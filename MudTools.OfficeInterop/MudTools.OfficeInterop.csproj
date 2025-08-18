@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Product>Mud Office COM组件二次封装</Product>
+		<Description>Office COM组件核心功能二次封装</Description>
+	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="MSOfficeCore.Interop">
+	    <Version>15.0.2</Version>
+	  </PackageReference>
+	</ItemGroup>
+</Project>

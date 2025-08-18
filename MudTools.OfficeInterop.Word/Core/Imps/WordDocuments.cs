@@ -1,0 +1,220 @@
+﻿//
+// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+namespace MudTools.OfficeInterop.Word.Imps;
+
+/// <summary>
+/// Word 文档集合实现类
+/// </summary>
+internal class WordDocuments : IWordDocuments
+{
+    private readonly MsWord.Documents _documents;
+    private readonly IWordApplication _application;
+    private bool _disposedValue;
+
+    public IWordApplication Application => _application;
+
+    public int Count => _documents.Count;
+
+    public object Parent => _documents.Parent;
+
+
+    internal WordDocuments(MsWord.Documents documents, IWordApplication application)
+    {
+        _documents = documents ?? throw new ArgumentNullException(nameof(documents));
+        _application = application ?? throw new ArgumentNullException(nameof(application));
+        _disposedValue = false;
+    }
+
+    public IWordDocument this[int index]
+    {
+        get
+        {
+            if (index < 1 || index > Count)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
+
+            try
+            {
+                var document = _documents[index];
+                return new WordDocument(document, _application);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get document at index {index}.", ex);
+            }
+        }
+    }
+
+    public IWordDocument this[string name]
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Document name cannot be null or empty.", nameof(name));
+
+            try
+            {
+                var document = _documents[name];
+                return new WordDocument(document, _application);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get document with name '{name}'.", ex);
+            }
+        }
+    }
+
+    public IWordDocument Add(string template = null)
+    {
+        try
+        {
+            MsWord.Document doc;
+            if (string.IsNullOrEmpty(template))
+            {
+                doc = _documents.Add();
+            }
+            else
+            {
+                doc = _documents.Add(template);
+            }
+            return new WordDocument(doc, _application);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to add document.", ex);
+        }
+    }
+
+    public IWordDocument Open(string fileName, bool readOnly = false, string password = null)
+    {
+        if (!File.Exists(fileName))
+            throw new FileNotFoundException("File not found.", fileName);
+
+        try
+        {
+            object fileNameObj = fileName;
+            object confirmConversionsObj = missing;
+            object readOnlyObj = readOnly;
+            object addToRecentFilesObj = missing;
+            object passwordDocumentObj = string.IsNullOrEmpty(password) ? missing : (object)password;
+            object passwordTemplateObj = missing;
+            object revertObj = missing;
+            object writePasswordDocumentObj = missing;
+            object writePasswordTemplateObj = missing;
+            object formatObj = missing;
+            object encodingObj = missing;
+            object visibleObj = missing;
+            object openAndRepairObj = missing;
+            object documentDirectionObj = missing;
+            object noEncodingDialogObj = missing;
+            object xMLTransformObj = missing;
+
+            var doc = _documents.Open(
+                ref fileNameObj,
+                ref confirmConversionsObj,
+                ref readOnlyObj,
+                ref addToRecentFilesObj,
+                ref passwordDocumentObj,
+                ref passwordTemplateObj,
+                ref revertObj,
+                ref writePasswordDocumentObj,
+                ref writePasswordTemplateObj,
+                ref formatObj,
+                ref encodingObj,
+                ref visibleObj,
+                ref openAndRepairObj,
+                ref documentDirectionObj,
+                ref noEncodingDialogObj,
+                ref xMLTransformObj);
+
+            return new WordDocument(doc, _application);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to open document '{fileName}'.", ex);
+        }
+    }
+
+    public IWordDocument GetActiveDocument()
+    {
+        try
+        {
+            var activeDoc = (_documents.Parent as MsWord.Application)?.ActiveDocument;
+            return activeDoc != null ? new WordDocument(activeDoc, _application) : null;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to get active document.", ex);
+        }
+    }
+
+    public void CloseAll(bool saveChanges = true)
+    {
+        try
+        {
+            object saveOption = saveChanges ? MsWord.WdSaveOptions.wdSaveChanges : MsWord.WdSaveOptions.wdDoNotSaveChanges;
+            object originalFormat = missing;
+            object routeDocument = missing;
+
+            _documents.Close(ref saveOption, ref originalFormat, ref routeDocument);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to close all documents.", ex);
+        }
+    }
+
+    public void SaveAll()
+    {
+        try
+        {
+            for (int i = 1; i <= Count; i++)
+            {
+                try
+                {
+                    var doc = this[i];
+                    doc.Save();
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to save all documents.", ex);
+        }
+    }
+
+    public IEnumerator<IWordDocument> GetEnumerator()
+    {
+        for (int i = 1; i <= Count; i++)
+        {
+            yield return this[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    private static readonly object missing = System.Reflection.Missing.Value;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposedValue) return;
+        _disposedValue = true;
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+}

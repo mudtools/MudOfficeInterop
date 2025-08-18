@@ -1,0 +1,48 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudTools.OfficeInterop", "MudTools.OfficeInterop\MudTools.OfficeInterop.csproj", "{50AA401E-713B-3FF4-66A0-23306F6631F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudTools.OfficeInterop.Vbe", "MudTools.OfficeInterop.Vbe\MudTools.OfficeInterop.Vbe.csproj", "{8331BABD-49BA-4FA6-00A9-75213E96AF03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudTools.OfficeInterop.Excel", "MudTools.OfficeInterop.Excel\MudTools.OfficeInterop.Excel.csproj", "{6B8B4A4E-327E-B4C1-1964-0A5BE73DB734}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudTools.OfficeInterop.PowerPoint", "MudTools.OfficeInterop.PowerPoint\MudTools.OfficeInterop.PowerPoint.csproj", "{FD08CF3D-0877-0EEA-BA9C-CA470689ABBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudTools.OfficeInterop.Word", "MudTools.OfficeInterop.Word\MudTools.OfficeInterop.Word.csproj", "{9B3438EC-1C64-F35C-6879-C6A86C3FC3A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50AA401E-713B-3FF4-66A0-23306F6631F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50AA401E-713B-3FF4-66A0-23306F6631F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50AA401E-713B-3FF4-66A0-23306F6631F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50AA401E-713B-3FF4-66A0-23306F6631F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8331BABD-49BA-4FA6-00A9-75213E96AF03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8331BABD-49BA-4FA6-00A9-75213E96AF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8331BABD-49BA-4FA6-00A9-75213E96AF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8331BABD-49BA-4FA6-00A9-75213E96AF03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B8B4A4E-327E-B4C1-1964-0A5BE73DB734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B8B4A4E-327E-B4C1-1964-0A5BE73DB734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B8B4A4E-327E-B4C1-1964-0A5BE73DB734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B8B4A4E-327E-B4C1-1964-0A5BE73DB734}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD08CF3D-0877-0EEA-BA9C-CA470689ABBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD08CF3D-0877-0EEA-BA9C-CA470689ABBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD08CF3D-0877-0EEA-BA9C-CA470689ABBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD08CF3D-0877-0EEA-BA9C-CA470689ABBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B3438EC-1C64-F35C-6879-C6A86C3FC3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B3438EC-1C64-F35C-6879-C6A86C3FC3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B3438EC-1C64-F35C-6879-C6A86C3FC3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B3438EC-1C64-F35C-6879-C6A86C3FC3A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {561A94CB-98B0-415C-B83C-85504D78851A}
+	EndGlobalSection
+EndGlobal

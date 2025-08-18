@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Product>Mud Office COM组件二次封装</Product>
+		<Description>VBE COM组件通用功能二次封装</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="WonderCircuits.Microsoft.Vbe.Interop" Version="15.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
+	</ItemGroup>
+</Project>
