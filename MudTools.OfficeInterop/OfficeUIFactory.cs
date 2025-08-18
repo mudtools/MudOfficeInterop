@@ -21,7 +21,7 @@ public sealed class OfficeUIFactory
     /// </summary>
     /// <param name="officeCTPFactory">原始的Office CTP工厂对象</param>
     /// <returns>IOfficeCTPFactory接口实例，如果传入的参数为null则返回null</returns>
-    public static IOfficeCTPFactory CreateCTPFactory(MsCore.ICTPFactory officeCTPFactory)
+    public static IOfficeCTPFactory? CreateCTPFactory(MsCore.ICTPFactory officeCTPFactory)
     {
         if (officeCTPFactory == null) return null;
         return new OfficeCTPFactory(officeCTPFactory);

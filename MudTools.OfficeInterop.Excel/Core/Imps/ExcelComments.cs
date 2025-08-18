@@ -712,7 +712,7 @@ internal class ExcelComments : IExcelComments
                         Text = comment.Text() ?? "",
                         Author = comment.Author ?? "N/A",
                         Visible = comment.Visible,
-                        Created = DateTime.Now, // Excel不提供创建时间
+                        Created = DateTime.Now,
                         TextLength = comment.Text()?.Length ?? 0
                     };
                     result.Add(info);
@@ -729,115 +729,6 @@ internal class ExcelComments : IExcelComments
     #endregion
 
     #region 统计和分析
-
-    /// <summary>
-    /// 获取评论统计信息
-    /// </summary>
-    /// <returns>评论统计信息对象</returns>
-    public CommentStatistics GetStatistics()
-    {
-        var stats = new CommentStatistics
-        {
-            TotalCount = Count,
-            VisibleCount = 0,
-            HiddenCount = 0,
-            AverageLength = 0,
-            MaxLength = 0,
-            MinLength = int.MaxValue,
-            UniqueAuthors = 0
-        };
-
-        if (_comments == null || Count == 0)
-            return stats;
-
-        int totalLength = 0;
-        var authors = new System.Collections.Generic.HashSet<string>();
-
-        for (int i = 1; i <= Count; i++)
-        {
-            try
-            {
-                var comment = this[i];
-                if (comment != null)
-                {
-                    if (comment.Visible)
-                        stats.VisibleCount++;
-                    else
-                        stats.HiddenCount++;
-
-                    int textLength = comment.Text()?.Length ?? 0;
-                    totalLength += textLength;
-
-                    if (textLength > stats.MaxLength)
-                        stats.MaxLength = textLength;
-
-                    if (textLength < stats.MinLength)
-                        stats.MinLength = textLength;
-
-                    if (!string.IsNullOrEmpty(comment.Author))
-                        authors.Add(comment.Author);
-                }
-            }
-            catch
-            {
-                // 忽略单个评论访问异常
-            }
-        }
-
-        stats.MinLength = stats.MinLength == int.MaxValue ? 0 : stats.MinLength;
-        stats.AverageLength = Count > 0 ? (double)totalLength / Count : 0;
-        stats.UniqueAuthors = authors.Count;
-
-        return stats;
-    }
-
-    /// <summary>
-    /// 获取作者统计信息
-    /// </summary>
-    /// <returns>作者统计信息数组</returns>
-    public AuthorStatistics[] GetAuthorStatistics()
-    {
-        if (_comments == null || Count == 0)
-            return new AuthorStatistics[0];
-
-        var authorStats = new System.Collections.Generic.Dictionary<string, AuthorStatistics>();
-
-        for (int i = 1; i <= Count; i++)
-        {
-            try
-            {
-                var comment = this[i];
-                if (comment != null)
-                {
-                    string author = comment.Author ?? "Unknown";
-
-                    if (!authorStats.ContainsKey(author))
-                    {
-                        authorStats[author] = new AuthorStatistics
-                        {
-                            Author = author,
-                            CommentCount = 0,
-                            AverageLength = 0,
-                            LastComment = DateTime.MinValue
-                        };
-                    }
-
-                    var stats = authorStats[author];
-                    stats.CommentCount++;
-                    stats.AverageLength = ((stats.AverageLength * (stats.CommentCount - 1)) +
-                                         (comment.Text()?.Length ?? 0)) / stats.CommentCount;
-                    stats.LastComment = DateTime.Now; // Excel不提供实际时间
-                }
-            }
-            catch
-            {
-                // 忽略单个评论访问异常
-            }
-        }
-
-        return new System.Collections.Generic.List<AuthorStatistics>(authorStats.Values).ToArray();
-    }
-
     /// <summary>
     /// 获取最常见的评论文本
     /// </summary>
@@ -846,7 +737,7 @@ internal class ExcelComments : IExcelComments
     public string[] GetMostCommonComments(int count = 10)
     {
         if (_comments == null || Count == 0 || count <= 0)
-            return new string[0];
+            return [];
 
         var textCount = new System.Collections.Generic.Dictionary<string, int>();
 
@@ -877,51 +768,6 @@ internal class ExcelComments : IExcelComments
                              .ToArray();
 
         return sorted;
-    }
-
-    /// <summary>
-    /// 获取评论长度统计
-    /// </summary>
-    /// <returns>长度统计信息</returns>
-    public LengthStatistics GetLengthStatistics()
-    {
-        var stats = new LengthStatistics
-        {
-            ShortComments = 0,
-            MediumComments = 0,
-            LongComments = 0,
-            VeryLongComments = 0
-        };
-
-        if (_comments == null || Count == 0)
-            return stats;
-
-        for (int i = 1; i <= Count; i++)
-        {
-            try
-            {
-                var comment = this[i];
-                if (comment != null)
-                {
-                    int length = comment.Text()?.Length ?? 0;
-
-                    if (length <= 50)
-                        stats.ShortComments++;
-                    else if (length <= 200)
-                        stats.MediumComments++;
-                    else if (length <= 500)
-                        stats.LongComments++;
-                    else
-                        stats.VeryLongComments++;
-                }
-            }
-            catch
-            {
-                // 忽略单个评论访问异常
-            }
-        }
-
-        return stats;
     }
 
     public IEnumerator<IExcelComment> GetEnumerator()

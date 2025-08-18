@@ -93,17 +93,11 @@ public interface IExcelChartArea : IDisposable
     /// <summary>
     /// 清除图表区内容和格式
     /// </summary>
-    void ClearAll(); // 注意：这是 ChartArea 特有的
+    void ClearAll();
 
     /// <summary>
     /// 复制图表区
     /// </summary>
     void Copy();
-
-    /// <summary>
-    /// 获取图表区边界框
-    /// </summary>
-    /// <returns>边界框信息</returns>
-    BoundingBox GetBoundingBox();
     #endregion
 }

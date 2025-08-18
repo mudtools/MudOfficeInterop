@@ -99,17 +99,6 @@ internal class ExcelChartArea : IExcelChartArea
     {
         _chartArea.Copy();
     }
-
-    public BoundingBox GetBoundingBox()
-    {
-        return new BoundingBox
-        {
-            Left = Left,
-            Top = Top,
-            Width = Width,
-            Height = Height
-        };
-    }
     #endregion
 
     #region IDisposable Support

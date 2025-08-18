@@ -132,11 +132,5 @@ public interface IExcelChartTitle : IDisposable
     /// 对应 ChartTitle.Delete 方法
     /// </summary>
     void Delete();
-
-    /// <summary>
-    /// 获取图表标题边界框
-    /// </summary>
-    /// <returns>边界框信息</returns>
-    BoundingBox GetBoundingBox();
     #endregion
 }

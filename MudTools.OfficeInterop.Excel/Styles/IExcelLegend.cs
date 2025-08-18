@@ -115,10 +115,5 @@ public interface IExcelLegend : IDisposable
     /// </summary>
     void Clear();
 
-    /// <summary>
-    /// 获取图例边界框
-    /// </summary>
-    /// <returns>边界框信息</returns>
-    BoundingBox GetBoundingBox();
     #endregion
 }

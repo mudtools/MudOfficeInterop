@@ -188,32 +188,12 @@ public interface IExcelComments : IEnumerable<IExcelComment>, IDisposable
     #endregion
 
     #region 统计和分析
-
-    /// <summary>
-    /// 获取评论统计信息
-    /// </summary>
-    /// <returns>评论统计信息对象</returns>
-    CommentStatistics GetStatistics();
-
-    /// <summary>
-    /// 获取作者统计信息
-    /// </summary>
-    /// <returns>作者统计信息数组</returns>
-    AuthorStatistics[] GetAuthorStatistics();
-
     /// <summary>
     /// 获取最常见的评论文本
     /// </summary>
     /// <param name="count">返回的数量</param>
     /// <returns>最常见的评论文本数组</returns>
     string[] GetMostCommonComments(int count = 10);
-
-    /// <summary>
-    /// 获取评论长度统计
-    /// </summary>
-    /// <returns>长度统计信息</returns>
-    LengthStatistics GetLengthStatistics();
-
     #endregion
 }
 
@@ -277,97 +257,4 @@ public class CommentInfo
     /// 文本长度
     /// </summary>
     public int TextLength { get; set; }
-}
-
-/// <summary>
-/// 评论统计信息结构
-/// </summary>
-public class CommentStatistics
-{
-    /// <summary>
-    /// 总评论数
-    /// </summary>
-    public int TotalCount { get; set; }
-
-    /// <summary>
-    /// 可见评论数
-    /// </summary>
-    public int VisibleCount { get; set; }
-
-    /// <summary>
-    /// 隐藏评论数
-    /// </summary>
-    public int HiddenCount { get; set; }
-
-    /// <summary>
-    /// 平均文本长度
-    /// </summary>
-    public double AverageLength { get; set; }
-
-    /// <summary>
-    /// 最大文本长度
-    /// </summary>
-    public int MaxLength { get; set; }
-
-    /// <summary>
-    /// 最小文本长度
-    /// </summary>
-    public int MinLength { get; set; }
-
-    /// <summary>
-    /// 唯一作者数
-    /// </summary>
-    public int UniqueAuthors { get; set; }
-}
-
-/// <summary>
-/// 作者统计信息结构
-/// </summary>
-public class AuthorStatistics
-{
-    /// <summary>
-    /// 作者名称
-    /// </summary>
-    public string Author { get; set; }
-
-    /// <summary>
-    /// 评论数量
-    /// </summary>
-    public int CommentCount { get; set; }
-
-    /// <summary>
-    /// 平均文本长度
-    /// </summary>
-    public double AverageLength { get; set; }
-
-    /// <summary>
-    /// 最后评论时间
-    /// </summary>
-    public DateTime LastComment { get; set; }
-}
-
-/// <summary>
-/// 长度统计信息结构
-/// </summary>
-public class LengthStatistics
-{
-    /// <summary>
-    /// 短评论数量（1-50字符）
-    /// </summary>
-    public int ShortComments { get; set; }
-
-    /// <summary>
-    /// 中等评论数量（51-200字符）
-    /// </summary>
-    public int MediumComments { get; set; }
-
-    /// <summary>
-    /// 长评论数量（201-500字符）
-    /// </summary>
-    public int LongComments { get; set; }
-
-    /// <summary>
-    /// 超长评论数量（500+字符）
-    /// </summary>
-    public int VeryLongComments { get; set; }
 }

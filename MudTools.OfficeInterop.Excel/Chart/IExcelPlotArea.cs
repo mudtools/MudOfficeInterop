@@ -96,10 +96,5 @@ public interface IExcelPlotArea : IDisposable
     /// </summary>
     void ClearFormats();
 
-    /// <summary>
-    /// 获取图表区边界框
-    /// </summary>
-    /// <returns>边界框信息</returns>
-    BoundingBox GetBoundingBox();
     #endregion
 }

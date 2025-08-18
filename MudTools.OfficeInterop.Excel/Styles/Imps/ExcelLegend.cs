@@ -100,16 +100,6 @@ internal class ExcelLegend : IExcelLegend
         _legend.Clear();
     }
 
-    public BoundingBox GetBoundingBox()
-    {
-        return new BoundingBox
-        {
-            Left = Left,
-            Top = Top,
-            Width = Width,
-            Height = Height
-        };
-    }
     #endregion
 
     #region IDisposable Support
@@ -136,13 +126,13 @@ internal class ExcelLegend : IExcelLegend
 
     ~ExcelLegend()
     {
-        
+
         Dispose(disposing: false);
     }
 
     public void Dispose()
     {
-        
+
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }

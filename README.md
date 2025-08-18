@@ -2,9 +2,42 @@
 
 一个针对 Microsoft Office 应用程序的 .NET 封装库，旨在简化 Office COM 组件的使用。
 
+该库为开发者提供了一套现代化、面向对象的 API，用于操作 Microsoft Office 应用程序（Excel、Word、PowerPoint）。通过使用本库，开发者可以避免直接处理复杂的 COM 交互，从而更专注于业务逻辑的实现。
+
 ## 项目概述
 
 MudTools.OfficeInterop 是一套针对 Microsoft Office 应用程序（包括 Excel、Word、PowerPoint 和 VBE）的 .NET 封装库。该项目通过提供简洁、统一的 API 接口，降低了直接使用 Office COM 组件的复杂性，使开发者能够更轻松地在 .NET 应用程序中集成和操作 Office 文档。
+
+### 项目目标
+
+本项目的主要目标是：
+
+1. **简化 Office 自动化**：通过封装复杂的 COM 接口，提供更简洁、更易用的 .NET API
+2. **提高开发效率**：减少开发者在 Office 自动化方面所需的时间和精力
+3. **增强代码可维护性**：通过面向对象的设计和清晰的接口，使代码更易于理解和维护
+4. **提供完整功能覆盖**：支持 Office 应用程序的常用功能，包括文档创建、编辑、格式化等
+5. **确保类型安全**：利用 .NET 的类型系统，减少运行时错误
+
+### 适用场景
+
+MudTools.OfficeInterop 适用于以下场景：
+
+- 企业报表生成和数据处理
+- 批量文档处理和格式化
+- Office 插件开发
+- 自动化办公应用
+- 数据导入/导出功能
+- 文档模板处理
+
+### 设计理念
+
+本项目遵循以下设计理念：
+
+1. **简洁性**：提供直观、易用的 API，降低学习成本
+2. **一致性**：在不同 Office 应用程序间保持相似的接口设计
+3. **可扩展性**：允许开发者在需要时访问底层 COM 对象
+4. **资源管理**：通过实现 IDisposable 接口，确保正确释放 COM 资源
+5. **兼容性**：支持多个 .NET Framework 版本和不同版本的 Office
 
 ## 功能模块
 
@@ -12,6 +45,7 @@ MudTools.OfficeInterop 是一套针对 Microsoft Office 应用程序（包括 Ex
 - 提供 Office 应用程序的基础接口和通用功能
 - 封装 Office 核心组件的常用操作
 - 为其他 Office 应用程序模块提供基础支撑
+- 提供 Office UI 相关组件的封装，包括功能区(Ribbon)和自定义任务窗格(CTP)
 
 ### Excel 模块 (MudTools.OfficeInterop.Excel)
 - 完整的 Excel 应用程序操作接口
@@ -48,6 +82,22 @@ MudTools.OfficeInterop 是一套针对 Microsoft Office 应用程序（包括 Ex
 <PackageReference Include="MudTools.OfficeInterop" Version="1.0.1" />
 <PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.0.1" />
 ```
+
+## 工厂类使用说明
+
+本项目提供多个工厂类用于创建和操作 Office 应用程序对象：
+
+- [OfficeUIFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop/OfficeUIFactory.cs#L16-L51) - 用于创建 Office UI 相关组件，如功能区(Ribbon)和自定义任务窗格(CTP)
+- [ExcelFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) - 用于创建和操作 Excel 应用程序实例
+- [WordFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) - 用于创建和操作 Word 应用程序实例
+- [PowerPointFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) - 用于创建和操作 PowerPoint 应用程序实例
+
+所有工厂类都提供多种创建应用程序实例的方法：
+- `Connection` - 通过现有 COM 对象连接到已运行的应用程序实例
+- `BlankWorkbook` - 创建新的空白文档/工作簿/演示文稿
+- `CreateFrom` - 基于模板创建新的文档/工作簿/演示文稿
+- `Open` - 打开现有的文档/工作簿/演示文稿
+- `CreateInstance` - (仅 ExcelFactory) 通过 ProgID 创建特定版本的应用程序实例
 
 ## 使用示例
 
@@ -239,7 +289,7 @@ presentation.SaveAs(@"C:\presentations\example.pptx");
 
 #### 操作现有演示文稿
 
-```csharp
+``csharp
 // 打开现有演示文稿
 using var app = PowerPointFactory.Open(@"C:\presentations\ExistingPresentation.pptx");
 var presentation = app.ActivePresentation;
@@ -291,6 +341,47 @@ animation.AdvanceMode = PowerPoint.PpAdvanceMode.ppAdvanceOnClick;
 
 presentation.SaveAs(@"C:\presentations\AnimatedPresentation.pptx");
 app.Quit();
+```
+
+### Office UI 操作示例
+
+#### 使用自定义任务窗格
+
+```csharp
+// 创建自定义任务窗格
+var ctpFactory = OfficeUIFactory.CreateCTPFactory(officeCTPFactory);
+var ctp = ctpFactory.CreateCTP("MyAddin.UserControl", "我的任务窗格");
+
+// 设置任务窗格属性
+ctp.Visible = true;
+ctp.Width = 200;
+
+// 显示任务窗格
+ctp.DockPosition = MsoCTPDockPosition.msoCTPDockPositionRight;
+```
+
+#### 使用功能区控件
+
+```csharp
+// 处理功能区控件事件
+public void OnRibbonButtonClicked(IRibbonControl control)
+{
+    switch (control.Id)
+    {
+        case "buttonNewDocument":
+            // 创建新文档
+            using var app = ExcelFactory.BlankWorkbook();
+            break;
+        case "buttonOpenDocument":
+            // 打开文档
+            var openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using var app = ExcelFactory.Open(openFileDialog.FileName);
+            }
+            break;
+    }
+}
 ```
 
 ## 许可证

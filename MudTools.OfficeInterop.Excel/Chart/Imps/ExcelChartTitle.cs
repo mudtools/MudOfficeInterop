@@ -116,17 +116,6 @@ internal class ExcelChartTitle : IExcelChartTitle
     {
         _chartTitle.Delete();
     }
-
-    public BoundingBox GetBoundingBox()
-    {
-        return new BoundingBox
-        {
-            Left = Left,
-            Top = Top,
-            Width = Width,
-            Height = Height
-        };
-    }
     #endregion
 
     #region IDisposable Support
