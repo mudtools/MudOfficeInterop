@@ -1,8 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>Word COM组件通用功能二次封装</Description>
+		<PackageId>MudTools.OfficeInterop.Word</PackageId>
+		<PackageTags>Office;Word;Interop;COM;Document</PackageTags>
+		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.Word library.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -11,6 +14,11 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\icon.png" Pack="true" PackagePath="\"/>
+		<None Include="README.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 
 </Project>

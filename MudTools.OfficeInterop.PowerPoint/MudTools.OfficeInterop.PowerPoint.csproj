@@ -1,7 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>PowerPoint COM组件通用功能二次封装</Description>
+		<PackageId>MudTools.OfficeInterop.PowerPoint</PackageId>
+		<PackageTags>Office;PowerPoint;Interop;COM;Presentation</PackageTags>
+		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.PowerPoint library.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -9,5 +12,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\icon.png" Pack="true" PackagePath="\"/>
+		<None Include="README.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 </Project>

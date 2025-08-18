@@ -1,8 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>VBE COM组件通用功能二次封装</Description>
+		<PackageId>MudTools.OfficeInterop.Vbe</PackageId>
+		<PackageTags>Office;VBE;Interop;COM;VisualBasic;Editor</PackageTags>
+		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.Vbe library.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -10,5 +13,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\icon.png" Pack="true" PackagePath="\"/>
+		<None Include="README.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 </Project>

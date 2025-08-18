@@ -1,12 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>Office COM组件核心功能二次封装</Description>
+		<PackageId>MudTools.OfficeInterop</PackageId>
+		<PackageTags>Office;Interop;COM;Core;Ribbon</PackageTags>		
+		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop core library.</PackageReleaseNotes>
 	</PropertyGroup>
+	
 	<ItemGroup>
 	  <PackageReference Include="MSOfficeCore.Interop">
 	    <Version>15.0.2</Version>
 	  </PackageReference>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\icon.png" Pack="true" PackagePath="\"/>
+		<None Include="README.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 </Project>
