@@ -1,0 +1,15 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs
+/MudTools.OfficeInterop/bin/Debug
+/MudTools.OfficeInterop/obj
+/MudTools.OfficeInterop.Excel/bin/Debug
+/MudTools.OfficeInterop.Excel/obj
+/MudTools.OfficeInterop.PowerPoint/bin/Debug
+/MudTools.OfficeInterop.PowerPoint/obj
+/MudTools.OfficeInterop.Vbe/bin/Debug
+/MudTools.OfficeInterop.Vbe/obj
+/MudTools.OfficeInterop.Word/bin/Debug
+/MudTools.OfficeInterop.Word/obj
