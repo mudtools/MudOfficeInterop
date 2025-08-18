@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>Office COM组件核心功能二次封装</Description>
+		<AssemblyName>MudTools.OfficeInterop</AssemblyName>
 		<PackageId>MudTools.OfficeInterop</PackageId>
 		<PackageTags>Office;Interop;COM;Core;Ribbon</PackageTags>		
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop core library.</PackageReleaseNotes>

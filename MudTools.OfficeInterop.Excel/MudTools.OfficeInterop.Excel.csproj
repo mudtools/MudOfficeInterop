@@ -3,6 +3,7 @@
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>Excel COM组件通用功能二次封装</Description>
 		<PackageId>MudTools.OfficeInterop.Excel</PackageId>
+		<AssemblyName>MudTools.OfficeInterop.Excel</AssemblyName>
 		<PackageTags>Office;Excel;Interop;COM;Spreadsheet</PackageTags>
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.Excel library.</PackageReleaseNotes>
 	</PropertyGroup>

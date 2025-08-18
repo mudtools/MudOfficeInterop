@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>Word COM组件通用功能二次封装</Description>
+		<AssemblyName>MudTools.OfficeInterop.PowerPoint</AssemblyName>
 		<PackageId>MudTools.OfficeInterop.Word</PackageId>
 		<PackageTags>Office;Word;Interop;COM;Document</PackageTags>
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.Word library.</PackageReleaseNotes>

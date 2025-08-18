@@ -2,6 +2,7 @@
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>PowerPoint COM组件通用功能二次封装</Description>
+		<AssemblyName>MudTools.OfficeInterop.PowerPoint</AssemblyName>
 		<PackageId>MudTools.OfficeInterop.PowerPoint</PackageId>
 		<PackageTags>Office;PowerPoint;Interop;COM;Presentation</PackageTags>
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.PowerPoint library.</PackageReleaseNotes>

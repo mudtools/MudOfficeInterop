@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<Product>Mud Office COM组件二次封装</Product>
 		<Description>VBE COM组件通用功能二次封装</Description>
+		<AssemblyName>MudTools.OfficeInterop.Vbe</AssemblyName>
 		<PackageId>MudTools.OfficeInterop.Vbe</PackageId>
 		<PackageTags>Office;VBE;Interop;COM;VisualBasic;Editor</PackageTags>
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.Vbe library.</PackageReleaseNotes>
