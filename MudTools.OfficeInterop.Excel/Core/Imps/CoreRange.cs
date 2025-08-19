@@ -44,6 +44,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     private IExcelHyperlinks? _hyperlinks;
     private IExcelSmartTags? _smartTags;
     private IExcelComment? _comment;
+    private IExcelErrors? _errors = null;
     private IExcelPageSetup? _pageSetup;
     #endregion
 
@@ -617,6 +618,8 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// 获取单元格批注对象
     /// </summary>
     public IExcelComment Comment => _comment ??= new ExcelComment(InternalRange.Comment);
+
+    public IExcelErrors Errors => _errors ?? new ExcelErrors(InternalRange.Errors);
 
     /// <summary>
     /// 获取或设置批注文本
@@ -1586,7 +1589,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         _font, _borders,_mergeArea,_characters,
         _firstCell, _lastCell, _next, _previous,
         _currentRegion, _entireRow, _entireColumn,
-        _usedRange, _parentRange,_parentSheet,
+        _usedRange, _parentRange,_parentSheet,_errors,
         _hyperlinks, _smartTags, _comment, _pageSetup,
         _columns,_cells,_excelFormatConditions
         };
@@ -1613,6 +1616,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         _hyperlinks = null;
         _smartTags = null;
         _comment = null;
+        _errors = null;
         _pageSetup = null;
         _excelFormatConditions = null;
     }

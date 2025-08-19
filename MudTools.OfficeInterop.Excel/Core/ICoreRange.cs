@@ -313,6 +313,8 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// </summary>
     IExcelHyperlinks Hyperlinks { get; }
 
+    IExcelErrors Errors { get; }
+
     /// <summary>
     /// 为区域添加超链接
     /// </summary>
