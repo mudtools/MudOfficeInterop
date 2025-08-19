@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelAxes : IExcelAxes
 {
-    private MsExcel.Axes _axes;
+    private MsExcel.Axes? _axes;
     private bool _disposedValue = false;
 
     internal ExcelAxes(MsExcel.Axes axes)

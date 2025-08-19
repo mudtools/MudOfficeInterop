@@ -33,7 +33,7 @@ public interface IExcelGroupShapes : IEnumerable<IExcelShape>, IDisposable
     /// <summary>
     /// 获取应用程序对象
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取创建者信息

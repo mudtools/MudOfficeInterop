@@ -15,17 +15,17 @@ internal class ExcelChartObject : IExcelChartObject
     /// <summary>
     /// 底层的 COM ChartObject 对象
     /// </summary>
-    private MsExcel.ChartObject _chartObject;
+    private MsExcel.ChartObject? _chartObject;
 
     /// <summary>
     /// 底层的形状对象
     /// </summary>
-    private MsExcel.ShapeRange _shapeRange;
+    private MsExcel.ShapeRange? _shapeRange;
 
     /// <summary>
     /// 底层的图表对象
     /// </summary>
-    private MsExcel.Chart _chart;
+    private MsExcel.Chart? _chart;
 
     /// <summary>
     /// 标记对象是否已被释放

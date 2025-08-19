@@ -124,7 +124,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// <param name="count">添加的工作表数量</param>
         /// <param name="type">工作表类型</param>
         /// <returns>新创建的工作表对象</returns>
-        public IExcelWorksheet Add(IExcelWorksheet before = null, IExcelWorksheet after = null,
+        public IExcelWorksheet Add(IExcelWorksheet? before = null, IExcelWorksheet? after = null,
                                  int count = 1, int type = 0)
         {
             if (_worksheets == null)
@@ -157,7 +157,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// <param name="before">添加到指定工作表之前</param>
         /// <param name="after">添加到指定工作表之后</param>
         /// <returns>成功添加的工作表数量</returns>
-        public int AddRange(string[] names, IExcelWorksheet before = null, IExcelWorksheet after = null)
+        public int AddRange(string[] names, IExcelWorksheet? before = null, IExcelWorksheet? after = null)
         {
             if (_worksheets == null || names == null || names.Length == 0)
                 return 0;
@@ -190,8 +190,8 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// <param name="before">添加到指定工作表之前</param>
         /// <param name="after">添加到指定工作表之后</param>
         /// <returns>新创建的工作表对象</returns>
-        public IExcelWorksheet CreateFromTemplate(string templatePath, string name = "",
-                                                IExcelWorksheet before = null, IExcelWorksheet after = null)
+        public IExcelWorksheet? CreateFromTemplate(string templatePath, string name = "",
+                                                IExcelWorksheet? before = null, IExcelWorksheet? after = null)
         {
             if (_worksheets == null || string.IsNullOrEmpty(templatePath))
                 return null;
@@ -418,7 +418,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// <param name="worksheet">要移动的工作表</param>
         /// <param name="before">移动到指定工作表之前</param>
         /// <param name="after">移动到指定工作表之后</param>
-        public void Move(IExcelWorksheet worksheet, IExcelWorksheet before = null, IExcelWorksheet after = null)
+        public void Move(IExcelWorksheet worksheet, IExcelWorksheet? before = null, IExcelWorksheet? after = null)
         {
             if (_worksheets == null || worksheet == null)
                 return;
@@ -441,7 +441,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// <param name="after">复制到指定工作表之后</param>
         /// <param name="newName">新工作表名称</param>
         /// <returns>复制的工作表对象</returns>
-        public IExcelWorksheet Copy(IExcelWorksheet worksheet, IExcelWorksheet? before = null,
+        public IExcelWorksheet? Copy(IExcelWorksheet worksheet, IExcelWorksheet? before = null,
                                   IExcelWorksheet? after = null, string newName = "")
         {
             if (_worksheets == null || worksheet == null)

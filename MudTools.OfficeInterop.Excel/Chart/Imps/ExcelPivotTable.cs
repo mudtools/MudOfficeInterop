@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelPivotTable : IExcelPivotTable
 {
-    private MsExcel.PivotTable _pivotTable;
+    private MsExcel.PivotTable? _pivotTable;
     private bool _disposedValue = false;
 
     internal ExcelPivotTable(MsExcel.PivotTable pivotTable)

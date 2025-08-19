@@ -280,6 +280,10 @@ namespace MudTools.OfficeInterop.Excel
         /// </summary>
         ICommonWorksheet? ActiveSheet { get; }
 
+        /// <summary>
+        /// 获取当前活动的工作表
+        /// 对应 Application.ActiveSheet 属性
+        /// </summary>
         IExcelWorksheet? ActiveSheetWarp { get; }
 
         /// <summary>
@@ -360,6 +364,9 @@ namespace MudTools.OfficeInterop.Excel
         /// </summary>
         IExcelProtectedViewWindow? ActiveProtectedViewWindow { get; }
 
+        /// <summary>
+        /// 获取当前的插件集合。
+        /// </summary>
         IExcelAddIns? AddIns { get; }
         #endregion
 
@@ -982,7 +989,7 @@ namespace MudTools.OfficeInterop.Excel
             XlReferenceStyle fromReferenceStyle,
             XlReferenceStyle toReferenceStyle,
             int toAbsolute = 1,
-            object relativeTo = null);
+            object? relativeTo = null);
 
         /// <summary>
         /// 检查指定文本的拼写。
@@ -991,7 +998,7 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="customDictionary">自定义词典的名称。</param>
         /// <param name="ignoreUpper">是否忽略全大写单词。</param>
         /// <returns>如果拼写正确返回 True，否则返回 False。</returns>
-        bool CheckSpelling(string text, object customDictionary = null, object ignoreUpper = null);
+        bool CheckSpelling(string text, object? customDictionary = null, object? ignoreUpper = null);
 
 
         /// <summary>

@@ -7,7 +7,7 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
-// <summary>
+/// <summary>
 /// Excel ShadowFormat 对象的二次封装接口
 /// </summary>
 public interface IExcelShadowFormat : IDisposable

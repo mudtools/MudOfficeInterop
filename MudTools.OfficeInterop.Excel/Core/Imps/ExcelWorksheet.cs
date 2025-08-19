@@ -351,7 +351,7 @@ internal class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     public string CodeName => _worksheet?.CodeName?.ToString();
 
-    // <summary>
+    /// <summary>
     /// 获取工作表所在的父对象。
     /// 对于标准的 Excel 工作表，其父对象是它所属的工作簿 (Workbook)。
     /// </summary>
@@ -947,31 +947,31 @@ internal class ExcelWorksheet : IExcelWorksheet
         );
     }
 
-    public IEnumerable<IExcelPivotTable> PivotTables()
+    public IExcelPivotTables? PivotTables()
     {
-        var pivotTables = _worksheet.PivotTables() as MsExcel.PivotTables;
-        foreach (var pivotTable in pivotTables)
-        {
-            yield return new ExcelPivotTable(pivotTable as MsExcel.PivotTable);
-        }
+        var pivotTables = _worksheet?.PivotTables() as MsExcel.PivotTables;
+        if (pivotTables == null)
+            return null;
+        return new ExcelPivotTables(pivotTables);
     }
 
-    public IExcelPivotTable PivotTables(int index)
+    public IExcelPivotTable? PivotTables(int index)
     {
-        var pivotTable = _worksheet.PivotTables(index) as MsExcel.PivotTable;
+        var pivotTable = _worksheet?.PivotTables(index) as MsExcel.PivotTable;
+        if (pivotTable == null)
+            return null;
         return new ExcelPivotTable(pivotTable);
     }
 
     /// <summary>
     /// 获取工作表的图表对象集合
     /// </summary>
-    public IEnumerable<IExcelChartObject> ChartObjects()
+    public IExcelChartObjects? ChartObjects()
     {
         var chartObjects = _worksheet?.ChartObjects() as MsExcel.ChartObjects;
-        foreach (var chartObject in chartObjects)
-        {
-            yield return new ExcelChartObject(chartObject as MsExcel.ChartObject);
-        }
+        if (chartObjects == null)
+            return null;
+        return new ExcelChartObjects(chartObjects);
     }
 
     /// <summary>

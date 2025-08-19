@@ -175,6 +175,10 @@ public interface IExcelShape : IDisposable
     /// </summary>
     void Copy();
 
+    /// <summary>
+    /// 复制形状
+    /// 对应 Shape.Copy 方法
+    /// </summary>
     void CopyPicture(XlPictureAppearance? Appearance, XlCopyPictureFormat? Format);
 
     /// <summary>

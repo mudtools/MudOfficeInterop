@@ -30,15 +30,15 @@ internal class ExcelSortFields : IExcelSortFields
         _disposedValue = false;
     }
 
-    public IExcelSortField Add(IExcelRange key, XlSortOn sortOn = XlSortOn.xlSortOnValues,
+    public IExcelSortField? Add(IExcelRange key, XlSortOn sortOn = XlSortOn.xlSortOnValues,
                               XlSortOrder order = XlSortOrder.xlAscending,
-                              object customOrder = null, XlSortDataOption dataOption = XlSortDataOption.xlSortNormal)
+                              object? customOrder = null, XlSortDataOption dataOption = XlSortDataOption.xlSortNormal)
     {
         if (key == null) throw new ArgumentNullException(nameof(key));
 
         try
         {
-            MsExcel.Range comRange = null;
+            MsExcel.Range? comRange = null;
             if (key is ExcelRange excelRange)
             {
                 comRange = excelRange.InternalRange;

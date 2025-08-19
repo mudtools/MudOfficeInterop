@@ -154,7 +154,7 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="before">在哪个工作表之前插入</param>
         /// <param name="after">在哪个工作表之后插入</param>
         /// <returns>导入的工作表对象数组</returns>
-        IExcelWorksheet[] ImportFromFile(string filename, string sheetName = "", object before = null, object after = null);
+        IExcelWorksheet[]? ImportFromFile(string filename, string sheetName = "", object? before = null, object? after = null);
 
         #endregion
 

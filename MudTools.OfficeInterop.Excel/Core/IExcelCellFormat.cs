@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -85,6 +85,10 @@ public interface IExcelCellFormat : IDisposable
     /// </summary>
     bool FormulaHidden { get; set; }
 
+    /// <summary>
+    /// 获取或设置单元格的本地化数字格式代码
+    /// 对应 CellFormat.NumberFormatLocal 属性
+    /// </summary>
     string NumberFormatLocal { get; set; }
     #endregion
 

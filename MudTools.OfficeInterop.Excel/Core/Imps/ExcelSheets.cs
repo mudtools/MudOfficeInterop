@@ -29,7 +29,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public override IExcelWorksheet this[int index]
+    public override IExcelWorksheet? this[int index]
     {
         get
         {
@@ -81,8 +81,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 
         try
         {
-            ExcelWorksheet beforeSheet = before as ExcelWorksheet;
-            ExcelWorksheet afterSheet = after as ExcelWorksheet;
+            ExcelWorksheet? beforeSheet = before as ExcelWorksheet;
+            ExcelWorksheet? afterSheet = after as ExcelWorksheet;
 
 
             if (_worksheets.Add(
@@ -156,7 +156,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         List<IExcelWorksheet> results = new List<IExcelWorksheet>();
         for (int i = 1; i <= Count; i++)
         {
-            IExcelWorksheet worksheet = this[i];
+            IExcelWorksheet? worksheet = this[i];
             if (worksheet != null && worksheet.IsProtected)
             {
                 results.Add(worksheet);
@@ -201,8 +201,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 
         try
         {
-            object interopBefore = (beforeSheet as ExcelWorksheet)?.Worksheet ?? (beforeSheet as ExcelChart)?._chart ?? beforeSheet;
-            object interopAfter = (afterSheet as ExcelWorksheet)?.Worksheet ?? (afterSheet as ExcelChart)?._chart ?? afterSheet;
+            object? interopBefore = (beforeSheet as ExcelWorksheet)?.Worksheet ?? (beforeSheet as ExcelChart)?._chart ?? beforeSheet;
+            object? interopAfter = (afterSheet as ExcelWorksheet)?.Worksheet ?? (afterSheet as ExcelChart)?._chart ?? afterSheet;
 
             _worksheets.Copy(interopBefore, interopAfter);
         }
@@ -418,8 +418,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             try
             {
                 IExcelWorksheet? sheet = this[i];
-                string fileName = Path.Combine(folderPath, $"{prefix}{sheet.Name}.{fileFormat}");
-                sheet.SaveAs(fileName);
+                string fileName = Path.Combine(folderPath, $"{prefix}{sheet?.Name}.{fileFormat}");
+                sheet?.SaveAs(fileName);
                 count++;
             }
             catch
@@ -430,7 +430,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         return count;
     }
 
-    public IExcelWorksheet[] ImportFromFile(string filename, string sheetName = "", object before = null, object after = null)
+    public IExcelWorksheet[]? ImportFromFile(string filename, string sheetName = "", object? before = null, object? after = null)
     {
         if (_worksheets == null || string.IsNullOrEmpty(filename))
             return null;

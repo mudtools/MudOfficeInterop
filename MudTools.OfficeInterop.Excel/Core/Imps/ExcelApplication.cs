@@ -2674,7 +2674,7 @@ internal class ExcelApplication : IExcelApplication
     /// <returns>转换后的公式。</returns>
     public string ConvertFormula(string formula, XlReferenceStyle fromReferenceStyle,
                                  XlReferenceStyle toReferenceStyle, int toAbsolute = 1, // XlAbsolute (1) is default
-                                 object relativeTo = null)
+                                 object? relativeTo = null)
     {
         if (_application == null || string.IsNullOrEmpty(formula))
             return formula;
@@ -2715,7 +2715,7 @@ internal class ExcelApplication : IExcelApplication
     /// <param name="customDictionary">自定义词典的名称。</param>
     /// <param name="ignoreUpper">是否忽略全大写单词。</param>
     /// <returns>如果拼写正确返回 True，否则返回 False。</returns>
-    public bool CheckSpelling(string text, object customDictionary = null, object ignoreUpper = null)
+    public bool CheckSpelling(string text, object? customDictionary = null, object? ignoreUpper = null)
     {
         if (_application == null || string.IsNullOrEmpty(text))
             return true; // 或 false，取决于默认行为假设

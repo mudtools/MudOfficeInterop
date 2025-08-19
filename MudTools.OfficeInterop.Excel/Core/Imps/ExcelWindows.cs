@@ -272,7 +272,7 @@ internal class ExcelWindows : IExcelWindows
     /// 关闭所有窗口（除了指定的窗口）
     /// </summary>
     /// <param name="exceptWindow">要保留的窗口</param>
-    public void CloseAllExcept(IExcelWindow exceptWindow = null)
+    public void CloseAllExcept(IExcelWindow? exceptWindow = null)
     {
         try
         {

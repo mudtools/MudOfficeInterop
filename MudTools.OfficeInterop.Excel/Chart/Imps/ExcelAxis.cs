@@ -17,7 +17,7 @@ internal class ExcelAxis : IExcelAxis
     /// <summary>
     /// 内部持有的 Microsoft.Office.Interop.Excel.Axis 对象引用
     /// </summary>
-    private MsExcel.Axis _axis;
+    private MsExcel.Axis? _axis;
 
     /// <summary>
     /// 标记对象是否已被释放，用于防止重复释放

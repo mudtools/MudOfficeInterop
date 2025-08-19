@@ -314,7 +314,7 @@ internal class ExcelName : IExcelName
     /// <param name="newName">新名称</param>
     /// <param name="parent">父对象</param>
     /// <returns>复制的名称对象</returns>
-    public IExcelName Copy(string newName = "", object parent = null)
+    public IExcelName? Copy(string newName = "", object? parent = null)
     {
         if (_name?.Parent == null)
             return null;

@@ -78,7 +78,7 @@ public interface IExcelWindows : IDisposable, IEnumerable<IExcelWindow>
     /// 关闭所有窗口（除了指定的窗口）
     /// </summary>
     /// <param name="exceptWindow">要保留的窗口</param>
-    void CloseAllExcept(IExcelWindow exceptWindow = null);
+    void CloseAllExcept(IExcelWindow? exceptWindow = null);
 
     /// <summary>
     /// 激活所有窗口

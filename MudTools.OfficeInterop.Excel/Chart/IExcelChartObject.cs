@@ -88,21 +88,6 @@ public interface IExcelChartObject : ICommonWorksheet, IDisposable
     #endregion
 
     #region 操作方法
-
-    /// <summary>
-    /// 选择图表对象
-    /// 对应 ChartObject.Select 方法
-    /// </summary>
-    /// <param name="replace">是否替换当前选择</param>
-    void Select(bool replace = true);
-
-
-    /// <summary>
-    /// 复制图表对象
-    /// 对应 ChartObject.Copy 方法
-    /// </summary>
-    void Copy();
-
     /// <summary>
     /// 剪切图表对象
     /// 对应 ChartObject.Cut 方法

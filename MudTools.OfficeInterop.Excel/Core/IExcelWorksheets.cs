@@ -22,7 +22,7 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="count">添加的工作表数量</param>
         /// <param name="type">工作表类型</param>
         /// <returns>新创建的工作表对象</returns>
-        IExcelWorksheet Add(IExcelWorksheet before = null, IExcelWorksheet after = null,
+        IExcelWorksheet Add(IExcelWorksheet? before = null, IExcelWorksheet? after = null,
                            int count = 1, int type = 0);
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="before">添加到指定工作表之前</param>
         /// <param name="after">添加到指定工作表之后</param>
         /// <returns>成功添加的工作表数量</returns>
-        int AddRange(string[] names, IExcelWorksheet before = null, IExcelWorksheet after = null);
+        int AddRange(string[] names, IExcelWorksheet? before = null, IExcelWorksheet? after = null);
 
         /// <summary>
         /// 基于模板创建工作表
@@ -42,8 +42,8 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="before">添加到指定工作表之前</param>
         /// <param name="after">添加到指定工作表之后</param>
         /// <returns>新创建的工作表对象</returns>
-        IExcelWorksheet CreateFromTemplate(string templatePath, string name = "",
-                                         IExcelWorksheet before = null, IExcelWorksheet after = null);
+        IExcelWorksheet? CreateFromTemplate(string templatePath, string name = "",
+                                         IExcelWorksheet? before = null, IExcelWorksheet? after = null);
 
         #endregion
 
@@ -96,7 +96,7 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="worksheet">要移动的工作表</param>
         /// <param name="before">移动到指定工作表之前</param>
         /// <param name="after">移动到指定工作表之后</param>
-        void Move(IExcelWorksheet worksheet, IExcelWorksheet before = null, IExcelWorksheet after = null);
+        void Move(IExcelWorksheet worksheet, IExcelWorksheet? before = null, IExcelWorksheet? after = null);
 
         /// <summary>
         /// 复制工作表
@@ -106,8 +106,8 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="after">复制到指定工作表之后</param>
         /// <param name="newName">新工作表名称</param>
         /// <returns>复制的工作表对象</returns>
-        IExcelWorksheet Copy(IExcelWorksheet worksheet, IExcelWorksheet before = null,
-                            IExcelWorksheet after = null, string newName = "");
+        IExcelWorksheet? Copy(IExcelWorksheet worksheet, IExcelWorksheet? before = null,
+                            IExcelWorksheet? after = null, string newName = "");
 
         #endregion
 

@@ -137,7 +137,7 @@ public interface IExcelName : IDisposable
     /// <param name="newName">新名称</param>
     /// <param name="parent">父对象</param>
     /// <returns>复制的名称对象</returns>
-    IExcelName Copy(string newName = "", object parent = null);
+    IExcelName? Copy(string newName = "", object? parent = null);
 
     /// <summary>
     /// 重命名名称

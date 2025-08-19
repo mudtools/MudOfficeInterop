@@ -35,9 +35,9 @@ public interface IExcelSortFields : IDisposable, IEnumerable<IExcelSortField>
     /// <param name="customOrder">自定义排序顺序</param>
     /// <param name="dataOption">数据选项</param>
     /// <returns>新创建的排序字段对象</returns>
-    IExcelSortField Add(IExcelRange key, XlSortOn sortOn = XlSortOn.xlSortOnValues,
+    IExcelSortField? Add(IExcelRange key, XlSortOn sortOn = XlSortOn.xlSortOnValues,
                        XlSortOrder order = XlSortOrder.xlAscending,
-                       object customOrder = null, XlSortDataOption dataOption = XlSortDataOption.xlSortNormal);
+                       object? customOrder = null, XlSortDataOption dataOption = XlSortDataOption.xlSortNormal);
 
     /// <summary>
     /// 清除所有排序字段

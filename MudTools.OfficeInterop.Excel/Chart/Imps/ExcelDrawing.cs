@@ -72,9 +72,9 @@ internal class ExcelDrawing : IExcelDrawing
     }
 
 
-    public IExcelDrawingObjects Parent => new ExcelDrawingObjects(_drawing.Parent as MsExcel.DrawingObjects);
+    public IExcelDrawingObjects Parent => new ExcelDrawingObjects(_drawing?.Parent as MsExcel.DrawingObjects);
 
-    public IExcelWorksheet Worksheet => new ExcelWorksheet(_drawing.Parent as MsExcel.Worksheet);
+    public IExcelWorksheet Worksheet => new ExcelWorksheet(_drawing?.Parent as MsExcel.Worksheet);
 
 
     public string Text

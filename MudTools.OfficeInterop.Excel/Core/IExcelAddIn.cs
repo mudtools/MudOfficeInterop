@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -26,13 +26,40 @@ public interface IExcelAddIn : IDisposable
     /// </summary>
     string FullName { get; }
 
+    /// <summary>
+    /// 获取加载项的文档标题
+    /// 对应文档的标题属性
+    /// </summary>
     string Title { get; }
+    
+    /// <summary>
+    /// 获取加载项的文档主题
+    /// 对应文档的 Subject 属性
+    /// </summary>
     string Subject { get; }
+    
+    /// <summary>
+    /// 获取加载项的路径
+    /// 对应文档的 Path 属性
+    /// </summary>
     string Path { get; }
+    
+    /// <summary>
+    /// 获取加载项的注释信息
+    /// 对应文档的 Comments 属性
+    /// </summary>
     string Comments { get; }
 
+    /// <summary>
+    /// 获取加载项的作者信息
+    /// 对应文档的 Author 属性
+    /// </summary>
     string Author { get; }
 
+    /// <summary>
+    /// 获取加载项的关键字信息
+    /// 对应文档的 Keywords 属性
+    /// </summary>
     string Keywords { get; }
 
     /// <summary>

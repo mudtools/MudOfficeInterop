@@ -669,6 +669,9 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// </summary>
     IExcelBorders Borders { get; }
 
+    /// <summary>
+    /// 获取当前区域的注音符号集合对象，用于处理日文等语言的注音符号。
+    /// </summary>
     IExcelPhonetics? Phonetics { get; }
 
     /// <summary>

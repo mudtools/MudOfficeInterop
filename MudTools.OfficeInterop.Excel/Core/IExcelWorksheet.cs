@@ -212,6 +212,10 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
 
     #region 形状和图表
 
+    /// <summary>
+    /// 获取工作表的列表对象集合
+    /// 对应 Worksheet.ListObjects 属性
+    /// </summary>
     IExcelListObjects ListObjects { get; }
 
     /// <summary>
@@ -380,14 +384,23 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// <param name="after">移动到指定工作表之后</param>
     void Move(IExcelWorksheet? before = null, IExcelWorksheet? after = null);
 
-    IExcelPivotTable PivotTables(int index);
+    /// <summary>
+    /// 获取工作表中指定索引的数据透视表对象
+    /// </summary>
+    /// <param name="index">数据透视表索引</param>
+    /// <returns>数据透视表对象</returns>
+    IExcelPivotTable? PivotTables(int index);
 
-    IEnumerable<IExcelPivotTable> PivotTables();
+    /// <summary>
+    /// 获取工作表中所有数据透视表的集合
+    /// </summary>
+    /// <returns>数据透视表集合对象</returns>
+    IExcelPivotTables? PivotTables();
 
     /// <summary>
     /// 获取工作表的图表对象集合
     /// </summary>
-    IEnumerable<IExcelChartObject> ChartObjects();
+    IExcelChartObjects? ChartObjects();
 
     /// <summary>
     /// 获取工作表的图表对象集合

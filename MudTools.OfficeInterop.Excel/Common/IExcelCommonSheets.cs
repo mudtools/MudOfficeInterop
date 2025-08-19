@@ -25,14 +25,14 @@ public interface IExcelCommonSheets : IEnumerable<IExcelWorksheet>, IDisposable
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    IExcelWorksheet this[int index] { get; }
+    IExcelWorksheet? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的工作表对象
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    IExcelWorksheet this[string name] { get; }
+    IExcelWorksheet? this[string name] { get; }
 
     /// <summary>
     /// 获取指定名称的工作表对象
@@ -184,7 +184,6 @@ public interface IExcelCommonSheets : IEnumerable<IExcelWorksheet>, IDisposable
     #endregion
 }
 
-/// </summary>
 public class CopySheetOptions
 {
     /// <summary>复制到该工作表之前</summary>

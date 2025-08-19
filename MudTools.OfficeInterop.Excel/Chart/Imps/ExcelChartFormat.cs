@@ -17,7 +17,7 @@ internal class ExcelChartFormat : IExcelChartFormat
     /// <summary>
     /// 内部持有的 Microsoft.Office.Interop.Excel.ChartFormat 对象引用
     /// </summary>
-    private MsExcel.ChartFormat _chartFormat;
+    private MsExcel.ChartFormat? _chartFormat;
 
     /// <summary>
     /// 标记对象是否已被释放，用于防止重复释放
