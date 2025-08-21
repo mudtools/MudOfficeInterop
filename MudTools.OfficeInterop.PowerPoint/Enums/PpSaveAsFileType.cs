@@ -15,201 +15,192 @@ public enum PpSaveAsFileType
     /// 演示文稿格式
     /// </summary>
     ppSaveAsPresentation = 1,
-    
+
     /// <summary>
     /// PowerPoint 7 格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsPowerPoint7 = 2,
-    
+
     /// <summary>
     /// PowerPoint 4 格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsPowerPoint4 = 3,
-    
+
     /// <summary>
     /// PowerPoint 3 格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsPowerPoint3 = 4,
-    
+
     /// <summary>
     /// 模板格式
     /// </summary>
     ppSaveAsTemplate = 5,
-    
+
     /// <summary>
     /// RTF 格式
     /// </summary>
     ppSaveAsRTF = 6,
-    
+
     /// <summary>
     /// 放映格式
     /// </summary>
     ppSaveAsShow = 7,
-    
+
     /// <summary>
     /// 加载项格式
     /// </summary>
     ppSaveAsAddIn = 8,
-    
+
     /// <summary>
     /// 远东版 PowerPoint 4 格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsPowerPoint4FarEast = 10,
-    
+
     /// <summary>
     /// 默认格式
     /// </summary>
     ppSaveAsDefault = 11,
-    
+
     /// <summary>
     /// HTML 格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsHTML = 12,
-    
+
     /// <summary>
     /// HTML v3 格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsHTMLv3 = 13,
-    
+
     /// <summary>
     /// HTML 双格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsHTMLDual = 14,
-    
+
     /// <summary>
     /// 元文件格式
     /// </summary>
     ppSaveAsMetaFile = 15,
-    
+
     /// <summary>
     /// GIF 格式
     /// </summary>
     ppSaveAsGIF = 16,
-    
+
     /// <summary>
     /// JPG 格式
     /// </summary>
     ppSaveAsJPG = 17,
-    
+
     /// <summary>
     /// PNG 格式
     /// </summary>
     ppSaveAsPNG = 18,
-    
+
     /// <summary>
     /// BMP 格式
     /// </summary>
     ppSaveAsBMP = 19,
-    
+
     /// <summary>
     /// Web 归档格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsWebArchive = 20,
-    
+
     /// <summary>
     /// TIF 格式
     /// </summary>
     ppSaveAsTIF = 21,
-    
+
     /// <summary>
     /// 审阅用演示文稿格式（已过时）
     /// </summary>
-    [TypeLibVar(64)]
     ppSaveAsPresForReview = 22,
-    
+
     /// <summary>
     /// EMF 格式
     /// </summary>
     ppSaveAsEMF = 23,
-    
+
     /// <summary>
     /// OpenXML 演示文稿格式
     /// </summary>
     ppSaveAsOpenXMLPresentation = 24,
-    
+
     /// <summary>
     /// 启用宏的 OpenXML 演示文稿格式
     /// </summary>
     ppSaveAsOpenXMLPresentationMacroEnabled = 25,
-    
+
     /// <summary>
     /// OpenXML 模板格式
     /// </summary>
     ppSaveAsOpenXMLTemplate = 26,
-    
+
     /// <summary>
     /// 启用宏的 OpenXML 模板格式
     /// </summary>
     ppSaveAsOpenXMLTemplateMacroEnabled = 27,
-    
+
     /// <summary>
     /// OpenXML 放映格式
     /// </summary>
     ppSaveAsOpenXMLShow = 28,
-    
+
     /// <summary>
     /// 启用宏的 OpenXML 放映格式
     /// </summary>
     ppSaveAsOpenXMLShowMacroEnabled = 29,
-    
+
     /// <summary>
     /// OpenXML 加载项格式
     /// </summary>
     ppSaveAsOpenXMLAddin = 30,
-    
+
     /// <summary>
     /// OpenXML 主题格式
     /// </summary>
     ppSaveAsOpenXMLTheme = 31,
-    
+
     /// <summary>
     /// PDF 格式
     /// </summary>
     ppSaveAsPDF = 32,
-    
+
     /// <summary>
     /// XPS 格式
     /// </summary>
     ppSaveAsXPS = 33,
-    
+
     /// <summary>
     /// XML 演示文稿格式
     /// </summary>
     ppSaveAsXMLPresentation = 34,
-    
+
     /// <summary>
     /// OpenDocument 演示文稿格式
     /// </summary>
     ppSaveAsOpenDocumentPresentation = 35,
-    
+
     /// <summary>
     /// OpenXML 图片演示文稿格式
     /// </summary>
     ppSaveAsOpenXMLPicturePresentation = 36,
-    
+
     /// <summary>
     /// WMV 格式
     /// </summary>
     ppSaveAsWMV = 37,
-    
+
     /// <summary>
     /// 严格 OpenXML 演示文稿格式
     /// </summary>
     ppSaveAsStrictOpenXMLPresentation = 38,
-    
+
     /// <summary>
     /// MP4 格式
     /// </summary>
     ppSaveAsMP4 = 39,
-    
+
     /// <summary>
     /// 外部转换器格式
     /// </summary>

@@ -146,16 +146,6 @@ namespace MudTools.OfficeInterop.Excel
         /// <returns>成功导出的工作表数量</returns>
         int ExportToFolder(string folderPath, string fileFormat = "xlsx", string prefix = "sheet_");
 
-        /// <summary>
-        /// 从文件导入工作表
-        /// </summary>
-        /// <param name="filename">导入文件路径</param>
-        /// <param name="sheetName">要导入的工作表名称 (如果为空，则导入所有)</param>
-        /// <param name="before">在哪个工作表之前插入</param>
-        /// <param name="after">在哪个工作表之后插入</param>
-        /// <returns>导入的工作表对象数组</returns>
-        IExcelWorksheet[]? ImportFromFile(string filename, string sheetName = "", object? before = null, object? after = null);
-
         #endregion
 
         #region 高级功能
