@@ -1,20 +1,18 @@
 <Project>
 	<PropertyGroup>
-		<TargetFrameworks>net462;netstandard2.0;net6;net8</TargetFrameworks>
-		<Version>1.0.4</Version>
+		<TargetFrameworks>net462;netstandard2.0;net6.0-windows;net8-windows</TargetFrameworks>
+		<Version>1.0.5</Version>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<NoDefaultExcludes>true</NoDefaultExcludes>
-		<ImplicitUsings>enable</ImplicitUsings>
 		<Copyright>© 2019-2025 Mud Studio Co.,Ltd.</Copyright>
 		<Authors>Mud Studio</Authors>
 		<Company>Mud Studio</Company>
 		<LangVersion>latest</LangVersion>
 		<PackageProjectUrl>http://www.mudtools.cn/</PackageProjectUrl>
-		<PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<RepositoryUrl>https://gitee.com/mudtools/OfficeInterop</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
