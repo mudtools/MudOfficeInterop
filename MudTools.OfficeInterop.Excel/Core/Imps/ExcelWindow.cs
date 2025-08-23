@@ -344,11 +344,11 @@ internal class ExcelWindow : IExcelWindow
         }
     }
 
-    public object Parent
+    public object? Parent
     {
         get
         {
-            if (_window.Parent == null)
+            if (_window == null || _window.Parent == null)
                 return null;
             if (_window.Parent is MsExcel.Application app)
                 return new ExcelApplication(app);
@@ -360,6 +360,18 @@ internal class ExcelWindow : IExcelWindow
                 return new ExcelWindows(wins, null);
 
             return _workbook.Parent;
+        }
+    }
+
+    public IExcelWorkbook? ParentWorkbook
+    {
+        get
+        {
+            if (_window == null || _window.Parent == null)
+                return null;
+            if (_window.Parent is MsExcel.Workbook workbook)
+                return new ExcelWorkbook(workbook);
+            return null;
         }
     }
 

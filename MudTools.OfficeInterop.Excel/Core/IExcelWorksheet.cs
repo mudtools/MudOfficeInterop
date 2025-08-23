@@ -109,7 +109,7 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// 获取工作表的代码名称
     /// 对应 Worksheet.CodeName 属性
     /// </summary>
-    string CodeName { get; }
+    string? CodeName { get; }
 
     /// <summary>
     /// 获取工作表所在的父对象（通常是工作簿）

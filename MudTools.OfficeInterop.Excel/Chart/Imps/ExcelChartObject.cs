@@ -149,7 +149,53 @@ internal class ExcelChartObject : IExcelChartObject
     /// <summary>
     /// 获取图表对象所在的父对象
     /// </summary>
-    public object Parent => _chartObject?.Parent;
+    public object? Parent
+    {
+        get
+        {
+            if (_chartObject?.Parent == null)
+            {
+                return null;
+            }
+            if (_chartObject.Parent is MsExcel.ChartObjects chartObjs)
+            {
+                return new ExcelChartObjects(chartObjs);
+            }
+            if (_chartObject.Parent is MsExcel.Workbook workbook)
+            {
+                return new ExcelWorkbook(workbook);
+            }
+            if (_chartObject.Parent is MsExcel.Worksheet worksheet)
+            {
+                return new ExcelWorksheet(worksheet);
+            }
+            return null;
+        }
+    }
+
+    public string? ParentName
+    {
+        get
+        {
+            if (_chartObject?.Parent == null)
+            {
+                return null;
+            }
+            if (_chartObject.Parent is MsExcel.ChartObjects chartObjs)
+            {
+                return "";
+            }
+            if (_chartObject.Parent is MsExcel.Workbook workbook)
+            {
+                return workbook.Name;
+            }
+            if (_chartObject.Parent is MsExcel.Worksheet worksheet)
+            {
+                return worksheet.Name;
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 形状对象缓存

@@ -349,7 +349,7 @@ internal class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的代码名称
     /// </summary>
-    public string CodeName => _worksheet?.CodeName?.ToString();
+    public string? CodeName => _worksheet?.CodeName;
 
     /// <summary>
     /// 获取工作表所在的父对象。
@@ -369,6 +369,26 @@ internal class ExcelWorksheet : IExcelWorksheet
             }
             log?.Warn($"Unexpected Parent type for worksheet: {_worksheet.Parent.GetType().FullName}");
             return _worksheet.Parent;
+        }
+    }
+
+    public string? ParentName
+    {
+        get
+        {
+            if (_worksheet?.Parent == null)
+            {
+                return null;
+            }
+            if (_worksheet.Parent is MsExcel.Workbook workbook)
+            {
+                return workbook.Name;
+            }
+            if (_worksheet.Parent is MsExcel.Worksheet worksheet)
+            {
+                return worksheet.Name;
+            }
+            return null;
         }
     }
 

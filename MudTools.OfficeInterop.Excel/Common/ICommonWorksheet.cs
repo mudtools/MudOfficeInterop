@@ -33,6 +33,11 @@ public interface ICommonWorksheet : IDisposable
     object? Parent { get; }
 
     /// <summary>
+    ///  获取工作表所在的父对象名字。
+    /// </summary>
+    string? ParentName { get; }
+
+    /// <summary>
     /// 获取图表是否被保护
     /// </summary>
     bool IsProtected { get; }

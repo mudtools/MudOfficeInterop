@@ -94,7 +94,53 @@ internal class ExcelChart : IExcelChart
     /// <summary>
     /// 获取图表的父对象
     /// </summary>
-    public object Parent => _chart.Parent;
+    public object? Parent
+    {
+        get
+        {
+            if (_chart?.Parent == null)
+            {
+                return null;
+            }
+            if (_chart.Parent is MsExcel.ChartObject chatObj)
+            {
+                return new ExcelChartObject(chatObj);
+            }
+            if (_chart.Parent is MsExcel.Worksheet worksheet)
+            {
+                return new ExcelWorksheet(worksheet);
+            }
+            if (_chart.Parent is MsExcel.Workbook workbook)
+            {
+                return new ExcelWorkbook(workbook);
+            }
+            return _chart.Parent;
+        }
+    }
+
+    public string? ParentName
+    {
+        get
+        {
+            if (_chart?.Parent == null)
+            {
+                return null;
+            }
+            if (_chart.Parent is MsExcel.ChartObject chatObj)
+            {
+                return chatObj.Name;
+            }
+            if (_chart.Parent is MsExcel.Worksheet worksheet)
+            {
+                return worksheet.Name;
+            }
+            if (_chart.Parent is MsExcel.Workbook workbook)
+            {
+                return workbook.Name;
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取图表所在的 Excel Application 对象

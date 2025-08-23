@@ -186,9 +186,14 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     IExcelWorksheet ActiveSheet { get; }
 
     /// <summary>
-    /// 获取父对象（通常是 Application）
+    /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取父工作簿<see cref="IExcelWorkbook"/>对象
+    /// </summary>
+    IExcelWorkbook? ParentWorkbook { get; }
 
     /// <summary>
     /// 获取窗口索引
