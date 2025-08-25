@@ -51,7 +51,7 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     /// <param name="filename">图片文件路径</param>
     /// <param name="converter"></param>
     /// <returns>新创建的图片对象</returns>
-    IExcelPicture? Add(string filename, object converter);
+    IExcelPicture? Insert(string filename, object converter);
 
 
     /// <summary>

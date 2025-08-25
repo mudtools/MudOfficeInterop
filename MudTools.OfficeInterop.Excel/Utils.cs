@@ -5,8 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using MudTools.OfficeInterop.Excel.Imps;
 using log4net;
+using MudTools.OfficeInterop.Excel.Imps;
 
 namespace MudTools.OfficeInterop.Excel;
 
@@ -36,6 +36,7 @@ internal class Utils
                 MsExcel.ListObject listObject => new ExcelListObject(listObject),
                 MsExcel.Comment comment => new ExcelComment(comment),
                 MsExcel.DrawingObjects drawingObjs => new ExcelDrawingObjects(drawingObjs),
+                MsExcel.Picture picture => new ExcelPicture(picture),
                 _ => selection,// 如果以上类型都不匹配，直接返回原始COM对象。
             };
         }

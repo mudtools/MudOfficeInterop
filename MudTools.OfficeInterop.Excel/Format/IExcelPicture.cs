@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -44,6 +44,12 @@ public interface IExcelPicture : IDisposable
     /// </summary>
     IExcelShapeRange ShapeRange { get; }
 
+    /// <summary>
+    /// 获取图片的 Z 轴顺序位置
+    /// 对应 Picture.ZOrder 属性
+    /// </summary>
+    int ZOrder { get; }
+
     #endregion
 
     #region 位置和大小
@@ -71,12 +77,6 @@ public interface IExcelPicture : IDisposable
     /// 对应 Picture.Height 属性
     /// </summary>
     double Height { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片的旋转角度
-    /// 对应 Picture.Shape.Rotation 属性
-    /// </summary>
-    double Rotation { get; set; }
 
     #endregion
 
@@ -114,6 +114,31 @@ public interface IExcelPicture : IDisposable
     void Delete();
 
     /// <summary>
+    /// 复制图片到剪贴板
+    /// 对应 Picture.Copy 方法
+    /// </summary>
+    /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
+    IExcelPicture? Copy();
+
+    /// <summary>
+    /// 将图片复制为指定格式的图片对象
+    /// 对应 Picture.CopyPicture 方法
+    /// </summary>
+    /// <param name="Appearance">指定图片外观类型，如屏幕显示样式或打印机样式</param>
+    /// <param name="Format">指定复制的图片格式，如位图或图片格式</param>
+    /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
+    IExcelPicture? CopyPicture(
+       XlPictureAppearance Appearance = XlPictureAppearance.xlPrinter,
+       XlCopyPictureFormat Format = XlCopyPictureFormat.xlPicture);
+
+    /// <summary>
+    /// 剪切图片到剪贴板并删除原图片
+    /// 对应 Picture.Cut 方法
+    /// </summary>
+    /// <returns>返回剪切的图片对象，如果剪切失败则返回 null</returns>
+    IExcelPicture? Cut();
+
+    /// <summary>
     /// 调整图片大小
     /// </summary>
     /// <param name="width">新宽度</param>
@@ -127,22 +152,6 @@ public interface IExcelPicture : IDisposable
     /// <param name="left">新左边距</param>
     /// <param name="top">新顶边距</param>
     void Move(double left, double top);
-
-    /// <summary>
-    /// 旋转图片
-    /// </summary>
-    /// <param name="angle">旋转角度</param>
-    void Rotate(double angle);
-
-    /// <summary>
-    /// 将图片置于最前面
-    /// </summary>
-    void BringToFront();
-
-    /// <summary>
-    /// 将图片置于最后面
-    /// </summary>
-    void SendToBack();
 
     #endregion
 

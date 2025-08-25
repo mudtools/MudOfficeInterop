@@ -95,7 +95,7 @@ internal class ExcelPictures : IExcelPictures
 
             try
             {
-                var picture = _pictures.Item(index) as MsExcel.Picture;
+                MsExcel.Picture? picture = _pictures.Item(index) as MsExcel.Picture;
                 return picture != null ? new ExcelPicture(picture) : null;
             }
             catch
@@ -144,7 +144,7 @@ internal class ExcelPictures : IExcelPictures
     /// <param name="filename">图片文件路径</param>
     /// <param name="Converter"></param>
     /// <returns>新创建的图片对象</returns>
-    public IExcelPicture? Add(string filename, object Converter)
+    public IExcelPicture? Insert(string filename, object Converter)
     {
         if (_pictures == null || string.IsNullOrEmpty(filename))
             return null;
@@ -195,7 +195,7 @@ internal class ExcelPictures : IExcelPictures
             File.WriteAllBytes(tempImagePath, imageBytes);
 
             // 添加图片
-            var picture = Add(tempImagePath, null);
+            var picture = Insert(tempImagePath, null);
 
             // 删除临时文件
             if (File.Exists(tempImagePath))
@@ -221,7 +221,7 @@ internal class ExcelPictures : IExcelPictures
     public IExcelPicture[] FindByName(string name)
     {
         if (_pictures == null || string.IsNullOrEmpty(name) || Count == 0)
-            return new IExcelPicture[0];
+            return [];
 
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)
@@ -252,7 +252,7 @@ internal class ExcelPictures : IExcelPictures
     public IExcelPicture[] FindByPosition(double left, double top, double tolerance = 10)
     {
         if (_pictures == null || Count == 0)
-            return new IExcelPicture[0];
+            return [];
 
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)
@@ -289,7 +289,7 @@ internal class ExcelPictures : IExcelPictures
     public IExcelPicture[] FindBySize(double width, double height, double tolerance = 10)
     {
         if (_pictures == null || Count == 0)
-            return new IExcelPicture[0];
+            return [];
 
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)
@@ -324,7 +324,7 @@ internal class ExcelPictures : IExcelPictures
     public IExcelPicture[] GetPicturesInRange(IExcelRange range)
     {
         if (_pictures == null || range == null || Count == 0)
-            return new IExcelPicture[0];
+            return [];
 
         var result = new List<IExcelPicture>();
         // 注意：Excel Pictures集合不直接支持区域筛选
@@ -345,7 +345,7 @@ internal class ExcelPictures : IExcelPictures
     public IExcelPicture[] GetVisiblePictures()
     {
         if (_pictures == null || Count == 0)
-            return new IExcelPicture[0];
+            return [];
 
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)

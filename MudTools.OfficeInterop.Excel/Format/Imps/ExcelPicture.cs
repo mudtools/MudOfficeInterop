@@ -17,10 +17,6 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     private MsExcel.Picture _picture;
 
-    /// <summary>
-    /// 底层的形状对象缓存
-    /// </summary>
-    private MsExcel.ShapeRange _shapeRange;
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -36,7 +32,6 @@ internal class ExcelPicture : IExcelPicture
     internal ExcelPicture(MsExcel.Picture picture)
     {
         _picture = picture ?? throw new ArgumentNullException(nameof(picture));
-        _shapeRange = picture.ShapeRange;
         _disposedValue = false;
     }
 
@@ -52,9 +47,6 @@ internal class ExcelPicture : IExcelPicture
         {
             try
             {
-                // 释放形状对象
-                if (_shapeRange != null)
-                    Marshal.ReleaseComObject(_shapeRange);
 
                 // 释放底层COM对象
                 if (_picture != null)
@@ -65,7 +57,6 @@ internal class ExcelPicture : IExcelPicture
                 // 忽略释放过程中的异常
             }
             _picture = null;
-            _shapeRange = null;
         }
 
         _disposedValue = true;
@@ -85,29 +76,29 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     public string Name
     {
-        get => _shapeRange?.Name?.ToString();
+        get => _picture?.Name?.ToString();
         set
         {
-            if (_shapeRange != null && value != null)
-                _shapeRange.Name = value;
+            if (_picture != null && value != null)
+                _picture.Name = value;
         }
     }
 
     /// <summary>
     /// 获取图片的索引位置
     /// </summary>
-    public int Index => _shapeRange?.ZOrderPosition ?? 0;
+    public int Index => _picture?.Index ?? 0;
 
     /// <summary>
     /// 获取或设置图片是否可见
     /// </summary>
     public bool Visible
     {
-        get => _shapeRange != null && Convert.ToBoolean(_shapeRange.Visible);
+        get => _picture != null && _picture.Visible;
         set
         {
-            if (_shapeRange != null)
-                _shapeRange.Visible = (MsCore.MsoTriState)(value ? MsExcel.XlSheetVisibility.xlSheetVisible : MsExcel.XlSheetVisibility.xlSheetHidden);
+            if (_picture != null)
+                _picture.Visible = value;
         }
     }
 
@@ -124,8 +115,19 @@ internal class ExcelPicture : IExcelPicture
     /// <summary>
     /// 获取图片的底层形状对象
     /// </summary>
-    public IExcelShapeRange ShapeRange => _excelShape ??= new ExcelShapeRange(_shapeRange);
+    public IExcelShapeRange ShapeRange
+    {
+        get
+        {
+            _excelShape ??= new ExcelShapeRange(_picture.ShapeRange);
+            return _excelShape;
+        }
+    }
 
+    public int ZOrder
+    {
+        get => _picture.ZOrder;
+    }
     #endregion
 
     #region 位置和大小
@@ -135,11 +137,11 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     public double Left
     {
-        get => _shapeRange?.Left ?? 0;
+        get => _picture?.Left ?? 0;
         set
         {
-            if (_shapeRange != null)
-                _shapeRange.Left = (float)value;
+            if (_picture != null)
+                _picture.Left = (float)value;
         }
     }
 
@@ -148,11 +150,11 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     public double Top
     {
-        get => _shapeRange?.Top ?? 0;
+        get => _picture?.Top ?? 0;
         set
         {
-            if (_shapeRange != null)
-                _shapeRange.Top = (float)value;
+            if (_picture != null)
+                _picture.Top = (float)value;
         }
     }
 
@@ -161,11 +163,11 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     public double Width
     {
-        get => _shapeRange?.Width ?? 0;
+        get => _picture?.Width ?? 0;
         set
         {
-            if (_shapeRange != null)
-                _shapeRange.Width = (float)value;
+            if (_picture != null)
+                _picture.Width = (float)value;
         }
     }
 
@@ -174,24 +176,11 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     public double Height
     {
-        get => _shapeRange?.Height ?? 0;
+        get => _picture?.Height ?? 0;
         set
         {
-            if (_shapeRange != null)
-                _shapeRange.Height = (float)value;
-        }
-    }
-
-    /// <summary>
-    /// 获取或设置图片的旋转角度
-    /// </summary>
-    public double Rotation
-    {
-        get => _shapeRange?.Rotation ?? 0;
-        set
-        {
-            if (_shapeRange != null)
-                _shapeRange.Rotation = (float)value;
+            if (_picture != null)
+                _picture.Height = (float)value;
         }
     }
 
@@ -204,12 +193,12 @@ internal class ExcelPicture : IExcelPicture
     /// <summary>
     /// 获取图片的原始宽度
     /// </summary>
-    public double OriginalWidth => _shapeRange?.Width ?? 0;
+    public double OriginalWidth => _picture?.Width ?? 0;
 
     /// <summary>
     /// 获取图片的原始高度
     /// </summary>
-    public double OriginalHeight => _shapeRange?.Height ?? 0;
+    public double OriginalHeight => _picture?.Height ?? 0;
 
     /// <summary>
     /// 获取图片的纵横比
@@ -234,7 +223,7 @@ internal class ExcelPicture : IExcelPicture
     /// <param name="replace">是否替换当前选择</param>
     public void Select(bool replace = true)
     {
-        _shapeRange?.Select(replace);
+        _picture?.Select(replace);
     }
 
 
@@ -243,7 +232,33 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     public void Delete()
     {
-        _shapeRange?.Delete();
+        _picture?.Delete();
+    }
+
+    public IExcelPicture? Copy()
+    {
+        var obj = _picture?.Copy();
+        if (obj != null && obj is MsExcel.Picture pic)
+            return new ExcelPicture(pic);
+        return null;
+    }
+
+    public IExcelPicture? CopyPicture(
+        XlPictureAppearance Appearance = XlPictureAppearance.xlPrinter,
+        XlCopyPictureFormat Format = XlCopyPictureFormat.xlPicture)
+    {
+        var obj = _picture?.CopyPicture((MsExcel.XlPictureAppearance)(int)Appearance, (MsExcel.XlCopyPictureFormat)(int)Format);
+        if (obj != null && obj is MsExcel.Picture pic)
+            return new ExcelPicture(pic);
+        return null;
+    }
+
+    public IExcelPicture? Cut()
+    {
+        var obj = _picture?.Cut();
+        if (obj != null && obj is MsExcel.Picture pic)
+            return new ExcelPicture(pic);
+        return null;
     }
 
     /// <summary>
@@ -254,7 +269,7 @@ internal class ExcelPicture : IExcelPicture
     /// <param name="keepAspectRatio">是否保持纵横比</param>
     public void Resize(double width, double height, bool keepAspectRatio = true)
     {
-        if (_shapeRange == null) return;
+        if (_picture == null) return;
 
         try
         {
@@ -275,8 +290,8 @@ internal class ExcelPicture : IExcelPicture
                 }
             }
 
-            _shapeRange.Width = (float)width;
-            _shapeRange.Height = (float)height;
+            _picture.Width = (float)width;
+            _picture.Height = (float)height;
         }
         catch
         {
@@ -291,12 +306,12 @@ internal class ExcelPicture : IExcelPicture
     /// <param name="top">新顶边距</param>
     public void Move(double left, double top)
     {
-        if (_shapeRange == null) return;
+        if (_picture == null) return;
 
         try
         {
-            _shapeRange.Left = (float)left;
-            _shapeRange.Top = (float)top;
+            _picture.Left = (float)left;
+            _picture.Top = (float)top;
         }
         catch
         {
@@ -304,39 +319,7 @@ internal class ExcelPicture : IExcelPicture
         }
     }
 
-    /// <summary>
-    /// 旋转图片
-    /// </summary>
-    /// <param name="angle">旋转角度</param>
-    public void Rotate(double angle)
-    {
-        if (_shapeRange == null) return;
 
-        try
-        {
-            _shapeRange.Rotation = (float)angle;
-        }
-        catch
-        {
-            // 忽略旋转过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 将图片置于最前面
-    /// </summary>
-    public void BringToFront()
-    {
-        _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoBringToFront);
-    }
-
-    /// <summary>
-    /// 将图片置于最后面
-    /// </summary>
-    public void SendToBack()
-    {
-        _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoSendToBack);
-    }
 
     #endregion
 
@@ -347,7 +330,7 @@ internal class ExcelPicture : IExcelPicture
     /// <param name="scale">缩放比例</param>
     public void Scale(double scale)
     {
-        if (_shapeRange == null || scale <= 0) return;
+        if (_picture == null || scale <= 0) return;
 
         try
         {
