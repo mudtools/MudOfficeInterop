@@ -2,19 +2,25 @@
 
 ## 适用场景与解决问题
 
+还在为复杂的 Excel 自动化操作而烦恼吗？本指南就是为你量身定制的！无论你是需要批量处理报表的后台服务开发者，还是需要集成 Excel 功能的桌面应用工程师，都能在这里找到解决方案。
+
 本指南适用于需要通过 .NET 程序操作 Excel 应用程序的开发者，解决以下问题：
-- 如何启动和连接 Excel 应用程序
-- 如何管理 Excel 工作簿和窗口
+- 如何优雅地启动和连接 Excel 应用程序
+- 如何轻松管理 Excel 工作簿和窗口
 - 如何简化 Excel 自动化操作
-- 如何避免 COM 对象管理的复杂性
+- 如何告别 COM 对象管理的复杂性
+
+> "Excel 不只是电子表格，它是数据处理的魔法舞台！" - 某位不愿透露姓名的资深数据分析师
 
 ## ExcelFactory - Excel 应用程序入口点
 
-[ExcelFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) 是创建和操作 Excel 应用程序的静态工厂类，提供了多种创建 Excel 实例的方法。
+[ExcelFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) 是创建和操作 Excel 应用程序的静态工厂类，提供了多种创建 Excel 实例的方法。把它想象成你的 Excel 应用程序"哆啦A梦"，想要什么类型的 Excel 实例，它都能帮你变出来！
 
 ### 主要方法
 
 #### 1. BlankWorkbook() - 创建空白工作簿
+想要从零开始？这个方法就是你的最佳选择！
+
 ```csharp
 // 创建新的空白工作簿
 var excelApp = ExcelFactory.BlankWorkbook();
@@ -23,6 +29,8 @@ excelApp.GetActiveSheet().Cells[1, 1].Value = "Hello World";
 ```
 
 #### 2. CreateFrom(string templatePath) - 基于模板创建工作簿
+模板在手，效率我有！基于现有模板快速创建格式统一的工作簿。
+
 ```csharp
 // 基于模板创建工作簿
 var excelApp = ExcelFactory.CreateFrom(@"C:\Templates\ReportTemplate.xltx");
@@ -30,6 +38,8 @@ var excelApp = ExcelFactory.CreateFrom(@"C:\Templates\ReportTemplate.xltx");
 ```
 
 #### 3. Open(string filePath) - 打开现有工作簿
+需要处理现有文件？轻轻松松打开它！
+
 ```csharp
 // 打开现有工作簿
 var excelApp = ExcelFactory.Open(@"C:\Data\SalesReport.xlsx");
@@ -38,12 +48,16 @@ var value = excelApp.GetActiveSheet().Cells[1, 1].Value;
 ```
 
 #### 4. Connection(object comObj) - 连接现有 Excel 实例
+已经有运行中的 Excel？直接连接它！
+
 ```csharp
 // 连接到现有的 Excel 应用程序实例
 var excelApp = ExcelFactory.Connection(comObject);
 ```
 
 #### 5. CreateInstance(string progId) - 创建特定版本实例
+多版本 Excel？精确控制版本不是梦！
+
 ```csharp
 // 根据 ProgID 创建 Excel 应用程序的新实例
 var excelApp = ExcelFactory.CreateInstance("Excel.Application.16");
@@ -51,15 +65,15 @@ var excelApp = ExcelFactory.CreateInstance("Excel.Application.16");
 
 ## IExcelApplication - Excel 应用程序核心接口
 
-[IExcelApplication](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelApplication.cs#L12-L1129) 是操作 Excel 应用程序的核心接口，提供了对 Excel 应用程序的全面控制。
+[IExcelApplication](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelApplication.cs#L12-L1129) 是操作 Excel 应用程序的核心接口，提供了对 Excel 应用程序的全面控制。它就像你的遥控器，让你能够随心所欲地操控 Excel！
 
 ### 基础属性管理
 
 ```csharp
 // 设置应用程序属性
-excelApp.DisplayAlerts = false; // 禁用警告对话框
-excelApp.ScreenUpdating = false; // 禁用屏幕更新以提高性能
-excelApp.Calculation = XlCalculation.xlCalculationManual; // 手动计算模式
+excelApp.DisplayAlerts = false; // 禁用警告对话框，让操作更安静
+excelApp.ScreenUpdating = false; // 禁用屏幕更新以提高性能，飞一般的感觉！
+excelApp.Calculation = XlCalculation.xlCalculationManual; // 手动计算模式，掌控计算时机
 
 // 获取系统信息
 string version = excelApp.Version;
@@ -110,18 +124,18 @@ double sum = excelApp.EvaluateToNumber("=SUM(1, 2, 3)");
 
 ```csharp
 // 窗口操作
-excelApp.Minimize();
-excelApp.Maximize();
-excelApp.Restore();
+excelApp.Minimize();  // 最小化窗口
+excelApp.Maximize();  // 最大化窗口
+excelApp.Restore();   // 还原窗口
 
 // 显示设置
-excelApp.DisplayFullScreen = true;
-excelApp.DisplayFormulaBar = false;
+excelApp.DisplayFullScreen = true;    // 全屏显示
+excelApp.DisplayFormulaBar = false;   // 隐藏公式栏
 ```
 
 ## IExcelWorkbook - 工作簿操作接口
 
-[IExcelWorkbook](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelWorkbook.cs#L15-L395) 提供对 Excel 工作簿的全面管理功能。
+[IExcelWorkbook](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelWorkbook.cs#L15-L395) 提供对 Excel 工作簿的全面管理功能。它是你工作簿的"贴身管家"，帮你打理一切！
 
 ### 工作簿基础操作
 
@@ -181,19 +195,19 @@ workbook.RefreshAll();
 
 ## IExcelWindow - 窗口管理接口
 
-[IExcelWindow](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelWindow.cs#L12-L277) 提供对 Excel 窗口的详细控制。
+[IExcelWindow](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelWindow.cs#L12-L277) 提供对 Excel 窗口的详细控制。让你的 Excel 窗口随心所欲地展示数据！
 
 ### 窗口属性设置
 
 ```csharp
 // 窗口状态
-window.WindowState = XlWindowState.xlMaximized;
+window.WindowState = XlWindowState.xlMaximized;  // 最大化窗口
 
 // 显示比例
-window.Zoom = 150; // 150%
+window.Zoom = 150; // 150%，看得更清楚！
 
 // 视图类型
-window.View = XlWindowView.xlPageBreakPreview;
+window.View = XlWindowView.xlPageBreakPreview;  // 页面断点预览
 ```
 
 ### 窗口显示选项
@@ -253,6 +267,8 @@ var selectedSheets = window.SelectedSheets;
 ## 最佳实践示例
 
 ### 完整的工作簿操作示例
+
+让我们来看一个完整的示例，体验一下使用 MudTools.OfficeInterop 的优雅之处：
 
 ```csharp
 // 创建新的 Excel 应用程序和工作簿
@@ -332,3 +348,5 @@ window.ScrollToRange("A100");
 5. 提高开发效率和代码维护性
 
 这些接口提供了对 Excel 核心功能的全面封装，使开发者能够专注于业务逻辑而不是底层的 COM 交互细节。
+
+现在，你已经掌握了 Excel 操作的基础知识，准备好迎接更高级的挑战了吗？继续阅读后续指南，解锁更多 Excel 自动化技能！

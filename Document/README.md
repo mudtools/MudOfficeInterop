@@ -6,7 +6,9 @@
 
 ## 项目简介
 
-MudTools.OfficeInterop 是一套针对 Microsoft Office 应用程序（包括 Excel、Word、PowerPoint 和 VBE）的 .NET 封装库。该项目通过提供简洁、统一的 API 接口，降低了直接使用 Office COM 组件的复杂性，使开发者能够更轻松地在 .NET 应用程序中集成和操作 Office 文档。
+还在为复杂的 Office COM 组件调用而头疼吗？MudTools.OfficeInterop 就是你的救星！这是一套针对 Microsoft Office 应用程序（包括 Excel、Word、PowerPoint 和 VBE）的 .NET 封装库。我们通过提供简洁、统一的 API 接口，大大降低了直接使用 Office COM 组件的复杂性，让你能够轻松地在 .NET 应用程序中集成和操作 Office 文档。
+
+想象一下，告别那些繁琐的 COM 对象调用，不再需要手动管理资源释放，也不用再担心类型安全问题。我们的库让你专注于真正重要的业务逻辑，而不是底层的技术细节。
 
 ### 核心价值
 
@@ -30,7 +32,7 @@ MudTools.OfficeInterop 是一套针对 Microsoft Office 应用程序（包括 Ex
 
 ### 核心模块 (MudTools.OfficeInterop)
 
-提供 Office 应用程序的基础接口和通用功能，封装 Office 核心组件的常用操作。
+这是整个库的基础，提供了 Office 应用程序的基础接口和通用功能，封装了 Office 核心组件的常用操作。
 
 主要特性：
 - Office UI 组件封装（功能区 Ribbon 和自定义任务窗格 CTP）
@@ -39,7 +41,9 @@ MudTools.OfficeInterop 是一套针对 Microsoft Office 应用程序（包括 Ex
 
 ### Excel 模块 (MudTools.OfficeInterop.Excel)
 
-完整的 Excel 应用程序操作接口，包含工作簿、工作表、单元格等对象的便捷操作。
+> "Excel 不只是表格，它是数据处理的艺术！" - 某位不愿透露姓名的项目经理
+
+Excel 模块提供了完整的 Excel 应用程序操作接口，让你能够轻松地处理工作簿、工作表、单元格等对象。
 
 主要特性：
 - 工作簿、工作表、单元格操作
@@ -47,64 +51,103 @@ MudTools.OfficeInterop 是一套针对 Microsoft Office 应用程序（包括 Ex
 - 格式设置和样式管理
 - 数据导入导出功能
 
+快速开始示例：
+
+```csharp
+// 创建新的空白工作簿
+var excelApp = ExcelFactory.BlankWorkbook();
+// 现在可以对工作簿进行操作
+excelApp.GetActiveSheet().Cells[1, 1].Value = "Hello World";
+
+// 基于模板创建工作簿
+var excelApp = ExcelFactory.CreateFrom(@"C:\Templates\ReportTemplate.xltx");
+// 新工作簿将继承模板的格式、样式、公式等
+
+// 打开现有工作簿
+var excelApp = ExcelFactory.Open(@"C:\Data\SalesReport.xlsx");
+// 现在可以读取和修改现有数据
+var value = excelApp.GetActiveSheet().Cells[1, 1].Value;
+```
+
 ### Word 模块 (MudTools.OfficeInterop.Word)
 
-Word 文档操作接口，提供文档内容、样式、格式等管理功能。
+> "文档不仅仅是文字，它是思想的载体。" - 某位资深技术文档工程师
+
+Word 模块提供了文档内容、样式、格式等管理功能，让你能够轻松处理各种文档操作。
 
 主要特性：
 - 文档创建和编辑
 - 内容格式化
 - 表格和图片处理
 
+快速开始示例：
+
+```csharp
+// 创建新的空白文档
+var wordApp = WordFactory.BlankWorkbook();
+// 现在可以对文档进行操作
+
+// 基于模板创建文档
+var wordApp = WordFactory.CreateFrom(@"C:\Templates\BusinessLetter.dotx");
+// 新文档将继承模板的格式、样式等
+
+// 打开现有文档
+var wordApp = WordFactory.Open(@"C:\Documents\Report.docx");
+// 现在可以读取和修改现有文档
+```
+
 ### PowerPoint 模块 (MudTools.OfficeInterop.PowerPoint)
 
-PowerPoint 演示文稿操作接口，支持幻灯片、母版、动画等对象的管理。
+> "好的演示不仅仅是幻灯片，它是思想的视觉盛宴。" - 某位知名演讲教练
+
+PowerPoint 模块支持幻灯片、母版、动画等对象的管理，让你轻松制作专业演示文稿。
 
 主要特性：
 - 演示文稿创建和编辑
 - 幻灯片操作
 - 动画和过渡效果
 
+快速开始示例：
+
+```csharp
+// 创建新的空白演示文稿
+var pptApp = PowerPointFactory.BlankWorkbook();
+// 现在可以对演示文稿进行操作
+
+// 打开现有演示文稿
+var pptApp = PowerPointFactory.Open(@"C:\Presentations\SalesPresentation.pptx");
+// 现在可以读取和修改现有演示文稿
+```
+
 ### VBE 模块 (MudTools.OfficeInterop.Vbe)
 
-Visual Basic Editor 相关功能封装，支持宏、代码模块、项目等对象的操作。
+> "代码改变世界，而宏让 Office 更智能。" - 某位 VBA 大师
 
-## 工厂类入口
+VBE 模块封装了 Visual Basic Editor 相关功能，支持宏、代码模块、项目等对象的操作。
 
-项目通过静态工厂类提供统一的入口点：
-
-- [ExcelFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) - Excel 应用程序操作入口
-- [WordFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) - Word 应用程序操作入口
-- [PowerPointFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) - PowerPoint 应用程序操作入口
-- [OfficeUIFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop/OfficeUIFactory.cs#L16-L51) - Office UI 组件操作入口
 
 ## 支持的框架
 
 - .NET Framework 4.6.2
 - .NET Framework 4.7
 - .NET Framework 4.8
-- .NET Standard 2.1
+- .NET Standard 2.0
 
 ## 安装方式
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop" Version="1.0.1" />
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.0.1" />
+<PackageReference Include="MudTools.OfficeInterop" Version="1.0.7" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.0.7" />
 ```
 
 ## 适用场景
+
+无论你是需要批量处理文档的后台服务，还是需要集成 Office 功能的桌面应用，MudTools.OfficeInterop 都能胜任：
 
 - 企业报表生成和数据处理
 - 批量文档处理和格式化
 - Office 插件开发
 - 自动化办公应用
 - 数据导入/导出功能
-- 文档模板处理
 
-## 下一步
-
-请参考以下专题文档深入了解各模块的使用方法：
-- [Excel 操作指南](excel-guide.md)
-- [Word 操作指南](word-guide.md)
-- [与原生 Interop 对比优势说明](comparison.md)
-- [使用最佳实践](best-practices.md)
+现在就开始使用 MudTools.OfficeInterop，让你的 Office 自动化开发之旅更加轻松愉快！
