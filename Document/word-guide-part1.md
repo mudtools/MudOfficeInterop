@@ -14,7 +14,7 @@
 
 ## WordFactory - Word 应用程序入口点
 
-[WordFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) 是创建和操作 Word 应用程序的静态工厂类，提供了多种创建 Word 实例的方法。它就像你的"Word精灵"，随时为你召唤出所需的Word应用程序！
+[WordFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) 是创建和操作 Word 应用程序的静态工厂类，提供了多种创建 Word 实例的方法。它就像你的"Word精灵"，随时为你召唤出所需的Word应用程序！
 
 ### 主要方法
 
@@ -57,7 +57,7 @@ var wordApp = WordFactory.Connection(comObject);
 
 ## IWordApplication - Word 应用程序核心接口
 
-[IWordApplication](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Core/IWordApplication.cs#L12-L334) 是操作 Word 应用程序的核心接口，提供了对 Word 应用程序的全面控制。它就像你的"Word遥控器"，让你随心所欲地操控Word应用程序！
+[IWordApplication](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordApplication.cs#L12-L334) 是操作 Word 应用程序的核心接口，提供了对 Word 应用程序的全面控制。它就像你的"Word遥控器"，让你随心所欲地操控Word应用程序！
 
 ### 基础属性管理
 
@@ -119,7 +119,7 @@ wordApp.RunMacro("MyMacro");
 
 ## IWordDocument - 文档操作接口
 
-[IWordDocument](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Core/IWordDocument.cs#L13-L433) 提供对 Word 文档的全面管理功能。它是你文档的"贴身管家"，帮你打理文档的一切！
+[IWordDocument](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordDocument.cs#L13-L433) 提供对 Word 文档的全面管理功能。它是你文档的"贴身管家"，帮你打理文档的一切！
 
 ### 文档基础操作
 
@@ -235,7 +235,7 @@ var stats = document.GetStatistics();
 
 ## IWordWindow - 窗口管理接口
 
-[IWordWindow](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Core/IWordWindow.cs#L13-L59) 提供对 Word 窗口的详细控制。让你的 Word 窗口随心所欲地展示文档！
+[IWordWindow](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordWindow.cs#L13-L59) 提供对 Word 窗口的详细控制。让你的 Word 窗口随心所欲地展示文档！
 
 ### 窗口属性设置
 

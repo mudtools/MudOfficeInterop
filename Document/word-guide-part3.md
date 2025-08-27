@@ -15,7 +15,7 @@
 
 ## IWordBookmark - 书签操作接口
 
-[IWordBookmark](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Format/IWordBookmark.cs#L11-L37) 用于管理 Word 文档中的书签。它就像你的"文档导航员"，帮你快速定位到文档的任何位置！
+[IWordBookmark](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Format/IWordBookmark.cs#L11-L37) 用于管理 Word 文档中的书签。它就像你的"文档导航员"，帮你快速定位到文档的任何位置！
 
 ### 书签基础操作
 
@@ -71,7 +71,7 @@ if (bookmark != null)
 
 ## IWordFind - 查找操作接口
 
-[IWordFind](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Format/IWordFind.cs#L13-L67) 用于在 Word 文档中执行查找和替换操作。它是你的"文档侦探"，帮你快速找到需要的内容！
+[IWordFind](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Format/IWordFind.cs#L13-L67) 用于在 Word 文档中执行查找和替换操作。它是你的"文档侦探"，帮你快速找到需要的内容！
 
 ### 查找设置
 
@@ -136,7 +136,7 @@ find.ClearReplaceFormatting();
 
 ## IWordShape - 形状操作接口
 
-[IWordShape](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Format/IWordShape.cs#L13-L83) 用于操作 Word 文档中的形状对象。它是你的"文档艺术家"，帮你为文档增添视觉魅力！
+[IWordShape](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Format/IWordShape.cs#L13-L83) 用于操作 Word 文档中的形状对象。它是你的"文档艺术家"，帮你为文档增添视觉魅力！
 
 ### 形状基础属性
 
@@ -201,7 +201,7 @@ int zOrder = shape.ZOrderPosition;
 
 ## IWordStyle - 样式操作接口
 
-[IWordStyle](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Format/IWordStyle.cs#L12-L53) 用于管理和操作 Word 文档中的样式。它是你的"文档造型师"，帮你打造统一美观的文档风格！
+[IWordStyle](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Format/IWordStyle.cs#L12-L53) 用于管理和操作 Word 文档中的样式。它是你的"文档造型师"，帮你打造统一美观的文档风格！
 
 ### 样式基础操作
 

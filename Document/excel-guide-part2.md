@@ -14,7 +14,7 @@
 
 ## IExcelRange - 单元格区域核心接口
 
-[IExcelRange](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelRange.cs#L14-L82) 是操作 Excel 单元格区域的核心接口，继承自 [ICoreRange](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/ICoreRange.cs#L14-L825) 接口。它就像你的"画笔"，让你能够在Excel画布上自由挥洒！
+[IExcelRange](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelRange.cs#L14-L82) 是操作 Excel 单元格区域的核心接口，继承自 [ICoreRange](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/ICoreRange.cs#L14-L825) 接口。它就像你的"画笔"，让你能够在Excel画布上自由挥洒！
 
 ### 基础操作
 
@@ -222,7 +222,7 @@ worksheet.Cells[1, 1].DeleteComment();
 
 ## IExcelRows - 行操作接口
 
-[IExcelRows](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelRows.cs#L12-L15) 继承自 [IExcelRange](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelRange.cs#L14-L82)，专门用于处理行相关操作。它就像你的"行军指挥官"，帮你整齐划一地管理每一行数据！
+[IExcelRows](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelRows.cs#L12-L15) 继承自 [IExcelRange](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelRange.cs#L14-L82)，专门用于处理行相关操作。它就像你的"行军指挥官"，帮你整齐划一地管理每一行数据！
 
 ### 行操作示例
 
@@ -261,7 +261,7 @@ selectedRows.AutoFit();
 
 ## IExcelColumns - 列操作接口
 
-[IExcelColumns](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelColumns.cs#L12-L14) 继承自 [IExcelRange](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelRange.cs#L14-L82)，专门用于处理列相关操作。它是你的"列队教练"，帮你把每一列都训练得井井有条！
+[IExcelColumns](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelColumns.cs#L12-L14) 继承自 [IExcelRange](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelRange.cs#L14-L82)，专门用于处理列相关操作。它是你的"列队教练"，帮你把每一列都训练得井井有条！
 
 ### 列操作示例
 

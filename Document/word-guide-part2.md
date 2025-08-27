@@ -14,7 +14,7 @@
 
 ## IWordParagraph - 段落操作接口
 
-[IWordParagraph](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Core/IWordParagraph.cs#L12-L78) 用于操作 Word 文档中的段落。它就像你的"段落编辑师"，帮你精心雕琢每一个段落！
+[IWordParagraph](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordParagraph.cs#L12-L78) 用于操作 Word 文档中的段落。它就像你的"段落编辑师"，帮你精心雕琢每一个段落！
 
 ### 段落基础操作
 
@@ -73,7 +73,7 @@ var lastParagraph = document.AddParagraph(-1, "文档末尾的新段落");
 
 ## IWordSection - 节操作接口
 
-[IWordSection](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Core/IWordSection.cs#L12-L33) 用于操作 Word 文档中的节。它是你的"文档分区师"，帮你把文档划分为不同的区域！
+[IWordSection](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordSection.cs#L12-L33) 用于操作 Word 文档中的节。它是你的"文档分区师"，帮你把文档划分为不同的区域！
 
 ### 节基础操作
 
@@ -121,7 +121,7 @@ document.AddSectionBreak(100, (int)WdSectionBreakType.wdSectionBreakNextPage);
 
 ## IWordTable - 表格操作接口
 
-[IWordTable](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Word/Core/IWordTable.cs#L12-L56) 用于操作 Word 文档中的表格。它是你的"数据整理师"，帮你把复杂的数据整理得井井有条！
+[IWordTable](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordTable.cs#L12-L56) 用于操作 Word 文档中的表格。它是你的"数据整理师"，帮你把复杂的数据整理得井井有条！
 
 ### 表格基础操作
 

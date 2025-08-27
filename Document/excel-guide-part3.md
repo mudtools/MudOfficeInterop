@@ -14,7 +14,7 @@
 
 ## IExcelChart - 图表操作接口
 
-[IExcelChart](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Chart/IExcelChart.cs#L14-L262) 提供了对 Excel 图表的全面管理功能。它就像你的"数据艺术家"，帮你把枯燥的数字变成生动的图表！
+[IExcelChart](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelChart.cs#L14-L262) 提供了对 Excel 图表的全面管理功能。它就像你的"数据艺术家"，帮你把枯燥的数字变成生动的图表！
 
 ### 创建图表
 
@@ -85,7 +85,7 @@ byte[] imageBytes = chart.GetImageBytes("jpg");
 
 ## IExcelSeries - 数据系列接口
 
-[IExcelSeries](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Chart/IExcelSeries.cs#L12-L261) 用于管理图表中的数据系列。它是图表的"演员"，每个系列都在图表舞台上扮演着自己的角色！
+[IExcelSeries](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelSeries.cs#L12-L261) 用于管理图表中的数据系列。它是图表的"演员"，每个系列都在图表舞台上扮演着自己的角色！
 
 ### 数据系列操作
 
@@ -149,7 +149,7 @@ series.Delete();
 
 ## IExcelPivotTable - 数据透视表接口
 
-[IExcelPivotTable](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Chart/IExcelPivotTable.cs#L12-L229) 提供了对 Excel 数据透视表的全面管理功能。它是你的"数据分析大师"，帮你从海量数据中挖掘出有价值的洞察！
+[IExcelPivotTable](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelPivotTable.cs#L12-L229) 提供了对 Excel 数据透视表的全面管理功能。它是你的"数据分析大师"，帮你从海量数据中挖掘出有价值的洞察！
 
 ### 创建数据透视表
 
@@ -218,7 +218,7 @@ pivotTable.ClearAll();
 
 ## IExcelPivotCache - 数据透视表缓存接口
 
-[IExcelPivotCache](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Chart/IExcelPivotCache.cs#L12-L85) 管理数据透视表的数据源缓存。它是数据透视表的"数据仓库管理员"，确保数据的准确和及时！
+[IExcelPivotCache](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelPivotCache.cs#L12-L85) 管理数据透视表的数据源缓存。它是数据透视表的"数据仓库管理员"，确保数据的准确和及时！
 
 ### 缓存操作
 

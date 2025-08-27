@@ -14,7 +14,7 @@
 
 ## PowerPointFactory - PowerPoint 应用程序入口点
 
-[PowerPointFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) 是创建和操作 PowerPoint 应用程序的静态工厂类，提供了多种创建 PowerPoint 实例的方法。它就像你的"PowerPoint精灵"，随时为你召唤出所需的PowerPoint应用程序！
+[PowerPointFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) 是创建和操作 PowerPoint 应用程序的静态工厂类，提供了多种创建 PowerPoint 实例的方法。它就像你的"PowerPoint精灵"，随时为你召唤出所需的PowerPoint应用程序！
 
 ### 主要方法
 
@@ -48,7 +48,7 @@ var pptApp = PowerPointFactory.Connection(comObject);
 
 ## IPowerPointApplication - PowerPoint 应用程序核心接口
 
-[IPowerPointApplication](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Core/IPowerPointApplication.cs#L13-L175) 是操作 PowerPoint 应用程序的核心接口，提供了对 PowerPoint 应用程序的全面控制。它就像你的"PowerPoint遥控器"，让你随心所欲地操控PowerPoint应用程序！
+[IPowerPointApplication](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Core/IPowerPointApplication.cs#L13-L175) 是操作 PowerPoint 应用程序的核心接口，提供了对 PowerPoint 应用程序的全面控制。它就像你的"PowerPoint遥控器"，让你随心所欲地操控PowerPoint应用程序！
 
 ### 基础属性管理
 
@@ -102,7 +102,7 @@ pptApp.RunCommand("FileSave");
 
 ## IPowerPointPresentation - 演示文稿操作接口
 
-[IPowerPointPresentation](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Core/IPowerPointPresentation.cs#L11-L137) 提供对 PowerPoint 演示文稿的全面管理功能。它是你演示文稿的"贴身管家"，帮你打理演示文稿的一切！
+[IPowerPointPresentation](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Core/IPowerPointPresentation.cs#L11-L137) 提供对 PowerPoint 演示文稿的全面管理功能。它是你演示文稿的"贴身管家"，帮你打理演示文稿的一切！
 
 ### 演示文稿基础操作
 
@@ -167,7 +167,7 @@ presentation.Unprotect("password");
 
 ## IPowerPointDocumentWindow - 窗口管理接口
 
-[IPowerPointDocumentWindow](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Core/IPowerPointDocumentWindow.cs#L12-L137) 提供对 PowerPoint 窗口的详细控制。让你的 PowerPoint 窗口随心所欲地展示演示文稿！
+[IPowerPointDocumentWindow](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Core/IPowerPointDocumentWindow.cs#L12-L137) 提供对 PowerPoint 窗口的详细控制。让你的 PowerPoint 窗口随心所欲地展示演示文稿！
 
 ### 窗口属性设置
 

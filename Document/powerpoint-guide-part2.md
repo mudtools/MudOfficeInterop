@@ -15,7 +15,7 @@
 
 ## IPowerPointSlide - 幻灯片操作接口
 
-[IPowerPointSlide](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSlide.cs#L11-L170) 用于操作 PowerPoint 演示文稿中的幻灯片。它就像你的"幻灯片导演"，帮你精心编排每一张幻灯片！
+[IPowerPointSlide](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSlide.cs#L11-L170) 用于操作 PowerPoint 演示文稿中的幻灯片。它就像你的"幻灯片导演"，帮你精心编排每一张幻灯片！
 
 ### 幻灯片基础操作
 
@@ -100,7 +100,7 @@ var placeholders = slide.GetPlaceholders();
 
 ## IPowerPointTextFrame - 文本框操作接口
 
-[IPowerPointTextFrame](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointTextFrame.cs#L11-L161) 用于操作 PowerPoint 中的文本框。它是你的"文本造型师"，帮你把文字打扮得漂漂亮亮！
+[IPowerPointTextFrame](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointTextFrame.cs#L11-L161) 用于操作 PowerPoint 中的文本框。它是你的"文本造型师"，帮你把文字打扮得漂漂亮亮！
 
 ### 文本框基础操作
 
@@ -190,7 +190,7 @@ textFrame.AutoSizeText();
 
 ## IPowerPointSlideShowView - 幻灯片放映视图接口
 
-[IPowerPointSlideShowView](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSlideShowView.cs#L11-L64) 用于控制幻灯片放映视图。它是你的"放映指挥家"，帮你掌控整个演示过程！
+[IPowerPointSlideShowView](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSlideShowView.cs#L11-L64) 用于控制幻灯片放映视图。它是你的"放映指挥家"，帮你掌控整个演示过程！
 
 ### 放映视图基础操作
 
@@ -233,7 +233,7 @@ slideShowView.End();
 
 ## IPowerPointTimeLine - 时间线操作接口
 
-[IPowerPointTimeLine](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointTimeLine.cs#L13-L94) 用于管理幻灯片中的动画时间线。它是你的"动画编导"，帮你编排出精彩的动画效果！
+[IPowerPointTimeLine](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointTimeLine.cs#L13-L94) 用于管理幻灯片中的动画时间线。它是你的"动画编导"，帮你编排出精彩的动画效果！
 
 ### 时间线基础操作
 
@@ -288,7 +288,7 @@ string info = timeline.GetTimeLineInfo();
 
 ## IPowerPointTextRange - 文本范围操作接口
 
-[IPowerPointTextRange](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointTextRange.cs#L11-L197) 用于操作文本范围。它是你的"文本精修师"，帮你精确处理每一个字符！
+[IPowerPointTextRange](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointTextRange.cs#L11-L197) 用于操作文本范围。它是你的"文本精修师"，帮你精确处理每一个字符！
 
 ### 文本范围基础操作
 

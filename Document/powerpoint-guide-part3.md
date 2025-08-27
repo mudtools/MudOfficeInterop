@@ -11,7 +11,7 @@
 
 ## IPowerPointEffect - 动画效果操作接口
 
-[IPowerPointEffect](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointEffect.cs#L12-L82) 用于管理 PowerPoint 中的动画效果。
+[IPowerPointEffect](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointEffect.cs#L12-L82) 用于管理 PowerPoint 中的动画效果。
 
 ### 动画效果基础操作
 
@@ -63,7 +63,7 @@ string info = effect.GetEffectInfo();
 
 ## IPowerPointActionSetting - 动作设置操作接口
 
-[IPowerPointActionSetting](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointActionSetting.cs#L11-L95) 用于设置 PowerPoint 中的交互式动作。
+[IPowerPointActionSetting](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointActionSetting.cs#L11-L95) 用于设置 PowerPoint 中的交互式动作。
 
 ### 动作设置基础操作
 
@@ -117,7 +117,7 @@ string info = actionSetting.GetActionSettingInfo();
 
 ## IPowerPointSequence - 动画序列操作接口
 
-[IPowerPointSequence](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSequence.cs#L12-L76) 用于管理 PowerPoint 中的动画序列。
+[IPowerPointSequence](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSequence.cs#L12-L76) 用于管理 PowerPoint 中的动画序列。
 
 ### 动画序列基础操作
 
@@ -163,7 +163,7 @@ string info = sequence.GetSequenceInfo();
 
 ## IPowerPointSoundEffect - 声音效果操作接口
 
-[IPowerPointSoundEffect](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSoundEffect.cs#L12-L60) 用于操作 PowerPoint 中的声音效果。
+[IPowerPointSoundEffect](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Styles/IPowerPointSoundEffect.cs#L12-L60) 用于操作 PowerPoint 中的声音效果。
 
 ### 声音效果基础操作
 
@@ -203,7 +203,7 @@ string info = soundEffect.GetSoundEffectInfo();
 
 ## IPowerPointParagraphFormat - 段落格式操作接口
 
-[IPowerPointParagraphFormat](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Format/IPowerPointParagraphFormat.cs#L11-L97) 用于管理 PowerPoint 中的段落格式。
+[IPowerPointParagraphFormat](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Format/IPowerPointParagraphFormat.cs#L11-L97) 用于管理 PowerPoint 中的段落格式。
 
 ### 段落格式基础操作
 
@@ -266,7 +266,7 @@ paragraphFormat.SetAlignment((int)PpParagraphAlignment.ppAlignJustify);
 
 ## IPowerPointPictureFormat - 图片格式操作接口
 
-[IPowerPointPictureFormat](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.PowerPoint/Format/IPowerPointPictureFormat.cs#L11-L84) 用于操作 PowerPoint 中的图片格式。
+[IPowerPointPictureFormat](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/Format/IPowerPointPictureFormat.cs#L11-L84) 用于操作 PowerPoint 中的图片格式。
 
 ### 图片格式基础操作
 

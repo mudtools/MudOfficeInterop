@@ -14,7 +14,7 @@
 
 ## ExcelFactory - Excel 应用程序入口点
 
-[ExcelFactory](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) 是创建和操作 Excel 应用程序的静态工厂类，提供了多种创建 Excel 实例的方法。把它想象成你的 Excel 应用程序"哆啦A梦"，想要什么类型的 Excel 实例，它都能帮你变出来！
+[ExcelFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) 是创建和操作 Excel 应用程序的静态工厂类，提供了多种创建 Excel 实例的方法。把它想象成你的 Excel 应用程序"哆啦A梦"，想要什么类型的 Excel 实例，它都能帮你变出来！
 
 ### 主要方法
 
@@ -65,7 +65,7 @@ var excelApp = ExcelFactory.CreateInstance("Excel.Application.16");
 
 ## IExcelApplication - Excel 应用程序核心接口
 
-[IExcelApplication](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelApplication.cs#L12-L1129) 是操作 Excel 应用程序的核心接口，提供了对 Excel 应用程序的全面控制。它就像你的遥控器，让你能够随心所欲地操控 Excel！
+[IExcelApplication](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelApplication.cs#L12-L1129) 是操作 Excel 应用程序的核心接口，提供了对 Excel 应用程序的全面控制。它就像你的遥控器，让你能够随心所欲地操控 Excel！
 
 ### 基础属性管理
 
@@ -135,7 +135,7 @@ excelApp.DisplayFormulaBar = false;   // 隐藏公式栏
 
 ## IExcelWorkbook - 工作簿操作接口
 
-[IExcelWorkbook](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelWorkbook.cs#L15-L395) 提供对 Excel 工作簿的全面管理功能。它是你工作簿的"贴身管家"，帮你打理一切！
+[IExcelWorkbook](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelWorkbook.cs#L15-L395) 提供对 Excel 工作簿的全面管理功能。它是你工作簿的"贴身管家"，帮你打理一切！
 
 ### 工作簿基础操作
 
@@ -195,7 +195,7 @@ workbook.RefreshAll();
 
 ## IExcelWindow - 窗口管理接口
 
-[IExcelWindow](file:///D:/Repos/OfficeInterop/MudTools.OfficeInterop.Excel/Core/IExcelWindow.cs#L12-L277) 提供对 Excel 窗口的详细控制。让你的 Excel 窗口随心所欲地展示数据！
+[IExcelWindow](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Core/IExcelWindow.cs#L12-L277) 提供对 Excel 窗口的详细控制。让你的 Excel 窗口随心所欲地展示数据！
 
 ### 窗口属性设置
 
