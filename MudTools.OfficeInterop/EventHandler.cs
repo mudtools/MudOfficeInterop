@@ -6,13 +6,20 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
+
 /// <summary>
 /// 自定义任务窗格可见性变化事件参数
 /// </summary>
 public class TaskPaneVisibleStateChangedEventArgs : EventArgs
 {
+    /// <summary>
+    /// 自定义任务窗格是否可见
+    /// </summary>
     public bool IsVisible { get; }
 
+    /// <summary>
+    /// 默认构造函数。
+    /// </summary>
     public TaskPaneVisibleStateChangedEventArgs(bool isVisible)
     {
         IsVisible = isVisible;
@@ -24,8 +31,15 @@ public class TaskPaneVisibleStateChangedEventArgs : EventArgs
 /// </summary>
 public class TaskPaneDockPositionChangedEventArgs : EventArgs
 {
+    /// <summary>
+    /// 设置新的停靠位置
+    /// </summary>
     public MsoDockPosition NewDockPosition { get; }
 
+    /// <summary>
+    /// 默认构造函数。
+    /// </summary>
+    /// <param name="newPosition"></param>
     public TaskPaneDockPositionChangedEventArgs(MsoDockPosition newPosition)
     {
         NewDockPosition = newPosition;
