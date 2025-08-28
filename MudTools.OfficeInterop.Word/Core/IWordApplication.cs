@@ -137,7 +137,9 @@ public interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取活动窗口
     /// </summary>
-    IWordWindow ActiveWindow { get; }
+    IWordWindow? ActiveWindow { get; }
+
+    IWordTemplate? NormalTemplate { get; }
     #endregion
 
     #region 文档操作

@@ -172,10 +172,7 @@ internal class WordApplication : IWordApplication
     {
         get
         {
-            if (_selection == null)
-            {
-                _selection = new WordSelection(_application.Selection, _activeDocument);
-            }
+            _selection ??= new WordSelection(_application.Selection, _activeDocument);
             return _selection;
         }
     }
@@ -184,10 +181,7 @@ internal class WordApplication : IWordApplication
     {
         get
         {
-            if (_documents == null)
-            {
-                _documents = new WordDocuments(_application.Documents, this);
-            }
+            _documents ??= new WordDocuments(_application.Documents, this);
             return _documents;
         }
     }
@@ -196,17 +190,14 @@ internal class WordApplication : IWordApplication
     {
         get
         {
-            if (_windows == null)
-            {
-                _windows = new WordWindows(_application.Windows, this);
-            }
+            _windows ??= new WordWindows(_application.Windows, this);
             return _windows;
         }
     }
 
     public int WindowCount => _application.Windows.Count;
 
-    public IWordWindow ActiveWindow
+    public IWordWindow? ActiveWindow
     {
         get
         {
@@ -219,6 +210,18 @@ internal class WordApplication : IWordApplication
             {
                 return null;
             }
+        }
+    }
+
+    private IWordTemplate? _wordTemplate;
+
+    public IWordTemplate? NormalTemplate
+    {
+        get
+        {
+            if (_wordTemplate != null) return _wordTemplate;
+            _wordTemplate = new WordTemplate(_application.NormalTemplate);
+            return _wordTemplate;
         }
     }
 
@@ -686,6 +689,7 @@ internal class WordApplication : IWordApplication
             _selection?.Dispose();
             _documents?.Dispose();
             _windows?.Dispose();
+            _wordTemplate?.Dispose();
             DisconnectEvents();
             if (_application != null)
             {
