@@ -2,6 +2,9 @@
 
 using System;
 
+/// <summary>
+/// Excel Errors COM组件二次封装
+/// </summary>
 public interface IExcelErrors : IDisposable
 {
     /// <summary>

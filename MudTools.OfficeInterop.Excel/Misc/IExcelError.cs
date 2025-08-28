@@ -1,5 +1,8 @@
 ﻿namespace MudTools.OfficeInterop.Excel;
 
+/// <summary>
+/// Excel Error COM组件二次封装
+/// </summary>
 public interface IExcelError : IDisposable
 {
     /// <summary>
