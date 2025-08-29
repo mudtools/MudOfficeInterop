@@ -388,30 +388,12 @@ public interface IWordDocument : IDisposable, IEnumerable<IWordRange>
     /// </summary>
     void RejectAllRevisions();
 
-    /// <summary>
-    /// 比较文档
-    /// </summary>
-    /// <param name="document">要比较的文档</param>
-    /// <returns>比较结果文档</returns>
-    IWordDocument Compare(IWordDocument document);
-
-    /// <summary>
-    /// 合并文档
-    /// </summary>
-    /// <param name="document">要合并的文档</param>
-    void Merge(IWordDocument document);
 
     /// <summary>
     /// 导出为 PDF
     /// </summary>
     /// <param name="fileName">PDF 文件路径</param>
     void ExportAsPdf(string fileName);
-
-    /// <summary>
-    /// 获取文档统计信息
-    /// </summary>
-    /// <returns>文档统计信息</returns>
-    IWordDocumentStatistics GetStatistics();
 
     /// <summary>
     /// 刷新文档显示

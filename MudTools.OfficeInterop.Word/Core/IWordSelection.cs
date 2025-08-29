@@ -13,6 +13,11 @@ namespace MudTools.OfficeInterop.Word;
 public interface IWordSelection : IDisposable
 {
     /// <summary>
+    /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
+    /// </summary>
+    IWordApplication Application { get; }
+
+    /// <summary>
     /// 获取选择区域的文本内容
     /// </summary>
     string Text { get; set; }

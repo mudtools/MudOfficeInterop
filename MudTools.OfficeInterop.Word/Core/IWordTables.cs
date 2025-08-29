@@ -11,6 +11,11 @@ namespace MudTools.OfficeInterop.Word;
 /// </summary>
 public interface IWordTables : IDisposable, IEnumerable<IWordTable>
 {
+    /// <summary>
+    /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
+    /// </summary>
+    IWordApplication Application { get; }
+
     IWordDocument Document { get; }
 
     /// <summary>

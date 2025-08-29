@@ -21,6 +21,8 @@ internal class WordSections : IWordSections
     /// </summary>
     public int Count => _sections.Count;
 
+    public IWordApplication? Application => _sections != null ? new WordApplication(_sections.Application) : null;
+
 
     /// <summary>
     /// 构造函数

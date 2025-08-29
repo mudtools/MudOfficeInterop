@@ -28,6 +28,9 @@ internal class WordRange : IWordRange
 
     #region 属性实现
 
+    public IWordApplication? Application => _range != null ? new WordApplication(_range.Application) : null;
+
+
     /// <inheritdoc/>
     public string Text
     {

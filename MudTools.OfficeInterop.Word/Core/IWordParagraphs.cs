@@ -13,6 +13,11 @@ namespace MudTools.OfficeInterop.Word;
 public interface IWordParagraphs : IDisposable, IEnumerable<IWordParagraph>
 {
     /// <summary>
+    /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
+    /// </summary>
+    IWordApplication Application { get; }
+
+    /// <summary>
     /// 获取段落数量
     /// </summary>
     int Count { get; }

@@ -213,10 +213,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_styles == null)
-            {
-                _styles = new WordStyles(_document.Styles, this);
-            }
+            _styles ??= new WordStyles(_document.Styles);
             return _styles;
         }
     }
@@ -225,10 +222,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_listTemplates == null)
-            {
-                _listTemplates = new WordListTemplates(_document.ListTemplates, this);
-            }
+            _listTemplates ??= new WordListTemplates(_document.ListTemplates, this);
             return _listTemplates;
         }
     }
@@ -237,10 +231,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_variables == null)
-            {
-                _variables = new WordVariables(_document.Variables, this);
-            }
+            _variables ??= new WordVariables(_document.Variables, this);
             return _variables;
         }
     }
@@ -249,10 +240,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_customProperties == null)
-            {
-                _customProperties = new WordCustomProperties(_document.CustomDocumentProperties, this);
-            }
+            _customProperties ??= new WordCustomProperties(_document.CustomDocumentProperties, this);
             return _customProperties;
         }
     }
@@ -780,10 +768,7 @@ internal class WordDocument : IWordDocument
 
         try
         {
-            if (_document.Variables[name] != null)
-            {
-                _document.Variables[name].Delete();
-            }
+            _document.Variables[name]?.Delete();
         }
         catch (Exception ex)
         {
@@ -827,39 +812,6 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordDocument Compare(IWordDocument document)
-    {
-        if (document == null)
-            throw new ArgumentNullException(nameof(document));
-
-        try
-        {
-            // 注意：这里需要实际的 WordDocument 实现
-            // 这只是一个示例实现
-            throw new NotImplementedException("Compare method not implemented.");
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to compare documents.", ex);
-        }
-    }
-
-    public void Merge(IWordDocument document)
-    {
-        if (document == null)
-            throw new ArgumentNullException(nameof(document));
-
-        try
-        {
-            // 注意：这里需要实际的 WordDocument 实现
-            // 这只是一个示例实现
-            throw new NotImplementedException("Merge method not implemented.");
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to merge documents.", ex);
-        }
-    }
 
     public void ExportAsPdf(string fileName)
     {
@@ -876,39 +828,6 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordDocumentStatistics GetStatistics()
-    {
-        try
-        {
-            var range = _document.Range();
-            return new WordDocumentStatistics
-            {
-                Pages = (int)range.Information[MsWord.WdInformation.wdNumberOfPagesInDocument],
-                Words = _document.Words.Count,
-                Characters = _document.Characters.Count,
-                CharactersWithSpaces = GetCharactersWithSpaces(range),
-                Paragraphs = _document.Paragraphs.Count,
-                Lines = (int)range.Information[MsWord.WdInformation.wdEndOfRangeRowNumber]
-            };
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to get document statistics.", ex);
-        }
-    }
-
-    private int GetCharactersWithSpaces(MsWord.Range range)
-    {
-        try
-        {
-            return range.ComputeStatistics(MsWord.WdStatistic.wdStatisticCharactersWithSpaces);
-        }
-        catch
-        {
-            // 如果无法获取，返回 0
-            return 0;
-        }
-    }
 
     public void Refresh()
     {

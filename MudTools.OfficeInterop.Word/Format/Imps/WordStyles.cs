@@ -8,150 +8,295 @@
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
-/// Word 文档样式集合实现类
+/// 封装 Microsoft.Office.Interop.Word.Styles 的实现类。
 /// </summary>
 internal class WordStyles : IWordStyles
 {
-    private readonly MsWord.Styles _styles;
-    private readonly IWordDocument _document;
+    private MsWord.Styles _styles;
     private bool _disposedValue;
 
     /// <summary>
-    /// 获取样式数量
+    /// 构造函数，包装 COM 对象。
     /// </summary>
-    public int Count => _styles.Count;
-
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="styles">COM Styles 对象</param>
-    /// <param name="document">关联的文档对象</param>
-    internal WordStyles(MsWord.Styles styles, IWordDocument document)
+    /// <param name="styles">原始 COM Styles 对象。</param>
+    internal WordStyles(MsWord.Styles styles)
     {
         _styles = styles ?? throw new ArgumentNullException(nameof(styles));
-        _document = document ?? throw new ArgumentNullException(nameof(document));
         _disposedValue = false;
     }
 
-    /// <summary>
-    /// 根据索引获取样式
-    /// </summary>
-    /// <param name="index">样式索引</param>
-    /// <returns>样式对象</returns>
-    public IWordStyle Item(int index)
-    {
-        if (index < 1 || index > Count)
-            throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
+    #region 属性实现
 
-        try
+    /// <inheritdoc/>
+    public int Count => _styles?.Count ?? 0;
+
+    /// <inheritdoc/>
+    public IWordStyle this[int index]
+    {
+        get
         {
-            var style = _styles[index];
-            return new WordStyle(style);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get style at index {index}.", ex);
+            if (_styles == null || index < 1 || index > Count)
+                return null;
+
+            try
+            {
+                var style = _styles[index];
+                return new WordStyle(style);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 
-    /// <summary>
-    /// 根据名称获取样式
-    /// </summary>
-    /// <param name="name">样式名称</param>
-    /// <returns>样式对象</returns>
-    public IWordStyle Item(string name)
+    /// <inheritdoc/>
+    public IWordStyle this[string name]
     {
-        if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("Style name cannot be null or empty.", nameof(name));
+        get
+        {
+            if (_styles == null || string.IsNullOrWhiteSpace(name))
+                return null;
 
-        try
-        {
-            var style = _styles[name];
-            return new WordStyle(style);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get style with name '{name}'.", ex);
+            try
+            {
+                var style = _styles[name];
+                return style != null ? new WordStyle(style) : null;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 
-    /// <summary>
-    /// 添加样式
-    /// </summary>
-    /// <param name="name">样式名称</param>
-    /// <param name="type">样式类型</param>
-    /// <returns>样式对象</returns>
-    public IWordStyle Add(string name, int type = 1)
+    /// <inheritdoc/>
+    public IWordStyle DefaultParagraphStyle =>
+        this[MsWord.WdBuiltinStyle.wdStyleNormal.ToString()] ?? this["正文"];
+
+    /// <inheritdoc/>
+    public IWordStyle DefaultCharacterStyle =>
+        this[MsWord.WdBuiltinStyle.wdStyleDefaultParagraphFont.ToString()];
+
+    /// <inheritdoc/>
+    public IWordStyle GetDefaultStyle(MsWord.WdStyleType styleType)
     {
-        if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("Style name cannot be null or empty.", nameof(name));
+        if (_styles == null)
+            return null;
 
         try
         {
-            var style = _styles.Add(name, (MsWord.WdStyleType)type);
-            return new WordStyle(style);
+            switch (styleType)
+            {
+                case MsWord.WdStyleType.wdStyleTypeParagraph:
+                    return DefaultParagraphStyle;
+                case MsWord.WdStyleType.wdStyleTypeCharacter:
+                    return DefaultCharacterStyle;
+                default:
+                    return null;
+            }
         }
-        catch (Exception ex)
+        catch
         {
-            throw new InvalidOperationException($"Failed to add style '{name}'.", ex);
+            return null;
         }
     }
 
-    /// <summary>
-    /// 获取枚举器
-    /// </summary>
-    /// <returns>样式枚举器</returns>
+    #endregion
+
+    #region 方法实现
+
+    /// <inheritdoc/>
+    public IWordStyle Add(string name, WdStyleType type = WdStyleType.wdStyleTypeParagraph)
+    {
+        if (_styles == null)
+        {
+            throw new ObjectDisposedException(nameof(WordStyles));
+        }
+
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("样式名称不能为空。", nameof(name));
+
+        try
+        {
+            var newStyle = _styles.Add(name, (MsWord.WdStyleType)(int)type);
+            return new WordStyle(newStyle);
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException($"无法添加样式 '{name}'。", ex);
+        }
+    }
+
+    /// <inheritdoc/>
+    public bool Contains(string name)
+    {
+        if (_styles == null || string.IsNullOrWhiteSpace(name))
+            return false;
+
+        return _styles[name] != null;
+    }
+
+    /// <inheritdoc/>
+    public List<string> GetStyleNamesByType(WdStyleType styleType)
+    {
+        var names = new List<string>();
+
+        if (_styles == null)
+            return names;
+
+        for (int i = 1; i <= Count; i++)
+        {
+            var style = _styles[i];
+            if (style != null && style.Type == (MsWord.WdStyleType)(int)styleType)
+            {
+                names.Add(style.NameLocal);
+            }
+        }
+
+        return names;
+    }
+
+    /// <inheritdoc/>
+    public List<string> GetAllStyleNames()
+    {
+        var names = new List<string>();
+
+        if (_styles == null)
+            return names;
+
+        for (int i = 1; i <= Count; i++)
+        {
+            var style = _styles[i];
+            if (style?.NameLocal != null)
+            {
+                names.Add(style.NameLocal);
+            }
+        }
+
+        return names;
+    }
+
+    /// <inheritdoc/>
+    public List<string> GetBuiltInStyleNames()
+    {
+        var names = new List<string>();
+
+        if (_styles == null)
+            return names;
+
+        for (int i = 1; i <= Count; i++)
+        {
+            var style = _styles[i];
+            if (style != null && style.BuiltIn)
+            {
+                names.Add(style.NameLocal);
+            }
+        }
+
+        return names;
+    }
+
+    /// <inheritdoc/>
+    public List<string> GetCustomStyleNames()
+    {
+        var names = new List<string>();
+
+        if (_styles == null)
+            return names;
+
+        for (int i = 1; i <= Count; i++)
+        {
+            var style = _styles[i];
+            if (style != null && style.BuiltIn)
+            {
+                names.Add(style.NameLocal);
+            }
+        }
+
+        return names;
+    }
+
+
+    /// <inheritdoc/>
+    public bool DeleteStyle(string name)
+    {
+        if (_styles == null || string.IsNullOrWhiteSpace(name))
+            return false;
+
+        var style = _styles[name];
+        if (style != null && style.BuiltIn) // 只能删除自定义样式
+        {
+            style.Delete();
+            return true;
+        }
+        return false;
+    }
+
+    /// <inheritdoc/>
+    public void ClearCustomStyles()
+    {
+        if (_styles == null)
+            return;
+
+        var customStyles = GetCustomStyleNames();
+        foreach (var styleName in customStyles)
+        {
+            DeleteStyle(styleName);
+        }
+    }
+
+    #endregion
+
+    #region IEnumerable<IWordStyle> 实现
+
+    /// <inheritdoc/>
     public IEnumerator<IWordStyle> GetEnumerator()
     {
-        try
+        if (_styles == null)
+            yield break;
+
+        for (int i = 1; i <= Count; i++)
         {
-            var styles = new List<IWordStyle>();
-            for (int i = 1; i <= Count; i++)
-            {
-                try
-                {
-                    styles.Add(Item(i));
-                }
-                catch
-                {
-                    // 忽略获取失败的样式
-                    continue;
-                }
-            }
-            return styles.GetEnumerator();
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to enumerate styles.", ex);
+            var style = _styles[i];
+            if (style != null)
+                yield return new WordStyle(style);
         }
     }
 
-    /// <summary>
-    /// 获取枚举器
-    /// </summary>
-    /// <returns>枚举器</returns>
+    /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
     }
 
+    #endregion
+
+    #region IDisposable 实现
+
     /// <summary>
-    /// 释放资源
+    /// 释放 COM 对象资源。
     /// </summary>
-    /// <param name="disposing">是否正在 disposing</param>
+    /// <param name="disposing">是否由用户主动调用 Dispose。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
+
+        if (disposing && _styles != null)
+        {
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(_styles);
+            _styles = null;
+        }
+
         _disposedValue = true;
     }
 
-    /// <summary>
-    /// 释放资源
-    /// </summary>
+    /// <inheritdoc/>
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
+
+    #endregion
 }

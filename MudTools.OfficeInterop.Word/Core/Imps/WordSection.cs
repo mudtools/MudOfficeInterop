@@ -17,6 +17,9 @@ internal class WordSection : IWordSection
     private IWordRange _range;
     private IWordPageSetup _pageSetup;
 
+
+    public IWordApplication? Application => _section != null ? new WordApplication(_section.Application) : null;
+
     /// <summary>
     /// 获取节范围
     /// </summary>

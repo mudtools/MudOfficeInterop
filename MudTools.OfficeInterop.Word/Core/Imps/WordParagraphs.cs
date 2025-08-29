@@ -16,6 +16,9 @@ internal class WordParagraphs : IWordParagraphs
     private readonly IWordDocument _document;
     private bool _disposedValue;
 
+    public IWordApplication? Application => _paragraphs != null ? new WordApplication(_paragraphs.Application) : null;
+
+
     /// <summary>
     /// 获取段落数量
     /// </summary>

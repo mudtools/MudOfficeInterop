@@ -13,6 +13,11 @@ namespace MudTools.OfficeInterop.Word;
 public interface IWordTable : IDisposable
 {
     /// <summary>
+    /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
+    /// </summary>
+    IWordApplication Application { get; }
+
+    /// <summary>
     /// 获取表格行数
     /// </summary>
     int Rows { get; }

@@ -17,6 +17,9 @@ internal class WordSelection : IWordSelection
     private IWordFind _find;
     private IWordRange _range;
 
+    public IWordApplication? Application => _selection != null ? new WordApplication(_selection.Application) : null;
+
+
     public string Text
     {
         get => _selection.Text;

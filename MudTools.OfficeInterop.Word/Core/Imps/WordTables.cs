@@ -15,6 +15,8 @@ internal class WordTables : IWordTables
     private readonly IWordDocument _document;
     private bool _disposedValue;
 
+    public IWordApplication? Application => _tables != null ? new WordApplication(_tables.Application) : null;
+
     public IWordDocument Document => _document;
 
     /// <summary>

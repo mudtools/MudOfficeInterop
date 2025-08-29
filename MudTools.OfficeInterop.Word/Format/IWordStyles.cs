@@ -7,32 +7,86 @@
 
 namespace MudTools.OfficeInterop.Word;
 
-
 /// <summary>
-/// Word 文档样式集合接口
+/// 封装 Microsoft.Office.Interop.Word.Styles 的接口，用于操作文档样式集合。
 /// </summary>
-public interface IWordStyles : IDisposable, IEnumerable<IWordStyle>
+public interface IWordStyles : IEnumerable<IWordStyle>, IDisposable
 {
     /// <summary>
-    /// 获取样式数量
+    /// 获取样式集合中的样式数量。
     /// </summary>
     int Count { get; }
 
     /// <summary>
-    /// 根据索引获取样式
+    /// 根据索引获取样式（从1开始）。
     /// </summary>
-    IWordStyle Item(int index);
+    IWordStyle this[int index] { get; }
 
     /// <summary>
-    /// 根据名称获取样式
+    /// 根据名称获取样式。
     /// </summary>
-    IWordStyle Item(string name);
+    IWordStyle this[string name] { get; }
 
     /// <summary>
-    /// 添加样式
+    /// 添加新样式。
     /// </summary>
-    /// <param name="name">样式名称</param>
-    /// <param name="type">样式类型</param>
-    /// <returns>样式对象</returns>
-    IWordStyle Add(string name, int type = 1);
+    /// <param name="name">样式名称。</param>
+    /// <param name="type">样式类型。</param>
+    /// <returns>新创建的样式。</returns>
+    IWordStyle Add(string name, WdStyleType type = WdStyleType.wdStyleTypeParagraph);
+
+    /// <summary>
+    /// 检查样式是否存在。
+    /// </summary>
+    /// <param name="name">样式名称。</param>
+    /// <returns>是否存在。</returns>
+    bool Contains(string name);
+
+    /// <summary>
+    /// 根据样式类型获取样式列表。
+    /// </summary>
+    /// <param name="styleType">样式类型。</param>
+    /// <returns>样式名称列表。</returns>
+    List<string> GetStyleNamesByType(WdStyleType styleType);
+
+    /// <summary>
+    /// 获取所有样式名称。
+    /// </summary>
+    /// <returns>样式名称列表。</returns>
+    List<string> GetAllStyleNames();
+
+    /// <summary>
+    /// 获取内置样式名称列表。
+    /// </summary>
+    /// <returns>内置样式名称列表。</returns>
+    List<string> GetBuiltInStyleNames();
+
+    /// <summary>
+    /// 获取用户自定义样式名称列表。
+    /// </summary>
+    /// <returns>自定义样式名称列表。</returns>
+    List<string> GetCustomStyleNames();
+
+    /// <summary>
+    /// 删除指定名称的样式。
+    /// </summary>
+    /// <param name="name">样式名称。</param>
+    /// <returns>是否删除成功。</returns>
+    bool DeleteStyle(string name);
+
+    /// <summary>
+    /// 清除所有用户自定义样式。
+    /// </summary>
+    void ClearCustomStyles();
+
+    /// <summary>
+    /// 获取默认段落样式。
+    /// </summary>
+    IWordStyle DefaultParagraphStyle { get; }
+
+    /// <summary>
+    /// 获取默认字符样式。
+    /// </summary>
+    IWordStyle DefaultCharacterStyle { get; }
+
 }

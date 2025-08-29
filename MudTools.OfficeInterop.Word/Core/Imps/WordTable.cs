@@ -15,6 +15,8 @@ internal class WordTable : IWordTable
     private bool _disposedValue;
     private IWordRange _range;
 
+    public IWordApplication? Application => _table != null ? new WordApplication(_table.Application) : null;
+
     public int Rows => _table.Rows.Count;
 
     public int Columns => _table.Columns.Count;

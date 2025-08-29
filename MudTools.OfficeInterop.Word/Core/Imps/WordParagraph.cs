@@ -16,6 +16,9 @@ internal class WordParagraph : IWordParagraph
     private bool _disposedValue;
     private IWordRange _range;
 
+    public IWordApplication? Application => _paragraph != null ? new WordApplication(_paragraph.Application) : null;
+
+
     /// <summary>
     /// 获取段落范围
     /// </summary>
@@ -23,10 +26,7 @@ internal class WordParagraph : IWordParagraph
     {
         get
         {
-            if (_range == null)
-            {
-                _range = new WordRange(_paragraph.Range);
-            }
+            _range ??= new WordRange(_paragraph.Range);
             return _range;
         }
     }

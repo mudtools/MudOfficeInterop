@@ -6,49 +6,79 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
-
 /// <summary>
-/// Word 文档样式接口
+/// 封装 Microsoft.Office.Interop.Word.Style 的接口，用于操作文档样式。
 /// </summary>
 public interface IWordStyle : IDisposable
 {
-    /// <summary>
-    /// 获取样式名称
-    /// </summary>
-    string Name { get; }
+
+    bool InUse { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取样式的本地化名称。
     /// </summary>
-    object Parent { get; }
+    string NameLocal { get; }
 
     /// <summary>
-    /// 获取或设置是否基于其他样式
+    /// 获取或设置样式的类型。
     /// </summary>
-    bool BasedOn { get; set; }
+    WdStyleType Type { get; }
 
     /// <summary>
-    /// 获取或设置字体名称
+    /// 获取或设置样式的下一个段落样式名称。
     /// </summary>
-    string FontName { get; set; }
+    string NextParagraphStyle { get; set; }
 
     /// <summary>
-    /// 获取或设置字体大小
+    /// 获取或设置是否自动更新样式。
     /// </summary>
-    float FontSize { get; set; }
+    bool AutomaticallyUpdate { get; set; }
 
     /// <summary>
-    /// 获取或设置是否加粗
+    /// 获取或设置是否为快捷样式。
     /// </summary>
-    bool Bold { get; set; }
+    bool QuickStyle { get; set; }
 
     /// <summary>
-    /// 获取或设置是否斜体
+    /// 获取或设置是否可见。
     /// </summary>
-    bool Italic { get; set; }
+    bool Visibility { get; set; }
 
     /// <summary>
-    /// 删除样式
+    /// 获取样式的字体格式封装对象。
+    /// </summary>
+    IWordFont Font { get; }
+
+    /// <summary>
+    /// 获取样式的段落格式封装对象。
+    /// </summary>
+    IWordParagraphFormat ParagraphFormat { get; }
+
+    /// <summary>
+    /// 获取样式的编号格式封装对象。
+    /// </summary>
+    IWordListTemplate ListTemplate { get; }
+
+    /// <summary>
+    /// 删除此样式。
     /// </summary>
     void Delete();
+
+    /// <summary>
+    /// 复制样式到另一个名称。
+    /// </summary>
+    /// <param name="newName">新样式名称。</param>
+    /// <returns>复制的新样式。</returns>
+    IWordStyle Copy(string newName);
+
+    /// <summary>
+    /// 应用样式到指定范围。
+    /// </summary>
+    /// <param name="range">要应用样式的范围。</param>
+    void ApplyTo(IWordRange range);
+
+    /// <summary>
+    /// 检查样式是否为内置样式。
+    /// </summary>
+    bool IsBuiltIn { get; }
 }
