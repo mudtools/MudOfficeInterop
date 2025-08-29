@@ -1,108 +1,108 @@
 namespace MudTools.OfficeInterop.Word;
 
-/// &lt;summary&gt;
+/// <summary>
 /// 指定线条的样式类型，用于文档中的边框和线条格式化
-/// &lt;/summary&gt;
+/// </summary>
 public enum WdLineStyle
 {
-    /// &lt;summary&gt;
+    /// <summary>
     /// 无线条样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleNone,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 单线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleSingle,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 点线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDot,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 小间隔虚线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDashSmallGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 大间隔虚线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDashLargeGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 一线一点样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDashDot,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 一线两点样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDashDotDot,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 双线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDouble,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 三线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleTriple,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 细线-粗线-细线(小间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThinThickSmallGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 粗线-细线-粗线(小间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThickThinSmallGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 细线-粗线-细线(小间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThinThickThinSmallGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 细线-粗线(中等间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThinThickMedGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 粗线-细线(中等间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThickThinMedGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 细线-粗线-细线(中等间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThinThickThinMedGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 细线-粗线(大间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThinThickLargeGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 粗线-细线(大间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThickThinLargeGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 细线-粗线-细线(大间隔)样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleThinThickThinLargeGap,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 单波浪线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleSingleWavy,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 双波浪线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDoubleWavy,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 交替点划线样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleDashDotStroked,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 凸起3D样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleEmboss3D,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 凹陷3D样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleEngrave3D,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 外凸样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleOutset,
-    /// &lt;summary&gt;
+    /// <summary>
     /// 内嵌样式
-    /// &lt;/summary&gt;
+    /// </summary>
     wdLineStyleInset
 }
