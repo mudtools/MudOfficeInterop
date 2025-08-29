@@ -21,4 +21,6 @@ public interface IWordAutoCorrectEntry : IDisposable
     /// 删除当前自动更正条目。
     /// </summary>
     void Delete();
+
+    void Apply(IWordRange range);
 }

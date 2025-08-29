@@ -1,5 +1,4 @@
-﻿
-namespace MudTools.OfficeInterop.Word.Imps;
+﻿namespace MudTools.OfficeInterop.Word.Imps;
 
 // <summary>
 /// 对 <see cref="AutoCorrectEntry"/> COM 对象的封装实现类。
@@ -62,6 +61,19 @@ internal class WordAutoCorrectEntry : IWordAutoCorrectEntry
         catch (COMException ex)
         {
             throw new InvalidOperationException("删除自动更正条目失败。", ex);
+        }
+    }
+
+    public void Apply(IWordRange range)
+    {
+        if (range == null) return;
+        try
+        {
+            _entry.Apply(((WordRange)range)._range);
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("应用自动更正条目失败。", ex);
         }
     }
 
