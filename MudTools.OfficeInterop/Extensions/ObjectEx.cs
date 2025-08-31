@@ -40,6 +40,19 @@ internal static class ObjectEx
         throw new InvalidCastException($"Cannot convert {result?.GetType().Name ?? "null"} to double.");
     }
 
+    public static float ConvertToFloat(this object result)
+    {
+        if (result is double d) return (float)d;
+        if (result is int i) return i;
+        if (result is float f) return f;
+        if (result is decimal dec) return (float)dec;
+
+        if (float.TryParse(result?.ToString(), out float parsed))
+            return parsed;
+
+        throw new InvalidCastException($"Cannot convert {result?.GetType().Name ?? "null"} to double.");
+    }
+
     public static bool ConvertToBool(this object result)
     {
         if (result is bool b) return b;

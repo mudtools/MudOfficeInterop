@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -15,10 +15,19 @@ internal class WordStoryRanges : IWordStoryRanges
     private bool _disposedValue;
 
     /// <summary>
+    /// 获取应用程序对象
+    /// </summary>
+    public IWordApplication? Application => _storyRanges != null ? new WordApplication(_storyRanges.Application) : null;
+
+    /// <summary>
+    /// 获取父对象
+    /// </summary>
+    public object Parent => _storyRanges?.Parent;
+
+    /// <summary>
     /// 获取范围数量
     /// </summary>
     public int Count => _storyRanges.Count;
-
 
     /// <summary>
     /// 构造函数
@@ -47,6 +56,13 @@ internal class WordStoryRanges : IWordStoryRanges
             throw new InvalidOperationException($"Failed to get story range at index {index}.", ex);
         }
     }
+
+    /// <summary>
+    /// 根据类型获取范围
+    /// </summary>
+    /// <param name="index">范围类型</param>
+    /// <returns>范围对象</returns>
+    public IWordRange this[WdStoryType index] => Item(index);
 
     /// <summary>
     /// 获取枚举器

@@ -17,27 +17,27 @@ public enum WdSelectionType
     /// 无选择 - 没有选择任何内容
     /// </summary>
     wdNoSelection = 0,
-    
+
     /// <summary>
     /// 插入点 - 光标位置，未选择任何内容
     /// </summary>
     wdSelectionIP = 1,
-    
+
     /// <summary>
     /// 普通选择 - 选择了文本内容
     /// </summary>
     wdSelectionNormal = 2,
-    
+
     /// <summary>
     /// 列选择 - 在表格中选择了一列
     /// </summary>
     wdSelectionColumn = 3,
-    
+
     /// <summary>
     /// 行选择 - 在表格中选择了一行
     /// </summary>
     wdSelectionRow = 4,
-    
+
     /// <summary>
     /// 块选择 - 选择了矩形区域的文本块
     /// </summary>

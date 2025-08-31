@@ -1,4 +1,4 @@
-﻿using Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Word;
 
 namespace MudTools.OfficeInterop.Word.Imps;
 
@@ -21,6 +21,12 @@ internal class WordTableStyle : IWordTableStyle
     }
 
     #region 属性实现
+
+    /// <inheritdoc/>
+    public IWordApplication? Application => _tableStyle != null ? new WordApplication(_tableStyle.Application) : null;
+
+    /// <inheritdoc/>
+    public object Parent => _tableStyle?.Parent;
 
     public WdTableDirection TableDirection
     {

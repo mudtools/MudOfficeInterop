@@ -1,4 +1,4 @@
-﻿namespace MudTools.OfficeInterop.Word.Imps;
+namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.TabStop 的实现类。
@@ -19,6 +19,12 @@ internal class WordTabStop : IWordTabStop
     }
 
     #region 属性实现
+
+    /// <inheritdoc/>
+    public IWordApplication? Application => _tabStop != null ? new WordApplication(_tabStop.Application) : null;
+
+    /// <inheritdoc/>
+    public object Parent => _tabStop?.Parent;
 
     /// <inheritdoc/>
     public float Position

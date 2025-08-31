@@ -1,10 +1,20 @@
-﻿namespace MudTools.OfficeInterop.Word;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.ParagraphFormat 的接口，用于操作 Word 文档中段落的格式设置。
 /// </summary>
 public interface IWordParagraphFormat : IDisposable
 {
+    /// <summary>
+    /// 获取应用程序对象。
+    /// </summary>
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object Parent { get; }
+
     /// <summary>
     /// 获取或设置段落的对齐方式。
     /// </summary>

@@ -1,10 +1,20 @@
-﻿namespace MudTools.OfficeInterop.Word;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.Font 的接口，用于操作 Word 文档中文字的字体样式。
 /// </summary>
 public interface IWordFont : IDisposable
 {
+    /// <summary>
+    /// 获取应用程序对象。
+    /// </summary>
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object Parent { get; }
+
     /// <summary>
     /// 获取或设置字体名称（如 "Arial", "Times New Roman" 等）。
     /// </summary>

@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -14,6 +14,16 @@ internal class WordBookmarks : IWordBookmarks
     private readonly MsWord.Bookmarks _bookmarks;
     private readonly IWordDocument _document;
     private bool _disposedValue;
+
+    /// <summary>
+    /// 获取应用程序对象
+    /// </summary>
+    public IWordApplication? Application => _bookmarks != null ? new WordApplication(_bookmarks.Application) : null;
+
+    /// <summary>
+    /// 获取父对象
+    /// </summary>
+    public object Parent => _bookmarks?.Parent;
 
     /// <summary>
     /// 获取书签数量
@@ -37,19 +47,22 @@ internal class WordBookmarks : IWordBookmarks
     /// </summary>
     /// <param name="index">书签索引</param>
     /// <returns>书签对象</returns>
-    public IWordBookmark Item(int index)
+    public IWordBookmark this[int index]
     {
-        if (index < 1 || index > Count)
-            throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
+        get
+        {
+            if (index < 1 || index > Count)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
 
-        try
-        {
-            var bookmark = _bookmarks[index];
-            return new WordBookmark(bookmark);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get bookmark at index {index}.", ex);
+            try
+            {
+                var bookmark = _bookmarks[index];
+                return new WordBookmark(bookmark);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get bookmark at index {index}.", ex);
+            }
         }
     }
 
@@ -58,19 +71,22 @@ internal class WordBookmarks : IWordBookmarks
     /// </summary>
     /// <param name="name">书签名称</param>
     /// <returns>书签对象</returns>
-    public IWordBookmark Item(string name)
+    public IWordBookmark this[string name]
     {
-        if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("Bookmark name cannot be null or empty.", nameof(name));
+        get
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Bookmark name cannot be null or empty.", nameof(name));
 
-        try
-        {
-            var bookmark = _bookmarks[name];
-            return new WordBookmark(bookmark);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get bookmark with name '{name}'.", ex);
+            try
+            {
+                var bookmark = _bookmarks[name];
+                return new WordBookmark(bookmark);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get bookmark with name '{name}'.", ex);
+            }
         }
     }
 
@@ -156,7 +172,7 @@ internal class WordBookmarks : IWordBookmarks
             {
                 try
                 {
-                    bookmarks.Add(Item(i));
+                    bookmarks.Add(this[i]);
                 }
                 catch
                 {

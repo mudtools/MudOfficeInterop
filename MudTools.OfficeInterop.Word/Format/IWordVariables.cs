@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -11,6 +11,16 @@ namespace MudTools.OfficeInterop.Word;
 /// </summary>
 public interface IWordVariables : IDisposable, IEnumerable<IWordVariable>
 {
+    /// <summary>
+    /// 获取应用程序对象。
+    /// </summary>
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object Parent { get; }
+
     /// <summary>
     /// 获取变量数量
     /// </summary>
@@ -31,19 +41,6 @@ public interface IWordVariables : IDisposable, IEnumerable<IWordVariable>
     /// </summary>
     /// <param name="name">变量名称</param>
     /// <param name="value">变量值</param>
-    /// <returns>变量对象</returns>
+    /// <returns>新添加的变量</returns>
     IWordVariable Add(string name, string value);
-
-    /// <summary>
-    /// 删除变量
-    /// </summary>
-    /// <param name="name">变量名称</param>
-    void Delete(string name);
-
-    /// <summary>
-    /// 检查变量是否存在
-    /// </summary>
-    /// <param name="name">变量名称</param>
-    /// <returns>是否存在</returns>
-    bool Exists(string name);
 }

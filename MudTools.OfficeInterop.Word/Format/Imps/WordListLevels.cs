@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -25,24 +25,34 @@ internal class WordListLevels : IWordListLevels
         _disposedValue = false;
     }
 
+    /// <inheritdoc/>
+    public IWordApplication? Application => _listLevels != null ? new WordApplication(_listLevels.Application) : null;
+
+    /// <inheritdoc/>
+    public object Parent => _listLevels?.Parent;
+
+
     /// <summary>
     /// 根据索引获取列表级别
     /// </summary>
     /// <param name="index">列表级别索引</param>
     /// <returns>列表级别对象</returns>
-    public IWordListLevel Item(int index)
+    public IWordListLevel this[int index]
     {
-        if (index < 1 || index > 9) // Word 最多支持 9 个列表级别
-            throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 1 and 9.");
+        get
+        {
+            if (index < 1 || index > 9) // Word 最多支持 9 个列表级别
+                throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 1 and 9.");
 
-        try
-        {
-            var listLevel = _listLevels[index];
-            return new WordListLevel(listLevel);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get list level at index {index}.", ex);
+            try
+            {
+                var listLevel = _listLevels[index];
+                return new WordListLevel(listLevel);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get list level at index {index}.", ex);
+            }
         }
     }
 

@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -14,18 +14,21 @@ internal class WordOLEFormat : IWordOLEFormat
 {
     #region 属性封装
 
+    /// <inheritdoc/>
+    public IWordApplication? Application => _oleFormat != null ? new WordApplication(_oleFormat.Application) : null;
+
+    /// <inheritdoc/>
+    public object Parent => _oleFormat?.Parent;
+
     /// <summary>
     /// 获取 OLE 对象的类名
     /// </summary>
     public string ClassType => _oleFormat.ClassType;
 
-
-
     /// <summary>
     /// 获取 OLE 对象的程序标识符
     /// </summary>
     public string ProgID => _oleFormat.ProgID;
-
 
     /// <summary>
     /// 获取或设置 OLE 对象的图标索引
@@ -58,11 +61,6 @@ internal class WordOLEFormat : IWordOLEFormat
     /// 获取 OLE 对象的原始格式（伪代码）
     /// </summary>
     public object Object => _oleFormat.Object;
-
-    /// <summary>
-    /// 获取 OLE 对象的应用程序对象（伪代码）
-    /// </summary>
-    public object Application => _oleFormat.Application;
     #endregion
 
     #region 构造函数与私有字段

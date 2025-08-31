@@ -1,10 +1,20 @@
-﻿namespace MudTools.OfficeInterop.Word;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.Shading 的接口，用于操作段落或表格的底纹样式。
 /// </summary>
 public interface IWordShading : IDisposable
 {
+    /// <summary>
+    /// 获取应用程序对象。
+    /// </summary>
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object Parent { get; }
+
     /// <summary>
     /// 获取或设置底纹的背景颜色（RGB值）。
     /// </summary>

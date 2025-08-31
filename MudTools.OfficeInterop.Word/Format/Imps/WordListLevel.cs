@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -15,6 +15,24 @@ internal class WordListLevel : IWordListLevel
     private bool _disposedValue;
 
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="listLevel">COM ListLevel 对象</param>
+    internal WordListLevel(MsWord.ListLevel listLevel)
+    {
+        _listLevel = listLevel ?? throw new ArgumentNullException(nameof(listLevel));
+        _disposedValue = false;
+    }
+
+    #region 属性实现
+
+    /// <inheritdoc/>
+    public IWordApplication? Application => _listLevel != null ? new WordApplication(_listLevel.Application) : null;
+
+    /// <inheritdoc/>
+    public object Parent => _listLevel?.Parent;
+
+    /// <summary>
     /// 获取或设置编号格式
     /// </summary>
     public string NumberFormat
@@ -26,21 +44,67 @@ internal class WordListLevel : IWordListLevel
     /// <summary>
     /// 获取或设置对齐方式
     /// </summary>
-    public int Alignment
+    public WdListLevelAlignment Alignment
     {
-        get => (int)_listLevel.Alignment;
-        set => _listLevel.Alignment = (MsWord.WdListLevelAlignment)value;
+        get => (WdListLevelAlignment)(int)_listLevel.Alignment;
+        set => _listLevel.Alignment = (MsWord.WdListLevelAlignment)(int)value;
     }
 
     /// <summary>
-    /// 构造函数
+    /// 获取或设置起始编号
     /// </summary>
-    /// <param name="listLevel">COM ListLevel 对象</param>
-    internal WordListLevel(MsWord.ListLevel listLevel)
+    public int StartAt
     {
-        _listLevel = listLevel ?? throw new ArgumentNullException(nameof(listLevel));
-        _disposedValue = false;
+        get => _listLevel.StartAt;
+        set => _listLevel.StartAt = value;
     }
+
+    /// <summary>
+    /// 获取或设置编号样式
+    /// </summary>
+    public WdListNumberStyle NumberStyle
+    {
+        get => (WdListNumberStyle)(int)_listLevel.NumberStyle;
+        set => _listLevel.NumberStyle = (MsWord.WdListNumberStyle)(int)value;
+    }
+
+    /// <summary>
+    /// 获取或设置制表符位置
+    /// </summary>
+    public float TabPosition
+    {
+        get => _listLevel.TabPosition;
+        set => _listLevel.TabPosition = value;
+    }
+
+    /// <summary>
+    /// 获取或设置文本缩进位置
+    /// </summary>
+    public float TextPosition
+    {
+        get => _listLevel.TextPosition;
+        set => _listLevel.TextPosition = value;
+    }
+
+    /// <summary>
+    /// 获取或设置编号后的字符
+    /// </summary>
+    public WdTrailingCharacter TrailingCharacter
+    {
+        get => (WdTrailingCharacter)(int)_listLevel.TrailingCharacter;
+        set => _listLevel.TrailingCharacter = (MsWord.WdTrailingCharacter)(int)value;
+    }
+
+    /// <summary>
+    /// 获取或设置链接样式
+    /// </summary>
+    public string LinkedStyle
+    {
+        get => _listLevel.LinkedStyle;
+        set => _listLevel.LinkedStyle = value;
+    }
+
+    #endregion
 
     /// <summary>
     /// 释放资源

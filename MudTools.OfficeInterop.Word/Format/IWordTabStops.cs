@@ -1,10 +1,20 @@
-﻿namespace MudTools.OfficeInterop.Word;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.TabStops 的接口，用于操作段落的制表符集合。
 /// </summary>
 public interface IWordTabStops : IEnumerable<IWordTabStop>, IDisposable
 {
+    /// <summary>
+    /// 获取应用程序对象。
+    /// </summary>
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object Parent { get; }
+
     /// <summary>
     /// 获取制表符的数量。
     /// </summary>

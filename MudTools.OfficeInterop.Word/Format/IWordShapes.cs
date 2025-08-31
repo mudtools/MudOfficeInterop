@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,88 +8,138 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 表示 Word 中形状集合的封装接口
+/// 封装 Microsoft.Office.Interop.Word.Shapes 的接口，用于操作文档中的形状集合。
 /// </summary>
 public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
 {
     /// <summary>
-    /// 获取形状的数量
+    /// 获取应用程序对象。
+    /// </summary>
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取形状集合中的形状数量。
     /// </summary>
     int Count { get; }
 
     /// <summary>
-    /// 获取指定索引的形状对象
+    /// 根据索引获取形状（从1开始）。
     /// </summary>
-    /// <param name="index">形状索引（从1开始）</param>
-    /// <returns>形状对象</returns>
     IWordShape this[int index] { get; }
 
     /// <summary>
-    /// 获取指定名称的形状对象
+    /// 根据名称获取形状。
     /// </summary>
-    /// <param name="name">形状名称</param>
-    /// <returns>形状对象</returns>
     IWordShape this[string name] { get; }
 
-    IWordShape AddOLEObject(ref object ClassType,
-        ref object FileName,
-        ref object LinkToFile,
-        ref object DisplayAsIcon,
-        ref object IconFileName,
-        ref object IconIndex,
-        ref object IconLabel,
-        ref object Left,
-        ref object Top,
-        ref object Width,
-        ref object Height,
-        ref object Anchor);
-
     /// <summary>
-    /// 添加文本框形状
+    /// 添加文本框形状。
     /// </summary>
-    /// <param name="orientation">文本方向</param>
-    /// <param name="left">左边距</param>
-    /// <param name="top">上边距</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新创建的形状对象</returns>
+    /// <param name="orientation">文本方向。</param>
+    /// <param name="left">左边距。</param>
+    /// <param name="top">上边距。</param>
+    /// <param name="width">宽度。</param>
+    /// <param name="height">高度。</param>
+    /// <returns>新添加的形状。</returns>
     IWordShape AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height);
 
     /// <summary>
-    /// 添加图片形状
+    /// 添加矩形形状。
     /// </summary>
-    /// <param name="fileName">图片文件路径</param>
-    /// <param name="linkToFile">是否链接到文件</param>
-    /// <param name="saveWithDocument">是否与文档一起保存</param>
-    /// <param name="left">左边距</param>
-    /// <param name="top">上边距</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新创建的形状对象</returns>
-    IWordShape AddPicture(string fileName, bool linkToFile, bool saveWithDocument,
-                         double left, double top, double width, double height);
+    /// <param name="left">左边距。</param>
+    /// <param name="top">上边距。</param>
+    /// <param name="width">宽度。</param>
+    /// <param name="height">高度。</param>
+    /// <returns>新添加的形状。</returns>
+    IWordShape AddRectangle(float left, float top, float width, float height);
 
     /// <summary>
-    /// 根据索引删除形状
+    /// 添加线条形状。
     /// </summary>
-    /// <param name="index">要删除的形状索引</param>
-    void Delete(int index);
+    /// <param name="beginX">起始点X坐标。</param>
+    /// <param name="beginY">起始点Y坐标。</param>
+    /// <param name="endX">结束点X坐标。</param>
+    /// <param name="endY">结束点Y坐标。</param>
+    /// <returns>新添加的形状。</returns>
+    IWordShape AddLine(float beginX, float beginY, float endX, float endY);
 
     /// <summary>
-    /// 根据名称删除形状
+    /// 添加图片形状。
     /// </summary>
-    /// <param name="name">要删除的形状名称</param>
-    void Delete(string name);
+    /// <param name="fileName">图片文件路径。</param>
+    /// <param name="linkToFile">是否链接到文件。</param>
+    /// <param name="saveWithDocument">是否与文档一起保存。</param>
+    /// <param name="left">左边距。</param>
+    /// <param name="top">上边距。</param>
+    /// <param name="width">宽度。</param>
+    /// <param name="height">高度。</param>
+    /// <returns>新添加的形状。</returns>
+    IWordShape AddPicture(string fileName, bool linkToFile, bool saveWithDocument, float left, float top, float width, float height);
 
     /// <summary>
-    /// 删除所有形状
+    /// 添加图表形状。
+    /// </summary>
+    /// <param name="type">图表类型。</param>
+    /// <param name="left">左边距。</param>
+    /// <param name="top">上边距。</param>
+    /// <param name="width">宽度。</param>
+    /// <param name="height">高度。</param>
+    /// <returns>新添加的形状。</returns>
+    IWordShape AddChart(MsoChartType type, float left, float top, float width, float height);
+
+    /// <summary>
+    /// 检查形状是否存在。
+    /// </summary>
+    /// <param name="name">形状名称。</param>
+    /// <returns>是否存在。</returns>
+    bool Contains(string name);
+
+    /// <summary>
+    /// 获取所有形状名称。
+    /// </summary>
+    /// <returns>形状名称列表。</returns>
+    List<string> GetAllShapeNames();
+
+    /// <summary>
+    /// 根据形状类型获取形状名称列表。
+    /// </summary>
+    /// <param name="shapeType">形状类型。</param>
+    /// <returns>形状名称列表。</returns>
+    List<string> GetShapeNamesByType(MsoShapeType shapeType);
+
+    /// <summary>
+    /// 删除指定名称的形状。
+    /// </summary>
+    /// <param name="name">形状名称。</param>
+    /// <returns>是否删除成功。</returns>
+    bool DeleteShape(string name);
+
+    /// <summary>
+    /// 删除所有形状。
     /// </summary>
     void DeleteAll();
 
     /// <summary>
-    /// 查找指定名称的形状
+    /// 选择所有形状。
     /// </summary>
-    /// <param name="name">形状名称</param>
-    /// <returns>形状对象，如果未找到则返回null</returns>
-    IWordShape FindByName(string name);
+    void SelectAll();
+
+    /// <summary>
+    /// 获取指定范围内的形状。
+    /// </summary>
+    /// <param name="range">范围。</param>
+    /// <returns>形状集合。</returns>
+    IWordShapes GetShapesInRange(IWordRange range);
+
+    /// <summary>
+    /// 获取指定类型的形状数量。
+    /// </summary>
+    /// <param name="shapeType">形状类型。</param>
+    /// <returns>形状数量。</returns>
+    int GetCountByType(MsoShapeType shapeType);
 }

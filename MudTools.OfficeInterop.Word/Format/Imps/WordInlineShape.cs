@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -8,239 +8,432 @@
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
-/// 对 Microsoft.Office.Interop.Word.InlineShape 的封装实现类
+/// 封装 Microsoft.Office.Interop.Word.InlineShape 的实现类。
 /// </summary>
 internal class WordInlineShape : IWordInlineShape
 {
-    #region 属性封装
-
-    /// <summary>
-    /// 获取内嵌形状的类型
-    /// </summary>
-    public int Type => Convert.ToInt32(_inlineShape.Type);
-
-    /// <summary>
-    /// 获取或设置内嵌形状的替代文本
-    /// </summary>
-    public string AlternativeText
-    {
-        get => _inlineShape.AlternativeText;
-        set => _inlineShape.AlternativeText = value;
-    }
-
-    /// <summary>
-    /// 获取或设置内嵌形状的高度
-    /// </summary>
-    public float Height
-    {
-        get => _inlineShape.Height;
-        set => _inlineShape.Height = value;
-    }
-
-    /// <summary>
-    /// 获取或设置内嵌形状的宽度
-    /// </summary>
-    public float Width
-    {
-        get => _inlineShape.Width;
-        set => _inlineShape.Width = value;
-    }
-
-    /// <summary>
-    /// 获取内嵌形状的范围（伪代码）
-    /// </summary>
-    public object Range => _inlineShape.Range;
-
-    /// <summary>
-    /// 获取内嵌形状的父对象（伪代码）
-    /// </summary>
-    public object Parent => _inlineShape.Parent;
-
-    /// <summary>
-    /// 获取内嵌形状的OLE格式（伪代码）
-    /// </summary>
-    public object OLEFormat => _inlineShape.OLEFormat;
-
-    /// <summary>
-    /// 获取内嵌形状的链接格式（伪代码）
-    /// </summary>
-    public object LinkFormat => _inlineShape.LinkFormat;
-
-
-    /// <summary>
-    /// 获取内嵌形状的填充属性（伪代码）
-    /// </summary>
-    public object Fill => _inlineShape.Fill;
-
-    /// <summary>
-    /// 获取内嵌形状的线条属性（伪代码）
-    /// </summary>
-    public object Line => _inlineShape.Line;
-
-
-    /// <summary>
-    /// 锁定内嵌形状的比例
-    /// </summary>
-    public bool LockAspectRatio
-    {
-        get => _inlineShape.LockAspectRatio == MsCore.MsoTriState.msoTrue ? true : false;
-        set => _inlineShape.LockAspectRatio = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
-    }
-
-    /// <summary>
-    /// 获取内嵌形状是否为图片类型
-    /// </summary>
-    public bool IsPicture => Type == 3; // wdInlineShapePicture = 3
-
-    /// <summary>
-    /// 获取内嵌形状是否为OLE对象类型
-    /// </summary>
-    public bool IsOLEObject => Type == 1; // wdInlineShapeEmbeddedOLEObject = 1
-
-    #endregion
-
-    #region 构造函数与私有字段
-
     private MsWord.InlineShape _inlineShape;
     private bool _disposedValue;
+    private float _originalWidth;
+    private float _originalHeight;
 
     /// <summary>
-    /// 初始化 WordInlineShape 实例
+    /// 构造函数，包装 COM 对象。
     /// </summary>
-    /// <param name="inlineShape">原始 COM InlineShape 对象</param>
+    /// <param name="inlineShape">原始 COM InlineShape 对象。</param>
     internal WordInlineShape(MsWord.InlineShape inlineShape)
     {
         _inlineShape = inlineShape ?? throw new ArgumentNullException(nameof(inlineShape));
         _disposedValue = false;
+
+        // 保存原始尺寸
+        try
+        {
+            _originalWidth = _inlineShape.Width;
+            _originalHeight = _inlineShape.Height;
+        }
+        catch
+        {
+            _originalWidth = 100f;
+            _originalHeight = 100f;
+        }
+    }
+
+    #region 属性实现
+
+    /// <inheritdoc/>
+    public WdInlineShapeType Type => _inlineShape?.Type != null ? (WdInlineShapeType)(int)_inlineShape?.Type : WdInlineShapeType.wdInlineShapePicture;
+
+
+    /// <inheritdoc/>
+    public IWordRange Range =>
+        _inlineShape?.Range != null ? new WordRange(_inlineShape.Range) : null;
+
+    /// <inheritdoc/>
+    public object Parent => _inlineShape?.Parent;
+
+
+    /// <inheritdoc/>
+    public float Width
+    {
+        get => _inlineShape?.Width ?? 0f;
+        set
+        {
+            if (_inlineShape != null)
+                _inlineShape.Width = value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public float Height
+    {
+        get => _inlineShape?.Height ?? 0f;
+        set
+        {
+            if (_inlineShape != null)
+                _inlineShape.Height = value;
+        }
+    }
+
+
+    /// <inheritdoc/>
+    public bool LockAspectRatio
+    {
+        get => _inlineShape?.LockAspectRatio == MsCore.MsoTriState.msoTrue;
+        set
+        {
+            if (_inlineShape != null)
+                _inlineShape.LockAspectRatio = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
+        }
+    }
+
+    /// <inheritdoc/>
+    public IWordOLEFormat? OLEFormat =>
+         _inlineShape?.OLEFormat != null ? new WordOLEFormat(_inlineShape.OLEFormat) : null;
+
+    /// <inheritdoc/>
+    public IWordLinkFormat? LinkFormat =>
+         _inlineShape?.LinkFormat != null ? new WordLinkFormat(_inlineShape.LinkFormat) : null;
+
+    /// <inheritdoc/>
+    public IWordField? Field => _inlineShape?.Field != null ? new WordField(_inlineShape.Field) : null;
+
+    /// <inheritdoc/>
+    public IWordLineFormat? Line =>
+        _inlineShape?.Line != null ? new WordLineFormat(_inlineShape.Line) : null;
+
+    /// <inheritdoc/>
+    public IWordFillFormat? Fill =>
+        _inlineShape?.Fill != null ? new WordFillFormat(_inlineShape.Fill) : null;
+
+    /// <inheritdoc/>
+    public IWordShadowFormat? Shadow =>
+        _inlineShape?.Shadow != null ? new WordShadowFormat(_inlineShape.Shadow) : null;
+
+    /// <inheritdoc/>
+    public IWordChart Chart => _inlineShape?.Chart;
+
+    /// <inheritdoc/>
+    public IWordSmartArt SmartArt => _inlineShape?.SmartArt;
+
+    /// <inheritdoc/>
+    public IWordPictureFormat? PictureFormat =>
+         _inlineShape?.PictureFormat != null ? new WordPictureFormat(_inlineShape.PictureFormat) : null;
+
+    /// <inheritdoc/>
+    public IWordShape GroupItems => _inlineShape?.GroupItems;
+
+    /// <inheritdoc/>
+    public bool IsPicture => Type == WdInlineShapeType.wdInlineShapePicture;
+
+    /// <inheritdoc/>
+    public bool IsOLEObject => Type == WdInlineShapeType.wdInlineShapeOLEControlObject;
+
+    /// <inheritdoc/>
+    public bool IsChart => Type == WdInlineShapeType.wdInlineShapeChart;
+
+    /// <inheritdoc/>
+    public bool IsFirst => _inlineShape?.Range?.Start == 0;
+
+    /// <inheritdoc/>
+    public bool IsLast => _inlineShape?.Range?.End == (_inlineShape?.Range?.Document?.Range()?.End ?? 0);
+
+    /// <inheritdoc/>
+    public string AlternativeText
+    {
+        get => _inlineShape?.AlternativeText ?? string.Empty;
+        set
+        {
+            if (_inlineShape != null)
+                _inlineShape.AlternativeText = value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public string Title
+    {
+        get => _inlineShape?.Title ?? string.Empty;
+        set
+        {
+            if (_inlineShape != null)
+                _inlineShape.Title = value;
+        }
     }
 
     #endregion
 
-    #region 公共方法
+    #region 方法实现
 
-    /// <summary>
-    /// 删除当前内嵌形状
-    /// </summary>
+    /// <inheritdoc/>
     public void Delete()
     {
-        try
-        {
-            _inlineShape.Delete();
-        }
-        catch (COMException ex)
-        {
-            throw new InvalidOperationException("无法删除内嵌形状", ex);
-        }
+        _inlineShape?.Delete();
     }
 
-    /// <summary>
-    /// 复制当前内嵌形状
-    /// </summary>
-    public void Copy()
-    {
-        try
-        {
-            _inlineShape.Range.Copy();
-        }
-        catch (COMException ex)
-        {
-            throw new InvalidOperationException("无法复制内嵌形状", ex);
-        }
-    }
-
-    /// <summary>
-    /// 剪切当前内嵌形状
-    /// </summary>
-    public void Cut()
-    {
-        try
-        {
-            _inlineShape.Range.Cut();
-        }
-        catch (COMException ex)
-        {
-            throw new InvalidOperationException("无法剪切内嵌形状", ex);
-        }
-    }
-
-    /// <summary>
-    /// 选择当前内嵌形状
-    /// </summary>
+    /// <inheritdoc/>
     public void Select()
     {
-        try
+        _inlineShape?.Select();
+    }
+
+    /// <inheritdoc/>
+    public void Copy()
+    {
+        _inlineShape?.Range?.Copy();
+    }
+
+    /// <inheritdoc/>
+    public void Cut()
+    {
+        _inlineShape?.Range?.Cut();
+    }
+
+    /// <inheritdoc/>
+    public void ScaleSize(float width, float height, bool scale = true)
+    {
+        if (_inlineShape != null)
         {
-            _inlineShape.Range.Select();
-        }
-        catch (COMException ex)
-        {
-            throw new InvalidOperationException("无法选择内嵌形状", ex);
+            if (scale && LockAspectRatio)
+            {
+                // 按比例缩放
+                float scaleX = width / Width;
+                float scaleY = height / Height;
+                float scaleRatio = Math.Min(scaleX, scaleY);
+                _inlineShape.Width = Width * scaleRatio;
+                _inlineShape.Height = Height * scaleRatio;
+            }
+            else
+            {
+                _inlineShape.Width = width;
+                _inlineShape.Height = height;
+            }
         }
     }
 
-    /// <summary>
-    /// 将内嵌形状转换为浮动形状
-    /// </summary>
-    /// <returns>转换后的浮动形状对象</returns>
-    public IWordShape ConvertToShape()
+    /// <inheritdoc/>
+    public IWordShape? ConvertToShape()
     {
+        if (_inlineShape == null)
+            return null;
+
         try
         {
             var shape = _inlineShape.ConvertToShape();
-            return new WordShape(shape);
+            return shape != null ? new WordShape(shape) : null;
         }
-        catch (COMException ex)
+        catch (COMException)
         {
-            throw new InvalidOperationException("无法转换为浮动形状", ex);
+            return null;
+        }
+        catch
+        {
+            return null;
         }
     }
 
-    /// <summary>
-    /// 更新链接的内嵌形状
-    /// </summary>
-    public void Update()
+    /// <inheritdoc/>
+    public void SetSize(float width, float height)
     {
+        if (_inlineShape != null)
+        {
+            _inlineShape.Width = width;
+            _inlineShape.Height = height;
+        }
+    }
+
+    /// <inheritdoc/>
+    public void ResetSize()
+    {
+        if (_inlineShape != null)
+        {
+            _inlineShape.Width = _originalWidth;
+            _inlineShape.Height = _originalHeight;
+        }
+    }
+
+    /// <inheritdoc/>
+    public void CopyTo(IWordInlineShape targetInlineShape)
+    {
+        if (_inlineShape == null || targetInlineShape == null)
+            return;
+
         try
         {
-            _inlineShape.LinkFormat?.Update();
+            // 复制基本属性
+            targetInlineShape.Width = this.Width;
+            targetInlineShape.Height = this.Height;
+            targetInlineShape.LockAspectRatio = this.LockAspectRatio;
+            targetInlineShape.AlternativeText = this.AlternativeText;
+            targetInlineShape.Title = this.Title;
+
+            // 复制线条格式
+            if (this.Line != null && targetInlineShape.Line != null)
+            {
+                try
+                {
+                    targetInlineShape.Line.ForeColor.RGB = this.Line.ForeColor.RGB;
+                    targetInlineShape.Line.BackColor.RGB = this.Line.BackColor.RGB;
+                    targetInlineShape.Line.Weight = this.Line.Weight;
+                    targetInlineShape.Line.Style = this.Line.Style;
+                    targetInlineShape.Line.DashStyle = this.Line.DashStyle;
+                    targetInlineShape.Line.Visible = this.Line.Visible;
+                    targetInlineShape.Line.Transparency = this.Line.Transparency;
+                }
+                catch
+                {
+                    // 忽略线条格式复制异常
+                }
+            }
+
+            // 复制填充格式
+            if (this.Fill != null && targetInlineShape.Fill != null)
+            {
+                try
+                {
+                    targetInlineShape.Fill.ForeColor.RGB = this.Fill.ForeColor.RGB;
+                    targetInlineShape.Fill.BackColor.RGB = this.Fill.BackColor.RGB;
+                    targetInlineShape.Fill.Transparency = this.Fill.Transparency;
+                    targetInlineShape.Fill.Visible = this.Fill.Visible;
+                }
+                catch
+                {
+                    // 忽略填充格式复制异常
+                }
+            }
         }
         catch (COMException ex)
         {
-            throw new InvalidOperationException("无法更新链接的内嵌形状", ex);
+            throw new InvalidOperationException("无法复制内联形状格式。", ex);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void Reset()
+    {
+        if (_inlineShape != null)
+        {
+            // 重置基本属性为默认值
+            _inlineShape.Width = _originalWidth;
+            _inlineShape.Height = _originalHeight;
+            _inlineShape.LockAspectRatio = MsCore.MsoTriState.msoTrue; // 默认锁定纵横比
+            _inlineShape.AlternativeText = string.Empty;
+            _inlineShape.Title = string.Empty;
+        }
+    }
+
+    /// <inheritdoc/>
+    public string GetSourcePath()
+    {
+        if (_inlineShape == null)
+            return string.Empty;
+
+        try
+        {
+            if (LinkFormat?.SourceFullName != null)
+                return LinkFormat.SourceFullName;
+
+            if (OLEFormat?.IconPath != null)
+                return OLEFormat.IconPath;
+
+            return string.Empty;
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+
+    /// <inheritdoc/>
+    public bool Update()
+    {
+        if (_inlineShape == null)
+            return false;
+
+        try
+        {
+            if (LinkFormat != null)
+            {
+                LinkFormat.Update();
+                return true;
+            }
+            return false;
+        }
+        catch (COMException)
+        {
+            return false;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    /// <inheritdoc/>
+    public bool BreakLink()
+    {
+        if (_inlineShape == null)
+            return false;
+
+        try
+        {
+            if (LinkFormat != null)
+            {
+                LinkFormat.BreakLink();
+                return true;
+            }
+            return false;
+        }
+        catch (COMException)
+        {
+            return false;
+        }
+        catch
+        {
+            return false;
         }
     }
 
     #endregion
 
-    #region IDisposable 模式实现
+    #region IDisposable 实现
 
     /// <summary>
-    /// 释放资源
+    /// 释放 COM 对象资源。
     /// </summary>
-    /// <param name="disposing">是否显式调用 Dispose()</param>
+    /// <param name="disposing">是否由用户主动调用 Dispose。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
 
-        if (disposing && _inlineShape != null)
+        if (disposing)
         {
-            try
+            // 释放范围对象
+            if (_inlineShape?.Range != null)
             {
-                while (Marshal.ReleaseComObject(_inlineShape) > 0) { }
+                Marshal.ReleaseComObject(_inlineShape.Range);
             }
-            catch
+            // 释放线条格式对象
+            if (_inlineShape?.Line != null)
             {
-                // 忽略释放 COM 对象时的异常
+                Marshal.ReleaseComObject(_inlineShape.Line);
             }
-            _inlineShape = null;
+            // 释放填充格式对象
+            if (_inlineShape?.Fill != null)
+            {
+                Marshal.ReleaseComObject(_inlineShape.Fill);
+            }
+            // 释放内联形状对象本身
+            if (_inlineShape != null)
+            {
+                Marshal.ReleaseComObject(_inlineShape);
+                _inlineShape = null;
+            }
         }
 
         _disposedValue = true;
     }
 
-    /// <summary>
-    /// 显式释放资源
-    /// </summary>
+    /// <inheritdoc/>
     public void Dispose()
     {
         Dispose(true);

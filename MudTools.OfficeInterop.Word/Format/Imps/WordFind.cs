@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -14,6 +14,12 @@ internal class WordFind : IWordFind
 {
     private readonly MsWord.Find _find;
     private bool _disposedValue;
+
+    /// <inheritdoc/>
+    public IWordApplication? Application => _find != null ? new WordApplication(_find.Application) : null;
+
+    /// <inheritdoc/>
+    public object Parent => _find?.Parent;
 
     public string FindText
     {
@@ -43,6 +49,30 @@ internal class WordFind : IWordFind
     {
         get => _find.MatchWildcards;
         set => _find.MatchWildcards = value;
+    }
+
+    public bool MatchPrefix
+    {
+        get => _find.MatchPrefix;
+        set => _find.MatchPrefix = value;
+    }
+
+    public bool MatchSuffix
+    {
+        get => _find.MatchSuffix;
+        set => _find.MatchSuffix = value;
+    }
+
+    public bool IgnoreSpace
+    {
+        get => _find.IgnoreSpace;
+        set => _find.IgnoreSpace = value;
+    }
+
+    public bool IgnorePunct
+    {
+        get => _find.IgnorePunct;
+        set => _find.IgnorePunct = value;
     }
 
     public WdFindWrap Wrap

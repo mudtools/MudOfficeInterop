@@ -1,4 +1,4 @@
-﻿using Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Word;
 
 namespace MudTools.OfficeInterop.Word;
 
@@ -7,6 +7,16 @@ namespace MudTools.OfficeInterop.Word;
 /// </summary>
 public interface IWordTableStyle : IDisposable
 {
+    /// <summary>
+    /// 获取应用程序对象。
+    /// </summary>
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object Parent { get; }
+
     WdTableDirection TableDirection { get; set; }
     /// <summary>
     /// 获取或设置表格左边框样式。
