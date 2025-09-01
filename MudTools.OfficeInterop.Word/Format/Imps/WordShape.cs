@@ -115,25 +115,32 @@ internal class WordShape : IWordShape
     }
 
     /// <inheritdoc/>
-    public IWordTextFrame? TextFrame => _shape?.TextFrame != null ? new WordTextFrame(_shape.TextFrame) : null;
+    public IWordTextFrame? TextFrame =>
+        _shape?.TextFrame != null ? new WordTextFrame(_shape.TextFrame) : null;
 
     /// <inheritdoc/>
-    public IWordFillFormat? Fill => _shape?.Fill != null ? new WordFillFormat(_shape.Fill) : null;
+    public IWordFillFormat? Fill =>
+        _shape?.Fill != null ? new WordFillFormat(_shape.Fill) : null;
 
     /// <inheritdoc/>
-    public IWordLineFormat? Line => _shape?.Line != null ? new WordLineFormat(_shape.Line) : null;
+    public IWordLineFormat? Line =>
+        _shape?.Line != null ? new WordLineFormat(_shape.Line) : null;
 
     /// <inheritdoc/>
-    public IWordShadowFormat? Shadow => _shape?.Shadow != null ? new WordShadowFormat(_shape.Shadow) : null;
+    public IWordShadowFormat? Shadow =>
+        _shape?.Shadow != null ? new WordShadowFormat(_shape.Shadow) : null;
 
     /// <inheritdoc/>
-    public IWordThreeDFormat? ThreeD => _shape?.ThreeD != null ? new WordThreeDFormat(_shape.ThreeD) : null;
+    public IWordThreeDFormat? ThreeD =>
+        _shape?.ThreeD != null ? new WordThreeDFormat(_shape.ThreeD) : null;
 
     /// <inheritdoc/>
-    public IWordLinkFormat? LinkFormat => _shape?.LinkFormat != null ? new WordLinkFormat(_shape.LinkFormat) : null;
+    public IWordLinkFormat? LinkFormat =>
+        _shape?.LinkFormat != null ? new WordLinkFormat(_shape.LinkFormat) : null;
 
     /// <inheritdoc/>
-    public IWordOLEFormat? OLEFormat => _shape?.OLEFormat != null ? new WordOLEFormat(_shape.OLEFormat) : null;
+    public IWordOLEFormat? OLEFormat =>
+        _shape?.OLEFormat != null ? new WordOLEFormat(_shape.OLEFormat) : null;
 
     /// <inheritdoc/>
     public IWordSoftEdgeFormat? SoftEdge =>

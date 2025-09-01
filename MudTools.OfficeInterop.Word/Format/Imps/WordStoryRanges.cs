@@ -39,30 +39,28 @@ internal class WordStoryRanges : IWordStoryRanges
         _disposedValue = false;
     }
 
-    /// <summary>
-    /// 根据索引获取范围
-    /// </summary>
-    /// <param name="index">范围索引</param>
-    /// <returns>范围对象</returns>
-    public IWordRange Item(WdStoryType index)
-    {
-        try
-        {
-            var range = _storyRanges[(MsWord.WdStoryType)index];
-            return new WordRange(range);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get story range at index {index}.", ex);
-        }
-    }
+
 
     /// <summary>
     /// 根据类型获取范围
     /// </summary>
     /// <param name="index">范围类型</param>
     /// <returns>范围对象</returns>
-    public IWordRange this[WdStoryType index] => Item(index);
+    public IWordRange this[WdStoryType index]
+    {
+        get
+        {
+            try
+            {
+                var range = _storyRanges[(MsWord.WdStoryType)index];
+                return new WordRange(range);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get story range at index {index}.", ex);
+            }
+        }
+    }
 
     /// <summary>
     /// 获取枚举器
@@ -77,7 +75,7 @@ internal class WordStoryRanges : IWordStoryRanges
             {
                 try
                 {
-                    ranges.Add(Item((WdStoryType)i));
+                    ranges.Add(this[(WdStoryType)i]);
                 }
                 catch
                 {
