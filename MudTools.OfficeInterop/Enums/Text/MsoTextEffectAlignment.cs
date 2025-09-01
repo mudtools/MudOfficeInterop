@@ -8,42 +8,42 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定艺术字文本的对齐方式
 /// </summary>
-public enum MsoArrowheadStyle
+public enum MsoTextEffectAlignment
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 混合对齐方式（通常用于表示未设置或多种方式的组合）
     /// </summary>
-    msoArrowheadStyleMixed = -2,
-
+    msoTextEffectAlignmentMixed = -2,
+    
     /// <summary>
-    /// 无箭头
+    /// 左对齐
     /// </summary>
-    msoArrowheadNone = 1,
-
+    msoTextEffectAlignmentLeft = 1,
+    
     /// <summary>
-    /// 三角形箭头
+    /// 居中对齐
     /// </summary>
-    msoArrowheadTriangle = 2,
-
+    msoTextEffectAlignmentCentered = 2,
+    
     /// <summary>
-    /// 开放式箭头
+    /// 右对齐
     /// </summary>
-    msoArrowheadOpen = 3,
-
+    msoTextEffectAlignmentRight = 3,
+    
     /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
+    /// 字母间距调整对齐（分散对齐，调整字母间距以填充行宽）
     /// </summary>
-    msoArrowheadStealth = 4,
-
+    msoTextEffectAlignmentLetterJustify = 4,
+    
     /// <summary>
-    /// 菱形箭头
+    /// 单词间距调整对齐（调整单词间距以填充行宽）
     /// </summary>
-    msoArrowheadDiamond = 5,
-
+    msoTextEffectAlignmentWordJustify = 5,
+    
     /// <summary>
-    /// 椭圆形箭头
+    /// 拉伸调整对齐（通过拉伸或压缩文本以填充行宽）
     /// </summary>
-    msoArrowheadOval = 6
+    msoTextEffectAlignmentStretchJustify = 6
 }

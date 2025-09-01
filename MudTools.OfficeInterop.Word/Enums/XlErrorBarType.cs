@@ -5,45 +5,41 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定图表误差线的类型
+/// 用于定义Excel图表中数据系列误差线的计算方式
 /// </summary>
-public enum MsoArrowheadStyle
+public enum XlErrorBarType
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 自定义误差线类型
+    /// 用户可以指定正负误差量的具体值
     /// </summary>
-    msoArrowheadStyleMixed = -2,
-
+    xlErrorBarTypeCustom = -4114,
+    
     /// <summary>
-    /// 无箭头
+    /// 固定值误差线类型
+    /// 误差量为固定的数值
     /// </summary>
-    msoArrowheadNone = 1,
-
+    xlErrorBarTypeFixedValue = 1,
+    
     /// <summary>
-    /// 三角形箭头
+    /// 百分比误差线类型
+    /// 误差量为数据点值的百分比
     /// </summary>
-    msoArrowheadTriangle = 2,
-
+    xlErrorBarTypePercent = 2,
+    
     /// <summary>
-    /// 开放式箭头
+    /// 标准偏差误差线类型
+    /// 误差量为数据的标准偏差
     /// </summary>
-    msoArrowheadOpen = 3,
-
+    xlErrorBarTypeStDev = -4155,
+    
     /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
+    /// 标准误差线类型
+    /// 误差量为数据的标准误差
     /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    xlErrorBarTypeStError = 4
 }

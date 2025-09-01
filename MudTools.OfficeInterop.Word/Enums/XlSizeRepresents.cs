@@ -5,45 +5,20 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定尺寸所代表的含义
 /// </summary>
-public enum MsoArrowheadStyle
+public enum XlSizeRepresents
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 尺寸表示面积
     /// </summary>
-    msoArrowheadStyleMixed = -2,
+    xlSizeIsArea = 1,
 
     /// <summary>
-    /// 无箭头
+    /// 尺寸表示宽度
     /// </summary>
-    msoArrowheadNone = 1,
-
-    /// <summary>
-    /// 三角形箭头
-    /// </summary>
-    msoArrowheadTriangle = 2,
-
-    /// <summary>
-    /// 开放式箭头
-    /// </summary>
-    msoArrowheadOpen = 3,
-
-    /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
-    /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    xlSizeIsWidth = 2
 }

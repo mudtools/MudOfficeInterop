@@ -5,45 +5,20 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定图表元素在图表中的位置设置
 /// </summary>
-public enum MsoArrowheadStyle
+public enum XlChartElementPosition
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 自动位置：图表元素由系统自动定位
     /// </summary>
-    msoArrowheadStyleMixed = -2,
-
+    xlChartElementPositionAutomatic = -4105,
+    
     /// <summary>
-    /// 无箭头
+    /// 自定义位置：图表元素使用用户定义的位置
     /// </summary>
-    msoArrowheadNone = 1,
-
-    /// <summary>
-    /// 三角形箭头
-    /// </summary>
-    msoArrowheadTriangle = 2,
-
-    /// <summary>
-    /// 开放式箭头
-    /// </summary>
-    msoArrowheadOpen = 3,
-
-    /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
-    /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    xlChartElementPositionCustom = -4114
 }

@@ -8,42 +8,22 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定文本方向的枚举类型
 /// </summary>
-public enum MsoArrowheadStyle
+public enum MsoTextDirection
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 混合文本方向（通常表示未统一的方向设置）
     /// </summary>
-    msoArrowheadStyleMixed = -2,
-
+    msoTextDirectionMixed = -2,
+    
     /// <summary>
-    /// 无箭头
+    /// 从左到右的文本方向
     /// </summary>
-    msoArrowheadNone = 1,
-
+    msoTextDirectionLeftToRight = 1,
+    
     /// <summary>
-    /// 三角形箭头
+    /// 从右到左的文本方向
     /// </summary>
-    msoArrowheadTriangle = 2,
-
-    /// <summary>
-    /// 开放式箭头
-    /// </summary>
-    msoArrowheadOpen = 3,
-
-    /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
-    /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    msoTextDirectionRightToLeft = 2
 }

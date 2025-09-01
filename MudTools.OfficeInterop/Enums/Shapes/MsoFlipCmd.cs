@@ -8,42 +8,16 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定形状对象的翻转方向
 /// </summary>
-public enum MsoArrowheadStyle
+public enum MsoFlipCmd
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 水平翻转
     /// </summary>
-    msoArrowheadStyleMixed = -2,
-
+    msoFlipHorizontal,
     /// <summary>
-    /// 无箭头
+    /// 垂直翻转
     /// </summary>
-    msoArrowheadNone = 1,
-
-    /// <summary>
-    /// 三角形箭头
-    /// </summary>
-    msoArrowheadTriangle = 2,
-
-    /// <summary>
-    /// 开放式箭头
-    /// </summary>
-    msoArrowheadOpen = 3,
-
-    /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
-    /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    msoFlipVertical
 }

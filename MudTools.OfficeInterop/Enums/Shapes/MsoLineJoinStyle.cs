@@ -8,42 +8,27 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定线条连接样式的枚举类型，用于定义形状路径中线段相交处的连接方式
 /// </summary>
-public enum MsoArrowheadStyle
+public enum MsoLineJoinStyle
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 混合线条连接样式（通常用于表示未设置或混合了多种样式）
     /// </summary>
-    msoArrowheadStyleMixed = -2,
+    msoLineJoinMixed = -2,
 
     /// <summary>
-    /// 无箭头
+    /// 圆角连接，线段相交处以圆弧过渡
     /// </summary>
-    msoArrowheadNone = 1,
+    msoLineJoinRound = 1,
 
     /// <summary>
-    /// 三角形箭头
+    /// 斜角连接，线段相交处以斜切方式连接
     /// </summary>
-    msoArrowheadTriangle = 2,
+    msoLineJoinBevel = 2,
 
     /// <summary>
-    /// 开放式箭头
+    /// 直角连接，线段相交处以直角方式连接
     /// </summary>
-    msoArrowheadOpen = 3,
-
-    /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
-    /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    msoLineJoinMiter = 3
 }

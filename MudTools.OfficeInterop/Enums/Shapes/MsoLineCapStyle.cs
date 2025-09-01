@@ -8,42 +8,27 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定线条端点的样式
 /// </summary>
-public enum MsoArrowheadStyle
+public enum MsoLineCapStyle
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 混合线条端点样式
     /// </summary>
-    msoArrowheadStyleMixed = -2,
-
+    msoLineCapMixed = -2,
+    
     /// <summary>
-    /// 无箭头
+    /// 方形线条端点样式
     /// </summary>
-    msoArrowheadNone = 1,
-
+    msoLineCapSquare = 1,
+    
     /// <summary>
-    /// 三角形箭头
+    /// 圆形线条端点样式
     /// </summary>
-    msoArrowheadTriangle = 2,
-
+    msoLineCapRound = 2,
+    
     /// <summary>
-    /// 开放式箭头
+    /// 平头线条端点样式
     /// </summary>
-    msoArrowheadOpen = 3,
-
-    /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
-    /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    msoLineCapFlat = 3
 }

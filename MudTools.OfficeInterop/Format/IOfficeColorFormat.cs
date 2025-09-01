@@ -1,4 +1,4 @@
-//
+﻿//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,42 +8,33 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 表示Office颜色格式对象的接口
+/// 封装了Microsoft.Office.Core.ColorFormat COM对象
 /// </summary>
-public enum MsoArrowheadStyle
+public interface IOfficeColorFormat : IDisposable
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 获取或设置颜色的RGB值
     /// </summary>
-    msoArrowheadStyleMixed = -2,
+    int RGB { get; set; }
 
     /// <summary>
-    /// 无箭头
+    /// 获取或设置颜色的亮度（-1到1之间）
     /// </summary>
-    msoArrowheadNone = 1,
+    float Brightness { get; set; }
 
     /// <summary>
-    /// 三角形箭头
+    /// 获取或设置主题颜色索引
     /// </summary>
-    msoArrowheadTriangle = 2,
+    MsoThemeColorIndex ObjectThemeColor { get; set; }
 
     /// <summary>
-    /// 开放式箭头
+    /// 获取颜色类型
     /// </summary>
-    msoArrowheadOpen = 3,
+    MsoColorType Type { get; }
 
     /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
+    /// 获取或设置方案颜色索引（用于向后兼容）
     /// </summary>
-    msoArrowheadStealth = 4,
-
-    /// <summary>
-    /// 菱形箭头
-    /// </summary>
-    msoArrowheadDiamond = 5,
-
-    /// <summary>
-    /// 椭圆形箭头
-    /// </summary>
-    msoArrowheadOval = 6
+    int SchemeColor { get; set; }
 }

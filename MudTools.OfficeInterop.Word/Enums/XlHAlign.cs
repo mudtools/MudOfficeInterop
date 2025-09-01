@@ -5,45 +5,50 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 指定Excel中的水平对齐方式
 /// </summary>
-public enum MsoArrowheadStyle
+public enum XlHAlign
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 居中对齐
     /// </summary>
-    msoArrowheadStyleMixed = -2,
-
+    xlHAlignCenter = -4108,
+    
     /// <summary>
-    /// 无箭头
+    /// 跨选定区域居中对齐
     /// </summary>
-    msoArrowheadNone = 1,
-
+    xlHAlignCenterAcrossSelection = 7,
+    
     /// <summary>
-    /// 三角形箭头
+    /// 分散对齐
     /// </summary>
-    msoArrowheadTriangle = 2,
-
+    xlHAlignDistributed = -4117,
+    
     /// <summary>
-    /// 开放式箭头
+    /// 填充对齐
     /// </summary>
-    msoArrowheadOpen = 3,
-
+    xlHAlignFill = 5,
+    
     /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
+    /// 常规对齐
     /// </summary>
-    msoArrowheadStealth = 4,
-
+    xlHAlignGeneral = 1,
+    
     /// <summary>
-    /// 菱形箭头
+    /// 两端对齐
     /// </summary>
-    msoArrowheadDiamond = 5,
-
+    xlHAlignJustify = -4130,
+    
     /// <summary>
-    /// 椭圆形箭头
+    /// 左对齐
     /// </summary>
-    msoArrowheadOval = 6
+    xlHAlignLeft = -4131,
+    
+    /// <summary>
+    /// 右对齐
+    /// </summary>
+    xlHAlignRight = -4152
 }

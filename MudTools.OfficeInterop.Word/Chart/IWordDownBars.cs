@@ -1,49 +1,59 @@
-//
+﻿//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop;
+namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定形状线条端点的箭头样式
+/// 表示 Word 图表下降柱线的封装接口。
 /// </summary>
-public enum MsoArrowheadStyle
+public interface IWordDownBars : IDisposable
 {
     /// <summary>
-    /// 仅用于持久化，表示混合样式
+    /// 获取应用程序对象。
     /// </summary>
-    msoArrowheadStyleMixed = -2,
+    IWordApplication Application { get; }
 
     /// <summary>
-    /// 无箭头
+    /// 获取父对象。
     /// </summary>
-    msoArrowheadNone = 1,
+    object Parent { get; }
 
     /// <summary>
-    /// 三角形箭头
+    /// 获取或设置下降柱线名称。
     /// </summary>
-    msoArrowheadTriangle = 2,
+    string Name { get; }
 
     /// <summary>
-    /// 开放式箭头
+    /// 获取内部区域格式。
     /// </summary>
-    msoArrowheadOpen = 3,
+    IWordInterior? Interior { get; }
 
     /// <summary>
-    /// 隐形箭头（尖锐的三角形变体）
+    /// 获取填充格式。
     /// </summary>
-    msoArrowheadStealth = 4,
+    IWordChartFillFormat? Fill { get; }
 
     /// <summary>
-    /// 菱形箭头
+    /// 获取边框格式。
     /// </summary>
-    msoArrowheadDiamond = 5,
+    IWordChartBorder? Border { get; }
 
     /// <summary>
-    /// 椭圆形箭头
+    /// 获取格式对象。
     /// </summary>
-    msoArrowheadOval = 6
+    IWordChartFormat? Format { get; }
+
+    /// <summary>
+    /// 选择下降柱线。
+    /// </summary>
+    void Select();
+
+    /// <summary>
+    /// 删除下降柱线。
+    /// </summary>
+    void Delete();
 }
