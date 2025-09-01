@@ -15,20 +15,38 @@ public interface IWordListTemplate : IDisposable
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication? Application { get; }
+    IWordApplication Application { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取父对象。
     /// </summary>
     object Parent { get; }
 
     /// <summary>
-    /// 获取列表级别
+    /// 获取列表模板名称。
+    /// </summary>
+    string Name { get; }
+
+    /// <summary>
+    /// 获取列表级别集合。
     /// </summary>
     IWordListLevels ListLevels { get; }
 
+    bool OutlineNumbered { get; set; }
+
+    IWordListTemplate Convert(IWordListLevel listLevel);
+
+
     /// <summary>
-    /// 删除列表模板
+    /// 获取指定级别的列表级别对象。
     /// </summary>
-    void Delete();
+    /// <param name="level">级别数（1-9）。</param>
+    /// <returns>列表级别对象。</returns>
+    IWordListLevel GetListLevel(int level);
+
+    /// <summary>
+    /// 设置所有级别的编号格式。
+    /// </summary>
+    /// <param name="formats">编号格式数组。</param>
+    void SetAllLevelNumberFormats(string[] formats);
 }

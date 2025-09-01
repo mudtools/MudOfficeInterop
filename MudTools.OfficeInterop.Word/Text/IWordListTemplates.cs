@@ -15,7 +15,7 @@ public interface IWordListTemplates : IDisposable, IEnumerable<IWordListTemplate
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication? Application { get; }
+    IWordApplication Application { get; }
 
     /// <summary>
     /// 获取父对象。
@@ -23,19 +23,38 @@ public interface IWordListTemplates : IDisposable, IEnumerable<IWordListTemplate
     object Parent { get; }
 
     /// <summary>
-    /// 获取列表模板数量
+    /// 获取列表模板数量。
     /// </summary>
     int Count { get; }
 
     /// <summary>
-    /// 根据索引获取列表模板
+    /// 通过索引获取列表模板。
     /// </summary>
-    IWordListTemplate Item(int index);
+    IWordListTemplate this[int index] { get; }
 
     /// <summary>
-    /// 添加列表模板
+    /// 通过名称获取列表模板。
     /// </summary>
-    /// <param name="outlineNumbered">是否大纲编号</param>
-    /// <returns>列表模板对象</returns>
-    IWordListTemplate Add(bool outlineNumbered = false);
+    IWordListTemplate this[string name] { get; }
+
+    /// <summary>
+    /// 添加新的列表模板。
+    /// </summary>
+    /// <param name="outlineNumbered">是否为大纲编号。</param>
+    /// <param name="builtIn">是否为内置模板。</param>
+    /// <returns>新创建的列表模板。</returns>
+    IWordListTemplate Add(bool outlineNumbered, bool builtIn);
+
+    /// <summary>
+    /// 判断是否存在指定名称的列表模板。
+    /// </summary>
+    /// <param name="name">列表模板名称。</param>
+    /// <returns>是否存在。</returns>
+    bool Contains(string name);
+
+    /// <summary>
+    /// 获取所有列表模板名称列表。
+    /// </summary>
+    /// <returns>列表模板名称列表。</returns>
+    List<string> GetNames();
 }

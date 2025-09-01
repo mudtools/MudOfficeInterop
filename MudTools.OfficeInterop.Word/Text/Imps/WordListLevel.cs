@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordListLevel : IWordListLevel
 {
-    private readonly MsWord.ListLevel _listLevel;
+    internal readonly MsWord.ListLevel _listLevel;
     private bool _disposedValue;
 
     /// <summary>
