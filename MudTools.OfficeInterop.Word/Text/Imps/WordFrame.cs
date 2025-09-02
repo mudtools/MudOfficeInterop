@@ -34,11 +34,11 @@ internal class WordFrame : IWordFrame
     public object Parent => _frame?.Parent;
 
     /// <inheritdoc/>
-    public IWordRange Range =>
+    public IWordRange? Range =>
         _frame?.Range != null ? new WordRange(_frame.Range) : null;
 
     /// <inheritdoc/>
-    public IWordShading Shading =>
+    public IWordShading? Shading =>
         _frame?.Shading != null ? new WordShading(_frame.Shading) : null;
 
 

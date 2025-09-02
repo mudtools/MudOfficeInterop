@@ -25,12 +25,12 @@ public interface IWordFrame : IDisposable
     /// <summary>
     /// 获取框架所在的范围。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 获取框架的底纹格式设置。
     /// </summary>
-    IWordShading Shading { get; }
+    IWordShading? Shading { get; }
 
     /// <summary>
     /// 获取或设置框架的水平位置。
@@ -86,11 +86,6 @@ public interface IWordFrame : IDisposable
     /// 获取框架中的段落数。
     /// </summary>
     int ParagraphsCount { get; }
-
-    /// <summary>
-    /// 获取框架的父对象。
-    /// </summary>
-    object Parent { get; }
 
     /// <summary>
     /// 删除框架。
