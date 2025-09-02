@@ -41,7 +41,31 @@ public interface IWordRange : IDisposable
     /// </summary>
     IWordParagraphFormat? ParagraphFormat { get; }
 
+    IWordBorders? Borders { get; }
+
     IWordCharacters? Characters { get; }
+
+    IWordFootnotes? Footnotes { get; }
+
+    IWordEndnotes? Endnotes { get; }
+
+    IWordTables? Tables { get; }
+
+    IWordSections? Sections { get; }
+
+    IWordSentences? Sentences { get; }
+
+    IWordWords? Words { get; }
+
+    IWordParagraphs? Paragraphs { get; }
+
+    IWordShading? Shading { get; }
+
+    IWordFields? Fields { get; }
+
+    IWordBookmarks? Bookmarks { get; }
+
+    IWordListFormat? ListFormat { get; }
 
     /// <summary>
     /// 获取范围内的字符数。

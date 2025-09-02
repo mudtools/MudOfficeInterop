@@ -12,7 +12,6 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordBookmarks : IWordBookmarks
 {
     private readonly MsWord.Bookmarks _bookmarks;
-    private readonly IWordDocument _document;
     private bool _disposedValue;
 
     /// <summary>
@@ -34,11 +33,9 @@ internal class WordBookmarks : IWordBookmarks
     /// 构造函数
     /// </summary>
     /// <param name="bookmarks">COM Bookmarks 对象</param>
-    /// <param name="document">关联的文档对象</param>
-    internal WordBookmarks(MsWord.Bookmarks bookmarks, IWordDocument document)
+    internal WordBookmarks(MsWord.Bookmarks bookmarks)
     {
         _bookmarks = bookmarks ?? throw new ArgumentNullException(nameof(bookmarks));
-        _document = document ?? throw new ArgumentNullException(nameof(document));
         _disposedValue = false;
     }
 

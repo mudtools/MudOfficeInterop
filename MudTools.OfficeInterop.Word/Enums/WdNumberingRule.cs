@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -6,38 +6,24 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
-/// Word 文档表格集合接口
+/// 指定编号的重新启动规则
 /// </summary>
-public interface IWordTables : IDisposable, IEnumerable<IWordTable>
+public enum WdNumberingRule
 {
     /// <summary>
-    /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
+    /// 连续编号，不重新启动
     /// </summary>
-    IWordApplication Application { get; }
-
+    wdRestartContinuous,
+    
     /// <summary>
-    /// 获取表格数量
+    /// 在章节开始时重新启动编号
     /// </summary>
-    int Count { get; }
-
+    wdRestartSection,
+    
     /// <summary>
-    /// 根据索引获取表格
+    /// 在页面开始时重新启动编号
     /// </summary>
-    IWordTable Item(int index);
-
-    /// <summary>
-    /// 添加表格
-    /// </summary>
-    /// <param name="rows">行数</param>
-    /// <param name="columns">列数</param>
-    /// <param name="range">插入范围</param>
-    /// <returns>表格对象</returns>
-    IWordTable Add(int rows, int columns, IWordRange range);
-
-    /// <summary>
-    /// 删除表格
-    /// </summary>
-    /// <param name="index">表格索引</param>
-    void Delete(int index);
+    wdRestartPage
 }

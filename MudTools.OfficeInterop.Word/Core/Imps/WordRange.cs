@@ -65,6 +65,9 @@ internal class WordRange : IWordRange
     }
 
     /// <inheritdoc/>
+    public IWordTables? Tables => _range?.Tables != null ? new WordTables(_range.Tables) : null;
+
+    /// <inheritdoc/>
     public IWordFont? Font => _range?.Font != null ? new WordFont(_range.Font) : null;
 
     /// <inheritdoc/>
@@ -75,6 +78,45 @@ internal class WordRange : IWordRange
     public IWordCharacters? Characters =>
         _range?.Characters != null ? new WordCharacters(_range.Characters) : null;
 
+    /// <inheritdoc/>
+    public IWordSections? Sections => _range?.Sections != null ? new WordSections(_range.Sections) : null;
+
+    /// <inheritdoc/>
+    public IWordSentences? Sentences => _range?.Sentences != null ? new WordSentences(_range.Sentences) : null;
+
+
+    /// <inheritdoc/>
+    public IWordWords? Words => _range?.Words != null ? new WordWords(_range.Words) : null;
+
+    /// <inheritdoc/>
+    public IWordFootnotes? Footnotes => _range?.Footnotes != null ? new WordFootnotes(_range.Footnotes) : null;
+
+    /// <inheritdoc/>
+    public IWordEndnotes? Endnotes => _range?.Endnotes != null ? new WordEndnotes(_range.Endnotes) : null;
+
+    /// <inheritdoc/>
+    public IWordParagraphs? Paragraphs => _range?.Paragraphs != null ? new WordParagraphs(_range.Paragraphs) : null;
+
+    /// <inheritdoc/>
+    public IWordBorders? Borders => _range?.Borders != null ? new WordBorders(_range.Borders) : null;
+
+    /// <inheritdoc/>
+    public IWordShading? Shading => _range?.Shading != null ? new WordShading(_range.Shading) : null;
+
+    /// <inheritdoc/>
+    public IWordFields? Fields => _range?.Fields != null ? new WordFields(_range.Fields) : null;
+
+    /// <inheritdoc/>
+    public IWordFrames? Frames => _range?.Frames != null ? new WordFrames(_range.Frames) : null;
+
+    /// <inheritdoc/>
+    public IWordBookmarks? Bookmarks => _range?.Bookmarks != null ? new WordBookmarks(_range.Bookmarks) : null;
+
+    /// <inheritdoc/>
+    public IWordListFormat? ListFormat => _range?.ListFormat != null ? new WordListFormat(_range.ListFormat) : null;
+
+    /// <inheritdoc/>
+    public IWordHyperlinks? Hyperlinks => _range?.Hyperlinks != null ? new WordHyperlinks(_range.Hyperlinks) : null;
 
     /// <inheritdoc/>
     public int CharactersCount => _range?.Characters?.Count ?? 0;
