@@ -111,7 +111,8 @@ internal class WordInlineShape : IWordInlineShape
         _inlineShape?.Shadow != null ? new WordShadowFormat(_inlineShape.Shadow) : null;
 
     /// <inheritdoc/>
-    public IWordChart Chart => _inlineShape?.Chart;
+    public IWordChart? Chart =>
+        _inlineShape?.Chart != null ? new WordChart(_inlineShape.Chart) : null;
 
     /// <inheritdoc/>
     public IWordSmartArt SmartArt => _inlineShape?.SmartArt;

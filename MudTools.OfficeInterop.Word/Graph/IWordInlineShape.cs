@@ -102,7 +102,7 @@ public interface IWordInlineShape : IDisposable
     /// <summary>
     /// 获取内联形状的图表对象。
     /// </summary>
-    IWordChart Chart { get; }
+    IWordChart? Chart { get; }
 
     /// <summary>
     /// 获取内联形状的SmartArt对象。
@@ -215,12 +215,6 @@ public interface IWordInlineShape : IDisposable
     /// 重置内联形状格式为默认值。
     /// </summary>
     void Reset();
-
-    /// <summary>
-    /// 获取内联形状的描述信息。
-    /// </summary>
-    /// <returns>内联形状描述。</returns>
-    string GetDescription();
 
     /// <summary>
     /// 获取内联形状的文件路径（如果是链接对象）。
