@@ -8,27 +8,22 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定在图表中包含误差线的方向
+/// 指定内容控件中日期的存储格式
 /// </summary>
-public enum XlErrorBarInclude
+public enum WdContentControlDateStorageFormat
 {
     /// <summary>
-    /// 包括正负两个方向的误差线
+    /// 以文本形式存储日期
     /// </summary>
-    xlErrorBarIncludeBoth = 1,
-
+    wdContentControlDateStorageText,
+    
     /// <summary>
-    /// 仅包括负值方向的误差线
+    /// 以日期形式存储日期
     /// </summary>
-    xlErrorBarIncludeMinusValues = 3,
-
+    wdContentControlDateStorageDate,
+    
     /// <summary>
-    /// 不包括误差线
+    /// 以日期和时间形式存储日期
     /// </summary>
-    xlErrorBarIncludeNone = -4142,
-
-    /// <summary>
-    /// 仅包括正值方向的误差线
-    /// </summary>
-    xlErrorBarIncludePlusValues = 2
+    wdContentControlDateStorageDateTime
 }

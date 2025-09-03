@@ -80,10 +80,10 @@ internal class WordRange : IWordRange
     public IWordParagraphFormat? ParagraphFormat => _range?.ParagraphFormat != null ? new WordParagraphFormat(_range.ParagraphFormat) : null;
 
     /// <inheritdoc/>
-    public object Style
+    public object? Style
     {
         get => _range?.get_Style();
-        set { if (_range != null) _range.set_Style(value); }
+        set { _range?.set_Style(value); }
     }
 
     /// <inheritdoc/>
@@ -299,33 +299,11 @@ internal class WordRange : IWordRange
 
     #endregion
 
-    #region IDisposable 实现
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (_disposedValue) return;
-
-        if (disposing && _range != null)
-        {
-            Marshal.ReleaseComObject(_range);
-            _range = null;
-        }
-
-        _disposedValue = true;
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    #endregion
 
     #region 更多集合属性实现 (More Collection Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordShapeRange ShapeRange
+    public IWordShapeRange? ShapeRange
     {
         get
         {
@@ -356,9 +334,12 @@ internal class WordRange : IWordRange
     public IWordSubdocuments? Subdocuments => _range?.Subdocuments != null ? new WordSubdocuments(_range.Subdocuments) : null;
 
     /// <inheritdoc/>
-    public MsWord.ContentControls ContentControls => _range?.ContentControls;
-    public MsWord.Conflicts Conflicts => _range?.Conflicts;
-    public MsWord.Editors Editors => _range?.Editors;
+    public IWordContentControls? ContentControls => _range?.ContentControls != null ? new WordContentControls(_range.ContentControls) : null;
+
+    public IWordConflicts? Conflicts => _range?.Conflicts != null ? new WordConflicts(_range.Conflicts) : null;
+
+    public IWordEditors? Editors => _range?.Editors != null ? new WordEditors(_range.Editors) : null;
+
 
     #endregion
 
@@ -543,6 +524,29 @@ internal class WordRange : IWordRange
             System.Diagnostics.Debug.WriteLine($"SaveAsText failed: {ex.Message}");
             // 可以选择抛出异常
         }
+    }
+
+    #endregion
+
+    #region IDisposable 实现
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposedValue) return;
+
+        if (disposing && _range != null)
+        {
+            Marshal.ReleaseComObject(_range);
+            _range = null;
+        }
+
+        _disposedValue = true;
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     #endregion

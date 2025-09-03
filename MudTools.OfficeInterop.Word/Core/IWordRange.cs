@@ -83,7 +83,7 @@ public interface IWordRange : IDisposable
     /// <summary>
     /// 获取或设置区域的样式。
     /// </summary>
-    object Style { get; set; }
+    object? Style { get; set; }
 
     /// <summary>
     /// 获取或设置区域的粗体格式 (0=False, 1=True, 9999999=Undefined)。
@@ -323,17 +323,17 @@ public interface IWordRange : IDisposable
     /// <summary>
     /// 获取区域中的内容控件。
     /// </summary>
-    MsWord.ContentControls ContentControls { get; } // 假设此类未封装或作为 COM 对象直接使用
+    IWordContentControls? ContentControls { get; }
 
     /// <summary>
     /// 获取区域中的冲突。
     /// </summary>
-    MsWord.Conflicts Conflicts { get; } // 假设此类未封装或作为 COM 对象直接使用
+    IWordConflicts? Conflicts { get; }
 
     /// <summary>
     /// 获取区域中的编辑者。
     /// </summary>
-    MsWord.Editors Editors { get; } // 假设此类未封装或作为 COM 对象直接使用
+    IWordEditors? Editors { get; }
 
     #endregion
 

@@ -1,4 +1,4 @@
-//
+﻿//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -6,34 +6,40 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
-
 /// <summary>
-/// 指定分隔符类型，用于定义文档中不同元素之间的分隔符样式
+/// 表示文档中的一个冲突。
+/// <para>注：通常在启用共同创作的文档中，当多位作者同时编辑同一区域时会发生冲突。
+/// Word 会为第一个保存更改的作者保留其版本，而后续保存的作者则会遇到冲突，需要解决这些冲突。</para>
 /// </summary>
-public enum WdSeparatorType
+public interface IWordConflict : IDisposable
 {
     /// <summary>
-    /// 连字符分隔符 (-)
+    /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    wdSeparatorHyphen,
-    
+    IWordApplication Application { get; }
+
     /// <summary>
-    /// 句号分隔符 (.)
+    /// 获取父对象。
     /// </summary>
-    wdSeparatorPeriod,
-    
+    object Parent { get; }
+
     /// <summary>
-    /// 冒号分隔符 (:)
+    /// 获取冲突的范围。
     /// </summary>
-    wdSeparatorColon,
-    
+    IWordRange Range { get; }
+
     /// <summary>
-    /// 长破折号分隔符 (—)
+    /// 获取冲突的类型，由 <see cref="MsWord.WdRevisionType"/> 常量之一标识。
     /// </summary>
-    wdSeparatorEmDash,
-    
+    WdRevisionType Type { get; }
+
     /// <summary>
-    /// 短破折号分隔符 (–)
+    /// 接受此冲突更改。
     /// </summary>
-    wdSeparatorEnDash
+    void Accept();
+
+    /// <summary>
+    /// 拒绝此冲突更改。
+    /// </summary>
+    void Reject();
 }
