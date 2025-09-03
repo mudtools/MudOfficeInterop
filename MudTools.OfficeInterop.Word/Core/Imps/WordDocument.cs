@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -13,7 +13,6 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordDocument : IWordDocument
 {
     private readonly MsWord.Document _document;
-    private readonly IWordApplication _application;
     private bool _disposedValue;
     private IWordWindow _activeWindow;
     private IWordSelection _selection;
@@ -28,7 +27,9 @@ internal class WordDocument : IWordDocument
     private IWordVariables _variables;
     private IWordCustomProperties _customProperties;
 
-    public IWordApplication Application => _application;
+    /// <inheritdoc/>
+    public IWordApplication Application => _document != null ? new WordApplication(_document.Application) : null;
+
 
     public string Name => _document.Name;
 
@@ -167,7 +168,7 @@ internal class WordDocument : IWordDocument
         {
             if (_bookmarks == null)
             {
-                _bookmarks = new WordBookmarks(_document.Bookmarks, this);
+                _bookmarks = new WordBookmarks(_document.Bookmarks);
             }
             return _bookmarks;
         }
@@ -179,7 +180,7 @@ internal class WordDocument : IWordDocument
         {
             if (_tables == null)
             {
-                _tables = new WordTables(_document.Tables, this);
+                _tables = new WordTables(_document.Tables);
             }
             return _tables;
         }
@@ -191,7 +192,7 @@ internal class WordDocument : IWordDocument
         {
             if (_paragraphs == null)
             {
-                _paragraphs = new WordParagraphs(_document.Paragraphs, this);
+                _paragraphs = new WordParagraphs(_document.Paragraphs);
             }
             return _paragraphs;
         }
@@ -203,7 +204,7 @@ internal class WordDocument : IWordDocument
         {
             if (_sections == null)
             {
-                _sections = new WordSections(_document.Sections, this);
+                _sections = new WordSections(_document.Sections);
             }
             return _sections;
         }
@@ -222,7 +223,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            _listTemplates ??= new WordListTemplates(_document.ListTemplates, this);
+            _listTemplates ??= new WordListTemplates(_document.ListTemplates);
             return _listTemplates;
         }
     }
@@ -277,10 +278,9 @@ internal class WordDocument : IWordDocument
 
     public IWordRange this[string bookmarkName] => GetBookmark(bookmarkName)?.Range;
 
-    internal WordDocument(MsWord.Document document, IWordApplication application)
+    internal WordDocument(MsWord.Document document)
     {
         _document = document ?? throw new ArgumentNullException(nameof(document));
-        _application = application;
         _disposedValue = false;
     }
 
