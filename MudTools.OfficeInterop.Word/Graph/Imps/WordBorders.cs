@@ -8,7 +8,7 @@
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
-/// 封装 Microsoft.Office.Interop.Word.Borders 的实现类。
+/// 表示 Word 文档中一组边框（Borders）的封装实现类。
 /// </summary>
 internal class WordBorders : IWordBorders
 {
@@ -16,9 +16,9 @@ internal class WordBorders : IWordBorders
     private bool _disposedValue;
 
     /// <summary>
-    /// 构造函数，包装 COM 对象。
+    /// 初始化 <see cref="WordBorders"/> 类的新实例。
     /// </summary>
-    /// <param name="borders">原始 COM Borders 对象。</param>
+    /// <param name="borders">要封装的原始 COM Borders 对象。</param>
     internal WordBorders(MsWord.Borders borders)
     {
         _borders = borders ?? throw new ArgumentNullException(nameof(borders));
@@ -28,7 +28,7 @@ internal class WordBorders : IWordBorders
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication? Application => _borders != null ? new WordApplication(_borders.Application) : null;
+    public IWordApplication Application => _borders != null ? new WordApplication(_borders.Application) : null;
 
     /// <inheritdoc/>
     public object Parent => _borders?.Parent;
@@ -37,19 +37,17 @@ internal class WordBorders : IWordBorders
     public int Count => _borders?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordBorder this[WdBorderType borderType]
+    public IWordBorder this[WdBorderType index]
     {
         get
         {
-            if (_borders == null)
-                return null;
-
+            if (_borders == null) return null;
             try
             {
-                var border = _borders[(MsWord.WdBorderType)(int)borderType];
-                return border != null ? new WordBorder(border) : null;
+                var comBorder = _borders[(MsWord.WdBorderType)(int)index];
+                return comBorder != null ? new WordBorder(comBorder) : null;
             }
-            catch
+            catch (COMException)
             {
                 return null;
             }
@@ -59,102 +57,184 @@ internal class WordBorders : IWordBorders
     /// <inheritdoc/>
     public bool Enable
     {
-        get => _borders?.Enable == 1;
+        get => _borders?.Enable != null && _borders?.Enable == 1;
+        set { if (_borders != null) _borders.Enable = value ? 1 : 0; }
+    }
+
+    /// <inheritdoc/>
+    public bool JoinBorders
+    {
+        get => _borders?.JoinBorders ?? false;
+        set { if (_borders != null) _borders.JoinBorders = value; }
+    }
+
+    /// <inheritdoc/>
+    public WdColor InsideColor
+    {
+        get => _borders?.InsideColor != null ? (WdColor)(int)_borders?.InsideColor : WdColor.wdColorAutomatic;
         set
         {
-            if (_borders != null)
-                _borders.Enable = value ? 1 : 0;
+            if (_borders != null) _borders.InsideColor = (MsWord.WdColor)(int)value;
         }
     }
+
+    /// <inheritdoc/>
+    public WdColorIndex InsideColorIndex
+    {
+        get => _borders?.InsideColorIndex != null ? (WdColorIndex)(int)_borders?.InsideColorIndex : WdColorIndex.wdAuto;
+        set
+        {
+            if (_borders != null) _borders.InsideColorIndex = (MsWord.WdColorIndex)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdLineStyle InsideLineStyle
+    {
+        get => _borders?.InsideLineStyle != null ? (WdLineStyle)(int)_borders?.InsideLineStyle : WdLineStyle.wdLineStyleDot;
+        set
+        {
+            if (_borders != null) _borders.InsideLineStyle = (MsWord.WdLineStyle)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdLineWidth InsideLineWidth
+    {
+        get => _borders?.InsideLineWidth != null ? (WdLineWidth)(int)_borders?.InsideLineWidth : WdLineWidth.wdLineWidth050pt;
+        set
+        {
+            if (_borders != null) _borders.InsideLineWidth = (MsWord.WdLineWidth)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdColor OutsideColor
+    {
+        get => _borders?.OutsideColor != null ? (WdColor)(int)_borders?.OutsideColor : WdColor.wdColorAutomatic;
+        set
+        {
+            if (_borders != null) _borders.OutsideColor = (MsWord.WdColor)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdColorIndex OutsideColorIndex
+    {
+        get => _borders?.OutsideColorIndex != null ? (WdColorIndex)(int)_borders?.OutsideColorIndex : WdColorIndex.wdAuto;
+        set
+        {
+            if (_borders != null) _borders.OutsideColorIndex = (MsWord.WdColorIndex)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdLineStyle OutsideLineStyle
+    {
+        get => _borders?.OutsideLineStyle != null ? (WdLineStyle)(int)_borders?.OutsideLineStyle : WdLineStyle.wdLineStyleDot;
+        set
+        {
+            if (_borders != null) _borders.OutsideLineStyle = (MsWord.WdLineStyle)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdLineWidth OutsideLineWidth
+    {
+        get => _borders?.OutsideLineWidth != null ? (WdLineWidth)(int)_borders?.OutsideLineWidth : WdLineWidth.wdLineWidth050pt;
+        set
+        {
+            if (_borders != null) _borders.OutsideLineWidth = (MsWord.WdLineWidth)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public bool HasHorizontal => _borders?.HasHorizontal ?? false;
+
+    /// <inheritdoc/>
+    public bool HasVertical => _borders?.HasVertical ?? false;
+
+    /// <inheritdoc/>
+    public bool AlwaysInFront
+    {
+        get => _borders?.AlwaysInFront ?? false;
+        set { if (_borders != null) _borders.AlwaysInFront = value; }
+    }
+
+    /// <inheritdoc/>
+    public WdBorderDistanceFrom DistanceFrom
+    {
+        get => _borders?.DistanceFrom != null ? (WdBorderDistanceFrom)(int)_borders?.DistanceFrom : WdBorderDistanceFrom.wdBorderDistanceFromText;
+        set
+        {
+            if (_borders != null) _borders.DistanceFrom = (MsWord.WdBorderDistanceFrom)(int)value;
+        }
+    }
+
+    /// <inheritdoc/>
+    public int DistanceFromBottom
+    {
+        get => _borders?.DistanceFromBottom ?? 0;
+        set { if (_borders != null) _borders.DistanceFromBottom = value; }
+    }
+
+    /// <inheritdoc/>
+    public int DistanceFromLeft
+    {
+        get => _borders?.DistanceFromLeft ?? 0;
+        set { if (_borders != null) _borders.DistanceFromLeft = value; }
+    }
+
+    /// <inheritdoc/>
+    public int DistanceFromRight
+    {
+        get => _borders?.DistanceFromRight ?? 0;
+        set { if (_borders != null) _borders.DistanceFromRight = value; }
+    }
+
+    /// <inheritdoc/>
+    public int DistanceFromTop
+    {
+        get => _borders?.DistanceFromTop ?? 0;
+        set { if (_borders != null) _borders.DistanceFromTop = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool EnableFirstPageInSection
+    {
+        get => _borders?.EnableFirstPageInSection ?? false;
+        set { if (_borders != null) _borders.EnableFirstPageInSection = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool EnableOtherPagesInSection
+    {
+        get => _borders?.EnableOtherPagesInSection ?? false;
+        set { if (_borders != null) _borders.EnableOtherPagesInSection = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool SurroundFooter
+    {
+        get => _borders?.SurroundFooter ?? false;
+        set { if (_borders != null) _borders.SurroundFooter = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool SurroundHeader
+    {
+        get => _borders?.SurroundHeader ?? false;
+        set { if (_borders != null) _borders.SurroundHeader = value; }
+    }
+
     #endregion
 
     #region 方法实现
 
     /// <inheritdoc/>
-    public void ApplyStyle(WdLineStyle lineStyle, WdLineWidth lineWidth, WdColor color)
+    public void ApplyPageBordersToAllSections()
     {
-        if (_borders == null)
-            throw new ObjectDisposedException(nameof(WordBorders));
-
-        try
-        {
-            foreach (MsWord.Border border in _borders)
-            {
-                if (border != null)
-                {
-                    border.LineStyle = (MsWord.WdLineStyle)(int)lineStyle;
-                    border.LineWidth = (MsWord.WdLineWidth)(int)lineWidth;
-                    border.Color = (MsWord.WdColor)(int)color;
-                }
-            }
-        }
-        catch (COMException ex)
-        {
-            throw new InvalidOperationException("无法应用边框样式。", ex);
-        }
-    }
-
-    /// <inheritdoc/>
-    public bool Contains(WdBorderType borderType)
-    {
-        if (_borders == null)
-            return false;
-
-        return _borders[(MsWord.WdBorderType)(int)borderType] != null;
-    }
-
-    /// <inheritdoc/>
-    public List<WdBorderType> GetBorderTypes()
-    {
-        var types = new List<WdBorderType>();
-
-        if (_borders == null)
-            return types;
-
-        // 常见的边框类型枚举
-        var allTypes = new[]
-        {
-            WdBorderType.wdBorderTop,
-            WdBorderType.wdBorderLeft,
-            WdBorderType.wdBorderBottom,
-            WdBorderType.wdBorderRight,
-            WdBorderType.wdBorderHorizontal,
-            WdBorderType.wdBorderVertical,
-            WdBorderType.wdBorderDiagonalDown,
-            WdBorderType.wdBorderDiagonalUp
-        };
-
-        foreach (var type in allTypes)
-        {
-            if (Contains(type))
-                types.Add(type);
-        }
-
-        return types;
-    }
-
-    #endregion
-
-    #region IEnumerable<IWordBorder> 实现
-
-    /// <inheritdoc/>
-    public IEnumerator<IWordBorder> GetEnumerator()
-    {
-        if (_borders == null)
-            yield break;
-
-        foreach (var border in _borders)
-        {
-            var b = border as MsWord.Border;
-            if (border != null)
-                yield return new WordBorder(b);
-        }
-    }
-
-    /// <inheritdoc/>
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
+        _borders?.ApplyPageBordersToAllSections();
     }
 
     #endregion
@@ -162,9 +242,9 @@ internal class WordBorders : IWordBorders
     #region IDisposable 实现
 
     /// <summary>
-    /// 释放 COM 对象资源。
+    /// 释放由 <see cref="WordBorders"/> 使用的非托管资源，并选择性地释放托管资源。
     /// </summary>
-    /// <param name="disposing">是否由用户主动调用 Dispose。</param>
+    /// <param name="disposing">如果为 true，则同时释放托管和非托管资源；如果为 false，则仅释放非托管资源。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
@@ -178,11 +258,32 @@ internal class WordBorders : IWordBorders
         _disposedValue = true;
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// 释放由 <see cref="WordBorders"/> 使用的所有资源。
+    /// </summary>
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    #endregion
+
+    #region IEnumerable<IWordBorder> 实现
+
+    /// <inheritdoc/>
+    public IEnumerator<IWordBorder> GetEnumerator()
+    {
+        foreach (var b in _borders)
+        {
+            yield return new WordBorder(b as MsWord.Border);
+        }
+    }
+
+    /// <inheritdoc/>
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
     #endregion

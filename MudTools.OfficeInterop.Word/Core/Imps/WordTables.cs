@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordTables : IWordTables
 {
-    private readonly MsWord.Tables _tables;
+    private MsWord.Tables _tables;
     private bool _disposedValue;
 
     public IWordApplication? Application => _tables != null ? new WordApplication(_tables.Application) : null;
@@ -32,24 +32,21 @@ internal class WordTables : IWordTables
         _disposedValue = false;
     }
 
-    /// <summary>
-    /// 根据索引获取表格
-    /// </summary>
-    /// <param name="index">表格索引</param>
-    /// <returns>表格对象</returns>
-    public IWordTable Item(int index)
+    /// <inheritdoc/>
+    public IWordTable this[int index]
     {
-        if (index < 1 || index > Count)
-            throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
-
-        try
+        get
         {
-            var table = _tables[index];
-            return new WordTable(table);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get table at index {index}.", ex);
+            if (index < 1 || index > Count || _tables == null) return null;
+            try
+            {
+                var comTable = _tables[index];
+                return comTable != null ? new WordTable(comTable) : null;
+            }
+            catch (COMException)
+            {
+                return null;
+            }
         }
     }
 
@@ -60,7 +57,7 @@ internal class WordTables : IWordTables
     /// <param name="columns">列数</param>
     /// <param name="range">插入范围</param>
     /// <returns>表格对象</returns>
-    public IWordTable Add(int rows, int columns, IWordRange range)
+    public IWordTable Add(IWordRange range, int rows, int columns)
     {
         if (rows <= 0 || columns <= 0)
             throw new ArgumentException("Rows and columns must be greater than zero.");
@@ -69,8 +66,6 @@ internal class WordTables : IWordTables
 
         try
         {
-            // 注意：这里需要将 IWordRange 转换为 COM Range 对象
-            // 由于缺少具体实现，这里使用占位符
             var comRange = GetComRange(range);
             var table = _tables.Add(comRange, rows, columns);
             return new WordTable(table);
@@ -89,7 +84,7 @@ internal class WordTables : IWordTables
     {
         try
         {
-            var table = Item(index);
+            var table = this[index];
             table.Delete();
         }
         catch (Exception ex)
@@ -104,26 +99,9 @@ internal class WordTables : IWordTables
     /// <returns>表格枚举器</returns>
     public IEnumerator<IWordTable> GetEnumerator()
     {
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            var tables = new List<IWordTable>();
-            for (int i = 1; i <= Count; i++)
-            {
-                try
-                {
-                    tables.Add(Item(i));
-                }
-                catch
-                {
-                    // 忽略获取失败的表格
-                    continue;
-                }
-            }
-            return tables.GetEnumerator();
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to enumerate tables.", ex);
+            yield return this[i];
         }
     }
 
@@ -143,9 +121,7 @@ internal class WordTables : IWordTables
     /// <returns>COM Range 对象</returns>
     private MsWord.Range GetComRange(IWordRange range)
     {
-        // 这里需要具体的实现来获取 COM Range 对象
-        // 由于缺少具体实现，返回 null 作为占位符
-        return null;
+        return ((WordRange)range)._range;
     }
 
     /// <summary>
@@ -155,6 +131,13 @@ internal class WordTables : IWordTables
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
+
+        if (disposing && _tables != null)
+        {
+            Marshal.ReleaseComObject(_tables);
+            _tables = null;
+        }
+
         _disposedValue = true;
     }
 

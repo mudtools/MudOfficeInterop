@@ -8,14 +8,15 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 封装 Microsoft.Office.Interop.Word.Borders 的接口，用于操作边框集合。
+/// 表示 Word 文档中一组边框（Borders）的封装接口。
+/// <para>注：Borders 集合的成员数量是有限的，并且取决于父对象的类型。</para>
 /// </summary>
 public interface IWordBorders : IEnumerable<IWordBorder>, IDisposable
 {
     /// <summary>
-    /// 获取应用程序对象。
+    /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication? Application { get; }
+    IWordApplication Application { get; }
 
     /// <summary>
     /// 获取父对象。
@@ -23,38 +24,129 @@ public interface IWordBorders : IEnumerable<IWordBorder>, IDisposable
     object Parent { get; }
 
     /// <summary>
-    /// 获取边框的数量。
+    /// 获取集合中的边框数量。
     /// </summary>
     int Count { get; }
 
     /// <summary>
-    /// 根据边框类型获取边框。
+    /// 通过索引（<see cref="MsWord.WdBorderType"/> 常量）获取单个边框。
     /// </summary>
-    IWordBorder this[WdBorderType borderType] { get; }
+    /// <param name="index">标识边框的 <see cref="MsWord.WdBorderType"/> 常量。</param>
+    /// <returns>指定的边框对象。</returns>
+    IWordBorder this[WdBorderType index] { get; }
 
     /// <summary>
-    /// 获取或设置是否启用边框。
+    /// 获取或设置一个值，该值指示是否启用所有边框的格式。
     /// </summary>
     bool Enable { get; set; }
 
     /// <summary>
-    /// 应用边框样式到所有边框。
+    /// 获取或设置一个值，该值指示是否删除段落和表格边缘的垂直边框，以便水平边框可以连接到页面边框。
     /// </summary>
-    /// <param name="lineStyle">线条样式。</param>
-    /// <param name="lineWidth">线条粗细。</param>
-    /// <param name="color">颜色。</param>
-    void ApplyStyle(WdLineStyle lineStyle, WdLineWidth lineWidth, WdColor color);
+    bool JoinBorders { get; set; }
 
     /// <summary>
-    /// 获取指定类型的边框是否存在。
+    /// 获取或设置内部边框的 24 位颜色。
     /// </summary>
-    /// <param name="borderType">边框类型。</param>
-    /// <returns>是否存在。</returns>
-    bool Contains(WdBorderType borderType);
+    WdColor InsideColor { get; set; }
 
     /// <summary>
-    /// 获取所有边框类型的列表。
+    /// 获取或设置内部边框的颜色索引。
     /// </summary>
-    /// <returns>边框类型列表。</returns>
-    List<WdBorderType> GetBorderTypes();
+    WdColorIndex InsideColorIndex { get; set; }
+
+    /// <summary>
+    /// 获取或设置内部边框的线条样式。
+    /// </summary>
+    WdLineStyle InsideLineStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置内部边框的线条宽度。
+    /// </summary>
+    WdLineWidth InsideLineWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置外部边框的 24 位颜色。
+    /// </summary>
+    WdColor OutsideColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置外部边框的颜色索引。
+    /// </summary>
+    WdColorIndex OutsideColorIndex { get; set; }
+
+    /// <summary>
+    /// 获取或设置外部边框的线条样式。
+    /// </summary>
+    WdLineStyle OutsideLineStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置外部边框的线条宽度。
+    /// </summary>
+    WdLineWidth OutsideLineWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否可以将水平边框应用于对象。
+    /// </summary>
+    bool HasHorizontal { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否可以将垂直边框应用于对象。
+    /// </summary>
+    bool HasVertical { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示页面边框是否显示在文档文本的前面。
+    /// </summary>
+    bool AlwaysInFront { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示页面边框从页面边缘测量还是从环绕的文本测量。
+    /// </summary>
+    WdBorderDistanceFrom DistanceFrom { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本与下边框之间的间距（以磅为单位）。
+    /// </summary>
+    int DistanceFromBottom { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本与左边框之间的间距（以磅为单位）。
+    /// </summary>
+    int DistanceFromLeft { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本与右边框之间的间距（以磅为单位）。
+    /// </summary>
+    int DistanceFromRight { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本与上边框之间的间距（以磅为单位）。
+    /// </summary>
+    int DistanceFromTop { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否为节中的第一页启用了页面边框。
+    /// </summary>
+    bool EnableFirstPageInSection { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否为节中的所有页面（第一页除外）启用了页面边框。
+    /// </summary>
+    bool EnableOtherPagesInSection { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示页面边框是否包含文档页脚。
+    /// </summary>
+    bool SurroundFooter { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示页面边框是否包含文档页眉。
+    /// </summary>
+    bool SurroundHeader { get; set; }
+
+    /// <summary>
+    /// 将指定的页面边框格式应用于文档中的所有节。
+    /// </summary>
+    void ApplyPageBordersToAllSections();
 }
