@@ -155,7 +155,7 @@ internal partial class WordApplication : IWordApplication
     public int UsableHeight => _application?.UsableHeight ?? 0;
 
     /// <inheritdoc/>
-    public IWordWindows Windows => _application?.Windows != null ? new WordWindows(_application.Windows) : null;
+    public IWordWindows? Windows => _application?.Windows != null ? new WordWindows(_application.Windows) : null;
 
     #endregion
 
@@ -190,7 +190,7 @@ internal partial class WordApplication : IWordApplication
     #region 选择和查找属性实现 (Selection & Find Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordSelection Selection => _application?.Selection != null ? new WordSelection(_application.Selection) : null;
+    public IWordSelection? Selection => _application?.Selection != null ? new WordSelection(_application.Selection) : null;
 
     /// <inheritdoc/>
     public WdAlertLevel DisplayAlerts
@@ -414,9 +414,9 @@ internal partial class WordApplication : IWordApplication
 
 
     /// <inheritdoc/>
-    public object GetInternational(MsWord.WdInternationalIndex index)
+    public object GetInternational(WdInternationalIndex index)
     {
-        return _application?.International[index];
+        return _application?.International[(MsWord.WdInternationalIndex)(int)index];
     }
 
     #endregion
@@ -440,12 +440,12 @@ internal partial class WordApplication : IWordApplication
     }
 
     /// <inheritdoc/>
-    public IWordFileConverters FileConverters => _application?.FileConverters != null ? new WordFileConverters(_application.FileConverters) : null;
-    public IWordTasks Tasks => _application?.Tasks != null ? new WordTasks(_application.Tasks) : null;
-    public IWordDialogs Dialogs => _application?.Dialogs;
-    public IWordKeyBindings KeyBindings => _application?.KeyBindings;
-    public object COMAddIns => _application?.COMAddIns;
-    public IOfficeCommandBars CommandBars => _application?.CommandBars != null ? new OfficeCommandBars(_application?.CommandBars) : null;
+    public IWordFileConverters? FileConverters => _application?.FileConverters != null ? new WordFileConverters(_application.FileConverters) : null;
+    public IWordTasks? Tasks => _application?.Tasks != null ? new WordTasks(_application.Tasks) : null;
+    public IWordDialogs? Dialogs => _application?.Dialogs;
+    public IWordKeyBindings? KeyBindings => _application?.KeyBindings != null ? new WordKeyBindings(_application.KeyBindings) : null;
+    public object? COMAddIns => _application?.COMAddIns;
+    public IOfficeCommandBars? CommandBars => _application?.CommandBars != null ? new OfficeCommandBars(_application?.CommandBars) : null;
 
     #endregion
 
@@ -624,7 +624,7 @@ internal partial class WordApplication : IWordApplication
     public MsWord.HangulHanjaConversionDictionaries HangulHanjaDictionaries => _application?.HangulHanjaDictionaries;
     public bool IsSandboxed => _application?.IsSandboxed ?? false;
     public MsoLanguageID Language => _application?.Language != null ? (MsoLanguageID)(int)_application?.Language : MsoLanguageID.msoLanguageIDSimplifiedChinese;
-    public MsWord.LanguageSettings LanguageSettings => _application?.LanguageSettings;
+    public IOfficeLanguageSettings? LanguageSettings => _application?.LanguageSettings != null ? new OfficeLanguageSettings(_application?.LanguageSettings) : null;
     public object MacroContainer => _application?.MacroContainer;
     public MsWord.OMathAutoCorrect OMathAutoCorrect => _application?.OMathAutoCorrect;
     public object PickerDialog => _application?.PickerDialog;
@@ -832,5 +832,4 @@ internal partial class WordApplication : IWordApplication
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
 }

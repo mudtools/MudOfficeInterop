@@ -111,7 +111,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示所有文档窗口的 Windows 集合。
     /// </summary>
-    IWordWindows Windows { get; }
+    IWordWindows? Windows { get; }
 
     #endregion
 
@@ -138,7 +138,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示所选区域或插入点的 Selection 对象。
     /// </summary>
-    IWordSelection Selection { get; }
+    IWordSelection? Selection { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示运行宏时的一些警告和消息的处理的方式。
@@ -327,7 +327,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     /// <param name="index">要返回的信息类型。</param>
     /// <returns>相关信息。</returns>
-    object GetInternational(MsWord.WdInternationalIndex index);
+    object GetInternational(WdInternationalIndex index);
 
     #endregion
 
@@ -342,12 +342,12 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示所有可用文件转换器的 FileConverters 集合。
     /// </summary>
-    IWordFileConverters FileConverters { get; }
+    IWordFileConverters? FileConverters { get; }
 
     /// <summary>
     /// 获取表示所有正在运行的应用程序的 Tasks 集合。
     /// </summary>
-    IWordTasks Tasks { get; }
+    IWordTasks? Tasks { get; }
 
     /// <summary>
     /// 获取表示所有内置对话框的 Dialogs 集合。
@@ -357,7 +357,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示所有自定义键绑定的 KeyBindings 集合。
     /// </summary>
-    IWordKeyBindings KeyBindings { get; }
+    IWordKeyBindings? KeyBindings { get; }
 
     /// <summary>
     /// 获取表示所有已加载的 COM 加载项的 COMAddIns 集合。
