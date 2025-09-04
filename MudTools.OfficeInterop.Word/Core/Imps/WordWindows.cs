@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -13,7 +13,6 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordWindows : IWordWindows
 {
     private readonly MsWord.Windows _windows;
-    private readonly IWordApplication _application;
     private readonly Dictionary<int, IWordWindow> _windowCache;
     private bool _disposedValue;
 
@@ -22,50 +21,55 @@ internal class WordWindows : IWordWindows
     public object Parent => _windows.Parent;
 
 
-    internal WordWindows(MsWord.Windows windows, IWordApplication application)
+    internal WordWindows(MsWord.Windows windows)
     {
         _windows = windows ?? throw new ArgumentNullException(nameof(windows));
-        _application = application ?? throw new ArgumentNullException(nameof(application));
         _windowCache = new Dictionary<int, IWordWindow>();
         _disposedValue = false;
     }
 
-    public IWordWindow Item(int index)
+    public IWordWindow this[int index]
     {
-        if (index < 1 || index > Count)
-            throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
-
-        try
+        get
         {
-            if (_windowCache.TryGetValue(index, out IWordWindow cachedWindow))
+            if (index < 1 || index > Count)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
+
+            try
             {
-                return cachedWindow;
-            }
+                if (_windowCache.TryGetValue(index, out IWordWindow cachedWindow))
+                {
+                    return cachedWindow;
+                }
 
-            var window = _windows[index];
-            var wordWindow = new WordWindow(window);
-            _windowCache[index] = wordWindow;
-            return wordWindow;
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get window at index {index}.", ex);
+                var window = _windows[index];
+                var wordWindow = new WordWindow(window);
+                _windowCache[index] = wordWindow;
+                return wordWindow;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get window at index {index}.", ex);
+            }
         }
     }
 
-    public IWordWindow Item(string caption)
+    public IWordWindow this[string caption]
     {
-        if (string.IsNullOrEmpty(caption))
-            throw new ArgumentException("Caption cannot be null or empty.", nameof(caption));
+        get
+        {
+            if (string.IsNullOrEmpty(caption))
+                throw new ArgumentException("Caption cannot be null or empty.", nameof(caption));
 
-        try
-        {
-            var window = _windows[caption];
-            return new WordWindow(window);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get window with caption '{caption}'.", ex);
+            try
+            {
+                var window = _windows[caption];
+                return new WordWindow(window);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to get window with caption '{caption}'.", ex);
+            }
         }
     }
 
@@ -116,7 +120,7 @@ internal class WordWindows : IWordWindows
             {
                 try
                 {
-                    var window = Item(i);
+                    var window = this[i];
                     if (predicate(window))
                     {
                         results.Add(window);
@@ -144,7 +148,7 @@ internal class WordWindows : IWordWindows
             {
                 try
                 {
-                    windows.Add(Item(i));
+                    windows.Add(this[i]);
                 }
                 catch
                 {
@@ -171,7 +175,7 @@ internal class WordWindows : IWordWindows
             {
                 try
                 {
-                    windows.Add(Item(i));
+                    windows.Add(this[i]);
                 }
                 catch
                 {
@@ -197,7 +201,7 @@ internal class WordWindows : IWordWindows
             {
                 try
                 {
-                    var window = Item(i);
+                    var window = this[i];
                     // Window 对象没有直接的刷新方法
                 }
                 catch
@@ -221,7 +225,7 @@ internal class WordWindows : IWordWindows
             {
                 try
                 {
-                    var window = Item(i);
+                    var window = this[i];
                     if (exceptWindow == null || window.GetHashCode() != exceptWindow.GetHashCode())
                     {
                         windowsToClose.Add(window);
@@ -261,7 +265,7 @@ internal class WordWindows : IWordWindows
             {
                 try
                 {
-                    var window = Item(i);
+                    var window = this[i];
                     window.Activate();
                 }
                 catch
@@ -285,7 +289,7 @@ internal class WordWindows : IWordWindows
             {
                 try
                 {
-                    windows.Add(Item(i));
+                    windows.Add(this[i]);
                 }
                 catch
                 {

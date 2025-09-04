@@ -8,46 +8,47 @@
 using log4net;
 
 namespace MudTools.OfficeInterop.Word.Imps;
+
 /// <summary>
-/// 表示组合形状中单个形状集合的封装实现类。
+/// 表示 Microsoft Word 可用的所有加载项集合的封装实现类。
 /// </summary>
-internal class WordGroupShapes : IWordGroupShapes
+internal class WordAddIns : IWordAddIns
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(WordGroupShapes));
-    private MsWord.GroupShapes _groupShapes;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordAddIns));
+    private MsWord.AddIns _addIns;
     private bool _disposedValue;
 
     /// <summary>
-    /// 初始化 <see cref="WordGroupShapes"/> 类的新实例。
+    /// 初始化 <see cref="WordAddIns"/> 类的新实例。
     /// </summary>
-    /// <param name="groupShapes">要封装的原始 COM GroupShapes 对象。</param>
-    internal WordGroupShapes(MsWord.GroupShapes groupShapes)
+    /// <param name="addIns">要封装的原始 COM AddIns 对象。</param>
+    internal WordAddIns(MsWord.AddIns addIns)
     {
-        _groupShapes = groupShapes ?? throw new ArgumentNullException(nameof(groupShapes));
+        _addIns = addIns ?? throw new ArgumentNullException(nameof(addIns));
         _disposedValue = false;
     }
 
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _groupShapes != null ? new WordApplication(_groupShapes.Application) : null;
+    public IWordApplication Application => _addIns != null ? new WordApplication(_addIns.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _groupShapes?.Parent;
+    public object Parent => _addIns?.Parent;
 
     /// <inheritdoc/>
-    public int Count => _groupShapes?.Count ?? 0;
+    public int Count => _addIns?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordShape this[object index]
+    public IWordAddIn this[object index]
     {
         get
         {
-            if (_groupShapes == null) return null;
+            if (_addIns == null) return null;
             try
             {
-                var comShape = _groupShapes[index];
-                return comShape != null ? new WordShape(comShape) : null;
+                var comAddIn = _addIns[index];
+                return comAddIn != null ? new WordAddIn(comAddIn) : null;
             }
             catch (COMException ce)
             {
@@ -62,19 +63,25 @@ internal class WordGroupShapes : IWordGroupShapes
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordShapeRange Range(object index)
+    public IWordAddIn Add(string fileName, object install)
     {
-        if (_groupShapes == null) return null;
+        if (_addIns == null || string.IsNullOrWhiteSpace(fileName)) return null;
         try
         {
-            var shapeRange = _groupShapes.Range(ref index);
-            return shapeRange != null ? new WordShapeRange(shapeRange) : null;
+            var newAddIn = _addIns.Add(fileName, ref install);
+            return newAddIn != null ? new WordAddIn(newAddIn) : null;
         }
         catch (COMException ex)
         {
-            log.Error($"Failed to get ShapeRange from GroupShapes: {ex.Message}");
+            log.Error($"Failed to add AddIn '{fileName}': {ex.Message}", ex);
             return null;
         }
+    }
+
+    /// <inheritdoc/>
+    public void Unload(bool removeFromList)
+    {
+        _addIns?.Unload(removeFromList);
     }
 
     #endregion
@@ -82,24 +89,24 @@ internal class WordGroupShapes : IWordGroupShapes
     #region IDisposable 实现
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的非托管资源，并选择性地释放托管资源。
+    /// 释放由 <see cref="WordAddIns"/> 使用的非托管资源，并选择性地释放托管资源。
     /// </summary>
     /// <param name="disposing">如果为 true，则同时释放托管和非托管资源；如果为 false，则仅释放非托管资源。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
 
-        if (disposing && _groupShapes != null)
+        if (disposing && _addIns != null)
         {
-            Marshal.ReleaseComObject(_groupShapes);
-            _groupShapes = null;
+            Marshal.ReleaseComObject(_addIns);
+            _addIns = null;
         }
 
         _disposedValue = true;
     }
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的所有资源。
+    /// 释放由 <see cref="WordAddIns"/> 使用的所有资源。
     /// </summary>
     public void Dispose()
     {
@@ -109,10 +116,10 @@ internal class WordGroupShapes : IWordGroupShapes
 
     #endregion
 
-    #region IEnumerable<IWordShape> 实现
+    #region IEnumerable<IWordAddIn> 实现
 
     /// <inheritdoc/>
-    public IEnumerator<IWordShape> GetEnumerator()
+    public IEnumerator<IWordAddIn> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {

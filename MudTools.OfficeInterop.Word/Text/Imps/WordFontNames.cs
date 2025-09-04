@@ -8,72 +8,55 @@
 using log4net;
 
 namespace MudTools.OfficeInterop.Word.Imps;
+
 /// <summary>
-/// 表示组合形状中单个形状集合的封装实现类。
+/// 表示所有有效字体名称列表的封装实现类。
 /// </summary>
-internal class WordGroupShapes : IWordGroupShapes
+internal class WordFontNames : IWordFontNames
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(WordGroupShapes));
-    private MsWord.GroupShapes _groupShapes;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordFontNames));
+    private MsWord.FontNames _fontNames;
     private bool _disposedValue;
 
     /// <summary>
-    /// 初始化 <see cref="WordGroupShapes"/> 类的新实例。
+    /// 初始化 <see cref="WordFontNames"/> 类的新实例。
     /// </summary>
-    /// <param name="groupShapes">要封装的原始 COM GroupShapes 对象。</param>
-    internal WordGroupShapes(MsWord.GroupShapes groupShapes)
+    /// <param name="fontNames">要封装的原始 COM FontNames 对象。</param>
+    internal WordFontNames(MsWord.FontNames fontNames)
     {
-        _groupShapes = groupShapes ?? throw new ArgumentNullException(nameof(groupShapes));
+        _fontNames = fontNames ?? throw new ArgumentNullException(nameof(fontNames));
         _disposedValue = false;
     }
 
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _groupShapes != null ? new WordApplication(_groupShapes.Application) : null;
+    public IWordApplication Application => _fontNames != null ? new WordApplication(_fontNames.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _groupShapes?.Parent;
+    public object Parent => _fontNames?.Parent;
 
     /// <inheritdoc/>
-    public int Count => _groupShapes?.Count ?? 0;
+    public int Count => _fontNames?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordShape this[object index]
+    public string this[int index]
     {
         get
         {
-            if (_groupShapes == null) return null;
+            if (_fontNames == null || index < 1 || index > Count)
+            {
+                return string.Empty;
+            }
             try
             {
-                var comShape = _groupShapes[index];
-                return comShape != null ? new WordShape(comShape) : null;
+                return _fontNames[index];
             }
             catch (COMException ce)
             {
                 log.Error($"Failed to retrieve object based on index: {ce.Message}", ce);
-                return null;
+                return string.Empty;
             }
-        }
-    }
-
-    #endregion
-
-    #region 方法实现
-
-    /// <inheritdoc/>
-    public IWordShapeRange Range(object index)
-    {
-        if (_groupShapes == null) return null;
-        try
-        {
-            var shapeRange = _groupShapes.Range(ref index);
-            return shapeRange != null ? new WordShapeRange(shapeRange) : null;
-        }
-        catch (COMException ex)
-        {
-            log.Error($"Failed to get ShapeRange from GroupShapes: {ex.Message}");
-            return null;
         }
     }
 
@@ -82,24 +65,24 @@ internal class WordGroupShapes : IWordGroupShapes
     #region IDisposable 实现
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的非托管资源，并选择性地释放托管资源。
+    /// 释放由 <see cref="WordFontNames"/> 使用的非托管资源，并选择性地释放托管资源。
     /// </summary>
     /// <param name="disposing">如果为 true，则同时释放托管和非托管资源；如果为 false，则仅释放非托管资源。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
 
-        if (disposing && _groupShapes != null)
+        if (disposing && _fontNames != null)
         {
-            Marshal.ReleaseComObject(_groupShapes);
-            _groupShapes = null;
+            Marshal.ReleaseComObject(_fontNames);
+            _fontNames = null;
         }
 
         _disposedValue = true;
     }
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的所有资源。
+    /// 释放由 <see cref="WordFontNames"/> 使用的所有资源。
     /// </summary>
     public void Dispose()
     {
@@ -109,11 +92,12 @@ internal class WordGroupShapes : IWordGroupShapes
 
     #endregion
 
-    #region IEnumerable<IWordShape> 实现
+    #region IEnumerable<string> 实现
 
     /// <inheritdoc/>
-    public IEnumerator<IWordShape> GetEnumerator()
+    public IEnumerator<string> GetEnumerator()
     {
+        // FontNames 集合的索引通常从 1 开始
         for (int i = 1; i <= Count; i++)
         {
             yield return this[i];

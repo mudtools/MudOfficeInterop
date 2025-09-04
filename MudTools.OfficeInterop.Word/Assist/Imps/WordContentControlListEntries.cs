@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordContentControlListEntries : IWordContentControlListEntries
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(WordEditors));
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordContentControlListEntries));
     private MsWord.ContentControlListEntries _listEntries;
     private bool _disposedValue;
 

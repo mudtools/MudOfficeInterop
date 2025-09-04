@@ -8,46 +8,47 @@
 using log4net;
 
 namespace MudTools.OfficeInterop.Word.Imps;
+
 /// <summary>
-/// 表示组合形状中单个形状集合的封装实现类。
+/// 表示最近访问文件集合的封装实现类。
 /// </summary>
-internal class WordGroupShapes : IWordGroupShapes
+internal class WordRecentFiles : IWordRecentFiles
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(WordGroupShapes));
-    private MsWord.GroupShapes _groupShapes;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordRecentFiles));
+    private MsWord.RecentFiles _recentFiles;
     private bool _disposedValue;
 
     /// <summary>
-    /// 初始化 <see cref="WordGroupShapes"/> 类的新实例。
+    /// 初始化 <see cref="WordRecentFiles"/> 类的新实例。
     /// </summary>
-    /// <param name="groupShapes">要封装的原始 COM GroupShapes 对象。</param>
-    internal WordGroupShapes(MsWord.GroupShapes groupShapes)
+    /// <param name="recentFiles">要封装的原始 COM RecentFiles 对象。</param>
+    internal WordRecentFiles(MsWord.RecentFiles recentFiles)
     {
-        _groupShapes = groupShapes ?? throw new ArgumentNullException(nameof(groupShapes));
+        _recentFiles = recentFiles ?? throw new ArgumentNullException(nameof(recentFiles));
         _disposedValue = false;
     }
 
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _groupShapes != null ? new WordApplication(_groupShapes.Application) : null;
+    public IWordApplication Application => _recentFiles != null ? new WordApplication(_recentFiles.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _groupShapes?.Parent;
+    public object Parent => _recentFiles?.Parent;
 
     /// <inheritdoc/>
-    public int Count => _groupShapes?.Count ?? 0;
+    public int Count => _recentFiles?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordShape this[object index]
+    public IWordRecentFile this[int index]
     {
         get
         {
-            if (_groupShapes == null) return null;
+            if (_recentFiles == null || index < 1 || index > Count) return null;
             try
             {
-                var comShape = _groupShapes[index];
-                return comShape != null ? new WordShape(comShape) : null;
+                var comRecentFile = _recentFiles[index];
+                return comRecentFile != null ? new WordRecentFile(comRecentFile) : null;
             }
             catch (COMException ce)
             {
@@ -62,17 +63,18 @@ internal class WordGroupShapes : IWordGroupShapes
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordShapeRange Range(object index)
+    public IWordRecentFile Add(string fileName, object readOnly)
     {
-        if (_groupShapes == null) return null;
+        if (_recentFiles == null || string.IsNullOrWhiteSpace(fileName)) return null;
         try
         {
-            var shapeRange = _groupShapes.Range(ref index);
-            return shapeRange != null ? new WordShapeRange(shapeRange) : null;
+            var newRecentFile = _recentFiles.Add(fileName, ref readOnly);
+            return newRecentFile != null ? new WordRecentFile(newRecentFile) : null;
         }
         catch (COMException ex)
         {
-            log.Error($"Failed to get ShapeRange from GroupShapes: {ex.Message}");
+            // 文件可能不存在或路径无效
+            System.Diagnostics.Debug.WriteLine($"Failed to add recent file '{fileName}': {ex.Message}");
             return null;
         }
     }
@@ -82,24 +84,24 @@ internal class WordGroupShapes : IWordGroupShapes
     #region IDisposable 实现
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的非托管资源，并选择性地释放托管资源。
+    /// 释放由 <see cref="WordRecentFiles"/> 使用的非托管资源，并选择性地释放托管资源。
     /// </summary>
     /// <param name="disposing">如果为 true，则同时释放托管和非托管资源；如果为 false，则仅释放非托管资源。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
 
-        if (disposing && _groupShapes != null)
+        if (disposing && _recentFiles != null)
         {
-            Marshal.ReleaseComObject(_groupShapes);
-            _groupShapes = null;
+            Marshal.ReleaseComObject(_recentFiles);
+            _recentFiles = null;
         }
 
         _disposedValue = true;
     }
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的所有资源。
+    /// 释放由 <see cref="WordRecentFiles"/> 使用的所有资源。
     /// </summary>
     public void Dispose()
     {
@@ -109,10 +111,10 @@ internal class WordGroupShapes : IWordGroupShapes
 
     #endregion
 
-    #region IEnumerable<IWordShape> 实现
+    #region IEnumerable<IWordRecentFile> 实现
 
     /// <inheritdoc/>
-    public IEnumerator<IWordShape> GetEnumerator()
+    public IEnumerator<IWordRecentFile> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {

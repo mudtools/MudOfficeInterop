@@ -13,20 +13,18 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordDocuments : IWordDocuments
 {
     private readonly MsWord.Documents _documents;
-    private readonly IWordApplication _application;
     private bool _disposedValue;
 
-    public IWordApplication Application => _application;
+    public IWordApplication Application => _documents != null ? new WordApplication(_documents.Application) : null;
 
     public int Count => _documents.Count;
 
     public object Parent => _documents.Parent;
 
 
-    internal WordDocuments(MsWord.Documents documents, IWordApplication application)
+    internal WordDocuments(MsWord.Documents documents)
     {
         _documents = documents ?? throw new ArgumentNullException(nameof(documents));
-        _application = application ?? throw new ArgumentNullException(nameof(application));
         _disposedValue = false;
     }
 

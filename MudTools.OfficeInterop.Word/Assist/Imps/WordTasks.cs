@@ -8,46 +8,47 @@
 using log4net;
 
 namespace MudTools.OfficeInterop.Word.Imps;
+
 /// <summary>
-/// 表示组合形状中单个形状集合的封装实现类。
+/// 表示当前在系统上运行的所有应用程序任务集合的封装实现类。
 /// </summary>
-internal class WordGroupShapes : IWordGroupShapes
+internal class WordTasks : IWordTasks
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(WordGroupShapes));
-    private MsWord.GroupShapes _groupShapes;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordTasks));
+    private MsWord.Tasks _tasks;
     private bool _disposedValue;
 
     /// <summary>
-    /// 初始化 <see cref="WordGroupShapes"/> 类的新实例。
+    /// 初始化 <see cref="WordTasks"/> 类的新实例。
     /// </summary>
-    /// <param name="groupShapes">要封装的原始 COM GroupShapes 对象。</param>
-    internal WordGroupShapes(MsWord.GroupShapes groupShapes)
+    /// <param name="tasks">要封装的原始 COM Tasks 对象。</param>
+    internal WordTasks(MsWord.Tasks tasks)
     {
-        _groupShapes = groupShapes ?? throw new ArgumentNullException(nameof(groupShapes));
+        _tasks = tasks ?? throw new ArgumentNullException(nameof(tasks));
         _disposedValue = false;
     }
 
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _groupShapes != null ? new WordApplication(_groupShapes.Application) : null;
+    public IWordApplication Application => _tasks != null ? new WordApplication(_tasks.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _groupShapes?.Parent;
+    public object Parent => _tasks?.Parent;
 
     /// <inheritdoc/>
-    public int Count => _groupShapes?.Count ?? 0;
+    public int Count => _tasks?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordShape this[object index]
+    public IWordTask this[object index]
     {
         get
         {
-            if (_groupShapes == null) return null;
+            if (_tasks == null) return null;
             try
             {
-                var comShape = _groupShapes[index];
-                return comShape != null ? new WordShape(comShape) : null;
+                var comTask = _tasks[index];
+                return comTask != null ? new WordTask(comTask) : null;
             }
             catch (COMException ce)
             {
@@ -62,19 +63,15 @@ internal class WordGroupShapes : IWordGroupShapes
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordShapeRange Range(object index)
+    public bool Exists(string name)
     {
-        if (_groupShapes == null) return null;
-        try
-        {
-            var shapeRange = _groupShapes.Range(ref index);
-            return shapeRange != null ? new WordShapeRange(shapeRange) : null;
-        }
-        catch (COMException ex)
-        {
-            log.Error($"Failed to get ShapeRange from GroupShapes: {ex.Message}");
-            return null;
-        }
+        return _tasks?.Exists(name) ?? false;
+    }
+
+    /// <inheritdoc/>
+    public void ExitWindows()
+    {
+        _tasks?.ExitWindows();
     }
 
     #endregion
@@ -82,24 +79,24 @@ internal class WordGroupShapes : IWordGroupShapes
     #region IDisposable 实现
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的非托管资源，并选择性地释放托管资源。
+    /// 释放由 <see cref="WordTasks"/> 使用的非托管资源，并选择性地释放托管资源。
     /// </summary>
     /// <param name="disposing">如果为 true，则同时释放托管和非托管资源；如果为 false，则仅释放非托管资源。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
 
-        if (disposing && _groupShapes != null)
+        if (disposing && _tasks != null)
         {
-            Marshal.ReleaseComObject(_groupShapes);
-            _groupShapes = null;
+            Marshal.ReleaseComObject(_tasks);
+            _tasks = null;
         }
 
         _disposedValue = true;
     }
 
     /// <summary>
-    /// 释放由 <see cref="WordGroupShapes"/> 使用的所有资源。
+    /// 释放由 <see cref="WordTasks"/> 使用的所有资源。
     /// </summary>
     public void Dispose()
     {
@@ -109,10 +106,10 @@ internal class WordGroupShapes : IWordGroupShapes
 
     #endregion
 
-    #region IEnumerable<IWordShape> 实现
+    #region IEnumerable<IWordTask> 实现
 
     /// <inheritdoc/>
-    public IEnumerator<IWordShape> GetEnumerator()
+    public IEnumerator<IWordTask> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {
