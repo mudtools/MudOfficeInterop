@@ -85,10 +85,11 @@ internal class WordContentControl : IWordContentControl
     }
 
     /// <inheritdoc/>
-    public IWordXMLMapping XMLMapping => _contentControl?.XMLMapping;
+    //public IWordXMLMapping XMLMapping => _contentControl?.XMLMapping;
 
     /// <inheritdoc/>
-    public IWordContentControlListEntries DropdownListEntries => _contentControl?.DropdownListEntries;
+    public IWordContentControlListEntries? DropdownListEntries =>
+        _contentControl?.DropdownListEntries != null ? new WordContentControlListEntries(_contentControl.DropdownListEntries) : null;
 
     /// <inheritdoc/>
     public string DateDisplayFormat

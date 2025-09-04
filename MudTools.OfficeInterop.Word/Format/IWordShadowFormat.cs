@@ -51,4 +51,24 @@ public interface IWordShadowFormat : IDisposable
     /// 获取或设置阴影的大小。
     /// </summary>
     float Size { get; set; }
+
+    bool RotateWithShape { get; set; }
+
+    MsoShadowStyle Style { get; set; }
+
+    float OffsetX { get; set; }
+
+    float OffsetY { get; set; }
+
+    void SetOffset(float offsetX, float offsetY);
+
+    void Clear();
+
+    void CopyTo(IWordShadowFormat targetShadow);
+
+    void Reset();
+
+    void ApplyOuterShadow(float offsetX, float offsetY, float blur, int color, float transparency);
+
+    void ApplyInnerShadow(float offsetX, float offsetY, float blur, int color, float transparency);
 }

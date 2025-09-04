@@ -52,9 +52,6 @@ internal class WordField : IWordField
         _field?.Code != null ? new WordRange(_field.Code) : null;
 
     /// <inheritdoc/>
-    public object Parent => _field?.Parent;
-
-    /// <inheritdoc/>
     public bool Locked
     {
         get => _field?.Locked != null && _field.Locked;

@@ -44,10 +44,17 @@ internal class WordInlineShape : IWordInlineShape
     /// <inheritdoc/>
     public WdInlineShapeType Type => _inlineShape?.Type != null ? (WdInlineShapeType)(int)_inlineShape?.Type : WdInlineShapeType.wdInlineShapePicture;
 
+    /// <inheritdoc/>
+    public IWordTextEffectFormat? TextEffect =>
+        _inlineShape?.TextEffect != null ? new WordTextEffectFormat(_inlineShape.TextEffect) : null;
 
     /// <inheritdoc/>
     public IWordRange Range =>
         _inlineShape?.Range != null ? new WordRange(_inlineShape.Range) : null;
+
+    /// <inheritdoc/>
+    public IWordApplication? Application => _inlineShape != null ? new WordApplication(_inlineShape.Application) : null;
+
 
     /// <inheritdoc/>
     public object Parent => _inlineShape?.Parent;
@@ -115,14 +122,15 @@ internal class WordInlineShape : IWordInlineShape
         _inlineShape?.Chart != null ? new WordChart(_inlineShape.Chart) : null;
 
     /// <inheritdoc/>
-    public IWordSmartArt SmartArt => _inlineShape?.SmartArt;
+    //public IWordSmartArt SmartArt => _inlineShape?.SmartArt;
 
     /// <inheritdoc/>
     public IWordPictureFormat? PictureFormat =>
          _inlineShape?.PictureFormat != null ? new WordPictureFormat(_inlineShape.PictureFormat) : null;
 
     /// <inheritdoc/>
-    public IWordShape GroupItems => _inlineShape?.GroupItems;
+    public IWordGroupShapes? GroupItems =>
+        _inlineShape?.GroupItems != null ? new WordGroupShapes(_inlineShape.GroupItems) : null;
 
     /// <inheritdoc/>
     public bool IsPicture => Type == WdInlineShapeType.wdInlineShapePicture;
@@ -319,28 +327,6 @@ internal class WordInlineShape : IWordInlineShape
             _inlineShape.LockAspectRatio = MsCore.MsoTriState.msoTrue; // 默认锁定纵横比
             _inlineShape.AlternativeText = string.Empty;
             _inlineShape.Title = string.Empty;
-        }
-    }
-
-    /// <inheritdoc/>
-    public string GetSourcePath()
-    {
-        if (_inlineShape == null)
-            return string.Empty;
-
-        try
-        {
-            if (LinkFormat?.SourceFullName != null)
-                return LinkFormat.SourceFullName;
-
-            if (OLEFormat?.IconPath != null)
-                return OLEFormat.IconPath;
-
-            return string.Empty;
-        }
-        catch
-        {
-            return string.Empty;
         }
     }
 

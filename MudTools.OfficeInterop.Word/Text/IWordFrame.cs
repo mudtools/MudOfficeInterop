@@ -32,6 +32,8 @@ public interface IWordFrame : IDisposable
     /// </summary>
     IWordShading? Shading { get; }
 
+    IWordBorders? Borders { get; }
+
     /// <summary>
     /// 获取或设置框架的水平位置。
     /// </summary>
@@ -76,16 +78,6 @@ public interface IWordFrame : IDisposable
     /// 获取框架是否包含文本。
     /// </summary>
     bool HasText { get; }
-
-    /// <summary>
-    /// 获取框架中的字符数。
-    /// </summary>
-    int CharactersCount { get; }
-
-    /// <summary>
-    /// 获取框架中的段落数。
-    /// </summary>
-    int ParagraphsCount { get; }
 
     /// <summary>
     /// 删除框架。

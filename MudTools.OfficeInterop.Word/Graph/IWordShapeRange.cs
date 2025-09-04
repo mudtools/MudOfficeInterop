@@ -167,12 +167,6 @@ public interface IWordShapeRange : IDisposable
     void Distribute(MsoDistributeCmd distributeCmd, int relativeTo);
 
     /// <summary>
-    /// 应用快速样式到形状范围。
-    /// </summary>
-    /// <param name="style">样式。</param>
-    void ApplyStyle(string style);
-
-    /// <summary>
     /// 转换为图片。
     /// </summary>
     void ConvertToInlineShape();

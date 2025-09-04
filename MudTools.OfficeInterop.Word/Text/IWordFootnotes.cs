@@ -35,18 +35,18 @@ public interface IWordFootnotes : IEnumerable<IWordFootnote>, IDisposable
     /// <summary>
     /// 获取第一个脚注。
     /// </summary>
-    IWordFootnote First { get; }
+    IWordFootnote? First { get; }
 
     /// <summary>
     /// 获取最后一个脚注。
     /// </summary>
-    IWordFootnote Last { get; }
+    IWordFootnote? Last { get; }
 
-    IWordRange Separator { get; }
+    IWordRange? Separator { get; }
 
-    IWordRange ContinuationSeparator { get; }
+    IWordRange? ContinuationSeparator { get; }
 
-    IWordRange ContinuationNotice { get; }
+    IWordRange? ContinuationNotice { get; }
 
     /// <summary>
     /// 获取或设置脚注编号方式。

@@ -26,7 +26,7 @@ internal class WordLegend : IWordLegend
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _legend != null ? new WordApplication(_legend.Application) : null;
+    public IWordApplication Application => _legend != null ? new WordApplication(_legend.Application as MsWord.Application) : null;
 
     /// <inheritdoc/>
     public object Parent => _legend?.Parent;

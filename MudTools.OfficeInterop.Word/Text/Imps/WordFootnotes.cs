@@ -33,19 +33,19 @@ internal class WordFootnotes : IWordFootnotes
     public int Count => _footnotes?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordFootnote First => _footnotes?.Count > 0 ? new WordFootnote(_footnotes[1]) : null;
+    public IWordFootnote? First => _footnotes?.Count > 0 ? new WordFootnote(_footnotes[1]) : null;
 
     /// <inheritdoc/>
-    public IWordFootnote Last => _footnotes?.Count > 0 ? new WordFootnote(_footnotes[_footnotes.Count]) : null;
+    public IWordFootnote? Last => _footnotes?.Count > 0 ? new WordFootnote(_footnotes[_footnotes.Count]) : null;
 
     /// <inheritdoc/>
-    public IWordRange Separator => _footnotes?.Separator != null ? new WordRange(_footnotes.Separator) : null;
+    public IWordRange? Separator => _footnotes?.Separator != null ? new WordRange(_footnotes.Separator) : null;
 
     /// <inheritdoc/>
-    public IWordRange ContinuationSeparator => _footnotes?.ContinuationSeparator != null ? new WordRange(_footnotes.ContinuationSeparator) : null;
+    public IWordRange? ContinuationSeparator => _footnotes?.ContinuationSeparator != null ? new WordRange(_footnotes.ContinuationSeparator) : null;
 
     /// <inheritdoc/>
-    public IWordRange ContinuationNotice => _footnotes?.ContinuationNotice != null ? new WordRange(_footnotes.ContinuationNotice) : null;
+    public IWordRange? ContinuationNotice => _footnotes?.ContinuationNotice != null ? new WordRange(_footnotes.ContinuationNotice) : null;
 
     /// <inheritdoc/>
     public WdNoteNumberStyle NumberStyle

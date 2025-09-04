@@ -41,6 +41,10 @@ internal class WordFrame : IWordFrame
     public IWordShading? Shading =>
         _frame?.Shading != null ? new WordShading(_frame.Shading) : null;
 
+    /// <inheritdoc/>
+    public IWordBorders? Borders =>
+        _frame?.Borders != null ? new WordBorders(_frame.Borders) : null;
+
 
     /// <inheritdoc/>    
     public float HorizontalPosition
@@ -132,12 +136,6 @@ internal class WordFrame : IWordFrame
 
     /// <inheritdoc/>
     public bool HasText => Range?.Text?.Length > 0;
-
-    /// <inheritdoc/>
-    public int CharactersCount => Range?.CharactersCount ?? 0;
-
-    /// <inheritdoc/>
-    public int ParagraphsCount => Range?.ParagraphsCount ?? 0;
 
     /// <inheritdoc/>
     public IWordFont Font => Range?.Font;
@@ -305,30 +303,6 @@ internal class WordFrame : IWordFrame
                 catch
                 {
                     // 忽略底纹格式复制异常
-                }
-            }
-
-            // 复制边框格式（如果可以通过范围获取）
-            if (this.Range != null && targetFrame.Range != null)
-            {
-                try
-                {
-                    if (this.Range.ParagraphFormat?.Borders != null && targetFrame.Range.ParagraphFormat?.Borders != null)
-                    {
-                        var sourceBorders = this.Range.ParagraphFormat.Borders;
-                        var targetBorders = targetFrame.Range.ParagraphFormat.Borders;
-                        targetBorders.ApplyStyle(
-                            WdLineStyle.wdLineStyleSingle,
-                            WdLineWidth.wdLineWidth050pt,
-                            this.Range.ParagraphFormat.Borders[WdBorderType.wdBorderTop]?.Color ?? 0
-                        );
-                        sourceBorders.Dispose();
-                        targetBorders.Dispose();
-                    }
-                }
-                catch
-                {
-                    // 忽略边框格式复制异常
                 }
             }
         }

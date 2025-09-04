@@ -90,10 +90,5 @@ public interface IWordInlineShapes : IEnumerable<IWordInlineShape>, IDisposable
     /// </summary>
     /// <param name="type">形状类型</param>
     /// <returns>符合条件的内嵌形状集合</returns>
-    IEnumerable<IWordInlineShape> FindByType(int type);
-
-    /// <summary>
-    /// 获取集合的父对象（伪代码）
-    /// </summary>
-    object Parent { get; }
+    IEnumerable<IWordInlineShape> FindByType(WdInlineShapeType type);
 }

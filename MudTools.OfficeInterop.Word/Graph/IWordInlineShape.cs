@@ -27,20 +27,12 @@ public interface IWordInlineShape : IDisposable
     /// </summary>
     IWordRange Range { get; }
 
+    IWordTextEffectFormat? TextEffect { get; }
+
     /// <summary>
     /// 获取内联形状的父对象。
     /// </summary>
     object Parent { get; }
-
-    /// <summary>
-    /// 获取或设置内联形状的左边距（磅）。
-    /// </summary>
-    float Left { get; set; }
-
-    /// <summary>
-    /// 获取或设置内联形状的上边距（磅）。
-    /// </summary>
-    float Top { get; set; }
 
     /// <summary>
     /// 获取或设置内联形状的宽度（磅）。
@@ -51,16 +43,6 @@ public interface IWordInlineShape : IDisposable
     /// 获取或设置内联形状的高度（磅）。
     /// </summary>
     float Height { get; set; }
-
-    /// <summary>
-    /// 获取内联形状的水平位置。
-    /// </summary>
-    WdHorizontalPositionAlignment HorizontalAlignment { get; }
-
-    /// <summary>
-    /// 获取内联形状的垂直位置。
-    /// </summary>
-    WdVerticalPositionAlignment VerticalAlignment { get; }
 
     /// <summary>
     /// 获取或设置内联形状是否锁定纵横比。
@@ -94,10 +76,6 @@ public interface IWordInlineShape : IDisposable
 
     IWordShadowFormat? Shadow { get; }
 
-    /// <summary>
-    /// 获取内联形状的文本框格式。
-    /// </summary>
-    IWordTextFrame? TextFrame { get; }
 
     /// <summary>
     /// 获取内联形状的图表对象。
@@ -107,7 +85,7 @@ public interface IWordInlineShape : IDisposable
     /// <summary>
     /// 获取内联形状的SmartArt对象。
     /// </summary>
-    IWordSmartArt SmartArt { get; }
+    //IWordSmartArt SmartArt { get; }
 
     /// <summary>
     /// 获取内联形状的图片格式。
@@ -115,14 +93,9 @@ public interface IWordInlineShape : IDisposable
     IWordPictureFormat? PictureFormat { get; }
 
     /// <summary>
-    /// 获取内联形状的表格对象。
-    /// </summary>
-    IWordTable Table { get; }
-
-    /// <summary>
     /// 获取内联形状的图形对象。
     /// </summary>
-    IWordShape GroupItems { get; }
+    IWordGroupShapes? GroupItems { get; }
 
     /// <summary>
     /// 获取内联形状是否为图片类型。
@@ -138,16 +111,6 @@ public interface IWordInlineShape : IDisposable
     /// 获取内联形状是否为图表。
     /// </summary>
     bool IsChart { get; }
-
-    /// <summary>
-    /// 获取内联形状是否为文本框。
-    /// </summary>
-    bool IsTextBox { get; }
-
-    /// <summary>
-    /// 获取内联形状的Z轴顺序位置。
-    /// </summary>
-    int ZOrderPosition { get; }
 
     /// <summary>
     /// 获取内联形状是否为第一个形状。
@@ -216,11 +179,6 @@ public interface IWordInlineShape : IDisposable
     /// </summary>
     void Reset();
 
-    /// <summary>
-    /// 获取内联形状的文件路径（如果是链接对象）。
-    /// </summary>
-    /// <returns>文件路径。</returns>
-    string GetSourcePath();
 
     /// <summary>
     /// 更新链接的内联形状。

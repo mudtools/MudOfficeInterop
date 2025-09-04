@@ -15,29 +15,29 @@ public interface IWordTable : IDisposable
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取表格所在的范围。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     bool Uniform { get; }
 
     /// <summary>
     /// 获取表格的行集合。
     /// </summary>
-    IWordRows Rows { get; }
+    IWordRows? Rows { get; }
 
     /// <summary>
     /// 获取表格的列集合。
     /// </summary>
-    IWordColumns Columns { get; }
+    IWordColumns? Columns { get; }
 
     /// <summary>
     /// 获取表格的边框集合。
@@ -67,7 +67,7 @@ public interface IWordTable : IDisposable
     /// <summary>
     /// 获取或设置表格的样式。
     /// </summary>
-    object TableStyle { get; set; }
+    object? TableStyle { get; set; }
 
     /// <summary>
     /// 获取或设置表格标题行。
@@ -164,7 +164,7 @@ public interface IWordTable : IDisposable
     /// </summary>
     /// <param name="rowIndex">行索引（从1开始）。</param>
     /// <param name="columnIndex">列索引（从1开始）。</param>
-    IWordCell Cell(int rowIndex, int columnIndex);
+    IWordCell? Cell(int rowIndex, int columnIndex);
 
 
     /// <summary>
@@ -172,7 +172,7 @@ public interface IWordTable : IDisposable
     /// </summary>
     /// <param name="separator">分隔符。</param>
     /// <returns>转换后的范围。</returns>
-    IWordRange ConvertToText(object separator);
+    IWordRange? ConvertToText(object separator);
 
     /// <summary>
     /// 删除表格。

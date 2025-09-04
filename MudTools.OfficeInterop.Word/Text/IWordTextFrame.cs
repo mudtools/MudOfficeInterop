@@ -104,16 +104,6 @@ public interface IWordTextFrame : IDisposable
     bool HasText { get; }
 
     /// <summary>
-    /// 获取文本框中的字符数。
-    /// </summary>
-    int CharactersCount { get; }
-
-    /// <summary>
-    /// 获取文本框中的段落数。
-    /// </summary>
-    int ParagraphsCount { get; }
-
-    /// <summary>
     /// 获取或设置文本框的填充格式。
     /// </summary>
     IWordFillFormat? Fill { get; }

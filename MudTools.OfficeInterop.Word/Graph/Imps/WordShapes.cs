@@ -249,7 +249,7 @@ internal class WordShapes : IWordShapes
     }
 
     /// <inheritdoc/>
-    public IWordShapes GetShapesInRange(IWordRange range)
+    public IWordShapeRange GetShapesInRange(IWordRange range)
     {
         if (_shapes == null || range == null)
             return null;
@@ -260,7 +260,7 @@ internal class WordShapes : IWordShapes
             if (wordRange != null)
             {
                 var rangeShapes = wordRange.ShapeRange;
-                return new WordShape(rangeShapes);
+                return new WordShapeRange(rangeShapes);
             }
             return null;
         }

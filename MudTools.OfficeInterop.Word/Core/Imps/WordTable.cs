@@ -23,22 +23,22 @@ internal class WordTable : IWordTable
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _table != null ? new WordApplication(_table.Application) : null;
+    public IWordApplication? Application => _table != null ? new WordApplication(_table.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _table?.Parent;
+    public object? Parent => _table?.Parent;
 
     /// <inheritdoc/>
-    public IWordRange Range => _table?.Range != null ? new WordRange(_table.Range) : null;
+    public IWordRange? Range => _table?.Range != null ? new WordRange(_table.Range) : null;
 
     /// <inheritdoc/>
     public bool Uniform => _table?.Uniform ?? false;
 
     /// <inheritdoc/>
-    public IWordRows Rows => _table?.Rows != null ? new WordRows(_table.Rows) : null;
+    public IWordRows? Rows => _table?.Rows != null ? new WordRows(_table.Rows) : null;
 
     /// <inheritdoc/>
-    public IWordColumns Columns => _table?.Columns != null ? new WordColumns(_table.Columns) : null;
+    public IWordColumns? Columns => _table?.Columns != null ? new WordColumns(_table.Columns) : null;
 
     /// <inheritdoc/>
     public IWordTables? Tables => _table?.Tables != null ? new WordTables(_table.Tables) : null;
@@ -133,7 +133,7 @@ internal class WordTable : IWordTable
     }
 
     /// <inheritdoc/>
-    public object TableStyle
+    public object? TableStyle
     {
         get => _table?.get_Style();
         set
@@ -270,7 +270,7 @@ internal class WordTable : IWordTable
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordCell Cell(int rowIndex, int columnIndex)
+    public IWordCell? Cell(int rowIndex, int columnIndex)
     {
         if (_table == null) return null;
         try
@@ -291,7 +291,7 @@ internal class WordTable : IWordTable
     }
 
     /// <inheritdoc/>
-    public IWordRange ConvertToText(object separator)
+    public IWordRange? ConvertToText(object separator)
     {
         if (_table == null) return null;
         try

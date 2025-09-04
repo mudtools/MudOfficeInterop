@@ -299,18 +299,10 @@ internal class WordRange : IWordRange
 
     #endregion
 
-
     #region 更多集合属性实现 (More Collection Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordShapeRange? ShapeRange
-    {
-        get
-        {
-            try { return _range?.ShapeRange != null ? new WordShapeRange(_range.ShapeRange) : null; }
-            catch (COMException) { return null; }
-        }
-    }
+    public IWordShapeRange? ShapeRange => _range?.ShapeRange != null ? new WordShapeRange(_range.ShapeRange) : null;
 
     /// <inheritdoc/>
     public IWordInlineShapes? InlineShapes => _range?.InlineShapes != null ? new WordInlineShapes(_range.InlineShapes) : null;

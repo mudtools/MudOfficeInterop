@@ -158,12 +158,6 @@ internal class WordTextFrame : IWordTextFrame
     public bool HasText => _textFrame?.HasText == 1;
 
     /// <inheritdoc/>
-    public int CharactersCount => TextRange?.CharactersCount ?? 0;
-
-    /// <inheritdoc/>
-    public int ParagraphsCount => TextRange?.ParagraphsCount ?? 0;
-
-    /// <inheritdoc/>
     public IWordFillFormat? Fill =>
         _textFrame?.Parent is MsWord.Shape shape && shape.Fill != null
             ? new WordFillFormat(shape.Fill) : null;

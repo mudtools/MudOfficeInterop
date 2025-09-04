@@ -190,7 +190,7 @@ internal class WordInlineShapes : IWordInlineShapes
     /// </summary>
     /// <param name="type">形状类型</param>
     /// <returns>符合条件的内嵌形状集合</returns>
-    public IEnumerable<IWordInlineShape> FindByType(int type)
+    public IEnumerable<IWordInlineShape> FindByType(WdInlineShapeType type)
     {
         for (int i = 1; i <= Count; i++)
         {

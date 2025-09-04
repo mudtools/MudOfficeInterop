@@ -90,9 +90,6 @@ internal class WordFields : IWordFields
     }
 
     /// <inheritdoc/>
-    public object Parent => _fields?.Parent;
-
-    /// <inheritdoc/>
     public IWordField FirstField => this[1];
 
     /// <inheritdoc/>

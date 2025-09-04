@@ -70,12 +70,12 @@ public interface IWordContentControl : IDisposable
     /// <summary>
     /// 获取或设置内容控件的 XML 映射。
     /// </summary>
-    IWordXMLMapping XMLMapping { get; }
+    //IWordXMLMapping XMLMapping { get; }
 
     /// <summary>
     /// 获取内容控件的下拉列表条目（适用于 ComboBox 和 DropdownList 类型）。
     /// </summary>
-    IWordContentControlListEntries DropdownListEntries { get; }
+    IWordContentControlListEntries? DropdownListEntries { get; }
 
     /// <summary>
     /// 获取内容控件的日期显示格式（适用于 Date 类型）。

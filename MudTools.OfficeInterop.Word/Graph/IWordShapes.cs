@@ -134,7 +134,7 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// </summary>
     /// <param name="range">范围。</param>
     /// <returns>形状集合。</returns>
-    IWordShapes GetShapesInRange(IWordRange range);
+    IWordShapeRange GetShapesInRange(IWordRange range);
 
     /// <summary>
     /// 获取指定类型的形状数量。
