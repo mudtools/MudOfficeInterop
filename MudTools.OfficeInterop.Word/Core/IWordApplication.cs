@@ -197,27 +197,27 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示“语言”对话框中列出的校对语言的 Languages 集合。
     /// </summary>
-    IWordLanguages Languages { get; }
+    IWordLanguages? Languages { get; }
 
     /// <summary>
     /// 获取表示所有可用字体名称的 FontNames 集合。
     /// </summary>
-    IWordFontNames FontNames { get; }
+    IWordFontNames? FontNames { get; }
 
     /// <summary>
     /// 获取表示所有可用纵向字体名称的 FontNames 集合。
     /// </summary>
-    IWordFontNames PortraitFontNames { get; }
+    IWordFontNames? PortraitFontNames { get; }
 
     /// <summary>
     /// 获取表示所有可用横向字体名称的 FontNames 集合。
     /// </summary>
-    IWordFontNames LandscapeFontNames { get; }
+    IWordFontNames? LandscapeFontNames { get; }
 
     /// <summary>
     /// 获取表示活动自定义字典集合的 Dictionaries 对象。
     /// </summary>
-    IWordDictionaries CustomDictionaries { get; }
+    IWordDictionaries? CustomDictionaries { get; }
 
     #endregion
 
@@ -226,17 +226,17 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示当前自动更正选项、条目和异常的 AutoCorrect 对象。
     /// </summary>
-    IWordAutoCorrect AutoCorrect { get; }
+    IWordAutoCorrect? AutoCorrect { get; }
 
     /// <summary>
     /// 获取表示对电子邮件进行的自动更正的 AutoCorrect 对象。
     /// </summary>
-    IWordAutoCorrect AutoCorrectEmail { get; }
+    IWordAutoCorrect? AutoCorrectEmail { get; }
 
     /// <summary>
     /// 获取表示项目符号、编号和大纲编号模板库的 ListGalleries 集合。
     /// </summary>
-    IWordListGalleries ListGalleries { get; }
+    IWordListGalleries? ListGalleries { get; }
 
     #endregion
 
@@ -287,9 +287,10 @@ public partial interface IWordApplication : IOfficeApplication
     /// <param name="encoding">文档的编码。</param>
     /// <param name="visible">如果为 true，则打开文档时使其可见。</param>
     /// <returns>打开的文档对象。</returns>
-    IWordDocument OpenDocument(string fileName, object confirmConversions, object readOnly, object addToRecentFiles,
-                              object passwordDocument, object passwordTemplate, object revert, object writePasswordDocument,
-                              object writePasswordTemplate, object format, object encoding, object visible);
+    IWordDocument? OpenDocument(string fileName, bool confirmConversions = true, bool readOnly = false, bool addToRecentFiles = true,
+                                     string passwordDocument = "", string passwordTemplate = "", bool revert = true, string writePasswordDocument = "",
+                                     string writePasswordTemplate = "", WdOpenFormat format = WdOpenFormat.wdOpenFormatAuto,
+                                     MsoEncoding encoding = MsoEncoding.msoEncodingSimplifiedChineseAutoDetect, bool visible = true);
 
     /// <summary>
     /// 新建一个文档。
@@ -297,7 +298,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <param name="template">用于创建新文档的模板。</param>
     /// <param name="newTemplate">如果为 true，则将文档创建为新模板。</param>
     /// <returns>新建的文档对象。</returns>
-    IWordDocument NewDocument(object template, object newTemplate);
+    IWordDocument? NewDocument(object template, object newTemplate);
 
     /// <summary>
     /// 执行查找操作。

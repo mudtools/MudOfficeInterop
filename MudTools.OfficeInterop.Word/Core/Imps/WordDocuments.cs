@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -12,6 +14,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordDocuments : IWordDocuments
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordApplication));
     private readonly MsWord.Documents _documents;
     private bool _disposedValue;
 
@@ -87,7 +90,7 @@ internal class WordDocuments : IWordDocuments
         }
     }
 
-    public IWordDocument Open(string fileName, bool readOnly = false, string password = null)
+    public IWordDocument Open(string fileName, bool readOnly = false, string? password = null)
     {
         if (!File.Exists(fileName))
             throw new FileNotFoundException("File not found.", fileName);
@@ -131,9 +134,33 @@ internal class WordDocuments : IWordDocuments
 
             return new WordDocument(doc);
         }
-        catch (Exception ex)
+        catch (COMException ex)
         {
-            throw new InvalidOperationException($"Failed to open document '{fileName}'.", ex);
+            log.Error($"Failed to open document '{fileName}': {ex.Message}", ex);
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public IWordDocument? OpenDocument(string fileName, bool confirmConversions = true, bool readOnly = false, bool addToRecentFiles = true,
+                                     string passwordDocument = "", string passwordTemplate = "", bool revert = true, string writePasswordDocument = "",
+                                     string writePasswordTemplate = "", WdOpenFormat format = WdOpenFormat.wdOpenFormatAuto,
+                                     MsoEncoding encoding = MsoEncoding.msoEncodingSimplifiedChineseAutoDetect, bool visible = true)
+    {
+        if (_documents == null || string.IsNullOrWhiteSpace(fileName)) return null;
+
+        try
+        {
+            var document = _documents.Open(fileName, confirmConversions, readOnly, addToRecentFiles,
+                                                     passwordDocument, passwordTemplate, revert,
+                                                     writePasswordDocument, writePasswordTemplate, format,
+                                                     (MsCore.MsoEncoding)(int)encoding, visible);
+            return document != null ? new WordDocument(document) : null;
+        }
+        catch (COMException ex)
+        {
+            log.Error($"Failed to open document '{fileName}': {ex.Message}", ex);
+            return null;
         }
     }
 

@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using log4net;
+using Microsoft.Office.Interop.Word;
 using MudTools.OfficeInterop.Imps;
 
 namespace MudTools.OfficeInterop.Word.Imps;
@@ -266,20 +267,20 @@ internal partial class WordApplication : IWordApplication
     #region 语言和字典属性实现 (Language & Dictionary Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordLanguages Languages => _application?.Languages != null ? new WordLanguages(_application.Languages) : null;
-    public IWordFontNames FontNames => _application?.FontNames != null ? new WordFontNames(_application.FontNames) : null;
-    public IWordFontNames PortraitFontNames => _application?.PortraitFontNames != null ? new WordFontNames(_application.PortraitFontNames) : null;
-    public IWordFontNames LandscapeFontNames => _application?.LandscapeFontNames != null ? new WordFontNames(_application.LandscapeFontNames) : null;
-    public IWordDictionaries CustomDictionaries => _application?.CustomDictionaries;
+    public IWordLanguages? Languages => _application?.Languages != null ? new WordLanguages(_application.Languages) : null;
+    public IWordFontNames? FontNames => _application?.FontNames != null ? new WordFontNames(_application.FontNames) : null;
+    public IWordFontNames? PortraitFontNames => _application?.PortraitFontNames != null ? new WordFontNames(_application.PortraitFontNames) : null;
+    public IWordFontNames? LandscapeFontNames => _application?.LandscapeFontNames != null ? new WordFontNames(_application.LandscapeFontNames) : null;
+    public IWordDictionaries? CustomDictionaries => _application?.CustomDictionaries != null ? new WordDictionaries(_application.CustomDictionaries) : null;
 
     #endregion
 
     #region 自动更正和列表属性实现 (AutoCorrect & Lists Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordAutoCorrect AutoCorrect => _application?.AutoCorrect != null ? new WordAutoCorrect(_application.AutoCorrect) : null;
-    public IWordAutoCorrect AutoCorrectEmail => _application?.AutoCorrectEmail != null ? new WordAutoCorrect(_application.AutoCorrectEmail) : null;
-    public IWordListGalleries ListGalleries => _application?.ListGalleries;
+    public IWordAutoCorrect? AutoCorrect => _application?.AutoCorrect != null ? new WordAutoCorrect(_application.AutoCorrect) : null;
+    public IWordAutoCorrect? AutoCorrectEmail => _application?.AutoCorrectEmail != null ? new WordAutoCorrect(_application.AutoCorrectEmail) : null;
+    public IWordListGalleries? ListGalleries => _application?.ListGalleries != null ? new WordListGalleries(_application.ListGalleries) : null;
 
     #endregion
 
@@ -321,18 +322,19 @@ internal partial class WordApplication : IWordApplication
     #region 更多方法实现 (More Methods Implementation)
 
     /// <inheritdoc/>
-    public IWordDocument OpenDocument(string fileName, object confirmConversions, object readOnly, object addToRecentFiles,
-                                     object passwordDocument, object passwordTemplate, object revert, object writePasswordDocument,
-                                     object writePasswordTemplate, object format, object encoding, object visible)
+    public IWordDocument? OpenDocument(string fileName, bool confirmConversions = true, bool readOnly = false, bool addToRecentFiles = true,
+                                     string passwordDocument = "", string passwordTemplate = "", bool revert = true, string writePasswordDocument = "",
+                                     string writePasswordTemplate = "", WdOpenFormat format = WdOpenFormat.wdOpenFormatAuto,
+                                     MsoEncoding encoding = MsoEncoding.msoEncodingSimplifiedChineseAutoDetect, bool visible = true)
     {
         if (_application == null || string.IsNullOrWhiteSpace(fileName)) return null;
 
         try
         {
-            var document = _application.Documents.Open(fileName, ref confirmConversions, ref readOnly, ref addToRecentFiles,
-                                                     ref passwordDocument, ref passwordTemplate, ref revert,
-                                                     ref writePasswordDocument, ref writePasswordTemplate, ref format,
-                                                     ref encoding, ref visible);
+            var document = _application.Documents.Open(fileName, confirmConversions, readOnly, addToRecentFiles,
+                                                     passwordDocument, passwordTemplate, revert,
+                                                     writePasswordDocument, writePasswordTemplate, format,
+                                                     (MsCore.MsoEncoding)(int)encoding, visible);
             return document != null ? new WordDocument(document) : null;
         }
         catch (COMException ex)
@@ -343,7 +345,7 @@ internal partial class WordApplication : IWordApplication
     }
 
     /// <inheritdoc/>
-    public IWordDocument NewDocument(object template, object newTemplate)
+    public IWordDocument? NewDocument(object template, object newTemplate)
     {
         if (_application?.Documents == null) return null;
 
@@ -802,8 +804,8 @@ internal partial class WordApplication : IWordApplication
                     if (Visibility == WordAppVisibility.Hidden)
                     {
                         object saveChanges = MsWord.WdSaveOptions.wdDoNotSaveChanges;
-                        object originalFormat = missing;
-                        object routeDocument = missing;
+                        object originalFormat = MissingValue;
+                        object routeDocument = MissingValue;
                         _application.Quit(ref saveChanges, ref originalFormat, ref routeDocument);
                     }
                     else
