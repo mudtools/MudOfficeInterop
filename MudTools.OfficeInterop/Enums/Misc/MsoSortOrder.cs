@@ -6,16 +6,8 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
-/// <summary>
-/// 表示 Office 中搜索范围的接口封装。
-/// 该接口提供对单个搜索范围属性的访问。
-/// </summary>
-public interface IOfficeSearchScope : IDisposable
+public enum MsoSortOrder
 {
-    /// <summary>
-    /// 获取搜索范围的类型。
-    /// </summary>
-    MsoSearchIn Type { get; }
-
-    IOfficeScopeFolder ScopeFolder { get; }
+    msoSortOrderAscending = 1,
+    msoSortOrderDescending
 }

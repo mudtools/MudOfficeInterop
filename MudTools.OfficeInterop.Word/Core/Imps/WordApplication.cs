@@ -685,7 +685,7 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.ChartDataPointTrack = value; }
     }
 
-    public IWordFileSearch FileSearch => _application?.FileSearch;
+    public IOfficeFileSearch FileSearch => _application?.FileSearch != null ? new OfficeFileSearch(_application?.FileSearch) : null;
 
     #endregion
 
@@ -792,7 +792,6 @@ internal partial class WordApplication : IWordApplication
             _selection?.Dispose();
             _documents?.Dispose();
             _windows?.Dispose();
-            _wordTemplate?.Dispose();
             DisconnectEvents();
             if (_application != null)
             {

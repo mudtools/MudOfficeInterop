@@ -709,7 +709,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取一个 FileSearch 对象，该对象可用于使用绝对路径或相对路径搜索文件。
     /// </summary>
-    IWordFileSearch FileSearch { get; }
+    IOfficeFileSearch FileSearch { get; }
 
     #endregion
 

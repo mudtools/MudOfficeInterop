@@ -7,15 +7,28 @@
 
 namespace MudTools.OfficeInterop;
 /// <summary>
-/// 表示 Office 中搜索范围的接口封装。
-/// 该接口提供对单个搜索范围属性的访问。
+/// 表示 Office 中属性测试条件的接口封装。
+/// 该接口提供对单个属性测试条件属性的访问。
 /// </summary>
-public interface IOfficeSearchScope : IDisposable
+public interface IOfficePropertyTest : IDisposable
 {
     /// <summary>
-    /// 获取搜索范围的类型。
+    /// 获取或设置属性测试的名称。
     /// </summary>
-    MsoSearchIn Type { get; }
+    string Name { get; }
 
-    IOfficeScopeFolder ScopeFolder { get; }
+    /// <summary>
+    /// 获取或设置属性测试的条件。
+    /// </summary>
+    MsoCondition Condition { get; }
+
+    /// <summary>
+    /// 获取或设置属性测试的值。
+    /// </summary>
+    object Value { get; }
+
+    /// <summary>
+    /// 获取或设置属性测试的第二个值（用于范围比较）。
+    /// </summary>
+    object SecondValue { get; }
 }

@@ -7,38 +7,48 @@
 
 namespace MudTools.OfficeInterop.Imps;
 /// <summary>
-/// 对 Microsoft.Office.Core.SearchScope 的二次封装实现类。
-/// 提供安全访问搜索范围属性的方式，并管理 COM 对象生命周期。
+/// 对 Microsoft.Office.Core.PropertyTest 的二次封装实现类。
+/// 提供安全访问属性测试条件属性的方式，并管理 COM 对象生命周期。
 /// </summary>
-internal class OfficeSearchScope : IOfficeSearchScope
+internal class OfficePropertyTest : IOfficePropertyTest
 {
-    private MsCore.SearchScope _searchScope;
+    private MsCore.PropertyTest _propertyTest;
     private bool _disposedValue;
 
     /// <summary>
-    /// 构造函数，初始化封装的 SearchScope 对象。
+    /// 构造函数，初始化封装的 PropertyTest 对象。
     /// </summary>
-    /// <param name="searchScope">原始的 COM SearchScope 对象。</param>
-    internal OfficeSearchScope(MsCore.SearchScope searchScope)
+    /// <param name="propertyTest">原始的 COM PropertyTest 对象。</param>
+    internal OfficePropertyTest(MsCore.PropertyTest propertyTest)
     {
-        _searchScope = searchScope ?? throw new ArgumentNullException(nameof(searchScope));
+        _propertyTest = propertyTest ?? throw new ArgumentNullException(nameof(propertyTest));
         _disposedValue = false;
     }
 
     #region 属性实现
 
     /// <inheritdoc/>
-    public MsoSearchIn Type => _searchScope?.Type != null ? (MsoSearchIn)(int)_searchScope?.Type : MsoSearchIn.msoSearchInCustom;
-    public IOfficeScopeFolder ScopeFolder
+    public string Name
     {
-        get
-        {
-            if (_searchScope?.ScopeFolder != null)
-            {
-                return new OfficeScopeFolder(_searchScope.ScopeFolder);
-            }
-            return null;
-        }
+        get => _propertyTest?.Name ?? string.Empty;
+    }
+
+    /// <inheritdoc/>
+    public MsoCondition Condition
+    {
+        get => _propertyTest?.Condition != null ? (MsoCondition)(int)_propertyTest?.Condition : MsoCondition.msoConditionEquals;
+    }
+
+    /// <inheritdoc/>
+    public object Value
+    {
+        get => _propertyTest?.Value;
+    }
+
+    /// <inheritdoc/>
+    public object SecondValue
+    {
+        get => _propertyTest?.SecondValue;
     }
     #endregion
 
@@ -52,17 +62,10 @@ internal class OfficeSearchScope : IOfficeSearchScope
     {
         if (_disposedValue) return;
 
-        if (disposing && _searchScope != null)
+        if (disposing && _propertyTest != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_searchScope);
-            }
-            catch
-            {
-                // 忽略释放异常
-            }
-            _searchScope = null;
+            Marshal.ReleaseComObject(_propertyTest);
+            _propertyTest = null;
         }
 
         _disposedValue = true;

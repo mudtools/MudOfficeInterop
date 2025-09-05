@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeScopeFolder : IOfficeScopeFolder
 {
-    private MsCore.ScopeFolder _scopeFolder;
+    internal MsCore.ScopeFolder _scopeFolder;
     private bool _disposedValue;
 
     /// <summary>
