@@ -1,18 +1,39 @@
 //
-// ����Excel������ ��Ŀ�İ�Ȩ���̱ꡢר�����������Ȩ��������Ӧ���ɷ���ı�����ʹ�ñ���ĿӦ������ط��ɷ��������֤��Ҫ��
+// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
-// ����Ŀ��Ҫ��ѭ MIT ����֤�� Apache ����֤���汾 2.0�����зַ���ʹ�á�����֤λ��Դ��������Ŀ¼�е� LICENSE-MIT �� LICENSE-APACHE �ļ���
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
-// �������ñ���Ŀ����Σ�����Ұ�ȫ��������������ַ����˺Ϸ�Ȩ��ȷ��ɷ����ֹ�Ļ���κλ��ڱ���Ŀ���ο�����������һ�з��ɾ��׺����Σ����ǲ��е��κ����Σ�
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
 
+/// <summary>
+/// 指定外接程序连接到 Office 应用程序的模式
+/// </summary>
 public enum ext_ConnectMode
 {
+    /// <summary>
+    /// Office 应用程序启动后加载外接程序
+    /// </summary>
     ext_cm_AfterStartup,
+    /// <summary>
+    /// Office 应用程序启动时加载外接程序
+    /// </summary>
     ext_cm_Startup,
+    /// <summary>
+    /// 从外部源加载外接程序
+    /// </summary>
     ext_cm_External,
+    /// <summary>
+    /// 通过命令行参数加载外接程序
+    /// </summary>
     ext_cm_CommandLine,
+    /// <summary>
+    /// 当打开解决方案时加载外接程序
+    /// </summary>
     ext_cm_Solution,
+    /// <summary>
+    /// 在用户界面设置期间加载外接程序
+    /// </summary>
     ext_cm_UISetup
 }
