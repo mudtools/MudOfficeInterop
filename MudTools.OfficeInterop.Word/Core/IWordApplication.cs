@@ -352,7 +352,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示所有内置对话框的 Dialogs 集合。
     /// </summary>
-    IWordDialogs Dialogs { get; }
+    IWordDialogs? Dialogs { get; }
 
     /// <summary>
     /// 获取表示所有自定义键绑定的 KeyBindings 集合。
@@ -371,7 +371,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示电子邮件创作的全局首选项的 EmailOptions 对象。
     /// </summary>
-    IWordEmailOptions EmailOptions { get; }
+    IWordEmailOptions? EmailOptions { get; }
 
     /// <summary>
     /// 获取或设置用于电子邮件的模板。
@@ -381,7 +381,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示邮件标签的 MailingLabel 对象。
     /// </summary>
-    IWordMailingLabel MailingLabel { get; }
+    IWordMailingLabel? MailingLabel { get; }
 
     /// <summary>
     /// 获取表示活动电子邮件的 MailMessage 对象。
@@ -391,7 +391,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取邮件系统的类型。
     /// </summary>
-    IWordWdMailSystem MailSystem { get; }
+    WdMailSystem MailSystem { get; }
 
     /// <summary>
     /// 获取一个值，该值指示是否安装了 MAPI。
@@ -430,12 +430,6 @@ public partial interface IWordApplication : IOfficeApplication
     #endregion
 
     #region 系统和环境属性 (System & Environment Properties)
-
-    /// <summary>
-    /// 获取表示系统相关信息的对象。
-    /// </summary>
-    IWordSystem System { get; }
-
     /// <summary>
     /// 获取一个值，该值指示是否安装了数学协处理器。
     /// </summary>
@@ -545,17 +539,12 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示 Microsoft Office 帮助查看器的 IAssistance 对象。
     /// </summary>
-    object Assistance { get; }
-
-    /// <summary>
-    /// 获取表示 Microsoft Office 助手的 Assistant 对象。
-    /// </summary>
-    MsWord.Assistant Assistant { get; }
+    IOfficeAssistance? Assistance { get; }
 
     /// <summary>
     /// 获取表示在将表格和图片等项目插入文档中时自动添加的标题的 AutoCaptions 集合。
     /// </summary>
-    IWordAutoCaptions AutoCaptions { get; }
+    IWordAutoCaptions? AutoCaptions { get; }
 
     /// <summary>
     /// 获取后台打印队列中打印作业的编号。
@@ -680,7 +669,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示 Microsoft Word 中最常执行的任务的 TaskPanes 集合。
     /// </summary>
-    IWordTaskPanes TaskPanes { get; }
+    IWordTaskPanes? TaskPanes { get; }
 
     /// <summary>
     /// 获取一个 UndoRecord 对象，该对象提供撤消堆栈中的自定义入口点。

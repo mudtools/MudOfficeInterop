@@ -441,10 +441,20 @@ internal partial class WordApplication : IWordApplication
 
     /// <inheritdoc/>
     public IWordFileConverters? FileConverters => _application?.FileConverters != null ? new WordFileConverters(_application.FileConverters) : null;
+
+    /// <inheritdoc/>
     public IWordTasks? Tasks => _application?.Tasks != null ? new WordTasks(_application.Tasks) : null;
-    public IWordDialogs? Dialogs => _application?.Dialogs;
+
+    /// <inheritdoc/>
+    public IWordDialogs? Dialogs => _application?.Dialogs != null ? new WordDialogs(_application.Dialogs) : null;
+
+    /// <inheritdoc/>
     public IWordKeyBindings? KeyBindings => _application?.KeyBindings != null ? new WordKeyBindings(_application.KeyBindings) : null;
+
+    /// <inheritdoc/>
     public object? COMAddIns => _application?.COMAddIns;
+
+    /// <inheritdoc/>
     public IOfficeCommandBars? CommandBars => _application?.CommandBars != null ? new OfficeCommandBars(_application?.CommandBars) : null;
 
     #endregion
@@ -452,7 +462,7 @@ internal partial class WordApplication : IWordApplication
     #region 邮件相关属性实现 (Mail Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordEmailOptions EmailOptions => _application?.EmailOptions;
+    public IWordEmailOptions? EmailOptions => _application?.EmailOptions != null ? new WordEmailOptions(_application?.EmailOptions) : null;
 
     /// <inheritdoc/>
     public string EmailTemplate
@@ -462,9 +472,10 @@ internal partial class WordApplication : IWordApplication
     }
 
     /// <inheritdoc/>
-    public IWordMailingLabel MailingLabel => _application?.MailingLabel;
-    public IWordMailMessage MailMessage => _application?.MailMessage;
-    public IWordWdMailSystem MailSystem => _application?.MailSystem ?? MsWord.WdMailSystem.wdNoMailSystem;
+    public IWordMailingLabel? MailingLabel => _application?.MailingLabel != null ? new WordMailingLabel(_application?.MailingLabel) : null;
+
+    public IWordMailMessage MailMessage => _application?.MailMessage != null ? new WordMailMessage(_application?.MailMessage) : null;
+    public WdMailSystem MailSystem => _application?.MailSystem != null ? (WdMailSystem)(int)_application?.MailSystem : WdMailSystem.wdNoMailSystem;
     public bool MAPIAvailable => _application?.MAPIAvailable ?? false;
     public bool FocusInMailHeader => _application?.FocusInMailHeader ?? false;
 
@@ -482,7 +493,7 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public MsoAutomationSecurity AutomationSecurity
     {
-        get => _application?.AutomationSecurity != null ? (MsoAutomationSecurity)(int)_application?.AutomationSecurity : MsoAutomationSecurity.msoAutomationSecurityByUI.msoFileValidationDefault;
+        get => _application?.AutomationSecurity != null ? (MsoAutomationSecurity)(int)_application?.AutomationSecurity : MsoAutomationSecurity.msoAutomationSecurityByUI;
         set
         {
             if (_application != null) _application.AutomationSecurity = (MsCore.MsoAutomationSecurity)(int)value;
@@ -509,9 +520,6 @@ internal partial class WordApplication : IWordApplication
     #endregion
 
     #region 系统和环境属性实现 (System & Environment Properties Implementation)
-
-    /// <inheritdoc/>
-    public IWordSystem System => _application?.System;
     public bool MathCoprocessorAvailable => _application?.MathCoprocessorAvailable ?? false;
     public bool MouseAvailable => _application?.MouseAvailable ?? false;
     public bool NumLock => _application?.NumLock ?? false;
@@ -548,12 +556,6 @@ internal partial class WordApplication : IWordApplication
 
 
     /// <inheritdoc/>
-    public IWordSynonymInfo SynonymInfo(string word, object languageID)
-    {
-        return _application?.SynonymInfo[word, ref languageID];
-    }
-
-    /// <inheritdoc/>
     public IOfficeFileDialog FileDialog(MsoFileDialogType fileDialogType)
     {
         var dialog = _application?.FileDialog[(MsCore.MsoFileDialogType)(int)fileDialogType];
@@ -570,11 +572,10 @@ internal partial class WordApplication : IWordApplication
 
     /// <inheritdoc/>
     public bool ArbitraryXMLSupportAvailable => _application?.ArbitraryXMLSupportAvailable ?? false;
-    public object Assistance => _application?.Assistance;
-    public MsWord.AutoCaptions AutoCaptions => _application?.AutoCaptions;
+    public IOfficeAssistance? Assistance => _application?.Assistant != null ? new OfficeAssistance(_application?.Assistance) : null;
+    public IWordAutoCaptions? AutoCaptions => _application?.AutoCaptions != null ? new WordAutoCaptions(_application?.AutoCaptions) : null;
     public int BackgroundPrintingStatus => _application?.BackgroundPrintingStatus ?? 0;
     public int BackgroundSavingStatus => _application?.BackgroundSavingStatus ?? 0;
-    public MsWord.Bibliography Bibliography => _application?.Bibliography;
 
     /// <inheritdoc/>
     public string BrowseExtraFileTypes
@@ -661,7 +662,7 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.StatusBar = value ?? string.Empty; }
     }
 
-    public IWordTaskPanes TaskPanes => _application?.TaskPanes;
+    public IWordTaskPanes? TaskPanes => _application?.TaskPanes != null ? new WordTaskPanes(_application?.TaskPanes) : null;
     public object UndoRecord => _application?.UndoRecord;
 
     /// <inheritdoc/>
@@ -672,7 +673,6 @@ internal partial class WordApplication : IWordApplication
     }
 
     public object WordBasic => _application?.WordBasic;
-    public MsWord.XMLNamespaces XMLNamespaces => _application?.XMLNamespaces;
     public object SmartArtColors => _application?.SmartArtColors;
     public object SmartArtLayouts => _application?.SmartArtLayouts;
     public object SmartArtQuickStyles => _application?.SmartArtQuickStyles;
@@ -690,7 +690,6 @@ internal partial class WordApplication : IWordApplication
     #endregion
 
     #region 剩余方法实现 (Remaining Methods Implementation)
-
 
     /// <inheritdoc/>
     public void ExportAsFixedFormat(string outputFileName,
