@@ -16,7 +16,6 @@ public partial interface IWordApplication : IOfficeApplication
 {
     IWordDocument BlankDocument();
 
-    #region 基本属性 (Basic Properties)
     /// <summary>
     /// 获取父对象。对于 Application 对象，通常返回 null。
     /// </summary>
@@ -67,9 +66,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     string PathSeparator { get; }
 
-    #endregion
-
-    #region 窗口和显示属性 (Window & Display Properties)
 
     WordAppVisibility Visibility { get; set; }
 
@@ -113,10 +109,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IWordWindows? Windows { get; }
 
-    #endregion
-
-    #region 基本方法 (Basic Methods)
-
     /// <summary>
     /// 退出 Microsoft Word 应用程序。
     /// </summary>
@@ -134,9 +126,6 @@ public partial interface IWordApplication : IOfficeApplication
                   ref object pageType, ref object printToFile, ref object collate, ref object fileName,
                   ref object lineEnding, ref object outputPrinterName);
 
-    #endregion
-
-    #region 选择和查找属性 (Selection & Find Properties)
 
     /// <summary>
     /// 获取表示所选区域或插入点的 Selection 对象。
@@ -158,9 +147,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool DisplayScreenTips { get; set; }
 
-    #endregion
-
-    #region 选项和设置属性 (Options & Settings Properties)
 
     /// <summary>
     /// 获取表示 Microsoft Word 中应用程序设置的 Options 对象。
@@ -191,11 +177,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// 获取或设置一个值，该值指示是否打开拼写和语法检查。
     /// </summary>
     bool CheckSpellingAsYouType { get; set; }
+
     bool CheckGrammarAsYouType { get; set; }
 
-    #endregion
-
-    #region 语言和字典属性 (Language & Dictionary Properties)
 
     /// <summary>
     /// 获取表示“语言”对话框中列出的校对语言的 Languages 集合。
@@ -222,10 +206,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IWordDictionaries? CustomDictionaries { get; }
 
-    #endregion
-
-    #region 自动更正和列表属性 (AutoCorrect & Lists Properties)
-
     /// <summary>
     /// 获取表示当前自动更正选项、条目和异常的 AutoCorrect 对象。
     /// </summary>
@@ -241,9 +221,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IWordListGalleries? ListGalleries { get; }
 
-    #endregion
-
-    #region 文件和模板属性 (File & Template Properties)
 
     /// <summary>
     /// 获取表示最近访问的文件的 RecentFiles 集合。
@@ -269,10 +246,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// 获取或设置用户名。
     /// </summary>
     string UserName { get; set; }
-
-    #endregion
-
-    #region 更多方法 (More Methods)
 
     /// <summary>
     /// 打开一个现有文档。
@@ -326,9 +299,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// <returns>相关信息。</returns>
     object GetInternational(WdInternationalIndex index);
 
-    #endregion
-
-    #region 自动化和 COM 属性 (Automation & COM Properties)
     /// <summary>
     /// 获取一个值，该值指示引用对象的指定变量是否有效。
     /// </summary>
@@ -361,9 +331,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     object COMAddIns { get; }
 
-    #endregion
-
-    #region 邮件相关属性 (Mail Properties)
 
     /// <summary>
     /// 获取表示电子邮件创作的全局首选项的 EmailOptions 对象。
@@ -405,9 +372,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool OpenAttachmentsInFullScreen { get; set; }
 
-    #endregion
-
-    #region 安全性相关属性 (Security Properties)
 
     /// <summary>
     /// 获取或设置自动化安全级别。
@@ -424,9 +388,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool RestrictLinkedStyles { get; set; }
 
-    #endregion
 
-    #region 系统和环境属性 (System & Environment Properties)
     /// <summary>
     /// 获取一个值，该值指示是否安装了数学协处理器。
     /// </summary>
@@ -452,9 +414,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool UserControl { get; }
 
-    #endregion
-
-    #region 更多方法 (More Methods)
 
     /// <summary>
     /// 保护文档。
@@ -512,9 +471,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IWordSmartTagTypes? SmartTagTypes { get; }
 
-    #endregion
 
-    #region 剩余属性 (Remaining Properties)
     /// <summary>
     /// 获取一个值，该值指示是否支持任意 XML。
     /// </summary>
@@ -690,9 +647,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IOfficeFileSearch? FileSearch { get; }
 
-    #endregion
-
-    #region 剩余方法 (Remaining Methods)
 
     /// <summary>
     /// 将文档另存为 PDF 或 XPS 格式。
@@ -725,5 +679,5 @@ public partial interface IWordApplication : IOfficeApplication
          object fixedFormatExtClassPtr = null);
 
     IWordSystemInfo GetSystemInfo();
-    #endregion
+
 }

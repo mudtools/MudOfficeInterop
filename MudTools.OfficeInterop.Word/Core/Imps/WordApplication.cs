@@ -33,7 +33,7 @@ internal partial class WordApplication : IWordApplication
     }
 
 
-    #region 基本属性实现 (Basic Properties Implementation)
+
     /// <inheritdoc/>
     public object Parent => _application?.Parent;
 
@@ -78,9 +78,7 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public string PathSeparator => _application?.PathSeparator ?? string.Empty;
 
-    #endregion
 
-    #region 窗口和显示属性实现 (Window & Display Properties Implementation)
 
     /// <inheritdoc/>
     public float Left
@@ -166,9 +164,6 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public IWordWindows? Windows => _application?.Windows != null ? new WordWindows(_application.Windows) : null;
 
-    #endregion
-
-    #region 基本方法实现 (Basic Methods Implementation)
 
     public void Quit()
     {
@@ -228,9 +223,6 @@ internal partial class WordApplication : IWordApplication
         }
     }
 
-    #endregion
-
-    #region 选择和查找属性实现 (Selection & Find Properties Implementation)
 
     /// <inheritdoc/>
     public IWordSelection? Selection => _application?.Selection != null ? new WordSelection(_application.Selection) : null;
@@ -259,9 +251,6 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.DisplayScreenTips = value; }
     }
 
-    #endregion
-
-    #region 选项和设置属性实现 (Options & Settings Properties Implementation)
 
     /// <inheritdoc/>
     public IWordOptions? Options =>
@@ -305,9 +294,6 @@ internal partial class WordApplication : IWordApplication
         set { if (_application?.Options != null) _application.Options.CheckGrammarAsYouType = value; }
     }
 
-    #endregion
-
-    #region 语言和字典属性实现 (Language & Dictionary Properties Implementation)
 
     /// <inheritdoc/>
     public IWordLanguages? Languages => _application?.Languages != null ? new WordLanguages(_application.Languages) : null;
@@ -316,9 +302,7 @@ internal partial class WordApplication : IWordApplication
     public IWordFontNames? LandscapeFontNames => _application?.LandscapeFontNames != null ? new WordFontNames(_application.LandscapeFontNames) : null;
     public IWordDictionaries? CustomDictionaries => _application?.CustomDictionaries != null ? new WordDictionaries(_application.CustomDictionaries) : null;
 
-    #endregion
 
-    #region 自动更正和列表属性实现 (AutoCorrect & Lists Properties Implementation)
 
     /// <inheritdoc/>
     public IWordAutoCorrect? AutoCorrect =>
@@ -330,9 +314,6 @@ internal partial class WordApplication : IWordApplication
     public IWordListGalleries? ListGalleries =>
         _application?.ListGalleries != null ? new WordListGalleries(_application.ListGalleries) : null;
 
-    #endregion
-
-    #region 文件和模板属性实现 (File & Template Properties Implementation)
 
     /// <inheritdoc/>
     public IWordRecentFiles RecentFiles =>
@@ -365,10 +346,6 @@ internal partial class WordApplication : IWordApplication
         get => _application?.UserName ?? string.Empty;
         set { if (_application != null) _application.UserName = value ?? string.Empty; }
     }
-
-    #endregion
-
-    #region 更多方法实现 (More Methods Implementation)
 
     /// <inheritdoc/>
     public IWordDocument? OpenDocument(string fileName, bool confirmConversions = true, bool readOnly = false, bool addToRecentFiles = true,
@@ -468,10 +445,6 @@ internal partial class WordApplication : IWordApplication
         return _application?.International[(MsWord.WdInternationalIndex)(int)index];
     }
 
-    #endregion
-
-    #region 自动化和 COM 属性实现 (Automation & COM Properties Implementation)
-
     /// <inheritdoc/>
     public MsoFeatureInstall FeatureInstall
     {
@@ -506,9 +479,6 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public IOfficeCommandBars? CommandBars => _application?.CommandBars != null ? new OfficeCommandBars(_application.CommandBars) : null;
 
-    #endregion
-
-    #region 邮件相关属性实现 (Mail Properties Implementation)
 
     /// <inheritdoc/>
     public IWordEmailOptions? EmailOptions => _application?.EmailOptions != null ? new WordEmailOptions(_application.EmailOptions) : null;
@@ -534,10 +504,6 @@ internal partial class WordApplication : IWordApplication
         get => _application?.OpenAttachmentsInFullScreen ?? false;
         set { if (_application != null) _application.OpenAttachmentsInFullScreen = value; }
     }
-
-    #endregion
-
-    #region 安全性相关属性实现 (Security Properties Implementation)
 
     /// <inheritdoc/>
     public MsoAutomationSecurity AutomationSecurity
@@ -566,13 +532,14 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.RestrictLinkedStyles = value; }
     }
 
-    #endregion
-
-    #region 系统和环境属性实现 (System & Environment Properties Implementation)
     public bool MathCoprocessorAvailable => _application?.MathCoprocessorAvailable ?? false;
+
     public bool MouseAvailable => _application?.MouseAvailable ?? false;
+
     public bool NumLock => _application?.NumLock ?? false;
+
     public bool CapsLock => _application?.CapsLock ?? false;
+
     public string Build => _application?.Build ?? string.Empty;
 
     /// <inheritdoc/>
@@ -580,10 +547,6 @@ internal partial class WordApplication : IWordApplication
     {
         get => _application?.UserControl ?? false;
     }
-
-    #endregion
-
-    #region 更多方法实现 (More Methods Implementation)
 
     /// <inheritdoc/>
     public void Protect(MsWord.WdProtectionType type, object noReset, object password, object useIRM, object enforceStyleLock)
@@ -620,9 +583,6 @@ internal partial class WordApplication : IWordApplication
 
     public IWordSmartTagTypes? SmartTagTypes => _application?.SmartTagTypes != null ? new WordSmartTagTypes(_application.SmartTagTypes) : null;
 
-    #endregion
-
-    #region 剩余属性实现 (Remaining Properties Implementation)
 
     /// <inheritdoc/>
     public bool ArbitraryXMLSupportAvailable =>
@@ -774,9 +734,6 @@ internal partial class WordApplication : IWordApplication
     public IOfficeFileSearch? FileSearch =>
         _application?.FileSearch != null ? new OfficeFileSearch(_application.FileSearch) : null;
 
-    #endregion
-
-    #region 剩余方法实现 (Remaining Methods Implementation)
 
     /// <inheritdoc/>
     public void ExportAsFixedFormat(string outputFileName,
@@ -800,7 +757,6 @@ internal partial class WordApplication : IWordApplication
             keepIRM, createBookmarks, docStructureTags,
             bitmapMissingFonts, useISO19005_1, fixedFormatExtClassPtr);
     }
-    #endregion
 
     public IWordSystemInfo GetSystemInfo()
     {
