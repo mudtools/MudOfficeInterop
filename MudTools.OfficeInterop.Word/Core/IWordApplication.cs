@@ -120,7 +120,10 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 退出 Microsoft Word 应用程序。
     /// </summary>
-    void Quit(ref object saveChanges, ref object originalFormat, ref object routeDocument);
+    void Quit(
+         WdSaveOptions? saveChanges = null,
+         WdOriginalFormat? originalFormat = null,
+         bool? routeDocument = null);
 
 
     /// <summary>
@@ -317,12 +320,6 @@ public partial interface IWordApplication : IOfficeApplication
     int ReplaceText(string findText, string replaceWith, MsWord.WdReplace replace);
 
     /// <summary>
-    /// 使 Visual Basic 编辑器窗口可见或不可见。
-    /// </summary>
-    /// <param name="visible">如果为 true，则使窗口可见。</param>
-    void ShowVisualBasicEditor(bool visible);
-
-    /// <summary>
     /// 获取有关当前国家/地区和国际设置的信息。
     /// </summary>
     /// <param name="index">要返回的信息类型。</param>
@@ -497,40 +494,27 @@ public partial interface IWordApplication : IOfficeApplication
     /// <returns>键绑定集合。</returns>
     IWordKeysBoundTo KeysBoundTo(MsWord.WdKeyCategory keyCategory, string command, object commandParameter);
 
-    /// <summary>
-    /// 获取同义词信息。
-    /// </summary>
-    /// <param name="word">要查询的单词。</param>
-    /// <param name="languageID">语言ID。</param>
-    /// <returns>同义词信息对象。</returns>
-    IWordSynonymInfo SynonymInfo(string word, object languageID);
 
     /// <summary>
     /// 获取文件对话框。
     /// </summary>
     /// <param name="fileDialogType">文件对话框类型。</param>
     /// <returns>文件对话框对象。</returns>
-    IOfficeFileDialog FileDialog(MsoFileDialogType fileDialogType);
+    IOfficeFileDialog? FileDialog(MsoFileDialogType fileDialogType);
 
     /// <summary>
     /// 获取智能标记识别器集合。
     /// </summary>
-    IWordSmartTagRecognizers SmartTagRecognizers { get; }
+    IWordSmartTagRecognizers? SmartTagRecognizers { get; }
 
     /// <summary>
     /// 获取智能标记类型集合。
     /// </summary>
-    IWordSmartTagTypes SmartTagTypes { get; }
+    IWordSmartTagTypes? SmartTagTypes { get; }
 
     #endregion
 
     #region 剩余属性 (Remaining Properties)
-
-    /// <summary>
-    /// 获取表示 AnswerWizard 对象，其中包含联机帮助搜索引擎使用的文件。
-    /// </summary>
-    MsWord.AnswerWizard AnswerWizard { get; }
-
     /// <summary>
     /// 获取一个值，该值指示是否支持任意 XML。
     /// </summary>
@@ -569,7 +553,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示垂直滚动条上的“选择浏览对象”工具的 Browser 对象。
     /// </summary>
-    IWordBrowser Browser { get; }
+    IWordBrowser? Browser { get; }
 
     /// <summary>
     /// 获取 Word 应用程序的内部版本号。
@@ -604,7 +588,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示所有活动的自定义转换字典的 HangulHanjaConversionDictionaries 集合。
     /// </summary>
-    MsWord.HangulHanjaConversionDictionaries HangulHanjaDictionaries { get; }
+    IWordHangulHanjaConversionDictionaries? HangulHanjaDictionaries { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否在受保护的视图中打开文件。
@@ -617,24 +601,19 @@ public partial interface IWordApplication : IOfficeApplication
     MsoLanguageID Language { get; }
 
     /// <summary>
-    /// 获取表示有关 Microsoft Word 中的语言设置的信息的 LanguageSettings 对象。
-    /// </summary>
-    MsWord.LanguageSettings LanguageSettings { get; }
-
-    /// <summary>
     /// 获取表示在其中存储包含正在运行过程的模块的模板或文档的 Template 或 Document 对象。
     /// </summary>
-    object MacroContainer { get; } // 使用 object 以避免依赖
+    object MacroContainer { get; }
 
     /// <summary>
     /// 获取表示公式的自动更正条目的 OMathAutoCorrect 对象。
     /// </summary>
-    IWordOMathAutoCorrect OMathAutoCorrect { get; }
+    IWordOMathAutoCorrect? OMathAutoCorrect { get; }
 
     /// <summary>
     /// 获取一个 PickerDialog 对象，该对象提供在对话框中选择人员或数据的功能。
     /// </summary>
-    object PickerDialog { get; } // 使用 object 以避免依赖
+    object PickerDialog { get; }
 
     /// <summary>
     /// 获取一个值，该值指示打印预览是否为当前视图。
@@ -664,7 +643,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取或设置状态栏中显示的文本。
     /// </summary>
-    string StatusBar { get; set; }
+    void SetStatusBar(string text);
 
     /// <summary>
     /// 获取表示 Microsoft Word 中最常执行的任务的 TaskPanes 集合。
@@ -684,22 +663,22 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示当前在应用程序中加载的一组颜色样式的 SmartArtColors 对象。
     /// </summary>
-    object SmartArtColors { get; }
+    IOfficeSmartArtColors SmartArtColors { get; }
 
     /// <summary>
     /// 获取表示当前在应用程序中加载的 SmartArt 布局集的 SmartArtLayouts 对象。
     /// </summary>
-    object SmartArtLayouts { get; }
+    IOfficeSmartArtLayouts SmartArtLayouts { get; }
 
     /// <summary>
     /// 获取表示应用程序中当前加载的 SmartArt 样式集的 SmartArtQuickStyles 对象。
     /// </summary>
-    object SmartArtQuickStyles { get; }
+    IOfficeSmartArtQuickStyles SmartArtQuickStyles { get; }
 
     /// <summary>
     /// 获取表示活动加密会话的对象。
     /// </summary>
-    object ActiveEncryptionSession { get; }
+    int ActiveEncryptionSession { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示图表数据点是否被跟踪。
@@ -744,5 +723,7 @@ public partial interface IWordApplication : IOfficeApplication
         bool bitmapMissingFonts = true,
         bool useISO19005_1 = false,
          object fixedFormatExtClassPtr = null);
+
+    IWordSystemInfo GetSystemInfo();
     #endregion
 }

@@ -110,6 +110,15 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.Height = Convert.ToInt32(value); }
     }
 
+    public int WindowState
+    {
+        get => _application?.WindowState != null ? (int)_application?.WindowState : (int)WdWindowState.wdWindowStateNormal;
+        set
+        {
+            if (_application != null) _application.WindowState = (MsWord.WdWindowState)(int)value;
+        }
+    }
+
     /// <inheritdoc/>
     public WdWindowState WordWindowState
     {
@@ -161,10 +170,28 @@ internal partial class WordApplication : IWordApplication
 
     #region 基本方法实现 (Basic Methods Implementation)
 
-    /// <inheritdoc/>
-    public void Quit(ref object saveChanges, ref object originalFormat, ref object routeDocument)
+    public void Quit()
     {
-        _application?.Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+        _application?.Quit();
+    }
+
+    /// <inheritdoc/>
+    public void Quit(
+        WdSaveOptions? saveChanges = null,
+        WdOriginalFormat? originalFormat = null,
+        bool? routeDocument = null)
+    {
+        var originalFormatObj = Type.Missing;
+        if (originalFormat != null)
+            originalFormatObj = (MsWord.WdOriginalFormat)(int)originalFormat;
+
+        var saveChangesObj = Type.Missing;
+        if (saveChanges != null)
+            saveChangesObj = (MsWord.WdSaveOptions)(int)saveChanges;
+
+        _application?.Quit(
+           saveChangesObj,
+            originalFormatObj, routeDocument.ComArgsVal());
     }
 
     /// <inheritdoc/>
@@ -183,6 +210,22 @@ internal partial class WordApplication : IWordApplication
                                ref from, ref to, ref item, ref copies, ref pages,
                                ref pageType, ref printToFile, ref collate, ref fileName,
                                ref lineEnding, ref outputPrinterName);
+    }
+
+    public object Run(string macroName, params object[] args)
+    {
+        if (_application == null || string.IsNullOrEmpty(macroName))
+            return null;
+
+        try
+        {
+            object result = _application.Run(macroName, args);
+            return result;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     #endregion
@@ -278,16 +321,22 @@ internal partial class WordApplication : IWordApplication
     #region 自动更正和列表属性实现 (AutoCorrect & Lists Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordAutoCorrect? AutoCorrect => _application?.AutoCorrect != null ? new WordAutoCorrect(_application.AutoCorrect) : null;
-    public IWordAutoCorrect? AutoCorrectEmail => _application?.AutoCorrectEmail != null ? new WordAutoCorrect(_application.AutoCorrectEmail) : null;
-    public IWordListGalleries? ListGalleries => _application?.ListGalleries != null ? new WordListGalleries(_application.ListGalleries) : null;
+    public IWordAutoCorrect? AutoCorrect =>
+        _application?.AutoCorrect != null ? new WordAutoCorrect(_application.AutoCorrect) : null;
+
+    public IWordAutoCorrect? AutoCorrectEmail =>
+        _application?.AutoCorrectEmail != null ? new WordAutoCorrect(_application.AutoCorrectEmail) : null;
+
+    public IWordListGalleries? ListGalleries =>
+        _application?.ListGalleries != null ? new WordListGalleries(_application.ListGalleries) : null;
 
     #endregion
 
     #region 文件和模板属性实现 (File & Template Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordRecentFiles RecentFiles => _application?.RecentFiles != null ? new WordRecentFiles(_application.RecentFiles) : null;
+    public IWordRecentFiles RecentFiles =>
+        _application?.RecentFiles != null ? new WordRecentFiles(_application.RecentFiles) : null;
 
     /// <inheritdoc/>
     public string StartupPath
@@ -554,27 +603,39 @@ internal partial class WordApplication : IWordApplication
         _application?.Documents?.Save(MissingValue, MissingValue);
     }
 
-
-    /// <inheritdoc/>
-    public IOfficeFileDialog FileDialog(MsoFileDialogType fileDialogType)
+    public IOfficeFileDialog CreateFileDialog(MsoFileDialogType fileDialogType)
     {
         var dialog = _application?.FileDialog[(MsCore.MsoFileDialogType)(int)fileDialogType];
         return dialog != null ? new OfficeFileDialog(dialog) : null;
     }
 
     /// <inheritdoc/>
-    public IWordSmartTagRecognizers SmartTagRecognizers => _application?.SmartTagRecognizers;
-    public IWordSmartTagTypes SmartTagTypes => _application?.SmartTagTypes;
+    public IOfficeFileDialog? FileDialog(MsoFileDialogType fileDialogType)
+    {
+        return CreateFileDialog(fileDialogType);
+    }
+
+    /// <inheritdoc/>
+    public IWordSmartTagRecognizers? SmartTagRecognizers => _application?.SmartTagRecognizers != null ? new WordSmartTagRecognizers(_application?.SmartTagRecognizers) : null;
+
+    public IWordSmartTagTypes? SmartTagTypes => _application?.SmartTagTypes != null ? new WordSmartTagTypes(_application?.SmartTagTypes) : null;
 
     #endregion
 
     #region 剩余属性实现 (Remaining Properties Implementation)
 
     /// <inheritdoc/>
-    public bool ArbitraryXMLSupportAvailable => _application?.ArbitraryXMLSupportAvailable ?? false;
-    public IOfficeAssistance? Assistance => _application?.Assistant != null ? new OfficeAssistance(_application?.Assistance) : null;
-    public IWordAutoCaptions? AutoCaptions => _application?.AutoCaptions != null ? new WordAutoCaptions(_application?.AutoCaptions) : null;
+    public bool ArbitraryXMLSupportAvailable =>
+        _application?.ArbitraryXMLSupportAvailable ?? false;
+
+    public IOfficeAssistance? Assistance =>
+        _application?.Assistant != null ? new OfficeAssistance(_application?.Assistance) : null;
+
+    public IWordAutoCaptions? AutoCaptions =>
+        _application?.AutoCaptions != null ? new WordAutoCaptions(_application?.AutoCaptions) : null;
+
     public int BackgroundPrintingStatus => _application?.BackgroundPrintingStatus ?? 0;
+
     public int BackgroundSavingStatus => _application?.BackgroundSavingStatus ?? 0;
 
     /// <inheritdoc/>
@@ -584,7 +645,9 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.BrowseExtraFileTypes = value ?? string.Empty; }
     }
 
-    public MsWord.Browser Browser => _application?.Browser;
+    public IWordBrowser? Browser =>
+         _application?.Browser != null ? new WordBrowser(_application?.Browser) : null;
+
     public string BuildFull => _application?.BuildFull ?? string.Empty;
 
     /// <inheritdoc/>
@@ -622,12 +685,23 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.DontResetInsertionPointProperties = value; }
     }
 
-    public MsWord.HangulHanjaConversionDictionaries HangulHanjaDictionaries => _application?.HangulHanjaDictionaries;
+    public IWordHangulHanjaConversionDictionaries? HangulHanjaDictionaries =>
+        _application?.HangulHanjaDictionaries != null ? new WordHangulHanjaConversionDictionaries(_application?.HangulHanjaDictionaries) : null;
+
     public bool IsSandboxed => _application?.IsSandboxed ?? false;
-    public MsoLanguageID Language => _application?.Language != null ? (MsoLanguageID)(int)_application?.Language : MsoLanguageID.msoLanguageIDSimplifiedChinese;
-    public IOfficeLanguageSettings? LanguageSettings => _application?.LanguageSettings != null ? new OfficeLanguageSettings(_application?.LanguageSettings) : null;
+
+    public MsoLanguageID Language =>
+        _application?.Language != null ? (MsoLanguageID)(int)_application?.Language : MsoLanguageID.msoLanguageIDSimplifiedChinese;
+
+    public IOfficeLanguageSettings? LanguageSettings =>
+        _application?.LanguageSettings != null ? new OfficeLanguageSettings(_application?.LanguageSettings) : null;
+
     public object MacroContainer => _application?.MacroContainer;
-    public MsWord.OMathAutoCorrect OMathAutoCorrect => _application?.OMathAutoCorrect;
+
+    public IWordOMathAutoCorrect? OMathAutoCorrect =>
+         _application?.OMathAutoCorrect != null ? new WordOMathAutoCorrect(_application?.OMathAutoCorrect) : null;
+
+
     public object PickerDialog => _application?.PickerDialog;
 
     /// <inheritdoc/>
@@ -637,7 +711,8 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.PrintPreview = value; }
     }
 
-    public MsWord.ProtectedViewWindows ProtectedViewWindows => _application?.ProtectedViewWindows;
+    public IWordProtectedViewWindows ProtectedViewWindows =>
+        _application?.ProtectedViewWindows != null ? new WordProtectedViewWindows(_application?.ProtectedViewWindows) : null;
 
     /// <inheritdoc/>
     public bool ShowStartupDialog
@@ -656,13 +731,13 @@ internal partial class WordApplication : IWordApplication
     public bool SpecialMode => _application?.SpecialMode ?? false;
 
     /// <inheritdoc/>
-    public string StatusBar
+    public void SetStatusBar(string text)
     {
-        get => _application?.StatusBar ?? string.Empty;
-        set { if (_application != null) _application.StatusBar = value ?? string.Empty; }
+        if (_application != null) _application.StatusBar = text ?? string.Empty;
     }
 
-    public IWordTaskPanes? TaskPanes => _application?.TaskPanes != null ? new WordTaskPanes(_application?.TaskPanes) : null;
+    public IWordTaskPanes? TaskPanes =>
+        _application?.TaskPanes != null ? new WordTaskPanes(_application?.TaskPanes) : null;
     public object UndoRecord => _application?.UndoRecord;
 
     /// <inheritdoc/>
@@ -673,10 +748,18 @@ internal partial class WordApplication : IWordApplication
     }
 
     public object WordBasic => _application?.WordBasic;
-    public object SmartArtColors => _application?.SmartArtColors;
-    public object SmartArtLayouts => _application?.SmartArtLayouts;
-    public object SmartArtQuickStyles => _application?.SmartArtQuickStyles;
-    public object ActiveEncryptionSession => _application?.ActiveEncryptionSession;
+
+    public IOfficeSmartArtColors SmartArtColors =>
+        _application?.SmartArtColors != null ? new OfficeSmartArtColors(_application?.SmartArtColors) : null;
+
+    public IOfficeSmartArtLayouts SmartArtLayouts =>
+         _application?.SmartArtLayouts != null ? new OfficeSmartArtLayouts(_application?.SmartArtLayouts) : null;
+
+    public IOfficeSmartArtQuickStyles SmartArtQuickStyles =>
+         _application?.SmartArtQuickStyles != null ? new OfficeSmartArtQuickStyles(_application?.SmartArtQuickStyles) : null;
+
+    public int ActiveEncryptionSession =>
+         _application?.ActiveEncryptionSession != null ? _application.ActiveEncryptionSession : 0;
 
     /// <inheritdoc/>
     public bool ChartDataPointTrack
@@ -750,7 +833,6 @@ internal partial class WordApplication : IWordApplication
             throw new InvalidOperationException("Failed to create blank document.", ex);
         }
     }
-
 
     internal WordApplication()
     {

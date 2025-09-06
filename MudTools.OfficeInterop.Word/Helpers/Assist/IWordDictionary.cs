@@ -57,7 +57,7 @@ public interface IWordDictionary : IDisposable
     /// <summary>
     /// 获取词典的类型。
     /// </summary>
-    MsWord.WdDictionaryType Type { get; }
+    WdDictionaryType Type { get; }
 
     /// <summary>
     /// 删除指定的字典。

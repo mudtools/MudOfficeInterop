@@ -70,7 +70,8 @@ internal class WordDictionary : IWordDictionary
     public bool ReadOnly => _dictionary?.ReadOnly ?? false;
 
     /// <inheritdoc/>
-    public MsWord.WdDictionaryType Type => _dictionary?.Type ?? MsWord.WdDictionaryType.wdSpelling;
+    public WdDictionaryType Type
+        => _dictionary?.Type != null ? (WdDictionaryType)(int)_dictionary?.Type : WdDictionaryType.wdSpelling;
 
     #endregion
 

@@ -8,44 +8,22 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定键类别，用于键盘快捷键的分类
+/// 指定在关闭文档时如何处理对该文档所做的更改
 /// </summary>
-public enum WdKeyCategory
+public enum WdSaveOptions
 {
     /// <summary>
-    /// 空键类别（无效值）
+    /// 不保存对文档所做的更改
     /// </summary>
-    wdKeyCategoryNil = -1,
+    wdDoNotSaveChanges = 0,
+
     /// <summary>
-    /// 禁用的键类别
+    /// 保存对文档所做的更改
     /// </summary>
-    wdKeyCategoryDisable,
+    wdSaveChanges = -1,
+
     /// <summary>
-    /// 命令键类别
+    /// 提示用户是否保存对文档所做的更改
     /// </summary>
-    wdKeyCategoryCommand,
-    /// <summary>
-    /// 宏键类别
-    /// </summary>
-    wdKeyCategoryMacro,
-    /// <summary>
-    /// 字体键类别
-    /// </summary>
-    wdKeyCategoryFont,
-    /// <summary>
-    /// 自动图文集键类别
-    /// </summary>
-    wdKeyCategoryAutoText,
-    /// <summary>
-    /// 样式键类别
-    /// </summary>
-    wdKeyCategoryStyle,
-    /// <summary>
-    /// 符号键类别
-    /// </summary>
-    wdKeyCategorySymbol,
-    /// <summary>
-    /// 前缀键类别
-    /// </summary>
-    wdKeyCategoryPrefix
+    wdPromptToSaveChanges = -2
 }

@@ -20,17 +20,17 @@ public interface IWordFillFormat : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取前景颜色格式。
     /// </summary>
-    IWordColorFormat ForeColor { get; }
+    IWordColorFormat? ForeColor { get; }
 
     /// <summary>
     /// 获取背景颜色格式。
     /// </summary>
-    IWordColorFormat BackColor { get; }
+    IWordColorFormat? BackColor { get; }
 
     /// <summary>
     /// 获取或设置填充的透明度（0.0到1.0之间）。

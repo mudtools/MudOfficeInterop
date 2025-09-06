@@ -8,44 +8,67 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定键类别，用于键盘快捷键的分类
+/// 指定在Word文档中浏览时要定位的目标项类型
 /// </summary>
-public enum WdKeyCategory
+public enum WdBrowseTarget
 {
     /// <summary>
-    /// 空键类别（无效值）
+    /// 浏览页面
     /// </summary>
-    wdKeyCategoryNil = -1,
+    wdBrowsePage = 1,
+    
     /// <summary>
-    /// 禁用的键类别
+    /// 浏览章节
     /// </summary>
-    wdKeyCategoryDisable,
+    wdBrowseSection,
+    
     /// <summary>
-    /// 命令键类别
+    /// 浏览批注
     /// </summary>
-    wdKeyCategoryCommand,
+    wdBrowseComment,
+    
     /// <summary>
-    /// 宏键类别
+    /// 浏览脚注
     /// </summary>
-    wdKeyCategoryMacro,
+    wdBrowseFootnote,
+    
     /// <summary>
-    /// 字体键类别
+    /// 浏览尾注
     /// </summary>
-    wdKeyCategoryFont,
+    wdBrowseEndnote,
+    
     /// <summary>
-    /// 自动图文集键类别
+    /// 浏览域
     /// </summary>
-    wdKeyCategoryAutoText,
+    wdBrowseField,
+    
     /// <summary>
-    /// 样式键类别
+    /// 浏览表格
     /// </summary>
-    wdKeyCategoryStyle,
+    wdBrowseTable,
+    
     /// <summary>
-    /// 符号键类别
+    /// 浏览图形
     /// </summary>
-    wdKeyCategorySymbol,
+    wdBrowseGraphic,
+    
     /// <summary>
-    /// 前缀键类别
+    /// 浏览标题
     /// </summary>
-    wdKeyCategoryPrefix
+    wdBrowseHeading,
+    
+    /// <summary>
+    /// 浏览编辑处
+    /// </summary>
+    wdBrowseEdit,
+    
+    /// <summary>
+    /// 浏览查找内容
+    /// </summary>
+    wdBrowseFind,
+    
+    /// <summary>
+    /// 浏览转到目标
+    /// </summary>
+    wdBrowseGoTo
 }

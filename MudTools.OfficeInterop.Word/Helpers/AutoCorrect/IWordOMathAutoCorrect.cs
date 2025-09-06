@@ -1,4 +1,4 @@
-//
+﻿//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,44 +8,37 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定键类别，用于键盘快捷键的分类
+/// OMathAutoCorrect 接口及实现类
 /// </summary>
-public enum WdKeyCategory
+public interface IWordOMathAutoCorrect : IDisposable
 {
     /// <summary>
-    /// 空键类别（无效值）
+    /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    wdKeyCategoryNil = -1,
+    IWordApplication Application { get; }
+
     /// <summary>
-    /// 禁用的键类别
+    /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    wdKeyCategoryDisable,
+    object Parent { get; }
+
     /// <summary>
-    /// 命令键类别
+    /// 获取一个 32 位整数，该整数指示创建对象的应用程序。
     /// </summary>
-    wdKeyCategoryCommand,
+    int Creator { get; }
+
     /// <summary>
-    /// 宏键类别
+    /// 获取或设置一个 Boolean 类型的值，该值代表是否将键入的普通文本自动更正为专业格式的数学符号。
     /// </summary>
-    wdKeyCategoryMacro,
+    bool UseOutsideOMath { get; set; }
+
     /// <summary>
-    /// 字体键类别
+    /// 获取数学自动更正条目的集合。
     /// </summary>
-    wdKeyCategoryFont,
+    IWordOMathAutoCorrectEntries Entries { get; }
+
     /// <summary>
-    /// 自动图文集键类别
+    /// 获取数学识别函数的集合。
     /// </summary>
-    wdKeyCategoryAutoText,
-    /// <summary>
-    /// 样式键类别
-    /// </summary>
-    wdKeyCategoryStyle,
-    /// <summary>
-    /// 符号键类别
-    /// </summary>
-    wdKeyCategorySymbol,
-    /// <summary>
-    /// 前缀键类别
-    /// </summary>
-    wdKeyCategoryPrefix
+    IWordOMathRecognizedFunctions Functions { get; }
 }

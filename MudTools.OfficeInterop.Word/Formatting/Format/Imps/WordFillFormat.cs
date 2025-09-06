@@ -33,14 +33,14 @@ internal class WordFillFormat : IWordFillFormat
     public IWordApplication? Application => _fillFormat != null ? new WordApplication(_fillFormat.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _fillFormat?.Parent;
+    public object? Parent => _fillFormat?.Parent;
 
     /// <inheritdoc/>
-    public IWordColorFormat ForeColor =>
+    public IWordColorFormat? ForeColor =>
         _fillFormat?.ForeColor != null ? new WordColorFormat(_fillFormat.ForeColor) : null;
 
     /// <inheritdoc/>
-    public IWordColorFormat BackColor =>
+    public IWordColorFormat? BackColor =>
         _fillFormat?.BackColor != null ? new WordColorFormat(_fillFormat.BackColor) : null;
 
     /// <inheritdoc/>
