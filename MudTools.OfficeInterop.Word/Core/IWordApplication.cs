@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Word;
 /// </summary>
 public partial interface IWordApplication : IOfficeApplication
 {
-    IWordDocument BlankDocument();
+    #region 应用程序基础属性
 
     /// <summary>
     /// 获取父对象。对于 Application 对象，通常返回 null。
@@ -30,6 +30,55 @@ public partial interface IWordApplication : IOfficeApplication
     /// 获取或设置活动打印机的名称。
     /// </summary>
     string ActivePrinter { get; set; }
+
+    /// <summary>
+    /// 获取或设置应用程序窗口的描述文字文本。
+    /// </summary>
+    string Caption { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否显示状态栏。
+    /// </summary>
+    bool DisplayStatusBar { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否显示滚动条。
+    /// </summary>
+    bool DisplayScrollBars { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否在"文件"菜单上显示最近使用的文件的名称。
+    /// </summary>
+    bool DisplayRecentFiles { get; set; }
+
+    /// <summary>
+    /// 获取 Word 文档窗口可设置的最大宽度（以磅为单位）。
+    /// </summary>
+    int UsableWidth { get; }
+
+    /// <summary>
+    /// 获取 Word 文档窗口的高度设置为最大高度 (以磅为单位)。
+    /// </summary>
+    int UsableHeight { get; }
+
+    /// <summary>
+    /// 获取用于分隔文件夹名称的字符。
+    /// </summary>
+    string PathSeparator { get; }
+
+    /// <summary>
+    /// 获取或设置应用程序的可见性
+    /// </summary>
+    WordAppVisibility Visibility { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定文档窗口或任务窗口的状态。
+    /// </summary>
+    WdWindowState WordWindowState { get; set; }
+
+    #endregion
+
+    #region 应用程序对象属性
 
     /// <summary>
     /// 获取表示活动文档的 Document 对象。
@@ -62,70 +111,13 @@ public partial interface IWordApplication : IOfficeApplication
     IWordTemplate? NormalTemplate { get; }
 
     /// <summary>
-    /// 获取用于分隔文件夹名称的字符。
-    /// </summary>
-    string PathSeparator { get; }
-
-
-    WordAppVisibility Visibility { get; set; }
-
-    /// <summary>
-    /// 获取或设置指定文档窗口或任务窗口的状态。
-    /// </summary>
-    WdWindowState WordWindowState { get; set; }
-
-    /// <summary>
-    /// 获取或设置应用程序窗口的描述文字文本。
-    /// </summary>
-    string Caption { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示是否显示状态栏。
-    /// </summary>
-    bool DisplayStatusBar { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示是否显示滚动条。
-    /// </summary>
-    bool DisplayScrollBars { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示是否在“文件”菜单上显示最近使用的文件的名称。
-    /// </summary>
-    bool DisplayRecentFiles { get; set; }
-
-    /// <summary>
-    /// 获取 Word 文档窗口可设置的最大宽度（以磅为单位）。
-    /// </summary>
-    int UsableWidth { get; }
-
-    /// <summary>
-    /// 获取 Word 文档窗口的高度设置为最大高度 (以磅为单位)。
-    /// </summary>
-    int UsableHeight { get; }
-
-    /// <summary>
     /// 获取表示所有文档窗口的 Windows 集合。
     /// </summary>
     IWordWindows? Windows { get; }
 
-    /// <summary>
-    /// 退出 Microsoft Word 应用程序。
-    /// </summary>
-    void Quit(
-         WdSaveOptions? saveChanges = null,
-         WdOriginalFormat? originalFormat = null,
-         bool? routeDocument = null);
+    #endregion
 
-
-    /// <summary>
-    /// 打印当前文档或选定内容。
-    /// </summary>
-    void PrintOut(ref object background, ref object append, ref object range, ref object outputFileName,
-                  ref object from, ref object to, ref object item, ref object copies, ref object pages,
-                  ref object pageType, ref object printToFile, ref object collate, ref object fileName,
-                  ref object lineEnding, ref object outputPrinterName);
-
+    #region 选择和选项属性
 
     /// <summary>
     /// 获取表示所选区域或插入点的 Selection 对象。
@@ -146,7 +138,6 @@ public partial interface IWordApplication : IOfficeApplication
     /// 获取或设置一个值，该值指示是否将批注、脚注、尾注和超链接显示为提示。
     /// </summary>
     bool DisplayScreenTips { get; set; }
-
 
     /// <summary>
     /// 获取表示 Microsoft Word 中应用程序设置的 Options 对象。
@@ -178,11 +169,17 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool CheckSpellingAsYouType { get; set; }
 
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否在键入时检查语法。
+    /// </summary>
     bool CheckGrammarAsYouType { get; set; }
 
+    #endregion
+
+    #region 语言和字典属性
 
     /// <summary>
-    /// 获取表示“语言”对话框中列出的校对语言的 Languages 集合。
+    /// 获取表示"语言"对话框中列出的校对语言的 Languages 集合。
     /// </summary>
     IWordLanguages? Languages { get; }
 
@@ -221,11 +218,14 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IWordListGalleries? ListGalleries { get; }
 
+    #endregion
+
+    #region 文件和用户属性
 
     /// <summary>
     /// 获取表示最近访问的文件的 RecentFiles 集合。
     /// </summary>
-    IWordRecentFiles RecentFiles { get; }
+    IWordRecentFiles? RecentFiles { get; }
 
     /// <summary>
     /// 获取或设置启动文件夹的完整路径（不包括最后的分隔符）。
@@ -247,50 +247,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     string UserName { get; set; }
 
-    /// <summary>
-    /// 打开一个现有文档。
-    /// </summary>
-    /// <param name="fileName">要打开的文档的文件名。</param>
-    /// <param name="confirmConversions">如果为 true，则在文件不是 Word 格式时显示“转换文件”对话框。</param>
-    /// <param name="readOnly">如果为 true，则以只读方式打开文档。</param>
-    /// <param name="addToRecentFiles">如果为 true，则将文件添加到最近使用的文件列表中。</param>
-    /// <param name="passwordDocument">打开文档所需的密码。</param>
-    /// <param name="passwordTemplate">打开模板所需的密码。</param>
-    /// <param name="revert">如果为 true，则将文档恢复到上次保存的版本。</param>
-    /// <param name="writePasswordDocument">保存对文档所做的更改所需的密码。</param>
-    /// <param name="writePasswordTemplate">保存对模板所做的更改所需的密码。</param>
-    /// <param name="format">文档的格式。</param>
-    /// <param name="encoding">文档的编码。</param>
-    /// <param name="visible">如果为 true，则打开文档时使其可见。</param>
-    /// <returns>打开的文档对象。</returns>
-    IWordDocument? OpenDocument(string fileName, bool confirmConversions = true, bool readOnly = false, bool addToRecentFiles = true,
-                                     string passwordDocument = "", string passwordTemplate = "", bool revert = true, string writePasswordDocument = "",
-                                     string writePasswordTemplate = "", WdOpenFormat format = WdOpenFormat.wdOpenFormatAuto,
-                                     MsoEncoding encoding = MsoEncoding.msoEncodingSimplifiedChineseAutoDetect, bool visible = true);
+    #endregion
 
-    /// <summary>
-    /// 新建一个文档。
-    /// </summary>
-    /// <param name="template">用于创建新文档的模板。</param>
-    /// <param name="newTemplate">如果为 true，则将文档创建为新模板。</param>
-    /// <returns>新建的文档对象。</returns>
-    IWordDocument? NewDocument(object template, object newTemplate);
-
-    /// <summary>
-    /// 执行查找操作。
-    /// </summary>
-    /// <param name="findText">要查找的文本。</param>
-    /// <returns>如果找到则返回 true，否则返回 false。</returns>
-    bool FindText(string findText);
-
-    /// <summary>
-    /// 替换文本。
-    /// </summary>
-    /// <param name="findText">要查找的文本。</param>
-    /// <param name="replaceWith">替换文本。</param>
-    /// <param name="replace">替换操作类型。</param>
-    /// <returns>替换的次数。</returns>
-    int ReplaceText(string findText, string replaceWith, MsWord.WdReplace replace);
+    #region 国际化方法和属性
 
     /// <summary>
     /// 获取有关当前国家/地区和国际设置的信息。
@@ -305,6 +264,10 @@ public partial interface IWordApplication : IOfficeApplication
     /// <param name="obj">要检查的对象。</param>
     /// <returns>如果对象有效则返回 true，否则返回 false。</returns>
     bool IsObjectValid(object obj);
+
+    #endregion
+
+    #region 文件转换和任务属性
 
     /// <summary>
     /// 获取表示所有可用文件转换器的 FileConverters 集合。
@@ -331,6 +294,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     object COMAddIns { get; }
 
+    #endregion
+
+    #region 邮件相关属性
 
     /// <summary>
     /// 获取表示电子邮件创作的全局首选项的 EmailOptions 对象。
@@ -372,6 +338,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool OpenAttachmentsInFullScreen { get; set; }
 
+    #endregion
+
+    #region 安全和限制属性
 
     /// <summary>
     /// 获取或设置自动化安全级别。
@@ -388,6 +357,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool RestrictLinkedStyles { get; set; }
 
+    #endregion
+
+    #region 系统信息属性
 
     /// <summary>
     /// 获取一个值，该值指示是否安装了数学协处理器。
@@ -414,27 +386,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     bool UserControl { get; }
 
+    #endregion
 
-    /// <summary>
-    /// 保护文档。
-    /// </summary>
-    /// <param name="type">保护类型。</param>
-    /// <param name="noReset">是否重置。</param>
-    /// <param name="password">密码。</param>
-    /// <param name="useIRM">是否使用信息权限管理。</param>
-    /// <param name="enforceStyleLock">是否强制样式锁定。</param>
-    void Protect(MsWord.WdProtectionType type, object noReset, object password, object useIRM, object enforceStyleLock);
-
-    /// <summary>
-    /// 取消保护文档。
-    /// </summary>
-    /// <param name="password">密码。</param>
-    void Unprotect(object password);
-
-    /// <summary>
-    /// 保存所有打开的文档。
-    /// </summary>
-    void SaveAll();
+    #region 键绑定方法
 
     /// <summary>
     /// 获取指定键绑定。
@@ -453,6 +407,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// <returns>键绑定集合。</returns>
     IWordKeysBoundTo KeysBoundTo(MsWord.WdKeyCategory keyCategory, string command, object commandParameter);
 
+    #endregion
+
+    #region 文件对话框方法
 
     /// <summary>
     /// 获取文件对话框。
@@ -460,6 +417,10 @@ public partial interface IWordApplication : IOfficeApplication
     /// <param name="fileDialogType">文件对话框类型。</param>
     /// <returns>文件对话框对象。</returns>
     IOfficeFileDialog? FileDialog(MsoFileDialogType fileDialogType);
+
+    #endregion
+
+    #region 智能标记属性
 
     /// <summary>
     /// 获取智能标记识别器集合。
@@ -471,6 +432,9 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IWordSmartTagTypes? SmartTagTypes { get; }
 
+    #endregion
+
+    #region 其他属性和方法
 
     /// <summary>
     /// 获取一个值，该值指示是否支持任意 XML。
@@ -508,7 +472,7 @@ public partial interface IWordApplication : IOfficeApplication
     string BrowseExtraFileTypes { get; set; }
 
     /// <summary>
-    /// 获取表示垂直滚动条上的“选择浏览对象”工具的 Browser 对象。
+    /// 获取表示垂直滚动条上的"选择浏览对象"工具的 Browser 对象。
     /// </summary>
     IWordBrowser? Browser { get; }
 
@@ -518,12 +482,12 @@ public partial interface IWordApplication : IOfficeApplication
     string BuildFull { get; }
 
     /// <summary>
-    /// 获取或设置一个值，该值指示在比较和合并文档时是否默认使用“法律黑线”选项。
+    /// 获取或设置一个值，该值指示在比较和合并文档时是否默认使用"法律黑线"选项。
     /// </summary>
     bool DefaultLegalBlackline { get; set; }
 
     /// <summary>
-    /// 获取或设置在“另存为”对话框中的“另存为类型”框中显示的默认格式。
+    /// 获取或设置在"另存为"对话框中的"另存为类型"框中显示的默认格式。
     /// </summary>
     string DefaultSaveFormat { get; set; }
 
@@ -600,6 +564,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取或设置状态栏中显示的文本。
     /// </summary>
+    /// <param name="text">要在状态栏中显示的文本</param>
     void SetStatusBar(string text);
 
     /// <summary>
@@ -647,6 +612,93 @@ public partial interface IWordApplication : IOfficeApplication
     /// </summary>
     IOfficeFileSearch? FileSearch { get; }
 
+    #endregion
+
+    #region 文档操作方法
+
+    /// <summary>
+    /// 创建一个空白文档
+    /// </summary>
+    /// <returns>新建的文档对象</returns>
+    IWordDocument BlankDocument();
+
+    /// <summary>
+    /// 打开一个现有文档。
+    /// </summary>
+    /// <param name="fileName">要打开的文档的文件名。</param>
+    /// <param name="confirmConversions">如果为 true，则在文件不是 Word 格式时显示"转换文件"对话框。</param>
+    /// <param name="readOnly">如果为 true，则以只读方式打开文档。</param>
+    /// <param name="addToRecentFiles">如果为 true，则将文件添加到最近使用的文件列表中。</param>
+    /// <param name="passwordDocument">打开文档所需的密码。</param>
+    /// <param name="passwordTemplate">打开模板所需的密码。</param>
+    /// <param name="revert">如果为 true，则将文档恢复到上次保存的版本。</param>
+    /// <param name="writePasswordDocument">保存对文档所做的更改所需的密码。</param>
+    /// <param name="writePasswordTemplate">保存对模板所做的更改所需的密码。</param>
+    /// <param name="format">文档的格式。</param>
+    /// <param name="encoding">文档的编码。</param>
+    /// <param name="visible">如果为 true，则打开文档时使其可见。</param>
+    /// <returns>打开的文档对象。</returns>
+    IWordDocument? OpenDocument(string fileName, bool confirmConversions = true, bool readOnly = false, bool addToRecentFiles = true,
+                                     string passwordDocument = "", string passwordTemplate = "", bool revert = true, string writePasswordDocument = "",
+                                     string writePasswordTemplate = "", WdOpenFormat format = WdOpenFormat.wdOpenFormatAuto,
+                                     MsoEncoding encoding = MsoEncoding.msoEncodingSimplifiedChineseAutoDetect, bool visible = true);
+
+    /// <summary>
+    /// 新建一个文档。
+    /// </summary>
+    /// <param name="template">用于创建新文档的模板。</param>
+    /// <param name="newTemplate">如果为 true，则将文档创建为新模板。</param>
+    /// <returns>新建的文档对象。</returns>
+    IWordDocument? NewDocument(object template, object newTemplate);
+
+    /// <summary>
+    /// 保护文档。
+    /// </summary>
+    /// <param name="type">保护类型。</param>
+    /// <param name="noReset">是否重置。</param>
+    /// <param name="password">密码。</param>
+    /// <param name="useIRM">是否使用信息权限管理。</param>
+    /// <param name="enforceStyleLock">是否强制样式锁定。</param>
+    void Protect(MsWord.WdProtectionType type, object noReset, object password, object useIRM, object enforceStyleLock);
+
+    /// <summary>
+    /// 取消保护文档。
+    /// </summary>
+    /// <param name="password">密码。</param>
+    void Unprotect(object password);
+
+    /// <summary>
+    /// 保存所有打开的文档。
+    /// </summary>
+    void SaveAll();
+
+    #endregion
+
+    #region 应用程序控制方法
+
+    /// <summary>
+    /// 退出 Microsoft Word 应用程序。
+    /// </summary>
+    void Quit(
+         WdSaveOptions? saveChanges = null,
+         WdOriginalFormat? originalFormat = null,
+         bool? routeDocument = null);
+
+    #endregion
+
+    #region 打印方法
+
+    /// <summary>
+    /// 打印当前文档或选定内容。
+    /// </summary>
+    void PrintOut(ref object background, ref object append, ref object range, ref object outputFileName,
+                  ref object from, ref object to, ref object item, ref object copies, ref object pages,
+                  ref object pageType, ref object printToFile, ref object collate, ref object fileName,
+                  ref object lineEnding, ref object outputPrinterName);
+
+    #endregion
+
+    #region 导出方法
 
     /// <summary>
     /// 将文档另存为 PDF 或 XPS 格式。
@@ -678,6 +730,35 @@ public partial interface IWordApplication : IOfficeApplication
         bool useISO19005_1 = false,
          object fixedFormatExtClassPtr = null);
 
+    #endregion
+
+    #region 查找和替换方法
+
+    /// <summary>
+    /// 执行查找操作。
+    /// </summary>
+    /// <param name="findText">要查找的文本。</param>
+    /// <returns>如果找到则返回 true，否则返回 false。</returns>
+    bool FindText(string findText);
+
+    /// <summary>
+    /// 替换文本。
+    /// </summary>
+    /// <param name="findText">要查找的文本。</param>
+    /// <param name="replaceWith">替换文本。</param>
+    /// <param name="replace">替换操作类型。</param>
+    /// <returns>替换的次数。</returns>
+    int ReplaceText(string findText, string replaceWith, MsWord.WdReplace replace);
+
+    #endregion
+
+    #region 系统信息方法
+
+    /// <summary>
+    /// 获取系统信息
+    /// </summary>
+    /// <returns>系统信息对象</returns>
     IWordSystemInfo GetSystemInfo();
 
+    #endregion
 }
