@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -42,10 +42,22 @@ public interface IWordFootnotes : IEnumerable<IWordFootnote>, IDisposable
     /// </summary>
     IWordFootnote? Last { get; }
 
+    /// <summary>
+    /// 获取脚注分隔符范围。
+    /// 这是位于页面底部脚注区域与正文之间的分隔线或符号。
+    /// </summary>
     IWordRange? Separator { get; }
 
+    /// <summary>
+    /// 获取脚注延续分隔符范围。
+    /// 当脚注文本延续到下一页时，用于分隔的符号或线条。
+    /// </summary>
     IWordRange? ContinuationSeparator { get; }
 
+    /// <summary>
+    /// 获取脚注延续注释范围。
+    /// 当脚注延续到下一页时显示的通知文本。
+    /// </summary>
     IWordRange? ContinuationNotice { get; }
 
     /// <summary>

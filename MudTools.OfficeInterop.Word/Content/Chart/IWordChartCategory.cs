@@ -1,4 +1,4 @@
-﻿namespace MudTools.OfficeInterop.Word;
+namespace MudTools.OfficeInterop.Word;
 
 
 /// <summary>
@@ -16,5 +16,8 @@ public interface IWordChartCategory : IDisposable
     /// </summary>
     string Name { get; }
 
+    /// <summary>
+    /// 获取或设置分类的筛选状态。
+    /// </summary>
     bool IsFiltered { get; set; }
 }
