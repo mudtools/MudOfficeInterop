@@ -383,7 +383,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示活动电子邮件的 MailMessage 对象。
     /// </summary>
-    IWordMailMessage MailMessage { get; }
+    IWordMailMessage? MailMessage { get; }
 
     /// <summary>
     /// 获取邮件系统的类型。
@@ -613,7 +613,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取一个 PickerDialog 对象，该对象提供在对话框中选择人员或数据的功能。
     /// </summary>
-    object PickerDialog { get; }
+    IOfficePickerDialog? PickerDialog { get; }
 
     /// <summary>
     /// 获取一个值，该值指示打印预览是否为当前视图。
@@ -623,7 +623,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示所有受保护的视图窗口的 ProtectedViewWindows 集合。
     /// </summary>
-    IWordProtectedViewWindows ProtectedViewWindows { get; }
+    IWordProtectedViewWindows? ProtectedViewWindows { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示启动 Microsoft Word 时是否显示任务窗格。
@@ -653,7 +653,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取一个 UndoRecord 对象，该对象提供撤消堆栈中的自定义入口点。
     /// </summary>
-    object UndoRecord { get; }
+    IWordUndoRecord? UndoRecord { get; }
 
     /// <summary>
     /// 获取自动化对象 (Word.Basic) ，其中包括 Microsoft Word 6.0 版和 Windows 95 Word 中提供的所有 WordBasic 语句和函数的方法。
@@ -663,17 +663,17 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示当前在应用程序中加载的一组颜色样式的 SmartArtColors 对象。
     /// </summary>
-    IOfficeSmartArtColors SmartArtColors { get; }
+    IOfficeSmartArtColors? SmartArtColors { get; }
 
     /// <summary>
     /// 获取表示当前在应用程序中加载的 SmartArt 布局集的 SmartArtLayouts 对象。
     /// </summary>
-    IOfficeSmartArtLayouts SmartArtLayouts { get; }
+    IOfficeSmartArtLayouts? SmartArtLayouts { get; }
 
     /// <summary>
     /// 获取表示应用程序中当前加载的 SmartArt 样式集的 SmartArtQuickStyles 对象。
     /// </summary>
-    IOfficeSmartArtQuickStyles SmartArtQuickStyles { get; }
+    IOfficeSmartArtQuickStyles? SmartArtQuickStyles { get; }
 
     /// <summary>
     /// 获取表示活动加密会话的对象。
@@ -688,7 +688,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取一个 FileSearch 对象，该对象可用于使用绝对路径或相对路径搜索文件。
     /// </summary>
-    IOfficeFileSearch FileSearch { get; }
+    IOfficeFileSearch? FileSearch { get; }
 
     #endregion
 
