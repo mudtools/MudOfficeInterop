@@ -8,47 +8,54 @@
 using log4net;
 
 namespace MudTools.OfficeInterop.Word.Imps;
-/// <summary>
-/// 表示有权编辑文档特定部分的用户或用户组集合的封装实现类。
-/// </summary>
-internal class WordEditors : IWordEditors
-{
-    private static readonly ILog log = LogManager.GetLogger(typeof(WordEditors));
 
-    private MsWord.Editors _editors;
+/// <summary>
+/// 表示文档中所有书目源（引文）集合的封装实现类。
+/// </summary>
+internal class WordSources : IWordSources
+{
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordSources));
+    private MsWord.Sources _sources;
     private bool _disposedValue;
 
     /// <summary>
-    /// 初始化 <see cref="WordEditors"/> 类的新实例。
+    /// 初始化 <see cref="WordSources"/> 类的新实例。
     /// </summary>
-    /// <param name="editors">要封装的原始 COM Editors 对象。</param>
-    internal WordEditors(MsWord.Editors editors)
+    /// <param name="sources">要封装的原始 COM Sources 对象。</param>
+    internal WordSources(MsWord.Sources sources)
     {
-        _editors = editors ?? throw new ArgumentNullException(nameof(editors));
+        _sources = sources ?? throw new ArgumentNullException(nameof(sources));
         _disposedValue = false;
     }
 
-    #region 属性实现
+    #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _editors != null ? new WordApplication(_editors.Application) : null;
+    public IWordApplication Application => _sources != null ? new WordApplication(_sources.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _editors?.Parent;
+    public object Parent => _sources?.Parent;
 
     /// <inheritdoc/>
-    public int Count => _editors?.Count ?? 0;
+    public int Creator => _sources?.Creator ?? 0;
 
     /// <inheritdoc/>
-    public IWordEditor this[object index]
+    public int Count => _sources?.Count ?? 0;
+
+    #endregion
+
+    #region 集合索引器实现 (Collection Indexer Implementation)
+
+    /// <inheritdoc/>
+    public IWordSource this[int index]
     {
         get
         {
-            if (_editors == null) return null;
+            if (_sources == null) return null;
             try
             {
-                var comEditor = _editors.Item(index);
-                return comEditor != null ? new WordEditor(comEditor) : null;
+                var comSource = _sources[index];
+                return comSource != null ? new WordSource(comSource) : null;
             }
             catch (COMException ce)
             {
@@ -60,21 +67,20 @@ internal class WordEditors : IWordEditors
 
     #endregion
 
-    #region 方法实现
+    #region 书目源集合方法实现 (Bibliography Sources Collection Methods Implementation)
 
     /// <inheritdoc/>
-    public IWordEditor Add(object editorID)
+    public void Add(string data)
     {
-        if (_editors == null || editorID == null) return null;
+        if (_sources == null || string.IsNullOrWhiteSpace(data)) return;
         try
         {
-            var newEditor = _editors.Add(editorID);
-            return newEditor != null ? new WordEditor(newEditor) : null;
+            _sources.Add(data);
         }
         catch (COMException ex)
         {
-            log.Error($"Failed to add editor: {ex.Message}", ex);
-            return null;
+            log.Error($"Failed to add source: {ex.Message}");
+            return;
         }
     }
 
@@ -83,24 +89,24 @@ internal class WordEditors : IWordEditors
     #region IDisposable 实现
 
     /// <summary>
-    /// 释放由 <see cref="WordEditors"/> 使用的非托管资源，并选择性地释放托管资源。
+    /// 释放由 <see cref="WordSources"/> 使用的非托管资源，并选择性地释放托管资源。
     /// </summary>
     /// <param name="disposing">如果为 true，则同时释放托管和非托管资源；如果为 false，则仅释放非托管资源。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
 
-        if (disposing && _editors != null)
+        if (disposing && _sources != null)
         {
-            Marshal.ReleaseComObject(_editors);
-            _editors = null;
+            Marshal.ReleaseComObject(_sources);
+            _sources = null;
         }
 
         _disposedValue = true;
     }
 
     /// <summary>
-    /// 释放由 <see cref="WordEditors"/> 使用的所有资源。
+    /// 释放由 <see cref="WordSources"/> 使用的所有资源。
     /// </summary>
     public void Dispose()
     {
@@ -110,10 +116,10 @@ internal class WordEditors : IWordEditors
 
     #endregion
 
-    #region IEnumerable<IWordEditor> 实现
+    #region IEnumerable<IWordSource> 实现
 
     /// <inheritdoc/>
-    public IEnumerator<IWordEditor> GetEnumerator()
+    public IEnumerator<IWordSource> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {

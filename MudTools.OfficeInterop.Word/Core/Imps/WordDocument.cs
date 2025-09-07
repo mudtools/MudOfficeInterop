@@ -130,10 +130,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_selection == null)
-            {
-                _selection = new WordSelection(_document.Application.Selection, this);
-            }
+            _selection ??= new WordSelection(_document.Application.Selection);
             return _selection;
         }
     }

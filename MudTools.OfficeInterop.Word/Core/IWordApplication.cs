@@ -396,7 +396,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <param name="keyCode">键代码。</param>
     /// <param name="keyCode2">第二个键代码（可选）。</param>
     /// <returns>键绑定对象。</returns>
-    IWordKeyBinding FindKey(int keyCode, object keyCode2);
+    IWordKeyBinding? FindKey(int keyCode, object keyCode2);
 
     /// <summary>
     /// 获取分配给指定项的所有组合键。
@@ -405,7 +405,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <param name="command">命令。</param>
     /// <param name="commandParameter">命令参数。</param>
     /// <returns>键绑定集合。</returns>
-    IWordKeysBoundTo KeysBoundTo(MsWord.WdKeyCategory keyCategory, string command, object commandParameter);
+    IWordKeysBoundTo? KeysBoundTo(WdKeyCategory keyCategory, string command, object commandParameter);
 
     #endregion
 
@@ -442,11 +442,6 @@ public partial interface IWordApplication : IOfficeApplication
     bool ArbitraryXMLSupportAvailable { get; }
 
     /// <summary>
-    /// 获取表示 Microsoft Office 帮助查看器的 IAssistance 对象。
-    /// </summary>
-    IOfficeAssistance? Assistance { get; }
-
-    /// <summary>
     /// 获取表示在将表格和图片等项目插入文档中时自动添加的标题的 AutoCaptions 集合。
     /// </summary>
     IWordAutoCaptions? AutoCaptions { get; }
@@ -464,7 +459,7 @@ public partial interface IWordApplication : IOfficeApplication
     /// <summary>
     /// 获取表示 Microsoft Office Word 中存储的书目引用源的 Bibliography 对象。
     /// </summary>
-    IWordBibliography Bibliography { get; }
+    IWordBibliography? Bibliography { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否可以使用 Word 打开 HTML 文件。
@@ -615,6 +610,21 @@ public partial interface IWordApplication : IOfficeApplication
     #endregion
 
     #region 文档操作方法
+    /// <summary>
+    /// 从模板创建文档
+    /// </summary>
+    /// <param name="templatePath">模板路径</param>
+    /// <returns>文档对象</returns>
+    IWordDocument CreateFrom(string templatePath);
+
+    /// <summary>
+    /// 打开现有文档
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <param name="readOnly">是否只读打开</param>
+    /// <param name="password">密码（可选）</param>
+    /// <returns>文档对象</returns>
+    IWordDocument Open(string filePath, bool readOnly = false, string? password = null);
 
     /// <summary>
     /// 创建一个空白文档

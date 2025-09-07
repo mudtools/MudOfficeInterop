@@ -117,7 +117,7 @@ internal partial class WordApplication
 
     private void OnWindowSelectionChange(MsWord.Selection sel)
     {
-        _windowSelectionChange?.Invoke(new WordSelection(sel, _activeDocument));
+        _windowSelectionChange?.Invoke(new WordSelection(sel));
     }
 
     private void OnWindowSize(MsWord.Document doc, MsWord.Window wnd)

@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using log4net;
+using Microsoft.Office.Interop.Word;
 
 namespace MudTools.OfficeInterop.Word.Imps;
 
@@ -95,12 +96,12 @@ internal class WordListGalleries : IWordListGalleries
     /// <inheritdoc/>
     public IEnumerator<IWordListGallery> GetEnumerator()
     {
-        // 遍历所有可能的 WdListGalleryType 枚举值
-        // 注意：枚举值是 wdBulletGallery=1, wdNumberGallery=2, wdOutlineNumberGallery=3
-        for (int i = 1; i <= Count; i++)
+        foreach (var item in _listGalleries)
         {
-            MsWord.WdListGalleryType type = (MsWord.WdListGalleryType)i;
-            yield return this[type];
+            if (item != null && item is ListGallery gallery)
+            {
+                yield return new WordListGallery(gallery);
+            }
         }
     }
 

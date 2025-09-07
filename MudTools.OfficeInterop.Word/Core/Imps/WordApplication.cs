@@ -140,6 +140,12 @@ internal partial class WordApplication : IWordApplication
         }
     }
 
+    public string ActivePrinter
+    {
+        get => _application?.ActivePrinter ?? string.Empty;
+        set { if (_application != null) _application.ActivePrinter = value ?? string.Empty; }
+    }
+
     /// <summary>
     /// 获取或设置应用程序窗口的描述文字文本。
     /// </summary>
@@ -567,6 +573,79 @@ internal partial class WordApplication : IWordApplication
 
     #region 文档操作方法
 
+    public IWordDocument CreateFrom(string templatePath)
+    {
+        if (!File.Exists(templatePath))
+            throw new FileNotFoundException("Template file not found.", templatePath);
+
+        try
+        {
+            var doc = _application.Documents.Add(templatePath);
+            var wordDoc = new WordDocument(doc);
+            MemorizeActiveDocument(wordDoc);
+            return wordDoc;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to create document from template.", ex);
+        }
+    }
+
+
+    public IWordDocument Open(string filePath, bool readOnly = false, string? password = null)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException("Document file not found.", filePath);
+
+        try
+        {
+            // 正确的参数类型和 ref 修饰符
+            object fileNameObj = filePath;
+            object confirmConversionsObj = MissingValue;
+            object readOnlyObj = readOnly;
+            object addToRecentFilesObj = MissingValue;
+            object passwordDocumentObj = string.IsNullOrEmpty(password) ? MissingValue : (object)password;
+            object passwordTemplateObj = MissingValue;
+            object revertObj = MissingValue;
+            object writePasswordDocumentObj = MissingValue;
+            object writePasswordTemplateObj = MissingValue;
+            object formatObj = MissingValue;
+            object encodingObj = MissingValue;
+            object visibleObj = MissingValue;
+            object openAndRepairObj = MissingValue;
+            object documentDirectionObj = MissingValue;
+            object noEncodingDialogObj = MissingValue;
+            object xMLTransformObj = MissingValue;
+
+            var doc = _application.Documents.Open(
+                ref fileNameObj,
+                ref confirmConversionsObj,
+                ref readOnlyObj,
+                ref addToRecentFilesObj,
+                ref passwordDocumentObj,
+                ref passwordTemplateObj,
+                ref revertObj,
+                ref writePasswordDocumentObj,
+                ref writePasswordTemplateObj,
+                ref formatObj,
+                ref encodingObj,
+                ref visibleObj,
+                ref openAndRepairObj,
+                ref documentDirectionObj,
+                ref noEncodingDialogObj,
+                ref xMLTransformObj);
+
+            var wordDoc = new WordDocument(doc);
+            MemorizeActiveDocument(wordDoc);
+            return wordDoc;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to open document '{filePath}'.", ex);
+        }
+    }
+
+
     /// <summary>
     /// 创建一个空白文档
     /// </summary>
@@ -930,6 +1009,37 @@ internal partial class WordApplication : IWordApplication
 
     #endregion
 
+    #region 键绑定方法
+
+    /// <summary>
+    /// 获取指定键绑定。
+    /// </summary>
+    /// <param name="keyCode">键代码。</param>
+    /// <param name="keyCode2">第二个键代码（可选）。</param>
+    /// <returns>键绑定对象。</returns>
+    public IWordKeyBinding? FindKey(int keyCode, object keyCode2)
+    {
+        if (_application == null) return null;
+        var keyBinding = _application.FindKey[keyCode, keyCode2];
+        return keyBinding != null ? new WordKeyBinding(keyBinding) : null;
+    }
+
+    /// <summary>
+    /// 获取分配给指定项的所有组合键。
+    /// </summary>
+    /// <param name="keyCategory">键类别。</param>
+    /// <param name="command">命令。</param>
+    /// <param name="commandParameter">命令参数。</param>
+    /// <returns>键绑定集合。</returns>
+    public IWordKeysBoundTo? KeysBoundTo(WdKeyCategory keyCategory, string command, object commandParameter)
+    {
+        if (_application == null) return null;
+        var keyBinding = _application.KeysBoundTo[(MsWord.WdKeyCategory)(int)keyCategory, command, commandParameter];
+        return keyBinding != null ? new WordKeysBoundTo(keyBinding) : null;
+    }
+
+    #endregion
+
     #region 文件对话框方法
 
     /// <summary>
@@ -979,12 +1089,6 @@ internal partial class WordApplication : IWordApplication
         _application?.ArbitraryXMLSupportAvailable ?? false;
 
     /// <summary>
-    /// 获取表示 Microsoft Office 帮助查看器的 IAssistance 对象。
-    /// </summary>
-    public IOfficeAssistance? Assistance =>
-        _application?.Assistant != null ? new OfficeAssistance(_application.Assistant) : null;
-
-    /// <summary>
     /// 获取表示在将表格和图片等项目插入文档中时自动添加的标题的 AutoCaptions 集合。
     /// </summary>
     public IWordAutoCaptions? AutoCaptions =>
@@ -1009,6 +1113,9 @@ internal partial class WordApplication : IWordApplication
         get => _application?.BrowseExtraFileTypes ?? string.Empty;
         set { if (_application != null) _application.BrowseExtraFileTypes = value ?? string.Empty; }
     }
+
+    public IWordBibliography? Bibliography =>
+         _application?.Bibliography != null ? new WordBibliography(_application.Bibliography) : null;
 
     /// <summary>
     /// 获取表示垂直滚动条上的"选择浏览对象"工具的 Browser 对象。

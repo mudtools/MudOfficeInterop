@@ -42,16 +42,31 @@ public interface IWordSmartTagAction : IDisposable
     /// <summary>
     /// 获取或设置一个 Object 类型的值，该值代表智能文档 ActiveX 控件的值。
     /// </summary>
-    object ActiveXControl { get; set; }
+    object ActiveXControl { get; }
 
+    /// <summary>
+    /// 获取或设置一个字符串，该字符串代表智能文档文本框控件中的文本内容。
+    /// </summary>
     string TextboxText { get; set; }
 
+    /// <summary>
+    /// 获取或设置一个整数，该整数代表智能文档单选按钮组控件中所选项的索引号。
+    /// </summary>
     int RadioGroupSelection { get; set; }
 
+    /// <summary>
+    /// 获取或设置一个 Boolean 类型的值，该值指定是否展开文档片段。
+    /// </summary>
     bool ExpandDocumentFragment { get; set; }
 
+    /// <summary>
+    /// 获取或设置一个 Boolean 类型的值，该值指定是否展开帮助信息。
+    /// </summary>
     bool ExpandHelp { get; set; }
 
+    /// <summary>
+    /// 获取一个 Boolean 类型的值，该值指定控件是否显示在任务窗格中。
+    /// </summary>
     bool PresentInPane { get; }
 
     /// <summary>
