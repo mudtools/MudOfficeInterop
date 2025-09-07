@@ -5,144 +5,135 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
+
 /// <summary>
-/// Word 文档节集合实现类
+/// 表示文档中所有节集合的封装实现类。
 /// </summary>
 internal class WordSections : IWordSections
 {
-    private readonly MsWord.Sections _sections;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordSections));
+    private MsWord.Sections _sections;
     private bool _disposedValue;
 
     /// <summary>
-    /// 获取节数量
+    /// 初始化 <see cref="WordSections"/> 类的新实例。
     /// </summary>
-    public int Count => _sections.Count;
-
-    public IWordApplication? Application => _sections != null ? new WordApplication(_sections.Application) : null;
-
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="sections">COM Sections 对象</param>
+    /// <param name="sections">要封装的原始 COM Sections 对象。</param>
     internal WordSections(MsWord.Sections sections)
     {
         _sections = sections ?? throw new ArgumentNullException(nameof(sections));
         _disposedValue = false;
     }
 
-    /// <summary>
-    /// 根据索引获取节
-    /// </summary>
-    /// <param name="index">节索引</param>
-    /// <returns>节对象</returns>
-    public IWordSection Item(int index)
-    {
-        if (index < 1 || index > Count)
-            throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 1 and {Count}.");
+    #region 基本属性实现 (Basic Properties Implementation)
 
-        try
-        {
-            var section = _sections[index];
-            return new WordSection(section);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to get section at index {index}.", ex);
-        }
-    }
+    /// <inheritdoc/>
+    public IWordApplication Application => _sections != null ? new WordApplication(_sections.Application) : null;
 
-    /// <summary>
-    /// 添加节
-    /// </summary>
-    /// <param name="range">插入范围</param>
-    /// <param name="type">分节符类型</param>
-    /// <returns>节对象</returns>
-    public IWordSection Add(IWordRange range, int type = 2)
-    {
-        try
-        {
-            // 注意：这里需要将 IWordRange 转换为 COM Range 对象
-            // 由于缺少具体实现，这里使用占位符
-            var comRange = GetComRange(range);
-            var section = _sections.Add(comRange, (MsWord.WdBreakType)type);
-            return new WordSection(section);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to add section.", ex);
-        }
-    }
+    /// <inheritdoc/>
+    public object Parent => _sections?.Parent;
 
-    /// <summary>
-    /// 获取枚举器
-    /// </summary>
-    /// <returns>节枚举器</returns>
-    public IEnumerator<IWordSection> GetEnumerator()
+    /// <inheritdoc/>
+    public int Creator => _sections?.Creator ?? 0;
+
+    /// <inheritdoc/>
+    public int Count => _sections?.Count ?? 0;
+
+    #endregion
+
+    #region 集合索引器实现 (Collection Indexer Implementation)
+
+    /// <inheritdoc/>
+    public IWordSection this[int index]
     {
-        try
+        get
         {
-            var sections = new List<IWordSection>();
-            for (int i = 1; i <= Count; i++)
+            if (_sections == null || index < 1 || index > Count) return null;
+            try
             {
-                try
-                {
-                    sections.Add(Item(i));
-                }
-                catch
-                {
-                    // 忽略获取失败的节
-                    continue;
-                }
+                var comSection = _sections[index];
+                return comSection != null ? new WordSection(comSection) : null;
             }
-            return sections.GetEnumerator();
+            catch (COMException ce)
+            {
+                log.Error($"Failed to retrieve object based on index: {ce.Message}", ce);
+                return null;
+            }
         }
-        catch (Exception ex)
+    }
+
+    #endregion
+
+    #region 节集合方法实现 (Sections Collection Methods Implementation)
+
+    /// <inheritdoc/>
+    public IWordSection? Add(IWordRange range, WdSectionStart start)
+    {
+        if (_sections == null) return null;
+        try
         {
-            throw new InvalidOperationException("Failed to enumerate sections.", ex);
+            var newSection = _sections.Add(((WordRange)range)._range, (MsWord.WdSectionStart)(int)start);
+            return newSection != null ? new WordSection(newSection) : null;
+        }
+        catch (COMException ex)
+        {
+            log.Error($"Failed to add section: {ex.Message}", ex);
+            return null;
         }
     }
+    #endregion
+
+    #region IDisposable 实现
 
     /// <summary>
-    /// 获取枚举器
+    /// 释放由 <see cref="WordSections"/> 使用的非托管资源，并选择性地释放托管资源。
     /// </summary>
-    /// <returns>枚举器</returns>
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    /// <summary>
-    /// 将 IWordRange 转换为 COM Range 对象
-    /// </summary>
-    /// <param name="range">IWordRange 对象</param>
-    /// <returns>COM Range 对象</returns>
-    private MsWord.Range GetComRange(IWordRange range)
-    {
-        // 这里需要具体的实现来获取 COM Range 对象
-        // 由于缺少具体实现，返回 null 作为占位符
-        return null;
-    }
-
-    /// <summary>
-    /// 释放资源
-    /// </summary>
-    /// <param name="disposing">是否正在 disposing</param>
+    /// <param name="disposing">如果为 true，则同时释放托管和非托管资源；如果为 false，则仅释放非托管资源。</param>
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
+
+        if (disposing && _sections != null)
+        {
+            Marshal.ReleaseComObject(_sections);
+            _sections = null;
+        }
+
         _disposedValue = true;
     }
 
     /// <summary>
-    /// 释放资源
+    /// 释放由 <see cref="WordSections"/> 使用的所有资源。
     /// </summary>
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
+
+    #endregion
+
+    #region IEnumerable<IWordSection> 实现
+
+    /// <inheritdoc/>
+    public IEnumerator<IWordSection> GetEnumerator()
+    {
+        for (int i = 1; i <= Count; i++)
+        {
+            yield return this[i];
+        }
+    }
+
+    /// <inheritdoc/>
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    #endregion
 }
 

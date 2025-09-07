@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,51 +8,32 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// Word 文档节接口
+/// 指定新章节的开始位置和分节符类型
 /// </summary>
-public interface IWordSection : IDisposable
+public enum WdSectionStart
 {
     /// <summary>
-    /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
+    /// 连续分节符 - 新节与前一节连续
     /// </summary>
-    IWordApplication? Application { get; }
-
+    wdSectionContinuous,
+    
     /// <summary>
-    /// 获取父对象
+    /// 新列分节符 - 新节从新列开始
     /// </summary>
-    object Parent { get; }
-
+    wdSectionNewColumn,
+    
     /// <summary>
-    /// 获取集合中项的索引号。
+    /// 新页分节符 - 新节从新页开始
     /// </summary>
-    int Index { get; }
-
-    bool ProtectedForForms { get; set; }
-
-    IWordBorders Borders { get; set; }
-
+    wdSectionNewPage,
+    
     /// <summary>
-    /// 获取节范围
+    /// 偶数页分节符 - 新节从下一个偶数页开始
     /// </summary>
-    IWordRange? Range { get; }
-
+    wdSectionEvenPage,
+    
     /// <summary>
-    /// 获取表示指定节中所有页眉的集合。
+    /// 奇数页分节符 - 新节从下一个奇数页开始
     /// </summary>
-    IWordHeadersFooters? Headers { get; }
-
-    /// <summary>
-    /// 获取表示指定节中所有页脚的集合。
-    /// </summary>
-    IWordHeadersFooters Footers { get; }
-
-    /// <summary>
-    /// 获取页面设置
-    /// </summary>
-    IWordPageSetup? PageSetup { get; }
-
-    /// <summary>
-    /// 删除节
-    /// </summary>
-    void Delete();
+    wdSectionOddPage
 }

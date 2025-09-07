@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -6,13 +6,12 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
-
 /// <summary>
-/// 表示文档中所有节的对象集合。
-/// <para>注：使用 Document.Sections 属性可返回 Sections 集合。</para>
-/// <para>注：使用 Sections(index)（其中 index 是节的索引号）可返回单个 Section 对象。索引号代表节在文档中的位置，主文档节的索引号为 1。</para>
+/// 表示单个页码。
+/// <para>注：PageNumber 对象是 PageNumbers 集合的成员。</para>
+/// <para>注：使用 PageNumbers(index)（其中 index 是索引号）可返回单个 PageNumber 对象。</para>
 /// </summary>
-public interface IWordSections : IEnumerable<IWordSection>, IDisposable
+public interface IWordPageNumber : IDisposable
 {
     #region 基本属性 (Basic Properties)
 
@@ -32,31 +31,40 @@ public interface IWordSections : IEnumerable<IWordSection>, IDisposable
     int Creator { get; }
 
     /// <summary>
-    /// 获取集合中的节数量。
+    /// 获取集合中项的索引号。
     /// </summary>
-    int Count { get; }
+    int Index { get; }
 
     #endregion
 
-    #region 集合索引器 (Collection Indexer)
+    #region 页码属性 (Page Number Properties)
 
     /// <summary>
-    /// 通过索引号获取单个节。
+    /// 获取或设置指定页码的对齐方式。
     /// </summary>
-    /// <param name="index">节的索引号（从 1 开始）。</param>
-    /// <returns>指定的节对象。</returns>
-    IWordSection this[int index] { get; }
-
+    WdPageNumberAlignment Alignment { get; set; }
     #endregion
 
-    #region 节集合方法 (Sections Collection Methods)
+    #region 页码方法 (Page Number Methods)
 
     /// <summary>
-    /// 将新的节添加到文档中。
+    /// 删除指定的页码。
     /// </summary>
-    /// <param name="range">指定新节插入位置的范围。新节将插入到此范围之前。</param>
-    /// <param name="start">新节的起始位置。</param>
-    /// <returns>表示添加的节的对象。</returns>
-    IWordSection? Add(IWordRange range, WdSectionStart start);
+    void Delete();
+
+    /// <summary>
+    /// 将指定的页码复制到剪贴板。
+    /// </summary>
+    void Copy();
+
+    /// <summary>
+    /// 将指定的页码剪切到剪贴板。
+    /// </summary>
+    void Cut();
+
+    /// <summary>
+    /// 选择指定的页码。
+    /// </summary>
+    void Select();
     #endregion
 }

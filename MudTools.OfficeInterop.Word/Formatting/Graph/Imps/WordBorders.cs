@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordBorders : IWordBorders
 {
-    private MsWord.Borders _borders;
+    internal MsWord.Borders _borders;
     private bool _disposedValue;
 
     /// <summary>

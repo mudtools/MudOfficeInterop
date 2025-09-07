@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -14,11 +14,32 @@ internal class WordSection : IWordSection
 {
     private readonly MsWord.Section _section;
     private bool _disposedValue;
-    private IWordRange _range;
-    private IWordPageSetup _pageSetup;
+    private IWordRange? _range;
+    private IWordPageSetup? _pageSetup;
+    private IWordHeadersFooters? _wordFooters;
+    private IWordHeadersFooters? _wordHeaders;
+    private IWordBorders? _wordBorders;
 
 
     public IWordApplication? Application => _section != null ? new WordApplication(_section.Application) : null;
+
+
+    /// <summary>
+    /// 获取父对象
+    /// </summary>
+    public object Parent => _section.Parent;
+
+    /// <inheritdoc/>
+    public int Index => _section?.Index ?? 0;
+
+    public bool ProtectedForForms
+    {
+        get => _section != null && _section.ProtectedForForms;
+        set
+        {
+            if (_section != null) _section.ProtectedForForms = value;
+        }
+    }
 
     /// <summary>
     /// 获取节范围
@@ -27,18 +48,30 @@ internal class WordSection : IWordSection
     {
         get
         {
-            if (_range == null)
-            {
-                _range = new WordRange(_section.Range);
-            }
+            _range ??= new WordRange(_section.Range);
             return _range;
         }
     }
 
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
-    public object Parent => _section.Parent;
+    /// <inheritdoc/>
+    public IWordHeadersFooters? Headers
+    {
+        get
+        {
+            _wordHeaders ??= new WordHeadersFooters(_section.Headers);
+            return _wordHeaders;
+        }
+    }
+
+    public IWordHeadersFooters Footers
+    {
+        get
+        {
+            _wordFooters ??= new WordHeadersFooters(_section.Footers);
+            return _wordFooters;
+        }
+    }
+
 
     /// <summary>
     /// 获取页面设置
@@ -47,11 +80,24 @@ internal class WordSection : IWordSection
     {
         get
         {
-            if (_pageSetup == null)
-            {
-                _pageSetup = new WordPageSetup(_section.PageSetup);
-            }
+            _pageSetup ??= new WordPageSetup(_section.PageSetup);
             return _pageSetup;
+        }
+    }
+
+    public IWordBorders Borders
+    {
+        get
+        {
+            _wordBorders ??= new WordBorders(_section.Borders);
+            return _wordBorders;
+        }
+        set
+        {
+            if (_section == null || value == null)
+                return;
+            _wordBorders = value;
+            _section.Borders = ((WordBorders)_wordBorders)._borders;
         }
     }
 
@@ -90,10 +136,12 @@ internal class WordSection : IWordSection
 
         if (disposing)
         {
+            Marshal.ReleaseComObject(_section);
             _range?.Dispose();
             _pageSetup?.Dispose();
+            _wordFooters?.Dispose();
+            _wordHeaders?.Dispose();
         }
-
         _disposedValue = true;
     }
 
