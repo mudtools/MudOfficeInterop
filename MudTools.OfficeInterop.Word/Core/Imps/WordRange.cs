@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -14,6 +14,39 @@ internal class WordRange : IWordRange
 {
     internal MsWord.Range _range;
     private bool _disposedValue;
+    private IWordRange? _duplicate;
+    private IWordDocument? _document;
+    private IWordFont? _font;
+    private IWordParagraphFormat? _paragraphFormat;
+    private IWordShading? _shading;
+    private IWordListFormat? _listFormat;
+    private IWordPageSetup? _pageSetup;
+    private IWordParagraphs? _paragraphs;
+    private IWordSentences? _sentences;
+    private IWordWords? _words;
+    private IWordCharacters? _characters;
+    private IWordTables? _tables;
+    private IWordBookmarks? _bookmarks;
+    private IWordFields? _fields;
+    private IWordHyperlinks? _hyperlinks;
+    private IWordFormFields? _formFields;
+    private IWordRevisions? _revisions;
+    private IWordComments? _comments;
+    private IWordFootnotes? _footnotes;
+    private IWordEndnotes? _endnotes;
+    private IWordFind? _find;
+    private IWordRange? _formattedText;
+    private IWordShapeRange? _shapeRangeField;  // 修复字段名冲突
+    private IWordInlineShapes? _inlineShapes;
+    private IWordBorders? _borders;
+    private IWordListParagraphs? _listParagraphs;
+    private IWordReadabilityStatistics? _readabilityStatistics;
+    private IWordProofreadingErrors? _spellingErrors;
+    private IWordProofreadingErrors? _grammaticalErrors;
+    private IWordSubdocuments? _subdocuments;
+    private IWordContentControls? _contentControls;
+    private IWordConflicts? _conflicts;
+    private IWordEditors? _editors;
 
     /// <summary>
     /// 初始化 <see cref="WordRange"/> 类的新实例。
@@ -55,10 +88,32 @@ internal class WordRange : IWordRange
     }
 
     /// <inheritdoc/>
-    public IWordRange? Duplicate => _range?.Duplicate != null ? new WordRange(_range.Duplicate) : null;
+    public IWordRange? Duplicate
+    {
+        get
+        {
+            if (_range?.Duplicate != null)
+            {
+                _duplicate ??= new WordRange(_range.Duplicate);
+                return _duplicate;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordDocument? Document => _range?.Document != null ? new WordDocument(_range.Document) : null;
+    public IWordDocument? Document
+    {
+        get
+        {
+            if (_range?.Document != null)
+            {
+                _document ??= new WordDocument(_range.Document);
+                return _document;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
     public WdStoryType? StoryType => _range?.StoryType != null ? (WdStoryType)(int)_range?.StoryType : WdStoryType.wdMainTextStory;
@@ -74,10 +129,32 @@ internal class WordRange : IWordRange
     #region 格式化属性实现 (Formatting Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordFont? Font => _range?.Font != null ? new WordFont(_range.Font) : null;
+    public IWordFont? Font
+    {
+        get
+        {
+            if (_range?.Font != null)
+            {
+                _font ??= new WordFont(_range.Font);
+                return _font;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordParagraphFormat? ParagraphFormat => _range?.ParagraphFormat != null ? new WordParagraphFormat(_range.ParagraphFormat) : null;
+    public IWordParagraphFormat? ParagraphFormat
+    {
+        get
+        {
+            if (_range?.ParagraphFormat != null)
+            {
+                _paragraphFormat ??= new WordParagraphFormat(_range.ParagraphFormat);
+                return _paragraphFormat;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
     public object? Style
@@ -131,14 +208,45 @@ internal class WordRange : IWordRange
     }
 
     /// <inheritdoc/>
-    public IWordShading? Shading => _range?.Shading != null ? new WordShading(_range.Shading) : null;
+    public IWordShading? Shading
+    {
+        get
+        {
+            if (_range?.Shading != null)
+            {
+                _shading ??= new WordShading(_range.Shading);
+                return _shading;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordListFormat? ListFormat => _range?.ListFormat != null ? new WordListFormat(_range.ListFormat) : null;
+    public IWordListFormat? ListFormat
+    {
+        get
+        {
+            if (_range?.ListFormat != null)
+            {
+                _listFormat ??= new WordListFormat(_range.ListFormat);
+                return _listFormat;
+            }
+            return null;
+        }
+    }
+
     /// <inheritdoc/>
     public IWordPageSetup? PageSetup
     {
-        get => _range?.PageSetup != null ? new WordPageSetup(_range.PageSetup) : null;
+        get
+        {
+            if (_range?.PageSetup != null)
+            {
+                _pageSetup ??= new WordPageSetup(_range.PageSetup);
+                return _pageSetup;
+            }
+            return null;
+        }
         set { if (_range != null) _range.PageSetup = ((WordPageSetup)value)._pageSetup; }
     }
 
@@ -147,43 +255,186 @@ internal class WordRange : IWordRange
     #region 集合属性实现 (Collection Properties Implementation - 第一部分)
 
     /// <inheritdoc/>
-    public IWordParagraphs? Paragraphs => _range?.Paragraphs != null ? new WordParagraphs(_range.Paragraphs) : null;
+    public IWordParagraphs? Paragraphs
+    {
+        get
+        {
+            if (_range?.Paragraphs != null)
+            {
+                _paragraphs ??= new WordParagraphs(_range.Paragraphs);
+                return _paragraphs;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordSentences? Sentences => _range?.Sentences != null ? new WordSentences(_range.Sentences) : null;
+    public IWordSentences? Sentences
+    {
+        get
+        {
+            if (_range?.Sentences != null)
+            {
+                _sentences ??= new WordSentences(_range.Sentences);
+                return _sentences;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordWords? Words => _range?.Words != null ? new WordWords(_range.Words) : null;
+    public IWordWords? Words
+    {
+        get
+        {
+            if (_range?.Words != null)
+            {
+                _words ??= new WordWords(_range.Words);
+                return _words;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordCharacters? Characters => _range?.Characters != null ? new WordCharacters(_range.Characters) : null;
+    public IWordCharacters? Characters
+    {
+        get
+        {
+            if (_range?.Characters != null)
+            {
+                _characters ??= new WordCharacters(_range.Characters);
+                return _characters;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordTables? Tables => _range?.Tables != null ? new WordTables(_range.Tables) : null;
+    public IWordTables? Tables
+    {
+        get
+        {
+            if (_range?.Tables != null)
+            {
+                _tables ??= new WordTables(_range.Tables);
+                return _tables;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordBookmarks? Bookmarks => _range?.Bookmarks != null ? new WordBookmarks(_range.Bookmarks) : null;
+    public IWordBookmarks? Bookmarks
+    {
+        get
+        {
+            if (_range?.Bookmarks != null)
+            {
+                _bookmarks ??= new WordBookmarks(_range.Bookmarks);
+                return _bookmarks;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordFields? Fields => _range?.Fields != null ? new WordFields(_range.Fields) : null;
+    public IWordFields? Fields
+    {
+        get
+        {
+            if (_range?.Fields != null)
+            {
+                _fields ??= new WordFields(_range.Fields);
+                return _fields;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordHyperlinks? Hyperlinks => _range?.Hyperlinks != null ? new WordHyperlinks(_range.Hyperlinks) : null;
+    public IWordHyperlinks? Hyperlinks
+    {
+        get
+        {
+            if (_range?.Hyperlinks != null)
+            {
+                _hyperlinks ??= new WordHyperlinks(_range.Hyperlinks);
+                return _hyperlinks;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordFormFields? FormFields => _range?.FormFields != null ? new WordFormFields(_range.FormFields) : null;
+    public IWordFormFields? FormFields
+    {
+        get
+        {
+            if (_range?.FormFields != null)
+            {
+                _formFields ??= new WordFormFields(_range.FormFields);
+                return _formFields;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordRevisions? Revisions => _range?.Revisions != null ? new WordRevisions(_range.Revisions) : null;
+    public IWordRevisions? Revisions
+    {
+        get
+        {
+            if (_range?.Revisions != null)
+            {
+                _revisions ??= new WordRevisions(_range.Revisions);
+                return _revisions;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordComments? Comments => _range?.Comments != null ? new WordComments(_range.Comments) : null;
+    public IWordComments? Comments
+    {
+        get
+        {
+            if (_range?.Comments != null)
+            {
+                _comments ??= new WordComments(_range.Comments);
+                return _comments;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordFootnotes? Footnotes => _range?.Footnotes != null ? new WordFootnotes(_range.Footnotes) : null;
+    public IWordFootnotes? Footnotes
+    {
+        get
+        {
+            if (_range?.Footnotes != null)
+            {
+                _footnotes ??= new WordFootnotes(_range.Footnotes);
+                return _footnotes;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordEndnotes? Endnotes => _range?.Endnotes != null ? new WordEndnotes(_range.Endnotes) : null;
+    public IWordEndnotes? Endnotes
+    {
+        get
+        {
+            if (_range?.Endnotes != null)
+            {
+                _endnotes ??= new WordEndnotes(_range.Endnotes);
+                return _endnotes;
+            }
+            return null;
+        }
+    }
 
     #endregion
 
@@ -211,12 +462,31 @@ internal class WordRange : IWordRange
     }
 
     /// <inheritdoc/>
-    public IWordFind? Find => _range?.Find != null ? new WordFind(_range.Find) : null;
+    public IWordFind? Find
+    {
+        get
+        {
+            if (_range?.Find != null)
+            {
+                _find ??= new WordFind(_range.Find);
+                return _find;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
     public IWordRange? FormattedText
     {
-        get => _range?.FormattedText != null ? new WordRange(_range.FormattedText) : null;
+        get
+        {
+            if (_range?.FormattedText != null)
+            {
+                _formattedText ??= new WordRange(_range.FormattedText);
+                return _formattedText;
+            }
+            return null;
+        }
         set
         {
             if (_range != null && value is WordRange sourceRange)
@@ -302,35 +572,156 @@ internal class WordRange : IWordRange
     #region 更多集合属性实现 (More Collection Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordShapeRange? ShapeRange => _range?.ShapeRange != null ? new WordShapeRange(_range.ShapeRange) : null;
+    public IWordShapeRange? ShapeRange
+    {
+        get
+        {
+            if (_range?.ShapeRange != null)
+            {
+                _shapeRangeField ??= new WordShapeRange(_range.ShapeRange);
+                return _shapeRangeField;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordInlineShapes? InlineShapes => _range?.InlineShapes != null ? new WordInlineShapes(_range.InlineShapes) : null;
+    public IWordInlineShapes? InlineShapes
+    {
+        get
+        {
+            if (_range?.InlineShapes != null)
+            {
+                _inlineShapes ??= new WordInlineShapes(_range.InlineShapes);
+                return _inlineShapes;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordBorders? Borders => _range?.Borders != null ? new WordBorders(_range.Borders) : null;
+    public IWordBorders? Borders
+    {
+        get
+        {
+            if (_range?.Borders != null)
+            {
+                _borders ??= new WordBorders(_range.Borders);
+                return _borders;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordListParagraphs? ListParagraphs => _range?.ListParagraphs != null ? new WordListParagraphs(_range.ListParagraphs) : null;
+    public IWordListParagraphs? ListParagraphs
+    {
+        get
+        {
+            if (_range?.ListParagraphs != null)
+            {
+                _listParagraphs ??= new WordListParagraphs(_range.ListParagraphs);
+                return _listParagraphs;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordReadabilityStatistics? ReadabilityStatistics => _range?.ReadabilityStatistics != null ? new WordReadabilityStatistics(_range.ReadabilityStatistics) : null;
+    public IWordReadabilityStatistics? ReadabilityStatistics
+    {
+        get
+        {
+            if (_range?.ReadabilityStatistics != null)
+            {
+                _readabilityStatistics ??= new WordReadabilityStatistics(_range.ReadabilityStatistics);
+                return _readabilityStatistics;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordProofreadingErrors? SpellingErrors => _range?.SpellingErrors != null ? new WordProofreadingErrors(_range.SpellingErrors) : null;
+    public IWordProofreadingErrors? SpellingErrors
+    {
+        get
+        {
+            if (_range?.SpellingErrors != null)
+            {
+                _spellingErrors ??= new WordProofreadingErrors(_range.SpellingErrors);
+                return _spellingErrors;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordProofreadingErrors? GrammaticalErrors => _range?.GrammaticalErrors != null ? new WordProofreadingErrors(_range.GrammaticalErrors) : null;
+    public IWordProofreadingErrors? GrammaticalErrors
+    {
+        get
+        {
+            if (_range?.GrammaticalErrors != null)
+            {
+                _grammaticalErrors ??= new WordProofreadingErrors(_range.GrammaticalErrors);
+                return _grammaticalErrors;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordSubdocuments? Subdocuments => _range?.Subdocuments != null ? new WordSubdocuments(_range.Subdocuments) : null;
+    public IWordSubdocuments? Subdocuments
+    {
+        get
+        {
+            if (_range?.Subdocuments != null)
+            {
+                _subdocuments ??= new WordSubdocuments(_range.Subdocuments);
+                return _subdocuments;
+            }
+            return null;
+        }
+    }
 
     /// <inheritdoc/>
-    public IWordContentControls? ContentControls => _range?.ContentControls != null ? new WordContentControls(_range.ContentControls) : null;
+    public IWordContentControls? ContentControls
+    {
+        get
+        {
+            if (_range?.ContentControls != null)
+            {
+                _contentControls ??= new WordContentControls(_range.ContentControls);
+                return _contentControls;
+            }
+            return null;
+        }
+    }
 
-    public IWordConflicts? Conflicts => _range?.Conflicts != null ? new WordConflicts(_range.Conflicts) : null;
+    public IWordConflicts? Conflicts
+    {
+        get
+        {
+            if (_range?.Conflicts != null)
+            {
+                _conflicts ??= new WordConflicts(_range.Conflicts);
+                return _conflicts;
+            }
+            return null;
+        }
+    }
 
-    public IWordEditors? Editors => _range?.Editors != null ? new WordEditors(_range.Editors) : null;
+    public IWordEditors? Editors
+    {
+        get
+        {
+            if (_range?.Editors != null)
+            {
+                _editors ??= new WordEditors(_range.Editors);
+                return _editors;
+            }
+            return null;
+        }
+    }
 
 
     #endregion
@@ -526,10 +917,56 @@ internal class WordRange : IWordRange
     {
         if (_disposedValue) return;
 
-        if (disposing && _range != null)
+        if (disposing)
         {
-            Marshal.ReleaseComObject(_range);
-            _range = null;
+            // 释放所有延迟初始化的封装对象
+            _duplicate?.Dispose();
+            _document?.Dispose();
+            _font?.Dispose();
+            _paragraphFormat?.Dispose();
+            _shading?.Dispose();
+            _listFormat?.Dispose();
+            _pageSetup?.Dispose();
+            _paragraphs?.Dispose();
+            _sentences?.Dispose();
+            _words?.Dispose();
+            _characters?.Dispose();
+            _tables?.Dispose();
+            _bookmarks?.Dispose();
+            _fields?.Dispose();
+            _hyperlinks?.Dispose();
+            _formFields?.Dispose();
+            _revisions?.Dispose();
+            _comments?.Dispose();
+            _footnotes?.Dispose();
+            _endnotes?.Dispose();
+            _find?.Dispose();
+            _formattedText?.Dispose();
+            _shapeRangeField?.Dispose();
+            _inlineShapes?.Dispose();
+            _borders?.Dispose();
+            _listParagraphs?.Dispose();
+            _readabilityStatistics?.Dispose();
+            _spellingErrors?.Dispose();
+            _grammaticalErrors?.Dispose();
+            _subdocuments?.Dispose();
+            _contentControls?.Dispose();
+            _conflicts?.Dispose();
+            _editors?.Dispose();
+
+            // 释放COM对象
+            if (_range != null)
+            {
+                try
+                {
+                    Marshal.ReleaseComObject(_range);
+                }
+                catch
+                {
+                    // 忽略释放COM对象时可能发生的异常
+                }
+                _range = null;
+            }
         }
 
         _disposedValue = true;

@@ -29,7 +29,7 @@ public interface IWordSection : IDisposable
 
     bool ProtectedForForms { get; set; }
 
-    IWordBorders Borders { get; set; }
+    IWordBorders? Borders { get; set; }
 
     /// <summary>
     /// 获取节范围
@@ -44,7 +44,7 @@ public interface IWordSection : IDisposable
     /// <summary>
     /// 获取表示指定节中所有页脚的集合。
     /// </summary>
-    IWordHeadersFooters Footers { get; }
+    IWordHeadersFooters? Footers { get; }
 
     /// <summary>
     /// 获取页面设置

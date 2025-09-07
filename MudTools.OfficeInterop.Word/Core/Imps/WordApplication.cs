@@ -216,41 +216,106 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示活动文档的 Document 对象。
     /// </summary>
     /// <inheritdoc/>
-    public IWordDocument? ActiveDocument => _application?.ActiveDocument != null ? new WordDocument(_application.ActiveDocument) : null;
+    public IWordDocument? ActiveDocument
+    {
+        get
+        {
+            if (_application?.ActiveDocument != null)
+            {
+                _activeDocument ??= new WordDocument(_application.ActiveDocument);
+                return _activeDocument;
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示活动窗口的 Window 对象。
     /// </summary>
     /// <inheritdoc/>
-    public IWordWindow? ActiveWindow => _application?.ActiveWindow != null ? new WordWindow(_application.ActiveWindow) : null;
+    public IWordWindow? ActiveWindow
+    {
+        get
+        {
+            if (_application?.ActiveWindow != null)
+                return new WordWindow(_application.ActiveWindow);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有打开的文档的 Documents 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordDocuments? Documents => _application?.Documents != null ? new WordDocuments(_application.Documents) : null;
+    public IWordDocuments? Documents
+    {
+        get
+        {
+            if (_application?.Documents != null)
+            {
+                _documents ??= new WordDocuments(_application.Documents);
+                return _documents;
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有可用模板的 Templates 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordTemplates? Templates => _application?.Templates != null ? new WordTemplates(_application.Templates) : null;
+    public IWordTemplates? Templates
+    {
+        get
+        {
+            if (_application?.Templates != null)
+                return new WordTemplates(_application.Templates);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有可用加载项的 AddIns 集合。
     /// </summary>
-    public IWordAddIns? AddIns => _application?.AddIns != null ? new WordAddIns(_application.AddIns) : null;
+    public IWordAddIns? AddIns
+    {
+        get
+        {
+            if (_application?.AddIns != null)
+                return new WordAddIns(_application.AddIns);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示 Normal 模板的 Template 对象。
     /// </summary>
-    public IWordTemplate? NormalTemplate => _application?.NormalTemplate != null ? new WordTemplate(_application.NormalTemplate) : null;
+    public IWordTemplate? NormalTemplate
+    {
+        get
+        {
+            if (_application?.NormalTemplate != null)
+                return new WordTemplate(_application.NormalTemplate);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有文档窗口的 Windows 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordWindows? Windows => _application?.Windows != null ? new WordWindows(_application.Windows) : null;
+    public IWordWindows? Windows
+    {
+        get
+        {
+            if (_application?.Windows != null)
+            {
+                _windows ??= new WordWindows(_application.Windows);
+                return _windows;
+            }
+            return null;
+        }
+    }
 
     #endregion
 
@@ -374,7 +439,18 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示所选区域或插入点的 Selection 对象。
     /// </summary>
     /// <inheritdoc/>
-    public IWordSelection? Selection => _application?.Selection != null ? new WordSelection(_application.Selection) : null;
+    public IWordSelection? Selection
+    {
+        get
+        {
+            if (_application?.Selection != null)
+            {
+                _selection ??= new WordSelection(_application.Selection);
+                return _selection;
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取或设置一个值，该值指示运行宏时的一些警告和消息的处理的方式。
@@ -413,8 +489,15 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示 Microsoft Word 中应用程序设置的 Options 对象。
     /// </summary>
     /// <inheritdoc/>
-    public IWordOptions? Options =>
-         _application?.Options != null ? new WordOptions(_application.Options) : null;
+    public IWordOptions? Options
+    {
+        get
+        {
+            if (_application?.Options != null)
+                return new WordOptions(_application.Options);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取或设置一个值，该值指示 Word 处理 Ctrl+Break 用户中断的方式。
@@ -477,46 +560,107 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示"语言"对话框中列出的校对语言的 Languages 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordLanguages? Languages => _application?.Languages != null ? new WordLanguages(_application.Languages) : null;
+    public IWordLanguages? Languages
+    {
+        get
+        {
+            if (_application?.Languages != null)
+                return new WordLanguages(_application.Languages);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有可用字体名称的 FontNames 集合。
     /// </summary>
-    public IWordFontNames? FontNames => _application?.FontNames != null ? new WordFontNames(_application.FontNames) : null;
+    public IWordFontNames? FontNames
+    {
+        get
+        {
+            if (_application?.FontNames != null)
+                return new WordFontNames(_application.FontNames);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有可用纵向字体名称的 FontNames 集合。
     /// </summary>
-    public IWordFontNames? PortraitFontNames => _application?.PortraitFontNames != null ? new WordFontNames(_application.PortraitFontNames) : null;
+    public IWordFontNames? PortraitFontNames
+    {
+        get
+        {
+            if (_application?.PortraitFontNames != null)
+                return new WordFontNames(_application.PortraitFontNames);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有可用横向字体名称的 FontNames 集合。
     /// </summary>
-    public IWordFontNames? LandscapeFontNames => _application?.LandscapeFontNames != null ? new WordFontNames(_application.LandscapeFontNames) : null;
+    public IWordFontNames? LandscapeFontNames
+    {
+        get
+        {
+            if (_application?.LandscapeFontNames != null)
+                return new WordFontNames(_application.LandscapeFontNames);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示活动自定义字典集合的 Dictionaries 对象。
     /// </summary>
-    public IWordDictionaries? CustomDictionaries => _application?.CustomDictionaries != null ? new WordDictionaries(_application.CustomDictionaries) : null;
+    public IWordDictionaries? CustomDictionaries
+    {
+        get
+        {
+            if (_application?.CustomDictionaries != null)
+                return new WordDictionaries(_application.CustomDictionaries);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示当前自动更正选项、条目和异常的 AutoCorrect 对象。
     /// </summary>
     /// <inheritdoc/>
-    public IWordAutoCorrect? AutoCorrect =>
-        _application?.AutoCorrect != null ? new WordAutoCorrect(_application.AutoCorrect) : null;
+    public IWordAutoCorrect? AutoCorrect
+    {
+        get
+        {
+            if (_application?.AutoCorrect != null)
+                return new WordAutoCorrect(_application.AutoCorrect);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示对电子邮件进行的自动更正的 AutoCorrect 对象。
     /// </summary>
-    public IWordAutoCorrect? AutoCorrectEmail =>
-        _application?.AutoCorrectEmail != null ? new WordAutoCorrect(_application.AutoCorrectEmail) : null;
+    public IWordAutoCorrect? AutoCorrectEmail
+    {
+        get
+        {
+            if (_application?.AutoCorrectEmail != null)
+                return new WordAutoCorrect(_application.AutoCorrectEmail);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示项目符号、编号和大纲编号模板库的 ListGalleries 集合。
     /// </summary>
-    public IWordListGalleries? ListGalleries =>
-        _application?.ListGalleries != null ? new WordListGalleries(_application.ListGalleries) : null;
+    public IWordListGalleries? ListGalleries
+    {
+        get
+        {
+            if (_application?.ListGalleries != null)
+                return new WordListGalleries(_application.ListGalleries);
+            return null;
+        }
+    }
 
     #endregion
 
@@ -526,8 +670,15 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示最近访问的文件的 RecentFiles 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordRecentFiles? RecentFiles =>
-        _application?.RecentFiles != null ? new WordRecentFiles(_application.RecentFiles) : null;
+    public IWordRecentFiles? RecentFiles
+    {
+        get
+        {
+            if (_application?.RecentFiles != null)
+                return new WordRecentFiles(_application.RecentFiles);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取或设置启动文件夹的完整路径（不包括最后的分隔符）。
@@ -841,25 +992,57 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示所有可用文件转换器的 FileConverters 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordFileConverters? FileConverters => _application?.FileConverters != null ? new WordFileConverters(_application.FileConverters) : null;
+    public IWordFileConverters? FileConverters
+    {
+        get
+        {
+            if (_application?.FileConverters != null)
+                return new WordFileConverters(_application.FileConverters);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有正在运行的应用程序的 Tasks 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordTasks? Tasks => _application?.Tasks != null ? new WordTasks(_application.Tasks) : null;
+    public IWordTasks? Tasks
+    {
+        get
+        {
+            if (_application?.Tasks != null)
+                return new WordTasks(_application.Tasks);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有内置对话框的 Dialogs 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordDialogs? Dialogs => _application?.Dialogs != null ? new WordDialogs(_application.Dialogs) : null;
+    public IWordDialogs? Dialogs
+    {
+        get
+        {
+            if (_application?.Dialogs != null)
+                return new WordDialogs(_application.Dialogs);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有自定义键绑定的 KeyBindings 集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordKeyBindings? KeyBindings => _application?.KeyBindings != null ? new WordKeyBindings(_application.KeyBindings) : null;
+    public IWordKeyBindings? KeyBindings
+    {
+        get
+        {
+            if (_application?.KeyBindings != null)
+                return new WordKeyBindings(_application.KeyBindings);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示所有已加载的 COM 加载项的 COMAddIns 集合。
@@ -871,7 +1054,15 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示命令栏的 CommandBars 对象
     /// </summary>
     /// <inheritdoc/>
-    public IOfficeCommandBars? CommandBars => _application?.CommandBars != null ? new OfficeCommandBars(_application.CommandBars) : null;
+    public IOfficeCommandBars? CommandBars
+    {
+        get
+        {
+            if (_application?.CommandBars != null)
+                return new OfficeCommandBars(_application.CommandBars);
+            return null;
+        }
+    }
 
     #endregion
 
@@ -881,7 +1072,15 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示电子邮件创作的全局首选项的 EmailOptions 对象。
     /// </summary>
     /// <inheritdoc/>
-    public IWordEmailOptions? EmailOptions => _application?.EmailOptions != null ? new WordEmailOptions(_application.EmailOptions) : null;
+    public IWordEmailOptions? EmailOptions
+    {
+        get
+        {
+            if (_application?.EmailOptions != null)
+                return new WordEmailOptions(_application.EmailOptions);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取或设置用于电子邮件的模板。
@@ -897,12 +1096,28 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示邮件标签的 MailingLabel 对象。
     /// </summary>
     /// <inheritdoc/>
-    public IWordMailingLabel? MailingLabel => _application?.MailingLabel != null ? new WordMailingLabel(_application.MailingLabel) : null;
+    public IWordMailingLabel? MailingLabel
+    {
+        get
+        {
+            if (_application?.MailingLabel != null)
+                return new WordMailingLabel(_application.MailingLabel);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示活动电子邮件的 MailMessage 对象。
     /// </summary>
-    public IWordMailMessage? MailMessage => _application?.MailMessage != null ? new WordMailMessage(_application.MailMessage) : null;
+    public IWordMailMessage? MailMessage
+    {
+        get
+        {
+            if (_application?.MailMessage != null)
+                return new WordMailMessage(_application.MailMessage);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取邮件系统的类型。
@@ -1070,12 +1285,28 @@ internal partial class WordApplication : IWordApplication
     /// 获取智能标记识别器集合。
     /// </summary>
     /// <inheritdoc/>
-    public IWordSmartTagRecognizers? SmartTagRecognizers => _application?.SmartTagRecognizers != null ? new WordSmartTagRecognizers(_application?.SmartTagRecognizers) : null;
+    public IWordSmartTagRecognizers? SmartTagRecognizers
+    {
+        get
+        {
+            if (_application?.SmartTagRecognizers != null)
+                return new WordSmartTagRecognizers(_application?.SmartTagRecognizers);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取智能标记类型集合。
     /// </summary>
-    public IWordSmartTagTypes? SmartTagTypes => _application?.SmartTagTypes != null ? new WordSmartTagTypes(_application.SmartTagTypes) : null;
+    public IWordSmartTagTypes? SmartTagTypes
+    {
+        get
+        {
+            if (_application?.SmartTagTypes != null)
+                return new WordSmartTagTypes(_application.SmartTagTypes);
+            return null;
+        }
+    }
 
     #endregion
 
@@ -1091,8 +1322,15 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取表示在将表格和图片等项目插入文档中时自动添加的标题的 AutoCaptions 集合。
     /// </summary>
-    public IWordAutoCaptions? AutoCaptions =>
-        _application?.AutoCaptions != null ? new WordAutoCaptions(_application.AutoCaptions) : null;
+    public IWordAutoCaptions? AutoCaptions
+    {
+        get
+        {
+            if (_application?.AutoCaptions != null)
+                return new WordAutoCaptions(_application.AutoCaptions);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取后台打印队列中打印作业的编号。
@@ -1114,14 +1352,28 @@ internal partial class WordApplication : IWordApplication
         set { if (_application != null) _application.BrowseExtraFileTypes = value ?? string.Empty; }
     }
 
-    public IWordBibliography? Bibliography =>
-         _application?.Bibliography != null ? new WordBibliography(_application.Bibliography) : null;
+    public IWordBibliography? Bibliography
+    {
+        get
+        {
+            if (_application?.Bibliography != null)
+                return new WordBibliography(_application.Bibliography);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示垂直滚动条上的"选择浏览对象"工具的 Browser 对象。
     /// </summary>
-    public IWordBrowser? Browser =>
-         _application?.Browser != null ? new WordBrowser(_application.Browser) : null;
+    public IWordBrowser? Browser
+    {
+        get
+        {
+            if (_application?.Browser != null)
+                return new WordBrowser(_application.Browser);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取 Word 应用程序的内部版本号。
@@ -1181,8 +1433,15 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取表示所有活动的自定义转换字典的 HangulHanjaConversionDictionaries 集合。
     /// </summary>
-    public IWordHangulHanjaConversionDictionaries? HangulHanjaDictionaries =>
-        _application?.HangulHanjaDictionaries != null ? new WordHangulHanjaConversionDictionaries(_application.HangulHanjaDictionaries) : null;
+    public IWordHangulHanjaConversionDictionaries? HangulHanjaDictionaries
+    {
+        get
+        {
+            if (_application?.HangulHanjaDictionaries != null)
+                return new WordHangulHanjaConversionDictionaries(_application.HangulHanjaDictionaries);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否在受保护的视图中打开文件。
@@ -1198,8 +1457,15 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取表示语言设置的 LanguageSettings 对象
     /// </summary>
-    public IOfficeLanguageSettings? LanguageSettings =>
-        _application?.LanguageSettings != null ? new OfficeLanguageSettings(_application.LanguageSettings) : null;
+    public IOfficeLanguageSettings? LanguageSettings
+    {
+        get
+        {
+            if (_application?.LanguageSettings != null)
+                return new OfficeLanguageSettings(_application.LanguageSettings);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示在其中存储包含正在运行过程的模块的模板或文档的 Template 或 Document 对象。
@@ -1209,14 +1475,28 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取表示公式的自动更正条目的 OMathAutoCorrect 对象。
     /// </summary>
-    public IWordOMathAutoCorrect? OMathAutoCorrect =>
-         _application?.OMathAutoCorrect != null ? new WordOMathAutoCorrect(_application.OMathAutoCorrect) : null;
+    public IWordOMathAutoCorrect? OMathAutoCorrect
+    {
+        get
+        {
+            if (_application?.OMathAutoCorrect != null)
+                return new WordOMathAutoCorrect(_application.OMathAutoCorrect);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取一个 PickerDialog 对象，该对象提供在对话框中选择人员或数据的功能。
     /// </summary>
-    public IOfficePickerDialog? PickerDialog =>
-        _application?.PickerDialog != null ? new OfficePickerDialog(_application.PickerDialog) : null;
+    public IOfficePickerDialog? PickerDialog
+    {
+        get
+        {
+            if (_application?.PickerDialog != null)
+                return new OfficePickerDialog(_application.PickerDialog);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取一个值，该值指示打印预览是否为当前视图。
@@ -1231,8 +1511,15 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取表示所有受保护的视图窗口的 ProtectedViewWindows 集合。
     /// </summary>
-    public IWordProtectedViewWindows? ProtectedViewWindows =>
-        _application?.ProtectedViewWindows != null ? new WordProtectedViewWindows(_application.ProtectedViewWindows) : null;
+    public IWordProtectedViewWindows? ProtectedViewWindows
+    {
+        get
+        {
+            if (_application?.ProtectedViewWindows != null)
+                return new WordProtectedViewWindows(_application.ProtectedViewWindows);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取或设置一个值，该值指示启动 Microsoft Word 时是否显示任务窗格。
@@ -1271,14 +1558,28 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取表示 Microsoft Word 中最常执行的任务的 TaskPanes 集合。
     /// </summary>
-    public IWordTaskPanes? TaskPanes =>
-        _application?.TaskPanes != null ? new WordTaskPanes(_application.TaskPanes) : null;
+    public IWordTaskPanes? TaskPanes
+    {
+        get
+        {
+            if (_application?.TaskPanes != null)
+                return new WordTaskPanes(_application.TaskPanes);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取一个 UndoRecord 对象，该对象提供撤消堆栈中的自定义入口点。
     /// </summary>
-    public IWordUndoRecord? UndoRecord =>
-        _application?.UndoRecord != null ? new WordUndoRecord(_application.UndoRecord) : null;
+    public IWordUndoRecord? UndoRecord
+    {
+        get
+        {
+            if (_application?.UndoRecord != null)
+                return new WordUndoRecord(_application.UndoRecord);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取自动化对象 (Word.Basic) ，其中包括 Microsoft Word 6.0 版和 Windows 95 Word 中提供的所有 WordBasic 语句和函数的方法。
@@ -1288,20 +1589,41 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取表示当前在应用程序中加载的一组颜色样式的 SmartArtColors 对象。
     /// </summary>
-    public IOfficeSmartArtColors? SmartArtColors =>
-        _application?.SmartArtColors != null ? new OfficeSmartArtColors(_application.SmartArtColors) : null;
+    public IOfficeSmartArtColors? SmartArtColors
+    {
+        get
+        {
+            if (_application?.SmartArtColors != null)
+                return new OfficeSmartArtColors(_application.SmartArtColors);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示当前在应用程序中加载的 SmartArt 布局集的 SmartArtLayouts 对象。
     /// </summary>
-    public IOfficeSmartArtLayouts? SmartArtLayouts =>
-         _application?.SmartArtLayouts != null ? new OfficeSmartArtLayouts(_application.SmartArtLayouts) : null;
+    public IOfficeSmartArtLayouts? SmartArtLayouts
+    {
+        get
+        {
+            if (_application?.SmartArtLayouts != null)
+                return new OfficeSmartArtLayouts(_application.SmartArtLayouts);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示应用程序中当前加载的 SmartArt 样式集的 SmartArtQuickStyles 对象。
     /// </summary>
-    public IOfficeSmartArtQuickStyles? SmartArtQuickStyles =>
-         _application?.SmartArtQuickStyles != null ? new OfficeSmartArtQuickStyles(_application.SmartArtQuickStyles) : null;
+    public IOfficeSmartArtQuickStyles? SmartArtQuickStyles
+    {
+        get
+        {
+            if (_application?.SmartArtQuickStyles != null)
+                return new OfficeSmartArtQuickStyles(_application.SmartArtQuickStyles);
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取表示活动加密会话的对象。
@@ -1322,8 +1644,15 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取一个 FileSearch 对象，该对象可用于使用绝对路径或相对路径搜索文件。
     /// </summary>
-    public IOfficeFileSearch? FileSearch =>
-        _application?.FileSearch != null ? new OfficeFileSearch(_application.FileSearch) : null;
+    public IOfficeFileSearch? FileSearch
+    {
+        get
+        {
+            if (_application?.FileSearch != null)
+                return new OfficeFileSearch(_application.FileSearch);
+            return null;
+        }
+    }
 
     #endregion
 

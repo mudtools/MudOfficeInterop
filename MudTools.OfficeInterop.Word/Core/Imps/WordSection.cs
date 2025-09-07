@@ -20,9 +20,7 @@ internal class WordSection : IWordSection
     private IWordHeadersFooters? _wordHeaders;
     private IWordBorders? _wordBorders;
 
-
     public IWordApplication? Application => _section != null ? new WordApplication(_section.Application) : null;
-
 
     /// <summary>
     /// 获取父对象
@@ -44,10 +42,11 @@ internal class WordSection : IWordSection
     /// <summary>
     /// 获取节范围
     /// </summary>
-    public IWordRange Range
+    public IWordRange? Range
     {
         get
         {
+            if (_section == null) return null;
             _range ??= new WordRange(_section.Range);
             return _range;
         }
@@ -58,15 +57,17 @@ internal class WordSection : IWordSection
     {
         get
         {
+            if (_section == null) return null;
             _wordHeaders ??= new WordHeadersFooters(_section.Headers);
             return _wordHeaders;
         }
     }
 
-    public IWordHeadersFooters Footers
+    public IWordHeadersFooters? Footers
     {
         get
         {
+            if (_section == null) return null;
             _wordFooters ??= new WordHeadersFooters(_section.Footers);
             return _wordFooters;
         }
@@ -76,19 +77,21 @@ internal class WordSection : IWordSection
     /// <summary>
     /// 获取页面设置
     /// </summary>
-    public IWordPageSetup PageSetup
+    public IWordPageSetup? PageSetup
     {
         get
         {
+            if (_section == null) return null;
             _pageSetup ??= new WordPageSetup(_section.PageSetup);
             return _pageSetup;
         }
     }
 
-    public IWordBorders Borders
+    public IWordBorders? Borders
     {
         get
         {
+            if (_section == null) return null;
             _wordBorders ??= new WordBorders(_section.Borders);
             return _wordBorders;
         }
