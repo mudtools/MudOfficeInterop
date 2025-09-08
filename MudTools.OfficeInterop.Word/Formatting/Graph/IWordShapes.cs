@@ -46,7 +46,8 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// <param name="width">宽度。</param>
     /// <param name="height">高度。</param>
     /// <returns>新添加的形状。</returns>
-    IWordShape AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height);
+    IWordShape? AddTextbox(MsoTextOrientation orientation, float left, float top,
+        float width, float height);
 
     /// <summary>
     /// 添加矩形形状。
@@ -56,7 +57,7 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// <param name="width">宽度。</param>
     /// <param name="height">高度。</param>
     /// <returns>新添加的形状。</returns>
-    IWordShape AddRectangle(float left, float top, float width, float height);
+    IWordShape? AddRectangle(float left, float top, float width, float height);
 
     /// <summary>
     /// 添加线条形状。
@@ -66,7 +67,7 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// <param name="endX">结束点X坐标。</param>
     /// <param name="endY">结束点Y坐标。</param>
     /// <returns>新添加的形状。</returns>
-    IWordShape AddLine(float beginX, float beginY, float endX, float endY);
+    IWordShape? AddLine(float beginX, float beginY, float endX, float endY);
 
     /// <summary>
     /// 添加图片形状。
@@ -79,7 +80,8 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// <param name="width">宽度。</param>
     /// <param name="height">高度。</param>
     /// <returns>新添加的形状。</returns>
-    IWordShape AddPicture(string fileName, bool linkToFile, bool saveWithDocument, float left, float top, float width, float height);
+    IWordShape? AddPicture(string fileName, bool linkToFile, bool saveWithDocument,
+        float left, float top, float width, float height);
 
     /// <summary>
     /// 添加图表形状。
@@ -90,7 +92,12 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// <param name="width">宽度。</param>
     /// <param name="height">高度。</param>
     /// <returns>新添加的形状。</returns>
-    IWordShape AddChart(MsoChartType type, float left, float top, float width, float height);
+    IWordShape? AddChart(MsoChartType type, float left, float top, float width, float height);
+
+    IWordShape? AddOLEObject(string? classType = null, string? fileName = null, bool? linkToFile = false,
+       bool? displayAsIcon = false, string? iconFileName = null, int? iconIndex = null, string? iconLabel = null,
+       float? left = null, float? top = null, float? width = null, float? height = null, object? anchor = null);
+
 
     /// <summary>
     /// 检查形状是否存在。

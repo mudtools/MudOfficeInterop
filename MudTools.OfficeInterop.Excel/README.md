@@ -25,7 +25,7 @@ MudTools.OfficeInterop.Excel 是专门用于操作 Microsoft Excel 应用程序�
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.0" />
 ```
 
 ## 核心组件

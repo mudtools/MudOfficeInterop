@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -9,7 +9,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// <summary>
 /// PowerPoint 形状集合接口
 /// </summary>
-public interface IPowerPointShapes : IDisposable
+public interface IPowerPointShapes : IEnumerable<IPowerPointShape>, IDisposable
 {
     /// <summary>
     /// 获取形状数量
@@ -100,6 +100,13 @@ public interface IPowerPointShapes : IDisposable
     /// <param name="height">高度</param>
     /// <returns>新添加的智能图形形状</returns>
     IPowerPointShape AddSmartArt(object smartArtType, double left, double top, double width, double height);
+
+    IPowerPointShape AddOLEObject(
+        float Left = 0f, float Top = 0f,
+        float Width = -1f, float Height = -1f,
+        string ClassName = "", string FileName = "", bool DisplayAsIcon = false,
+        string IconFileName = "", int IconIndex = 0,
+        string IconLabel = "", bool Link = false);
 
     /// <summary>
     /// 获取形状范围

@@ -24,7 +24,7 @@ MudTools.OfficeInterop.Word 是专门用于操作 Microsoft Word 应用程序的
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.0" />
 ```
 
 ## 核心组件

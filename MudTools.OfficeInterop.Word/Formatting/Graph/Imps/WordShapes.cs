@@ -74,7 +74,7 @@ internal class WordShapes : IWordShapes
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordShape AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height)
+    public IWordShape? AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height)
     {
         if (_shapes == null)
         {
@@ -93,7 +93,7 @@ internal class WordShapes : IWordShapes
     }
 
     /// <inheritdoc/>
-    public IWordShape AddRectangle(float left, float top, float width, float height)
+    public IWordShape? AddRectangle(float left, float top, float width, float height)
     {
         if (_shapes == null)
             throw new ObjectDisposedException(nameof(WordShapes));
@@ -110,7 +110,7 @@ internal class WordShapes : IWordShapes
     }
 
     /// <inheritdoc/>
-    public IWordShape AddLine(float beginX, float beginY, float endX, float endY)
+    public IWordShape? AddLine(float beginX, float beginY, float endX, float endY)
     {
         if (_shapes == null)
             throw new ObjectDisposedException(nameof(WordShapes));
@@ -127,7 +127,7 @@ internal class WordShapes : IWordShapes
     }
 
     /// <inheritdoc/>
-    public IWordShape AddPicture(string fileName, bool linkToFile, bool saveWithDocument, float left, float top, float width, float height)
+    public IWordShape? AddPicture(string fileName, bool linkToFile, bool saveWithDocument, float left, float top, float width, float height)
     {
         if (_shapes == null)
             throw new ObjectDisposedException(nameof(WordShapes));
@@ -147,7 +147,8 @@ internal class WordShapes : IWordShapes
     }
 
     /// <inheritdoc/>
-    public IWordShape AddChart(MsoChartType type, float left, float top, float width, float height)
+    public IWordShape? AddChart(MsoChartType type, float left, float top,
+        float width, float height)
     {
         if (_shapes == null)
             throw new ObjectDisposedException(nameof(WordShapes));
@@ -162,6 +163,23 @@ internal class WordShapes : IWordShapes
             throw new InvalidOperationException("无法添加图表形状。", ex);
         }
     }
+
+    public IWordShape? AddOLEObject(string? classType = null, string? fileName = null, bool? linkToFile = false,
+        bool? displayAsIcon = false, string? iconFileName = null, int? iconIndex = null, string? iconLabel = null,
+        float? left = null, float? top = null, float? width = null, float? height = null, object? anchor = null)
+    {
+        if (_shapes == null)
+            throw new ObjectDisposedException(nameof(WordShapes));
+
+        var shape = _shapes.AddOLEObject(
+            classType.ComArgsVal(), fileName.ComArgsVal(), linkToFile.ComArgsVal(),
+            displayAsIcon.ComArgsVal(), iconFileName.ComArgsVal(), iconIndex.ComArgsVal(),
+            iconLabel.ComArgsVal(), left.ComArgsVal(), top.ComArgsVal(),
+            width.ComArgsVal(), height.ComArgsVal(), anchor != null ? anchor : Type.Missing);
+
+        return shape != null ? new WordShape(shape) : null;
+    }
+
 
     /// <inheritdoc/>
     public bool Contains(string name)
