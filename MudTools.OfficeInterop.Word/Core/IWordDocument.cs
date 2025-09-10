@@ -5,13 +5,15 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using Microsoft.Office.Interop.Word;
+
 namespace MudTools.OfficeInterop.Word;
 
 
 /// <summary>
 /// Word 文档接口，用于操作 Word 文档
 /// </summary>
-public interface IWordDocument : IDisposable, IEnumerable<IWordRange>
+public interface IWordDocument : IDisposable
 {
     /// <summary>
     /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
@@ -41,7 +43,129 @@ public interface IWordDocument : IDisposable, IEnumerable<IWordRange>
     /// <summary>
     /// 获取文档是否已修改
     /// </summary>
-    bool Saved { get; set; }
+    bool? Saved { get; set; }
+
+    /// <summary>
+    /// 获取文档是否已发送路由
+    /// </summary>
+    bool? Routed { get; }
+
+    /// <summary>
+    /// 获取文档是否为主控文档
+    /// </summary>
+    bool? IsMasterDocument { get; }
+
+    /// <summary>
+    /// 获取或设置是否自动断字
+    /// </summary>
+    bool? AutoHyphenation { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否嵌入 TrueType 字体
+    /// </summary>
+    bool? EmbedTrueTypeFonts { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否保存窗体数据
+    /// </summary>
+    bool? SaveFormsData { get; set; }
+
+    /// <summary>
+    /// 获取文档是否为子文档
+    /// </summary>
+    bool? IsSubdocument { get; }
+
+    /// <summary>
+    /// 获取文档保存格式
+    /// </summary>
+    int? SaveFormat { get; }
+
+    /// <summary>
+    /// 获取或设置是否保存子集字体
+    /// </summary>
+    bool? SaveSubsetFonts { get; set; }
+
+    bool? PrintFormsData { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示语法错误
+    /// </summary>
+    bool? ShowGrammaticalErrors { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否已完成拼写检查
+    /// </summary>
+    bool? SpellingChecked { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示摘要
+    /// </summary>
+    bool? ShowSummary { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示拼写错误
+    /// </summary>
+    bool? ShowSpellingErrors { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否已完成语法检查
+    /// </summary>
+    bool? GrammarChecked { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否打印小数宽度字符
+    /// </summary>
+    bool? PrintFractionalWidths { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否在文本上打印 PostScript
+    /// </summary>
+    bool? PrintPostScriptOverText { get; set; }
+
+    /// <summary>
+    /// 获取或设置打开文档时是否更新样式
+    /// </summary>
+    bool? UpdateStylesOnOpen { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否建议以只读方式打开文档
+    /// </summary>
+    bool? ReadOnlyRecommended { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否对大写字母进行断字
+    /// </summary>
+    bool? HyphenateCaps { get; set; }
+
+    /// <summary>
+    /// 获取或设置断字区域宽度（单位：磅）
+    /// </summary>
+    int? HyphenationZone { get; set; }
+
+    /// <summary>
+    /// 获取或设置摘要长度
+    /// </summary>
+    int? SummaryLength { get; set; }
+
+    /// <summary>
+    /// 获取或设置默认制表位宽度（单位：磅）
+    /// </summary>
+    float? DefaultTabStop { get; set; }
+
+    /// <summary>
+    /// 获取或设置连续断字符的最大数量
+    /// </summary>
+    int? ConsecutiveHyphensLimit { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档是否有路由传阅单
+    /// </summary>
+    bool? HasRoutingSlip { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档类型
+    /// </summary>
+    WdDocumentKind Kind { get; set; }
 
     /// <summary>
     /// 获取文档是否受保护
@@ -54,23 +178,80 @@ public interface IWordDocument : IDisposable, IEnumerable<IWordRange>
     WdProtectionType ProtectionType { get; }
 
     /// <summary>
+    /// 获取文档类型
+    /// </summary>
+    WdDocumentType Type { get; }
+
+
+    /// <summary>
+    /// 获取文档的命令栏集合
+    /// </summary>
+    IOfficeCommandBars CommandBars { get; }
+
+    /// <summary>
+    /// 获取文档的批注集合
+    /// </summary>
+    IWordComments Comments { get; }
+
+    /// <summary>
+    /// 获取文档的尾注集合
+    /// </summary>
+    IWordEndnotes Endnotes { get; }
+
+    /// <summary>
+    /// 获取文档的脚注集合
+    /// </summary>
+    IWordFootnotes Footnotes { get; }
+
+    /// <summary>
+    /// 获取文档的单词集合
+    /// </summary>
+    IWordWords? Words { get; }
+
+    /// <summary>
+    /// 获取文档的主要内容范围
+    /// </summary>
+    IWordRange Content { get; }
+
+    /// <summary>
+    /// 获取文档的字符集合
+    /// </summary>
+    IWordCharacters Characters { get; }
+
+    /// <summary>
+    /// 获取文档的域集合
+    /// </summary>
+    IWordFields Fields { get; }
+
+    /// <summary>
+    /// 获取文档的窗体域集合
+    /// </summary>
+    IWordFormFields FormFields { get; }
+
+    /// <summary>
+    /// 获取文档的框架集合
+    /// </summary>
+    IWordFrames Frames { get; }
+
+    /// <summary>
+    /// 获取或设置文档的页面设置
+    /// </summary>
+    IWordPageSetup PageSetup { get; }
+
+    /// <summary>
+    /// 获取文档的窗口集合
+    /// </summary>
+    IWordWindows Windows { get; }
+
+    /// <summary>
+    /// 获取或设置文档的背景形状
+    /// </summary>
+    IWordShape? Background { get; }
+
+    /// <summary>
     /// 获取文档页数
     /// </summary>
     int PageCount { get; }
-
-    IWordWords? Words { get; }
-
-    IWordCharacters Characters { get; }
-
-    IWordFields Fields { get; }
-
-    IWordFormFields FormFields { get; }
-
-    IWordFrames Frames { get; }
-
-    IWordPageSetup PageSetup { get; }
-
-    IWordWindows Windows { get; }
 
     /// <summary>
     /// 获取文档字数
@@ -118,11 +299,6 @@ public interface IWordDocument : IDisposable, IEnumerable<IWordRange>
     /// 获取文档的活动选择区域
     /// </summary>
     IWordSelection Selection { get; }
-
-    /// <summary>
-    /// 获取文档范围
-    /// </summary>
-    IWordRange Range { get; }
 
     /// <summary>
     /// 获取文档范围集合
@@ -425,9 +601,18 @@ public interface IWordDocument : IDisposable, IEnumerable<IWordRange>
     /// <summary>
     /// 根据索引获取范围
     /// </summary>
-    /// <param name="index">范围索引</param>
+    /// <param name="start">范围开始索引</param>
+    /// <param name="end">范围结束索引</param>
     /// <returns>范围对象</returns>
-    IWordRange this[int index] { get; }
+    IWordRange? Range(int? start = null, int? end = null);
+
+    /// <summary>
+    /// 根据索引获取范围
+    /// </summary>
+    /// <param name="start">范围开始索引</param>
+    /// <param name="end">范围结束索引</param>
+    /// <returns>范围对象</returns>
+    IWordRange? this[int start, int end] { get; }
 
     /// <summary>
     /// 根据书签名称获取范围
