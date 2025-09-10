@@ -14,18 +14,27 @@ internal class WordDocument : IWordDocument
 {
     private readonly MsWord.Document _document;
     private bool _disposedValue;
-    private IWordWindow _activeWindow;
-    private IWordSelection _selection;
-    private IWordRange _range;
-    private IWordStoryRanges _storyRanges;
-    private IWordBookmarks _bookmarks;
-    private IWordTables _tables;
-    private IWordParagraphs _paragraphs;
-    private IWordSections _sections;
-    private IWordStyles _styles;
-    private IWordListTemplates _listTemplates;
-    private IWordVariables _variables;
-    private IWordCustomProperties _customProperties;
+    private IWordWindow? _activeWindow;
+    private IWordSelection? _selection;
+    private IWordRange? _range;
+    private IWordStoryRanges? _storyRanges;
+    private IWordBookmarks? _bookmarks;
+    private IWordTables? _tables;
+    private IWordParagraphs? _paragraphs;
+    private IWordSections? _sections;
+    private IWordStyles? _styles;
+    private IWordListTemplates? _listTemplates;
+    private IWordVariables? _variables;
+    private IWordCustomProperties? _customProperties;
+    private IWordWords? _words;
+    private IWordInlineShapes? _inlineShapes;
+    private IWordShapes? _shapes;
+    private IWordCharacters? _characters;
+    private IWordFields? _fields;
+    private IWordFormFields? _formFields;
+    private IWordFrames? _frames;
+    private IWordPageSetup? _pageSetup;
+    private IWordWindows? _windows;
 
     /// <inheritdoc/>
     public IWordApplication Application => _document != null ? new WordApplication(_document.Application) : null;
@@ -78,10 +87,7 @@ internal class WordDocument : IWordDocument
             var type = properties.GetType();
             var property = type.InvokeMember("Item", System.Reflection.BindingFlags.InvokeMethod, null, properties, new object[] { propertyName });
 
-            if (property != null)
-            {
-                property.GetType().InvokeMember("Value", System.Reflection.BindingFlags.SetProperty, null, property, new object[] { value ?? string.Empty });
-            }
+            property?.GetType().InvokeMember("Value", System.Reflection.BindingFlags.SetProperty, null, property, new object[] { value ?? string.Empty });
         }
         catch (Exception ex)
         {
@@ -113,9 +119,88 @@ internal class WordDocument : IWordDocument
 
     public object Parent => _document.Parent;
 
-    public IWordInlineShapes? InlineShapes => _document != null ? new WordInlineShapes(_document.InlineShapes) : null;
 
-    public IWordShapes? Shapes => _document != null ? new WordShapes(_document.Shapes) : null;
+    public IWordWindows Windows
+    {
+        get
+        {
+            _windows ??= new WordWindows(_document.Windows);
+            return _windows;
+        }
+    }
+
+    public IWordPageSetup PageSetup
+    {
+        get
+        {
+            _pageSetup ??= new WordPageSetup(_document.PageSetup);
+            return _pageSetup;
+        }
+    }
+
+    public IWordFrames Frames
+    {
+        get
+        {
+            _frames ??= new WordFrames(_document.Frames);
+            return _frames;
+        }
+    }
+
+    public IWordFormFields FormFields
+    {
+        get
+        {
+            _formFields ??= new WordFormFields(_document.FormFields);
+            return _formFields;
+        }
+    }
+
+
+
+    public IWordFields Fields
+    {
+        get
+        {
+            _fields ??= new WordFields(_document.Fields);
+            return _fields;
+        }
+    }
+
+    public IWordCharacters Characters
+    {
+        get
+        {
+            _characters ??= new WordCharacters(_document.Characters);
+            return _characters;
+        }
+    }
+
+    public IWordWords? Words
+    {
+        get
+        {
+            _words ??= new WordWords(_document.Words);
+            return _words;
+        }
+    }
+
+    public IWordInlineShapes? InlineShapes
+    {
+        get
+        {
+            _inlineShapes ??= new WordInlineShapes(_document.InlineShapes);
+            return _inlineShapes;
+        }
+    }
+    public IWordShapes? Shapes
+    {
+        get
+        {
+            _shapes ??= new WordShapes(_document.Shapes);
+            return _shapes;
+        }
+    }
 
     public IWordWindow ActiveWindow
     {
@@ -175,10 +260,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_tables == null)
-            {
-                _tables = new WordTables(_document.Tables);
-            }
+            _tables ??= new WordTables(_document.Tables);
             return _tables;
         }
     }
@@ -187,10 +269,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_paragraphs == null)
-            {
-                _paragraphs = new WordParagraphs(_document.Paragraphs);
-            }
+            _paragraphs ??= new WordParagraphs(_document.Paragraphs);
             return _paragraphs;
         }
     }
@@ -199,10 +278,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_sections == null)
-            {
-                _sections = new WordSections(_document.Sections);
-            }
+            _sections ??= new WordSections(_document.Sections);
             return _sections;
         }
     }
@@ -229,7 +305,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            _variables ??= new WordVariables(_document.Variables, this);
+            _variables ??= new WordVariables(_document.Variables);
             return _variables;
         }
     }
@@ -869,7 +945,37 @@ internal class WordDocument : IWordDocument
             _listTemplates?.Dispose();
             _variables?.Dispose();
             _customProperties?.Dispose();
+            _words?.Dispose();
+            _inlineShapes?.Dispose();
+            _shapes?.Dispose();
+            _formFields?.Dispose();
+            _frames?.Dispose();
+            _pageSetup?.Dispose();
+            _fields?.Dispose();
+            _windows?.Dispose();
+            _characters?.Dispose();
         }
+        _characters = null;
+        _windows = null;
+        _fields = null;
+        _pageSetup = null;
+        _frames = null;
+        _formFields = null;
+        _activeWindow = null;
+        _selection = null;
+        _range = null;
+        _storyRanges = null;
+        _bookmarks = null;
+        _tables = null;
+        _paragraphs = null;
+        _sections = null;
+        _styles = null;
+        _listTemplates = null;
+        _variables = null;
+        _customProperties = null;
+        _words = null;
+        _inlineShapes = null;
+        _shapes = null;
 
         _disposedValue = true;
     }
