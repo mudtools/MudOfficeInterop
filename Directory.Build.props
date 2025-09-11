@@ -18,6 +18,7 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<BaseOutputPath>..\..\bin</BaseOutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<DefineConstants>ns2</DefineConstants>
