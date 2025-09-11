@@ -31,8 +31,9 @@ MudTools.OfficeInterop 是整个 Office 互操作库的核心模块，提供了 
 ```xml
 <PackageReference Include="MudTools.OfficeInterop" Version="1.1.2" />
 ```
-
-[![Nuget](https://img.shields.io/nuget/vpre/MudTools.OfficeInterop.Word?color=informational&label=Version&logo=nuget&style=flat-square)](https://www.nuget.org/packages/MudTools.OfficeInterop.Word/) 
+| Module Name | Current Version | Gitee License | 
+|---|---|---|
+| [![RuoYi-Vue-Plus](https://img.shields.io/badge/OfficeInterop-1.1.2-success.svg)](https://gitee.com/mudtools/OfficeInterop)| [![Nuget](https://img.shields.io/nuget/vpre/MudTools.OfficeInterop.Word?color=informational&label=Version&logo=nuget&style=flat-square)](https://www.nuget.org/packages/MudTools.OfficeInterop.Word/) |[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/mudtools/OfficeInterop/LICENSE)
 
 ## 核心组件
 
