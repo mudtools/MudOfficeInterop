@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -508,8 +508,8 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <param name="SkipBlanks">是否跳过空单元格</param>
     /// <param name="Transpose">是否转置</param>
     /// <returns>粘贴后的区域对象</returns>
-    T? PasteSpecial(XlPasteType Paste,
-        XlPasteSpecialOperation Operation,
+    T? PasteSpecial(XlPasteType Paste = XlPasteType.xlPasteAll,
+        XlPasteSpecialOperation Operation = XlPasteSpecialOperation.xlPasteSpecialOperationNone,
         object? SkipBlanks = null,
         object? Transpose = null);
 

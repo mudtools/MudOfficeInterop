@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -368,15 +368,15 @@ internal class ExcelChartObjects : IExcelChartObjects
     public IExcelChartObject[] GetVisibleCharts()
     {
         if (_chartObjects == null || Count == 0)
-            return new IExcelChartObject[0];
+            return [];
 
-        var result = new System.Collections.Generic.List<IExcelChartObject>();
+        var result = new List<IExcelChartObject>();
         for (int i = 1; i <= Count; i++)
         {
             try
             {
                 var chartObject = this[i];
-                if (chartObject != null && chartObject.Visible)
+                if (chartObject != null && chartObject.IsVisible)
                 {
                     result.Add(chartObject);
                 }

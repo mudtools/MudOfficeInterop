@@ -48,6 +48,11 @@ public interface ICommonWorksheet : IDisposable
     bool IsVisible { get; set; }
 
     /// <summary>
+    /// 获取或设置图表是否可见
+    /// </summary>
+    XlSheetVisibility Visible { get; set; }
+
+    /// <summary>
     /// 删除工作表
     /// </summary>
     void Delete();

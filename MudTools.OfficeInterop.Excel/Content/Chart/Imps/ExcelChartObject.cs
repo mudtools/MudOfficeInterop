@@ -123,16 +123,14 @@ internal class ExcelChartObject : IExcelChartObject
     /// </summary>
     public int Index => _chartObject?.Index ?? 0;
 
-    /// <summary>
-    /// 获取或设置图表对象是否可见
-    /// </summary>
-    public bool Visible
+
+    public XlSheetVisibility Visible
     {
-        get => _chartObject != null && _chartObject.Visible;
+        get => _chartObject != null && _chartObject.Visible ? XlSheetVisibility.xlSheetVisible : XlSheetVisibility.xlSheetHidden;
         set
         {
             if (_chartObject != null)
-                _chartObject.Visible = value;
+                _chartObject.Visible = value == XlSheetVisibility.xlSheetVisible;
         }
     }
 
