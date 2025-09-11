@@ -54,6 +54,9 @@ internal class WordWindow : IWordWindow
     }
 
     /// <inheritdoc/>
+    public int? Hwnd => _window?.Hwnd;
+
+    /// <inheritdoc/>
     public IWordDocument? Document => _window?.Document != null ? new WordDocument(_window.Document) : null;
 
     /// <inheritdoc/>

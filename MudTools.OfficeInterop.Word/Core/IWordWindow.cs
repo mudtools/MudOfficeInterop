@@ -44,6 +44,11 @@ public interface IWordWindow : IDisposable
     bool? Active { get; }
 
     /// <summary>
+    /// 获取Excel应用程序窗口的句柄
+    /// </summary>
+    int? Hwnd { get; }
+
+    /// <summary>
     /// 获取窗口的文档。
     /// </summary>
     IWordDocument? Document { get; }
