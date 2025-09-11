@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -74,8 +74,12 @@ internal class ExcelName : IExcelName
 
     public string Value
     {
-        get => _name.Value;
-        set => _name.Value = value;
+        get => _name?.Value;
+        set
+        {
+            if (_name != null && value != null)
+                _name.Value = value;
+        }
     }
 
     /// <summary>
@@ -83,7 +87,7 @@ internal class ExcelName : IExcelName
     /// </summary>
     public string Name
     {
-        get => _name?.Name?.ToString();
+        get => _name?.Name;
         set
         {
             if (_name != null && value != null)
@@ -251,7 +255,7 @@ internal class ExcelName : IExcelName
     /// <summary>
     /// 获取引用的区域对象
     /// </summary>
-    public IExcelRange RefersToRange => _refersToRange ?? (_refersToRange = new ExcelRange(_name?.RefersToRange as MsExcel.Range));
+    public IExcelRange RefersToRange => _refersToRange ??= new ExcelRange(_name?.RefersToRange as MsExcel.Range);
 
     /// <summary>
     /// 获取或设置注释

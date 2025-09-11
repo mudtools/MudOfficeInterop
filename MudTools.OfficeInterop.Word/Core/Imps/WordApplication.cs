@@ -220,12 +220,9 @@ internal partial class WordApplication : IWordApplication
     {
         get
         {
-            if (_application?.ActiveDocument != null)
-            {
-                _activeDocument ??= new WordDocument(_application.ActiveDocument);
-                return _activeDocument;
-            }
-            return null;
+            if (_application?.ActiveDocument == null) return null;
+            _activeDocument ??= new WordDocument(_application.ActiveDocument);
+            return _activeDocument;
         }
     }
 
@@ -237,9 +234,9 @@ internal partial class WordApplication : IWordApplication
     {
         get
         {
-            if (_application?.ActiveWindow != null)
-                return new WordWindow(_application.ActiveWindow);
-            return null;
+            return _application?.ActiveWindow is not null
+                ? new WordWindow(_application.ActiveWindow)
+                : null;
         }
     }
 
@@ -251,12 +248,9 @@ internal partial class WordApplication : IWordApplication
     {
         get
         {
-            if (_application?.Documents != null)
-            {
-                _documents ??= new WordDocuments(_application.Documents);
-                return _documents;
-            }
-            return null;
+            if (_application?.Documents == null) return null;
+            _documents ??= new WordDocuments(_application.Documents);
+            return _documents;
         }
     }
 
@@ -268,9 +262,9 @@ internal partial class WordApplication : IWordApplication
     {
         get
         {
-            if (_application?.Templates != null)
-                return new WordTemplates(_application.Templates);
-            return null;
+            return _application?.Templates is not null
+                ? new WordTemplates(_application.Templates)
+                : null;
         }
     }
 
@@ -281,9 +275,9 @@ internal partial class WordApplication : IWordApplication
     {
         get
         {
-            if (_application?.AddIns != null)
-                return new WordAddIns(_application.AddIns);
-            return null;
+            return _application?.AddIns is not null
+                ? new WordAddIns(_application.AddIns)
+                : null;
         }
     }
 
@@ -294,9 +288,9 @@ internal partial class WordApplication : IWordApplication
     {
         get
         {
-            if (_application?.NormalTemplate != null)
-                return new WordTemplate(_application.NormalTemplate);
-            return null;
+            return _application?.NormalTemplate is not null
+                ? new WordTemplate(_application.NormalTemplate)
+                : null;
         }
     }
 
@@ -308,12 +302,9 @@ internal partial class WordApplication : IWordApplication
     {
         get
         {
-            if (_application?.Windows != null)
-            {
-                _windows ??= new WordWindows(_application.Windows);
-                return _windows;
-            }
-            return null;
+            if (_application?.Windows == null) return null;
+            _windows ??= new WordWindows(_application.Windows);
+            return _windows;
         }
     }
 
@@ -1721,6 +1712,9 @@ internal partial class WordApplication : IWordApplication
         _application.DisplayAlerts = MsWord.WdAlertLevel.wdAlertsMessageBox;
         _disposedValue = false;
         _activeDocument = null;
+        _windows = null;
+        _documents = null;
+        _selection = null;
     }
 
     /// <summary>
@@ -1746,34 +1740,88 @@ internal partial class WordApplication : IWordApplication
             _selection?.Dispose();
             _documents?.Dispose();
             _windows?.Dispose();
+            _activeDocument?.Dispose();
+
             DisconnectEvents();
+
             if (_application != null)
             {
                 try
                 {
+                    // 重置警告级别
                     _application.DisplayAlerts = MsWord.WdAlertLevel.wdAlertsAll;
 
+                    // 确保释放时关闭应用程序
                     if (Visibility == WordAppVisibility.Hidden)
                     {
+                        // 使用更明确的退出参数
                         object saveChanges = MsWord.WdSaveOptions.wdDoNotSaveChanges;
-                        object originalFormat = MissingValue;
-                        object routeDocument = MissingValue;
-                        _application.Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                        object originalFormat = Type.Missing;
+                        object routeDocument = Type.Missing;
+                        
+                        try
+                        {
+                            _application.Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                        }
+                        catch
+                        {
+                            // 捕获特定异常而不是全部异常
+                        }
                     }
                     else
                     {
-                        _application.Visible = true;
+                        try
+                        {
+                            _application.Visible = true;
+                        }
+                        catch
+                        {
+                            // 捕获特定异常而不是全部异常
+                        }
                     }
 
-                    try { while (Marshal.ReleaseComObject(_application) > 0) ; } catch { }
+                    // 强制释放COM对象 - 更健壮的释放逻辑
+                    try
+                    {
+                        int releaseCount;
+                        do
+                        {
+                            releaseCount = Marshal.ReleaseComObject(_application);
+                        } while (releaseCount > 0);
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        // 特定异常处理
+                    }
+                    catch (COMException)
+                    {
+                        // COM特定异常处理
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // 忽略释放失败的情况
+                    // 记录异常信息而不是静默忽略
+                    log.Error("Error during COM object release", ex);
                 }
             }
 
-            GC.Collect();
+            // 显式置null，帮助垃圾回收
+            _application = null;
+            _activeDocument = null;
+            _windows = null;
+            _documents = null;
+            _selection = null;
+
+            // 更可控的垃圾回收
+            try
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error during garbage collection", ex);
+            }
         }
 
         _disposedValue = true;
