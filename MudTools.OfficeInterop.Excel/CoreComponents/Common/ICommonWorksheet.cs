@@ -53,6 +53,11 @@ public interface ICommonWorksheet : IDisposable
     XlSheetVisibility Visible { get; set; }
 
     /// <summary>
+    /// 获取工作表的页面设置对象
+    /// </summary>
+    IExcelPageSetup PageSetup { get; }
+
+    /// <summary>
     /// 删除工作表
     /// </summary>
     void Delete();

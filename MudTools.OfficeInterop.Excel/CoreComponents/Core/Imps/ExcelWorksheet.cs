@@ -673,7 +673,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的页面设置对象
     /// </summary>
-    public IExcelPageSetup PageSetup => _pageSetup ?? (_pageSetup = new ExcelPageSetup(_worksheet?.PageSetup));
+    public IExcelPageSetup PageSetup => _pageSetup ??= new ExcelPageSetup(_worksheet?.PageSetup);
 
     #endregion
 

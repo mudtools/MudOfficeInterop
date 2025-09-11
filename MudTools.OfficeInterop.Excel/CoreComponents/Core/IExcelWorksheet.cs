@@ -251,16 +251,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
 
     #endregion
 
-    #region 页面设置
-
-    /// <summary>
-    /// 获取工作表的页面设置对象
-    /// 对应 Worksheet.PageSetup 属性
-    /// </summary>
-    IExcelPageSetup PageSetup { get; }
-
-    #endregion
-
     #region 形状和图表
 
     /// <summary>

@@ -5,8 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using Microsoft.Office.Interop.Excel;
-
 namespace MudTools.OfficeInterop.Excel.Imps;
 
 
@@ -170,32 +168,6 @@ internal class ExcelChart : IExcelChart
     #endregion
 
     #region 数据源 (IExcelChart)
-
-    /// <summary>
-    /// 获取或设置图表的数据源区域
-    /// 注意：获取 SourceData 可能需要解析图表公式，此处为简化实现。
-    /// </summary>
-    public IExcelRange SourceData
-    {
-        get
-        {
-            // 简化处理：返回 null 或需要解析 _chart.Formula 或其他属性
-            // 实际应用中可能需要更复杂的逻辑来获取原始 Range
-            return null;
-        }
-        set
-        {
-            if (value is ExcelRange excelRange)
-            {
-                _chart.SetSourceData(excelRange.InternalRange);
-            }
-            else
-            {
-                throw new ArgumentException("SourceData must be of type ExcelRange or compatible.");
-            }
-        }
-    }
-
     /// <summary>
     /// 获取或设置数据绘制方式 (行/列优先)
     /// </summary>
@@ -284,6 +256,17 @@ internal class ExcelChart : IExcelChart
     /// 获取图表的数据标签集合 (通常在 Series 上)
     /// </summary>
     public IExcelDataTable DataTable => new ExcelDataTable(_chart.DataTable);
+
+    /// <summary>
+    /// 页面设置对象缓存
+    /// </summary>
+    private IExcelPageSetup _pageSetup;
+
+    /// <summary>
+    /// 获取工作表的页面设置对象
+    /// </summary>
+    public IExcelPageSetup PageSetup => _pageSetup ?? (_pageSetup = new ExcelPageSetup(_chart?.PageSetup));
+
 
     #endregion
 
@@ -596,7 +579,7 @@ internal class ExcelChart : IExcelChart
         {
             try
             {
-                // 释放底层COM对象
+                _pageSetup?.Dispose();
                 if (_chart != null)
                     Marshal.ReleaseComObject(_chart);
             }
@@ -604,6 +587,7 @@ internal class ExcelChart : IExcelChart
             {
                 // 忽略释放过程中的异常
             }
+            _pageSetup = null;
             _chart = null;
         }
         _disposedValue = true;

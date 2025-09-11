@@ -26,6 +26,11 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// </summary>
     object Value { get; set; }
 
+    /// <summary>
+    /// 获取或设置单元格的数组值。。
+    /// </summary>
+    object[,] ArrayValue { get; set; }
+
     int PageBreak { get; set; }
 
     /// <summary>

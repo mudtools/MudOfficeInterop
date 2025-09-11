@@ -73,6 +73,18 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         set => InternalRange.Value = value;
     }
 
+    public object[,] ArrayValue
+    {
+        get
+        {
+            var obj = InternalRange.Value;
+            if (obj is object[,] objs && objs != null)
+                return objs;
+            return null;
+        }
+        set => InternalRange.Value = value;
+    }
+
     public int PageBreak
     {
         get => InternalRange.PageBreak;

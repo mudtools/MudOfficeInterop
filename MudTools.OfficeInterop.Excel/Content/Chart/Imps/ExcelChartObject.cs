@@ -59,10 +59,12 @@ internal class ExcelChartObject : IExcelChartObject
             try
             {
                 // 释放图表对象
-                (_chart as ExcelChart)?.Dispose();
+                _excelChart?.Dispose();
 
                 // 释放形状对象
-                (_shapeRange as ExcelShape)?.Dispose();
+                _excelShape?.Dispose();
+
+                _pageSetup?.Dispose();
 
                 // 释放底层COM对象
                 if (_chart != null)
@@ -78,8 +80,8 @@ internal class ExcelChartObject : IExcelChartObject
             {
                 // 忽略释放过程中的异常
             }
-            _chartObject = null;
-            _shapeRange = null;
+            _excelChart = null;
+            _excelShape = null;
             _chart = null;
         }
 
@@ -104,6 +106,17 @@ internal class ExcelChartObject : IExcelChartObject
     /// 获取图表内容是否被保护
     /// </summary>
     public bool IsProtected => _chart.ProtectContents;
+
+    /// <summary>
+    /// 页面设置对象缓存
+    /// </summary>
+    private IExcelPageSetup _pageSetup;
+
+    /// <summary>
+    /// 获取工作表的页面设置对象
+    /// </summary>
+    public IExcelPageSetup PageSetup => _pageSetup ?? (_pageSetup = new ExcelPageSetup(_chart?.PageSetup));
+
 
     /// <summary>
     /// 获取或设置图表对象的名称
