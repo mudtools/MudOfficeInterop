@@ -60,7 +60,7 @@ internal partial class ExcelWorkbook : IExcelWorkbook
                 _styles?.Dispose();
                 _charts?.Dispose();
                 _activeWorksheet?.Dispose();
-
+                DisConnectEvent();
                 // 释放底层COM对象
                 if (_workbook != null)
                     Marshal.ReleaseComObject(_workbook);
@@ -70,6 +70,7 @@ internal partial class ExcelWorkbook : IExcelWorkbook
                 // 忽略释放过程中的异常
             }
         }
+        _workbookEvents_Event = null;
         _worksheets = null;
         _sheets = null;
         _names = null;

@@ -64,6 +64,36 @@ partial class ExcelWorkbook
         _workbookEvents_Event.WindowResize += _workbookEvents_Event_WindowResize;
     }
 
+    private void DisConnectEvent()
+    {
+        if (_workbookEvents_Event == null)
+            return;
+
+        _workbookEvents_Event.Sync -= _workbookEvents_Event_Sync;
+        _workbookEvents_Event.Activate -= _workbookEvents_Event_Activate;
+        _workbookEvents_Event.AfterSave -= _workbookEvents_Event_AfterSave;
+        _workbookEvents_Event.BeforeClose -= _workbookEvents_Event_BeforeClose;
+        _workbookEvents_Event.NewChart -= _workbookEvents_Event_NewChart;
+        _workbookEvents_Event.BeforePrint -= _workbookEvents_Event_BeforePrint;
+        _workbookEvents_Event.Deactivate -= _workbookEvents_Event_Deactivate;
+        _workbookEvents_Event.Open -= _workbookEvents_Event_Open;
+        _workbookEvents_Event.PivotTableCloseConnection -= _workbookEvents_Event_PivotTableCloseConnection;
+        _workbookEvents_Event.PivotTableOpenConnection -= _workbookEvents_Event_PivotTableOpenConnection;
+        _workbookEvents_Event.RowsetComplete -= _workbookEvents_Event_RowsetComplete;
+
+        _workbookEvents_Event.NewSheet -= _workbookEvents_Event_NewSheet;
+        _workbookEvents_Event.SheetChange -= _workbookEvents_Event_SheetChange;
+        _workbookEvents_Event.SheetSelectionChange -= _workbookEvents_Event_SheetSelectionChange;
+        _workbookEvents_Event.SheetDeactivate -= _workbookEvents_Event_SheetDeactivate;
+        _workbookEvents_Event.SheetBeforeDelete -= _workbookEvents_Event_SheetBeforeDelete;
+        _workbookEvents_Event.SheetCalculate -= _workbookEvents_Event_SheetCalculate;
+        _workbookEvents_Event.SheetPivotTableChangeSync -= _workbookEvents_Event_SheetPivotTableChangeSync;
+
+        _workbookEvents_Event.WindowActivate -= _workbookEvents_Event_WindowActivate;
+        _workbookEvents_Event.WindowDeactivate -= _workbookEvents_Event_WindowDeactivate;
+        _workbookEvents_Event.WindowResize -= _workbookEvents_Event_WindowResize;
+    }
+
     private void _workbookEvents_Event_WindowResize(MsExcel.Window Wn)
     {
         var workSheet = Wn as MsExcel.Window;
