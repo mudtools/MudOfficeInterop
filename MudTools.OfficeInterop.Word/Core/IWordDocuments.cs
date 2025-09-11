@@ -42,7 +42,7 @@ public interface IWordDocuments : IDisposable, IEnumerable<IWordDocument>
     /// </summary>
     /// <param name="template">模板路径（可选）</param>
     /// <returns>新文档对象</returns>
-    IWordDocument Add(string template = null);
+    IWordDocument Add(string? template = null);
 
     /// <summary>
     /// 打开现有文档
@@ -83,8 +83,15 @@ public interface IWordDocuments : IDisposable, IEnumerable<IWordDocument>
     /// <summary>
     /// 关闭所有文档
     /// </summary>
+    void Close(WdSaveOptions saveChanges = WdSaveOptions.wdSaveChanges,
+                     WdOriginalFormat originalFormat = WdOriginalFormat.wdWordDocument,
+                     bool? routeDocument = null);
+
+    /// <summary>
+    /// 关闭所有文档
+    /// </summary>
     /// <param name="saveChanges">是否保存更改</param>
-    void CloseAll(bool saveChanges = true);
+    void Close(bool saveChanges = true);
 
     /// <summary>
     /// 保存所有文档

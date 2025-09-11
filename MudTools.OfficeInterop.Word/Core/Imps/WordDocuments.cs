@@ -69,7 +69,7 @@ internal class WordDocuments : IWordDocuments
         }
     }
 
-    public IWordDocument Add(string template = null)
+    public IWordDocument Add(string? template = null)
     {
         try
         {
@@ -177,7 +177,23 @@ internal class WordDocuments : IWordDocuments
         }
     }
 
-    public void CloseAll(bool saveChanges = true)
+    public void Close(WdSaveOptions saveChanges = WdSaveOptions.wdSaveChanges,
+                     WdOriginalFormat originalFormat = WdOriginalFormat.wdWordDocument,
+                     bool? routeDocument = null)
+    {
+        try
+        {
+            _documents.Close((MsWord.WdSaveOptions)(int)saveChanges,
+            (MsWord.WdOriginalFormat)(int)originalFormat,
+            routeDocument.ComArgsVal());
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to close all documents.", ex);
+        }
+    }
+
+    public void Close(bool saveChanges = true)
     {
         try
         {
