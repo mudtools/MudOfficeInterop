@@ -87,6 +87,14 @@ MudTools.OfficeInterop 适用于以下场景：
 <PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.2" />
 ```
 
+| 模块 | 当前版本 | 开源协议 | 
+|---|---|---|
+| [![OfficeInterop-Core](https://img.shields.io/badge/OfficeInterop-1.1.2-success.svg)](https://gitee.com/mudtools/OfficeInterop) | [![Nuget](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.2-blue&label=Version&logo=nuget)](https://www.nuget.org/packages/MudTools.OfficeInterop/) | [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/mudtools/OfficeInterop/blob/master/LICENSE)
+| [![OfficeInterop-Excel](https://img.shields.io/badge/OfficeInteropExcel-1.1.2-success.svg)](https://gitee.com/mudtools/OfficeInterop) | [![Nuget](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.2-blue&label=Version&logo=nuget)](https://www.nuget.org/packages/MudTools.OfficeInterop.Excel/) | [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/mudtools/OfficeInterop/blob/master/LICENSE)
+| [![OfficeInterop-Word](https://img.shields.io/badge/OfficeInteropWord-1.1.2-success.svg)](https://gitee.com/mudtools/OfficeInterop) | [![Nuget](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.2-blue&label=Version&logo=nuget)](https://www.nuget.org/packages/MudTools.OfficeInterop.Word/) | [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/mudtools/OfficeInterop/blob/master/LICENSE)
+| [![OfficeInterop-PowerPoint](https://img.shields.io/badge/OfficeInteropPowerPoint-1.1.2-success.svg)](https://gitee.com/mudtools/OfficeInterop) | [![Nuget](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.2-blue&label=Version&logo=nuget)](https://www.nuget.org/packages/MudTools.OfficeInterop.PowerPoint/) | [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/mudtools/OfficeInterop/blob/master/LICENSE)
+| [![OfficeInterop-Vbe](https://img.shields.io/badge/OfficeInteropVbe-1.1.2-success.svg)](https://gitee.com/mudtools/OfficeInterop) | [![Nuget](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.2-blue&label=Version&logo=nuget)](https://www.nuget.org/packages/MudTools.OfficeInterop.Vbe/) | [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/mudtools/OfficeInterop/blob/master/LICENSE)
+
 ## 工厂类使用说明
 
 本项目提供多个工厂类用于创建和操作 Office 应用程序对象：
