@@ -12,7 +12,6 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordVariables : IWordVariables
 {
     private readonly MsWord.Variables _variables;
-    private readonly IWordDocument _document;
     private bool _disposedValue;
 
     /// <summary>
@@ -34,11 +33,9 @@ internal class WordVariables : IWordVariables
     /// 构造函数
     /// </summary>
     /// <param name="variables">COM Variables 对象</param>
-    /// <param name="document">关联的文档对象</param>
-    internal WordVariables(MsWord.Variables variables, IWordDocument document)
+    internal WordVariables(MsWord.Variables variables)
     {
         _variables = variables ?? throw new ArgumentNullException(nameof(variables));
-        _document = document ?? throw new ArgumentNullException(nameof(document));
         _disposedValue = false;
     }
 

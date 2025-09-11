@@ -5,6 +5,9 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using Microsoft.Office.Interop.Word;
+using MudTools.OfficeInterop.Imps;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -14,18 +17,32 @@ internal class WordDocument : IWordDocument
 {
     private readonly MsWord.Document _document;
     private bool _disposedValue;
-    private IWordWindow _activeWindow;
-    private IWordSelection _selection;
-    private IWordRange _range;
-    private IWordStoryRanges _storyRanges;
-    private IWordBookmarks _bookmarks;
-    private IWordTables _tables;
-    private IWordParagraphs _paragraphs;
-    private IWordSections _sections;
-    private IWordStyles _styles;
-    private IWordListTemplates _listTemplates;
-    private IWordVariables _variables;
-    private IWordCustomProperties _customProperties;
+    private IWordWindow? _activeWindow;
+    private IWordSelection? _selection;
+    private IWordRange _content;
+    private IWordStoryRanges? _storyRanges;
+    private IWordBookmarks? _bookmarks;
+    private IWordTables? _tables;
+    private IWordParagraphs? _paragraphs;
+    private IWordSections? _sections;
+    private IWordStyles? _styles;
+    private IWordListTemplates? _listTemplates;
+    private IWordVariables? _variables;
+    private IWordCustomProperties? _customProperties;
+    private IWordWords? _words;
+    private IWordInlineShapes? _inlineShapes;
+    private IWordShapes? _shapes;
+    private IWordShape? _background;
+    private IWordCharacters? _characters;
+    private IWordFields? _fields;
+    private IWordFormFields? _formFields;
+    private IWordFrames? _frames;
+    private IWordPageSetup? _pageSetup;
+    private IWordWindows? _windows;
+    private IWordEndnotes? _endnotes;
+    private IWordFootnotes? _footnotes;
+    private IWordComments? _comments;
+    private IOfficeCommandBars? _officeCommandBars;
 
     /// <inheritdoc/>
     public IWordApplication Application => _document != null ? new WordApplication(_document.Application) : null;
@@ -78,10 +95,7 @@ internal class WordDocument : IWordDocument
             var type = properties.GetType();
             var property = type.InvokeMember("Item", System.Reflection.BindingFlags.InvokeMethod, null, properties, new object[] { propertyName });
 
-            if (property != null)
-            {
-                property.GetType().InvokeMember("Value", System.Reflection.BindingFlags.SetProperty, null, property, new object[] { value ?? string.Empty });
-            }
+            property?.GetType().InvokeMember("Value", System.Reflection.BindingFlags.SetProperty, null, property, new object[] { value ?? string.Empty });
         }
         catch (Exception ex)
         {
@@ -91,15 +105,251 @@ internal class WordDocument : IWordDocument
 
     public string Path => _document.Path;
 
-    public bool Saved
+    public bool? Saved
     {
-        get => _document.Saved;
-        set => _document.Saved = value;
+        get => _document?.Saved;
+        set
+        {
+            if (_document != null)
+                _document.Saved = value != null && value.Value;
+        }
+    }
+    public bool? AutoHyphenation
+    {
+        get => _document?.AutoHyphenation;
+        set
+        {
+            if (_document != null)
+                _document.AutoHyphenation = value != null && value.Value;
+        }
+    }
+
+    public bool? HasRoutingSlip
+    {
+        get => _document?.HasRoutingSlip;
+        set
+        {
+            if (_document != null)
+                _document.HasRoutingSlip = value != null && value.Value;
+        }
+    }
+
+    public bool? Routed
+    {
+        get => _document?.Routed;
+    }
+
+    public bool? IsMasterDocument
+    {
+        get => _document?.IsMasterDocument;
+    }
+
+    public bool? HyphenateCaps
+    {
+        get => _document?.HyphenateCaps;
+        set
+        {
+            if (_document != null)
+                _document.HyphenateCaps = value != null && value.Value;
+        }
+    }
+
+    public bool? EmbedTrueTypeFonts
+    {
+        get => _document?.EmbedTrueTypeFonts;
+        set
+        {
+            if (_document != null)
+                _document.EmbedTrueTypeFonts = value != null && value.Value;
+        }
+    }
+
+    public bool? SaveFormsData
+    {
+        get => _document?.SaveFormsData;
+        set
+        {
+            if (_document != null)
+                _document.SaveFormsData = value != null && value.Value;
+        }
+    }
+
+    public bool? IsSubdocument
+    {
+        get => _document?.IsSubdocument;
+    }
+
+    public int? SaveFormat
+    {
+        get => _document?.SaveFormat;
+    }
+
+
+    public bool? ReadOnlyRecommended
+    {
+        get => _document?.ReadOnlyRecommended;
+        set
+        {
+            if (_document != null)
+                _document.ReadOnlyRecommended = value != null && value.Value;
+        }
+    }
+
+    public bool? SaveSubsetFonts
+    {
+        get => _document?.SaveSubsetFonts;
+        set
+        {
+            if (_document != null)
+                _document.SaveSubsetFonts = value != null && value.Value;
+        }
+    }
+
+    public bool? ShowGrammaticalErrors
+    {
+        get => _document?.ShowGrammaticalErrors;
+        set
+        {
+            if (_document != null)
+                _document.ShowGrammaticalErrors = value != null && value.Value;
+        }
+    }
+
+    public bool? SpellingChecked
+    {
+        get => _document?.SpellingChecked;
+        set
+        {
+            if (_document != null)
+                _document.SpellingChecked = value != null && value.Value;
+        }
+    }
+
+    public bool? ShowSummary
+    {
+        get => _document?.ShowSummary;
+        set
+        {
+            if (_document != null)
+                _document.ShowSummary = value != null && value.Value;
+        }
+    }
+
+    public bool? ShowSpellingErrors
+    {
+        get => _document?.ShowSpellingErrors;
+        set
+        {
+            if (_document != null)
+                _document.ShowSpellingErrors = value != null && value.Value;
+        }
+    }
+
+    public bool? GrammarChecked
+    {
+        get => _document?.GrammarChecked;
+        set
+        {
+            if (_document != null)
+                _document.GrammarChecked = value != null && value.Value;
+        }
+    }
+
+    public bool? UpdateStylesOnOpen
+    {
+        get => _document?.UpdateStylesOnOpen;
+        set
+        {
+            if (_document != null)
+                _document.UpdateStylesOnOpen = value != null && value.Value;
+        }
+    }
+
+    public bool? PrintFractionalWidths
+    {
+        get => _document?.PrintFractionalWidths;
+        set
+        {
+            if (_document != null)
+                _document.PrintFractionalWidths = value != null && value.Value;
+        }
+    }
+
+    public bool? PrintPostScriptOverText
+    {
+        get => _document?.PrintPostScriptOverText;
+        set
+        {
+            if (_document != null)
+                _document.PrintPostScriptOverText = value != null && value.Value;
+        }
+    }
+    public bool? PrintFormsData
+    {
+        get => _document?.PrintFormsData;
+        set
+        {
+            if (_document != null)
+                _document.PrintFormsData = value != null && value.Value;
+        }
+    }
+
+
+    public int? HyphenationZone
+    {
+        get => _document?.HyphenationZone;
+        set
+        {
+            if (_document != null)
+                _document.HyphenationZone = value != null ? value.Value : 0;
+        }
+    }
+
+    public int? SummaryLength
+    {
+        get => _document?.SummaryLength;
+        set
+        {
+            if (_document != null)
+                _document.SummaryLength = value != null ? value.Value : 0;
+        }
+    }
+
+    public int? ConsecutiveHyphensLimit
+    {
+        get => _document?.ConsecutiveHyphensLimit;
+        set
+        {
+            if (_document != null)
+                _document.ConsecutiveHyphensLimit = value != null ? value.Value : 0;
+        }
+    }
+
+    public float? DefaultTabStop
+    {
+        get => _document?.DefaultTabStop;
+        set
+        {
+            if (_document != null)
+                _document.DefaultTabStop = value != null ? value.Value : 0F;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdDocumentKind Kind
+    {
+        get => _document?.Kind != null ? (WdDocumentKind)(int)_document?.Kind : WdDocumentKind.wdDocumentNotSpecified;
+        set
+        {
+            if (_document != null) _document.Kind = (MsWord.WdDocumentKind)(int)value;
+        }
     }
 
     public bool ReadOnly => _document.ReadOnly;
 
-    public WdProtectionType ProtectionType => (WdProtectionType)_document.ProtectionType;
+    public WdProtectionType ProtectionType => (WdProtectionType)(int)_document.ProtectionType;
+
+    public WdDocumentType Type => (WdDocumentType)(int)_document.Type;
 
     public int PageCount => (int)_document.Range().Information[MsWord.WdInformation.wdNumberOfPagesInDocument];
 
@@ -113,9 +363,136 @@ internal class WordDocument : IWordDocument
 
     public object Parent => _document.Parent;
 
-    public IWordInlineShapes? InlineShapes => _document != null ? new WordInlineShapes(_document.InlineShapes) : null;
 
-    public IWordShapes? Shapes => _document != null ? new WordShapes(_document.Shapes) : null;
+    public IWordWindows Windows
+    {
+        get
+        {
+            _windows ??= new WordWindows(_document.Windows);
+            return _windows;
+        }
+    }
+
+    public IWordPageSetup PageSetup
+    {
+        get
+        {
+            _pageSetup ??= new WordPageSetup(_document.PageSetup);
+            return _pageSetup;
+        }
+    }
+
+    public IWordFrames Frames
+    {
+        get
+        {
+            _frames ??= new WordFrames(_document.Frames);
+            return _frames;
+        }
+    }
+
+    public IWordFormFields FormFields
+    {
+        get
+        {
+            _formFields ??= new WordFormFields(_document.FormFields);
+            return _formFields;
+        }
+    }
+
+
+
+    public IWordFootnotes Footnotes
+    {
+        get
+        {
+            _footnotes ??= new WordFootnotes(_document.Footnotes);
+            return _footnotes;
+        }
+    }
+
+
+    public IWordEndnotes Endnotes
+    {
+        get
+        {
+            _endnotes ??= new WordEndnotes(_document.Endnotes);
+            return _endnotes;
+        }
+    }
+
+    public IWordComments Comments
+    {
+        get
+        {
+            _comments ??= new WordComments(_document.Comments);
+            return _comments;
+        }
+    }
+
+
+    public IWordFields Fields
+    {
+        get
+        {
+            _fields ??= new WordFields(_document.Fields);
+            return _fields;
+        }
+    }
+
+
+    public IOfficeCommandBars CommandBars
+    {
+        get
+        {
+            _officeCommandBars ??= new OfficeCommandBars(_document.CommandBars);
+            return _officeCommandBars;
+        }
+    }
+
+    public IWordCharacters Characters
+    {
+        get
+        {
+            _characters ??= new WordCharacters(_document.Characters);
+            return _characters;
+        }
+    }
+
+    public IWordWords? Words
+    {
+        get
+        {
+            _words ??= new WordWords(_document.Words);
+            return _words;
+        }
+    }
+
+    public IWordInlineShapes? InlineShapes
+    {
+        get
+        {
+            _inlineShapes ??= new WordInlineShapes(_document.InlineShapes);
+            return _inlineShapes;
+        }
+    }
+    public IWordShapes? Shapes
+    {
+        get
+        {
+            _shapes ??= new WordShapes(_document.Shapes);
+            return _shapes;
+        }
+    }
+
+    public IWordShape? Background
+    {
+        get
+        {
+            _background ??= new WordShape(_document.Background);
+            return _background;
+        }
+    }
 
     public IWordWindow ActiveWindow
     {
@@ -135,26 +512,21 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordRange Range
+    public IWordRange Content
     {
         get
         {
-            if (_range == null)
-            {
-                _range = new WordRange(_document.Range());
-            }
-            return _range;
+            _content ??= new WordRange(_document.Content);
+            return _content;
         }
     }
+
 
     public IWordStoryRanges StoryRanges
     {
         get
         {
-            if (_storyRanges == null)
-            {
-                _storyRanges = new WordStoryRanges(_document.StoryRanges);
-            }
+            _storyRanges ??= new WordStoryRanges(_document.StoryRanges);
             return _storyRanges;
         }
     }
@@ -175,10 +547,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_tables == null)
-            {
-                _tables = new WordTables(_document.Tables);
-            }
+            _tables ??= new WordTables(_document.Tables);
             return _tables;
         }
     }
@@ -187,10 +556,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_paragraphs == null)
-            {
-                _paragraphs = new WordParagraphs(_document.Paragraphs);
-            }
+            _paragraphs ??= new WordParagraphs(_document.Paragraphs);
             return _paragraphs;
         }
     }
@@ -199,10 +565,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            if (_sections == null)
-            {
-                _sections = new WordSections(_document.Sections);
-            }
+            _sections ??= new WordSections(_document.Sections);
             return _sections;
         }
     }
@@ -229,7 +592,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
-            _variables ??= new WordVariables(_document.Variables, this);
+            _variables ??= new WordVariables(_document.Variables);
             return _variables;
         }
     }
@@ -271,7 +634,28 @@ internal class WordDocument : IWordDocument
         set => _document.WritePassword = value;
     }
 
-    public IWordRange this[int index] => Range;
+    public IWordRange? Range(int? start = null, int? end = null)
+    {
+        if (_document == null)
+            return null;
+        MsWord.Range? range = null;
+        if (start == null && end == null)
+            range = _document.Range();
+        else
+            range = _document.Range(start.ComArgsVal(), end.ComArgsVal());
+        return new WordRange(range);
+    }
+
+    public IWordRange? this[int start, int end]
+    {
+        get
+        {
+            if (_document == null)
+                return null;
+            var range = _document.Range(start, end);
+            return new WordRange(range);
+        }
+    }
 
     public IWordRange this[string bookmarkName] => GetBookmark(bookmarkName)?.Range;
 
@@ -838,16 +1222,6 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IEnumerator<IWordRange> GetEnumerator()
-    {
-        return new List<IWordRange> { Range }.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
     private static readonly object missing = System.Reflection.Missing.Value;
     private static readonly object replaceAll = MsWord.WdReplace.wdReplaceAll;
 
@@ -859,7 +1233,7 @@ internal class WordDocument : IWordDocument
         {
             _activeWindow?.Dispose();
             _selection?.Dispose();
-            _range?.Dispose();
+            _content?.Dispose();
             _storyRanges?.Dispose();
             _bookmarks?.Dispose();
             _tables?.Dispose();
@@ -869,7 +1243,47 @@ internal class WordDocument : IWordDocument
             _listTemplates?.Dispose();
             _variables?.Dispose();
             _customProperties?.Dispose();
+            _words?.Dispose();
+            _inlineShapes?.Dispose();
+            _shapes?.Dispose();
+            _background?.Dispose();
+            _formFields?.Dispose();
+            _frames?.Dispose();
+            _pageSetup?.Dispose();
+            _fields?.Dispose();
+            _windows?.Dispose();
+            _characters?.Dispose();
+            _endnotes?.Dispose();
+            _footnotes?.Dispose();
+            _comments?.Dispose();
+            _officeCommandBars?.Dispose();
         }
+        _background = null;
+        _officeCommandBars = null;
+        _comments = null;
+        _footnotes = null;
+        _endnotes = null;
+        _characters = null;
+        _windows = null;
+        _fields = null;
+        _pageSetup = null;
+        _frames = null;
+        _formFields = null;
+        _activeWindow = null;
+        _selection = null;
+        _content = null;
+        _storyRanges = null;
+        _bookmarks = null;
+        _tables = null;
+        _paragraphs = null;
+        _sections = null;
+        _styles = null;
+        _listTemplates = null;
+        _variables = null;
+        _customProperties = null;
+        _words = null;
+        _inlineShapes = null;
+        _shapes = null;
 
         _disposedValue = true;
     }
