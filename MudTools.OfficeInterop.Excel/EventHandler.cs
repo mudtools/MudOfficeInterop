@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -40,7 +40,13 @@ public delegate void WorkbookDeactivateEventHandler(IExcelWorkbook workbook);
 /// <param name="cancel">是否取消关闭操作</param>
 public delegate void WorkbookBeforeCloseEventHandler(IExcelWorkbook workbook, ref bool cancel);
 
-public delegate void WorkbookBeforeSaveEventHandler(IExcelWorkbook workbook, bool SaveAsUI, ref bool Cancel);
+/// <summary>
+/// WorkbookBeforeSave事件处理委托
+/// </summary>
+/// <param name="workbook">即将保存的工作簿</param>
+/// <param name="saveAsUI">如果操作来自"另存为"对话框，则为true；如果操作来自"保存"或"另存为"命令，则为false</param>
+/// <param name="Cancel">如果设置为true，则取消保存操作</param>
+public delegate void WorkbookBeforeSaveEventHandler(IExcelWorkbook workbook, bool saveAsUI, ref bool Cancel);
 
 /// <summary>
 /// SheetChange事件处理委托
@@ -54,6 +60,12 @@ public delegate void SheetChangeEventHandler(IExcelWorksheet sheet, IExcelRange 
 /// </summary>
 /// <param name="sheet">激活的工作表</param>
 public delegate void SheetActivateEventHandler(IExcelWorksheet sheet);
+
+/// <summary>
+/// 工作表删除前事件处理委托
+/// </summary>
+/// <param name="sheet">即将被删除的工作表</param>
+public delegate void SheetBeforeDeleteEventHandler(IExcelWorksheet sheet);
 
 /// <summary>
 /// SheetDeactivate事件处理委托
@@ -127,20 +139,107 @@ public delegate void ActivateEventHandler();
 /// </summary>
 public delegate void DeactivateEventHandler();
 
+/// <summary>
+/// BeforeDelete事件处理委托
+/// </summary>
 public delegate void BeforeDeleteEventHandler();
 
+/// <summary>
+/// 工作簿同步事件处理委托
+/// </summary>
+/// <param name="syncEventType">同步事件类型</param>
+public delegate void WorkBookSyncEventHandler(MsoSyncEventType syncEventType);
+
+/// <summary>
+/// 工作簿工作表变更事件处理委托
+/// </summary>
+/// <param name="sh">工作表对象</param>
+/// <param name="target">变更的目标单元格区域</param>
+public delegate void WorkBookSheetChangeEventHandler(object sh, IExcelRange target);
+
+/// <summary>
+/// 工作簿保存后事件处理委托
+/// </summary>
+/// <param name="success">保存操作是否成功</param>
+public delegate void WorkBookAfterSaveEventHandler(bool success);
+
+/// <summary>
+/// 工作簿新建图表事件处理委托
+/// </summary>
+/// <param name="chart">新建的图表对象</param>
+public delegate void WorkBookNewChartEventHandler(IExcelChart chart);
+
+/// <summary>
+/// 工作簿打印前事件处理委托
+/// </summary>
+/// <param name="cancel">是否取消打印操作</param>
+public delegate void WorkBookBeforePrintEventHandler(bool cancel);
+
+/// <summary>
+/// 工作簿行集完成前事件处理委托
+/// </summary>
+/// <param name="description">行集描述</param>
+/// <param name="sheet">工作表名称</param>
+/// <param name="success">操作是否成功</param>
+public delegate void WorkBookBeforeRowsetCompleteEventHandler(string description, string sheet, bool success);
+
+/// <summary>
+/// 工作簿新建工作表事件处理委托
+/// </summary>
+/// <param name="worksheet">新建的工作表对象</param>
+public delegate void WorkBookNewSheetEventHandler(IExcelWorksheet worksheet);
+
+/// <summary>
+/// 工作表数据透视表变更事件处理委托
+/// </summary>
+/// <param name="worksheet">工作表对象</param>
+/// <param name="pivotTable">变更的数据透视表对象</param>
+public delegate void WorkBookSheetPivotTableChangeEventHandler(IExcelWorksheet worksheet, IExcelPivotTable pivotTable);
+
+/// <summary>
+/// 数据透视表关闭连接事件处理委托
+/// </summary>
+/// <param name="pivotTable">数据透视表对象</param>
+public delegate void WorkBookPivotTableCloseConnectionEventHandler(IExcelPivotTable pivotTable);
+
+/// <summary>
+/// 数据透视表打开连接事件处理委托
+/// </summary>
+/// <param name="pivotTable">数据透视表对象</param>
+public delegate void WorkBookPivotTableOpenConnectionEventHandler(IExcelPivotTable pivotTable);
+
+/// <summary>
+/// PivotTableChangeSync事件处理委托
+/// </summary>
+/// <param name="excelPivotTable">Excel数据透视表对象</param>
 public delegate void PivotTableChangeSyncEventHandler(IExcelPivotTable excelPivotTable);
+
+
+/// <summary>
+/// WindowResize事件处理委托
+/// </summary>
+/// <param name="Wb">Excel工作簿对象</param>
+/// <param name="Wn">Excel窗口对象</param>
+public delegate void WindowResizeEventHandler(IExcelWorkbook Wb, IExcelWindow Wn);
+
+/// <summary>
+/// WindowDeactivate事件处理委托
+/// </summary>
+/// <param name="Wb">Excel工作簿对象</param>
+/// <param name="Wn">Excel窗口对象</param>
+public delegate void WindowDeactivateEventHandler(IExcelWorkbook Wb, IExcelWindow Wn);
+
+/// <summary>
+/// WindowActivate事件处理委托
+/// </summary>
+/// <param name="Wb">Excel工作簿对象</param>
+/// <param name="Wn">Excel窗口对象</param>
+public delegate void WindowActivateEventHandler(IExcelWorkbook Wb, IExcelWindow Wn);
 
 /// <summary>
 /// Calculate事件处理委托
 /// </summary>
 public delegate void CalculateEventHandler();
-
-public delegate void WindowResizeEventHandler(IExcelWorkbook Wb, IExcelWindow Wn);
-
-public delegate void WindowDeactivateEventHandler(IExcelWorkbook Wb, IExcelWindow Wn);
-
-public delegate void WindowActivateEventHandler(IExcelWorkbook Wb, IExcelWindow Wn);
 
 /// <summary>
 /// 应用程序性能统计信息

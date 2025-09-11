@@ -265,7 +265,7 @@ partial class ExcelApplication
         if (_windowResize != null && Wb != null)
         {
             var excelWorkbook = new ExcelWorkbook(Wb);
-            var excelwindows = Wn != null ? new ExcelWindow(Wn, excelWorkbook) : null;
+            var excelwindows = Wn != null ? new ExcelWindow(Wn) : null;
             _windowResize(excelWorkbook, excelwindows);
         }
     }
@@ -275,7 +275,7 @@ partial class ExcelApplication
         if (_windowDeactivate != null && Wb != null)
         {
             var excelWorkbook = new ExcelWorkbook(Wb);
-            var excelwindows = Wn != null ? new ExcelWindow(Wn, excelWorkbook) : null;
+            var excelwindows = Wn != null ? new ExcelWindow(Wn) : null;
             _windowDeactivate(excelWorkbook, excelwindows);
         }
     }
@@ -285,7 +285,7 @@ partial class ExcelApplication
         if (_windowActivate != null && Wb != null)
         {
             var excelWorkbook = new ExcelWorkbook(Wb);
-            var excelwindows = Wn != null ? new ExcelWindow(Wn, excelWorkbook) : null;
+            var excelwindows = Wn != null ? new ExcelWindow(Wn) : null;
             _windowActivate(excelWorkbook, excelwindows);
         }
     }

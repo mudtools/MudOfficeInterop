@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// Excel Workbook 对象的二次封装实现类
 /// 负责对 Microsoft.Office.Interop.Excel.Workbook 对象的安全访问和资源管理
 /// </summary>
-internal class ExcelWorkbook : IExcelWorkbook
+internal partial class ExcelWorkbook : IExcelWorkbook
 {
     /// <summary>
     /// 底层的 COM Workbook 对象
@@ -34,6 +34,8 @@ internal class ExcelWorkbook : IExcelWorkbook
     internal ExcelWorkbook(MsExcel.Workbook workbook)
     {
         _workbook = workbook ?? throw new ArgumentNullException(nameof(workbook));
+        _workbookEvents_Event = workbook;
+        InitializeEvents();
         _disposedValue = false;
     }
 
@@ -276,7 +278,7 @@ internal class ExcelWorkbook : IExcelWorkbook
                 return new ExcelApplication(app);
 
             if (_workbook.Parent is MsExcel.Window win)
-                return new ExcelWindow(win, this);
+                return new ExcelWindow(win);
 
             if (_workbook.Parent is MsExcel.Windows wins)
                 return new ExcelWindows(wins, Application);

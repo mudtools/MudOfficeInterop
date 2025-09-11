@@ -623,8 +623,15 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// </summary>
     event CalculateEventHandler SheetCalculate;
 
+    /// <summary>
+    /// 在工作表被删除之前触发
+    /// </summary>
     event BeforeDeleteEventHandler BeforeDelete;
 
+    /// <summary>
+    /// 当数据透视表发生更改时同步触发
+    /// </summary>
+    /// <param name="excelPivotTable">发生更改的数据透视表</param>
     event PivotTableChangeSyncEventHandler PivotTableChangeSync;
     #endregion
 }

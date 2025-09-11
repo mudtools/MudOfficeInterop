@@ -661,7 +661,7 @@ internal partial class ExcelApplication : IExcelApplication
         get
         {
             var window = _application?.ActiveWindow;
-            return window != null ? new ExcelWindow(window, ActiveWorkbook) : null;
+            return window != null ? new ExcelWindow(window) : null;
         }
     }
 

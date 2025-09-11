@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -14,7 +14,6 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 internal class ExcelWindow : IExcelWindow
 {
     private readonly MsExcel.Window _window;
-    private readonly IExcelWorkbook _workbook;
     private bool _disposedValue;
     private double _savedHeight;
     private double _savedWidth;
@@ -100,7 +99,6 @@ internal class ExcelWindow : IExcelWindow
 
     public IExcelRange VisibleRange => new ExcelRange(_window.VisibleRange);
 
-    public IExcelWorkbook Workbook => _workbook;
 
     private IExcelWorksheet _activeSheet;
 
@@ -359,7 +357,7 @@ internal class ExcelWindow : IExcelWindow
             if (_window.Parent is MsExcel.Windows wins)
                 return new ExcelWindows(wins, null);
 
-            return _workbook.Parent;
+            return _window.Parent;
         }
     }
 
@@ -395,10 +393,9 @@ internal class ExcelWindow : IExcelWindow
         }
     }
 
-    internal ExcelWindow(MsExcel.Window window, IExcelWorkbook workbook)
+    internal ExcelWindow(MsExcel.Window window)
     {
         _window = window ?? throw new ArgumentNullException(nameof(window));
-        _workbook = workbook; // workbook 可以为 null
         _disposedValue = false;
     }
 
@@ -522,7 +519,7 @@ internal class ExcelWindow : IExcelWindow
     public IExcelWindow NewWindow()
     {
         var newWindow = _window.NewWindow();
-        return new ExcelWindow(newWindow, _workbook);
+        return new ExcelWindow(newWindow);
     }
 
     /// <summary>

@@ -399,4 +399,111 @@ public interface IExcelWorkbook : IDisposable
     XlCalculation Calculation { get; set; }
 
     #endregion
+
+    #region 事件
+    /// <summary>
+    /// 当工作表数据透视表更改时发生
+    /// </summary>
+    event WorkBookSheetPivotTableChangeEventHandler WorkBookSheetPivotTableChange;
+
+    /// <summary>
+    /// 当窗口大小调整时发生
+    /// </summary>
+    event WindowResizeEventHandler WindowResize;
+
+    /// <summary>
+    /// 当窗口停用时发生
+    /// </summary>
+    event WindowDeactivateEventHandler WindowDeActivate;
+
+    /// <summary>
+    /// 当窗口激活时发生
+    /// </summary>
+    event WindowActivateEventHandler WindowActivate;
+
+    /// <summary>
+    /// 当工作表计算完成时发生
+    /// </summary>
+    event SheetCalculateEventHandler Calculate;
+
+    /// <summary>
+    /// 当工作表即将删除时发生
+    /// </summary>
+    event SheetBeforeDeleteEventHandler SheetBeforeDelete;
+
+    /// <summary>
+    /// 当工作表停用时发生
+    /// </summary>
+    event SheetDeactivateEventHandler SheetDeactivate;
+
+    /// <summary>
+    /// 当行集完成之前发生
+    /// </summary>
+    event WorkBookBeforeRowsetCompleteEventHandler OnBeforeRowsetComplete;
+
+    /// <summary>
+    /// 当数据透视表打开连接时发生
+    /// </summary>
+    event WorkBookPivotTableOpenConnectionEventHandler PivotTableOpenConnection;
+
+    /// <summary>
+    /// 当数据透视表关闭连接时发生
+    /// </summary>
+    event WorkBookPivotTableCloseConnectionEventHandler PivotTableCloseConnection;
+
+    /// <summary>
+    /// 当工作簿打开时发生
+    /// </summary>
+    event WorkbookOpenEventHandler Open;
+
+    /// <summary>
+    /// 当工作簿中新建工作表时发生
+    /// </summary>
+    event WorkBookNewSheetEventHandler NewSheet;
+
+    /// <summary>
+    /// 当工作簿停用时发生
+    /// </summary>
+    event DeactivateEventHandler Deactivate;
+
+    /// <summary>
+    /// 当工作簿打印之前发生
+    /// </summary>
+    event WorkBookBeforePrintEventHandler BeforePrint;
+
+    /// <summary>
+    /// 当工作簿中新建图表时发生
+    /// </summary>
+    event WorkBookNewChartEventHandler NewChart;
+
+    /// <summary>
+    /// 当工作簿关闭之前发生
+    /// </summary>
+    event WorkbookBeforeCloseEventHandler BeforeClose;
+
+    /// <summary>
+    /// 当工作表选择区域更改时发生
+    /// </summary>
+    event SheetSelectionChangeEventHandler SheetSelectionChange;
+
+    /// <summary>
+    /// 当工作簿保存之后发生
+    /// </summary>
+    event WorkBookAfterSaveEventHandler AfterSave;
+
+    /// <summary>
+    /// 当工作簿激活时发生
+    /// </summary>
+    event WorkbookActivateEventHandler WorkbookActivate;
+
+    /// <summary>
+    /// 当工作表内容更改时发生
+    /// </summary>
+    event WorkBookSheetChangeEventHandler SheetChange;
+
+    /// <summary>
+    /// 当工作簿同步事件发生时触发
+    /// </summary>
+    event WorkBookSyncEventHandler Sync;
+    #endregion
 }
