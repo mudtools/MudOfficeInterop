@@ -22,11 +22,15 @@ MudTools.OfficeInterop.Vbe 是专门用于操作 Microsoft Visual Basic Editor (
 - .NET Framework 4.7
 - .NET Framework 4.8
 - .NET Standard 2.1
+- .NET 6.0-windows
+- .NET 7.0-windows
+- .NET 8.0-windows
+- .NET 9.0-windows
 
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.0" />
+<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.2" />
 ```
 
 ## 核心组件
@@ -35,14 +39,14 @@ MudTools.OfficeInterop.Vbe 是专门用于操作 Microsoft Visual Basic Editor (
 
 VBE 模块提供以下核心接口：
 
-- [IVbeApplication](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeApplication.cs#L12-L101) - VBE 应用程序对象接口
-- [IVbeVBProject](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeVBProject.cs#L12-L174) - VB 项目对象接口
-- [IVbeVBProjects](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeVBProjects.cs#L12-L172) - VB 项目集合接口
-- [IVbeVBComponent](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeVBComponent.cs#L12-L124) - VB 组件对象接口
-- [IVbeVBComponents](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeVBComponents.cs#L12-L168) - VB 组件集合接口
-- [IVbeCodeModule](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeCodeModule.cs#L12-L162) - 代码模块对象接口
-- [IVbeReference](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeReference.cs#L12-L110) - 引用对象接口
-- [IVbeReferences](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Vbe/IVbeReferences.cs#L12-L166) - 引用集合接口
+- [IVbeApplication](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeApplication.cs#L12-L101) - VBE 应用程序对象接口
+- [IVbeVBProject](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeVBProject.cs#L12-L174) - VB 项目对象接口
+- [IVbeVBProjects](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeVBProjects.cs#L12-L172) - VB 项目集合接口
+- [IVbeVBComponent](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeVBComponent.cs#L12-L124) - VB 组件对象接口
+- [IVbeVBComponents](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeVBComponents.cs#L12-L168) - VB 组件集合接口
+- [IVbeCodeModule](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeCodeModule.cs#L12-L162) - 代码模块对象接口
+- [IVbeReference](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeReference.cs#L12-L110) - 引用对象接口
+- [IVbeReferences](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Vbe/IVbeReferences.cs#L12-L166) - 引用集合接口
 
 ## 使用示例
 
@@ -149,7 +153,6 @@ foreach (var reference in references)
 本项目采用双重许可证模式：
 
 - [MIT 许可证](../../LICENSE-MIT)
-- [Apache 许可证 2.0](../../LICENSE-APACHE)
 
 ## 免责声明
 

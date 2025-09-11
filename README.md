@@ -73,6 +73,10 @@ MudTools.OfficeInterop 适用于以下场景：
 - .NET Framework 4.7
 - .NET Framework 4.8
 - .NET Standard 2.1
+- .NET 6.0-windows
+- .NET 7.0-windows
+- .NET 8.0-windows
+- .NET 9.0-windows
 
 ## 安装
 
@@ -87,10 +91,10 @@ MudTools.OfficeInterop 适用于以下场景：
 
 本项目提供多个工厂类用于创建和操作 Office 应用程序对象：
 
-- [OfficeUIFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop/OfficeUIFactory.cs#L16-L51) - 用于创建 Office UI 相关组件，如功能区(Ribbon)和自定义任务窗格(CTP)
-- [ExcelFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) - 用于创建和操作 Excel 应用程序实例
-- [WordFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) - 用于创建和操作 Word 应用程序实例
-- [PowerPointFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) - 用于创建和操作 PowerPoint 应用程序实例
+- [OfficeUIFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop/OfficeUIFactory.cs#L16-L51) - 用于创建 Office UI 相关组件，如功能区(Ribbon)和自定义任务窗格(CTP)
+- [ExcelFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) - 用于创建和操作 Excel 应用程序实例
+- [WordFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) - 用于创建和操作 Word 应用程序实例
+- [PowerPointFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) - 用于创建和操作 PowerPoint 应用程序实例
 
 所有工厂类都提供多种创建应用程序实例的方法：
 - `Connection` - 通过现有 COM 对象连接到已运行的应用程序实例

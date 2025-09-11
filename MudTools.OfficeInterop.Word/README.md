@@ -20,18 +20,22 @@ MudTools.OfficeInterop.Word 是专门用于操作 Microsoft Word 应用程序的
 - .NET Framework 4.7
 - .NET Framework 4.8
 - .NET Standard 2.1
+- .NET 6.0-windows
+- .NET 7.0-windows
+- .NET 8.0-windows
+- .NET 9.0-windows
 
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.0" />
+<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.2" />
 ```
 
 ## 核心组件
 
 ### WordFactory
 
-[WordFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) 是用于创建和操作 Word 应用程序实例的工厂类，提供以下方法：
+[WordFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97) 是用于创建和操作 Word 应用程序实例的工厂类，提供以下方法：
 
 - `Connection` - 通过现有 COM 对象连接到已运行的 Word 应用程序实例
 - `BlankWorkbook` - 创建新的空白 Word 文档
@@ -113,7 +117,6 @@ app.Quit();
 本项目采用双重许可证模式：
 
 - [MIT 许可证](../../LICENSE-MIT)
-- [Apache 许可证 2.0](../../LICENSE-APACHE)
 
 ## 免责声明
 

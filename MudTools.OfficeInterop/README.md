@@ -21,18 +21,22 @@ MudTools.OfficeInterop 是整个 Office 互操作库的核心模块，提供了 
 - .NET Framework 4.7
 - .NET Framework 4.8
 - .NET Standard 2.1
+- .NET 6.0-windows
+- .NET 7.0-windows
+- .NET 8.0-windows
+- .NET 9.0-windows
 
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop" Version="1.1.0" />
+<PackageReference Include="MudTools.OfficeInterop" Version="1.1.2" />
 ```
 
 ## 核心组件
 
 ### OfficeUIFactory
 
-[OfficeUIFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop/OfficeUIFactory.cs#L16-L51) 是用于创建 Office UI 相关组件的工厂类，提供以下方法：
+[OfficeUIFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop/OfficeUIFactory.cs#L16-L51) 是用于创建 Office UI 相关组件的工厂类，提供以下方法：
 
 - `CreateCTPFactory` - 创建自定义任务窗格工厂的包装器实例
 - `CreateRibbonUI` - 创建功能区 UI 的包装器实例

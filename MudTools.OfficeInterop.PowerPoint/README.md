@@ -20,18 +20,22 @@ MudTools.OfficeInterop.PowerPoint 是专门用于操作 Microsoft PowerPoint 应
 - .NET Framework 4.7
 - .NET Framework 4.8
 - .NET Standard 2.1
+- .NET 6.0-windows
+- .NET 7.0-windows
+- .NET 8.0-windows
+- .NET 9.0-windows
 
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.0" />
+<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.2" />
 ```
 
 ## 核心组件
 
 ### PowerPointFactory
 
-[PowerPointFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) 是用于创建和操作 PowerPoint 应用程序实例的工厂类，提供以下方法：
+[PowerPointFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.PowerPoint/PowerPointFactory.cs#L15-L74) 是用于创建和操作 PowerPoint 应用程序实例的工厂类，提供以下方法：
 
 - `Connection` - 通过现有 COM 对象连接到已运行的 PowerPoint 应用程序实例
 - `BlankWorkbook` - 创建新的空白 PowerPoint 演示文稿
@@ -123,7 +127,6 @@ app.Quit();
 本项目采用双重许可证模式：
 
 - [MIT 许可证](../../LICENSE-MIT)
-- [Apache 许可证 2.0](../../LICENSE-APACHE)
 
 ## 免责声明
 

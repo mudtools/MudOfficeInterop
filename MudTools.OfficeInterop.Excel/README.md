@@ -21,18 +21,22 @@ MudTools.OfficeInterop.Excel 是专门用于操作 Microsoft Excel 应用程序�
 - .NET Framework 4.7
 - .NET Framework 4.8
 - .NET Standard 2.1
+- .NET 6.0-windows
+- .NET 7.0-windows
+- .NET 8.0-windows
+- .NET 9.0-windows
 
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.0" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.2" />
 ```
 
 ## 核心组件
 
 ### ExcelFactory
 
-[ExcelFactory](file:///D:/Repos/MudTools.OfficeInterop/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) 是用于创建和操作 Excel 应用程序实例的工厂类，提供以下方法：
+[ExcelFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/ExcelFactory.cs#L22-L152) 是用于创建和操作 Excel 应用程序实例的工厂类，提供以下方法：
 
 - `Connection` - 通过现有 COM 对象连接到已运行的 Excel 应用程序实例
 - `CreateInstance` - 通过 ProgID 创建特定版本的 Excel 应用程序实例
@@ -136,7 +140,6 @@ app.Quit();
 本项目采用双重许可证模式：
 
 - [MIT 许可证](../../LICENSE-MIT)
-- [Apache 许可证 2.0](../../LICENSE-APACHE)
 
 ## 免责声明
 
