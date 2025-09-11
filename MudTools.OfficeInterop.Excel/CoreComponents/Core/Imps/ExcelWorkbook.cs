@@ -544,8 +544,13 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         try
         {
             _workbook.SaveAs(
-                filename, fileFormat, password.ComArgsVal(), writeResPassword.ComArgsVal(), readOnlyRecommended.ComArgsVal(),
-                createBackup.ComArgsVal(), (MsExcel.XlSaveAsAccessMode)accessMode, conflictResolution.ComArgsVal(), addToMru.ComArgsVal(), local.ComArgsVal()
+                    filename, (MsExcel.XlFileFormat)(int)fileFormat,
+                    password.ComArgsVal(), writeResPassword.ComArgsVal(),
+                    readOnlyRecommended.ComArgsVal(),
+                    createBackup.ComArgsVal(),
+                    (MsExcel.XlSaveAsAccessMode)(int)accessMode,
+                    conflictResolution.ComArgsVal(),
+                    addToMru.ComArgsVal(), local.ComArgsVal()
             );
         }
         catch (COMException ce)
