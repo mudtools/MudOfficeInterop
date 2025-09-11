@@ -6,85 +6,110 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
-
 internal static class ObjectEx
 {
-    public static object ComArgsVal<T>(this Nullable<T> val, Func<T, bool>? condition = null)
+    /// <summary>
+    /// 将可空值转换为 COM 参数值，若为空或不满足条件则返回 Type.Missing。
+    /// </summary>
+    public static object ComArgsVal<T>(this T? val, Func<T, bool>? condition = null)
         where T : struct
     {
-        if (val != null && val.HasValue)
-        {
-            if (condition == null)
-                return val.Value;
-            if (condition(val.Value))
-                return val.Value;
-        }
+        if (val.HasValue && (condition == null || condition(val.Value)))
+            return val.Value;
+
         return Type.Missing;
     }
 
+    /// <summary>
+    /// 判断双精度值是否为 Excel 日期序列号（1900-01-01 至 9999-12-31）
+    /// </summary>
     public static bool IsExcelDateSerial(this double value)
     {
-        // Excel日期范围：1900年1月1日到9999年12月31日
         return value >= 1 && value <= 2958465.99999;
     }
 
+    /// <summary>
+    /// 将对象转换为 double
+    /// </summary>
     public static double ConvertToDouble(this object result)
     {
-        if (result is double d) return d;
-        if (result is int i) return i;
-        if (result is float f) return f;
-        if (result is decimal dec) return (double)dec;
-
-        if (double.TryParse(result?.ToString(), out double parsed))
-            return parsed;
-
-        throw new InvalidCastException($"Cannot convert {result?.GetType().Name ?? "null"} to double.");
+        return result switch
+        {
+            double d => d,
+            int i => i,
+            float f => f,
+            long l => l,
+            short s => s,
+            decimal dec => (double)dec,
+            _ => TryParseOrThrow<double>(result, double.TryParse, nameof(Double))
+        };
     }
 
+    /// <summary>
+    /// 将对象转换为 float
+    /// </summary>
     public static float ConvertToFloat(this object result)
     {
-        if (result is double d) return (float)d;
-        if (result is int i) return i;
-        if (result is float f) return f;
-        if (result is decimal dec) return (float)dec;
-
-        if (float.TryParse(result?.ToString(), out float parsed))
-            return parsed;
-
-        throw new InvalidCastException($"Cannot convert {result?.GetType().Name ?? "null"} to double.");
+        return result switch
+        {
+            double d => (float)d,
+            int i => i,
+            float f => f,
+            long l => l,
+            short s => s,
+            decimal dec => (float)dec,
+            _ => TryParseOrThrow<float>(result, float.TryParse, nameof(Single))
+        };
     }
 
+    /// <summary>
+    /// 将对象转换为 bool
+    /// </summary>
     public static bool ConvertToBool(this object result)
     {
-        if (result is bool b) return b;
-        if (result is int i) return i != 0;
-        if (result is double d) return d != 0;
-
-        if (bool.TryParse(result?.ToString(), out bool parsed))
-            return parsed;
-
-        throw new InvalidCastException($"Cannot convert {result?.GetType().Name ?? "null"} to bool.");
+        return result switch
+        {
+            bool b => b,
+            int i => i != 0,
+            short s => s != 0,
+            long l => l != 0,
+            double d => d != 0,
+            _ => TryParseOrThrow<bool>(result, bool.TryParse, nameof(Boolean))
+        };
     }
 
+    /// <summary>
+    /// 将对象转换为 DateTime
+    /// </summary>
     public static DateTime ConvertToDateTime(this object result)
     {
         if (result is DateTime dt) return dt;
-        if (result is double d && IsExcelDateSerial(d))
+        if (result is double d && d.IsExcelDateSerial())
             return DateTime.FromOADate(d);
 
-        if (DateTime.TryParse(result?.ToString(), out DateTime parsed))
-            return parsed;
-
-        throw new InvalidCastException($"Cannot convert {result?.GetType().Name ?? "null"} to DateTime.");
+        return TryParseOrThrow<DateTime>(result, DateTime.TryParse, nameof(DateTime));
     }
 
+    /// <summary>
+    /// 将对象转换为二维对象数组（单值转为 1x1 数组）
+    /// </summary>
     public static object[,] ConvertToArray(this object result)
     {
-        if (result is object[,] array) return array;
-
-        // 单值转换为1x1数组
-        object[,] singleValueArray = new object[1, 1];
-        singleValueArray[0, 0] = result;
-        return singleValueArray;
+        return result is object[,] array ? array : new object[1, 1] { { result } };
     }
+
+    // ========== 私有辅助方法 ==========
+
+    private static T TryParseOrThrow<T>(object result, TryParseDelegate<T> tryParse, string targetType)
+    {
+        if (result == null)
+            throw new InvalidCastException($"Cannot convert null to {targetType}.");
+
+        if (tryParse(result.ToString(), out T parsed))
+            return parsed;
+
+        throw new InvalidCastException($"Cannot convert {result.GetType().Name} to {targetType}.");
+    }
+
+    private delegate bool TryParseDelegate<T>(string s, out T result);
 }

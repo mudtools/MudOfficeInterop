@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -28,7 +28,7 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     XlWindowView View { get; set; }
 
     /// <summary>
-    /// 获取或设置显示比例（75 表示 75%）
+    /// 获取或设置显示比例（75 表示 75%、100 等于正常大小、200 等于两倍大小等）
     /// </summary>
     double Zoom { get; set; }
 
@@ -92,6 +92,21 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     bool DisplayWorkbookTabs { get; set; }
 
     /// <summary>
+    /// 获取或设置是否显示标尺
+    /// </summary>
+    bool DisplayRuler { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用自动筛选器日期分组功能
+    /// </summary>
+    bool AutoFilterDateGrouping { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示空白字符
+    /// </summary>
+    bool DisplayWhitespace { get; set; }
+
+    /// <summary>
     /// 获取或设置当前垂直滚动位置（行号）
     /// </summary>
     int ScrollRow { get; set; }
@@ -130,7 +145,17 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <summary>
     /// 获取当前选中的单元格区域
     /// </summary>
-    IExcelRange RangeSelection { get; }
+    IExcelRange? RangeSelection { get; }
+
+    /// <summary>
+    /// 获取当前选中的单元格区域
+    /// </summary>
+    IExcelRange? Selection { get; }
+
+    /// <summary>
+    /// 获取工作表视图集合
+    /// </summary>
+    IExcelSheetViews SheetViews { get; }
 
     /// <summary>
     /// 获取或设置水平拆分位置（像素）
@@ -165,7 +190,7 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <summary>
     /// 获取当前窗口中可见的单元格区域
     /// </summary>
-    IExcelRange VisibleRange { get; }
+    IExcelRange? VisibleRange { get; }
 
     /// <summary>
     /// 根据指定的坐标点获取对应的单元格区域
@@ -178,12 +203,12 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <summary>
     /// 获取选中的工作表集合
     /// </summary>
-    IExcelSheets SelectedSheets { get; }
+    IExcelSheets? SelectedSheets { get; }
 
     /// <summary>
     /// 获取关联的工作表
     /// </summary>
-    IExcelWorksheet ActiveSheet { get; }
+    IExcelWorksheet? ActiveSheet { get; }
 
     /// <summary>
     /// 获取父对象
@@ -245,7 +270,7 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <param name="up">向上滚动页数</param>
     /// <param name="right">向右滚动页数</param>
     /// <param name="left">向左滚动页数</param>
-    void LargeScroll(int down = 0, int up = 0, int right = 0, int left = 0);
+    void LargeScroll(int? down = 0, int? up = 0, int? right = 0, int? left = 0);
 
     /// <summary>
     /// 小范围滚动窗口内容
@@ -254,7 +279,7 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <param name="up">向上滚动行数</param>
     /// <param name="right">向右滚动列数</param>
     /// <param name="left">向左滚动列数</param>
-    void SmallScroll(int down = 0, int up = 0, int right = 0, int left = 0);
+    void SmallScroll(int? down = 0, int? up = 0, int? right = 0, int? left = 0);
 
     /// <summary>
     /// 将水平坐标点转换为屏幕像素值
@@ -271,8 +296,28 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     int PointsToScreenPixelsY(int points);
 
     /// <summary>
+    /// 执行打印预览
+    /// </summary>
+    void PrintPreview();
+
+    /// <summary>
     /// 打印窗口内容
     /// </summary>
     /// <param name="preview">是否预览</param>
     void PrintOut(bool preview = false);
+
+    /// <summary>
+    /// 封装Excel窗口打印方法
+    /// </summary>
+    /// <param name="copies">打印份数</param>
+    /// <param name="preview">是否预览</param>
+    /// <param name="activePrinter">打印机名称</param>
+    /// <param name="printToFile">是否打印到文件</param>
+    /// <param name="collate">是否逐份打印</param>
+    void PrintOut(
+        int copies = 1,
+        bool preview = false,
+        string? activePrinter = null,
+        bool printToFile = false,
+        bool collate = true);
 }

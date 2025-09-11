@@ -57,14 +57,14 @@ internal class ExcelWindow : IExcelWindow
 
     public XlWindowState WindowState
     {
-        get => (XlWindowState)_window.WindowState;
-        set => _window.WindowState = (MsExcel.XlWindowState)value;
+        get => (XlWindowState)(int)_window.WindowState;
+        set => _window.WindowState = (MsExcel.XlWindowState)(int)value;
     }
 
     public XlWindowView View
     {
-        get => (XlWindowView)_window.View;
-        set => _window.View = (MsExcel.XlWindowView)value;
+        get => (XlWindowView)(int)_window.View;
+        set => _window.View = (MsExcel.XlWindowView)(int)value;
     }
 
     public double Zoom
@@ -97,15 +97,16 @@ internal class ExcelWindow : IExcelWindow
         set => _window.Split = value;
     }
 
-    public IExcelRange VisibleRange => new ExcelRange(_window.VisibleRange);
+    public IExcelRange? VisibleRange => _window != null ? new ExcelRange(_window.VisibleRange) : null;
 
+    public IExcelSheetViews SheetViews => _window != null ? new ExcelSheetViews(_window.SheetViews) : null;
 
     private IExcelWorksheet _activeSheet;
 
     /// <summary>
     /// 获取活动工作表（带缓存）
     /// </summary>
-    public IExcelWorksheet ActiveSheet
+    public IExcelWorksheet? ActiveSheet
     {
         get
         {
@@ -198,6 +199,24 @@ internal class ExcelWindow : IExcelWindow
         set => _window.DisplayWorkbookTabs = value;
     }
 
+    public bool DisplayRuler
+    {
+        get => _window.DisplayRuler;
+        set => _window.DisplayRuler = value;
+    }
+
+    public bool AutoFilterDateGrouping
+    {
+        get => _window.AutoFilterDateGrouping;
+        set => _window.AutoFilterDateGrouping = value;
+    }
+
+    public bool DisplayWhitespace
+    {
+        get => _window.DisplayWhitespace;
+        set => _window.DisplayWhitespace = value;
+    }
+
     /// <summary>
     /// 获取或设置当前垂直滚动位置（行号）
     /// </summary>
@@ -272,10 +291,19 @@ internal class ExcelWindow : IExcelWindow
         }
     }
 
+    public IExcelRange? Selection
+    {
+        get
+        {
+            MsExcel.Range? range = _window.Selection as MsExcel.Range;
+            return range != null ? new ExcelRange(range) : null;
+        }
+    }
+
     /// <summary>
     /// 获取当前选中的单元格区域
     /// </summary>
-    public IExcelRange RangeSelection
+    public IExcelRange? RangeSelection
     {
         get
         {
@@ -314,7 +342,7 @@ internal class ExcelWindow : IExcelWindow
     /// <summary>
     /// 获取窗口类型（工作表/图表）
     /// </summary>
-    public XlWindowType Type => (XlWindowType)_window.Type;
+    public XlWindowType Type => (XlWindowType)(int)_window.Type;
 
     /// <summary>
     /// 获取窗口可用高度（排除工具栏等）
@@ -326,18 +354,18 @@ internal class ExcelWindow : IExcelWindow
     /// </summary>
     public double UsableWidth => _window.UsableWidth;
 
-    private IExcelSheets _selectedSheets;
+    private IExcelSheets? _selectedSheets;
 
     /// <summary>
     /// 获取选中的工作表集合
     /// </summary>
-    public IExcelSheets SelectedSheets
+    public IExcelSheets? SelectedSheets
     {
         get
         {
             if (_selectedSheets != null)
                 return _selectedSheets;
-            _selectedSheets = new ExcelSheets(_window.SelectedSheets);
+            _selectedSheets = _window != null ? new ExcelSheets(_window.SelectedSheets) : null;
             return _selectedSheets;
         }
     }
@@ -529,13 +557,13 @@ internal class ExcelWindow : IExcelWindow
     /// <param name="up">向上滚动页数</param>
     /// <param name="right">向右滚动页数</param>
     /// <param name="left">向左滚动页数</param>
-    public void LargeScroll(int down = 0, int up = 0, int right = 0, int left = 0)
+    public void LargeScroll(int? down = 0, int? up = 0, int? right = 0, int? left = 0)
     {
         _window.LargeScroll(
-            Down: down,
-            Up: up,
-            ToRight: right,
-            ToLeft: left
+            Down: down.ComArgsVal(),
+            Up: up.ComArgsVal(),
+            ToRight: right.ComArgsVal(),
+            ToLeft: left.ComArgsVal()
         );
     }
 
@@ -546,13 +574,13 @@ internal class ExcelWindow : IExcelWindow
     /// <param name="up">向上滚动行数</param>
     /// <param name="right">向右滚动列数</param>
     /// <param name="left">向左滚动列数</param>
-    public void SmallScroll(int down = 0, int up = 0, int right = 0, int left = 0)
+    public void SmallScroll(int? down = 0, int? up = 0, int? right = 0, int? left = 0)
     {
         _window.SmallScroll(
-            Down: down,
-            Up: up,
-            ToRight: right,
-            ToLeft: left
+            Down: down.ComArgsVal(),
+            Up: up.ComArgsVal(),
+            ToRight: right.ComArgsVal(),
+            ToLeft: left.ComArgsVal()
         );
     }
 
@@ -577,6 +605,36 @@ internal class ExcelWindow : IExcelWindow
     }
 
     /// <summary>
+    /// 封装Excel窗口打印方法
+    /// </summary>
+    /// <param name="copies">打印份数</param>
+    /// <param name="preview">是否预览</param>
+    /// <param name="activePrinter">打印机名称</param>
+    /// <param name="printToFile">是否打印到文件</param>
+    /// <param name="collate">是否逐份打印</param>
+    public void PrintOut(
+        int copies = 1,
+        bool preview = false,
+        string? activePrinter = null,
+        bool printToFile = false,
+        bool collate = true)
+    {
+        object missing = System.Type.Missing;
+
+        _window.PrintOut(
+            From: missing,
+            To: missing,
+            Copies: copies,
+            Preview: preview,
+            ActivePrinter: activePrinter ?? missing,
+            PrintToFile: printToFile,
+            Collate: collate,
+            PrToFileName: missing
+        );
+    }
+
+
+    /// <summary>
     /// 打印窗口内容
     /// </summary>
     /// <param name="preview">是否预览</param>
@@ -598,6 +656,22 @@ internal class ExcelWindow : IExcelWindow
                 Collate: System.Type.Missing,
                 PrToFileName: System.Type.Missing
             );
+        }
+    }
+
+    /// <summary>
+    /// 执行打印预览
+    /// </summary>
+    public void PrintPreview()
+    {
+        try
+        {
+            // 执行原生打印预览
+            _window.PrintPreview(EnableChanges: false);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("打印预览失败", ex);
         }
     }
     #endregion
