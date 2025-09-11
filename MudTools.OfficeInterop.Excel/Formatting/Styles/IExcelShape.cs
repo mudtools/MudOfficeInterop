@@ -14,8 +14,16 @@ public interface IExcelShape : IDisposable
 {
     #region 基础属性
 
+    /// <summary>
+    /// 获取形状的 OLE 格式设置属性
+    /// 对应 Shape.OLEFormat 属性，提供对嵌入的 OLE 对象格式设置的访问
+    /// </summary>
     IExcelOLEFormat OLEFormat { get; }
 
+    /// <summary>
+    /// 获取组合形状中单个子形状的集合
+    /// 对应 Shape.GroupItems 属性，仅当形状为组合形状时可用
+    /// </summary>
     IExcelGroupShapes GroupItems { get; }
 
     /// <summary>
