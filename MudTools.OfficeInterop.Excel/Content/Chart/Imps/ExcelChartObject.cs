@@ -216,7 +216,7 @@ internal class ExcelChartObject : IExcelChartObject
     /// <summary>
     /// 获取图表对象的底层形状对象
     /// </summary>
-    public IExcelShapeRange ShapeRange => _excelShape ?? (_excelShape = new ExcelShapeRange(_shapeRange));
+    public IExcelShapeRange ShapeRange => _excelShape ??= new ExcelShapeRange(_shapeRange);
 
     #endregion
 

@@ -5,6 +5,7 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
 using MudTools.OfficeInterop.Vbe;
 using MudTools.OfficeInterop.Vbe.Imp;
 
@@ -15,6 +16,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal partial class ExcelWorkbook : IExcelWorkbook
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelWorkbook));
     /// <summary>
     /// 底层的 COM Workbook 对象
     /// </summary>
@@ -530,10 +532,11 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <param name="conflictResolution">冲突解决方式</param>
     /// <param name="addToMru">是否添加到最近使用文件</param>
     /// <param name="local">是否本地格式</param>
-    public void SaveAs(string filename, int fileFormat = 0, string password = "",
-                      string writeResPassword = "", bool readOnlyRecommended = false,
-                      bool createBackup = false, XlSaveAsAccessMode accessMode = XlSaveAsAccessMode.xlNoChange, int conflictResolution = 2,
-                      bool addToMru = true, bool local = false)
+    public void SaveAs(string filename, XlFileFormat fileFormat = XlFileFormat.xlWorkbookDefault, string? password = null,
+                      string? writeResPassword = null, bool? readOnlyRecommended = false, bool? createBackup = false,
+                      XlSaveAsAccessMode accessMode = XlSaveAsAccessMode.xlNoChange,
+                      XlSaveConflictResolution? conflictResolution = XlSaveConflictResolution.xlLocalSessionChanges,
+                      bool? addToMru = true, bool? local = false)
     {
         if (_workbook == null || string.IsNullOrEmpty(filename))
             return;
@@ -541,13 +544,17 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         try
         {
             _workbook.SaveAs(
-                filename, fileFormat, password, writeResPassword, readOnlyRecommended,
-                createBackup, (MsExcel.XlSaveAsAccessMode)accessMode, conflictResolution, addToMru, local
+                filename, fileFormat, password.ComArgsVal(), writeResPassword.ComArgsVal(), readOnlyRecommended.ComArgsVal(),
+                createBackup.ComArgsVal(), (MsExcel.XlSaveAsAccessMode)accessMode, conflictResolution.ComArgsVal(), addToMru.ComArgsVal(), local.ComArgsVal()
             );
         }
-        catch
+        catch (COMException ce)
         {
-            // 忽略保存过程中的异常
+            log.Error($"保存文件{filename}失败:{ce.Message}", ce);
+        }
+        catch (Exception ex)
+        {
+            log.Error($"保存文件{filename}失败:{ex.Message}", ex);
         }
     }
 

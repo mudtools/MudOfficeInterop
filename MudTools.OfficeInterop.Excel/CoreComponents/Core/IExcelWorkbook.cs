@@ -252,10 +252,11 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="conflictResolution">冲突解决方式</param>
     /// <param name="addToMru">是否添加到最近使用文件</param>
     /// <param name="local">是否本地格式</param>
-    void SaveAs(string filename, int fileFormat = 0, string password = "",
-               string writeResPassword = "", bool readOnlyRecommended = false,
-               bool createBackup = false, XlSaveAsAccessMode accessMode = XlSaveAsAccessMode.xlNoChange, int conflictResolution = 2,
-               bool addToMru = true, bool local = false);
+    void SaveAs(string filename, XlFileFormat fileFormat = XlFileFormat.xlWorkbookDefault, string? password = null,
+                      string? writeResPassword = null, bool? readOnlyRecommended = false, bool? createBackup = false,
+                      XlSaveAsAccessMode accessMode = XlSaveAsAccessMode.xlNoChange,
+                      XlSaveConflictResolution? conflictResolution = XlSaveConflictResolution.xlLocalSessionChanges,
+                      bool? addToMru = true, bool? local = false);
 
     /// <summary>
     /// 关闭工作簿
