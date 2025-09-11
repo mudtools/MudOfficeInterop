@@ -13,17 +13,17 @@ namespace MudTools.OfficeInterop.Excel;
 public enum XlTextQualifier
 {
     /// <summary>
-/// 指定双引号 (") 作为文本识别符
-/// </summary>
+    /// 指定双引号 (") 作为文本识别符
+    /// </summary>
     xlTextQualifierDoubleQuote = 1,
-    
+
     /// <summary>
-/// 指定没有文本识别符
-/// </summary>
+    /// 指定没有文本识别符
+    /// </summary>
     xlTextQualifierNone = -4142,
-    
+
     /// <summary>
-/// 指定单引号 (') 作为文本识别符
-/// </summary>
+    /// 指定单引号 (') 作为文本识别符
+    /// </summary>
     xlTextQualifierSingleQuote = 2
 }

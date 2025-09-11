@@ -16,17 +16,17 @@ public enum XlSortOn
     /// 按单元格的值进行排序
     /// </summary>
     xlSortOnValues,
-    
+
     /// <summary>
     /// 按单元格背景颜色进行排序
     /// </summary>
     xlSortOnCellColor,
-    
+
     /// <summary>
     /// 按单元格字体颜色进行排序
     /// </summary>
     xlSortOnFontColor,
-    
+
     /// <summary>
     /// 按单元格图标进行排序
     /// </summary>
