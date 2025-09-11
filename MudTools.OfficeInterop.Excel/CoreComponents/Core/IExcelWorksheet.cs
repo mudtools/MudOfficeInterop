@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -53,6 +53,11 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     IExcelCells Cells { get; }
 
     /// <summary>
+    /// 获取工作表中的循环引用单元格集合
+    /// </summary>
+    IExcelCells CircularReference { get; }
+
+    /// <summary>
     /// 获取工作表的排序操作对象
     /// </summary>
     IExcelSort Sort { get; }
@@ -97,6 +102,52 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// 获取工作表类型
     /// </summary>
     XlSheetType Type { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否使用 Lotus 1-2-3 表达式计算规则
+    /// </summary>
+    bool TransitionExpEval { get; set; }
+
+    /// <summary>
+    /// 获取一个值，该值指示工作表当前是否处于保护模式
+    /// </summary>
+    bool ProtectionMode { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否启用大纲（分级显示）功能
+    /// </summary>
+    bool EnableOutlining { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否启用数据透视表功能
+    /// </summary>
+    bool EnablePivotTable { get; set; }
+
+    /// <summary>
+    /// 获取或设置工作表中可以选择的单元格类型
+    /// </summary>
+    XlEnableSelection EnableSelection { get; set; }
+
+    /// <summary>
+    /// 获取或设置在重新计算工作表时运行的宏名称
+    /// </summary>
+    string OnCalculate { get; set; }
+
+    /// <summary>
+    /// 获取或设置在工作表接收数据时运行的宏名称
+    /// </summary>
+    string OnData { get; set; }
+
+    /// <summary>
+    /// 获取或设置在双击工作表中的任何位置时运行的宏名称
+    /// </summary>
+    string OnDoubleClick { get; set; }
+
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否显示自动分页符
+    /// </summary>
+    bool DisplayAutomaticPageBreaks { get; set; }
 
     /// <summary>
     /// 获取或设置工作表是否可见
@@ -482,6 +533,12 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     void AutoFilter();
 
     /// <summary>
+    /// 重置工作表中的所有分页符
+    /// 清除所有手动添加的水平和垂直分页符，恢复到默认的分页符设置
+    /// </summary>
+    void ResetAllPageBreaks();
+
+    /// <summary>
     /// 计算工作表中的所有公式
     /// 对应 Worksheet.Calculate 方法
     /// </summary>
@@ -566,5 +623,8 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// </summary>
     event CalculateEventHandler SheetCalculate;
 
+    event BeforeDeleteEventHandler BeforeDelete;
+
+    event PivotTableChangeSyncEventHandler PivotTableChangeSync;
     #endregion
 }

@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -309,22 +309,22 @@ internal class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 工作表集合缓存
     /// </summary>
-    private IExcelSheets _worksheets;
+    private IExcelSheets? _worksheets;
 
     /// <summary>
     /// 获取工作簿中的所有工作表集合
     /// </summary>
-    public IExcelSheets Worksheets => _worksheets ?? (_worksheets = new ExcelSheets(_workbook?.Worksheets));
+    public IExcelSheets Worksheets => _worksheets ??= new ExcelSheets(_workbook?.Worksheets);
 
     /// <summary>
     /// 工作表集合缓存（所有类型）
     /// </summary>
-    private IExcelSheets _sheets;
+    private IExcelSheets? _sheets;
 
     /// <summary>
     /// 获取工作簿中的所有工作表集合（包括图表工作表等）
     /// </summary>
-    public IExcelSheets Sheets => _sheets ?? (_sheets = new ExcelSheets(_workbook?.Sheets));
+    public IExcelSheets Sheets => _sheets ??= new ExcelSheets(_workbook?.Sheets);
 
     /// <summary>
     /// 获取工作簿中的工作表数量
@@ -336,7 +336,7 @@ internal class ExcelWorkbook : IExcelWorkbook
     /// </summary>
     /// <param name="index">工作表索引</param>
     /// <returns>工作表对象</returns>
-    public IExcelWorksheet GetWorksheet(int index)
+    public IExcelWorksheet? GetWorksheet(int index)
     {
         if (_workbook?.Worksheets == null || index < 1 || index > WorksheetCount)
             return null;
@@ -357,7 +357,7 @@ internal class ExcelWorkbook : IExcelWorkbook
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    public IExcelWorksheet GetWorksheet(string name)
+    public IExcelWorksheet? GetWorksheet(string name)
     {
         if (_workbook?.Worksheets == null || string.IsNullOrEmpty(name))
             return null;
@@ -716,32 +716,32 @@ internal class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 名称集合缓存
     /// </summary>
-    private IExcelNames _names;
+    private IExcelNames? _names;
 
     /// <summary>
     /// 获取工作簿的名称集合
     /// </summary>
-    public IExcelNames Names => _names ?? (_names = new ExcelNames(_workbook?.Names));
+    public IExcelNames Names => _names ??= new ExcelNames(_workbook?.Names);
 
     /// <summary>
     /// 样式集合缓存
     /// </summary>
-    private IExcelStyles _styles;
+    private IExcelStyles? _styles;
 
     /// <summary>
     /// 获取工作簿的样式集合
     /// </summary>
-    public IExcelStyles Styles => _styles ?? (_styles = new ExcelStyles(_workbook?.Styles));
+    public IExcelStyles Styles => _styles ??= new ExcelStyles(_workbook?.Styles);
 
     /// <summary>
     /// 图表集合缓存
     /// </summary>
-    private IExcelSheets _charts;
+    private IExcelSheets? _charts;
 
     /// <summary>
     /// 获取工作簿的图表集合
     /// </summary>
-    public IExcelSheets Charts => _charts ?? (_charts = new ExcelSheets(_workbook?.Charts));
+    public IExcelSheets Charts => _charts ??= new ExcelSheets(_workbook?.Charts);
 
     /// <summary>
     /// 获取工作簿的透视表缓存集合

@@ -15,7 +15,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// Excel Worksheet 对象的二次封装实现类
 /// 负责对 Microsoft.Office.Interop.Excel.Worksheet 对象的安全访问和资源管理
 /// </summary>
-internal class ExcelWorksheet : IExcelWorksheet
+internal partial class ExcelWorksheet : IExcelWorksheet
 {
     private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -31,47 +31,7 @@ internal class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     private bool _disposedValue;
 
-    #region 事件字段
-
-    /// <summary>
-    /// Change事件
-    /// </summary>
-    private event ChangeEventHandler _change;
-
-    /// <summary>
-    /// SelectionChange事件
-    /// </summary>
-    private event SelectionChangeEventHandler _selectionChange;
-
-    /// <summary>
-    /// Activate事件
-    /// </summary>
-    private event ActivateEventHandler _sheetActivate;
-
-    /// <summary>
-    /// Deactivate事件
-    /// </summary>
-    private event DeactivateEventHandler _sheetDeactivate;
-
-    /// <summary>
-    /// BeforeDoubleClick事件
-    /// </summary>
-    private event BeforeDoubleClickEventHandler _beforeDoubleClick;
-
-    /// <summary>
-    /// BeforeRightClick事件
-    /// </summary>
-    private event BeforeRightClickEventHandler _beforeRightClick;
-
-    /// <summary>
-    /// Calculate事件
-    /// </summary>
-    private event CalculateEventHandler _sheetCalculate;
-
-    #endregion
-
     #region 构造函数和释放
-
     /// <summary>
     /// 初始化 ExcelWorksheet 实例
     /// </summary>
@@ -79,9 +39,10 @@ internal class ExcelWorksheet : IExcelWorksheet
     internal ExcelWorksheet(MsExcel.Worksheet worksheet)
     {
         _worksheet = worksheet ?? throw new ArgumentNullException(nameof(worksheet));
+        _docEvents_Event = worksheet;
+        InitializeEvents();
         _disposedValue = false;
     }
-
 
     /// <summary>
     /// 释放资源的核心方法
@@ -101,6 +62,7 @@ internal class ExcelWorksheet : IExcelWorksheet
                 _vPageBreaks?.Dispose();
                 _hPageBreaks?.Dispose();
                 _cells?.Dispose();
+                _circularReference?.Dispose();
                 _sort?.Dispose();
                 _pageSetup?.Dispose();
                 _shapes?.Dispose();
@@ -112,9 +74,14 @@ internal class ExcelWorksheet : IExcelWorksheet
                 _columns?.Dispose();
                 _rows?.Dispose();
 
+                DisConnectEvent();
+
                 // 释放底层COM对象
                 if (_worksheet != null)
                     Marshal.ReleaseComObject(_worksheet);
+
+                if (_docEvents_Event != null)
+                    Marshal.ReleaseComObject(_docEvents_Event);
             }
             catch
             {
@@ -123,6 +90,7 @@ internal class ExcelWorksheet : IExcelWorksheet
         }
 
         // 清理事件处理程序引用
+        _circularReference = null;
         _listObjects = null;
         _hPageBreaks = null;
         _vPageBreaks = null;
@@ -139,6 +107,7 @@ internal class ExcelWorksheet : IExcelWorksheet
         _beforeRightClick = null;
         _sheetCalculate = null;
         _worksheet = null;
+        _docEvents_Event = null;
         _disposedValue = true;
     }
 
@@ -220,6 +189,18 @@ internal class ExcelWorksheet : IExcelWorksheet
         }
     }
 
+    private IExcelCells? _circularReference = null;
+    public IExcelCells CircularReference
+    {
+        get
+        {
+            if (_circularReference != null)
+                return _circularReference;
+            _circularReference = new ExcelCells(_worksheet.CircularReference);
+            return _circularReference;
+        }
+    }
+
     private IExcelCells? _cells = null;
     public IExcelCells Cells
     {
@@ -269,6 +250,14 @@ internal class ExcelWorksheet : IExcelWorksheet
 
     public bool ProtectScenarios => _worksheet.ProtectScenarios;
 
+    public bool ProtectionMode => _worksheet.ProtectionMode;
+
+    public bool TransitionExpEval
+    {
+        get => _worksheet.TransitionExpEval;
+        set => _worksheet.TransitionExpEval = value;
+    }
+
     /// <summary>
     /// 获取或设置标准列宽
     /// </summary>
@@ -308,10 +297,56 @@ internal class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     public bool FilterMode => _worksheet.FilterMode;
 
+    public bool EnableOutlining
+    {
+        get => _worksheet.EnableOutlining;
+        set => _worksheet.EnableOutlining = value;
+    }
+
+    public bool EnablePivotTable
+    {
+        get => _worksheet.EnablePivotTable;
+        set => _worksheet.EnablePivotTable = value;
+    }
+
+    public string OnCalculate
+    {
+        get => _worksheet.OnCalculate;
+        set => _worksheet.OnCalculate = value;
+    }
+
+    public string OnData
+    {
+        get => _worksheet.OnData;
+        set => _worksheet.OnData = value;
+    }
+
+    public string OnDoubleClick
+    {
+        get => _worksheet.OnDoubleClick;
+        set => _worksheet.OnDoubleClick = value;
+    }
+
+    public bool DisplayAutomaticPageBreaks
+    {
+        get => _worksheet.DisplayAutomaticPageBreaks;
+        set => _worksheet.DisplayAutomaticPageBreaks = value;
+    }
+
     /// <summary>
     /// 获取工作表类型
     /// </summary>
     public XlSheetType Type => (XlSheetType)_worksheet.Type;
+
+    public XlEnableSelection EnableSelection
+    {
+        get => (XlEnableSelection)_worksheet.EnableSelection;
+        set
+        {
+            if (_worksheet != null)
+                _worksheet.EnableSelection = (MsExcel.XlEnableSelection)(int)value;
+        }
+    }
 
     /// <summary>
     /// 获取工作表的索引位置
@@ -1196,6 +1231,11 @@ internal class ExcelWorksheet : IExcelWorksheet
         _worksheet?.UsedRange?.AutoFilter();
     }
 
+    public void ResetAllPageBreaks()
+    {
+        _worksheet?.ResetAllPageBreaks();
+    }
+
     /// <summary>
     /// 计算工作表中的所有公式
     /// </summary>
@@ -1267,138 +1307,5 @@ internal class ExcelWorksheet : IExcelWorksheet
     {
         _worksheet?.UsedRange?.EntireRow?.AutoFit();
     }
-    #endregion
-
-    #region 事件实现
-
-    /// <summary>
-    /// 当工作表内容发生改变时触发
-    /// </summary>
-    public event ChangeEventHandler Change
-    {
-        add { _change += value; }
-        remove { _change -= value; }
-    }
-
-    /// <summary>
-    /// 当工作表选择区域发生改变时触发
-    /// </summary>
-    public event SelectionChangeEventHandler SelectionChange
-    {
-        add { _selectionChange += value; }
-        remove { _selectionChange -= value; }
-    }
-
-    /// <summary>
-    /// 当工作表被激活时触发
-    /// </summary>
-    public event ActivateEventHandler SheetActivate
-    {
-        add { _sheetActivate += value; }
-        remove { _sheetActivate -= value; }
-    }
-
-    /// <summary>
-    /// 当工作表被取消激活时触发
-    /// </summary>
-    public event DeactivateEventHandler SheetDeactivate
-    {
-        add { _sheetDeactivate += value; }
-        remove { _sheetDeactivate -= value; }
-    }
-
-    /// <summary>
-    /// 当工作表被双击时触发
-    /// </summary>
-    public event BeforeDoubleClickEventHandler BeforeDoubleClick
-    {
-        add { _beforeDoubleClick += value; }
-        remove { _beforeDoubleClick -= value; }
-    }
-
-    /// <summary>
-    /// 当工作表被右键单击时触发
-    /// </summary>
-    public event BeforeRightClickEventHandler BeforeRightClick
-    {
-        add { _beforeRightClick += value; }
-        remove { _beforeRightClick -= value; }
-    }
-
-    /// <summary>
-    /// 当工作表计算完成后触发
-    /// </summary>
-    public event CalculateEventHandler SheetCalculate
-    {
-        add { _sheetCalculate += value; }
-        remove { _sheetCalculate -= value; }
-    }
-
-    #endregion
-
-    #region 事件触发方法
-
-    /// <summary>
-    /// 触发Change事件
-    /// </summary>
-    /// <param name="target">发生变化的单元格区域</param>
-    internal void OnChange(IExcelRange target)
-    {
-        _change?.Invoke(target);
-    }
-
-    /// <summary>
-    /// 触发SelectionChange事件
-    /// </summary>
-    /// <param name="target">选中的区域</param>
-    internal void OnSelectionChange(IExcelRange target)
-    {
-        _selectionChange?.Invoke(target);
-    }
-
-    /// <summary>
-    /// 触发Activate事件
-    /// </summary>
-    internal void OnSheetActivate()
-    {
-        _sheetActivate?.Invoke();
-    }
-
-    /// <summary>
-    /// 触发Deactivate事件
-    /// </summary>
-    internal void OnSheetDeactivate()
-    {
-        _sheetDeactivate?.Invoke();
-    }
-
-    /// <summary>
-    /// 触发BeforeDoubleClick事件
-    /// </summary>
-    /// <param name="target">双击的区域</param>
-    /// <param name="cancel">是否取消默认操作</param>
-    internal void OnBeforeDoubleClick(IExcelRange target, ref bool cancel)
-    {
-        _beforeDoubleClick?.Invoke(target, ref cancel);
-    }
-
-    /// <summary>
-    /// 触发BeforeRightClick事件
-    /// </summary>
-    /// <param name="target">右键单击的区域</param>
-    /// <param name="cancel">是否取消默认操作</param>
-    internal void OnBeforeRightClick(IExcelRange target, ref bool cancel)
-    {
-        _beforeRightClick?.Invoke(target, ref cancel);
-    }
-
-    /// <summary>
-    /// 触发Calculate事件
-    /// </summary>
-    internal void OnSheetCalculate()
-    {
-        _sheetCalculate?.Invoke();
-    }
-
     #endregion
 }
