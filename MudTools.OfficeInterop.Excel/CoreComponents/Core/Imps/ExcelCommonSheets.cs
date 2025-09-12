@@ -1,9 +1,12 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using log4net;
+using System.Reflection;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
 
@@ -14,6 +17,10 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
 {
     #region IDisposable Support
     protected bool _disposedValue = false;
+    /// <summary>
+    /// 用于记录日志的静态日志记录器。
+    /// </summary>
+    private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
     protected virtual void Dispose(bool disposing)
     {
@@ -180,9 +187,13 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
                         result.Add(worksheet);
                 }
             }
-            catch
+            catch (COMException ce)
             {
-                // 忽略单个工作表访问异常
+                _log.Error($"根据工作表名查找工作表发生异常：{ce.Message}", ce);
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"根据工作表名查找工作表发生异常：{ex.Message}", ex);
             }
         }
         return [.. result];
@@ -209,9 +220,13 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
                     result.Add(worksheet);
                 }
             }
-            catch
+            catch (COMException ce)
             {
-                // 忽略单个工作表访问异常
+                _log.Error($"根据工作表类型查找工作表发生异常：{ce.Message}", ce);
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"根据工作表类型查找工作表发生异常：{ex.Message}", ex);
             }
         }
         return [.. result];
@@ -356,7 +371,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException("添加工作表失败", ex);
+            throw new ExcelOperationException($"添加工作表失败:{ex.Message}", ex);
         }
     }
 
@@ -451,7 +466,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException("工作表复制失败", ex);
+            throw new ExcelOperationException($"工作表复制失败:{ex.Message}", ex);
         }
     }
 
@@ -527,19 +542,16 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                try
-                {
-                    this[i]?.Protect(password);
-                }
-                catch
-                {
-                    // 忽略单个工作表保护异常
-                }
+                this[i]?.Protect(password);
             }
         }
-        catch
+        catch (COMException ce)
         {
-            // 忽略保护过程中的异常
+            _log.Error($"工作表保护过程中发生异常：{ce.Message}", ce);
+        }
+        catch (Exception ex)
+        {
+            _log.Error($"工作表保护过程中发生异常：{ex.Message}", ex);
         }
     }
 
@@ -555,19 +567,16 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                try
-                {
-                    this[i]?.Unprotect(password);
-                }
-                catch
-                {
-                    // 忽略单个工作表取消保护异常
-                }
+                this[i]?.Unprotect(password);
             }
         }
-        catch
+        catch (COMException ce)
         {
-            // 忽略取消保护过程中的异常
+            _log.Error($"取消工作表保护过程中发生异常：{ce.Message}", ce);
+        }
+        catch (Exception ex)
+        {
+            _log.Error($"取消工作表保护过程中发生异常：{ex.Message}", ex);
         }
     }
 
