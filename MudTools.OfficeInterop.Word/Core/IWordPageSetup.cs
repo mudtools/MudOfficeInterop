@@ -103,6 +103,31 @@ public interface IWordPageSetup : IDisposable
     WdSectionDirection SectionDirection { get; set; }
 
     /// <summary>
+    /// 获取或设置书籍折页反向打印设置
+    /// </summary>
+    bool BookFoldRevPrinting { get; set; }
+
+    /// <summary>
+    /// 获取或设置书籍折页打印的纸张数量
+    /// </summary>
+    int BookFoldPrintingSheets { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用书籍折页打印模式
+    /// </summary>
+    bool BookFoldPrinting { get; set; }
+
+    /// <summary>
+    /// 获取或设置页面布局模式
+    /// </summary>
+    WdLayoutMode LayoutMode { get; set; }
+
+    /// <summary>
+    /// 获取或设置装订线位置
+    /// </summary>
+    WdGutterStyle GutterPos { get; set; }
+
+    /// <summary>
     /// 获取或设置分节起始方式
     /// </summary>
     WdSectionStart SectionStart { get; set; }
@@ -146,4 +171,9 @@ public interface IWordPageSetup : IDisposable
     /// 获取或设置装订线是否在顶部
     /// </summary>
     bool GutterOnTop { get; set; }
+
+    /// <summary>
+    /// 获取或设置装订线宽度
+    /// </summary>
+    float Gutter { get; set; }
 }

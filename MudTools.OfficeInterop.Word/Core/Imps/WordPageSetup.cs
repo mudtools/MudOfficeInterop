@@ -116,10 +116,41 @@ internal class WordPageSetup : IWordPageSetup
         get => _pageSetup.ShowGrid;
         set => _pageSetup.ShowGrid = value;
     }
+
+    public bool BookFoldPrinting
+    {
+        get => _pageSetup.BookFoldPrinting;
+        set => _pageSetup.BookFoldPrinting = value;
+    }
+
+    public int BookFoldPrintingSheets
+    {
+        get => _pageSetup.BookFoldPrintingSheets;
+        set => _pageSetup.BookFoldPrintingSheets = value;
+    }
+
+    public bool BookFoldRevPrinting
+    {
+        get => _pageSetup.BookFoldRevPrinting;
+        set => _pageSetup.BookFoldRevPrinting = value;
+    }
+
     public WdSectionDirection SectionDirection
     {
         get => (WdSectionDirection)_pageSetup.SectionDirection;
         set => _pageSetup.SectionDirection = (MsWord.WdSectionDirection)value;
+    }
+
+    public WdGutterStyle GutterPos
+    {
+        get => (WdGutterStyle)_pageSetup.GutterPos;
+        set => _pageSetup.GutterPos = (MsWord.WdGutterStyle)value;
+    }
+
+    public WdLayoutMode LayoutMode
+    {
+        get => (WdLayoutMode)_pageSetup.LayoutMode;
+        set => _pageSetup.LayoutMode = (MsWord.WdLayoutMode)value;
     }
 
     public WdOrientation Orientation
@@ -181,6 +212,12 @@ internal class WordPageSetup : IWordPageSetup
     {
         get => _pageSetup.TwoPagesOnOne;
         set => _pageSetup.TwoPagesOnOne = value;
+    }
+
+    public float Gutter
+    {
+        get => _pageSetup.Gutter;
+        set => _pageSetup.Gutter = value;
     }
 
     public bool GutterOnTop
