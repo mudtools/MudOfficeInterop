@@ -73,6 +73,36 @@ public interface IWordPageSetup : IDisposable
     int DifferentFirstPageHeaderFooter { get; set; }
 
     /// <summary>
+    /// 获取或设置每行字符数
+    /// </summary>
+    float CharsLine { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否抑制脚注显示（0=不抑制，1=抑制）
+    /// </summary>
+    int SuppressEndnotes { get; set; }
+
+    /// <summary>
+    /// 获取或设置每页行数
+    /// </summary>
+    float LinesPage { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示网格线
+    /// </summary>
+    bool ShowGrid { get; set; }
+
+    /// <summary>
+    /// 获取或设置装订线样式
+    /// </summary>
+    WdGutterStyleOld GutterStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置章节文本方向
+    /// </summary>
+    WdSectionDirection SectionDirection { get; set; }
+
+    /// <summary>
     /// 获取或设置分节起始方式
     /// </summary>
     WdSectionStart SectionStart { get; set; }

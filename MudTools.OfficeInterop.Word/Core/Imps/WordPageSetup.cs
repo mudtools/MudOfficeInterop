@@ -99,13 +99,40 @@ internal class WordPageSetup : IWordPageSetup
         set => _pageSetup.SuppressEndnotes = value;
     }
 
-    /// <summary>
-    /// 获取或设置页面方向（0=纵向，1=横向）
-    /// </summary>
+    public float CharsLine
+    {
+        get => _pageSetup.CharsLine;
+        set => _pageSetup.CharsLine = value;
+    }
+
+    public float LinesPage
+    {
+        get => _pageSetup.LinesPage;
+        set => _pageSetup.LinesPage = value;
+    }
+
+    public bool ShowGrid
+    {
+        get => _pageSetup.ShowGrid;
+        set => _pageSetup.ShowGrid = value;
+    }
+    public WdSectionDirection SectionDirection
+    {
+        get => (WdSectionDirection)_pageSetup.SectionDirection;
+        set => _pageSetup.SectionDirection = (MsWord.WdSectionDirection)value;
+    }
+
     public WdOrientation Orientation
     {
         get => (WdOrientation)_pageSetup.Orientation;
         set => _pageSetup.Orientation = (MsWord.WdOrientation)value;
+    }
+
+
+    public WdGutterStyleOld GutterStyle
+    {
+        get => (WdGutterStyleOld)_pageSetup.GutterStyle;
+        set => _pageSetup.GutterStyle = (MsWord.WdGutterStyleOld)value;
     }
 
     public IWordLineNumbering LineNumbering
@@ -179,6 +206,10 @@ internal class WordPageSetup : IWordPageSetup
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
+        if (disposing && _pageSetup != null)
+        {
+            Marshal.ReleaseComObject(_pageSetup);
+        }
         _disposedValue = true;
     }
 
