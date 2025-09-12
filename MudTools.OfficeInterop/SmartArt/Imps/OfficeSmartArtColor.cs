@@ -40,20 +40,15 @@ internal class OfficeSmartArtColor : IOfficeSmartArtColor
     public string Id => _smartArtColor?.Id ?? string.Empty;
 
     /// <inheritdoc/>
-    public IOfficeSmartArtColors Parent
+    public IOfficeSmartArtColors? Parent
     {
         get
         {
             if (_smartArtColor?.Parent != null)
             {
-                try
-                {
-                    return new OfficeSmartArtColors(_smartArtColor.Parent as MsCore.SmartArtColors);
-                }
-                catch
-                {
-                    return null;
-                }
+                if (_smartArtColor.Parent is MsCore.SmartArtColors smartArtColor)
+                    return new OfficeSmartArtColors(smartArtColor);
+                return null;
             }
             return null;
         }

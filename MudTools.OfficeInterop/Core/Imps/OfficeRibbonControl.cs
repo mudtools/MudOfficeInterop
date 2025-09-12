@@ -22,7 +22,6 @@ internal class OfficeRibbonControl : IOfficeRibbonControl
     /// 初始化 OfficeRibbonControl 实例
     /// </summary>
     /// <param name="ribbonControl">要封装的 Microsoft.Office.Core.IRibbonControl 对象</param>
-    /// <param name="ribbonUI">关联的 IRibbonUI 对象，用于刷新 (可选)</param>
     internal OfficeRibbonControl(MsCore.IRibbonControl ribbonControl /*, IOfficeRibbonUI ribbonUI = null*/)
     {
         _ribbonControl = ribbonControl ?? throw new ArgumentNullException(nameof(ribbonControl));

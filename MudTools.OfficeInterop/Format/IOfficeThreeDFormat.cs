@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -36,9 +36,38 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     float BevelBottomDepth { get; set; }
 
+    /// <summary>
+    /// 获取或设置三维效果的透视效果启用状态。
+    /// </summary>
     bool Perspective { get; set; }
 
+    /// <summary>
+    /// 获取或设置三维效果的可见性。
+    /// </summary>
     bool Visible { get; set; }
+
+    /// <summary>
+    /// 获取或设置三维效果的Z轴坐标值。
+    /// </summary>
+    float Z { get; set; }
+
+    /// <summary>
+    /// 水平旋转角度增量调整。
+    /// </summary>
+    /// <param name="increment">水平旋转角度的增量值</param>
+    void IncrementRotationHorizontal(float increment);
+
+    /// <summary>
+    /// X轴旋转角度增量调整。
+    /// </summary>
+    /// <param name="increment">X轴旋转角度的增量值</param>
+    void IncrementRotationX(float increment);
+
+    /// <summary>
+    /// Y轴旋转角度增量调整。
+    /// </summary>
+    /// <param name="increment">Y轴旋转角度的增量值</param>
+    void IncrementRotationY(float increment);
 
     /// <summary>
     /// 获取或设置三维效果的旋转X轴角度。
@@ -55,7 +84,6 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     float RotationZ { get; set; }
 
-    float Z { get; set; }
 
     /// <summary>
     /// 获取或设置三维效果的场深。
@@ -103,12 +131,6 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     /// <param name="presetThreeDFormat">预设三维效果。</param>
     void PresetThreeDFormat(MsoPresetExtrusionDirection presetThreeDFormat);
-
-    void IncrementRotationHorizontal(float increment);
-
-    void IncrementRotationX(float increment);
-
-    void IncrementRotationY(float increment);
 
     /// <summary>
     /// 设置灯光效果。

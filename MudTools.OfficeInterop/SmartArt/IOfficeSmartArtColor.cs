@@ -35,5 +35,5 @@ public interface IOfficeSmartArtColor : IDisposable
     /// <summary>
     /// 获取 SmartArt 颜色方案的父对象。
     /// </summary>
-    IOfficeSmartArtColors Parent { get; }
+    IOfficeSmartArtColors? Parent { get; }
 }

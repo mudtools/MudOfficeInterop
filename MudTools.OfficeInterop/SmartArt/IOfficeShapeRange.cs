@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -61,12 +61,6 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// </summary>
     float Rotation { get; set; }
 
-    bool Connector { get; }
-
-    IOfficeConnectorFormat ConnectorFormat { get; }
-
-    IOfficeThreeDFormat ThreeD { get; }
-
     /// <summary>
     /// 获取形状范围的填充格式。
     /// </summary>
@@ -82,8 +76,29 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// </summary>
     IOfficeShadowFormat Shadow { get; }
 
+    /// <summary>
+    /// 获取一个值，该值指示形状是否为连接符。
+    /// </summary>
+    bool Connector { get; }
+
+    /// <summary>
+    /// 获取形状的连接符格式。
+    /// </summary>
+    IOfficeConnectorFormat ConnectorFormat { get; }
+
+    /// <summary>
+    /// 获取形状的三维格式。
+    /// </summary>
+    IOfficeThreeDFormat ThreeD { get; }
+
+    /// <summary>
+    /// 获取形状的文字效果格式。
+    /// </summary>
     IOfficeTextEffectFormat TextEffect { get; }
 
+    /// <summary>
+    /// 获取形状的图片格式。
+    /// </summary>
     IOfficePictureFormat PictureFormat { get; }
 
     /// <summary>

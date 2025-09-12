@@ -15,7 +15,6 @@ namespace MudTools.OfficeInterop;
 /// </remarks>
 public interface IOfficeCommandBarButton : IOfficeCommandBarControl
 {
-    int Priority { get; set; }
 
     /// <summary>
     /// 获取或设置按钮的超链接地址
@@ -37,7 +36,14 @@ public interface IOfficeCommandBarButton : IOfficeCommandBarControl
     /// </summary>
     MsoButtonState State { get; set; }
 
+    /// <summary>
+    /// 获取或设置按钮的优先级
+    /// </summary>
+    int Priority { get; set; }
 
+    /// <summary>
+    /// 获取或设置按钮的样式
+    /// </summary>
     MsoButtonStyle Style { get; set; }
 
     /// <summary>
