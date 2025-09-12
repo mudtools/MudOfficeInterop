@@ -69,13 +69,97 @@ internal class WordPageSetup : IWordPageSetup
         set => _pageSetup.PageHeight = value;
     }
 
+    public float HeaderDistance
+    {
+        get => _pageSetup.HeaderDistance;
+        set => _pageSetup.HeaderDistance = value;
+    }
+
+    public float FooterDistance
+    {
+        get => _pageSetup.FooterDistance;
+        set => _pageSetup.FooterDistance = value;
+    }
+
+    public int OddAndEvenPagesHeaderFooter
+    {
+        get => _pageSetup.OddAndEvenPagesHeaderFooter;
+        set => _pageSetup.OddAndEvenPagesHeaderFooter = value;
+    }
+
+    public int DifferentFirstPageHeaderFooter
+    {
+        get => _pageSetup.DifferentFirstPageHeaderFooter;
+        set => _pageSetup.DifferentFirstPageHeaderFooter = value;
+    }
+
+    public int SuppressEndnotes
+    {
+        get => _pageSetup.SuppressEndnotes;
+        set => _pageSetup.SuppressEndnotes = value;
+    }
+
     /// <summary>
     /// 获取或设置页面方向（0=纵向，1=横向）
     /// </summary>
-    public int Orientation
+    public WdOrientation Orientation
     {
-        get => (int)_pageSetup.Orientation;
+        get => (WdOrientation)_pageSetup.Orientation;
         set => _pageSetup.Orientation = (MsWord.WdOrientation)value;
+    }
+
+    public IWordLineNumbering LineNumbering
+    {
+        get => new WordLineNumbering(_pageSetup.LineNumbering);
+        set => _pageSetup.LineNumbering = ((WordLineNumbering)value)._lineNumbering;
+    }
+
+    public IWordTextColumns TextColumns
+    {
+        get => new WordTextColumns(_pageSetup.TextColumns);
+        set => _pageSetup.TextColumns = ((WordTextColumns)value)._textColumns;
+    }
+
+    public WdSectionStart SectionStart
+    {
+        get => (WdSectionStart)_pageSetup.SectionStart;
+        set => _pageSetup.SectionStart = (MsWord.WdSectionStart)value;
+    }
+
+    public WdPaperTray FirstPageTray
+    {
+        get => (WdPaperTray)_pageSetup.FirstPageTray;
+        set => _pageSetup.FirstPageTray = (MsWord.WdPaperTray)value;
+    }
+
+    public WdPaperTray OtherPagesTray
+    {
+        get => (WdPaperTray)_pageSetup.OtherPagesTray;
+        set => _pageSetup.OtherPagesTray = (MsWord.WdPaperTray)value;
+    }
+
+    public WdVerticalAlignment VerticalAlignment
+    {
+        get => (WdVerticalAlignment)_pageSetup.VerticalAlignment;
+        set => _pageSetup.VerticalAlignment = (MsWord.WdVerticalAlignment)value;
+    }
+
+    public WdPaperSize PaperSize
+    {
+        get => (WdPaperSize)_pageSetup.PaperSize;
+        set => _pageSetup.PaperSize = (MsWord.WdPaperSize)value;
+    }
+
+    public bool TwoPagesOnOne
+    {
+        get => _pageSetup.TwoPagesOnOne;
+        set => _pageSetup.TwoPagesOnOne = value;
+    }
+
+    public bool GutterOnTop
+    {
+        get => _pageSetup.GutterOnTop;
+        set => _pageSetup.GutterOnTop = value;
     }
 
     /// <summary>
