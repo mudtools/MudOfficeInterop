@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -53,36 +53,36 @@ internal class ExcelCellFormat : IExcelCellFormat
     public XlOrientation Orientation
     {
         get => (XlOrientation)_cellFormat.Orientation;
-        set => _cellFormat.Orientation = (MsExcel.XlOrientation)value; // value 应为 MsExcel.XlOrientation 枚举值对应的 int
+        set => _cellFormat.Orientation = (MsExcel.XlOrientation)value;
     }
 
-    public bool ShrinkToFit
+    public bool? ShrinkToFit
     {
-        get => Convert.ToBoolean(_cellFormat.ShrinkToFit);
+        get => _cellFormat?.ShrinkToFit != null ? Convert.ToBoolean(_cellFormat.ShrinkToFit) : null;
         set => _cellFormat.ShrinkToFit = value;
     }
 
-    public bool WrapText
+    public bool? WrapText
     {
-        get => Convert.ToBoolean(_cellFormat.WrapText);
+        get => _cellFormat?.WrapText != null ? Convert.ToBoolean(_cellFormat.WrapText) : null;
         set => _cellFormat.WrapText = value;
     }
 
-    public bool MergeCells
+    public bool? MergeCells
     {
-        get => Convert.ToBoolean(_cellFormat.MergeCells);
+        get => _cellFormat?.MergeCells != null ? Convert.ToBoolean(_cellFormat.MergeCells) : null;
         set => _cellFormat.MergeCells = value;
     }
 
-    public bool Locked
+    public bool? Locked
     {
-        get => Convert.ToBoolean(_cellFormat.Locked);
+        get => _cellFormat?.Locked != null ? Convert.ToBoolean(_cellFormat.Locked) : null;
         set => _cellFormat.Locked = value;
     }
 
-    public bool FormulaHidden
+    public bool? FormulaHidden
     {
-        get => Convert.ToBoolean(_cellFormat.FormulaHidden);
+        get => _cellFormat?.FormulaHidden != null ? Convert.ToBoolean(_cellFormat.FormulaHidden) : null;
         set => _cellFormat.FormulaHidden = value;
     }
 
@@ -94,11 +94,11 @@ internal class ExcelCellFormat : IExcelCellFormat
     #endregion
 
     #region 格式设置 (子对象)
-    public IExcelFont Font => _cellFormat.Font != null ? new ExcelFont(_cellFormat.Font) : null;
+    public IExcelFont? Font => _cellFormat.Font != null ? new ExcelFont(_cellFormat.Font) : null;
 
-    public IExcelInterior Interior => _cellFormat.Interior != null ? new ExcelInterior(_cellFormat.Interior) : null;
+    public IExcelInterior? Interior => _cellFormat.Interior != null ? new ExcelInterior(_cellFormat.Interior) : null;
 
-    public IExcelBorders Borders => _cellFormat.Borders != null ? new ExcelBorders(_cellFormat.Borders) : null;
+    public IExcelBorders? Borders => _cellFormat.Borders != null ? new ExcelBorders(_cellFormat.Borders) : null;
 
 
     #endregion

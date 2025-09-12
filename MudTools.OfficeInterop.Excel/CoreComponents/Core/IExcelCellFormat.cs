@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -59,31 +59,31 @@ public interface IExcelCellFormat : IDisposable
     /// 获取或设置单元格是否自动缩放字体
     /// 对应 CellFormat.ShrinkToFit 属性
     /// </summary>
-    bool ShrinkToFit { get; set; }
+    bool? ShrinkToFit { get; set; }
 
     /// <summary>
     /// 获取或设置单元格是否自动换行
     /// 对应 CellFormat.WrapText 属性
     /// </summary>
-    bool WrapText { get; set; }
+    bool? WrapText { get; set; }
 
     /// <summary>
     /// 获取或设置单元格的合并单元格属性
     /// 对应 CellFormat.MergeCells 属性
     /// </summary>
-    bool MergeCells { get; set; }
+    bool? MergeCells { get; set; }
 
     /// <summary>
     /// 获取或设置单元格的锁定状态
     /// 对应 CellFormat.Locked 属性
     /// </summary>
-    bool Locked { get; set; }
+    bool? Locked { get; set; }
 
     /// <summary>
     /// 获取或设置单元格的公式隐藏状态
     /// 对应 CellFormat.FormulaHidden 属性
     /// </summary>
-    bool FormulaHidden { get; set; }
+    bool? FormulaHidden { get; set; }
 
     /// <summary>
     /// 获取或设置单元格的本地化数字格式代码
@@ -92,24 +92,24 @@ public interface IExcelCellFormat : IDisposable
     string NumberFormatLocal { get; set; }
     #endregion
 
-    #region 格式设置 (子对象)
+    #region 格式设置 
     /// <summary>
     /// 获取单元格的字体对象
     /// 对应 CellFormat.Font 属性
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取单元格的背景填充对象
     /// 对应 CellFormat.Interior 属性
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取单元格的边框对象
     /// 对应 CellFormat.Borders 属性
     /// </summary>
-    IExcelBorders Borders { get; }
+    IExcelBorders? Borders { get; }
     #endregion
 
     #region 操作方法
