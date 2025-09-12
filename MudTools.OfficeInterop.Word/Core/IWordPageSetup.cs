@@ -13,6 +13,8 @@ namespace MudTools.OfficeInterop.Word;
 /// </summary>
 public interface IWordPageSetup : IDisposable
 {
+    #region 页面尺寸和边距设置
+
     /// <summary>
     /// 获取或设置上边距
     /// </summary>
@@ -43,10 +45,52 @@ public interface IWordPageSetup : IDisposable
     /// </summary>
     float PageHeight { get; set; }
 
+    #endregion
+
+    #region 页面方向和布局设置
+
     /// <summary>
     /// 获取或设置页面方向（0=纵向，1=横向）
     /// </summary>
     WdOrientation Orientation { get; set; }
+
+    /// <summary>
+    /// 获取或设置页面垂直对齐方式
+    /// </summary>
+    WdVerticalAlignment VerticalAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置页面布局模式
+    /// </summary>
+    WdLayoutMode LayoutMode { get; set; }
+
+    #endregion
+
+    #region 装订线设置
+
+    /// <summary>
+    /// 获取或设置装订线宽度
+    /// </summary>
+    float Gutter { get; set; }
+
+    /// <summary>
+    /// 获取或设置装订线样式
+    /// </summary>
+    WdGutterStyleOld GutterStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置装订线位置
+    /// </summary>
+    WdGutterStyle GutterPos { get; set; }
+
+    /// <summary>
+    /// 获取或设置装订线是否在顶部
+    /// </summary>
+    bool GutterOnTop { get; set; }
+
+    #endregion
+
+    #region 文本列和行号设置
 
     /// <summary>
     /// 获取或设置文本列集合
@@ -63,6 +107,20 @@ public interface IWordPageSetup : IDisposable
     IWordLineNumbering LineNumbering { get; set; }
 
     /// <summary>
+    /// 获取或设置每行字符数
+    /// </summary>
+    float CharsLine { get; set; }
+
+    /// <summary>
+    /// 获取或设置每页行数
+    /// </summary>
+    float LinesPage { get; set; }
+
+    #endregion
+
+    #region 页眉页脚设置
+
+    /// <summary>
     /// 获取或设置奇偶页页眉页脚是否不同（0=相同，1=不同）
     /// </summary>
     int OddAndEvenPagesHeaderFooter { get; set; }
@@ -73,34 +131,32 @@ public interface IWordPageSetup : IDisposable
     int DifferentFirstPageHeaderFooter { get; set; }
 
     /// <summary>
-    /// 获取或设置每行字符数
+    /// 获取或设置页眉到页面顶端的距离
     /// </summary>
-    float CharsLine { get; set; }
+    float HeaderDistance { get; set; }
 
     /// <summary>
-    /// 获取或设置是否抑制脚注显示（0=不抑制，1=抑制）
+    /// 获取或设置页脚到页面底端的距离
     /// </summary>
-    int SuppressEndnotes { get; set; }
+    float FooterDistance { get; set; }
 
-    /// <summary>
-    /// 获取或设置每页行数
-    /// </summary>
-    float LinesPage { get; set; }
+    #endregion
 
-    /// <summary>
-    /// 获取或设置是否显示网格线
-    /// </summary>
-    bool ShowGrid { get; set; }
-
-    /// <summary>
-    /// 获取或设置装订线样式
-    /// </summary>
-    WdGutterStyleOld GutterStyle { get; set; }
+    #region 章节和分节设置
 
     /// <summary>
     /// 获取或设置章节文本方向
     /// </summary>
     WdSectionDirection SectionDirection { get; set; }
+
+    /// <summary>
+    /// 获取或设置分节起始方式
+    /// </summary>
+    WdSectionStart SectionStart { get; set; }
+
+    #endregion
+
+    #region 书籍折页打印设置
 
     /// <summary>
     /// 获取或设置书籍折页反向打印设置
@@ -117,30 +173,9 @@ public interface IWordPageSetup : IDisposable
     /// </summary>
     bool BookFoldPrinting { get; set; }
 
-    /// <summary>
-    /// 获取或设置页面布局模式
-    /// </summary>
-    WdLayoutMode LayoutMode { get; set; }
+    #endregion
 
-    /// <summary>
-    /// 获取或设置装订线位置
-    /// </summary>
-    WdGutterStyle GutterPos { get; set; }
-
-    /// <summary>
-    /// 获取或设置分节起始方式
-    /// </summary>
-    WdSectionStart SectionStart { get; set; }
-
-    /// <summary>
-    /// 获取或设置页眉到页面顶端的距离
-    /// </summary>
-    float HeaderDistance { get; set; }
-
-    /// <summary>
-    /// 获取或设置页脚到页面底端的距离
-    /// </summary>
-    float FooterDistance { get; set; }
+    #region 纸张和打印设置
 
     /// <summary>
     /// 获取或设置首页纸张托盘
@@ -153,11 +188,6 @@ public interface IWordPageSetup : IDisposable
     WdPaperTray OtherPagesTray { get; set; }
 
     /// <summary>
-    /// 获取或设置页面垂直对齐方式
-    /// </summary>
-    WdVerticalAlignment VerticalAlignment { get; set; }
-
-    /// <summary>
     /// 获取或设置纸张大小
     /// </summary>
     WdPaperSize PaperSize { get; set; }
@@ -167,13 +197,19 @@ public interface IWordPageSetup : IDisposable
     /// </summary>
     bool TwoPagesOnOne { get; set; }
 
-    /// <summary>
-    /// 获取或设置装订线是否在顶部
-    /// </summary>
-    bool GutterOnTop { get; set; }
+    #endregion
+
+    #region 其他设置
 
     /// <summary>
-    /// 获取或设置装订线宽度
+    /// 获取或设置是否抑制脚注显示（0=不抑制，1=抑制）
     /// </summary>
-    float Gutter { get; set; }
+    int SuppressEndnotes { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示网格线
+    /// </summary>
+    bool ShowGrid { get; set; }
+
+    #endregion
 }
