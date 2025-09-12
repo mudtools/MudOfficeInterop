@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -86,7 +86,7 @@ internal class ExcelComments : IExcelComments
     /// </summary>
     /// <param name="index">评论索引（从1开始）</param>
     /// <returns>评论对象</returns>
-    public IExcelComment this[int index]
+    public IExcelComment? this[int index]
     {
         get
         {
@@ -95,7 +95,7 @@ internal class ExcelComments : IExcelComments
 
             try
             {
-                var comment = _comments[index] as MsExcel.Comment;
+                MsExcel.Comment comment = _comments[index] as MsExcel.Comment;
                 return comment != null ? new ExcelComment(comment) : null;
             }
             catch
@@ -119,23 +119,15 @@ internal class ExcelComments : IExcelComments
     /// </summary>
     /// <param name="range">要添加评论的区域</param>
     /// <param name="text">评论文本内容</param>
-    /// <param name="author">评论作者</param>
     /// <returns>新创建的评论对象</returns>
-    public IExcelComment? Add(IExcelRange range, string text, string author = "")
+    public IExcelComment? Add(IExcelRange range, string text)
     {
         if (_comments == null || range == null || string.IsNullOrEmpty(text))
             return null;
 
         try
         {
-            var excelRange = range as ExcelRange;
-            var comment = excelRange?.InternalRange?.AddComment(text);
-            if (comment != null && !string.IsNullOrEmpty(author))
-            {
-                // 注意：Excel中无法直接设置评论作者，作者通常是当前用户
-            }
-
-            return comment != null ? new ExcelComment(comment) : null;
+            return range.AddComment(text);
         }
         catch
         {
@@ -156,7 +148,7 @@ internal class ExcelComments : IExcelComments
         int successCount = 0;
         foreach (var data in commentsData)
         {
-            if (Add(data.Range, data.Text, data.Author) != null)
+            if (Add(data.Range, data.Text) != null)
                 successCount++;
         }
         return successCount;

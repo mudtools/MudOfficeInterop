@@ -1522,10 +1522,10 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     /// <param name="text">批注文本</param>
     /// <returns>批注对象</returns>
-    public IExcelComment AddComment(string? text)
+    public IExcelComment? AddComment(string? text)
     {
-        MsExcel.Comment comment = InternalRange.AddComment(text.ComArgsVal());
-        return new ExcelComment(comment);
+        MsExcel.Comment? comment = InternalRange?.AddComment(text.ComArgsVal());
+        return comment != null ? new ExcelComment(comment) : null;
     }
 
     /// <summary>

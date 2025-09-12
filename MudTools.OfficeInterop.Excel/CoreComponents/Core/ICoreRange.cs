@@ -354,7 +354,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// </summary>
     /// <param name="text">注释文本</param>
     /// <returns>创建的注释对象</returns>
-    IExcelComment AddComment(string? text);
+    IExcelComment? AddComment(string? text);
 
     /// <summary>
     /// 删除区域的注释

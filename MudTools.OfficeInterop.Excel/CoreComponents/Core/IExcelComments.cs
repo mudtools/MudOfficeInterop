@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -26,7 +26,7 @@ public interface IExcelComments : IEnumerable<IExcelComment>, IDisposable
     /// </summary>
     /// <param name="index">评论索引（从1开始）</param>
     /// <returns>评论对象</returns>
-    IExcelComment this[int index] { get; }
+    IExcelComment? this[int index] { get; }
 
     /// <summary>
     /// 获取评论集合所在的父对象（通常是工作表）
@@ -43,9 +43,8 @@ public interface IExcelComments : IEnumerable<IExcelComment>, IDisposable
     /// </summary>
     /// <param name="range">要添加评论的区域</param>
     /// <param name="text">评论文本内容</param>
-    /// <param name="author">评论作者</param>
     /// <returns>新创建的评论对象</returns>
-    IExcelComment? Add(IExcelRange range, string text, string author = "");
+    IExcelComment? Add(IExcelRange range, string text);
 
     /// <summary>
     /// 批量添加评论
@@ -200,28 +199,23 @@ public interface IExcelComments : IEnumerable<IExcelComment>, IDisposable
 /// <summary>
 /// 评论数据结构
 /// </summary>
-public class CommentData
+public record CommentData
 {
     /// <summary>
     /// 单元格区域
     /// </summary>
-    public IExcelRange Range { get; set; }
+    public IExcelRange? Range { get; set; }
 
     /// <summary>
     /// 评论文本
     /// </summary>
-    public string Text { get; set; }
-
-    /// <summary>
-    /// 评论作者
-    /// </summary>
-    public string Author { get; set; }
+    public string? Text { get; set; }
 }
 
 /// <summary>
 /// 评论详细信息结构
 /// </summary>
-public class CommentInfo
+public record CommentInfo
 {
     /// <summary>
     /// 评论索引
@@ -231,17 +225,17 @@ public class CommentInfo
     /// <summary>
     /// 单元格地址
     /// </summary>
-    public string Address { get; set; }
+    public string? Address { get; set; }
 
     /// <summary>
     /// 评论文本
     /// </summary>
-    public string Text { get; set; }
+    public string? Text { get; set; }
 
     /// <summary>
     /// 作者
     /// </summary>
-    public string Author { get; set; }
+    public string? Author { get; set; }
 
     /// <summary>
     /// 是否可见
