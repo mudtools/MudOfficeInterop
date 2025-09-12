@@ -261,7 +261,6 @@ var document = app.ActiveDocument;
 var titleRange = document.Range();
 titleRange.Text = "文档标题\n";
 titleRange.Font.Bold = 1;
-titleRange.Font.Size = 16;
 titleRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
 
 // 添加段落
