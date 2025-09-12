@@ -1061,28 +1061,6 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         }
     }
 
-    public TR? PasteSpecial(
-       XlPasteType Paste = XlPasteType.xlPasteAll,
-        XlPasteSpecialOperation Operation = XlPasteSpecialOperation.xlPasteSpecialOperationNone,
-        object? SkipBlanks = null,
-        object? Transpose = null)
-    {
-
-        SkipBlanks ??= Type.Missing;
-        Transpose ??= Type.Missing;
-
-        object? obj = _range?.PasteSpecial((MsExcel.XlPasteType)(int)Paste,
-                            (MsExcel.XlPasteSpecialOperation)(int)Operation,
-                            SkipBlanks,
-                            Transpose);
-        if (obj is MsExcel.Range rang)
-        {
-            return CreateRangeObject(rang);
-        }
-        return default;
-    }
-
-
 
     /// <summary>
     /// 粘贴数据到当前区域
@@ -1093,7 +1071,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// <param name="skipBlanks">是否跳过空单元格</param>
     /// <param name="transpose">是否转置</param>
     /// <returns>操作是否成功</returns>
-    public bool Paste(TR from,
+    public bool CopyAndPaste(TR from,
         PasteType type = PasteType.All,
         PasteOperation operation = PasteOperation.None,
         bool skipBlanks = false,
@@ -1118,6 +1096,25 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
             throw new ExcelOperationException($"粘贴数据到当前区域失败: {ex.Message}", ex);
         }
     }
+
+    public TR? PasteSpecial(
+        XlPasteType paste = XlPasteType.xlPasteAll,
+        XlPasteSpecialOperation operation = XlPasteSpecialOperation.xlPasteSpecialOperationNone,
+        bool? skipBlanks = false,
+        bool? transpose = false)
+    {
+
+        object? obj = _range?.PasteSpecial((MsExcel.XlPasteType)(int)paste,
+                            (MsExcel.XlPasteSpecialOperation)(int)operation,
+                            skipBlanks.ComArgsVal(),
+                            transpose.ComArgsVal());
+        if (obj is MsExcel.Range rang)
+        {
+            return CreateRangeObject(rang);
+        }
+        return default;
+    }
+
 
     /// <summary>
     /// 插入单元格
@@ -1174,6 +1171,15 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     public void Clear()
     {
         InternalRange.Clear();
+    }
+
+    public object Parse(string? parseLine = null, TR? range = default)
+    {
+        object? r = Type.Missing;
+        if (range != null && range is CoreRange<T, TR> otherRange)
+            r = otherRange.InternalRange;
+
+        return InternalRange.Parse(parseLine.ComArgsVal(), r);
     }
 
     /// <summary>

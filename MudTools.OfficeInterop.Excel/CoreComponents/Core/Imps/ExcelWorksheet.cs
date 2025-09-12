@@ -910,10 +910,10 @@ internal partial class ExcelWorksheet : IExcelWorksheet
             return;
 
         destinationRange.PasteSpecial(
-                 Paste: pasteType,
-                 Operation: XlPasteSpecialOperation.xlPasteSpecialOperationNone,
-                 SkipBlanks: skipBlanks,
-                 Transpose: transpose
+                 paste: pasteType,
+                 operation: XlPasteSpecialOperation.xlPasteSpecialOperationNone,
+                 skipBlanks: skipBlanks,
+                 transpose: transpose
              );
     }
 
@@ -964,10 +964,10 @@ internal partial class ExcelWorksheet : IExcelWorksheet
             return;
 
         destinationRange.PasteSpecial(
-                Paste: XlPasteType.xlPasteAll,
-                Operation: operation,
-                SkipBlanks: false,
-                Transpose: false
+                paste: XlPasteType.xlPasteAll,
+                operation: operation,
+                skipBlanks: false,
+                transpose: false
             );
     }
 

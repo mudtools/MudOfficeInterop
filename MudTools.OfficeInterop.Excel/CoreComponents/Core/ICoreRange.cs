@@ -499,7 +499,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <param name="skipBlanks">是否跳过源区域中的空白单元格，默认为 false</param>
     /// <param name="transpose">是否转置粘贴（行列互换），默认为 false</param>
     /// <returns>如果粘贴操作成功则返回 true，否则返回 false</returns>
-    bool Paste(T from,
+    bool CopyAndPaste(T from,
         PasteType type = PasteType.All,
         PasteOperation operation = PasteOperation.None,
         bool skipBlanks = false,
@@ -508,15 +508,16 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <summary>
     /// 特殊粘贴操作
     /// </summary>
-    /// <param name="Paste">粘贴内容类型</param>
-    /// <param name="Operation">粘贴操作类型</param>
-    /// <param name="SkipBlanks">是否跳过空单元格</param>
-    /// <param name="Transpose">是否转置</param>
+    /// <param name="paste">粘贴内容类型</param>
+    /// <param name="operation">粘贴操作类型</param>
+    /// <param name="skipBlanks">是否跳过空单元格</param>
+    /// <param name="transpose">是否转置</param>
     /// <returns>粘贴后的区域对象</returns>
-    T? PasteSpecial(XlPasteType Paste = XlPasteType.xlPasteAll,
-        XlPasteSpecialOperation Operation = XlPasteSpecialOperation.xlPasteSpecialOperationNone,
-        object? SkipBlanks = null,
-        object? Transpose = null);
+    T? PasteSpecial(
+        XlPasteType paste = XlPasteType.xlPasteAll,
+        XlPasteSpecialOperation operation = XlPasteSpecialOperation.xlPasteSpecialOperationNone,
+        bool? skipBlanks = false,
+        bool? transpose = false);
 
 
     /// <summary>
@@ -563,6 +564,14 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// 清除当前区域中的所有格式设置，但保留内容。
     /// </summary>
     void ClearFormats();
+
+    /// <summary>
+    /// 分列区域内的数据并将这些数据分散放置于若干单元格中。
+    /// </summary>
+    /// <param name="parseLine">包含左括号和右括号的字符串，用于指示单元格应拆分的位置。例如，“[xxx][xxx]”会将前三个字符插入目标范围的第一列中，并将接下来的三个字符插入到第二列中。如果省略此参数，Microsoft Excel 会根据区域中左上单元格的间距猜测拆分列的位置。 如果要使用不同的区域来猜测分析行，请使用 Range 对象作为 ParseLine 参数。 该区域必须为进行分列处理的单元格之一。 参数 ParseLine 长度不能超过 255 个字符，包括括号和空格。</param>
+    /// <param name="range">表示已分析数据的目标范围的左上角。 如果省略该参数，Excel 将在原处进行分列。</param>
+    /// <returns></returns>
+    object Parse(string? parseLine = null, T? range = default);
 
     /// <summary>
     /// 合并当前区域中的所有单元格为一个单元格。
