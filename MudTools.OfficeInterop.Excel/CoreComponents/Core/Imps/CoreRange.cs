@@ -857,7 +857,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         {
             InternalRange.AutoFill(
                 Destination: excelRange.InternalRange,
-                Type: (MsExcel.XlAutoFillType)type
+                Type: (MsExcel.XlAutoFillType)(int)type
             );
         }
         else
@@ -882,10 +882,10 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// 如果内部的 _range 对象为 null。
     /// </exception>
     public string GetAddressLocal(
-        object? rowAbsolute = null,       // 对应 Excel 的可选参数，null 表示使用默认值
-        object? columnAbsolute = null,
-        XlReferenceStyle referenceStyle = XlReferenceStyle.xlA1, // 使用具体枚举类型
-        object? external = null,
+        bool? rowAbsolute = true,
+        bool? columnAbsolute = true,
+        XlReferenceStyle referenceStyle = XlReferenceStyle.xlA1,
+        bool? external = false,
         object? relativeTo = null)
     {
         // 检查内部对象是否为 null
@@ -896,17 +896,12 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
 
         try
         {
-            object rowAbsParam = rowAbsolute ?? Type.Missing;
-            object colAbsParam = columnAbsolute ?? Type.Missing;
-            object extParam = external ?? Type.Missing;
-            object relToParam = relativeTo ?? Type.Missing;
-
-            return _range.get_Address(
-                rowAbsParam,
-                colAbsParam,
+            return _range.get_AddressLocal(
+                rowAbsolute.ComArgsVal(),
+                columnAbsolute.ComArgsVal(),
                 (MsExcel.XlReferenceStyle)referenceStyle,
-                extParam,
-                relToParam
+                external.ComArgsVal(),
+                relativeTo ?? Type.Missing
             );
         }
         catch (COMException comEx)
@@ -914,7 +909,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
             _log.Error("COM Exception in GetAddressLocal", comEx);
             throw new ExcelOperationException("COM Exception in GetAddressLocal", comEx);
         }
-        catch (Exception ex) // 捕获其他可能的异常
+        catch (Exception ex)
         {
             _log.Error("General Exception in GetAddressLocal", ex);
             throw new InvalidOperationException("Failed to get AddressLocal.", ex);
@@ -938,48 +933,47 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// 直接替换原始调用：range.get_Address(Type.Missing, Type.Missing, XlReferenceStyle.xlA1, Type.Missing, Type.Missing)
     /// </summary>
     /// <returns>地址字符串</returns>
-    public string GetDefaultA1Address()
+    public string? GetDefaultA1Address()
     {
-        return GetAddress(new AddressOptions
-        {
-            RowAbsolute = null,
-            ColumnAbsolute = null,
-            ReferenceStyle = XlReferenceStyle.xlA1,
-            External = null,
-            RelativeTo = null
-        });
+        return GetAddress(null, null, XlReferenceStyle.xlA1, null, null);
     }
 
 
     /// <summary>
     /// 完全兼容原始调用的静态方法
     /// </summary>
-    /// <param name="rowAbsolute">行绝对引用</param>
-    /// <param name="columnAbsolute">列绝对引用</param>
+    /// <param name="rowAbsolute">行是否绝对引用</param>
+    /// <param name="columnAbsolute">列是否绝对引用</param>
     /// <param name="referenceStyle">引用样式</param>
-    /// <param name="external">外部引用</param>
+    /// <param name="external">是否外部引用</param>
     /// <param name="relativeTo">相对引用基准</param>
     /// <returns>地址字符串</returns>
-    public string GetAddress(
-        object? rowAbsolute = null,
-        object? columnAbsolute = null,
+    public string? GetAddress(
+        bool? rowAbsolute = true,
+        bool? columnAbsolute = true,
         XlReferenceStyle referenceStyle = XlReferenceStyle.xlA1,
-        object? external = null,
+        bool? external = false,
         object? relativeTo = null)
     {
         try
         {
-            return _range.get_Address(
-                rowAbsolute ?? Missing.Value,
-                columnAbsolute ?? Missing.Value,
-                (MsExcel.XlReferenceStyle)referenceStyle,
-                external ?? Missing.Value,
-                relativeTo ?? Missing.Value
-            );
+            return _range?.get_Address(
+                            rowAbsolute.ComArgsVal(),
+                            columnAbsolute.ComArgsVal(),
+                            (MsExcel.XlReferenceStyle)(int)referenceStyle,
+                            external.ComArgsVal(),
+                            relativeTo ?? Type.Missing
+                            );
         }
-        catch (COMException ex)
+        catch (COMException comEx)
         {
-            throw new ExcelOperationException($"获取地址失败: {ex.Message}", ex);
+            _log.Error("COM Exception in GetAddress", comEx);
+            throw new ExcelOperationException("COM Exception in GetAddress", comEx);
+        }
+        catch (Exception ex)
+        {
+            _log.Error("General Exception in GetAddress", ex);
+            throw new InvalidOperationException("Failed to get GetAddress.", ex);
         }
     }
 

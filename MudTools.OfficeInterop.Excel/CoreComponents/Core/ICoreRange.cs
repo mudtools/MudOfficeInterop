@@ -418,10 +418,10 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// 如果内部的 _range 对象为 null。
     /// </exception>
     string GetAddressLocal(
-       object? rowAbsolute = null,       // 对应 Excel 的可选参数，null 表示使用默认值
-       object? columnAbsolute = null,
-       XlReferenceStyle referenceStyle = XlReferenceStyle.xlA1, // 使用具体枚举类型
-       object? external = null,
+       bool? rowAbsolute = true,
+       bool? columnAbsolute = true,
+       XlReferenceStyle referenceStyle = XlReferenceStyle.xlA1,
+       bool? external = false,
        object? relativeTo = null);
 
     /// <summary>
@@ -432,24 +432,24 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <summary>
     /// 完全兼容原始调用的静态方法
     /// </summary>
-    /// <param name="rowAbsolute">行绝对引用</param>
-    /// <param name="columnAbsolute">列绝对引用</param>
+    /// <param name="rowAbsolute">行是否绝对引用</param>
+    /// <param name="columnAbsolute">列是否绝对引用</param>
     /// <param name="referenceStyle">引用样式</param>
-    /// <param name="external">外部引用</param>
+    /// <param name="external">是否外部引用</param>
     /// <param name="relativeTo">相对引用基准</param>
     /// <returns>地址字符串</returns>
-    string GetAddress(
-       object? rowAbsolute = null,
-       object? columnAbsolute = null,
+    string? GetAddress(
+       bool? rowAbsolute = true,
+       bool? columnAbsolute = true,
        XlReferenceStyle referenceStyle = XlReferenceStyle.xlA1,
-       object? external = null,
-       object? relativeTo = null);
+       bool? external = false,
+        object? relativeTo = null);
 
     /// <summary>
     /// 直接替换原始调用：range.get_Address(Type.Missing, Type.Missing, XlReferenceStyle.xlA1, Type.Missing, Type.Missing)
     /// </summary>
     /// <returns>地址字符串</returns>
-    string GetDefaultA1Address();
+    string? GetDefaultA1Address();
 
     /// <summary>
     /// 获取或设置区域是否锁定（用于保护工作表）
