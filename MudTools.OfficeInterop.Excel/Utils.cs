@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -16,6 +16,45 @@ internal class Utils
     /// 用于记录此类型运行时日志的 logger 实例。
     /// </summary>
     private static readonly ILog log = LogManager.GetLogger(typeof(Utils));
+
+    public static ICommonWorksheet? CreateSheetObj(object workSheet)
+    {
+        try
+        {
+            ICommonWorksheet? sheet = null;
+            if (workSheet is MsExcel.Worksheet)
+            {
+                MsExcel.Worksheet ws = (MsExcel.Worksheet)workSheet;
+                sheet = new ExcelWorksheet(ws);
+            }
+            else if (workSheet is MsExcel.Chart)
+            {
+                MsExcel.Chart chart = (MsExcel.Chart)workSheet;
+                sheet = new ExcelChart(chart);
+            }
+            else if (workSheet is MsExcel.ChartObject)
+            {
+                MsExcel.ChartObject chartObj = (MsExcel.ChartObject)workSheet;
+                sheet = new ExcelChartObject(chartObj);
+            }
+            else if (workSheet is MsExcel.DialogSheet)
+            {
+                MsExcel.DialogSheet dialog = (MsExcel.DialogSheet)workSheet;
+            }
+            return sheet;
+        }
+        catch (COMException cx)
+        {
+            log.Error("识别 WorkSheet 对象类型失败：" + cx.Message, cx);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            log.Error("识别 WorkSheet 对象类型失败：" + ex.Message, ex);
+            return null;
+        }
+    }
+
 
     /// <summary>
     /// 详细识别Selection对象类型

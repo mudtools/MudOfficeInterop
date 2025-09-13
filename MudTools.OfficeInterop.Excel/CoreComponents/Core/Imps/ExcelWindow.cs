@@ -19,6 +19,41 @@ internal class ExcelWindow : IExcelWindow
     private double _savedWidth;
     private double _savedLeft;
     private double _savedTop;
+    private ICommonWorksheet? _activeSheet;
+
+    public IExcelRange? ActiveCell =>
+        _window != null ? new ExcelRange(_window.ActiveCell) : null;
+
+    public IExcelChart? ActiveChart =>
+        _window != null ? new ExcelChart(_window.ActiveChart) : null;
+
+    public IExcelPane? ActivePane =>
+       _window != null ? new ExcelPane(_window.ActivePane) : null;
+
+    public ICommonWorksheet? ActiveSheet
+    {
+        get
+        {
+            if (_window == null) return null;
+            if (_activeSheet != null) return _activeSheet;
+
+            _activeSheet = Utils.CreateSheetObj(_window.ActiveSheet);
+            return _activeSheet;
+        }
+    }
+
+    public IExcelWorksheet? ActiveWorkSheet
+    {
+        get
+        {
+            if (ActiveSheet == null) return null;
+
+            if (ActiveSheet is IExcelWorksheet worksheet)
+                return worksheet;
+            return null;
+        }
+    }
+
 
     public string Caption
     {
@@ -101,31 +136,6 @@ internal class ExcelWindow : IExcelWindow
 
     public IExcelSheetViews SheetViews => _window != null ? new ExcelSheetViews(_window.SheetViews) : null;
 
-    private IExcelWorksheet _activeSheet;
-
-    /// <summary>
-    /// 获取活动工作表（带缓存）
-    /// </summary>
-    public IExcelWorksheet? ActiveSheet
-    {
-        get
-        {
-            if (_activeSheet != null)
-                return _activeSheet;
-
-            try
-            {
-                MsExcel.Worksheet? sheet = _window.ActiveSheet as MsExcel.Worksheet;
-                return _activeSheet = (sheet != null)
-                    ? new ExcelWorksheet(sheet)
-                    : null;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-    }
 
     /// <summary>
     /// 获取或设置是否显示网格线
@@ -458,8 +468,11 @@ internal class ExcelWindow : IExcelWindow
 
         try
         {
-            var range = ActiveSheet?.Range(rangeAddress, null);
-            range?.Select();
+            if (ActiveSheet != null && ActiveSheet is IExcelWorksheet worksheet)
+            {
+                var range = worksheet?.Range(rangeAddress, null);
+                range?.Select();
+            }
         }
         catch (Exception ex)
         {
@@ -494,15 +507,18 @@ internal class ExcelWindow : IExcelWindow
 
         try
         {
-            var range = ActiveSheet?.Range(rangeAddress, null);
-            if (range != null)
+            if (ActiveSheet != null && ActiveSheet is IExcelWorksheet worksheet)
             {
-                // 确保区域可见
-                range.Activate();
+                var range = worksheet?.Range(rangeAddress, null);
+                if (range != null)
+                {
+                    // 确保区域可见
+                    range.Activate();
 
-                // 滚动到区域位置
-                _window.ScrollRow = range.Row;
-                _window.ScrollColumn = range.Column;
+                    // 滚动到区域位置
+                    _window.ScrollRow = range.Row;
+                    _window.ScrollColumn = range.Column;
+                }
             }
         }
         catch (Exception ex)
@@ -681,10 +697,13 @@ internal class ExcelWindow : IExcelWindow
 
         if (disposing)
         {
+            _activeSheet?.Dispose();
             _selectedSheets?.Dispose();
             _selectedSheets = null;
         }
-
+        _activeSheet = null;
+        _selectedSheets = null;
+        _selectedSheets = null;
         _disposedValue = true;
     }
     ~ExcelWindow()

@@ -18,6 +18,31 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     IExcelApplication Application { get; }
 
     /// <summary>
+    /// 获取当前活动单元格
+    /// </summary>
+    IExcelRange? ActiveCell { get; }
+
+    /// <summary>
+    /// 获取当前活动图表
+    /// </summary>
+    IExcelChart? ActiveChart { get; }
+
+    /// <summary>
+    /// 获取当前活动窗格
+    /// </summary>
+    IExcelPane? ActivePane { get; }
+
+    /// <summary>
+    /// 获取当前活动工作表
+    /// </summary>
+    ICommonWorksheet? ActiveSheet { get; }
+
+    /// <summary>
+    /// 获取当前活动工作表
+    /// </summary>
+    IExcelWorksheet? ActiveWorkSheet { get; }
+
+    /// <summary>
     /// 获取窗口状态（最大化、最小化、正常）
     /// </summary>
     XlWindowState WindowState { get; set; }
@@ -204,11 +229,6 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// 获取选中的工作表集合
     /// </summary>
     IExcelSheets? SelectedSheets { get; }
-
-    /// <summary>
-    /// 获取关联的工作表
-    /// </summary>
-    IExcelWorksheet? ActiveSheet { get; }
 
     /// <summary>
     /// 获取父对象

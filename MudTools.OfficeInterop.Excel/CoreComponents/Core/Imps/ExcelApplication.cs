@@ -763,27 +763,7 @@ internal partial class ExcelApplication : IExcelApplication
             if (_application?.ActiveSheet == null)
                 return null;
 
-            object activeSheet = _application.ActiveSheet;
-
-            if (activeSheet is MsExcel.Worksheet)
-            {
-                MsExcel.Worksheet ws = (MsExcel.Worksheet)activeSheet;
-                _activeSheet = new ExcelWorksheet(ws);
-            }
-            else if (activeSheet is MsExcel.Chart)
-            {
-                MsExcel.Chart chart = (MsExcel.Chart)activeSheet;
-                _activeSheet = new ExcelChart(chart);
-            }
-            else if (activeSheet is MsExcel.ChartObject)
-            {
-                MsExcel.ChartObject chartObj = (MsExcel.ChartObject)activeSheet;
-                _activeSheet = new ExcelChartObject(chartObj);
-            }
-            else if (activeSheet is MsExcel.DialogSheet)
-            {
-                MsExcel.DialogSheet dialog = (MsExcel.DialogSheet)activeSheet;
-            }
+            _activeSheet = Utils.CreateSheetObj(_application.ActiveSheet);
             return _activeSheet;
         }
     }
