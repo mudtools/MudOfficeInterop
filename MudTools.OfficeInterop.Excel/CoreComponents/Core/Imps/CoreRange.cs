@@ -1551,7 +1551,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// <param name="type">单元格类型</param>
     /// <param name="value">特殊值</param>
     /// <returns>特殊单元格区域</returns>
-    public TR? SpecialCells(XlCellType type, object? value)
+    public TR? SpecialCells(XlCellType type, object? value = null)
     {
         try
         {

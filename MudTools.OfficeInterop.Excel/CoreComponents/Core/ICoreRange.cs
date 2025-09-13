@@ -856,6 +856,6 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <param name="type">特殊单元格类型</param>
     /// <param name="value">附加参数值</param>
     /// <returns>特殊单元格区域</returns>
-    T? SpecialCells(XlCellType type, object? value);
+    T? SpecialCells(XlCellType type, object? value = null);
     #endregion
 }
