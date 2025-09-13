@@ -131,6 +131,8 @@ internal class ExcelChartObject : IExcelChartObject
         }
     }
 
+    public bool ProtectContents => _chart.ProtectContents;
+
     /// <summary>
     /// 获取图表对象的索引位置
     /// </summary>
@@ -327,10 +329,19 @@ internal class ExcelChartObject : IExcelChartObject
 
     #region 操作方法
 
-    public object OLEObjects(int? index = null)
+    /// <summary>
+    /// 取消保护工作表
+    /// </summary>
+    /// <param name="password">保护密码</param>
+    public void Unprotect(string password = "")
+    {
+        _chart?.Unprotect(password);
+    }
+
+    public object? OLEObjects(int? index = null)
     {
         if (index != null)
-            return _chart.OLEObjects(index);
+            return _chart?.OLEObjects(index);
         return _chart?.OLEObjects();
     }
 

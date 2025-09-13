@@ -91,6 +91,9 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public bool IsProtected => _chart.ProtectContents;
 
+    public bool ProtectContents => _chart.ProtectContents;
+
+
     /// <summary>
     /// 获取图表的父对象
     /// </summary>
@@ -484,7 +487,17 @@ internal class ExcelChart : IExcelChart
     #endregion
 
     #region 导出和转换 (IExcelChart)
-    public object OLEObjects(int? index = null)
+
+    /// <summary>
+    /// 取消保护工作表
+    /// </summary>
+    /// <param name="password">保护密码</param>
+    public void Unprotect(string password = "")
+    {
+        _chart?.Unprotect(password);
+    }
+
+    public object? OLEObjects(int? index = null)
     {
         if (index != null)
             return _chart.OLEObjects(index);

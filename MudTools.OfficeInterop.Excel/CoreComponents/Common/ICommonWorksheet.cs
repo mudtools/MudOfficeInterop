@@ -58,6 +58,11 @@ public interface ICommonWorksheet : IDisposable
     IExcelPageSetup PageSetup { get; }
 
     /// <summary>
+    /// 获取工作表内容是否受保护
+    /// </summary>
+    bool ProtectContents { get; }
+
+    /// <summary>
     /// 删除工作表
     /// </summary>
     void Delete();
@@ -78,5 +83,17 @@ public interface ICommonWorksheet : IDisposable
     /// </summary>
     void Copy();
 
-    object OLEObjects(int? index = null);
+    /// <summary>
+    /// 获取工作表中的OLE对象集合或指定索引的OLE对象
+    /// </summary>
+    /// <param name="index">OLE对象的索引，如果为null则返回所有OLE对象集合</param>
+    /// <returns>OLE对象或OLE对象集合</returns>
+    object? OLEObjects(int? index = null);
+
+    /// <summary>
+    /// 取消保护工作表
+    /// 对应 Worksheet.Unprotect 方法
+    /// </summary>
+    /// <param name="password">保护密码</param>
+    void Unprotect(string password = "");
 }

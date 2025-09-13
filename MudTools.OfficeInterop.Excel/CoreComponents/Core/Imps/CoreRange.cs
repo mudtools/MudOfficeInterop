@@ -1556,7 +1556,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         try
         {
             value ??= Type.Missing;
-            MsExcel.Range range = InternalRange.SpecialCells((MsExcel.XlCellType)type, value);
+            MsExcel.Range range = InternalRange.SpecialCells((MsExcel.XlCellType)(int)type, value);
             return CreateRangeObject(range);
         }
         catch

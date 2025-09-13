@@ -839,7 +839,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
 
     #region 操作方法
 
-    public object OLEObjects(int? index = null)
+    public object? OLEObjects(int? index = null)
     {
         if (index != null)
             return _worksheet.OLEObjects(index);

@@ -88,10 +88,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// </summary>
     bool DisplayPageBreaks { get; set; }
 
-    /// <summary>
-    /// 获取工作表内容是否受保护
-    /// </summary>
-    bool ProtectContents { get; }
 
     /// <summary>
     /// 获取工作表当前是否处于筛选模式
@@ -148,13 +144,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// 获取或设置一个值，该值指示是否显示自动分页符
     /// </summary>
     bool DisplayAutomaticPageBreaks { get; set; }
-
-    /// <summary>
-    /// 获取或设置工作表是否可见
-    /// 对应 Worksheet.Visible 属性
-    /// </summary>
-    XlSheetVisibility Visible { get; set; }
-
 
     /// <summary>
     /// 获取工作表的代码名称
@@ -340,13 +329,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
                 bool allowDeletingColumns = true, bool allowDeletingRows = true,
                 bool allowSorting = true, bool allowFiltering = true,
                 bool allowUsingPivotTables = true);
-
-    /// <summary>
-    /// 取消保护工作表
-    /// 对应 Worksheet.Unprotect 方法
-    /// </summary>
-    /// <param name="password">保护密码</param>
-    void Unprotect(string password = "");
 
     #endregion
 
