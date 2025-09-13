@@ -1423,17 +1423,21 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     #endregion
 
     #region 查找与替换
-    public TR? FindNext(object? after)
+    public TR? FindNext(TR? after = default)
     {
-        after ??= Type.Missing;
-        var range = InternalRange.FindNext(after);
+        var afterObj = Type.Missing;
+        if (after != null && after is CoreRange<T, TR> excelRange)
+            afterObj = excelRange.InternalRange;
+        var range = InternalRange.FindNext(afterObj);
         return CreateRangeObject(range);
     }
 
-    public TR? FindPrevious(object? after)
+    public TR? FindPrevious(TR? after = default)
     {
-        after ??= Type.Missing;
-        var range = InternalRange.FindNext(after);
+        var afterObj = Type.Missing;
+        if (after != null && after is CoreRange<T, TR> excelRange)
+            afterObj = excelRange.InternalRange;
+        var range = InternalRange.FindNext(afterObj);
         return CreateRangeObject(range);
     }
 
@@ -1452,16 +1456,19 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// <param name="searchDirection">搜索方向</param>
     /// <returns>找到的单元格</returns>
     public TR? Find(object what,
-       object? after = null,
+       TR? after = default,
         XlFindLookIn? lookIn = null,
         XlLookAt? lookAt = null,
         XlSearchOrder? searchOrder = null,
         XlSearchDirection searchDirection = XlSearchDirection.xlNext,
-        object? matchCase = null,
-        object? matchByte = null,
+        bool? matchCase = null,
+        bool? matchByte = null,
         object? searchFormat = null)
     {
-        after ??= Type.Missing;
+        var afterObj = Type.Missing;
+        if (after != null && after is CoreRange<T, TR> excelRange)
+            afterObj = excelRange.InternalRange;
+
 
         object lookInObj = Type.Missing;
         if (lookIn != null)
@@ -1475,19 +1482,17 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         if (searchOrder != null)
             searchOrderObj = (int)searchOrder;
 
-        matchCase ??= Type.Missing;
-        matchByte ??= Type.Missing;
         searchFormat ??= Type.Missing;
 
         MsExcel.Range range = InternalRange.Find(
                     What: what,
-                    After: after,
+                    After: afterObj,
                     LookIn: lookInObj,
                     LookAt: lookAtObj,
                     SearchOrder: searchOrderObj,
-                    SearchDirection: (MsExcel.XlSearchDirection)searchDirection,
-                    MatchCase: matchCase,
-                    MatchByte: matchByte,
+                    SearchDirection: (MsExcel.XlSearchDirection)(int)searchDirection,
+                    MatchCase: matchCase.ComArgsVal(),
+                    MatchByte: matchByte.ComArgsVal(),
                     SearchFormat: searchFormat);
 
         return CreateRangeObject(range);

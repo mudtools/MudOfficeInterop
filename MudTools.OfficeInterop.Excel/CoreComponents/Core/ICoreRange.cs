@@ -795,14 +795,14 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// </summary>
     /// <param name="after">查找的起始位置，搜索将从该位置之后开始。为null时表示从区域起始位置开始查找</param>
     /// <returns>返回找到的下一个匹配区域，如果未找到匹配项则返回null</returns>
-    T? FindNext(object? after);
+    T? FindNext(T? after = default);
 
     /// <summary>
     /// 在当前区域中查找上一个匹配的单元格区域
     /// </summary>
     /// <param name="after">查找的起始位置，搜索将从该位置之前开始。为null时表示从区域末尾位置开始查找</param>
     /// <returns>返回找到的上一个匹配区域，如果未找到匹配项则返回null</returns>
-    T? FindPrevious(object? after);
+    T? FindPrevious(T? after = default);
 
     /// <summary>
     /// 在区域中查找指定内容
@@ -818,13 +818,13 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <param name="searchFormat">查找格式</param>
     /// <returns>找到的区域，未找到则返回null</returns>
     T? Find(object what,
-       object? after = null,
+        T? after = default,
         XlFindLookIn? lookIn = null,
         XlLookAt? lookAt = null,
         XlSearchOrder? searchOrder = null,
         XlSearchDirection searchDirection = XlSearchDirection.xlNext,
-        object? matchCase = null,
-        object? matchByte = null,
+        bool? matchCase = null,
+        bool? matchByte = null,
         object? searchFormat = null);
 
     /// <summary>
