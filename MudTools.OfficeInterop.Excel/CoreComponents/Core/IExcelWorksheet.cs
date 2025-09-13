@@ -104,10 +104,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// </summary>
     bool TransitionExpEval { get; set; }
 
-    /// <summary>
-    /// 获取一个值，该值指示工作表当前是否处于保护模式
-    /// </summary>
-    bool ProtectionMode { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否启用大纲（分级显示）功能
@@ -249,15 +245,9 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     IExcelListObjects ListObjects { get; }
 
     /// <summary>
-    /// 获取工作表的形状集合
-    /// 对应 Worksheet.Shapes 属性
-    /// </summary>
-    IExcelShapes Shapes { get; }
-
-    /// <summary>
     /// 获取工作表的图片集合
     /// </summary>
-    IExcelPictures Pictures { get; }
+    IExcelPictures? Pictures { get; }
 
     /// <summary>
     /// 获取工作表的评论集合
@@ -302,13 +292,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
 
     #region 操作方法
 
-    /// <summary>
-    /// 复制工作表
-    /// 对应 Worksheet.Copy 方法
-    /// </summary>
-    /// <param name="before">复制到指定工作表之前</param>
-    /// <param name="after">复制到指定工作表之后</param>
-    void Copy(IExcelWorksheet? before = null, IExcelWorksheet? after = null);
 
 
     /// <summary>
@@ -460,11 +443,7 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// </summary>
     IExcelColumns GetColumns(string startColumn, string endColumn = "");
 
-    /// <summary>
-    /// 将工作表另存为xlsx文件。
-    /// </summary>
-    /// <param name="filePath"></param>
-    void SaveAs(string filePath);
+
 
     /// <summary>
     /// 重置工作表中的所有分页符

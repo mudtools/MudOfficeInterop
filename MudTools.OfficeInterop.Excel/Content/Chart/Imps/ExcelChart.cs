@@ -95,6 +95,8 @@ internal partial class ExcelChart : IExcelChart
 
     public bool ProtectContents => _chart.ProtectContents;
 
+    public bool ProtectionMode => _chart.ProtectionMode;
+
 
     /// <summary>
     /// 获取图表的父对象
@@ -298,6 +300,21 @@ internal partial class ExcelChart : IExcelChart
     #endregion
 
     #region 操作方法 (IExcelChart)
+
+    /// <summary>
+    /// 复制工作表
+    /// </summary>
+    /// <param name="before">复制到指定工作表之前</param>
+    /// <param name="after">复制到指定工作表之后</param>
+    public void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null)
+    {
+        if (_chart == null) return;
+
+        _chart.Copy(
+            before is ExcelChart beforeSheet ? beforeSheet._chart : System.Type.Missing,
+            after is ExcelChart afterSheet ? afterSheet._chart : System.Type.Missing
+        );
+    }
 
     /// <summary>
     /// 将工作表另存为xlsx文件。
@@ -581,7 +598,12 @@ internal partial class ExcelChart : IExcelChart
     }
     #endregion
 
-    #region 高级功能 (IExcelChart)   
+    #region 高级功能 (IExcelChart)
+
+    public void PrintPreview()
+    {
+        _chart?.PrintPreview();
+    }
 
     /// <summary>
     /// 打印图表

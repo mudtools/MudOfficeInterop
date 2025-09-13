@@ -687,7 +687,15 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的形状集合
     /// </summary>
-    public IExcelShapes Shapes => _shapes ??= new ExcelShapes(_worksheet?.Shapes);
+    public IExcelShapes? Shapes
+    {
+        get
+        {
+            if (_worksheet == null) return null;
+            _shapes ??= new ExcelShapes(_worksheet.Shapes);
+            return _shapes;
+        }
+    }
 
     /// <summary>
     /// 图片集合缓存
@@ -697,7 +705,15 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的图片集合
     /// </summary>
-    public IExcelPictures Pictures => _pictures ??= new ExcelPictures(_worksheet?.Pictures() as MsExcel.Pictures);
+    public IExcelPictures? Pictures
+    {
+        get
+        {
+            if (_worksheet == null) return null;
+            _pictures ??= new ExcelPictures(_worksheet.Pictures() as MsExcel.Pictures);
+            return _pictures;
+        }
+    }
 
     /// <summary>
     /// 评论集合缓存
@@ -995,7 +1011,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
-    public void Copy(IExcelWorksheet? before = null, IExcelWorksheet? after = null)
+    public void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null)
     {
         if (_worksheet == null) return;
 
@@ -1104,6 +1120,10 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         _worksheet?.Delete();
     }
 
+    public void PrintPreview()
+    {
+        _worksheet?.PrintPreview();
+    }
 
     /// <summary>
     /// 打印工作表

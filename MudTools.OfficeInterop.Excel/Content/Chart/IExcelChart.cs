@@ -78,9 +78,6 @@ public interface IExcelChart : ICommonWorksheet, IDisposable
     #endregion
 
     #region 图表元素
-
-    IExcelShapes? Shapes { get; }
-
     /// <summary>
     /// 获取图表的绘图区对象
     /// 对应 Chart.PlotArea 属性
@@ -134,13 +131,7 @@ public interface IExcelChart : ICommonWorksheet, IDisposable
 
     #endregion
 
-    #region 操作方法
-
-    /// <summary>
-    /// 将工作表另存为xlsx文件。
-    /// </summary>
-    /// <param name="filePath"></param>
-    void SaveAs(string filePath);
+    #region 操作方法   
     /// <summary>
     /// 旋转图表
     /// </summary>

@@ -118,6 +118,8 @@ internal class ExcelChartObject : IExcelChartObject
     public IExcelPageSetup PageSetup => _pageSetup ?? (_pageSetup = new ExcelPageSetup(_chart?.PageSetup));
 
 
+    public IExcelShapes? Shapes => _chart != null ? new ExcelShapes(_chart.Shapes) : null;
+
     /// <summary>
     /// 获取或设置图表对象的名称
     /// </summary>
@@ -132,6 +134,8 @@ internal class ExcelChartObject : IExcelChartObject
     }
 
     public bool ProtectContents => _chart.ProtectContents;
+
+    public bool ProtectionMode => _chart.ProtectionMode;
 
     /// <summary>
     /// 获取图表对象的索引位置
@@ -390,6 +394,21 @@ internal class ExcelChartObject : IExcelChartObject
     }
 
     /// <summary>
+    /// 复制工作表
+    /// </summary>
+    /// <param name="before">复制到指定工作表之前</param>
+    /// <param name="after">复制到指定工作表之后</param>
+    public void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null)
+    {
+        if (_chart == null) return;
+
+        _chart.Copy(
+            before is ExcelChart beforeSheet ? beforeSheet._chart : System.Type.Missing,
+            after is ExcelChart afterSheet ? afterSheet._chart : System.Type.Missing
+        );
+    }
+
+    /// <summary>
     /// 剪切图表对象
     /// </summary>
     public void Cut()
@@ -404,6 +423,36 @@ internal class ExcelChartObject : IExcelChartObject
     {
         _chartObject?.Delete();
     }
+
+    public void PrintPreview()
+    {
+        _chart?.PrintPreview();
+    }
+
+    /// <summary>
+    /// 打印图表
+    /// </summary>
+    /// <param name="preview">是否进行打印预览</param>
+    public void PrintOut(bool preview = false)
+    {
+        if (preview)
+        {
+            _chart?.PrintPreview();
+        }
+        else
+        {
+            _chart?.PrintOutEx();
+        }
+    }
+    /// <summary>
+    /// 将工作表另存为xlsx文件。
+    /// </summary>
+    /// <param name="filePath"></param>
+    public void SaveAs(string filePath)
+    {
+        _chart?.SaveAs(filePath);
+    }
+
 
     /// <summary>
     /// 调整图表对象大小

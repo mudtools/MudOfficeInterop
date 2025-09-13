@@ -42,6 +42,12 @@ public interface ICommonWorksheet : IDisposable
     /// </summary>
     bool IsProtected { get; }
 
+
+    /// <summary>
+    /// 获取一个值，该值指示工作表当前是否处于保护模式
+    /// </summary>
+    bool ProtectionMode { get; }
+
     /// <summary>
     /// 获取或设置工作表是否可见
     /// </summary>
@@ -58,9 +64,31 @@ public interface ICommonWorksheet : IDisposable
     IExcelPageSetup PageSetup { get; }
 
     /// <summary>
+    /// 获取工作表的形状集合
+    /// </summary>
+    IExcelShapes? Shapes { get; }
+
+    /// <summary>
     /// 获取工作表内容是否受保护
     /// </summary>
     bool ProtectContents { get; }
+
+    /// <summary>
+    /// 将工作表另存为xlsx文件。
+    /// </summary>
+    /// <param name="filePath"></param>
+    void SaveAs(string filePath);
+
+    /// <summary>
+    /// 打印预览
+    /// </summary>
+    void PrintPreview();
+
+    /// <summary>
+    /// 打印工作表
+    /// </summary>
+    /// <param name="preview">是否打印预览</param>
+    void PrintOut(bool preview = false);
 
     /// <summary>
     /// 删除工作表
@@ -82,6 +110,15 @@ public interface ICommonWorksheet : IDisposable
     /// 复制对象
     /// </summary>
     void Copy();
+
+
+    /// <summary>
+    /// 复制工作表
+    /// 对应 Worksheet.Copy 方法
+    /// </summary>
+    /// <param name="before">复制到指定工作表之前</param>
+    /// <param name="after">复制到指定工作表之后</param>
+    void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null);
 
     /// <summary>
     /// 获取工作表中的OLE对象集合或指定索引的OLE对象
