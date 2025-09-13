@@ -12,14 +12,14 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// Excel Chart 对象的二次封装实现类
 /// 实现 IExcelChart 接口，提供对 Microsoft.Office.Interop.Excel.Chart 的安全访问和操作
 /// </summary>
-internal class ExcelChart : IExcelChart
+internal partial class ExcelChart : IExcelChart
 {
     #region 私有字段
 
     /// <summary>
     /// 内部持有的 Microsoft.Office.Interop.Excel.Chart 对象引用
     /// </summary>
-    internal MsExcel.Chart _chart;
+    internal MsExcel.Chart? _chart;
 
     /// <summary>
     /// 标记对象是否已被释放，用于防止重复释放
@@ -38,6 +38,8 @@ internal class ExcelChart : IExcelChart
     internal ExcelChart(MsExcel.Chart chart)
     {
         _chart = chart ?? throw new ArgumentNullException(nameof(chart));
+        _chartEvents_Event = chart;
+        InitializeEvents();
     }
 
     #endregion
@@ -228,37 +230,37 @@ internal class ExcelChart : IExcelChart
 
     #region 图表元素 (IExcelChart)
 
-    public IExcelShapes Shapes => new ExcelShapes(_chart.Shapes);
+    public IExcelShapes? Shapes => _chart != null ? new ExcelShapes(_chart.Shapes) : null;
 
     /// <summary>
     /// 获取图表的绘图区对象
     /// </summary>
-    public IExcelPlotArea PlotArea => new ExcelPlotArea(_chart.PlotArea);
+    public IExcelPlotArea? PlotArea => _chart != null ? new ExcelPlotArea(_chart.PlotArea) : null;
 
     /// <summary>
     /// 获取图表的图表区对象
     /// </summary>
-    public IExcelChartArea ChartArea => new ExcelChartArea(_chart.ChartArea);
+    public IExcelChartArea? ChartArea => _chart != null ? new ExcelChartArea(_chart.ChartArea) : null;
 
     /// <summary>
     /// 获取图表的坐标轴集合
     /// </summary>
-    public IExcelAxes Axes => new ExcelAxes((MsExcel.Axes)_chart.Axes());
+    public IExcelAxes? Axes => _chart != null ? new ExcelAxes((MsExcel.Axes)_chart.Axes()) : null;
 
     /// <summary>
     /// 获取图表的图表标题对象
     /// </summary>
-    public IExcelChartTitle ChartTitleObject => HasTitle ? new ExcelChartTitle(_chart.ChartTitle) : null;
+    public IExcelChartTitle? ChartTitleObject => _chart != null && HasTitle ? new ExcelChartTitle(_chart.ChartTitle) : null;
 
     /// <summary>
     /// 获取图表的图例对象
     /// </summary>
-    public IExcelLegend Legend => HasLegend ? new ExcelLegend(_chart.Legend) : null;
+    public IExcelLegend? Legend => _chart != null && HasLegend ? new ExcelLegend(_chart.Legend) : null;
 
     /// <summary>
     /// 获取图表的数据标签集合 (通常在 Series 上)
     /// </summary>
-    public IExcelDataTable DataTable => new ExcelDataTable(_chart.DataTable);
+    public IExcelDataTable? DataTable => _chart != null ? new ExcelDataTable(_chart.DataTable) : null;
 
     /// <summary>
     /// 页面设置对象缓存
@@ -268,7 +270,7 @@ internal class ExcelChart : IExcelChart
     /// <summary>
     /// 获取工作表的页面设置对象
     /// </summary>
-    public IExcelPageSetup PageSetup => _pageSetup ?? (_pageSetup = new ExcelPageSetup(_chart?.PageSetup));
+    public IExcelPageSetup? PageSetup => _pageSetup ??= new ExcelPageSetup(_chart?.PageSetup);
 
 
     #endregion
@@ -312,7 +314,7 @@ internal class ExcelChart : IExcelChart
     /// <param name="replace">是否替换当前选择</param>
     public void Select(bool replace = true)
     {
-        _chart.Select(replace);
+        _chart?.Select(replace);
     }
 
     /// <summary>
@@ -320,7 +322,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public void Activate()
     {
-        _chart.Activate();
+        _chart?.Activate();
     }
 
     /// <summary>
@@ -328,7 +330,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public void Copy()
     {
-        _chart.Copy();
+        _chart?.Copy();
     }
 
     /// <summary>
@@ -336,7 +338,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public void Delete()
     {
-        _chart.Delete();
+        _chart?.Delete();
     }
 
 
@@ -357,11 +359,11 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     /// <param name="sourceData">数据源区域</param>
     /// <param name="plotBy">绘制方式 (1=列, 2=行)</param>
-    public void SetSourceData(IExcelRange sourceData, int plotBy = 1)
+    public void SetSourceData(IExcelRange sourceData, XlRowCol plotBy = XlRowCol.xlRows)
     {
         if (sourceData is ExcelRange excelRange)
         {
-            _chart.SetSourceData(excelRange.InternalRange, (MsExcel.XlRowCol)plotBy);
+            _chart?.SetSourceData(excelRange.InternalRange, (MsExcel.XlRowCol)(int)plotBy);
         }
         else
         {
@@ -375,7 +377,7 @@ internal class ExcelChart : IExcelChart
     /// <param name="layout">布局编号</param>
     public void ApplyLayout(int layout)
     {
-        _chart.ApplyLayout(layout);
+        _chart?.ApplyLayout(layout);
     }
 
     /// <summary>
@@ -383,7 +385,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public void Refresh()
     {
-        _chart.Refresh();
+        _chart?.Refresh();
     }
 
     /// <summary>
@@ -391,7 +393,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public void Clear()
     {
-        _chart.ChartArea.Clear();
+        _chart?.ChartArea.Clear();
     }
 
     /// <summary>
@@ -399,7 +401,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public void ClearFormats()
     {
-        _chart.ChartArea.ClearFormats();
+        _chart?.ChartArea.ClearFormats();
     }
 
     #endregion
@@ -411,8 +413,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public IExcelSeriesCollection? SeriesCollection()
     {
-        var series = _chart.SeriesCollection() as MsExcel.SeriesCollection;
-        if (series != null)
+        if (_chart?.SeriesCollection() is MsExcel.SeriesCollection series)
             return new ExcelSeriesCollection(series);
         return null;
     }
@@ -422,8 +423,7 @@ internal class ExcelChart : IExcelChart
     /// </summary>
     public IExcelSeries? SeriesCollection(int index)
     {
-        var series = _chart.SeriesCollection(index) as MsExcel.Series;
-        if (series != null)
+        if (_chart?.SeriesCollection(index) is MsExcel.Series series)
             return new ExcelSeries(series);
         return null;
     }
@@ -435,7 +435,8 @@ internal class ExcelChart : IExcelChart
     public void SetTitle(string title)
     {
         HasTitle = true;
-        _chart.ChartTitle.Text = title;
+        if (_chart != null)
+            _chart.ChartTitle.Text = title;
     }
 
 
@@ -446,7 +447,8 @@ internal class ExcelChart : IExcelChart
     public void SetLegendPosition(XlLegendPosition position)
     {
         HasLegend = true;
-        _chart.Legend.Position = (MsExcel.XlLegendPosition)position;
+        if (_chart != null)
+            _chart.Legend.Position = (MsExcel.XlLegendPosition)(int)position;
     }
 
     /// <summary>
@@ -455,7 +457,7 @@ internal class ExcelChart : IExcelChart
     /// <param name="show">是否显示</param>
     public void SetDataLabels(bool show)
     {
-        if (show)
+        if (show && _chart != null)
         {
             MsExcel.SeriesCollection? seriesColl = _chart.SeriesCollection() as MsExcel.SeriesCollection;
             for (int i = 1; i <= seriesColl.Count; i++)
@@ -472,7 +474,8 @@ internal class ExcelChart : IExcelChart
     /// <param name="color">RGB 颜色值</param>
     public void SetBackgroundColor(int color)
     {
-        _chart.ChartArea.Format.Fill.ForeColor.RGB = color;
+        if (_chart != null)
+            _chart.ChartArea.Format.Fill.ForeColor.RGB = color;
     }
 
     /// <summary>
@@ -481,7 +484,8 @@ internal class ExcelChart : IExcelChart
     /// <param name="color">RGB 颜色值</param>
     public void SetForegroundColor(int color)
     {
-        _chart.ChartArea.Format.Line.ForeColor.RGB = color;
+        if (_chart != null)
+            _chart.ChartArea.Format.Line.ForeColor.RGB = color;
     }
 
     #endregion
@@ -518,7 +522,7 @@ internal class ExcelChart : IExcelChart
 
     public object? OLEObjects(int? index = null)
     {
-        if (index != null)
+        if (index != null && _chart != null)
             return _chart.OLEObjects(index);
         return _chart?.OLEObjects();
     }
@@ -538,7 +542,7 @@ internal class ExcelChart : IExcelChart
             {
                 return false;
             }
-            _chart.Export(filename, format, false); // interactive = false
+            _chart?.Export(filename, format, false);
             return true;
         }
         catch
@@ -558,7 +562,7 @@ internal class ExcelChart : IExcelChart
         string tempPath = System.IO.Path.GetTempFileName() + "." + format;
         try
         {
-            _chart.Export(tempPath, format, false);
+            _chart?.Export(tempPath, format, false);
             if (System.IO.File.Exists(tempPath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(tempPath);
@@ -587,11 +591,11 @@ internal class ExcelChart : IExcelChart
     {
         if (preview)
         {
-            _chart.PrintPreview();
+            _chart?.PrintPreview();
         }
         else
         {
-            _chart.PrintOutEx();
+            _chart?.PrintOutEx();
         }
     }
 
@@ -609,18 +613,13 @@ internal class ExcelChart : IExcelChart
 
         if (disposing)
         {
-            try
-            {
-                _pageSetup?.Dispose();
-                if (_chart != null)
-                    Marshal.ReleaseComObject(_chart);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            _pageSetup?.Dispose();
+            DisconnectEvents();
+            if (_chart != null)
+                Marshal.ReleaseComObject(_chart);
             _pageSetup = null;
             _chart = null;
+            _chartEvents_Event = null;
         }
         _disposedValue = true;
     }

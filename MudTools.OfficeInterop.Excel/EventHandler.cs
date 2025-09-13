@@ -242,6 +242,50 @@ public delegate void WindowActivateEventHandler(IExcelWorkbook Wb, IExcelWindow 
 public delegate void CalculateEventHandler();
 
 /// <summary>
+/// 图表激活事件：当图表被激活时触发
+/// </summary>
+/// <param name="chart">触发事件的 ExcelChart 实例</param>
+public delegate void ChartActivateEventHandler(IExcelChart chart);
+
+/// <summary>
+/// 图表失活事件：当图表失去焦点时触发
+/// </summary>
+/// <param name="chart">触发事件的 ExcelChart 实例</param>
+public delegate void ChartDeactivateEventHandler(IExcelChart chart);
+
+/// <summary>
+/// 图表选择事件：用户在图表上点击任意元素（数据点、图例、坐标轴等）时触发
+/// </summary>
+/// <param name="chart">触发事件的 ExcelChart 实例</param>
+/// <param name="elementId">选中元素的类型，MsoChartElementType 枚举值（int）</param>
+/// <param name="seriesIndex">系列索引（int），若选中的是系列或数据点，则为该系列编号；否则为 Missing.Value</param>
+/// <param name="pointIndex">数据点索引（int），若选中的是单个数据点，则为该点编号；否则为 Missing.Value</param>
+public delegate void ChartSelectEventHandler(IExcelChart chart, MsoChartElementType elementId, int seriesIndex, int pointIndex);
+
+/// <summary>
+/// 图表双击前事件：可取消默认双击行为（如打开格式对话框）
+/// </summary>
+/// <param name="cancel">设为 true 可取消默认行为</param>
+/// <param name="elementId">选中元素的类型，MsoChartElementType 枚举值（int）</param>
+/// <param name="seriesIndex">系列索引（int），若选中的是系列或数据点，则为该系列编号；否则为 Missing.Value</param>
+/// <param name="pointIndex">数据点索引（int），若选中的是单个数据点，则为该点编号；否则为 Missing.Value</param>
+public delegate void ChartBeforeDoubleClickEventHandler(MsoChartElementType elementId, int seriesIndex, int pointIndex, ref bool cancel);
+
+/// <summary>
+/// 图表右键单击前事件：可取消默认上下文菜单显示
+/// </summary>
+/// <param name="cancel">设为 true 可取消默认菜单</param>
+public delegate void ChartBeforeRightClickEventHandler(ref bool cancel);
+
+/// <summary>
+/// 图表数据系列变化事件：当任一数据系列的数据发生变更时触发（如单元格值改变）
+/// </summary>
+/// <param name="chart">触发事件的 ExcelChart 实例</param>
+/// <param name="seriesIndex">发生变化的系列索引（int）</param>
+/// <param name="pointIndex">若仅单个点变化，则为该点索引；否则为 Missing.Value</param>
+public delegate void ChartSeriesChangeEventHandler(IExcelChart chart, int seriesIndex, int pointIndex);
+
+/// <summary>
 /// 应用程序性能统计信息
 /// </summary>
 public class ApplicationPerformance

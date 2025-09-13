@@ -79,43 +79,43 @@ public interface IExcelChart : ICommonWorksheet, IDisposable
 
     #region 图表元素
 
-    IExcelShapes Shapes { get; }
+    IExcelShapes? Shapes { get; }
 
     /// <summary>
     /// 获取图表的绘图区对象
     /// 对应 Chart.PlotArea 属性
     /// </summary>
-    IExcelPlotArea PlotArea { get; }
+    IExcelPlotArea? PlotArea { get; }
 
     /// <summary>
     /// 获取图表的图表区对象
     /// 对应 Chart.ChartArea 属性
     /// </summary>
-    IExcelChartArea ChartArea { get; }
+    IExcelChartArea? ChartArea { get; }
 
     /// <summary>
     /// 获取图表的坐标轴集合
     /// 对应 Chart.Axes 属性
     /// </summary>
-    IExcelAxes Axes { get; }
+    IExcelAxes? Axes { get; }
 
     /// <summary>
     /// 获取图表的图表标题对象
     /// 对应 Chart.ChartTitle 属性
     /// </summary>
-    IExcelChartTitle ChartTitleObject { get; }
+    IExcelChartTitle? ChartTitleObject { get; }
 
     /// <summary>
     /// 获取图表的图例对象
     /// 对应 Chart.Legend 属性
     /// </summary>
-    IExcelLegend Legend { get; }
+    IExcelLegend? Legend { get; }
 
     /// <summary>
     /// 获取图表的数据标签集合
     /// 对应 Chart.DataTable 属性
     /// </summary>
-    IExcelDataTable DataTable { get; }
+    IExcelDataTable? DataTable { get; }
     #endregion
 
     #region 图表设置
@@ -155,7 +155,7 @@ public interface IExcelChart : ICommonWorksheet, IDisposable
     /// </summary>
     /// <param name="sourceData">数据源区域</param>
     /// <param name="plotBy">绘制方式</param>
-    void SetSourceData(IExcelRange sourceData, int plotBy = 1);
+    void SetSourceData(IExcelRange sourceData, XlRowCol plotBy = XlRowCol.xlRows);
 
 
     /// <summary>
@@ -252,5 +252,38 @@ public interface IExcelChart : ICommonWorksheet, IDisposable
     /// </summary>
     /// <param name="preview">是否打印预览</param>
     void PrintOut(bool preview = false);
+    #endregion
+
+
+    #region 公共事件（与 COM 事件一一对应，命名保持一致）
+
+    /// <summary>
+    /// 图表被激活时触发
+    /// </summary>
+    event ChartActivateEventHandler ChartActivate;
+    /// <summary>
+    /// 图表失活时触发
+    /// </summary>
+    event ChartDeactivateEventHandler Deactivate;
+
+    /// <summary>
+    /// 用户在图表上选择任意元素时触发（如点击数据点、图例、标题等）
+    /// </summary>
+    event ChartSelectEventHandler ChartSelect;
+
+    /// <summary>
+    /// 用户双击图表前触发，设置 Cancel = true 可阻止默认行为（如打开“设置数据系列”对话框）
+    /// </summary>
+    event ChartBeforeDoubleClickEventHandler BeforeDoubleClick;
+
+    /// <summary>
+    /// 用户右键单击图表前触发，设置 Cancel = true 可阻止弹出上下文菜单
+    /// </summary>
+    event ChartBeforeRightClickEventHandler BeforeRightClick;
+
+    /// <summary>
+    /// 当图表中的数据系列发生变化时触发（例如单元格数据更新导致图表重绘）
+    /// </summary>
+    event ChartSeriesChangeEventHandler SeriesChange;
     #endregion
 }
