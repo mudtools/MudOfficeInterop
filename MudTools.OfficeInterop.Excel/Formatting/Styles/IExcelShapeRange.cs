@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -267,6 +267,22 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     #endregion
 
     #region 排列和布局
+
+    /// <summary>
+    /// 按指定比例缩放形状区域的高度
+    /// </summary>
+    /// <param name="factor">缩放因子，1.0表示原始大小，小于1.0表示缩小，大于1.0表示放大</param>
+    /// <param name="relativeToOriginalSize">是否相对于原始大小进行缩放。true表示相对于原始大小，false表示相对于当前大小</param>
+    /// <param name="scale">缩放参考点，指定从哪个位置开始缩放，默认为null</param>
+    void ScaleHeight(float factor, bool relativeToOriginalSize, MsoScaleFrom? scale = null);
+
+    /// <summary>
+    /// 按指定比例缩放形状区域的宽度
+    /// </summary>
+    /// <param name="factor">缩放因子，1.0表示原始大小，小于1.0表示缩小，大于1.0表示放大</param>
+    /// <param name="relativeToOriginalSize">是否相对于原始大小进行缩放。true表示相对于原始大小，false表示相对于当前大小</param>
+    /// <param name="scale">缩放参考点，指定从哪个位置开始缩放，默认为null</param>
+    void ScaleWidth(float factor, bool relativeToOriginalSize, MsoScaleFrom? scale = null);
 
     /// <summary>
     /// 将形状区域置于最前面

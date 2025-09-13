@@ -58,7 +58,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <summary>
     /// 获取单元格区域的条件格式规则集合，用于管理和操作单元格区域的条件格式
     /// </summary>
-    IExcelFormatConditions FormatConditions { get; }
+    IExcelFormatConditions? FormatConditions { get; }
 
     /// <summary>
     /// 获取单元格区域中字符的集合，用于对单元格中文本的字符级操作

@@ -140,15 +140,15 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         get => InternalRange.PrefixCharacter;
     }
 
-    private IExcelFormatConditions _excelFormatConditions;
+    private IExcelFormatConditions? _excelFormatConditions;
 
-    public IExcelFormatConditions FormatConditions
+    public IExcelFormatConditions? FormatConditions
     {
         get
         {
             if (_excelFormatConditions != null)
                 return _excelFormatConditions;
-            _excelFormatConditions = new ExcelFormatConditions(_range.FormatConditions);
+            _excelFormatConditions = _range != null ? new ExcelFormatConditions(_range.FormatConditions) : null;
             return _excelFormatConditions;
         }
     }
