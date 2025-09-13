@@ -1193,15 +1193,22 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
 
     #region 区域操作
 
-    public object? BorderAround(object LineStyle,
-         XlBorderWeight Weight = XlBorderWeight.xlThin,
-         XlColorIndex ColorIndex = XlColorIndex.xlColorIndexAutomatic,
-         object? Color = null)
+    public object? BorderAround(XlLineStyle? lineStyle = null,
+         XlBorderWeight weight = XlBorderWeight.xlThin,
+         XlColorIndex colorIndex = XlColorIndex.xlColorIndexAutomatic,
+         Color? color = null)
     {
-        LineStyle = LineStyle ?? Type.Missing;
-        Color = Color ?? Type.Missing;
+        object lineStyleObj = Type.Missing;
+        if (lineStyle != null)
+            lineStyleObj = (MsExcel.XlLineStyle)(int)lineStyle;
+        object colorObj = Type.Missing;
+        if (color != null)
+            colorObj = color.Value.ToArgb();
 
-        return _range?.BorderAround(LineStyle, (MsExcel.XlBorderWeight)(int)Weight, (MsExcel.XlColorIndex)(int)ColorIndex, Color);
+        return _range?.BorderAround(lineStyleObj,
+            (MsExcel.XlBorderWeight)(int)weight,
+            (MsExcel.XlColorIndex)(int)colorIndex,
+            colorObj);
     }
     /// <summary>
     /// 合并单元格

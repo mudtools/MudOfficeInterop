@@ -592,10 +592,10 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <param name="ColorIndex">边框颜色索引，默认为自动颜色</param>
     /// <param name="Color">边框颜色值，默认为null</param>
     /// <returns>返回边框设置结果</returns>
-    object? BorderAround(object LineStyle,
+    object? BorderAround(XlLineStyle? LineStyle = null,
          XlBorderWeight Weight = XlBorderWeight.xlThin,
          XlColorIndex ColorIndex = XlColorIndex.xlColorIndexAutomatic,
-         object? Color = null);
+         Color? Color = null);
 
     /// <summary>
     /// 调整区域大小
