@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Reflection;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     where T : CoreRange<T, TR>, TR, new()
     where TR : ICoreRange<TR>
@@ -152,15 +153,15 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         }
     }
 
-    private IExcelCharacters _characters;
+    private IExcelCharacters? _characters;
 
-    public IExcelCharacters Characters
+    public IExcelCharacters? Characters
     {
         get
         {
             if (_characters != null)
                 return _characters;
-            _characters = new ExcelCharacters(_range.Characters, _range);
+            _characters = _range != null ? new ExcelCharacters(_range.Characters, _range) : null;
             return _characters;
         }
     }
@@ -1314,9 +1315,24 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public void AutoFit()
     {
-        try { InternalRange.EntireColumn.AutoFit(); }
-        catch { }
+        InternalRange?.AutoFit();
     }
+
+    public object? AutoFormat(XlRangeAutoFormat format = XlRangeAutoFormat.xlRangeAutoFormatClassic1,
+        bool? number = true, bool? font = true, bool? alignment = true,
+        bool? border = true, bool? pattern = true, bool? width = true)
+    {
+        return InternalRange?.AutoFormat(
+            Format: (MsExcel.XlRangeAutoFormat)(int)format,
+            Number: number, Font: font, Alignment: alignment,
+            Border: border, Pattern: pattern, Width: width);
+    }
+
+    public object? AutoOutline()
+    {
+        return InternalRange?.AutoOutline();
+    }
+
 
     /// <summary>
     /// 获取区域边缘的单元格

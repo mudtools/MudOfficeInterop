@@ -63,7 +63,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <summary>
     /// 获取单元格区域中字符的集合，用于对单元格中文本的字符级操作
     /// </summary>
-    IExcelCharacters Characters { get; }
+    IExcelCharacters? Characters { get; }
 
     /// <summary>
     /// 获取一个值，该值指示此区域是否是单元格的公式。
@@ -699,6 +699,12 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// 自动调整当前区域所有列的宽度以适应其内容。
     /// </summary>
     void AutoFit();
+
+    object? AutoFormat(XlRangeAutoFormat format = XlRangeAutoFormat.xlRangeAutoFormatClassic1,
+        bool? number = true, bool? font = true, bool? alignment = true,
+        bool? border = true, bool? pattern = true, bool? width = true);
+
+    object? AutoOutline();
 
     /// <summary>
     /// 获取当前数据区域（自动识别连续数据区域）
