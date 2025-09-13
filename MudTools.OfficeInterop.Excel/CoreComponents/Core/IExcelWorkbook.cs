@@ -344,7 +344,7 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取工作簿的透视表缓存集合
     /// </summary>
-    IEnumerable<IExcelPivotCache> PivotCaches();
+    IExcelPivotCaches PivotCaches();
 
     #endregion
 

@@ -761,13 +761,12 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 获取工作簿的透视表缓存集合
     /// </summary>
-    public IEnumerable<IExcelPivotCache> PivotCaches()
+    public IExcelPivotCaches PivotCaches()
     {
         var caches = _workbook?.PivotCaches();
-        foreach (var item in caches)
-        {
-            yield return new ExcelPivotCache(item as MsExcel.PivotCache);
-        }
+        if (caches != null)
+            return new ExcelPivotCaches(caches);
+        return null;
     }
 
     #endregion
