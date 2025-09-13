@@ -827,6 +827,25 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     }
 
     /// <summary>
+    /// 保护工作表
+    /// </summary>
+    /// <param name="password">保护密码</param>
+    /// <param name="drawingObjects">是否保护图形对象</param>
+    /// <param name="contents">是否保护内容</param>
+    /// <param name="scenarios">是否保护方案</param>
+    /// <param name="userInterfaceOnly">是否仅保护用户界面</param>
+    public void Protect(string? password = null, bool? drawingObjects = null,
+        bool? contents = null, bool? scenarios = null, bool? userInterfaceOnly = null)
+    {
+        _worksheet?.Protect(
+          Password: password.ComArgsVal(),
+          DrawingObjects: drawingObjects.ComArgsVal(),
+          Contents: contents.ComArgsVal(),
+          Scenarios: scenarios.ComArgsVal(),
+          UserInterfaceOnly: userInterfaceOnly.ComArgsVal());
+    }
+
+    /// <summary>
     /// 取消保护工作表
     /// </summary>
     /// <param name="password">保护密码</param>

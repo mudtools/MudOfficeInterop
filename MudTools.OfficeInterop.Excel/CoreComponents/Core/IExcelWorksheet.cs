@@ -299,38 +299,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     bool DisplayPageLayout { get; set; }
     #endregion
 
-    #region 保护和安全
-
-    /// <summary>
-    /// 保护工作表
-    /// 对应 Worksheet.Protect 方法
-    /// </summary>
-    /// <param name="password">保护密码</param>
-    /// <param name="drawingObjects">是否保护图形对象</param>
-    /// <param name="contents">是否保护内容</param>
-    /// <param name="scenarios">是否保护方案</param>
-    /// <param name="userInterfaceOnly">是否仅保护用户界面</param>
-    /// <param name="allowFormattingCells">是否允许格式化单元格</param>
-    /// <param name="allowFormattingColumns">是否允许格式化列</param>
-    /// <param name="allowFormattingRows">是否允许格式化行</param>
-    /// <param name="allowInsertingColumns">是否允许插入列</param>
-    /// <param name="allowInsertingRows">是否允许插入行</param>
-    /// <param name="allowInsertingHyperlinks">是否允许插入超链接</param>
-    /// <param name="allowDeletingColumns">是否允许删除列</param>
-    /// <param name="allowDeletingRows">是否允许删除行</param>
-    /// <param name="allowSorting">是否允许排序</param>
-    /// <param name="allowFiltering">是否允许筛选</param>
-    /// <param name="allowUsingPivotTables">是否允许使用透视表</param>
-    void Protect(string password = "", bool drawingObjects = true, bool contents = true,
-                bool scenarios = true, bool userInterfaceOnly = false,
-                bool allowFormattingCells = true, bool allowFormattingColumns = true,
-                bool allowFormattingRows = true, bool allowInsertingColumns = true,
-                bool allowInsertingRows = true, bool allowInsertingHyperlinks = true,
-                bool allowDeletingColumns = true, bool allowDeletingRows = true,
-                bool allowSorting = true, bool allowFiltering = true,
-                bool allowUsingPivotTables = true);
-
-    #endregion
 
     #region 操作方法
 
@@ -551,6 +519,35 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     void AutoFitRows();
 
     #endregion
+
+    /// <summary>
+    /// 保护工作表
+    /// 对应 Worksheet.Protect 方法
+    /// </summary>
+    /// <param name="password">保护密码</param>
+    /// <param name="drawingObjects">是否保护图形对象</param>
+    /// <param name="contents">是否保护内容</param>
+    /// <param name="scenarios">是否保护方案</param>
+    /// <param name="userInterfaceOnly">是否仅保护用户界面</param>
+    /// <param name="allowFormattingCells">是否允许格式化单元格</param>
+    /// <param name="allowFormattingColumns">是否允许格式化列</param>
+    /// <param name="allowFormattingRows">是否允许格式化行</param>
+    /// <param name="allowInsertingColumns">是否允许插入列</param>
+    /// <param name="allowInsertingRows">是否允许插入行</param>
+    /// <param name="allowInsertingHyperlinks">是否允许插入超链接</param>
+    /// <param name="allowDeletingColumns">是否允许删除列</param>
+    /// <param name="allowDeletingRows">是否允许删除行</param>
+    /// <param name="allowSorting">是否允许排序</param>
+    /// <param name="allowFiltering">是否允许筛选</param>
+    /// <param name="allowUsingPivotTables">是否允许使用透视表</param>
+    void Protect(string password = "", bool drawingObjects = true, bool contents = true,
+                bool scenarios = true, bool userInterfaceOnly = false,
+                bool allowFormattingCells = true, bool allowFormattingColumns = true,
+                bool allowFormattingRows = true, bool allowInsertingColumns = true,
+                bool allowInsertingRows = true, bool allowInsertingHyperlinks = true,
+                bool allowDeletingColumns = true, bool allowDeletingRows = true,
+                bool allowSorting = true, bool allowFiltering = true,
+                bool allowUsingPivotTables = true);
 
     #region 事件
 
