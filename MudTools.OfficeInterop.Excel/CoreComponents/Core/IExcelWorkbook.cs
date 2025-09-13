@@ -221,6 +221,18 @@ public interface IExcelWorkbook : IDisposable
 
     #region 操作方法
 
+    /// <summary>
+    /// 将工作簿导出为固定格式文件（如 PDF 或 XPS）
+    /// </summary>
+    /// <param name="Type">要导出的固定格式类型</param>
+    /// <param name="Filename">导出文件的完整路径和文件名</param>
+    /// <param name="Quality">导出质量，可选参数</param>
+    /// <param name="IncludeDocProperties">是否包含文档属性，可选参数</param>
+    /// <param name="IgnorePrintAreas">是否忽略打印区域，可选参数</param>
+    /// <param name="From">起始页码，可选参数</param>
+    /// <param name="To">结束页码，可选参数</param>
+    /// <param name="OpenAfterPublish">发布后是否打开文件，可选参数</param>
+    /// <param name="FixedFormatExtClassPtr">固定格式扩展类指针，可选参数</param>
     void ExportAsFixedFormat(
       XlFixedFormatType Type,
       string Filename,

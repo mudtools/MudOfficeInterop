@@ -99,7 +99,7 @@ internal class ExcelPane : IExcelPane
 
         if (disposing && _pane != null)
         {
-            Marshal.ReleaseComObject(_pane) > 0);
+            Marshal.ReleaseComObject(_pane);
             _pane = null;
         }
 
