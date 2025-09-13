@@ -685,28 +685,6 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     }
 
     /// <summary>
-    /// 应用自动筛选到所有工作表
-    /// </summary>
-    public void AutoFilterAll()
-    {
-        var worksheets = Sheets;
-        if (worksheets != null)
-        {
-            for (int i = 1; i <= worksheets.Count; i++)
-            {
-                try
-                {
-                    worksheets[i]?.AutoFilter();
-                }
-                catch
-                {
-                    // 忽略单个工作表异常
-                }
-            }
-        }
-    }
-
-    /// <summary>
     /// 清除工作簿中的所有内容
     /// </summary>
     public void ClearAll()

@@ -81,7 +81,7 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// 获取工作表的自动筛选器对象
     /// 对应 Worksheet.AutoFilter 属性
     /// </summary>
-    IExcelAutoFilter AutoFilters { get; }
+    IExcelAutoFilter AutoFilter { get; }
 
     /// <summary>
     /// 获取或设置是否显示分页符
@@ -515,12 +515,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// </summary>
     /// <param name="filePath"></param>
     void SaveAs(string filePath);
-
-    /// <summary>
-    /// 应用自动筛选
-    /// 对应 Worksheet.AutoFilter 方法
-    /// </summary>
-    void AutoFilter();
 
     /// <summary>
     /// 重置工作表中的所有分页符

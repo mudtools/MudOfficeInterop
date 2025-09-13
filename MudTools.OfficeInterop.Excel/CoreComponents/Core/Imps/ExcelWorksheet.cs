@@ -1214,7 +1214,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         _worksheet?.SaveAs(filePath);
     }
 
-    public IExcelAutoFilter AutoFilters
+    public IExcelAutoFilter AutoFilter
     {
         get
         {
@@ -1222,14 +1222,6 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         }
     }
 
-
-    /// <summary>
-    /// 应用自动筛选
-    /// </summary>
-    public void AutoFilter()
-    {
-        _worksheet?.UsedRange?.AutoFilter();
-    }
 
     public void ResetAllPageBreaks()
     {

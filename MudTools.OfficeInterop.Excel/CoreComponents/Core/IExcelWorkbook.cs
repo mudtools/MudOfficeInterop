@@ -327,10 +327,6 @@ public interface IExcelWorkbook : IDisposable
     /// </summary>
     void RefreshAll();
 
-    /// <summary>
-    /// 应用自动筛选到所有工作表
-    /// </summary>
-    void AutoFilterAll();
 
     /// <summary>
     /// 清除工作簿中的所有内容
