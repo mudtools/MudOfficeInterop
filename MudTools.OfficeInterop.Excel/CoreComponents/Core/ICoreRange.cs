@@ -828,13 +828,28 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
         object? searchFormat = null);
 
     /// <summary>
+    /// 在单元格区域中查找并替换指定的内容
+    /// </summary>
+    /// <param name="what">要查找的内容</param>
+    /// <param name="replacement">用于替换的内容</param>
+    /// <param name="lookAt">指定匹配方式，是完全匹配还是部分匹配</param>
+    /// <param name="searchOrder">指定搜索顺序，按行或按列</param>
+    /// <param name="matchCase">是否区分大小写</param>
+    /// <param name="matchByte">是否匹配字节</param>
+    /// <param name="searchFormat">搜索的单元格格式条件</param>
+    /// <param name="replaceFormat">替换的单元格格式条件</param>
+    /// <returns>如果成功执行替换操作则返回true，否则返回false</returns>
+    bool Replace(object what, object replacement,
+       XlLookAt? lookAt = null, XlSearchOrder? searchOrder = null,
+       bool? matchCase = null, bool? matchByte = null,
+       object? searchFormat = null, object? replaceFormat = null);
+
+    /// <summary>
     /// 获取区域中的特殊单元格
     /// </summary>
     /// <param name="type">特殊单元格类型</param>
     /// <param name="value">附加参数值</param>
     /// <returns>特殊单元格区域</returns>
     T? SpecialCells(XlCellType type, object? value);
-
-
     #endregion
 }

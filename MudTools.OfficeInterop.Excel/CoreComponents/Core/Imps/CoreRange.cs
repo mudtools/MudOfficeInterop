@@ -1479,15 +1479,15 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
 
         object lookInObj = Type.Missing;
         if (lookIn != null)
-            lookInObj = (int)lookIn;
+            lookInObj = (MsExcel.XlFindLookIn)(int)lookIn;
 
         object lookAtObj = Type.Missing;
         if (lookAt != null)
-            lookAtObj = (int)lookAt;
+            lookAtObj = (MsExcel.XlLookAt)(int)lookAt;
 
         object searchOrderObj = Type.Missing;
         if (searchOrder != null)
-            searchOrderObj = (int)searchOrder;
+            searchOrderObj = (MsExcel.XlSearchOrder)(int)searchOrder;
 
         searchFormat ??= Type.Missing;
 
@@ -1504,6 +1504,30 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
 
         return CreateRangeObject(range);
     }
+
+    public bool Replace(object What, object Replacement,
+        XlLookAt? LookAt = null, XlSearchOrder? SearchOrder = null,
+        bool? MatchCase = null, bool? MatchByte = null,
+        object? SearchFormat = null, object? ReplaceFormat = null)
+    {
+        object lookAtObj = Type.Missing;
+        if (LookAt != null)
+            lookAtObj = (MsExcel.XlLookAt)(int)LookAt;
+
+        object searchOrderObj = Type.Missing;
+        if (SearchOrder != null)
+            searchOrderObj = (MsExcel.XlSearchOrder)(int)SearchOrder;
+
+        SearchFormat ??= Type.Missing;
+        ReplaceFormat ??= Type.Missing;
+
+        return InternalRange.Replace(What: What, Replacement: Replacement,
+                        LookAt: lookAtObj, SearchOrder: searchOrderObj,
+                        MatchCase: MatchCase.ComArgsVal(), MatchByte: MatchByte.ComArgsVal(),
+                        SearchFormat: SearchFormat,
+                        ReplaceFormat: ReplaceFormat);
+    }
+
 
     /// <summary>
     /// 获取特殊单元格
