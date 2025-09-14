@@ -13,7 +13,8 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeCustomTaskPane : IOfficeCustomTaskPane
 {
-    private MsCore.CustomTaskPane _customTaskPane;
+    private MsCore.CustomTaskPane? _customTaskPane;
+    private MsCore._CustomTaskPaneEvents_Event _customTaskPaneEvents_Event;
     private bool _disposedValue = false;
 
     public event EventHandler<TaskPaneVisibleStateChangedEventArgs> VisibleStateChanged;
@@ -26,10 +27,25 @@ internal class OfficeCustomTaskPane : IOfficeCustomTaskPane
     internal OfficeCustomTaskPane(MsCore.CustomTaskPane customTaskPane)
     {
         _customTaskPane = customTaskPane ?? throw new ArgumentNullException(nameof(customTaskPane));
-        if (_customTaskPane != null)
+        _customTaskPaneEvents_Event = customTaskPane;
+        ConectEvent();
+    }
+
+    private void ConectEvent()
+    {
+        if (_customTaskPaneEvents_Event != null)
         {
-            _customTaskPane.VisibleStateChange += OnComVisibleStateChanged;
-            _customTaskPane.DockPositionStateChange += OnComDockPositionChanged;
+            _customTaskPaneEvents_Event.VisibleStateChange += OnComVisibleStateChanged;
+            _customTaskPaneEvents_Event.DockPositionStateChange += OnComDockPositionChanged;
+        }
+    }
+
+    private void DisConnectEvent()
+    {
+        if (_customTaskPaneEvents_Event != null)
+        {
+            _customTaskPaneEvents_Event.VisibleStateChange -= OnComVisibleStateChanged;
+            _customTaskPaneEvents_Event.DockPositionStateChange -= OnComDockPositionChanged;
         }
     }
 
@@ -111,13 +127,12 @@ internal class OfficeCustomTaskPane : IOfficeCustomTaskPane
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
-        if (_customTaskPane != null)
+        if (disposing && _customTaskPane != null)
         {
-            _customTaskPane.VisibleStateChange -= OnComVisibleStateChanged;
-            _customTaskPane.DockPositionStateChange -= OnComDockPositionChanged;
-
+            DisConnectEvent();
             Marshal.ReleaseComObject(_customTaskPane);
             _customTaskPane = null;
+            _customTaskPaneEvents_Event = null;
         }
         _disposedValue = true;
     }

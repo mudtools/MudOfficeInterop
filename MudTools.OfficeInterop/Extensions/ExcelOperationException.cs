@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -13,7 +13,27 @@ namespace MudTools.OfficeInterop;
 [Serializable]
 public class ExcelOperationException : Exception
 {
-    public ExcelOperationException() { }
-    public ExcelOperationException(string message) : base(message) { }
-    public ExcelOperationException(string message, Exception inner) : base(message, inner) { }
+    /// <summary>
+    /// 初始化 <see cref="ExcelOperationException"/> 类的新实例。
+    /// </summary>
+    public ExcelOperationException()
+    {
+    }
+
+    /// <summary>
+    /// 使用指定的错误消息初始化 <see cref="ExcelOperationException"/> 类的新实例。
+    /// </summary>
+    /// <param name="message">描述错误的消息。</param>
+    public ExcelOperationException(string message) : base(message)
+    {
+    }
+
+    /// <summary>
+    /// 使用指定的错误消息和对作为此异常原因的内部异常的引用来初始化 <see cref="ExcelOperationException"/> 类的新实例。
+    /// </summary>
+    /// <param name="message">描述错误的消息。</param>
+    /// <param name="inner">导致当前异常的异常；如果未指定内部异常，则为空引用。</param>
+    public ExcelOperationException(string message, Exception inner) : base(message, inner)
+    {
+    }
 }

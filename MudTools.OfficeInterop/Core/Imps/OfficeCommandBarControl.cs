@@ -120,9 +120,9 @@ internal class OfficeCommandBarControl : IOfficeCommandBarControl
         }
     }
 
-    public IOfficeCommandBarControl Copy(
-        IOfficeCommandBar bar = null,
-        IOfficeCommandBar before = null)
+    public IOfficeCommandBarControl? Copy(
+        IOfficeCommandBar? bar = null,
+        IOfficeCommandBar? before = null)
     {
         try
         {

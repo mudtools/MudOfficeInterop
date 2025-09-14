@@ -40,7 +40,7 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新添加的形状</returns>
-    IOfficeShape AddShape(MsoAutoShapeType type, float left, float top, float width, float height);
+    IOfficeShape? AddShape(MsoAutoShapeType type, float left, float top, float width, float height);
 
     /// <summary>
     /// 向集合中添加文本框
@@ -49,8 +49,9 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="top">顶部位置</param>
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
+    /// <param name="orientation"></param>
     /// <returns>新添加的文本框形状</returns>
-    IOfficeShape AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height);
+    IOfficeShape? AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height);
 
     /// <summary>
     /// 从集合中删除所有形状

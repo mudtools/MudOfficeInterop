@@ -78,7 +78,7 @@ internal class OfficeShapes : IOfficeShapes
     #region 方法实现
 
     /// <inheritdoc/>
-    public IOfficeShape AddShape(MsoAutoShapeType type, float left, float top, float width, float height)
+    public IOfficeShape? AddShape(MsoAutoShapeType type, float left, float top, float width, float height)
     {
         if (_shapes == null)
             return null;
@@ -88,7 +88,7 @@ internal class OfficeShapes : IOfficeShapes
     }
 
     /// <inheritdoc/>
-    public IOfficeShape AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height)
+    public IOfficeShape? AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height)
     {
         if (_shapes == null)
             return null;
