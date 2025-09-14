@@ -183,8 +183,13 @@ public interface IExcelWorkbook : IDisposable
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
-    IExcelWorksheet ActiveSheet { get; }
+    IExcelCommonSheet? ActiveSheet { get; }
 
+    /// <summary>
+    /// 获取活动工作表
+    /// </summary>
+    /// <returns>活动工作表对象</returns>
+    IExcelWorksheet? ActiveSheetWrap { get; }
     #endregion
 
     #region 保护和安全

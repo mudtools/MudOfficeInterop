@@ -143,13 +143,6 @@ public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
     string? CodeName { get; }
 
     /// <summary>
-    /// 获取工作表所在的父对象（通常是工作簿）
-    /// 对应 Worksheet.Parent 属性
-    /// </summary>
-    IExcelWorkbook? ParentWorkbook { get; }
-
-
-    /// <summary>
     /// 获取工作表的下一个工作表
     /// 对应 Worksheet.Next 属性
     /// </summary>
@@ -249,11 +242,6 @@ public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
     /// </summary>
     IExcelComments Comments { get; }
 
-    /// <summary>
-    /// 获取工作表的超链接集合
-    /// </summary>
-    IExcelHyperlinks Hyperlinks { get; }
-
     #endregion
 
     #region 数据操作
@@ -344,13 +332,6 @@ public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
     /// <param name="operation">计算操作类型</param>
     void PasteWithOperation(IExcelRange destinationRange, XlPasteSpecialOperation operation);
 
-    /// <summary>
-    /// 移动工作表
-    /// 对应 Worksheet.Move 方法
-    /// </summary>
-    /// <param name="before">移动到指定工作表之前</param>
-    /// <param name="after">移动到指定工作表之后</param>
-    void Move(IExcelWorksheet? before = null, IExcelWorksheet? after = null);
 
     /// <summary>
     /// 获取工作表中指定索引的数据透视表对象

@@ -65,6 +65,7 @@ internal class ExcelChartObject : IExcelChartObject
                 _excelShape?.Dispose();
 
                 _pageSetup?.Dispose();
+                _hyperlinks?.Dispose();
 
                 // 释放底层COM对象
                 if (_chart != null)
@@ -82,6 +83,7 @@ internal class ExcelChartObject : IExcelChartObject
             }
             _excelChart = null;
             _excelShape = null;
+            _hyperlinks = null;
             _chart = null;
         }
 
@@ -119,6 +121,17 @@ internal class ExcelChartObject : IExcelChartObject
 
 
     public IExcelShapes? Shapes => _chart != null ? new ExcelShapes(_chart.Shapes) : null;
+
+    /// <summary>
+    /// 超链接集合缓存
+    /// </summary>
+    private IExcelHyperlinks _hyperlinks;
+
+    /// <summary>
+    /// 获取工作表的超链接集合
+    /// </summary>
+    public IExcelHyperlinks Hyperlinks => _hyperlinks ?? (_hyperlinks = new ExcelHyperlinks(_chart?.Hyperlinks));
+
 
     /// <summary>
     /// 获取或设置图表对象的名称
@@ -187,6 +200,22 @@ internal class ExcelChartObject : IExcelChartObject
             if (_chartObject.Parent is MsExcel.Worksheet worksheet)
             {
                 return new ExcelWorksheet(worksheet);
+            }
+            return null;
+        }
+    }
+
+    public IExcelWorkbook? ParentWorkbook
+    {
+        get
+        {
+            if (_chart?.Parent == null)
+            {
+                return null;
+            }
+            if (_chart.Parent is MsExcel.Workbook workbook)
+            {
+                return new ExcelWorkbook(workbook);
             }
             return null;
         }
@@ -553,6 +582,21 @@ internal class ExcelChartObject : IExcelChartObject
         {
             // 忽略旋转过程中的异常
         }
+    }
+
+    /// <summary>
+    /// 移动工作表
+    /// </summary>
+    /// <param name="before">移动到指定工作表之前</param>
+    /// <param name="after">移动到指定工作表之后</param>
+    public void Move(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
+    {
+        if (_chart == null) return;
+
+        _chart.Move(
+            before is ExcelChart beforeSheet ? beforeSheet._chart : System.Type.Missing,
+            after is ExcelChart afterSheet ? afterSheet._chart : System.Type.Missing
+        );
     }
 
     /// <summary>

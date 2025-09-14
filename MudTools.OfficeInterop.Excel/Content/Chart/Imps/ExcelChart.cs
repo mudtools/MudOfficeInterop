@@ -127,6 +127,22 @@ internal partial class ExcelChart : IExcelChart
         }
     }
 
+    public IExcelWorkbook? ParentWorkbook
+    {
+        get
+        {
+            if (_chart?.Parent == null)
+            {
+                return null;
+            }
+            if (_chart.Parent is MsExcel.Workbook workbook)
+            {
+                return new ExcelWorkbook(workbook);
+            }
+            return null;
+        }
+    }
+
     public string? ParentName
     {
         get
@@ -275,6 +291,15 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public IExcelPageSetup? PageSetup => _pageSetup ??= new ExcelPageSetup(_chart?.PageSetup);
 
+    /// <summary>
+    /// 超链接集合缓存
+    /// </summary>
+    private IExcelHyperlinks _hyperlinks;
+
+    /// <summary>
+    /// 获取工作表的超链接集合
+    /// </summary>
+    public IExcelHyperlinks Hyperlinks => _hyperlinks ?? (_hyperlinks = new ExcelHyperlinks(_chart?.Hyperlinks));
 
     #endregion
 
@@ -368,6 +393,21 @@ internal partial class ExcelChart : IExcelChart
     public void Rotate(double angle)
     {
         Rotation = angle;
+    }
+
+    /// <summary>
+    /// 移动工作表
+    /// </summary>
+    /// <param name="before">移动到指定工作表之前</param>
+    /// <param name="after">移动到指定工作表之后</param>
+    public void Move(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
+    {
+        if (_chart == null) return;
+
+        _chart.Move(
+            before is ExcelChart beforeSheet ? beforeSheet._chart : System.Type.Missing,
+            after is ExcelChart afterSheet ? afterSheet._chart : System.Type.Missing
+        );
     }
     #endregion
 
@@ -651,11 +691,13 @@ internal partial class ExcelChart : IExcelChart
         if (disposing)
         {
             _pageSetup?.Dispose();
+            _hyperlinks?.Dispose();
             DisconnectEvents();
             if (_chart != null)
                 Marshal.ReleaseComObject(_chart);
             _pageSetup = null;
             _chart = null;
+            _hyperlinks = null;
             _chartEvents_Event = null;
         }
         _disposedValue = true;

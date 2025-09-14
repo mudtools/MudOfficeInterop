@@ -432,12 +432,37 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 活动工作表缓存
     /// </summary>
-    private IExcelWorksheet _activeWorksheet;
+    private IExcelCommonSheet? _activeWorksheet;
 
     /// <summary>
     /// 获取活动工作表
     /// </summary>
-    public IExcelWorksheet ActiveSheet => _activeWorksheet ?? (_activeWorksheet = new ExcelWorksheet(_workbook?.ActiveSheet as MsExcel.Worksheet));
+    public IExcelCommonSheet? ActiveSheet
+    {
+        get
+        {
+            if (_activeWorksheet != null)
+                return _activeWorksheet;
+
+            var sheet = _workbook.ActiveSheet;
+            if (sheet != null && sheet is MsExcel.Worksheet worksheet)
+                _activeWorksheet = new ExcelWorksheet(worksheet);
+            if (sheet != null && sheet is MsExcel.Chart chart)
+                _activeWorksheet = new ExcelChart(chart);
+            return _activeWorksheet;
+        }
+    }
+
+    public IExcelWorksheet? ActiveSheetWrap
+    {
+        get
+        {
+            if (ActiveSheet is IExcelWorksheet worksheet)
+                return worksheet;
+            return null;
+        }
+    }
+
 
     #endregion
 

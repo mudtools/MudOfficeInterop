@@ -33,6 +33,11 @@ public interface IExcelCommonSheet : IDisposable
     int Index { get; }
 
     /// <summary>
+    /// 获取工作表的超链接集合
+    /// </summary>
+    IExcelHyperlinks Hyperlinks { get; }
+
+    /// <summary>
     /// 获取工作表所在的父对象（通常是工作簿）
     /// </summary>
     object? Parent { get; }
@@ -41,6 +46,13 @@ public interface IExcelCommonSheet : IDisposable
     ///  获取工作表所在的父对象名字。
     /// </summary>
     string? ParentName { get; }
+
+
+    /// <summary>
+    /// 获取工作表所在的父对象（通常是工作簿）
+    /// 对应 Worksheet.Parent 属性
+    /// </summary>
+    IExcelWorkbook? ParentWorkbook { get; }
 
     /// <summary>
     /// 获取图表是否被保护
@@ -123,6 +135,14 @@ public interface IExcelCommonSheet : IDisposable
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
     void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null);
+
+    /// <summary>
+    /// 移动工作表
+    /// 对应 Worksheet.Move 方法
+    /// </summary>
+    /// <param name="before">移动到指定工作表之前</param>
+    /// <param name="after">移动到指定工作表之后</param>
+    void Move(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null);
 
     /// <summary>
     /// 获取工作表中的OLE对象集合或指定索引的OLE对象
