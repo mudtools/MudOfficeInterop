@@ -30,8 +30,8 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         {
             if (disposing)
             {
-                Marshal.ReleaseComObject(_hpageBreaks);
-                Marshal.ReleaseComObject(_vpageBreaks);
+                _hpageBreaks?.Dispose();
+                _vpageBreaks?.Dispose();
             }
             _hpageBreaks = null;
             _vpageBreaks = null;
@@ -56,27 +56,17 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     #endregion
 
     #region IExcelCommonSheets Implementation
-
-    /// <summary>
-    /// 获取工作表集合中的工作表数量
-    /// </summary>
+    /// <inheritdoc/>
     public abstract int Count { get; }
 
-    /// <summary>
-    /// 获取指定索引的工作表对象
-    /// </summary>
-    /// <param name="index">工作表索引（从1开始）</param>
-    /// <returns>工作表对象</returns>
+    /// <inheritdoc/>
     public abstract IExcelCommonSheet? this[int index] { get; }
 
-    /// <summary>
-    /// 获取指定名称的工作表对象
-    /// </summary>
-    /// <param name="name">工作表名称</param>
-    /// <returns>工作表对象</returns>
+    /// <inheritdoc/>
     public abstract IExcelCommonSheet? this[string name] { get; }
 
 
+    /// <inheritdoc/>
     public IExcelCommonSheet[] this[params string[] names]
     {
         get
@@ -99,19 +89,16 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
 
     protected abstract object NativeSheets { get; }
 
-    /// <summary>
-    /// 获取工作表集合所在的父对象（通常是 Workbook）
-    /// </summary>
+    /// <inheritdoc/>
     public abstract object Parent { get; }
 
-    /// <summary>
-    /// 获取工作表集合所在的Application对象
-    /// </summary>
+    /// <inheritdoc/>
     public abstract IExcelApplication Application { get; }
 
 
     private IExcelHPageBreaks? _hpageBreaks = null;
 
+    /// <inheritdoc/>
     public IExcelHPageBreaks? HPageBreaks
     {
         get
@@ -134,6 +121,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
 
     private IExcelVPageBreaks? _vpageBreaks = null;
 
+    /// <inheritdoc/>
     public IExcelVPageBreaks? VPageBreaks
     {
         get
@@ -154,123 +142,17 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
     }
 
-    /// <summary>
-    /// 根据名称查找工作表
-    /// </summary>
-    /// <param name="name">工作表名称</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的工作表数组</returns>
-    public virtual IExcelCommonSheet[] FindByName(string name, bool matchCase = false)
-    {
-        if (string.IsNullOrEmpty(name) || Count == 0)
-            return [];
-
-        List<IExcelCommonSheet> result = [];
-        for (int i = 1; i <= Count; i++)
-        {
-            try
-            {
-                IExcelCommonSheet worksheet = this[i];
-                if (worksheet != null && worksheet.Name != null)
-                {
-                    bool match = matchCase ?
-                        worksheet.Name.Contains(name) :
-                        worksheet.Name.ToLower().Contains(name.ToLower());
-
-                    if (match)
-                        result.Add(worksheet);
-                }
-            }
-            catch (COMException ce)
-            {
-                _log.Error($"根据工作表名查找工作表发生异常：{ce.Message}", ce);
-            }
-            catch (Exception ex)
-            {
-                _log.Error($"根据工作表名查找工作表发生异常：{ex.Message}", ex);
-            }
-        }
-        return [.. result];
-    }
-
-    /// <summary>
-    /// 根据类型查找工作表 (例如: xlWorksheet, xlChart, xlExcel4MacroSheet, xlExcel4IntlMacroSheet)
-    /// </summary>
-    /// <param name="type">工作表类型</param>
-    /// <returns>匹配的工作表数组</returns>
-    public virtual IExcelCommonSheet[] FindByType(XlSheetType type)
-    {
-        if (Count == 0)
-            return [];
-
-        List<IExcelCommonSheet> result = [];
-        for (int i = 1; i <= Count; i++)
-        {
-            try
-            {
-                IExcelCommonSheet worksheet = this[i];
-                if (worksheet != null && worksheet.Type == type)
-                {
-                    result.Add(worksheet);
-                }
-            }
-            catch (COMException ce)
-            {
-                _log.Error($"根据工作表类型查找工作表发生异常：{ce.Message}", ce);
-            }
-            catch (Exception ex)
-            {
-                _log.Error($"根据工作表类型查找工作表发生异常：{ex.Message}", ex);
-            }
-        }
-        return [.. result];
-    }
-
-    /// <summary>
-    /// 根据索引范围查找工作表
-    /// </summary>
-    /// <param name="startIndex">起始索引</param>
-    /// <param name="endIndex">结束索引</param>
-    /// <returns>匹配的工作表数组</returns>
-    public virtual IExcelCommonSheet[] FindByIndexRange(int startIndex, int endIndex)
-    {
-        if (Count == 0 || startIndex < 1 || endIndex > Count)
-            return [];
-
-        List<IExcelCommonSheet> result = [];
-        for (int i = startIndex; i <= Math.Min(endIndex, Count); i++)
-        {
-            IExcelCommonSheet worksheet = this[i];
-            if (worksheet != null)
-                result.Add(worksheet);
-        }
-        return [.. result];
-    }
-
-    /// <summary>
-    /// 删除指定索引的工作表
-    /// </summary>
-    /// <param name="index">要删除的工作表索引</param>
+    /// <inheritdoc/>
     public abstract void Delete(int index);
 
-    /// <summary>
-    /// 删除指定名称的工作表
-    /// </summary>
-    /// <param name="name">要删除的工作表名称</param>
+    /// <inheritdoc/>
     public abstract void Delete(string name);
 
-    /// <summary>
-    /// 删除指定的工作表对象
-    /// </summary>
-    /// <param name="sheet">要删除的工作表对象</param>
+    /// <inheritdoc/>
     public abstract void Delete(IExcelCommonSheet sheet);
 
 
-    /// <summary>
-    /// 添加新工作表
-    /// </summary>
-    /// <param name="options">添加选项</param>
-    /// <returns>新创建的工作表</returns>
+    /// <inheritdoc/>
     public IExcelCommonSheet AddSheet(AddSheetOptions options)
     {
         if (options == null)
@@ -369,12 +251,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
     }
 
-    /// <summary>
-    /// 复制工作表
-    /// </summary>
-    /// <param name="source">源工作表</param>
-    /// <param name="options">复制选项</param>
-    /// <returns>新创建的工作表副本</returns>
+    /// <inheritdoc/>
     public IExcelCommonSheet CopySheet(IExcelCommonSheet source, CopySheetOptions options)
     {
         if (source == null)
@@ -464,10 +341,66 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
     }
 
-    /// <summary>
-    /// 批量删除工作表
-    /// </summary>
-    /// <param name="indices">要删除的工作表索引数组</param>
+    private IEnumerable<IExcelCommonSheet> EnumerateSheets()
+    {
+        for (int i = 1; i <= Count; i++)
+        {
+            yield return this[i];
+        }
+    }
+
+    #region 查找和筛选
+    /// <inheritdoc/>
+    public IExcelCommonSheet[] GetVisibleSheets() =>
+        EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetVisible).ToArray();
+
+    /// <inheritdoc/>
+    public IExcelCommonSheet[] GetHiddenSheets() =>
+        EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetHidden).ToArray();
+
+    /// <inheritdoc/>
+    public IExcelCommonSheet[] GetVeryHiddenSheets() =>
+        EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetVeryHidden).ToArray();
+
+    /// <inheritdoc/>
+    public IExcelCommonSheet[] GetProtectedSheets() =>
+        EnumerateSheets().Where(s => s.IsProtected).ToArray();
+
+    /// <inheritdoc/>
+    public virtual IExcelCommonSheet[] FindByName(string name, bool matchCase = false)
+    {
+        if (string.IsNullOrEmpty(name) || Count == 0)
+            return [];
+
+        return EnumerateSheets().Where(s => matchCase ?
+                        s.Name.Contains(name) :
+                        s.Name.ToLower().Contains(name.ToLower())).ToArray();
+    }
+
+    /// <inheritdoc/>
+    public virtual IExcelCommonSheet[] FindByType(XlSheetType type)
+        => EnumerateSheets().Where(s => s.Type == type).ToArray();
+
+    /// <inheritdoc/>
+    public virtual IExcelCommonSheet[] FindByIndexRange(int startIndex, int endIndex)
+    {
+        if (Count == 0 || startIndex < 1 || endIndex > Count)
+            return [];
+
+
+        List<IExcelCommonSheet> result = [];
+        for (int i = startIndex; i <= Math.Min(endIndex, Count); i++)
+        {
+            IExcelCommonSheet worksheet = this[i];
+            if (worksheet != null)
+                result.Add(worksheet);
+        }
+        return [.. result];
+    }
+    #endregion
+
+
+    /// <inheritdoc/>
     public virtual void DeleteRange(int[] indices)
     {
         if (indices == null || indices.Length == 0)
@@ -481,10 +414,8 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
     }
 
-    /// <summary>
-    /// 批量删除工作表
-    /// </summary>
-    /// <param name="names">要删除的工作表名称数组</param>
+
+    /// <inheritdoc/>
     public virtual void DeleteRange(string[] names)
     {
         if (names == null || names.Length == 0)
@@ -496,33 +427,27 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
     }
 
-    /// <summary>
-    /// 选择多个工作表
-    /// </summary>
-    /// <param name="worksheetNames">工作表名称数组</param>
+    /// <inheritdoc/>
     public abstract void Select(params string[] worksheetNames);
 
-    /// <summary>
-    /// 获取活动工作表
-    /// </summary>
-    /// <returns>活动工作表对象</returns>
+    /// <inheritdoc/>
     public abstract IExcelCommonSheet? ActiveWorksheet { get; }
 
-    /// <summary>
-    /// 打印所有工作表
-    /// </summary>
-    /// <param name="preview">是否打印预览</param>
+    /// <inheritdoc/>
     public abstract void PrintOutAll(bool preview = false);
 
-    /// <summary>
-    /// 计算所有工作表
-    /// </summary>
+    /// <inheritdoc/>
     public abstract void Calculate();
 
-    /// <summary>
-    /// 刷新所有工作表
-    /// </summary>
+
+    /// <inheritdoc/>
     public abstract void RefreshAll();
+
+    /// <inheritdoc/>
+    public abstract IExcelCommonSheet? Add(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null, int? count = 1, XlSheetType? type = null);
+
+    public abstract IExcelCommonSheet? CreateFromTemplate(string filename, string sheetName, IExcelCommonSheet? before = null, IExcelCommonSheet? after = null);
+
 
     /// <summary>
     /// 保护所有工作表
@@ -573,6 +498,5 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
             _log.Error($"取消工作表保护过程中发生异常：{ex.Message}", ex);
         }
     }
-
     #endregion
 }

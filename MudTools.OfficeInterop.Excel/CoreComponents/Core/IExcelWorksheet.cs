@@ -291,6 +291,7 @@ public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
     /// 粘贴剪贴板内容到指定单元格
     /// </summary>
     /// <param name="destinationCell">目标单元格</param>
+    /// <param name="link"></param>
     void Paste(IExcelRange destinationCell, bool? link = null);
 
     /// <summary>
@@ -383,32 +384,23 @@ public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
     /// 将工作表导出为固定格式文件（如PDF或XPS）
     /// 对应 Worksheet.ExportAsFixedFormat 方法
     /// </summary>
-    /// <param name="Type">导出文件格式类型（PDF或XPS）</param>
-    /// <param name="Filename">导出文件的完整路径和文件名</param>
-    /// <param name="Quality">导出质量，可影响文件大小和质量</param>
-    /// <param name="IncludeDocProperties">是否包含文档属性信息</param>
-    /// <param name="IgnorePrintAreas">是否忽略打印区域设置，如果为true则导出整个工作表</param>
-    /// <param name="From">起始页码，指定要导出的起始页面</param>
-    /// <param name="To">结束页码，指定要导出的结束页面</param>
-    /// <param name="OpenAfterPublish">导出完成后是否自动打开文件</param>
-    /// <param name="FixedFormatExtClassPtr">固定格式扩展类指针（通常不使用）</param>
+    /// <param name="type">导出文件格式类型（PDF或XPS）</param>
+    /// <param name="filename">导出文件的完整路径和文件名</param>
+    /// <param name="quality">导出质量，可影响文件大小和质量</param>
+    /// <param name="includeDocProperties">是否包含文档属性信息</param>
+    /// <param name="ignorePrintAreas">是否忽略打印区域设置，如果为true则导出整个工作表</param>
+    /// <param name="from">起始页码，指定要导出的起始页面</param>
+    /// <param name="to">结束页码，指定要导出的结束页面</param>
+    /// <param name="openAfterPublish">导出完成后是否自动打开文件</param>
     void ExportAsFixedFormat(
-      XlFixedFormatType Type,
-      string Filename,
-      object? Quality = null,
-      object? IncludeDocProperties = null,
-      object? IgnorePrintAreas = null,
-      object? From = null,
-      object? To = null,
-      object? OpenAfterPublish = null,
-      object? FixedFormatExtClassPtr = null);
-
-
-    /// <summary>
-    /// 打印工作表
-    /// </summary>
-    /// <param name="preview">是否打印预览</param>
-    void PrintOut(bool preview = false);
+        XlFixedFormatType type,
+        string filename,
+        XlFixedFormatQuality? quality = null,
+        bool? includeDocProperties = null,
+        bool? ignorePrintAreas = null,
+        int? from = null,
+        int? to = null,
+        bool? openAfterPublish = null);
 
     /// <summary>
     /// 重命名工作表

@@ -73,7 +73,7 @@ public interface IExcelChart : IExcelCommonSheet, IDisposable
     /// 获取或设置图例位置
     /// 对应 Chart.Legend.Position 属性
     /// </summary>
-    int LegendPosition { get; set; }
+    XlLegendPosition LegendPosition { get; set; }
 
     #endregion
 

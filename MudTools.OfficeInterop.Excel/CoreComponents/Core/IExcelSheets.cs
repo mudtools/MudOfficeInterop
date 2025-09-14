@@ -12,63 +12,6 @@ namespace MudTools.OfficeInterop.Excel
     /// </summary>
     public interface IExcelSheets : IExcelCommonSheets
     {
-        #region 创建和添加
-        /// <summary>
-        /// 向集合中添加新的工作表
-        /// 对应 Sheets.Add 方法
-        /// </summary>
-        /// <param name="before">在哪个工作表之前插入</param>
-        /// <param name="after">在哪个工作表之后插入</param>
-        /// <param name="count">要添加的工作表数量</param>
-        /// <param name="type">工作表类型</param>
-        /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
-        IExcelCommonSheet? Add(
-            IExcelCommonSheet? before = null,
-            IExcelCommonSheet? after = null,
-            int? count = null,
-            XlSheetType? type = null);
-
-        /// <summary>
-        /// 从文件复制工作表到此集合
-        /// </summary>
-        /// <param name="filename">源文件路径</param>
-        /// <param name="sheetName">源工作表名称</param>
-        /// <param name="before">在哪个工作表之前插入</param>
-        /// <param name="after">在哪个工作表之后插入</param>
-        /// <returns>新创建的工作表对象</returns>
-        IExcelCommonSheet? CreateFromTemplate(
-            string filename,
-            string sheetName,
-            IExcelCommonSheet? before = null,
-            IExcelCommonSheet? after = null);
-        #endregion
-
-        #region 查找和筛选
-        /// <summary>
-        /// 获取可见的工作表
-        /// </summary>
-        /// <returns>可见工作表数组</returns>
-        IExcelCommonSheet[] GetVisibleSheets();
-
-        /// <summary>
-        /// 获取隐藏的工作表
-        /// </summary>
-        /// <returns>隐藏工作表数组</returns>
-        IExcelCommonSheet[] GetHiddenSheets();
-
-        /// <summary>
-        /// 获取非常隐藏的工作表 (xlSheetVeryHidden)
-        /// </summary>
-        /// <returns>非常隐藏工作表数组</returns>
-        IExcelCommonSheet[] GetVeryHiddenSheets();
-
-        /// <summary>
-        /// 获取受保护的工作表
-        /// </summary>
-        /// <returns>受保护工作表数组</returns>
-        IExcelCommonSheet[] GetProtectedSheets();
-        #endregion
-
         #region 操作方法
         /// <summary>
         /// 将此 Sheets 集合中的所有工作表复制到指定位置。
@@ -136,7 +79,7 @@ namespace MudTools.OfficeInterop.Excel
         /// <exception cref="System.Runtime.InteropServices.COMException">
         /// 如果与 Excel 的交互失败（例如，源区域无效，工作表被保护），可能会抛出 COM 异常。
         /// </exception>
-        void FillAcrossSheets(IExcelRange sourceRange, XlFillWith fillType);
+        void FillAcrossSheets(IExcelRange sourceRange, XlFillWith? fillType = XlFillWith.xlFillWithAll);
 
         /// <summary>
         /// 删除所有工作表 (注意：Excel通常不允许删除所有工作表)

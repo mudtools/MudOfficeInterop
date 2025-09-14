@@ -6,8 +6,38 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
+
 internal static class ObjectEx
 {
+    /// <summary>
+    /// 实现枚举值之间的安全转换
+    /// </summary>
+    /// <typeparam name="T">源枚举类型</typeparam>
+    /// <typeparam name="TReturn">目标枚举类型</typeparam>
+    /// <param name="defaultVal">转换失败时返回的默认值。</param>
+    /// <param name="val">源枚举值</param>
+    /// <returns>目标枚举值</returns>
+    public static TReturn? EnumConvert<T, TReturn>(this T? val, TReturn? defaultVal = default)
+    where T : struct, Enum
+    where TReturn : struct, Enum
+    {
+        if (!val.HasValue)
+            return defaultVal;
+
+        // 获取源枚举值的底层数值
+        var underlyingValue = Convert.ChangeType(val.Value, Enum.GetUnderlyingType(typeof(T)));
+
+        // 检查该值是否在目标枚举的范围内
+        if (Enum.IsDefined(typeof(TReturn), underlyingValue))
+        {
+            return (TReturn)Enum.ToObject(typeof(TReturn), underlyingValue);
+        }
+
+        // 可选：处理值不在目标枚举中的情况
+        // 这里返回 null，但您可能希望抛出异常或使用其他处理方式
+        return defaultVal;
+    }
+
     /// <summary>
     /// 将可空值转换为 COM 参数值，若为空或不满足条件则返回 Type.Missing。
     /// </summary>
@@ -16,8 +46,19 @@ internal static class ObjectEx
     {
         if (val.HasValue && (condition == null || condition(val.Value)))
             return val.Value;
-
         return Type.Missing;
+    }
+
+    /// <summary>
+    /// 将可空值转换为 COM 参数值，若为空或不满足条件则返回空值，否则返回转换值。
+    /// </summary>
+    public static TReturn? ComArgsConvert<T, TReturn>(this T? val, Func<T, TReturn>? convert)
+         where T : struct
+        where TReturn : struct
+    {
+        if (!val.HasValue || convert == null)
+            return default;
+        return convert(val.Value);
     }
 
     /// <summary>

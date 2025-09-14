@@ -1090,26 +1090,29 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     }
 
     public void ExportAsFixedFormat(
-        XlFixedFormatType Type,
-        string Filename,
-        object? Quality = null,
-        object? IncludeDocProperties = null,
-        object? IgnorePrintAreas = null,
-        object? From = null,
-        object? To = null,
-        object? OpenAfterPublish = null,
-        object? FixedFormatExtClassPtr = null)
+        XlFixedFormatType type,
+        string filename,
+        XlFixedFormatQuality? quality = null,
+        bool? includeDocProperties = null,
+        bool? ignorePrintAreas = null,
+        int? from = null,
+        int? to = null,
+        bool? openAfterPublish = null)
     {
+        object qualityObj = System.Type.Missing;
+        if (quality != null)
+            qualityObj = (MsExcel.XlFixedFormatQuality)(int)quality;
+
         _worksheet.ExportAsFixedFormat(
-            (MsExcel.XlFixedFormatType)Type,
-            Filename,
-            Quality ?? System.Type.Missing,
-            IncludeDocProperties ?? System.Type.Missing,
-            IgnorePrintAreas ?? System.Type.Missing,
-            From ?? System.Type.Missing,
-            To ?? System.Type.Missing,
-            OpenAfterPublish ?? System.Type.Missing,
-            FixedFormatExtClassPtr ?? System.Type.Missing);
+            (MsExcel.XlFixedFormatType)type,
+            filename,
+            qualityObj,
+            includeDocProperties.ComArgsVal(),
+            ignorePrintAreas.ComArgsVal(),
+            from.ComArgsVal(),
+            to.ComArgsVal(),
+            openAfterPublish.ComArgsVal(),
+            System.Type.Missing);
     }
 
     /// <summary>

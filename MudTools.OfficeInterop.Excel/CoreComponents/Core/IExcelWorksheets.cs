@@ -13,18 +13,6 @@ namespace MudTools.OfficeInterop.Excel
     public interface IExcelWorksheets : IExcelCommonSheets
     {
         #region 创建和添加
-
-        /// <summary>
-        /// 向工作簿添加新的工作表
-        /// </summary>
-        /// <param name="before">添加到指定工作表之前</param>
-        /// <param name="after">添加到指定工作表之后</param>
-        /// <param name="count">添加的工作表数量</param>
-        /// <param name="type">工作表类型</param>
-        /// <returns>新创建的工作表对象</returns>
-        IExcelWorksheet? Add(IExcelWorksheet? before = null, IExcelWorksheet? after = null,
-                           int count = 1, int type = 0);
-
         /// <summary>
         /// 批量添加工作表
         /// </summary>
@@ -33,18 +21,6 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="after">添加到指定工作表之后</param>
         /// <returns>成功添加的工作表数量</returns>
         int AddRange(string[] names, IExcelWorksheet? before = null, IExcelWorksheet? after = null);
-
-        /// <summary>
-        /// 基于模板创建工作表
-        /// </summary>
-        /// <param name="templatePath">模板文件路径</param>
-        /// <param name="name">工作表名称</param>
-        /// <param name="before">添加到指定工作表之前</param>
-        /// <param name="after">添加到指定工作表之后</param>
-        /// <returns>新创建的工作表对象</returns>
-        IExcelWorksheet? CreateFromTemplate(string templatePath, string name = "",
-                                         IExcelWorksheet? before = null, IExcelWorksheet? after = null);
-
         #endregion
 
         #region 查找和筛选
@@ -54,7 +30,7 @@ namespace MudTools.OfficeInterop.Excel
         /// </summary>
         /// <param name="visible">可见性状态</param>
         /// <returns>匹配的工作表数组</returns>
-        IExcelWorksheet[] FindByVisibility(XlSheetVisibility visible);
+        IExcelWorksheet[] GetVisibleSheets(XlSheetVisibility visible);
 
         /// <summary>
         /// 获取可见的工作表

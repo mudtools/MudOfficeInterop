@@ -220,9 +220,9 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 获取或设置图例的位置 (使用 XlLegendPosition 枚举对应的 int 值)
     /// </summary>
-    public int LegendPosition
+    public XlLegendPosition LegendPosition
     {
-        get => HasLegend ? (int)_chart.Legend.Position : -1; // -1 表示无图例
+        get => HasLegend ? (XlLegendPosition)_chart.Legend.Position : XlLegendPosition.xlLegendPositionBottom;
         set
         {
             HasLegend = true;
@@ -233,7 +233,6 @@ internal partial class ExcelChart : IExcelChart
     #endregion
 
     #region 图表元素 (IExcelChart)
-
     public IExcelShapes? Shapes => _chart != null ? new ExcelShapes(_chart.Shapes) : null;
 
     /// <summary>
@@ -408,13 +407,8 @@ internal partial class ExcelChart : IExcelChart
         _chart?.Refresh();
     }
 
-    public void ClearContents()
-    {
-        _chart?.ChartArea.ClearContents();
-    }
-
     /// <summary>
-    /// 清除图表内容
+    /// 清除所有图表内容
     /// </summary>
     public void ClearAll()
     {
@@ -429,6 +423,10 @@ internal partial class ExcelChart : IExcelChart
     public void Clear()
     {
         _chart?.ChartArea.Clear();
+    }
+    public void ClearContents()
+    {
+        _chart?.ChartArea.ClearContents();
     }
 
     /// <summary>
@@ -617,7 +615,6 @@ internal partial class ExcelChart : IExcelChart
     #endregion
 
     #region 高级功能 (IExcelChart)
-
     public void PrintPreview()
     {
         _chart?.PrintPreview();

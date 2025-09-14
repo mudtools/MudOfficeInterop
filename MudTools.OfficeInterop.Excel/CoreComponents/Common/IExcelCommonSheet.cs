@@ -8,7 +8,7 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// Sheet公共接口。
+/// Sheet公共接口，Excel的Sheet类型：WordSheet、Chart。
 /// </summary>
 public interface IExcelCommonSheet : IDisposable
 {
