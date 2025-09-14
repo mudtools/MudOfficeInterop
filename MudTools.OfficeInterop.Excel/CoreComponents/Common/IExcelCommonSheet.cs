@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Sheet公共接口。
 /// </summary>
-public interface ICommonWorksheet : IDisposable
+public interface IExcelCommonSheet : IDisposable
 {
     /// <summary>
     /// 获取图表所在的 Excel Application 对象
@@ -21,6 +21,11 @@ public interface ICommonWorksheet : IDisposable
     /// 获取或设置工作表的名称
     /// </summary>
     string Name { get; set; }
+
+    /// <summary>
+    /// 获取工作表类型
+    /// </summary>
+    XlSheetType Type { get; }
 
     /// <summary>
     /// 获取图表对象的索引位置
@@ -111,14 +116,13 @@ public interface ICommonWorksheet : IDisposable
     /// </summary>
     void Copy();
 
-
     /// <summary>
     /// 复制工作表
     /// 对应 Worksheet.Copy 方法
     /// </summary>
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
-    void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null);
+    void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null);
 
     /// <summary>
     /// 获取工作表中的OLE对象集合或指定索引的OLE对象
@@ -126,6 +130,23 @@ public interface ICommonWorksheet : IDisposable
     /// <param name="index">OLE对象的索引，如果为null则返回所有OLE对象集合</param>
     /// <returns>OLE对象或OLE对象集合</returns>
     object? OLEObjects(int? index = null);
+
+    /// <summary>
+    /// 清除图表内容
+    /// </summary>
+    void Clear();
+
+
+    /// <summary>
+    /// 清除工作表内容和格式
+    /// </summary>
+    void ClearAll();
+
+
+    /// <summary>
+    /// 清除工作表内容
+    /// </summary>
+    void ClearContents();
 
     /// <summary>
     /// 取消保护工作表

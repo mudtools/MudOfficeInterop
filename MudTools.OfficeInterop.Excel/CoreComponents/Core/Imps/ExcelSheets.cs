@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -29,7 +29,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public override IExcelWorksheet? this[int index]
+    public override IExcelCommonSheet? this[int index]
     {
         get
         {
@@ -38,7 +38,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 
             try
             {
-                return _worksheets[index] is MsExcel.Worksheet worksheet ? new ExcelWorksheet(worksheet) : null;
+                var sheet = _worksheets[index];
+                if (sheet != null && sheet is MsExcel.Worksheet worksheet)
+                    return new ExcelWorksheet(worksheet);
+                if (sheet != null && sheet is MsExcel.Chart chart)
+                    return new ExcelChart(chart);
+                return null;
             }
             catch
             {
@@ -46,6 +51,36 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             }
         }
     }
+
+    /// <summary>
+    /// 获取指定名称的工作表对象
+    /// </summary>
+    /// <param name="name">工作表名称</param>
+    /// <returns>工作表对象</returns>
+    public override IExcelCommonSheet? this[string name]
+    {
+        get
+        {
+            if (_worksheets == null || string.IsNullOrEmpty(name))
+                return null;
+
+            try
+            {
+                var sheet = _worksheets[name];
+                if (sheet != null && sheet is MsExcel.Worksheet worksheet)
+                    return new ExcelWorksheet(worksheet);
+                if (sheet != null && sheet is MsExcel.Chart chart)
+                    return new ExcelChart(chart);
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+
+
     public override object Parent => _worksheets.Parent;
 
     protected override object NativeSheets => _worksheets;
@@ -54,27 +89,46 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region 创建和添加
-    public IExcelWorksheet? Add(
-        object? before = null,
-        object? after = null,
-        object? count = null,
-        object? type = null)
+    public IExcelCommonSheet? Add(
+        IExcelCommonSheet? before = null,
+        IExcelCommonSheet? after = null,
+        int? count = null,
+        XlSheetType? type = null)
     {
-        object comBefore = before ?? System.Type.Missing;
-        object comAfter = after ?? System.Type.Missing;
-        object comCount = count ?? System.Type.Missing;
-        object comType = type ?? System.Type.Missing;
+        object? interopBefore = Type.Missing;
+        if (before is ExcelWorksheet worksheet)
+            interopBefore = worksheet.Worksheet;
+        if (before is ExcelChart chart)
+            interopBefore = chart._chart;
 
-        object newSheet = _worksheets.Add(comBefore, comAfter, comCount, comType);
+        object? interopAfter = Type.Missing;
+        if (after is ExcelWorksheet aworksheet)
+            interopAfter = aworksheet.Worksheet;
+        if (after is ExcelChart achart)
+            interopAfter = achart._chart;
+
+        object newSheet = _worksheets.Add(
+                        interopBefore,
+                        interopAfter,
+                        count.ComArgsVal(),
+                        type.ComArgsVal());
 
         if (newSheet is MsExcel.Worksheet newWs)
         {
             return new ExcelWorksheet(newWs);
         }
+        if (newSheet is MsExcel.Chart newChart)
+        {
+            return new ExcelChart(newChart);
+        }
         return null;
     }
 
-    public IExcelWorksheet? CreateFromTemplate(string templatePath, string sheetName, object? before = null, object? after = null)
+    public IExcelCommonSheet? CreateFromTemplate(
+        string templatePath,
+        string sheetName,
+        IExcelCommonSheet? before = null,
+        IExcelCommonSheet? after = null)
     {
         if (_worksheets == null || string.IsNullOrEmpty(templatePath))
             return null;
@@ -83,7 +137,6 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             ExcelWorksheet? beforeSheet = before as ExcelWorksheet;
             ExcelWorksheet? afterSheet = after as ExcelWorksheet;
-
 
             if (_worksheets.Add(
                 beforeSheet?.Worksheet,
@@ -109,9 +162,9 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region 查找和筛选
-    public IExcelWorksheet[] GetVisibleSheets()
+    public IExcelCommonSheet[] GetVisibleSheets()
     {
-        List<IExcelWorksheet> results = new List<IExcelWorksheet>();
+        List<IExcelCommonSheet> results = [];
         for (int i = 1; i <= Count; i++)
         {
             var worksheet = this[i];
@@ -123,9 +176,9 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         return results.ToArray();
     }
 
-    public IExcelWorksheet[] GetHiddenSheets()
+    public IExcelCommonSheet[] GetHiddenSheets()
     {
-        List<IExcelWorksheet> results = new List<IExcelWorksheet>();
+        List<IExcelCommonSheet> results = new List<IExcelCommonSheet>();
         for (int i = 1; i <= Count; i++)
         {
             var worksheet = this[i];
@@ -137,12 +190,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         return results.ToArray();
     }
 
-    public IExcelWorksheet[] GetVeryHiddenSheets()
+    public IExcelCommonSheet[] GetVeryHiddenSheets()
     {
-        List<IExcelWorksheet> results = new List<IExcelWorksheet>();
+        List<IExcelCommonSheet> results = new List<IExcelCommonSheet>();
         for (int i = 1; i <= Count; i++)
         {
-            IExcelWorksheet worksheet = this[i];
+            IExcelCommonSheet worksheet = this[i];
             if (worksheet != null && worksheet.Visible == XlSheetVisibility.xlSheetVeryHidden)
             {
                 results.Add(worksheet);
@@ -151,12 +204,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         return results.ToArray();
     }
 
-    public IExcelWorksheet[] GetProtectedSheets()
+    public IExcelCommonSheet[] GetProtectedSheets()
     {
-        List<IExcelWorksheet> results = new List<IExcelWorksheet>();
+        List<IExcelCommonSheet> results = [];
         for (int i = 1; i <= Count; i++)
         {
-            IExcelWorksheet? worksheet = this[i];
+            IExcelCommonSheet? worksheet = this[i];
             if (worksheet != null && worksheet.IsProtected)
             {
                 results.Add(worksheet);
@@ -167,7 +220,6 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region 操作方法
-
     /// <summary>
     /// 将此 Sheets 集合中的所有工作表复制到指定位置。
     /// 这是对 Microsoft.Office.Interop.Excel.Sheets.Copy 方法的封装。
@@ -190,7 +242,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// 如果 beforeSheet 和 afterSheet 都为 null，则 Excel 通常会创建一个新工作簿来容纳复制的工作表。
     /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
     /// </remarks>
-    public void CopyTo(object? beforeSheet = null, object? afterSheet = null)
+    public void CopyTo(IExcelCommonSheet? beforeSheet = null, IExcelCommonSheet? afterSheet = null)
     {
         // 检查内部对象是否为 null
         if (_worksheets == null)
@@ -201,9 +253,17 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 
         try
         {
-            object? interopBefore = (beforeSheet as ExcelWorksheet)?.Worksheet ?? (beforeSheet as ExcelChart)?._chart ?? beforeSheet;
-            object? interopAfter = (afterSheet as ExcelWorksheet)?.Worksheet ?? (afterSheet as ExcelChart)?._chart ?? afterSheet;
+            object? interopBefore = Type.Missing;
+            if (beforeSheet is ExcelWorksheet worksheet)
+                interopBefore = worksheet.Worksheet;
+            if (beforeSheet is ExcelChart chart)
+                interopBefore = chart._chart;
 
+            object? interopAfter = Type.Missing;
+            if (afterSheet is ExcelWorksheet aworksheet)
+                interopAfter = aworksheet.Worksheet;
+            if (afterSheet is ExcelChart achart)
+                interopAfter = achart._chart;
             _worksheets.Copy(interopBefore, interopAfter);
         }
         catch (COMException comEx)
@@ -242,7 +302,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// 如果 beforeSheet 和 afterSheet 都为 null，行为可能不确定（可能移动到新工作簿或失败）。
     /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
     /// </remarks>
-    public void MoveTo(object? beforeSheet = null, object? afterSheet = null)
+    public void MoveTo(IExcelCommonSheet? beforeSheet = null, IExcelCommonSheet? afterSheet = null)
     {
         // 检查内部对象是否为 null
         if (_worksheets == null)
@@ -253,10 +313,17 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 
         try
         {
-            // 处理可选参数 (同 CopyTo)
-            object? interopBefore = (beforeSheet as ExcelWorksheet)?.Worksheet ?? (beforeSheet as ExcelChart)?._chart ?? beforeSheet;
-            object? interopAfter = (afterSheet as ExcelWorksheet)?.Worksheet ?? (afterSheet as ExcelChart)?._chart ?? afterSheet;
+            object? interopBefore = Type.Missing;
+            if (beforeSheet is ExcelWorksheet worksheet)
+                interopBefore = worksheet.Worksheet;
+            if (beforeSheet is ExcelChart chart)
+                interopBefore = chart._chart;
 
+            object? interopAfter = Type.Missing;
+            if (afterSheet is ExcelWorksheet aworksheet)
+                interopAfter = aworksheet.Worksheet;
+            if (afterSheet is ExcelChart achart)
+                interopAfter = achart._chart;
 
             // 调用 Interop 的 Move 方法
             _worksheets.Move(interopBefore, interopAfter);
@@ -330,17 +397,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     {
         for (int i = Count; i >= 1; i--)
         {
-            try
+            // 注意：不能删除所有工作表
+            if (Count > 1)
             {
-                // 注意：不能删除所有工作表
-                if (Count > 1)
-                {
-                    Delete(i);
-                }
-            }
-            catch
-            {
-                // 处理错误
+                Delete(i);
             }
         }
     }
@@ -370,15 +430,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
     }
 
-    public override void Delete(IExcelWorksheet sheet)
+    public override void Delete(IExcelCommonSheet sheet)
     {
         if (sheet is ExcelWorksheet realSheet)
         {
-            try
-            {
-                realSheet.Worksheet.Delete();
-            }
-            catch { }
+            realSheet.Worksheet.Delete();
         }
     }
 
@@ -417,7 +473,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             try
             {
-                IExcelWorksheet? sheet = this[i];
+                IExcelCommonSheet? sheet = this[i];
                 string fileName = Path.Combine(folderPath, $"{prefix}{sheet?.Name}.{fileFormat}");
                 sheet?.SaveAs(fileName);
                 count++;
@@ -432,7 +488,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region IEnumerable<IExcelWorksheet> Support
-    public override IEnumerator<IExcelWorksheet> GetEnumerator()
+    public override IEnumerator<IExcelCommonSheet> GetEnumerator()
     {
         for (int i = 1; i <= _worksheets.Count; i++)
         {
@@ -452,14 +508,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                try
-                {
-                    this[i]?.Calculate();
-                }
-                catch
-                {
-                    // 忽略单个工作表计算异常
-                }
+                if (this[i] is IExcelWorksheet worksheet)
+                    worksheet.Calculate();
             }
         }
         catch
@@ -507,14 +557,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                try
-                {
-                    this[i]?.Recalculate();
-                }
-                catch
-                {
-                    // 忽略单个工作表刷新异常
-                }
+                if (this[i] is IExcelWorksheet worksheet)
+                    worksheet.Recalculate();
             }
         }
         catch
@@ -527,17 +571,19 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
-    public override IExcelWorksheet ActiveWorksheet
+    public override IExcelCommonSheet? ActiveWorksheet
     {
         get
         {
             try
             {
-                MsExcel.Workbook? wb = _worksheets?.Parent as MsExcel.Workbook;
-                if (wb == null)
+                if (_worksheets?.Parent is not MsExcel.Workbook wb)
                     return null;
-                var activeSheet = wb.ActiveSheet as MsExcel.Worksheet;
-                return activeSheet != null ? new ExcelWorksheet(activeSheet) : null;
+                if (wb.ActiveSheet != null && wb.ActiveSheet is MsExcel.Worksheet worksheet)
+                    return new ExcelWorksheet(worksheet);
+                if (wb.ActiveSheet != null && wb.ActiveSheet is MsExcel.Chart chart)
+                    return new ExcelChart(chart);
+                return null;
             }
             catch
             {
@@ -558,19 +604,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             // 保留第一个工作表可见，隐藏其余工作表
             for (int i = 2; i <= Count; i++)
             {
-                try
-                {
-                    this[i].Visible = XlSheetVisibility.xlSheetHidden;
-                }
-                catch
-                {
-                    // 忽略单个工作表隐藏异常
-                }
+                this[i].Visible = XlSheetVisibility.xlSheetHidden;
             }
         }
         catch
         {
-            // 忽略隐藏过程中的异常
+
         }
     }
 
@@ -585,14 +624,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                try
-                {
-                    this[i].Visible = XlSheetVisibility.xlSheetVisible;
-                }
-                catch
-                {
-                    // 忽略单个工作表显示异常
-                }
+                this[i].Visible = XlSheetVisibility.xlSheetVisible;
             }
         }
         catch

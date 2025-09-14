@@ -336,7 +336,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表类型
     /// </summary>
-    public XlSheetType Type => (XlSheetType)_worksheet.Type;
+    public XlSheetType Type => (XlSheetType)(int)_worksheet.Type;
 
     public XlEnableSelection EnableSelection
     {
@@ -620,7 +620,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的已使用区域
     /// </summary>
-    public IExcelRange UsedRange => _usedRange ?? (_usedRange = new ExcelRange(_worksheet?.UsedRange));
+    public IExcelRange UsedRange => _usedRange ??= new ExcelRange(_worksheet?.UsedRange);
 
     /// <summary>
     /// 整个工作表区域缓存
@@ -630,7 +630,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的整个区域
     /// </summary>
-    public IExcelRange AllRange => _allRange ?? (_allRange = new ExcelRange(_worksheet?.Cells));
+    public IExcelRange AllRange => _allRange ??= new ExcelRange(_worksheet?.Cells);
 
 
     private IExcelRange? _rows;
@@ -1011,7 +1011,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
-    public void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null)
+    public void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
     {
         if (_worksheet == null) return;
 
@@ -1283,12 +1283,25 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         _worksheet?.Calculate();
     }
 
+    public void ClearContents()
+    {
+        _worksheet?.UsedRange?.ClearContents();
+    }
+
     /// <summary>
     /// 清除工作表内容
     /// </summary>
     public void Clear()
     {
         _worksheet?.UsedRange?.ClearContents();
+    }
+
+    /// <summary>
+    /// 清除工作表内容和格式
+    /// </summary>
+    public void ClearAll()
+    {
+        _worksheet?.UsedRange?.Clear();
     }
 
     /// <summary>
@@ -1299,13 +1312,6 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         _worksheet?.UsedRange?.ClearFormats();
     }
 
-    /// <summary>
-    /// 清除工作表内容和格式
-    /// </summary>
-    public void ClearAll()
-    {
-        _worksheet?.UsedRange?.Clear();
-    }
 
     /// <summary>
     /// 清除工作表注释

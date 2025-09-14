@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ChartObject 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.ChartObject 的安全访问和操作
 /// </summary>
-public interface IExcelChartObject : ICommonWorksheet, IDisposable
+public interface IExcelChartObject : IExcelCommonSheet, IDisposable
 {
     #region 基础属性
     /// <summary>

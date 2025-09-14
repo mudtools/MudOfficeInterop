@@ -133,6 +133,8 @@ internal class ExcelChartObject : IExcelChartObject
         }
     }
 
+    public XlSheetType Type => (XlSheetType)_chart.Type;
+
     public bool ProtectContents => _chart.ProtectContents;
 
     public bool ProtectionMode => _chart.ProtectionMode;
@@ -333,6 +335,29 @@ internal class ExcelChartObject : IExcelChartObject
 
     #region 操作方法
 
+    public void ClearContents()
+    {
+        _chart?.ChartArea.ClearContents();
+    }
+
+    /// <summary>
+    /// 清除图表内容
+    /// </summary>
+    public void ClearAll()
+    {
+        _chart?.ChartArea.ClearFormats();
+        _chart?.ChartArea.ClearContents();
+        _chart?.ChartArea.Clear();
+    }
+
+    /// <summary>
+    /// 清除图表内容
+    /// </summary>
+    public void Clear()
+    {
+        _chart?.ChartArea.Clear();
+    }
+
     /// <summary>
     /// 取消保护工作表
     /// </summary>
@@ -398,7 +423,7 @@ internal class ExcelChartObject : IExcelChartObject
     /// </summary>
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
-    public void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null)
+    public void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
     {
         if (_chart == null) return;
 
@@ -810,16 +835,14 @@ internal class ExcelChartObject : IExcelChartObject
         try
         {
             // 获取父工作表
-            var parentSheet = _chartObject.Parent as MsExcel.Worksheet;
-            if (parentSheet == null)
+            if (_chartObject.Parent is not MsExcel.Worksheet parentSheet)
                 return null;
 
             // 创建新工作表
-            var workbook = parentSheet.Parent as MsExcel.Workbook;
-            if (workbook == null)
+            if (parentSheet.Parent is not MsExcel.Workbook workbook)
                 return null;
 
-            var newSheet = workbook.Worksheets.Add(Type.Missing, parentSheet, Type.Missing, Type.Missing) as MsExcel.Worksheet;
+            var newSheet = workbook.Worksheets.Add(System.Type.Missing, parentSheet, System.Type.Missing, System.Type.Missing) as MsExcel.Worksheet;
 
             if (!string.IsNullOrEmpty(worksheetName))
                 newSheet.Name = worksheetName;

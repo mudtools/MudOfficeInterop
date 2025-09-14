@@ -17,6 +17,8 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
 {
     #region IDisposable Support
     protected bool _disposedValue = false;
+
+
     /// <summary>
     /// 用于记录日志的静态日志记录器。
     /// </summary>
@@ -45,7 +47,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     #endregion
 
     #region IEnumerable<IExcelWorksheet> Support
-    public abstract IEnumerator<IExcelWorksheet> GetEnumerator();
+    public abstract IEnumerator<IExcelCommonSheet> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -65,25 +67,17 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public abstract IExcelWorksheet this[int index] { get; }
+    public abstract IExcelCommonSheet? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的工作表对象
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    public IExcelWorksheet this[string name]
-    {
-        get
-        {
-            IExcelWorksheet[] result = FindByName(name);
-            if (result != null && result.Length > 0)
-                return result[0];
-            return null;
-        }
-    }
+    public abstract IExcelCommonSheet? this[string name] { get; }
 
-    public IExcelWorksheet[] this[params string[] names]
+
+    public IExcelCommonSheet[] this[params string[] names]
     {
         get
         {
@@ -92,10 +86,10 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
             if (names.Length < 1)
                 return [];
 
-            List<IExcelWorksheet> results = [];
+            List<IExcelCommonSheet> results = [];
             foreach (string name in names)
             {
-                IExcelWorksheet[] result = FindByName(name);
+                IExcelCommonSheet[] result = FindByName(name);
                 if (result != null && result.Length > 0)
                     results.AddRange(result);
             }
@@ -166,17 +160,17 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// <param name="name">工作表名称</param>
     /// <param name="matchCase">是否区分大小写</param>
     /// <returns>匹配的工作表数组</returns>
-    public virtual IExcelWorksheet[] FindByName(string name, bool matchCase = false)
+    public virtual IExcelCommonSheet[] FindByName(string name, bool matchCase = false)
     {
         if (string.IsNullOrEmpty(name) || Count == 0)
             return [];
 
-        List<IExcelWorksheet> result = [];
+        List<IExcelCommonSheet> result = [];
         for (int i = 1; i <= Count; i++)
         {
             try
             {
-                IExcelWorksheet worksheet = this[i];
+                IExcelCommonSheet worksheet = this[i];
                 if (worksheet != null && worksheet.Name != null)
                 {
                     bool match = matchCase ?
@@ -204,17 +198,17 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// </summary>
     /// <param name="type">工作表类型</param>
     /// <returns>匹配的工作表数组</returns>
-    public virtual IExcelWorksheet[] FindByType(XlSheetType type)
+    public virtual IExcelCommonSheet[] FindByType(XlSheetType type)
     {
         if (Count == 0)
             return [];
 
-        List<IExcelWorksheet> result = [];
+        List<IExcelCommonSheet> result = [];
         for (int i = 1; i <= Count; i++)
         {
             try
             {
-                IExcelWorksheet worksheet = this[i];
+                IExcelCommonSheet worksheet = this[i];
                 if (worksheet != null && worksheet.Type == type)
                 {
                     result.Add(worksheet);
@@ -238,15 +232,15 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// <param name="startIndex">起始索引</param>
     /// <param name="endIndex">结束索引</param>
     /// <returns>匹配的工作表数组</returns>
-    public virtual IExcelWorksheet[] FindByIndexRange(int startIndex, int endIndex)
+    public virtual IExcelCommonSheet[] FindByIndexRange(int startIndex, int endIndex)
     {
         if (Count == 0 || startIndex < 1 || endIndex > Count)
             return [];
 
-        List<IExcelWorksheet> result = [];
+        List<IExcelCommonSheet> result = [];
         for (int i = startIndex; i <= Math.Min(endIndex, Count); i++)
         {
-            IExcelWorksheet worksheet = this[i];
+            IExcelCommonSheet worksheet = this[i];
             if (worksheet != null)
                 result.Add(worksheet);
         }
@@ -269,7 +263,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// 删除指定的工作表对象
     /// </summary>
     /// <param name="sheet">要删除的工作表对象</param>
-    public abstract void Delete(IExcelWorksheet sheet);
+    public abstract void Delete(IExcelCommonSheet sheet);
 
 
     /// <summary>
@@ -277,7 +271,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// </summary>
     /// <param name="options">添加选项</param>
     /// <returns>新创建的工作表</returns>
-    public IExcelWorksheet AddSheet(AddSheetOptions options)
+    public IExcelCommonSheet AddSheet(AddSheetOptions options)
     {
         if (options == null)
             options = new AddSheetOptions();
@@ -381,7 +375,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// <param name="source">源工作表</param>
     /// <param name="options">复制选项</param>
     /// <returns>新创建的工作表副本</returns>
-    public IExcelWorksheet CopySheet(IExcelWorksheet source, CopySheetOptions options)
+    public IExcelCommonSheet CopySheet(IExcelCommonSheet source, CopySheetOptions options)
     {
         if (source == null)
             throw new ArgumentNullException(nameof(source));
@@ -457,9 +451,9 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
             var result = new ExcelWorksheet(newSheet);
 
             // 处理仅复制值的情况
-            if (options.ValuesOnly)
+            if (options.ValuesOnly && source is IExcelWorksheet worksheet)
             {
-                result.UsedRange.Value = source.UsedRange.Value;
+                result.UsedRange.Value = worksheet.UsedRange.Value;
             }
 
             return result;
@@ -512,7 +506,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
-    public abstract IExcelWorksheet ActiveWorksheet { get; }
+    public abstract IExcelCommonSheet? ActiveWorksheet { get; }
 
     /// <summary>
     /// 打印所有工作表

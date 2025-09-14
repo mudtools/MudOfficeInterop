@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Worksheet 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Worksheet 的安全访问和操作
 /// </summary>
-public interface IExcelWorksheet : ICommonWorksheet, IDisposable
+public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
 {
     #region 基础属性
     /// <summary>
@@ -93,11 +93,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     /// 获取工作表当前是否处于筛选模式
     /// </summary>
     bool FilterMode { get; }
-
-    /// <summary>
-    /// 获取工作表类型
-    /// </summary>
-    XlSheetType Type { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否使用 Lotus 1-2-3 表达式计算规则
@@ -290,9 +285,7 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     #endregion
 
 
-    #region 操作方法
-
-
+    #region 操作方法  
 
     /// <summary>
     /// 粘贴剪贴板内容到指定单元格
@@ -444,7 +437,6 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     IExcelColumns GetColumns(string startColumn, string endColumn = "");
 
 
-
     /// <summary>
     /// 重置工作表中的所有分页符
     /// 清除所有手动添加的水平和垂直分页符，恢复到默认的分页符设置
@@ -463,19 +455,9 @@ public interface IExcelWorksheet : ICommonWorksheet, IDisposable
     void Recalculate();
 
     /// <summary>
-    /// 清除工作表内容
-    /// </summary>
-    void Clear();
-
-    /// <summary>
     /// 清除工作表格式
     /// </summary>
     void ClearFormats();
-
-    /// <summary>
-    /// 清除工作表内容和格式
-    /// </summary>
-    void ClearAll();
 
     /// <summary>
     /// 清除工作表注释

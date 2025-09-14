@@ -661,7 +661,9 @@ internal partial class ExcelWorkbook : IExcelWorkbook
             {
                 try
                 {
-                    _worksheets[i]?.Calculate();
+                    if (_worksheets[i] != null
+                        && _worksheets[i] is IExcelWorksheet worksheet)
+                        worksheet?.Calculate();
                 }
                 catch
                 {

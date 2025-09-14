@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -22,7 +22,11 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="count">要添加的工作表数量</param>
         /// <param name="type">工作表类型</param>
         /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
-        IExcelWorksheet? Add(object? before = null, object? after = null, object? count = null, object? type = null);
+        IExcelCommonSheet? Add(
+            IExcelCommonSheet? before = null,
+            IExcelCommonSheet? after = null,
+            int? count = null,
+            XlSheetType? type = null);
 
         /// <summary>
         /// 从文件复制工作表到此集合
@@ -32,7 +36,11 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="before">在哪个工作表之前插入</param>
         /// <param name="after">在哪个工作表之后插入</param>
         /// <returns>新创建的工作表对象</returns>
-        IExcelWorksheet? CreateFromTemplate(string filename, string sheetName, object? before = null, object? after = null);
+        IExcelCommonSheet? CreateFromTemplate(
+            string filename,
+            string sheetName,
+            IExcelCommonSheet? before = null,
+            IExcelCommonSheet? after = null);
         #endregion
 
         #region 查找和筛选
@@ -40,25 +48,25 @@ namespace MudTools.OfficeInterop.Excel
         /// 获取可见的工作表
         /// </summary>
         /// <returns>可见工作表数组</returns>
-        IExcelWorksheet[] GetVisibleSheets();
+        IExcelCommonSheet[] GetVisibleSheets();
 
         /// <summary>
         /// 获取隐藏的工作表
         /// </summary>
         /// <returns>隐藏工作表数组</returns>
-        IExcelWorksheet[] GetHiddenSheets();
+        IExcelCommonSheet[] GetHiddenSheets();
 
         /// <summary>
         /// 获取非常隐藏的工作表 (xlSheetVeryHidden)
         /// </summary>
         /// <returns>非常隐藏工作表数组</returns>
-        IExcelWorksheet[] GetVeryHiddenSheets();
+        IExcelCommonSheet[] GetVeryHiddenSheets();
 
         /// <summary>
         /// 获取受保护的工作表
         /// </summary>
         /// <returns>受保护工作表数组</returns>
-        IExcelWorksheet[] GetProtectedSheets();
+        IExcelCommonSheet[] GetProtectedSheets();
         #endregion
 
         #region 操作方法
@@ -84,7 +92,7 @@ namespace MudTools.OfficeInterop.Excel
         /// 如果 beforeSheet 和 afterSheet 都为 null，则 Excel 通常会创建一个新工作簿来容纳复制的工作表。
         /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
         /// </remarks>
-        void CopyTo(object? beforeSheet = null, object? afterSheet = null);
+        void CopyTo(IExcelCommonSheet? beforeSheet = null, IExcelCommonSheet? afterSheet = null);
         /// <summary>
         /// 将此 Sheets 集合中的所有工作表移动到指定位置。
         /// 这是对 Microsoft.Office.Interop.Excel.Sheets.Move 方法的封装。
@@ -107,7 +115,7 @@ namespace MudTools.OfficeInterop.Excel
         /// 如果 beforeSheet 和 afterSheet 都为 null，行为可能不确定（可能移动到新工作簿或失败）。
         /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
         /// </remarks>
-        void MoveTo(object? beforeSheet = null, object? afterSheet = null);
+        void MoveTo(IExcelCommonSheet? beforeSheet = null, IExcelCommonSheet? afterSheet = null);
 
         /// <summary>
         /// 将指定区域的内容和格式填充到此 Sheets 集合中所有工作表的对应区域。

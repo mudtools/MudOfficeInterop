@@ -749,12 +749,12 @@ internal partial class ExcelApplication : IExcelApplication
         }
     }
 
-    private ICommonWorksheet? _activeSheet;
+    private IExcelCommonSheet? _activeSheet;
 
     /// <summary>
     /// 获取当前活动的工作表
     /// </summary>
-    public ICommonWorksheet? ActiveSheet
+    public IExcelCommonSheet? ActiveSheet
     {
         get
         {

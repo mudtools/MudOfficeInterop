@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -74,7 +74,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// </summary>
         /// <param name="index">工作表索引（从1开始）</param>
         /// <returns>工作表对象</returns>
-        public override IExcelWorksheet this[int index]
+        public override IExcelCommonSheet this[int index]
         {
             get
             {
@@ -83,7 +83,36 @@ namespace MudTools.OfficeInterop.Excel.Imps
 
                 try
                 {
-                    return _worksheets[index] is MsExcel.Worksheet worksheet ? new ExcelWorksheet(worksheet) : null;
+                    var sheet = _worksheets[index];
+                    if (sheet != null && sheet is MsExcel.Worksheet worksheet)
+                        return new ExcelWorksheet(worksheet);
+                    return null;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取指定名称的工作表对象
+        /// </summary>
+        /// <param name="name">工作表名称</param>
+        /// <returns>工作表对象</returns>
+        public override IExcelCommonSheet this[string name]
+        {
+            get
+            {
+                if (_worksheets == null || string.IsNullOrEmpty(name))
+                    return null;
+
+                try
+                {
+                    var sheet = _worksheets.Item[name];
+                    if (sheet != null && sheet is MsExcel.Worksheet worksheet)
+                        return new ExcelWorksheet(worksheet);
+                    return null;
                 }
                 catch
                 {
@@ -107,7 +136,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
         {
             get
             {
-                var application = _worksheets?.Application as Microsoft.Office.Interop.Excel.Application;
+                MsExcel.Application? application = _worksheets?.Application as MsExcel.Application;
                 return application != null ? new ExcelApplication(application) : null;
             }
         }
@@ -124,7 +153,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// <param name="count">添加的工作表数量</param>
         /// <param name="type">工作表类型</param>
         /// <returns>新创建的工作表对象</returns>
-        public IExcelWorksheet Add(IExcelWorksheet? before = null, IExcelWorksheet? after = null,
+        public IExcelWorksheet? Add(IExcelWorksheet? before = null, IExcelWorksheet? after = null,
                                  int count = 1, int type = 0)
         {
             if (_worksheets == null)
@@ -132,17 +161,12 @@ namespace MudTools.OfficeInterop.Excel.Imps
 
             try
             {
-                var beforeSheet = before as ExcelWorksheet;
-                var afterSheet = after as ExcelWorksheet;
-
-                var worksheet = _worksheets.Add(
-                    beforeSheet?.Worksheet,
-                    afterSheet?.Worksheet,
+                return _worksheets.Add(
+                    before is ExcelWorksheet beforeSheet ? beforeSheet.Worksheet : Type.Missing,
+                    after is ExcelWorksheet afterSheet ? afterSheet.Worksheet : Type.Missing,
                     count,
-                    (Microsoft.Office.Interop.Excel.XlSheetType)type
-                ) as Microsoft.Office.Interop.Excel.Worksheet;
-
-                return worksheet != null ? new ExcelWorksheet(worksheet) : null;
+                    (MsExcel.XlSheetType)type
+                ) is MsExcel.Worksheet worksheet ? new ExcelWorksheet(worksheet) : null;
             }
             catch
             {
@@ -165,18 +189,11 @@ namespace MudTools.OfficeInterop.Excel.Imps
             int successCount = 0;
             foreach (string name in names)
             {
-                try
+                var worksheet = Add(before, after);
+                if (worksheet != null)
                 {
-                    var worksheet = Add(before, after);
-                    if (worksheet != null)
-                    {
-                        worksheet.Name = name;
-                        successCount++;
-                    }
-                }
-                catch
-                {
-                    // 忽略单个工作表添加异常
+                    worksheet.Name = name;
+                    successCount++;
                 }
             }
             return successCount;
@@ -198,17 +215,12 @@ namespace MudTools.OfficeInterop.Excel.Imps
 
             try
             {
-                var beforeSheet = before as ExcelWorksheet;
-                var afterSheet = after as ExcelWorksheet;
-
-                var worksheet = _worksheets.Add(
-                    beforeSheet?.Worksheet,
-                    afterSheet?.Worksheet,
+                if (_worksheets.Add(
+                    before is ExcelWorksheet beforeSheet ? beforeSheet.Worksheet : Type.Missing,
+                    after is ExcelWorksheet afterSheet ? afterSheet.Worksheet : Type.Missing,
                     Type.Missing,
                     templatePath
-                ) as Microsoft.Office.Interop.Excel.Worksheet;
-
-                if (worksheet != null)
+                ) is MsExcel.Worksheet worksheet)
                 {
                     var excelWorksheet = new ExcelWorksheet(worksheet);
                     if (!string.IsNullOrEmpty(name))
@@ -242,17 +254,12 @@ namespace MudTools.OfficeInterop.Excel.Imps
             List<IExcelWorksheet> result = [];
             for (int i = 1; i <= Count; i++)
             {
-                try
+                var worksheet = this[i];
+                if (worksheet != null
+                    && worksheet.Visible == visible
+                    && worksheet is IExcelWorksheet ws)
                 {
-                    var worksheet = this[i];
-                    if (worksheet != null && worksheet.Visible == visible)
-                    {
-                        result.Add(worksheet);
-                    }
-                }
-                catch
-                {
-                    // 忽略单个工作表访问异常
+                    result.Add(ws);
                 }
             }
             return result.ToArray();
@@ -288,17 +295,12 @@ namespace MudTools.OfficeInterop.Excel.Imps
             var result = new System.Collections.Generic.List<IExcelWorksheet>();
             for (int i = 1; i <= Count; i++)
             {
-                try
+                var worksheet = this[i];
+                if (worksheet != null
+                    && worksheet.IsProtected
+                    && worksheet is IExcelWorksheet ws)
                 {
-                    var worksheet = this[i];
-                    if (worksheet != null && worksheet.IsProtected)
-                    {
-                        result.Add(worksheet);
-                    }
-                }
-                catch
-                {
-                    // 忽略单个工作表访问异常
+                    result.Add(ws);
                 }
             }
             return result.ToArray();
@@ -316,17 +318,12 @@ namespace MudTools.OfficeInterop.Excel.Imps
             var result = new System.Collections.Generic.List<IExcelWorksheet>();
             for (int i = 1; i <= Count; i++)
             {
-                try
+                var worksheet = this[i];
+                if (worksheet != null
+                    && !worksheet.IsProtected
+                    && worksheet is IExcelWorksheet ws)
                 {
-                    var worksheet = this[i];
-                    if (worksheet != null && !worksheet.IsProtected)
-                    {
-                        result.Add(worksheet);
-                    }
-                }
-                catch
-                {
-                    // 忽略单个工作表访问异常
+                    result.Add(ws);
                 }
             }
             return result.ToArray();
@@ -348,15 +345,8 @@ namespace MudTools.OfficeInterop.Excel.Imps
                 // 从后往前删除，避免索引变化问题
                 for (int i = Count; i >= 2; i--)
                 {
-                    try
-                    {
-                        var worksheet = _worksheets[i] as Microsoft.Office.Interop.Excel.Worksheet;
-                        worksheet.Delete();
-                    }
-                    catch
-                    {
-                        // 忽略删除过程中的异常
-                    }
+                    var worksheet = _worksheets[i] as MsExcel.Worksheet;
+                    worksheet.Delete();
                 }
             }
             catch
@@ -372,7 +362,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
 
             try
             {
-                var worksheet = _worksheets[index] as Microsoft.Office.Interop.Excel.Worksheet;
+                var worksheet = _worksheets[index] as MsExcel.Worksheet;
                 worksheet.Delete();
             }
             catch
@@ -388,7 +378,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
 
             try
             {
-                var worksheet = _worksheets[name] as Microsoft.Office.Interop.Excel.Worksheet;
+                var worksheet = _worksheets[name] as MsExcel.Worksheet;
                 worksheet?.Delete();
             }
             catch
@@ -397,7 +387,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
             }
         }
 
-        public override void Delete(IExcelWorksheet worksheet)
+        public override void Delete(IExcelCommonSheet worksheet)
         {
             if (_worksheets == null || worksheet == null)
                 return;
@@ -567,17 +557,15 @@ namespace MudTools.OfficeInterop.Excel.Imps
         /// 获取活动工作表
         /// </summary>
         /// <returns>活动工作表对象</returns>
-        public override IExcelWorksheet ActiveWorksheet
+        public override IExcelCommonSheet? ActiveWorksheet
         {
             get
             {
                 try
                 {
-                    var wb = _worksheets?.Parent as MsExcel.Workbook;
-                    if (wb == null)
+                    if (_worksheets?.Parent is not MsExcel.Workbook wb)
                         return null;
-                    var activeSheet = wb.ActiveSheet as MsExcel.Worksheet;
-                    return activeSheet != null ? new ExcelWorksheet(activeSheet) : null;
+                    return wb.ActiveSheet is MsExcel.Worksheet activeSheet ? new ExcelWorksheet(activeSheet) : null;
                 }
                 catch
                 {
@@ -625,14 +613,8 @@ namespace MudTools.OfficeInterop.Excel.Imps
             {
                 for (int i = 1; i <= Count; i++)
                 {
-                    try
-                    {
-                        this[i]?.Calculate();
-                    }
-                    catch
-                    {
-                        // 忽略单个工作表计算异常
-                    }
+                    if (this[i] is IExcelWorksheet worksheet)
+                        worksheet.Calculate();
                 }
             }
             catch
@@ -652,14 +634,8 @@ namespace MudTools.OfficeInterop.Excel.Imps
             {
                 for (int i = 1; i <= Count; i++)
                 {
-                    try
-                    {
-                        this[i]?.Recalculate();
-                    }
-                    catch
-                    {
-                        // 忽略单个工作表刷新异常
-                    }
+                    if (this[i] is IExcelWorksheet worksheet)
+                        worksheet.Recalculate();
                 }
             }
             catch
@@ -680,14 +656,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
                 // 保留第一个工作表可见，隐藏其余工作表
                 for (int i = 2; i <= Count; i++)
                 {
-                    try
-                    {
-                        this[i].Visible = XlSheetVisibility.xlSheetHidden;
-                    }
-                    catch
-                    {
-                        // 忽略单个工作表隐藏异常
-                    }
+                    this[i].Visible = XlSheetVisibility.xlSheetHidden;
                 }
             }
             catch
@@ -707,14 +676,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
             {
                 for (int i = 1; i <= Count; i++)
                 {
-                    try
-                    {
-                        this[i].Visible = XlSheetVisibility.xlSheetVisible;
-                    }
-                    catch
-                    {
-                        // 忽略单个工作表显示异常
-                    }
+                    this[i].Visible = XlSheetVisibility.xlSheetVisible;
                 }
             }
             catch
@@ -723,7 +685,7 @@ namespace MudTools.OfficeInterop.Excel.Imps
             }
         }
 
-        public override IEnumerator<IExcelWorksheet> GetEnumerator()
+        public override IEnumerator<IExcelCommonSheet> GetEnumerator()
         {
             for (int i = 0; i < Count; i++)
             {

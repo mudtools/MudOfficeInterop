@@ -55,6 +55,8 @@ internal partial class ExcelChart : IExcelChart
         set => _chart.Name = value;
     }
 
+    public XlSheetType Type => (XlSheetType)_chart.Type;
+
     /// <summary>
     /// 获取图表在集合中的索引位置 (从1开始)
     /// </summary>
@@ -306,7 +308,7 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
-    public void Copy(ICommonWorksheet? before = null, ICommonWorksheet? after = null)
+    public void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
     {
         if (_chart == null) return;
 
@@ -349,6 +351,7 @@ internal partial class ExcelChart : IExcelChart
     {
         _chart?.Copy();
     }
+
 
     /// <summary>
     /// 删除图表
@@ -403,6 +406,21 @@ internal partial class ExcelChart : IExcelChart
     public void Refresh()
     {
         _chart?.Refresh();
+    }
+
+    public void ClearContents()
+    {
+        _chart?.ChartArea.ClearContents();
+    }
+
+    /// <summary>
+    /// 清除图表内容
+    /// </summary>
+    public void ClearAll()
+    {
+        _chart?.ChartArea.ClearFormats();
+        _chart?.ChartArea.ClearContents();
+        _chart?.ChartArea.Clear();
     }
 
     /// <summary>
