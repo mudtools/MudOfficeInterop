@@ -380,7 +380,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             MsExcel.Range interopRange = ((ExcelRange)sourceRange).InternalRange;
             _worksheets.FillAcrossSheets(interopRange,
-                fillType.EnumConvert<XlFillWith, MsExcel.XlFillWith>(MsExcel.XlFillWith.xlFillWithAll).Value);
+                fillType.EnumConvert(MsExcel.XlFillWith.xlFillWithAll));
         }
         catch (COMException comEx)
         {

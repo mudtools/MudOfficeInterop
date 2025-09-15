@@ -1,9 +1,11 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using log4net;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
 /// <summary>
@@ -17,6 +19,7 @@ internal class ExcelPictures : IExcelPictures
     /// </summary>
     private MsExcel.Pictures _pictures;
 
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelPictures));
     /// <summary>
     /// 标记对象是否已被释放
     /// </summary>
@@ -57,8 +60,9 @@ internal class ExcelPictures : IExcelPictures
                 if (_pictures != null)
                     Marshal.ReleaseComObject(_pictures);
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn("释放ExcelPictures资源时发生异常", ex);
                 // 忽略释放过程中的异常
             }
             _pictures = null;
@@ -98,8 +102,9 @@ internal class ExcelPictures : IExcelPictures
                 MsExcel.Picture? picture = _pictures.Item(index) as MsExcel.Picture;
                 return picture != null ? new ExcelPicture(picture) : null;
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"获取索引为 {index} 的图片时发生异常", ex);
                 return null;
             }
         }
@@ -122,8 +127,9 @@ internal class ExcelPictures : IExcelPictures
                 var picture = _pictures.Item(name) as MsExcel.Picture;
                 return picture != null ? new ExcelPicture(picture) : null;
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"获取名称为 '{name}' 的图片时发生异常", ex);
                 return null;
             }
         }
@@ -153,14 +159,18 @@ internal class ExcelPictures : IExcelPictures
         {
             // 验证文件是否存在
             if (!File.Exists(filename))
+            {
+                log.Warn($"尝试插入图片失败，文件不存在: {filename}");
                 return null;
+            }
 
             var picture = _pictures.Insert(filename, Converter);
 
             return picture != null ? new ExcelPicture(picture) : null;
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error($"插入图片 '{filename}' 时发生异常", ex);
             return null;
         }
     }
@@ -203,8 +213,9 @@ internal class ExcelPictures : IExcelPictures
 
             return picture;
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error("从字节数组添加图片时发生异常", ex);
             return null;
         }
     }
@@ -226,17 +237,10 @@ internal class ExcelPictures : IExcelPictures
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)
         {
-            try
+            var picture = this[i];
+            if (picture != null && picture.Name?.Contains(name) == true)
             {
-                var picture = this[i];
-                if (picture != null && picture.Name?.Contains(name) == true)
-                {
-                    result.Add(picture);
-                }
-            }
-            catch
-            {
-                // 忽略单个图片访问异常
+                result.Add(picture);
             }
         }
         return result.ToArray();
@@ -257,23 +261,16 @@ internal class ExcelPictures : IExcelPictures
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)
         {
-            try
+            var picture = this[i];
+            if (picture != null)
             {
-                var picture = this[i];
-                if (picture != null)
-                {
-                    double picLeft = picture.Left;
-                    double picTop = picture.Top;
+                double picLeft = picture.Left;
+                double picTop = picture.Top;
 
-                    if (Math.Abs(picLeft - left) <= tolerance && Math.Abs(picTop - top) <= tolerance)
-                    {
-                        result.Add(picture);
-                    }
+                if (Math.Abs(picLeft - left) <= tolerance && Math.Abs(picTop - top) <= tolerance)
+                {
+                    result.Add(picture);
                 }
-            }
-            catch
-            {
-                // 忽略单个图片访问异常
             }
         }
         return result.ToArray();
@@ -294,46 +291,17 @@ internal class ExcelPictures : IExcelPictures
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)
         {
-            try
-            {
-                var picture = this[i];
-                if (picture != null)
-                {
-                    double picWidth = picture.Width;
-                    double picHeight = picture.Height;
-
-                    if (Math.Abs(picWidth - width) <= tolerance && Math.Abs(picHeight - height) <= tolerance)
-                    {
-                        result.Add(picture);
-                    }
-                }
-            }
-            catch
-            {
-                // 忽略单个图片访问异常
-            }
-        }
-        return result.ToArray();
-    }
-
-    /// <summary>
-    /// 获取指定区域内的所有图片
-    /// </summary>
-    /// <param name="range">目标区域</param>
-    /// <returns>区域内的图片数组</returns>
-    public IExcelPicture[] GetPicturesInRange(IExcelRange range)
-    {
-        if (_pictures == null || range == null || Count == 0)
-            return [];
-
-        var result = new List<IExcelPicture>();
-        // 注意：Excel Pictures集合不直接支持区域筛选
-        // 这里返回所有图片作为示例
-        for (int i = 1; i <= Count; i++)
-        {
             var picture = this[i];
             if (picture != null)
-                result.Add(picture);
+            {
+                double picWidth = picture.Width;
+                double picHeight = picture.Height;
+
+                if (Math.Abs(picWidth - width) <= tolerance && Math.Abs(picHeight - height) <= tolerance)
+                {
+                    result.Add(picture);
+                }
+            }
         }
         return result.ToArray();
     }
@@ -350,17 +318,10 @@ internal class ExcelPictures : IExcelPictures
         var result = new List<IExcelPicture>();
         for (int i = 1; i <= Count; i++)
         {
-            try
+            var picture = this[i];
+            if (picture != null && picture.Visible)
             {
-                var picture = this[i];
-                if (picture != null && picture.Visible)
-                {
-                    result.Add(picture);
-                }
-            }
-            catch
-            {
-                // 忽略单个图片访问异常
+                result.Add(picture);
             }
         }
         return result.ToArray();
@@ -382,18 +343,12 @@ internal class ExcelPictures : IExcelPictures
             // 从后往前删除，避免索引变化问题
             for (int i = Count; i >= 1; i--)
             {
-                try
-                {
-                    ((MsExcel.Picture)_pictures.Item(i)).Delete();
-                }
-                catch
-                {
-                    // 忽略删除过程中的异常
-                }
+                ((MsExcel.Picture)_pictures.Item(i)).Delete();
             }
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn("清空所有图片时发生异常", ex);
             // 忽略清空过程中的异常
         }
     }
@@ -411,8 +366,9 @@ internal class ExcelPictures : IExcelPictures
         {
             ((MsExcel.Picture)_pictures.Item(index)).Delete();
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn($"删除索引为 {index} 的图片时发生异常", ex);
             // 忽略删除过程中的异常
         }
     }
@@ -430,8 +386,9 @@ internal class ExcelPictures : IExcelPictures
         {
             picture.Delete();
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn("删除指定图片时发生异常", ex);
             // 忽略删除过程中的异常
         }
     }

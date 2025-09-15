@@ -1,10 +1,12 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+
+using log4net;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
 
@@ -14,6 +16,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelNames : IExcelNames
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelNames));
     /// <summary>
     /// 底层的 COM Names 集合对象
     /// </summary>
@@ -59,8 +62,9 @@ internal class ExcelNames : IExcelNames
                 if (_names != null)
                     Marshal.ReleaseComObject(_names);
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn("释放ExcelNames资源时发生异常", ex);
                 // 忽略释放过程中的异常
             }
             _names = null;
@@ -100,8 +104,9 @@ internal class ExcelNames : IExcelNames
                 var name = _names.Item(index);
                 return name != null ? new ExcelName(name) : null;
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"获取索引为 {index} 的名称时发生异常", ex);
                 return null;
             }
         }
@@ -124,8 +129,9 @@ internal class ExcelNames : IExcelNames
                 var excelName = _names.Item(name);
                 return excelName != null ? new ExcelName(excelName) : null;
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"获取名称为 '{name}' 的名称对象时发生异常", ex);
                 return null;
             }
         }
@@ -184,8 +190,9 @@ internal class ExcelNames : IExcelNames
 
             return excelName != null ? new ExcelName(excelName) : null;
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error($"添加名称 '{name}' 时发生异常", ex);
             return null;
         }
     }
@@ -217,8 +224,9 @@ internal class ExcelNames : IExcelNames
             }
             return null;
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error("基于区域创建名称时发生异常", ex);
             return null;
         }
     }
@@ -242,8 +250,9 @@ internal class ExcelNames : IExcelNames
 
             return Add(worksheetName, refersTo);
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error("创建工作表名称时发生异常", ex);
             return null;
         }
     }
@@ -279,8 +288,9 @@ internal class ExcelNames : IExcelNames
                         result.Add(excelName);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"查找名称过程中访问索引为 {i} 的名称时发生异常", ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -308,8 +318,9 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"查找引用过程中访问索引为 {i} 的名称时发生异常", ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -337,8 +348,9 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"根据可见性查找过程中访问索引为 {i} 的名称时发生异常", ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -366,8 +378,9 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"根据类别查找过程中访问索引为 {i} 的名称时发生异常", ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -413,8 +426,9 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"获取工作簿级别名称过程中访问索引为 {i} 的名称时发生异常", ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -442,8 +456,9 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                log.Warn($"获取工作表级别名称过程中访问索引为 {i} 的名称时发生异常", ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -470,14 +485,16 @@ internal class ExcelNames : IExcelNames
                 {
                     _names.Item(i).Delete();
                 }
-                catch
+                catch (Exception ex)
                 {
+                    log.Warn($"清空名称时删除索引为 {i} 的名称时发生异常", ex);
                     // 忽略删除过程中的异常
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn("清空所有名称时发生异常", ex);
             // 忽略清空过程中的异常
         }
     }
@@ -495,8 +512,9 @@ internal class ExcelNames : IExcelNames
         {
             _names.Item(index).Delete();
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn($"删除索引为 {index} 的名称时发生异常", ex);
             // 忽略删除过程中的异常
         }
     }
@@ -515,8 +533,9 @@ internal class ExcelNames : IExcelNames
             var excelName = _names.Item(name);
             excelName?.Delete();
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn($"删除名称 '{name}' 时发生异常", ex);
             // 忽略删除过程中的异常
         }
     }
@@ -534,8 +553,9 @@ internal class ExcelNames : IExcelNames
         {
             nameObject.Delete();
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn("删除指定名称对象时发生异常", ex);
             // 忽略删除过程中的异常
         }
     }
@@ -631,16 +651,18 @@ internal class ExcelNames : IExcelNames
                             writer.WriteLine();
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        log.Warn($"导出名称过程中访问索引为 {i} 的名称时发生异常", ex);
                         // 忽略单个名称导出异常
                     }
                 }
             }
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error($"导出名称到文件 '{filename}' 时发生异常", ex);
             return false;
         }
     }
@@ -721,8 +743,9 @@ internal class ExcelNames : IExcelNames
             string[] parts = reference.Split('!');
             return parts.Length > 0 ? parts[0].Trim('\'', '"') : "";
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn("从引用中获取工作表名称时发生异常", ex);
             return "";
         }
     }
@@ -746,8 +769,9 @@ internal class ExcelNames : IExcelNames
             }
             return reference;
         }
-        catch
+        catch (Exception ex)
         {
+            log.Warn("从引用中获取区域地址时发生异常", ex);
             return "";
         }
     }

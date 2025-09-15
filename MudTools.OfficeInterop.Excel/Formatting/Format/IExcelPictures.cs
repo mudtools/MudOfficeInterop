@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -95,13 +95,6 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     /// <param name="tolerance">容差</param>
     /// <returns>匹配的图片数组</returns>
     IExcelPicture[] FindBySize(double width, double height, double tolerance = 10);
-
-    /// <summary>
-    /// 获取指定区域内的所有图片
-    /// </summary>
-    /// <param name="range">目标区域</param>
-    /// <returns>区域内的图片数组</returns>
-    IExcelPicture[] GetPicturesInRange(IExcelRange range);
 
     /// <summary>
     /// 获取可见的图片

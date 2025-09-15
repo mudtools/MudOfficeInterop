@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -69,18 +69,17 @@ internal class ExcelSmartTagAction : IExcelSmartTagAction
     /// <summary>
     /// 获取智能标记动作的名称
     /// </summary>
-    public string Name => _smartTagAction?.Name?.ToString();
+    public string Name => _smartTagAction?.Name;
 
     /// <summary>
     /// 获取智能标记动作的显示文本
     /// </summary>
-    public string TextboxText => _smartTagAction?.TextboxText?.ToString();
+    public string TextboxText => _smartTagAction?.TextboxText;
 
     /// <summary>
     /// 获取智能标记动作的类型
     /// </summary>
-    public int Type => _smartTagAction != null ? Convert.ToInt32(_smartTagAction.Type) : 0;
-
+    public XlSmartTagControlType Type => _smartTagAction != null ? _smartTagAction.Type.EnumConvert(XlSmartTagControlType.xlSmartTagControlHelp) : XlSmartTagControlType.xlSmartTagControlHelp;
 
     /// <summary>
     /// 父级智能标记对象缓存
@@ -90,7 +89,7 @@ internal class ExcelSmartTagAction : IExcelSmartTagAction
     /// <summary>
     /// 获取智能标记动作所在的智能标记对象
     /// </summary>
-    public IExcelSmartTag Parent => _parent ?? (_parent = new ExcelSmartTag(_smartTagAction?.Parent as MsExcel.SmartTag));
+    public IExcelSmartTag Parent => _parent ??= new ExcelSmartTag(_smartTagAction?.Parent as MsExcel.SmartTag);
 
     /// <summary>
     /// 执行该智能标记动作
