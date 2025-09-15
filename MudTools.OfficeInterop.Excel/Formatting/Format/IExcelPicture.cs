@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -43,6 +43,48 @@ public interface IExcelPicture : IDisposable
     /// 对应 Picture.Shape 属性
     /// </summary>
     IExcelShapeRange ShapeRange { get; }
+
+    /// <summary>
+    /// 获取图片的边框格式
+    /// 对应 Picture.Border 属性
+    /// </summary>
+    IExcelBorder Border { get; }
+
+    /// <summary>
+    /// 获取图片的内部填充格式
+    /// 对应 Picture.Interior 属性
+    /// </summary>
+    IExcelInterior Interior { get; }
+
+    /// <summary>
+    /// 获取图片左上角所在的单元格
+    /// 对应 Picture.TopLeftCell 属性
+    /// </summary>
+    IExcelRange TopLeftCell { get; }
+
+    /// <summary>
+    /// 获取图片右下角所在的单元格
+    /// 对应 Picture.BottomRightCell 属性
+    /// </summary>
+    IExcelRange BottomRightCell { get; }
+
+    /// <summary>
+    /// 获取或设置图片是否在打印时可见
+    /// 对应 Picture.PrintObject 属性
+    /// </summary>
+    bool PrintObject { get; set; }
+
+    /// <summary>
+    /// 获取或设置图片是否被锁定
+    /// 对应 Picture.Locked 属性
+    /// </summary>
+    bool Locked { get; set; }
+
+    /// <summary>
+    /// 获取或设置图片是否启用
+    /// 对应 Picture.Enabled 属性
+    /// </summary>
+    bool Enabled { get; set; }
 
     /// <summary>
     /// 获取图片的 Z 轴顺序位置
