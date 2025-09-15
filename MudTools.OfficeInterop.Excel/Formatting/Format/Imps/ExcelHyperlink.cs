@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -45,7 +45,8 @@ internal class ExcelHyperlink : IExcelHyperlink
             try
             {
                 // 释放子COM组件
-                (_range as ExcelRange)?.Dispose();
+                _range?.Dispose();
+                _shape?.Dispose();
 
                 // 释放底层COM对象
                 if (_hyperlink != null)
@@ -55,6 +56,8 @@ internal class ExcelHyperlink : IExcelHyperlink
             {
                 // 忽略释放过程中的异常
             }
+            _shape = null;
+            _range = null;
             _hyperlink = null;
         }
 
@@ -69,14 +72,14 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// <summary>
     /// 获取超链接的名称
     /// </summary>
-    public string Name => _hyperlink?.Name?.ToString();
+    public string Name => _hyperlink?.Name;
 
     /// <summary>
     /// 获取或设置超链接的目标地址
     /// </summary>
     public string Address
     {
-        get => _hyperlink?.Address?.ToString();
+        get => _hyperlink?.Address;
         set
         {
             if (_hyperlink != null && value != null)
@@ -89,7 +92,7 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// </summary>
     public string SubAddress
     {
-        get => _hyperlink?.SubAddress?.ToString();
+        get => _hyperlink?.SubAddress;
         set
         {
             if (_hyperlink != null && value != null)
@@ -102,7 +105,7 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// </summary>
     public string ScreenTip
     {
-        get => _hyperlink?.ScreenTip?.ToString();
+        get => _hyperlink?.ScreenTip;
         set
         {
             if (_hyperlink != null && value != null)
@@ -115,7 +118,7 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// </summary>
     public string TextToDisplay
     {
-        get => _hyperlink?.TextToDisplay?.ToString();
+        get => _hyperlink?.TextToDisplay;
         set
         {
             if (_hyperlink != null && value != null)
@@ -123,20 +126,35 @@ internal class ExcelHyperlink : IExcelHyperlink
         }
     }
 
+    public string EmailSubject
+    {
+        get => _hyperlink?.EmailSubject;
+        set
+        {
+            if (_hyperlink != null && value != null)
+                _hyperlink.EmailSubject = value;
+        }
+    }
+
     /// <summary>
     /// 区域对象缓存
     /// </summary>
-    private IExcelRange _range;
+    private IExcelRange? _range;
 
     /// <summary>
     /// 获取超链接所在的区域对象
     /// </summary>
-    public IExcelRange Range => _range ?? (_range = new ExcelRange(_hyperlink?.Range));
+    public IExcelRange Range => _range ??= new ExcelRange(_hyperlink?.Range);
+
+    private IExcelShape? _shape;
+
+    public IExcelShape Shape => _shape ??= new ExcelShape(_hyperlink?.Shape);
+
 
     /// <summary>
     /// 获取超链接的类型
     /// </summary>
-    public int Type => _hyperlink != null ? Convert.ToInt32(_hyperlink.Type) : 0;
+    public int Type => _hyperlink != null ? _hyperlink.Type : 0;
 
     /// <summary>
     /// 删除超链接
@@ -155,5 +173,18 @@ internal class ExcelHyperlink : IExcelHyperlink
     public void Follow(bool newWindow, bool addHistory, object extraInfo)
     {
         _hyperlink?.Follow(newWindow, addHistory, extraInfo);
+    }
+
+    public void CreateNewDocument(string filename, bool editNow, bool overwrite)
+    {
+        if (string.IsNullOrEmpty(filename))
+            throw new ArgumentNullException(nameof(filename));
+
+        _hyperlink?.CreateNewDocument(filename, editNow, overwrite);
+    }
+
+    public void AddToFavorites()
+    {
+        _hyperlink?.AddToFavorites();
     }
 }

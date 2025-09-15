@@ -48,16 +48,9 @@ internal class ExcelBorder : IExcelBorder
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_border != null)
-                    Marshal.ReleaseComObject(_border);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_border != null)
+                Marshal.ReleaseComObject(_border);
             _border = null;
         }
 

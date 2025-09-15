@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -44,6 +44,18 @@ public interface IExcelHyperlink : IDisposable
     string TextToDisplay { get; set; }
 
     /// <summary>
+    /// 获取或设置电子邮件超链接的主题行
+    /// 对应 Hyperlink.EmailSubject 属性
+    /// </summary>
+    string EmailSubject { get; set; }
+
+    /// <summary>
+    /// 获取与超链接关联的形状对象
+    /// 对应 Hyperlink.Shape 属性
+    /// </summary>
+    IExcelShape Shape { get; }
+
+    /// <summary>
     /// 获取超链接所在的区域对象
     /// 对应 Hyperlink.Range 属性
     /// </summary>
@@ -69,4 +81,17 @@ public interface IExcelHyperlink : IDisposable
     /// <param name="addHistory">是否添加到历史记录</param>
     /// <param name="extraInfo">额外信息</param>
     void Follow(bool newWindow, bool addHistory, object extraInfo);
+
+    /// <summary>
+    /// 创建新的文档并将其作为超链接目标
+    /// </summary>
+    /// <param name="filename">要创建的文件名</param>
+    /// <param name="editNow">是否立即编辑新文档</param>
+    /// <param name="overwrite">是否覆盖同名现有文件</param>
+    void CreateNewDocument(string filename, bool editNow, bool overwrite);
+
+    /// <summary>
+    /// 将超链接添加到收藏夹
+    /// </summary>
+    void AddToFavorites();
 }

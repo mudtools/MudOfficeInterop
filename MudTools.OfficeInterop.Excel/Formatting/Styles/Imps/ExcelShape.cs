@@ -29,7 +29,7 @@ internal class ExcelShape : IExcelShape
     /// 初始化 ExcelShape 实例
     /// </summary>
     /// <param name="shape">底层的 COM Shape 对象</param>
-    internal ExcelShape(MsExcel.Shape shape)
+    internal ExcelShape(MsExcel.Shape? shape)
     {
         _shape = shape;
         _disposedValue = false;
