@@ -5,8 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using Microsoft.Office.Core;
-
 namespace MudTools.OfficeInterop.Excel;
 
 
@@ -23,12 +21,27 @@ public interface IExcelColorFormat : IDisposable
     /// <summary>
     /// 获取或设置颜色类型
     /// </summary>
-    MsoColorType Type { get; }
+    MsoColorType? Type { get; }
+
+    /// <summary>
+    /// 获取或设置对象的主题颜色索引
+    /// </summary>
+    MsoThemeColorIndex? ObjectThemeColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置颜色的亮度值
+    /// </summary>
+    float? Brightness { get; set; }
+
+    /// <summary>
+    /// 获取或设置颜色的色调和阴影值
+    /// </summary>
+    float? TintAndShade { get; set; }
 
     /// <summary>
     /// 获取或设置RGB颜色值
     /// </summary>
-    int RGB { get; set; }
+    int? RGB { get; set; }
 
     /// <summary>
     /// 获取或设置颜色的应用程序版本
