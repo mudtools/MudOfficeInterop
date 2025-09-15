@@ -354,12 +354,12 @@ public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
     /// <summary>
     /// 获取工作表的图表对象集合
     /// </summary>
-    IExcelChartObject ChartObjects(int index);
+    IExcelChartObject? ChartObjects(int index);
 
     /// <summary>
     /// 获取工作表的图表对象集合
     /// </summary>
-    IExcelChartObject ChartObjects(string name);
+    IExcelChartObject? ChartObjects(string name);
 
     /// <summary>
     /// 将工作表导出为固定格式文件（如PDF或XPS）

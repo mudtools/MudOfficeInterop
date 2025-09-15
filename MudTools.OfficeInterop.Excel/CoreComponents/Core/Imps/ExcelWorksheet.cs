@@ -1065,8 +1065,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     public IExcelChartObjects? ChartObjects()
     {
-        var chartObjects = _worksheet?.ChartObjects() as MsExcel.ChartObjects;
-        if (chartObjects == null)
+        if (_worksheet?.ChartObjects() is not MsExcel.ChartObjects chartObjects)
             return null;
         return new ExcelChartObjects(chartObjects);
     }
@@ -1074,18 +1073,20 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的图表对象集合
     /// </summary>
-    public IExcelChartObject ChartObjects(int index)
+    public IExcelChartObject? ChartObjects(int index)
     {
-        var chartObject = _worksheet.ChartObjects(index) as MsExcel.ChartObject;
+        if (_worksheet.ChartObjects(index) is not MsExcel.ChartObject chartObject)
+            return null;
         return new ExcelChartObject(chartObject);
     }
 
     /// <summary>
     /// 获取工作表的图表对象集合
     /// </summary>
-    public IExcelChartObject ChartObjects(string name)
+    public IExcelChartObject? ChartObjects(string name)
     {
-        var chartObject = _worksheet.ChartObjects(name) as MsExcel.ChartObject;
+        if (_worksheet.ChartObjects(name) is not MsExcel.ChartObject chartObject)
+            return null;
         return new ExcelChartObject(chartObject);
     }
 

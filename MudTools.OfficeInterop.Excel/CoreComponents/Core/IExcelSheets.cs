@@ -14,6 +14,18 @@ namespace MudTools.OfficeInterop.Excel
     {
         #region 操作方法
         /// <summary>
+        /// 向集合中添加新的图表
+        /// 对应 Sheets.Add 方法
+        /// </summary>
+        /// <param name="before">在哪个工作表之前插入</param>
+        /// <param name="after">在哪个工作表之后插入</param>
+        /// <param name="count">要添加的工作表数量</param>
+        /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
+        IExcelChart? AddChart(
+                   IExcelCommonSheet? before = null,
+                   IExcelCommonSheet? after = null,
+                   int? count = 1);
+        /// <summary>
         /// 将此 Sheets 集合中的所有工作表复制到指定位置。
         /// 这是对 Microsoft.Office.Interop.Excel.Sheets.Copy 方法的封装。
         /// </summary>

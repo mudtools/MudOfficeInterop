@@ -32,11 +32,6 @@ internal class Utils
                 MsExcel.Chart chart = (MsExcel.Chart)workSheet;
                 sheet = new ExcelChart(chart);
             }
-            else if (workSheet is MsExcel.ChartObject)
-            {
-                MsExcel.ChartObject chartObj = (MsExcel.ChartObject)workSheet;
-                sheet = new ExcelChartObject(chartObj);
-            }
             else if (workSheet is MsExcel.DialogSheet)
             {
                 MsExcel.DialogSheet dialog = (MsExcel.DialogSheet)workSheet;

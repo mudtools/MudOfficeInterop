@@ -71,6 +71,19 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// <param name="before">在哪个工作表之前插入</param>
     /// <param name="after">在哪个工作表之后插入</param>
     /// <param name="count">要添加的工作表数量</param>
+    /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
+    IExcelWorksheet? AddSheet(
+        IExcelCommonSheet? before = null,
+        IExcelCommonSheet? after = null,
+        int? count = 1);
+
+    /// <summary>
+    /// 向集合中添加新的工作表
+    /// 对应 Sheets.Add 方法
+    /// </summary>
+    /// <param name="before">在哪个工作表之前插入</param>
+    /// <param name="after">在哪个工作表之后插入</param>
+    /// <param name="count">要添加的工作表数量</param>
     /// <param name="type">工作表类型</param>
     /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
     IExcelCommonSheet? Add(

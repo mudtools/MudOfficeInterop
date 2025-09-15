@@ -23,11 +23,6 @@ internal class ExcelChartObject : IExcelChartObject
     private MsExcel.ShapeRange? _shapeRange;
 
     /// <summary>
-    /// 底层的图表对象
-    /// </summary>
-    private MsExcel.Chart? _chart;
-
-    /// <summary>
     /// 标记对象是否已被释放
     /// </summary>
     private bool _disposedValue;
@@ -42,7 +37,6 @@ internal class ExcelChartObject : IExcelChartObject
     {
         _chartObject = chartObject ?? throw new ArgumentNullException(nameof(chartObject));
         _shapeRange = chartObject.ShapeRange;
-        _chart = chartObject.Chart;
         _disposedValue = false;
     }
 
@@ -64,13 +58,6 @@ internal class ExcelChartObject : IExcelChartObject
                 // 释放形状对象
                 _excelShape?.Dispose();
 
-                _pageSetup?.Dispose();
-                _hyperlinks?.Dispose();
-
-                // 释放底层COM对象
-                if (_chart != null)
-                    Marshal.ReleaseComObject(_chart);
-
                 if (_shapeRange != null)
                     Marshal.ReleaseComObject(_shapeRange);
 
@@ -83,8 +70,6 @@ internal class ExcelChartObject : IExcelChartObject
             }
             _excelChart = null;
             _excelShape = null;
-            _hyperlinks = null;
-            _chart = null;
         }
 
         _disposedValue = true;
@@ -104,34 +89,6 @@ internal class ExcelChartObject : IExcelChartObject
     /// </summary>
     public IExcelApplication Application => new ExcelApplication(_chartObject.Application);
 
-    /// <summary>
-    /// 获取图表内容是否被保护
-    /// </summary>
-    public bool IsProtected => _chart.ProtectContents;
-
-    /// <summary>
-    /// 页面设置对象缓存
-    /// </summary>
-    private IExcelPageSetup _pageSetup;
-
-    /// <summary>
-    /// 获取工作表的页面设置对象
-    /// </summary>
-    public IExcelPageSetup PageSetup => _pageSetup ?? (_pageSetup = new ExcelPageSetup(_chart?.PageSetup));
-
-
-    public IExcelShapes? Shapes => _chart != null ? new ExcelShapes(_chart.Shapes) : null;
-
-    /// <summary>
-    /// 超链接集合缓存
-    /// </summary>
-    private IExcelHyperlinks _hyperlinks;
-
-    /// <summary>
-    /// 获取工作表的超链接集合
-    /// </summary>
-    public IExcelHyperlinks Hyperlinks => _hyperlinks ?? (_hyperlinks = new ExcelHyperlinks(_chart?.Hyperlinks));
-
 
     /// <summary>
     /// 获取或设置图表对象的名称
@@ -145,12 +102,6 @@ internal class ExcelChartObject : IExcelChartObject
                 _chartObject.Name = value;
         }
     }
-
-    public XlSheetType Type => (XlSheetType)_chart.Type;
-
-    public bool ProtectContents => _chart.ProtectContents;
-
-    public bool ProtectionMode => _chart.ProtectionMode;
 
     /// <summary>
     /// 获取图表对象的索引位置
@@ -200,46 +151,6 @@ internal class ExcelChartObject : IExcelChartObject
             if (_chartObject.Parent is MsExcel.Worksheet worksheet)
             {
                 return new ExcelWorksheet(worksheet);
-            }
-            return null;
-        }
-    }
-
-    public IExcelWorkbook? ParentWorkbook
-    {
-        get
-        {
-            if (_chart?.Parent == null)
-            {
-                return null;
-            }
-            if (_chart.Parent is MsExcel.Workbook workbook)
-            {
-                return new ExcelWorkbook(workbook);
-            }
-            return null;
-        }
-    }
-
-    public string? ParentName
-    {
-        get
-        {
-            if (_chartObject?.Parent == null)
-            {
-                return null;
-            }
-            if (_chartObject.Parent is MsExcel.ChartObjects chartObjs)
-            {
-                return "";
-            }
-            if (_chartObject.Parent is MsExcel.Workbook workbook)
-            {
-                return workbook.Name;
-            }
-            if (_chartObject.Parent is MsExcel.Worksheet worksheet)
-            {
-                return worksheet.Name;
             }
             return null;
         }
@@ -336,92 +247,16 @@ internal class ExcelChartObject : IExcelChartObject
     /// <summary>
     /// 获取图表对象的图表
     /// </summary>
-    public IExcelChart Chart => _excelChart ?? (_excelChart = new ExcelChart(_chart));
+    public IExcelChart Chart => _excelChart ?? (_excelChart = new ExcelChart(_chartObject.Chart));
 
-    /// <summary>
-    /// 获取或设置图表对象是否启用宏
-    /// </summary>
-    public bool EnableMacro
-    {
-        get => false; // Excel ChartObject不直接支持此属性
-        set
-        {
-            // Excel ChartObject不直接支持此属性
-        }
-    }
 
     /// <summary>
     /// 获取图表对象是否为嵌入式图表
     /// </summary>
     public bool IsEmbedded => _chartObject != null;
-
-    /// <summary>
-    /// 获取图表对象的图表类型
-    /// </summary>
-    public int ChartType => _chart != null ? Convert.ToInt32(_chart.ChartType) : 0;
-
     #endregion
 
     #region 操作方法
-
-    public void ClearContents()
-    {
-        _chart?.ChartArea.ClearContents();
-    }
-
-    /// <summary>
-    /// 清除图表内容
-    /// </summary>
-    public void ClearAll()
-    {
-        _chart?.ChartArea.ClearFormats();
-        _chart?.ChartArea.ClearContents();
-        _chart?.ChartArea.Clear();
-    }
-
-    /// <summary>
-    /// 清除图表内容
-    /// </summary>
-    public void Clear()
-    {
-        _chart?.ChartArea.Clear();
-    }
-
-    /// <summary>
-    /// 取消保护工作表
-    /// </summary>
-    /// <param name="password">保护密码</param>
-    public void Unprotect(string password = "")
-    {
-        _chart?.Unprotect(password);
-    }
-
-    /// <summary>
-    /// 保护工作表
-    /// </summary>
-    /// <param name="password">保护密码</param>
-    /// <param name="drawingObjects">是否保护图形对象</param>
-    /// <param name="contents">是否保护内容</param>
-    /// <param name="scenarios">是否保护方案</param>
-    /// <param name="userInterfaceOnly">是否仅保护用户界面</param>
-    public void Protect(string? password = null, bool? drawingObjects = null,
-        bool? contents = null, bool? scenarios = null, bool? userInterfaceOnly = null)
-    {
-        _chart?.Protect(
-            password.ComArgsVal(),
-            drawingObjects.ComArgsVal(),
-            contents.ComArgsVal(),
-            scenarios.ComArgsVal(),
-            userInterfaceOnly.ComArgsVal());
-    }
-
-    public object? OLEObjects(int? index = null)
-    {
-        if (index != null)
-            return _chart?.OLEObjects(index);
-        return _chart?.OLEObjects();
-    }
-
     /// <summary>
     /// 选择图表对象
     /// </summary>
@@ -448,21 +283,6 @@ internal class ExcelChartObject : IExcelChartObject
     }
 
     /// <summary>
-    /// 复制工作表
-    /// </summary>
-    /// <param name="before">复制到指定工作表之前</param>
-    /// <param name="after">复制到指定工作表之后</param>
-    public void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
-    {
-        if (_chart == null) return;
-
-        _chart.Copy(
-            before is ExcelChart beforeSheet ? beforeSheet._chart : System.Type.Missing,
-            after is ExcelChart afterSheet ? afterSheet._chart : System.Type.Missing
-        );
-    }
-
-    /// <summary>
     /// 剪切图表对象
     /// </summary>
     public void Cut()
@@ -477,36 +297,6 @@ internal class ExcelChartObject : IExcelChartObject
     {
         _chartObject?.Delete();
     }
-
-    public void PrintPreview()
-    {
-        _chart?.PrintPreview();
-    }
-
-    /// <summary>
-    /// 打印图表
-    /// </summary>
-    /// <param name="preview">是否进行打印预览</param>
-    public void PrintOut(bool preview = false)
-    {
-        if (preview)
-        {
-            _chart?.PrintPreview();
-        }
-        else
-        {
-            _chart?.PrintOutEx();
-        }
-    }
-    /// <summary>
-    /// 将工作表另存为xlsx文件。
-    /// </summary>
-    /// <param name="filePath"></param>
-    public void SaveAs(string filePath)
-    {
-        _chart?.SaveAs(filePath);
-    }
-
 
     /// <summary>
     /// 调整图表对象大小
@@ -585,21 +375,6 @@ internal class ExcelChartObject : IExcelChartObject
     }
 
     /// <summary>
-    /// 移动工作表
-    /// </summary>
-    /// <param name="before">移动到指定工作表之前</param>
-    /// <param name="after">移动到指定工作表之后</param>
-    public void Move(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
-    {
-        if (_chart == null) return;
-
-        _chart.Move(
-            before is ExcelChart beforeSheet ? beforeSheet._chart : System.Type.Missing,
-            after is ExcelChart afterSheet ? afterSheet._chart : System.Type.Missing
-        );
-    }
-
-    /// <summary>
     /// 将图表对象置于最前面
     /// </summary>
     public void BringToFront()
@@ -614,254 +389,7 @@ internal class ExcelChartObject : IExcelChartObject
     {
         _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoSendToBack);
     }
-
-    #endregion
-
-    #region 图表操作
-
-    /// <summary>
-    /// 设置图表数据源
-    /// </summary>
-    /// <param name="sourceData">数据源区域</param>
-    /// <param name="plotBy">绘制方式</param>
-    public void SetSourceData(IExcelRange sourceData, int plotBy = 1)
-    {
-        if (_chart == null || sourceData == null) return;
-
-        try
-        {
-            var excelRange = sourceData as ExcelRange;
-            if (excelRange?.InternalRange != null)
-            {
-                _chart.SetSourceData(excelRange.InternalRange, (MsExcel.XlRowCol)plotBy);
-            }
-        }
-        catch
-        {
-            // 忽略设置数据源过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 设置图表类型
-    /// </summary>
-    /// <param name="chartType">图表类型</param>
-    public void SetChartType(int chartType)
-    {
-        if (_chart == null) return;
-
-        try
-        {
-            _chart.ChartType = (MsExcel.XlChartType)chartType;
-        }
-        catch
-        {
-            // 忽略设置图表类型过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 应用图表布局
-    /// </summary>
-    /// <param name="layout">布局编号</param>
-    public void ApplyLayout(int layout)
-    {
-        if (_chart == null) return;
-
-        try
-        {
-            _chart.ApplyLayout(layout);
-        }
-        catch
-        {
-            // 忽略应用布局过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 重新绘制图表
-    /// </summary>
-    public void Refresh()
-    {
-        if (_chart == null) return;
-
-        try
-        {
-            _chart.Refresh();
-        }
-        catch
-        {
-            // 忽略重新绘制过程中的异常
-        }
-    }
-
-    #endregion
-
-    #region 格式设置
-
-    /// <summary>
-    /// 设置图表标题
-    /// </summary>
-    /// <param name="title">标题文本</param>
-    public void SetTitle(string title)
-    {
-        if (_chart == null || string.IsNullOrEmpty(title)) return;
-
-        try
-        {
-            if (_chart.HasTitle)
-            {
-                _chart.ChartTitle.Text = title;
-            }
-            else
-            {
-                _chart.HasTitle = true;
-                _chart.ChartTitle.Text = title;
-            }
-        }
-        catch
-        {
-            // 忽略设置标题过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 设置坐标轴标题
-    /// </summary>
-    /// <param name="axisType">坐标轴类型</param>
-    /// <param name="title">标题文本</param>
-    public void SetAxisTitle(int axisType, string title)
-    {
-        if (_chart == null || string.IsNullOrEmpty(title)) return;
-
-        try
-        {
-            MsExcel.Axis axis = null;
-            switch (axisType)
-            {
-                case 1: // X轴
-                    axis = _chart.Axes(MsExcel.XlAxisType.xlCategory) as MsExcel.Axis;
-                    break;
-                case 2: // Y轴
-                    axis = _chart.Axes(MsExcel.XlAxisType.xlValue) as MsExcel.Axis;
-                    break;
-            }
-
-            if (axis != null)
-            {
-                if (axis.HasTitle)
-                {
-                    axis.AxisTitle.Text = title;
-                }
-                else
-                {
-                    axis.HasTitle = true;
-                    axis.AxisTitle.Text = title;
-                }
-            }
-        }
-        catch
-        {
-            // 忽略设置坐标轴标题过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 设置图例位置
-    /// </summary>
-    /// <param name="position">图例位置</param>
-    public void SetLegendPosition(int position)
-    {
-        if (_chart == null) return;
-
-        try
-        {
-            if (_chart.HasLegend)
-            {
-                _chart.Legend.Position = (MsExcel.XlLegendPosition)position;
-            }
-            else
-            {
-                _chart.HasLegend = true;
-                _chart.Legend.Position = (MsExcel.XlLegendPosition)position;
-            }
-        }
-        catch
-        {
-            // 忽略设置图例位置过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 设置数据标签
-    /// </summary>
-    /// <param name="show">是否显示</param>
-    public void SetDataLabels(bool show)
-    {
-        if (_chart == null) return;
-
-        try
-        {
-            var seriesCollection = _chart.SeriesCollection() as MsExcel.SeriesCollection;
-            if (seriesCollection != null)
-            {
-                for (int i = 1; i <= seriesCollection.Count; i++)
-                {
-                    try
-                    {
-                        var series = seriesCollection.Item(i) as MsExcel.Series;
-                        if (series != null)
-                        {
-                            series.HasDataLabels = show;
-                        }
-                    }
-                    catch
-                    {
-                        // 忽略单个系列设置异常
-                    }
-                }
-            }
-        }
-        catch
-        {
-            // 忽略设置数据标签过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 设置网格线
-    /// </summary>
-    /// <param name="major">是否显示主要网格线</param>
-    /// <param name="minor">是否显示次要网格线</param>
-    public void SetGridlines(bool major, bool minor = false)
-    {
-        if (_chart == null) return;
-
-        try
-        {
-            // 设置主要网格线
-            var valueAxis = _chart.Axes(MsExcel.XlAxisType.xlValue) as MsExcel.Axis;
-            if (valueAxis != null)
-            {
-                valueAxis.HasMajorGridlines = major;
-                valueAxis.HasMinorGridlines = minor;
-            }
-
-            // 设置次要网格线
-            var categoryAxis = _chart.Axes(MsExcel.XlAxisType.xlCategory) as MsExcel.Axis;
-            if (categoryAxis != null)
-            {
-                categoryAxis.HasMajorGridlines = major;
-                categoryAxis.HasMinorGridlines = minor;
-            }
-        }
-        catch
-        {
-            // 忽略设置网格线过程中的异常
-        }
-    }
-
-    #endregion
+    #endregion       
 
     #region 导出和转换
 

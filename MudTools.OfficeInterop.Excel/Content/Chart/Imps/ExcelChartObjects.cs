@@ -165,44 +165,6 @@ internal class ExcelChartObjects : IExcelChartObjects
             return null;
         }
     }
-
-    /// <summary>
-    /// 基于现有数据创建图表对象
-    /// </summary>
-    /// <param name="sourceData">数据源区域</param>
-    /// <param name="left">左边距</param>
-    /// <param name="top">顶边距</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <param name="chartType">图表类型</param>
-    /// <returns>新创建的图表对象</returns>
-    public IExcelChartObject CreateFromData(IExcelRange sourceData, double left, double top,
-                                          double width, double height, int chartType = 0)
-    {
-        if (_chartObjects == null || sourceData == null)
-            return null;
-
-        try
-        {
-            var chartObject = Add(left, top, width, height);
-            if (chartObject != null)
-            {
-                var excelRange = sourceData as ExcelRange;
-                chartObject.SetSourceData(sourceData);
-
-                if (chartType != 0)
-                {
-                    chartObject.SetChartType(chartType);
-                }
-            }
-            return chartObject;
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
     #endregion
 
     #region 查找和筛选
@@ -300,35 +262,6 @@ internal class ExcelChartObjects : IExcelChartObjects
                     {
                         result.Add(chartObject);
                     }
-                }
-            }
-            catch
-            {
-                // 忽略单个图表对象访问异常
-            }
-        }
-        return result.ToArray();
-    }
-
-    /// <summary>
-    /// 根据图表类型查找图表对象
-    /// </summary>
-    /// <param name="chartType">图表类型</param>
-    /// <returns>匹配的图表对象数组</returns>
-    public IExcelChartObject[] FindByType(int chartType)
-    {
-        if (_chartObjects == null || Count == 0)
-            return new IExcelChartObject[0];
-
-        var result = new System.Collections.Generic.List<IExcelChartObject>();
-        for (int i = 1; i <= Count; i++)
-        {
-            try
-            {
-                var chartObject = this[i];
-                if (chartObject != null && chartObject.ChartType == chartType)
-                {
-                    result.Add(chartObject);
                 }
             }
             catch

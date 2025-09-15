@@ -91,6 +91,64 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region 创建和添加
+    public override IExcelWorksheet? AddSheet(
+        IExcelCommonSheet? before = null,
+        IExcelCommonSheet? after = null,
+        int? count = 1)
+    {
+        object? beforeObj = before switch
+        {
+            ExcelWorksheet ws => ws.Worksheet,
+            ExcelChart chart => chart._chart,
+            _ => Type.Missing
+        };
+
+        object? afterObj = after switch
+        {
+            ExcelWorksheet ws => ws.Worksheet,
+            ExcelChart chart => chart._chart,
+            _ => Type.Missing
+        };
+
+        object result = _worksheets.Add(
+                        beforeObj,
+                        afterObj,
+                        count.ComArgsVal(),
+                        MsExcel.XlSheetType.xlWorksheet);
+        if (result is MsExcel.Worksheet workSheet)
+            return new ExcelWorksheet(workSheet);
+        return null;
+    }
+
+    public IExcelChart? AddChart(
+       IExcelCommonSheet? before = null,
+       IExcelCommonSheet? after = null,
+       int? count = 1)
+    {
+        object? beforeObj = before switch
+        {
+            ExcelWorksheet ws => ws.Worksheet,
+            ExcelChart chart => chart._chart,
+            _ => Type.Missing
+        };
+
+        object? afterObj = after switch
+        {
+            ExcelWorksheet ws => ws.Worksheet,
+            ExcelChart chart => chart._chart,
+            _ => Type.Missing
+        };
+
+        object result = _worksheets.Add(
+                        beforeObj,
+                        afterObj,
+                        count.ComArgsVal(),
+                        MsExcel.XlSheetType.xlChart);
+        if (result is MsExcel.Chart workSheet)
+            return new ExcelChart(workSheet);
+        return null;
+    }
+
     public override IExcelCommonSheet? Add(
                                     IExcelCommonSheet? before = null,
                                     IExcelCommonSheet? after = null,
@@ -155,7 +213,6 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
     }
     #endregion
-
 
     #region 操作方法
     /// <summary>

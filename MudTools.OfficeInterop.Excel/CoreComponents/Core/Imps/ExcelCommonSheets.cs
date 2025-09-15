@@ -443,6 +443,8 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// <inheritdoc/>
     public abstract void RefreshAll();
 
+    public abstract IExcelWorksheet? AddSheet(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null, int? count = 1);
+
     /// <inheritdoc/>
     public abstract IExcelCommonSheet? Add(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null, int? count = 1, XlSheetType? type = null);
 

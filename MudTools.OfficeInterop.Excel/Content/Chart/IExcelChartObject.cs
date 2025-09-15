@@ -11,14 +11,45 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ChartObject 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.ChartObject 的安全访问和操作
 /// </summary>
-public interface IExcelChartObject : IExcelCommonSheet, IDisposable
+public interface IExcelChartObject : IDisposable
 {
     #region 基础属性
+    /// <summary>
+    /// 获取图表所在的 Excel Application 对象
+    /// </summary>
+    IExcelApplication Application { get; }
+
+    /// <summary>
+    /// 获取图表对象所在的父对象（通常是工作簿）
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取或设置图表对象的名称
+    /// </summary>
+    string Name { get; set; }
+
+
+    /// <summary>
+    /// 获取图表对象的索引位置
+    /// </summary>
+    int Index { get; }
+
     /// <summary>
     /// 获取图表对象的底层形状对象
     /// 对应 ChartObject.Shape 属性
     /// </summary>
     IExcelShapeRange ShapeRange { get; }
+
+    /// <summary>
+    /// 获取或设置图表是否可见
+    /// </summary>
+    XlSheetVisibility Visible { get; set; }
+
+    /// <summary>
+    /// 获取或设置图表对象是否可见
+    /// </summary>
+    bool IsVisible { get; set; }
 
     #endregion
 
@@ -65,28 +96,37 @@ public interface IExcelChartObject : IExcelCommonSheet, IDisposable
     IExcelChart Chart { get; }
 
     /// <summary>
-    /// 获取或设置图表对象是否启用宏
-    /// </summary>
-    bool EnableMacro { get; set; }
-
-    /// <summary>
     /// 获取图表对象是否为嵌入式图表
     /// </summary>
     bool IsEmbedded { get; }
-
-    /// <summary>
-    /// 获取图表对象的图表类型
-    /// </summary>
-    int ChartType { get; }
-
     #endregion
 
     #region 操作方法
+    /// <summary>
+    /// 激活对象
+    /// </summary>
+    void Activate();
+    /// <summary>
+    /// 选择对象
+    /// </summary>
+    /// <param name="replace">是否替换当前选择</param>
+    void Select(bool replace = true);
+
+    /// <summary>
+    /// 复制对象
+    /// </summary>
+    void Copy();
+
     /// <summary>
     /// 剪切图表对象
     /// 对应 ChartObject.Cut 方法
     /// </summary>
     void Cut();
+
+    /// <summary>
+    /// 删除图表对象
+    /// </summary>
+    void Delete();
 
     /// <summary>
     /// 调整图表对象大小
@@ -121,77 +161,13 @@ public interface IExcelChartObject : IExcelCommonSheet, IDisposable
 
     #endregion
 
-    #region 图表操作
-
-    /// <summary>
-    /// 设置图表数据源
-    /// </summary>
-    /// <param name="sourceData">数据源区域</param>
-    /// <param name="plotBy">绘制方式</param>
-    void SetSourceData(IExcelRange sourceData, int plotBy = 1);
-
-    /// <summary>
-    /// 设置图表类型
-    /// </summary>
-    /// <param name="chartType">图表类型</param>
-    void SetChartType(int chartType);
-
-    /// <summary>
-    /// 应用图表布局
-    /// </summary>
-    /// <param name="layout">布局编号</param>
-    void ApplyLayout(int layout);
-
-    /// <summary>
-    /// 重新绘制图表
-    /// </summary>
-    void Refresh();
-
-    #endregion
-
-    #region 格式设置
-
-    /// <summary>
-    /// 设置图表标题
-    /// </summary>
-    /// <param name="title">标题文本</param>
-    void SetTitle(string title);
-
-    /// <summary>
-    /// 设置坐标轴标题
-    /// </summary>
-    /// <param name="axisType">坐标轴类型</param>
-    /// <param name="title">标题文本</param>
-    void SetAxisTitle(int axisType, string title);
-
-    /// <summary>
-    /// 设置图例位置
-    /// </summary>
-    /// <param name="position">图例位置</param>
-    void SetLegendPosition(int position);
-
-    /// <summary>
-    /// 设置数据标签
-    /// </summary>
-    /// <param name="show">是否显示</param>
-    void SetDataLabels(bool show);
-
-    /// <summary>
-    /// 设置网格线
-    /// </summary>
-    /// <param name="major">是否显示主要网格线</param>
-    /// <param name="minor">是否显示次要网格线</param>
-    void SetGridlines(bool major, bool minor = false);
-
-    #endregion
-
     #region 导出和转换   
 
     /// <summary>
-    /// 复制图表到新工作表
+    /// 复制图表到新图表对象
     /// </summary>
-    /// <param name="worksheetName">新工作表名称</param>
-    /// <returns>新创建的工作表对象</returns>
+    /// <param name="worksheetName">新图表对象名称</param>
+    /// <returns>新创建的图表对象对象</returns>
     IExcelWorksheet CopyToNewWorksheet(string worksheetName = "");
     #endregion
 }

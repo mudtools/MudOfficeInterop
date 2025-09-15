@@ -16,6 +16,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     private MsExcel.Worksheets _worksheets;
     private static readonly ILog log = LogManager.GetLogger(typeof(ExcelWorksheets));
+
     #region 构造函数和释放
 
     /// <summary>
@@ -64,7 +65,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public override IExcelCommonSheet this[int index]
+    public override IExcelCommonSheet? this[int index]
     {
         get
         {
@@ -91,7 +92,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    public override IExcelCommonSheet this[string name]
+    public override IExcelCommonSheet? this[string name]
     {
         get
         {
@@ -136,6 +137,34 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     #endregion
 
     #region 创建和添加
+    public override IExcelWorksheet? AddSheet(
+       IExcelCommonSheet? before = null,
+       IExcelCommonSheet? after = null,
+       int? count = 1)
+    {
+        object? beforeObj = before switch
+        {
+            ExcelWorksheet ws => ws.Worksheet,
+            ExcelChart chart => chart._chart,
+            _ => Type.Missing
+        };
+
+        object? afterObj = after switch
+        {
+            ExcelWorksheet ws => ws.Worksheet,
+            ExcelChart chart => chart._chart,
+            _ => Type.Missing
+        };
+
+        object result = _worksheets.Add(
+                        beforeObj,
+                        afterObj,
+                        count.ComArgsVal(),
+                        MsExcel.XlSheetType.xlWorksheet);
+        if (result is MsExcel.Worksheet workSheet)
+            return new ExcelWorksheet(workSheet);
+        return null;
+    }
 
     /// <summary>
     /// 向工作簿添加新的工作表

@@ -736,7 +736,7 @@ internal partial class ExcelApplication : IExcelApplication
     #endregion
 
     #region 工作表管理
-    public IExcelWorksheet? ActiveSheetWarp
+    public IExcelWorksheet? ActiveSheetWrap
     {
         get
         {
