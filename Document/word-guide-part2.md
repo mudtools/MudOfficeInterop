@@ -1,455 +1,520 @@
-# Word 操作指南（第二部分）：段落、节和表格操作
+# .NET驾驭Word之力：理解Word对象模型核心 (Application, Document, Range)
 
-## 适用场景与解决问题
+在使用MudTools.OfficeInterop.Word库进行Word文档自动化处理时，深入理解Word对象模型的核心组件是至关重要的。Word对象模型提供了一套层次化的结构，使开发者能够通过编程方式控制Word应用程序、文档以及文档内容。本章将详细介绍Word对象模型中最核心的三个对象：Application、Document和Range。
 
-想要让你的Word文档结构更清晰、内容更丰富吗？想要轻松处理段落、节和表格吗？这篇指南将带你进入Word文档结构化处理的精彩世界！
+## 2.1 对象模型层次结构
 
-本指南适用于需要对 Word 文档中的段落、节和表格进行操作的开发者，解决以下问题：
-- 如何高效操作文档段落
-- 如何处理文档节和页面设置
-- 如何创建和格式化表格
-- 如何简化文档结构化内容操作
+Word对象模型采用了层次化的结构，从顶层的应用程序对象到具体的文档内容元素，每一层都包含下一层的对象。理解这种层次结构对于有效使用Word自动化功能至关重要。
 
-> "结构化的文档就像建筑，段落是砖块，节是楼层，表格是装饰，只有合理搭配才能建成美丽的文档大厦！" - 某位文档架构师
-
-## IWordParagraph - 段落操作接口
-
-[IWordParagraph](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordParagraph.cs#L12-L78) 用于操作 Word 文档中的段落。它就像你的"段落编辑师"，帮你精心雕琢每一个段落！
-
-### 段落基础操作
-
-```csharp
-// 获取段落
-var paragraph = document.Paragraphs[1]; // 获取第一个段落
-
-// 获取段落文本
-string text = paragraph.Text;
-
-// 设置段落文本
-paragraph.Text = "新段落内容";
+```
+Application (应用程序)
+├── Documents (文档集合)
+│   └── Document (文档)
+│       ├── Sections (节)
+│       ├── Paragraphs (段落)
+│       ├── Tables (表格)
+│       ├── Shapes (形状)
+│       ├── Bookmarks (书签)
+│       ├── Fields (域)
+│       ├── Comments (批注)
+│       ├── Headers/Footers (页眉/页脚)
+│       └── Range (范围)
+│           ├── Characters (字符)
+│           ├── Words (单词)
+│           ├── Sentences (句子)
+│           └── ...
+└── Windows (窗口)
+    └── Window (窗口)
 ```
 
-### 段落格式设置
+这种层次结构反映了Word应用程序的实际组织方式。Application对象代表整个Word应用程序实例，Documents集合包含所有打开的文档，每个Document对象代表一个具体的文档文件，而Range对象则代表文档中的特定内容区域。
+
+## 2.2 核心对象详解
+
+### Application对象
+
+Application对象是Word对象模型的顶层对象，代表整个Word应用程序实例。通过Application对象，您可以控制Word应用程序的全局设置和行为。
+
+主要功能包括：
+- 控制应用程序的可见性（显示或隐藏Word窗口）
+- 管理打开的文档集合
+- 设置全局选项（如显示警告、状态栏等）
+- 控制应用程序级别的行为（如打印设置、语言设置等）
+
+在MudTools.OfficeInterop.Word中，[IWordApplication](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordApplication.cs#L14-L773)接口封装了Word应用程序的主要功能。通过[WordFactory](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/WordFactory.cs#L15-L97)类的静态方法可以创建Application实例：
 
 ```csharp
-// 设置段落对齐方式
-paragraph.Alignment = (int)WdParagraphAlignment.wdAlignParagraphCenter;
+// 创建一个新的空白文档
+// BlankWorkbook()方法会启动Word应用程序并创建一个空白文档
+var wordApp = WordFactory.BlankWorkbook();
 
-// 设置缩进
-paragraph.FirstLineIndent = 20; // 首行缩进 20 磅
-paragraph.LeftIndent = 10;      // 左缩进 10 磅
-paragraph.RightIndent = 10;     // 右缩进 10 磅
+// 基于模板创建文档
+// CreateFrom()方法会启动Word应用程序并基于模板创建新文档
+var wordApp = WordFactory.CreateFrom(@"C:\Templates\MyTemplate.dotx");
 
-// 设置段落间距
-paragraph.SpaceBefore = 12;     // 段前间距 12 磅
-paragraph.SpaceAfter = 12;      // 段后间距 12 磅
-paragraph.LineSpacing = 1.5f;   // 1.5 倍行距
+// 打开现有文档
+// Open()方法会启动Word应用程序并打开指定的现有文档
+var wordApp = WordFactory.Open(@"C:\Documents\MyDocument.docx");
 ```
 
-### 段落操作方法
+通过Application对象，您可以控制Word应用程序的可见性：
 
 ```csharp
-// 删除段落
-paragraph.Delete();
+// 隐藏Word应用程序，适用于后台处理场景
+wordApp.Visibility = WordAppVisibility.Hidden;
 
-// 复制段落
-paragraph.Copy();
-
-// 选择段落
-paragraph.Select();
+// 显示Word应用程序，适用于需要用户交互的场景
+wordApp.Visibility = WordAppVisibility.Visible;
 ```
 
-### 创建新段落
+### Document对象
+
+Document对象是Word对象模型的核心，代表一个打开的Word文档文件。每个Document对象都与一个具体的.docx、.doc或其他Word支持的文件格式相关联。
+
+Document对象的主要功能包括：
+- 文档属性管理（名称、路径、标题等）
+- 文档内容操作（添加段落、表格、形状等）
+- 文档保存和关闭操作
+- 文档保护和权限管理
+- 页面设置和打印操作
+
+在MudTools.OfficeInterop.Word中，[IWordDocument](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordDocument.cs#L15-L622)接口提供了对Word文档的完整访问能力。通过Application对象的文档操作方法可以获取Document实例：
 
 ```csharp
-// 在指定位置添加段落
-var newParagraph = document.AddParagraph(100, "新段落内容");
-
-// 在文档末尾添加段落
-var selection = wordApp.Selection;
-selection.EndKey(ref unit); // 移动到文档末尾
-var lastParagraph = document.AddParagraph(-1, "文档末尾的新段落");
-```
-
-## IWordSection - 节操作接口
-
-[IWordSection](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordSection.cs#L12-L33) 用于操作 Word 文档中的节。它是你的"文档分区师"，帮你把文档划分为不同的区域！
-
-### 节基础操作
-
-```csharp
-// 获取节
-var section = document.Sections[1]; // 获取第一节
-
-// 获取节范围
-var range = section.Range;
-
-// 获取页面设置
-var pageSetup = section.PageSetup;
-```
-
-### 页面设置
-
-```csharp
-// 设置页面边距
-pageSetup.TopMargin = 72;     // 上边距 1 英寸
-pageSetup.BottomMargin = 72;  // 下边距 1 英寸
-pageSetup.LeftMargin = 72;    // 左边距 1 英寸
-pageSetup.RightMargin = 72;   // 右边距 1 英寸
-
-// 设置页面方向
-pageSetup.Orientation = WdOrientation.wdOrientPortrait; // 纵向
-
-// 设置页面大小
-pageSetup.PageWidth = 595;   // A4 宽度
-pageSetup.PageHeight = 842;  // A4 高度
-```
-
-### 节操作方法
-
-```csharp
-// 删除节
-section.Delete();
-```
-
-### 添加新节
-
-```csharp
-// 添加分节符
-document.AddSectionBreak(100, (int)WdSectionBreakType.wdSectionBreakNextPage);
-```
-
-## IWordTable - 表格操作接口
-
-[IWordTable](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordTable.cs#L12-L56) 用于操作 Word 文档中的表格。它是你的"数据整理师"，帮你把复杂的数据整理得井井有条！
-
-### 表格基础操作
-
-```csharp
-// 创建表格
-var table = document.AddTable(5, 3); // 5行3列
-
-// 获取表格信息
-int rows = table.Rows;
-int columns = table.Columns;
-
-// 获取表格范围
-var tableRange = table.Range;
-```
-
-### 单元格操作
-
-```csharp
-// 获取单元格
-var cell = table.Cell(2, 3); // 获取第2行第3列的单元格
-
-// 设置单元格文本
-cell.Text = "单元格内容";
-
-// 获取单元格文本
-string cellText = cell.Text;
-```
-
-### 表格格式设置
-
-```csharp
-// 自动调整表格
-table.AutoFit();
-
-// 设置表格边框
-table.SetBorders(true);
-
-// 设置表格对齐方式
-table.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-```
-
-### 表格操作方法
-
-```csharp
-// 删除表格
-table.Delete();
-```
-
-## 实际应用示例
-
-### 创建结构化报告
-
-```csharp
-// 创建包含多种元素的结构化报告
-using var wordApp = WordFactory.BlankWorkbook();
+// 获取活动文档，通常是在创建或打开文档后立即获取
 var document = wordApp.ActiveDocument;
 
-try
-{
-    var selection = wordApp.Selection;
-    
-    // 添加标题段落
-    var titleParagraph = document.AddParagraph(0, "年度财务报告");
-    titleParagraph.Alignment = (int)WdParagraphAlignment.wdAlignParagraphCenter;
-    titleParagraph.SpaceAfter = 20;
-    
-    // 添加章节标题
-    var sectionTitle = document.AddParagraph(document.Range.End, "财务摘要");
-    sectionTitle.Style = "标题 1";
-    sectionTitle.SpaceBefore = 12;
-    sectionTitle.SpaceAfter = 12;
-    
-    // 添加正文段落
-    var contentParagraph = document.AddParagraph(document.Range.End, 
-        "本报告总结了公司在过去一年的财务表现。总体来看，公司实现了稳健的增长。");
-    contentParagraph.FirstLineIndent = 21; // 首行缩进约 2 字符
-    
-    // 添加表格
-    var financialTable = document.AddTable(4, 4);
-    financialTable.Cell(1, 1).Text = "项目";
-    financialTable.Cell(1, 2).Text = "Q1";
-    financialTable.Cell(1, 3).Text = "Q2";
-    financialTable.Cell(1, 4).Text = "总计";
-    
-    financialTable.Cell(2, 1).Text = "收入";
-    financialTable.Cell(2, 2).Text = "¥1,000,000";
-    financialTable.Cell(2, 3).Text = "¥1,200,000";
-    financialTable.Cell(2, 4).Text = "¥2,200,000";
-    
-    financialTable.Cell(3, 1).Text = "支出";
-    financialTable.Cell(3, 2).Text = "¥800,000";
-    financialTable.Cell(3, 3).Text = "¥900,000";
-    financialTable.Cell(3, 4).Text = "¥1,700,000";
-    
-    // 格式化表格
-    financialTable.AutoFit();
-    financialTable.SetBorders(true);
-    
-    // 保存文档
-    document.SaveAs(@"C:\Output\FinancialReport.docx");
-}
-finally
-{
-    wordApp.Quit();
-}
+// 通过索引获取文档，适用于需要处理多个文档的场景
+var document = wordApp.Documents[1];
 ```
 
-### 表格数据处理
+Document对象包含了丰富的属性，用于获取和设置文档的各种信息：
 
 ```csharp
-// 从数据源创建表格
+// 获取文档名称，例如"MyDocument.docx"
+string name = document.Name;
+
+// 获取文档完整路径，例如"C:\Documents\MyDocument.docx"
+string fullPath = document.FullName;
+
+// 获取或设置文档标题，用于文档元数据管理
+string title = document.Title;
+document.Title = "新标题";
+```
+
+### Range对象
+
+Range对象是Word对象模型中最重要的概念之一，代表文档中的一个连续区域。Range由起始位置和结束位置定义，可以包含文档中的任意内容，从一个字符到整个文档。
+
+Range对象的主要特点：
+- **动态性**：当文档内容发生变化时，Range会自动调整其位置和内容
+- **灵活性**：可以表示文档中的任意连续区域，包括跨段落的内容
+- **功能性**：提供了丰富的文本操作、格式设置和内容管理功能
+
+在MudTools.OfficeInterop.Word中，[IWordRange](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordRange.cs#L14-L467)接口封装了Range对象的主要功能。Range对象可以通过多种方式获取：
+
+```csharp
+// 获取整个文档的内容范围，适用于操作整个文档内容的场景
+var contentRange = document.Content;
+
+// 获取指定位置的范围，适用于操作文档特定部分的场景
+// 参数1: 起始位置(从0开始)
+// 参数2: 结束位置(不包含该位置)
+var range = document.Range(0, 10);
+
+// 通过书签获取范围，适用于操作文档中标记区域的场景
+var range = document.Bookmarks["MyBookmark"].Range;
+```
+
+Range对象的核心属性是[Start](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordRange.cs#L32-L32)和[End](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordRange.cs#L37-L37)，它们定义了范围在文档中的位置：
+
+```csharp
+// 获取范围的起始和结束位置，用于确定当前操作区域
+int start = range.Start;
+int end = range.End;
+
+// 设置范围的位置，用于重新定义操作区域
+range.SetRange(10, 20);
+```
+
+Range对象还提供了对文本内容的直接访问：
+
+```csharp
+// 获取范围中的文本，用于读取文档内容
+string text = range.Text;
+
+// 设置范围中的文本，用于替换或插入内容
+range.Text = "新文本内容";
+```
+
+## 2.3 实战：文档的打开、创建、保存与关闭
+
+在实际应用中，文档的创建、打开、保存和关闭是最基本也是最重要的操作。MudTools.OfficeInterop.Word提供了简单直观的API来完成这些操作。
+
+### 使用WordFactory创建和打开文档
+
+WordFactory类提供了三种主要方法来创建或打开Word文档：
+
+```csharp
+// 创建一个新的空白文档
+// 适用于需要从头开始创建文档的场景，如生成报告、合同等
 using var wordApp = WordFactory.BlankWorkbook();
-var document = wordApp.ActiveDocument;
 
-try
+// 基于模板创建文档
+// 适用于需要保持统一格式的场景，如企业合同模板、学校论文模板等
+using var wordApp = WordFactory.CreateFrom(@"C:\Templates\BusinessLetter.dotx");
+
+// 打开现有文档
+// 适用于需要修改已有文档的场景，如编辑合同、修订报告等
+using var wordApp = WordFactory.Open(@"C:\Documents\Report.docx");
+```
+
+### 文档保存操作
+
+保存文档是文档处理中的关键步骤。Document对象提供了多种保存方法：
+
+```csharp
+// 保存对当前文档的更改
+// 适用于修改现有文档并保存回原文档的场景
+document.Save();
+
+// 另存为指定文件名和格式
+// 适用于需要保存为不同格式或不同文件名的场景
+document.SaveAs(@"C:\Documents\NewReport.docx", WdSaveFormat.wdFormatDocumentDefault);
+
+// 另存为PDF格式
+// 适用于需要将文档发布为只读格式的场景
+document.SaveAs(@"C:\Documents\Report.pdf", WdSaveFormat.wdFormatPDF);
+```
+
+在保存文档时，可以指定是否建议以只读方式打开：
+
+```csharp
+// 另存为并建议以只读方式打开
+// 适用于发布最终版本文档，防止意外修改的场景
+document.SaveAs(@"C:\Documents\Report.docx", 
+                WdSaveFormat.wdFormatDocumentDefault, 
+                readOnlyRecommended: true);
+```
+
+### 文档关闭操作
+
+处理完文档后，需要正确关闭文档以释放资源：
+
+```csharp
+// 关闭文档并保存更改
+// 适用于修改文档后需要保存的场景
+document.Close(true);
+
+// 关闭文档但不保存更改
+// 适用于查看文档但不希望保存修改的场景
+document.Close(false);
+
+// 使用枚举值指定关闭选项
+// 适用于需要明确指定保存行为的场景
+document.Close(); // 默认保存更改
+```
+
+### 处理保存提示（DisplayAlerts属性）
+
+在自动化操作中，可能需要控制Word显示的警告和提示信息。通过设置Application对象的[DisplayAlerts](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordApplication.cs#L116-L116)属性，可以控制警告的显示：
+
+```csharp
+// 禁止显示所有警告
+// 适用于完全自动化处理，不需要用户交互的场景
+wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+
+// 仅显示消息框警告
+// 适用于只需要关键警告提示的场景
+wordApp.DisplayAlerts = WdAlertLevel.wdAlertsMessageBox;
+
+// 显示所有警告（默认）
+// 适用于需要完整用户交互的场景
+wordApp.DisplayAlerts = WdAlertLevel.wdAlertsAll;
+```
+
+## 2.4 应用场景和实际示例
+
+### 场景1：批量生成员工合同
+
+在企业人力资源管理中，经常需要为新员工批量生成劳动合同。使用MudTools.OfficeInterop.Word可以基于合同模板自动填充员工信息并生成个性化合同。
+
+```csharp
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
+using System.Collections.Generic;
+
+// 员工信息类
+public class EmployeeInfo
 {
-    // 模拟数据源
-    var salesData = new[]
-    {
-        new { Product = "产品A", Q1 = 1000, Q2 = 1200, Q3 = 1100, Q4 = 1300 },
-        new { Product = "产品B", Q1 = 800, Q2 = 900, Q3 = 950, Q4 = 1000 },
-        new { Product = "产品C", Q1 = 600, Q2 = 700, Q3 = 750, Q4 = 800 }
-    };
-    
-    // 创建表格
-    var table = document.AddTable(salesData.Length + 1, 5);
-    
-    // 设置表头
-    table.Cell(1, 1).Text = "产品";
-    table.Cell(1, 2).Text = "Q1";
-    table.Cell(1, 3).Text = "Q2";
-    table.Cell(1, 4).Text = "Q3";
-    table.Cell(1, 5).Text = "Q4";
-    
-    // 填充数据
-    for (int i = 0; i < salesData.Length; i++)
-    {
-        var data = salesData[i];
-        table.Cell(i + 2, 1).Text = data.Product;
-        table.Cell(i + 2, 2).Text = data.Q1.ToString();
-        table.Cell(i + 2, 3).Text = data.Q2.ToString();
-        table.Cell(i + 2, 4).Text = data.Q3.ToString();
-        table.Cell(i + 2, 5).Text = data.Q4.ToString();
-    }
-    
-    // 格式化表格
-    table.AutoFit();
-    table.SetBorders(true);
-    
-    // 设置表头样式
-    for (int col = 1; col <= 5; col++)
-    {
-        var headerCell = table.Cell(1, col);
-        headerCell.Range.Font.Bold = 1;
-        headerCell.Range.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
-    }
-    
-    // 保存文档
-    document.SaveAs(@"C:\Output\SalesData.docx");
+    public string Name { get; set; }
+    public string Id { get; set; }
+    public string Department { get; set; }
+    public DateTime HireDate { get; set; }
+    public decimal Salary { get; set; }
 }
-finally
+
+// 批量生成员工合同
+public void GenerateEmployeeContracts(List<EmployeeInfo> employees)
 {
-    wordApp.Quit();
+    // 假设我们有一个合同模板，其中包含占位符如<<Name>>、<<Id>>等
+    string templatePath = @"C:\Templates\EmployeeContract.dotx";
+    
+    foreach (var employee in employees)
+    {
+        // 基于模板创建新文档
+        using var wordApp = WordFactory.CreateFrom(templatePath);
+        var document = wordApp.ActiveDocument;
+        
+        // 隐藏Word应用程序以提高性能
+        wordApp.Visibility = WordAppVisibility.Hidden;
+        
+        // 禁止显示警告
+        wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+        
+        // 查找并替换占位符
+        document.FindAndReplace("<<Name>>", employee.Name);
+        document.FindAndReplace("<<Id>>", employee.Id);
+        document.FindAndReplace("<<Department>>", employee.Department);
+        document.FindAndReplace("<<HireDate>>", employee.HireDate.ToString("yyyy年MM月dd日"));
+        document.FindAndReplace("<<Salary>>", employee.Salary.ToString("C"));
+        
+        // 保存为员工个人合同
+        string outputPath = $@"C:\Contracts\{employee.Id}_{employee.Name}_合同.docx";
+        document.SaveAs(outputPath, WdSaveFormat.wdFormatDocumentDefault);
+        
+        // 关闭文档
+        document.Close();
+        
+        Console.WriteLine($"已生成合同: {outputPath}");
+    }
 }
 ```
 
-### 多节文档处理
+### 场景2：自动化报告生成
+
+在数据分析和业务报告领域，经常需要将数据自动填充到报告模板中并生成专业文档。
 
 ```csharp
-// 创建包含多个节的文档
-using var wordApp = WordFactory.BlankWorkbook();
-var document = wordApp.ActiveDocument;
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
+using System.Collections.Generic;
 
-try
+// 销售数据类
+public class SalesData
 {
-    var selection = wordApp.Selection;
-    
-    // 添加第一节内容
-    selection.TypeText("第一节内容");
-    selection.TypeParagraph();
-    selection.TypeText("这是第一节的详细内容。");
-    selection.TypeParagraph();
-    
-    // 添加分节符，创建新节
-    document.AddSectionBreak(document.Range.End);
-    
-    // 获取新节并设置不同的页面设置
-    var section2 = document.Sections[2];
-    section2.PageSetup.Orientation = WdOrientation.wdOrientLandscape; // 横向
-    
-    // 添加第二节内容
-    selection.TypeText("第二节内容");
-    selection.TypeParagraph();
-    selection.TypeText("这是第二节的详细内容，在横向页面上。");
-    selection.TypeParagraph();
-    
-    // 再次添加分节符
-    document.AddSectionBreak(document.Range.End);
-    
-    // 获取第三节并恢复纵向
-    var section3 = document.Sections[3];
-    section3.PageSetup.Orientation = WdOrientation.wdOrientPortrait; // 纵向
-    
-    // 添加第三节内容
-    selection.TypeText("第三节内容");
-    selection.TypeParagraph();
-    selection.TypeText("这是第三节的详细内容，回到纵向页面。");
-    
-    // 保存文档
-    document.SaveAs(@"C:\Output\MultiSectionDocument.docx");
+    public string ProductName { get; set; }
+    public int UnitsSold { get; set; }
+    public decimal Revenue { get; set; }
+    public double GrowthRate { get; set; }
 }
-finally
+
+// 生成销售报告
+public void GenerateSalesReport(List<SalesData> salesData, DateTime reportDate)
 {
-    wordApp.Quit();
-}
-```
-
-## 性能优化建议
-
-### 批量段落操作
-
-```csharp
-// 在操作大量段落时禁用屏幕更新
-wordApp.ScreenUpdating = false;
-
-try
-{
-    // 批量操作段落
-    for (int i = 1; i <= document.Paragraphs.Count; i++)
+    // 使用销售报告模板
+    string templatePath = @"C:\Templates\SalesReport.dotx";
+    
+    // 基于模板创建报告
+    using var wordApp = WordFactory.CreateFrom(templatePath);
+    var document = wordApp.ActiveDocument;
+    
+    // 隐藏Word应用程序
+    wordApp.Visibility = WordAppVisibility.Hidden;
+    wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+    
+    // 替换报告日期
+    document.FindAndReplace("<<ReportDate>>", reportDate.ToString("yyyy年MM月dd日"));
+    
+    // 查找数据表格位置
+    var tableBookmark = document.Bookmarks["SalesTable"];
+    if (tableBookmark != null)
     {
-        var paragraph = document.Paragraphs[i];
-        paragraph.Alignment = (int)WdParagraphAlignment.wdAlignParagraphJustify;
-        paragraph.SpaceAfter = 10;
-    }
-}
-finally
-{
-    wordApp.ScreenUpdating = true;
-}
-```
-
-### 表格性能优化
-
-```csharp
-// 在创建大型表格时优化性能
-wordApp.ScreenUpdating = false;
-
-try
-{
-    // 创建大型表格
-    var table = document.AddTable(100, 5);
-    
-    // 批量填充数据
-    for (int row = 1; row <= 100; row++)
-    {
-        for (int col = 1; col <= 5; col++)
+        // 获取表格范围
+        var tableRange = tableBookmark.Range;
+        
+        // 在表格位置插入新表格
+        var table = document.Tables.Add(tableRange, salesData.Count + 1, 4);
+        
+        // 设置表头
+        table.Cell(1, 1).Range.Text = "产品名称";
+        table.Cell(1, 2).Range.Text = "销售数量";
+        table.Cell(1, 3).Range.Text = "销售收入";
+        table.Cell(1, 4).Range.Text = "增长率";
+        
+        // 填充数据
+        for (int i = 0; i < salesData.Count; i++)
         {
-            table.Cell(row, col).Text = $"数据{row}-{col}";
+            var data = salesData[i];
+            table.Cell(i + 2, 1).Range.Text = data.ProductName;
+            table.Cell(i + 2, 2).Range.Text = data.UnitsSold.ToString();
+            table.Cell(i + 2, 3).Range.Text = data.Revenue.ToString("C");
+            table.Cell(i + 2, 4).Range.Text = $"{data.GrowthRate:P2}";
         }
     }
     
-    // 一次性格式化
-    table.AutoFit();
-    table.SetBorders(true);
-}
-finally
-{
-    wordApp.ScreenUpdating = true;
+    // 保存报告
+    string outputPath = $@"C:\Reports\SalesReport_{reportDate:yyyyMMdd}.docx";
+    document.SaveAs(outputPath, WdSaveFormat.wdFormatDocumentDefault);
+    document.Close();
+    
+    Console.WriteLine($"销售报告已生成: {outputPath}");
 }
 ```
 
-## 最佳实践
+### 场景3：文档内容分析和提取
 
-### 错误处理
+在文档处理和信息检索领域，可能需要分析文档内容并提取关键信息。
 
 ```csharp
-try
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+// 文档分析器
+public class DocumentAnalyzer
 {
-    // 创建表格
-    var table = document.AddTable(5, 3);
-    
-    // 操作表格
-    for (int row = 1; row <= table.Rows; row++)
+    // 提取文档统计信息
+    public DocumentStats AnalyzeDocument(string filePath)
     {
-        for (int col = 1; col <= table.Columns; col++)
+        // 打开文档进行分析
+        using var wordApp = WordFactory.Open(filePath);
+        var document = wordApp.ActiveDocument;
+        
+        // 隐藏Word应用程序
+        wordApp.Visibility = WordAppVisibility.Hidden;
+        wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+        
+        // 获取文档统计信息
+        var stats = new DocumentStats
         {
-            table.Cell(row, col).Text = $"Row{row} Col{col}";
+            FileName = document.Name,
+            WordCount = document.WordCount,
+            PageCount = document.PageCount,
+            ParagraphCount = document.ParagraphCount,
+            TableCount = document.TableCount,
+            CharacterCount = document.Content.StoryLength, // 近似字符数
+            // 提取关键词（简单实现，实际应用中可能需要更复杂的算法）
+            Keywords = ExtractKeywords(document.Content.Text)
+        };
+        
+        document.Close(false); // 不保存更改
+        
+        return stats;
+    }
+    
+    // 简单关键词提取（实际应用中可以使用更复杂的自然语言处理技术）
+    private List<string> ExtractKeywords(string text)
+    {
+        // 移除标点符号并分割单词
+        var words = text.Split(new char[] { ' ', '\t', '\n', '\r', '.', ',', '!', '?', ';', ':' }, 
+                              StringSplitOptions.RemoveEmptyEntries);
+        
+        // 过滤常见停用词并统计词频
+        var commonWords = new HashSet<string> { "的", "了", "在", "是", "我", "有", "和", "就", "不", "人", 
+                                               "都", "一", "一个", "上", "也", "很", "到", "说", "要", "去" };
+        
+        var wordCounts = new Dictionary<string, int>();
+        foreach (var word in words)
+        {
+            var cleanWord = word.Trim().ToLower();
+            if (cleanWord.Length > 1 && !commonWords.Contains(cleanWord))
+            {
+                if (wordCounts.ContainsKey(cleanWord))
+                    wordCounts[cleanWord]++;
+                else
+                    wordCounts[cleanWord] = 1;
+            }
         }
+        
+        // 返回出现频率最高的前10个词
+        return wordCounts.OrderByDescending(kvp => kvp.Value)
+                        .Take(10)
+                        .Select(kvp => kvp.Key)
+                        .ToList();
     }
 }
-catch (Exception ex)
+
+// 文档统计信息类
+public class DocumentStats
 {
-    // 处理异常
-    Console.WriteLine($"表格操作失败: {ex.Message}");
+    public string FileName { get; set; }
+    public int WordCount { get; set; }
+    public int PageCount { get; set; }
+    public int ParagraphCount { get; set; }
+    public int TableCount { get; set; }
+    public int CharacterCount { get; set; }
+    public List<string> Keywords { get; set; }
 }
 ```
+
+## 2.5 最佳实践和注意事项
 
 ### 资源管理
 
+在使用MudTools.OfficeInterop.Word时，正确管理COM资源至关重要：
+
 ```csharp
-// 使用 using 语句确保资源正确释放
+// 正确的资源管理方式 - 使用using语句
 using var wordApp = WordFactory.BlankWorkbook();
+var document = wordApp.ActiveDocument;
+
 try
 {
-    var document = wordApp.ActiveDocument;
-    
     // 执行文档操作
-    ProcessDocument(document);
+    document.Content.Text = "Hello, World!";
     
     // 保存文档
-    document.SaveAs(@"C:\Output\ProcessedDocument.docx");
+    document.SaveAs(@"C:\Temp\Example.docx");
 }
 finally
 {
-    wordApp.Quit();
+    // using语句会自动处理资源释放
+    // 无需手动调用document.Close()和wordApp.Quit()
 }
 ```
 
-## 总结
+### 异常处理
 
-通过使用 IWordParagraph、IWordSection 和 IWordTable 接口，开发者可以：
+Word自动化操作可能遇到各种异常，需要适当的异常处理：
 
-1. 灵活操作 Word 文档中的段落
-2. 高效处理文档节和页面设置
-3. 简化表格创建和格式化操作
-4. 避免常见的性能问题
-5. 提高代码可读性和可维护性
+```csharp
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
 
-这些接口提供了对 Word 文档结构化内容操作的全面封装，使开发者能够专注于业务逻辑而不是底层的 COM 交互细节。
+public void SafeDocumentOperation(string filePath)
+{
+    try
+    {
+        using var wordApp = WordFactory.Open(filePath);
+        var document = wordApp.ActiveDocument;
+        
+        // 设置安全选项
+        wordApp.Visibility = WordAppVisibility.Hidden;
+        wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+        
+        // 执行操作
+        document.Content.Text = "Updated content";
+        document.Save();
+    }
+    catch (System.IO.FileNotFoundException)
+    {
+        Console.WriteLine($"文件未找到: {filePath}");
+    }
+    catch (System.UnauthorizedAccessException)
+    {
+        Console.WriteLine($"没有权限访问文件: {filePath}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"处理文档时发生错误: {ex.Message}");
+    }
+}
+```
 
-掌握了这些技能，你就能轻松地创建结构清晰、内容丰富的Word文档了！继续阅读后续指南，解锁更多Word自动化技能！
+通过以上详细介绍和示例，您应该对Word对象模型的核心组件有了深入的理解，并能够使用MudTools.OfficeInterop.Word库进行各种文档操作。掌握这些核心概念和最佳实践是进行更复杂Word自动化任务的基础。

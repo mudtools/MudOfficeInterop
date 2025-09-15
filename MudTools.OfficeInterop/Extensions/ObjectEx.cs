@@ -9,6 +9,62 @@ namespace MudTools.OfficeInterop;
 
 internal static class ObjectEx
 {
+
+    /// <summary>
+    /// 实现枚举值之间的安全转换
+    /// </summary>
+    /// <typeparam name="T">源枚举类型</typeparam>
+    /// <typeparam name="TReturn">目标枚举类型</typeparam>
+    /// <param name="defaultVal">转换失败时返回的默认值。</param>
+    /// <param name="val">源枚举值</param>
+    /// <returns>目标枚举值</returns>
+    public static TReturn EnumConvert<T, TReturn>(this T val, TReturn defaultVal = default)
+    where T : struct, Enum
+    where TReturn : struct, Enum
+    {
+        // 获取源枚举值的底层数值
+        var underlyingValue = Convert.ChangeType(val, Enum.GetUnderlyingType(typeof(T)));
+
+        // 检查该值是否在目标枚举的范围内
+        if (Enum.IsDefined(typeof(TReturn), underlyingValue))
+        {
+            return (TReturn)Enum.ToObject(typeof(TReturn), underlyingValue);
+        }
+
+        // 可选：处理值不在目标枚举中的情况
+        // 这里返回 null，但您可能希望抛出异常或使用其他处理方式
+        return defaultVal;
+    }
+
+    /// <summary>
+    /// 实现枚举值之间的安全转换
+    /// </summary>
+    /// <typeparam name="T">源枚举类型</typeparam>
+    /// <typeparam name="TReturn">目标枚举类型</typeparam>
+    /// <param name="defaultVal">转换失败时返回的默认值。</param>
+    /// <param name="val">源枚举值</param>
+    /// <returns>目标枚举值</returns>
+    public static TReturn EnumConvert<T, TReturn>(this T? val, TReturn defaultVal = default)
+    where T : struct, Enum
+    where TReturn : struct, Enum
+    {
+        if (!val.HasValue)
+            return defaultVal;
+
+        // 获取源枚举值的底层数值
+        var underlyingValue = Convert.ChangeType(val.Value, Enum.GetUnderlyingType(typeof(T)));
+
+        // 检查该值是否在目标枚举的范围内
+        if (Enum.IsDefined(typeof(TReturn), underlyingValue))
+        {
+            return (TReturn)Enum.ToObject(typeof(TReturn), underlyingValue);
+        }
+
+        // 可选：处理值不在目标枚举中的情况
+        // 这里返回 null，但您可能希望抛出异常或使用其他处理方式
+        return defaultVal;
+    }
+
     /// <summary>
     /// 实现枚举值之间的安全转换
     /// </summary>

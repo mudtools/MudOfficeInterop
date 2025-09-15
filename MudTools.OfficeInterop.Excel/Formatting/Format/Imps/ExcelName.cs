@@ -15,7 +15,7 @@ internal class ExcelName : IExcelName
     /// <summary>
     /// 底层的 COM Name 对象
     /// </summary>
-    private MsExcel.Name _name;
+    private MsExcel.Name? _name;
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -44,19 +44,12 @@ internal class ExcelName : IExcelName
 
         if (disposing)
         {
-            try
-            {
-                // 释放引用区域对象
-                (_refersToRange as ExcelRange)?.Dispose();
+            // 释放引用区域对象
+            _refersToRange?.Dispose();
 
-                // 释放底层COM对象
-                if (_name != null)
-                    Marshal.ReleaseComObject(_name);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_name != null)
+                Marshal.ReleaseComObject(_name);
             _name = null;
         }
 
@@ -207,13 +200,13 @@ internal class ExcelName : IExcelName
     /// <summary>
     /// 获取或设置宏类型
     /// </summary>
-    public XlXLMMacroType MacroType
+    public XlXLMMacroType? MacroType
     {
-        get => _name != null ? (XlXLMMacroType)_name.MacroType : XlXLMMacroType.xlFunction;
+        get => _name?.MacroType.EnumConvert(XlXLMMacroType.xlFunction);
         set
         {
             if (_name != null)
-                _name.MacroType = (MsExcel.XlXLMMacroType)value;
+                _name.MacroType = value.EnumConvert(MsExcel.XlXLMMacroType.xlFunction);
         }
     }
 

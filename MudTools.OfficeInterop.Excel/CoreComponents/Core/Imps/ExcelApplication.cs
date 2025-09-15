@@ -665,7 +665,7 @@ internal partial class ExcelApplication : IExcelApplication
         }
     }
 
-    public IExcelWorksheetFunction WorksheetFunction
+    public IExcelWorksheetFunction? WorksheetFunction
     {
         get
         {
@@ -677,12 +677,11 @@ internal partial class ExcelApplication : IExcelApplication
     /// <summary>
     /// 获取应用程序的ThisWorkbook
     /// </summary>
-    public IExcelWorkbook ThisWorkbook
+    public IExcelWorkbook? ThisWorkbook
     {
         get
         {
-            var workbook = _application?.ThisWorkbook as MsExcel.Workbook;
-            return workbook != null ? new ExcelWorkbook(workbook) : null;
+            return _application?.ThisWorkbook != null ? new ExcelWorkbook(_application.ThisWorkbook) : null;
         }
     }
 
@@ -696,7 +695,7 @@ internal partial class ExcelApplication : IExcelApplication
     /// </summary>
     /// <param name="index">工作簿索引</param>
     /// <returns>工作簿对象</returns>
-    public IExcelWorkbook GetWorkbook(int index)
+    public IExcelWorkbook? GetWorkbook(int index)
     {
         if (_application?.Workbooks == null || index < 1 || index > WorkbooksCount)
             return null;
@@ -717,14 +716,14 @@ internal partial class ExcelApplication : IExcelApplication
     /// </summary>
     /// <param name="name">工作簿名称</param>
     /// <returns>工作簿对象</returns>
-    public IExcelWorkbook GetWorkbook(string name)
+    public IExcelWorkbook? GetWorkbook(string name)
     {
         if (_application?.Workbooks == null || string.IsNullOrEmpty(name))
             return null;
 
         try
         {
-            var workbook = _application.Workbooks[name] as MsExcel.Workbook;
+            MsExcel.Workbook workbook = _application.Workbooks[name];
             return workbook != null ? new ExcelWorkbook(workbook) : null;
         }
         catch

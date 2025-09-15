@@ -243,13 +243,13 @@ namespace MudTools.OfficeInterop.Excel
         /// 获取工作表函数对象
         /// 对应 Application.WorksheetFunction 属性
         /// </summary>
-        IExcelWorksheetFunction WorksheetFunction { get; }
+        IExcelWorksheetFunction? WorksheetFunction { get; }
 
         /// <summary>
         /// 获取应用程序的ThisWorkbook
         /// 对应 Application.ThisWorkbook 属性
         /// </summary>
-        IExcelWorkbook ThisWorkbook { get; }
+        IExcelWorkbook? ThisWorkbook { get; }
 
         /// <summary>
         /// 获取工作簿的数量
@@ -261,14 +261,14 @@ namespace MudTools.OfficeInterop.Excel
         /// </summary>
         /// <param name="index">工作簿索引</param>
         /// <returns>工作簿对象</returns>
-        IExcelWorkbook GetWorkbook(int index);
+        IExcelWorkbook? GetWorkbook(int index);
 
         /// <summary>
         /// 获取指定名称的工作簿
         /// </summary>
         /// <param name="name">工作簿名称</param>
         /// <returns>工作簿对象</returns>
-        IExcelWorkbook GetWorkbook(string name);
+        IExcelWorkbook? GetWorkbook(string name);
 
         #endregion
 

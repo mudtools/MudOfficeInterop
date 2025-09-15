@@ -23,12 +23,6 @@ public interface IExcelChart : IExcelCommonSheet, IDisposable
     MsoChartType ChartType { get; set; }
 
     /// <summary>
-    /// 获取或设置工作表是否可见
-    /// 对应 Worksheet.Visible 属性
-    /// </summary>
-    XlSheetVisibility Visible { get; set; }
-
-    /// <summary>
     /// 获取图表的代码名称
     /// 对应 Chart.CodeName 属性
     /// </summary>
@@ -229,19 +223,10 @@ public interface IExcelChart : IExcelCommonSheet, IDisposable
     /// <returns>图片字节数组</returns>
     byte[] GetImageBytes(string format = "png");
 
-    #endregion
-
-    #region 高级功能
-
-    /// <summary>
-    /// 打印图表
-    /// </summary>
-    /// <param name="preview">是否打印预览</param>
-    void PrintOut(bool preview = false);
-    #endregion
+    #endregion  
 
 
-    #region 公共事件（与 COM 事件一一对应，命名保持一致）
+    #region 公共事件
 
     /// <summary>
     /// 图表被激活时触发

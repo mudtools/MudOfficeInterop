@@ -101,7 +101,6 @@ namespace MudTools.OfficeInterop.Excel
         void SortByName(bool ascending = true);
         #endregion
 
-
         #region 高级功能
 
         /// <summary>
