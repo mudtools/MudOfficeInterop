@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -73,38 +73,31 @@ internal class ExcelChartFillFormat : IExcelChartFillFormat
 
     #region 填充属性 (IExcelFill)
 
-    /// <summary>
-    /// 获取或设置填充的前景色 (RGB 颜色值)
-    /// </summary>
-    public int ForeColor => _chartFillFormat.ForeColor.RGB;
+    public IExcelChartColorFormat ForeColor => new ExcelChartColorFormat(_chartFillFormat.ForeColor);
 
-    /// <summary>
-    /// 获取或设置填充的背景色 (RGB 颜色值)
-    /// </summary>
-    public int BackColor => _chartFillFormat.BackColor.RGB;
+    public IExcelChartColorFormat BackColor => new ExcelChartColorFormat(_chartFillFormat.BackColor);
 
     /// <summary>
     /// 获取或设置填充类型
     /// </summary>
-    public MsoFillType? FillType => (MsoFillType)_chartFillFormat?.Type;
+    public MsoFillType? FillType => _chartFillFormat?.Type.EnumConvert(MsoFillType.msoFillMixed);
 
     /// <summary>
     /// 获取或设置图案类型
     /// </summary>
-    public MsoPatternType? Pattern => (MsoPatternType)_chartFillFormat?.Pattern;
+    public MsoPatternType? Pattern => _chartFillFormat?.Pattern.EnumConvert(MsoPatternType.msoPattern10Percent);
 
     /// <summary>
     /// 获取或设置渐变填充的样式
     /// </summary>
-    public MsoGradientStyle? GradientStyle => (MsoGradientStyle)_chartFillFormat?.GradientStyle;
-    /// <summary>
+    public MsoGradientStyle? GradientStyle => _chartFillFormat?.GradientStyle.EnumConvert(MsoGradientStyle.msoGradientMixed);
     /// 获取或设置渐变填充的变体
     /// </summary>
     public int GradientVariant => _chartFillFormat.GradientVariant;
     /// <summary>
     /// 获取或设置渐变填充的颜色类型
     /// </summary>
-    public MsoGradientColorType? GradientColorType => (MsoGradientColorType)_chartFillFormat?.GradientColorType;
+    public MsoGradientColorType? GradientColorType => _chartFillFormat?.GradientColorType.EnumConvert(MsoGradientColorType.msoGradientColorMixed);
 
     #endregion
 
