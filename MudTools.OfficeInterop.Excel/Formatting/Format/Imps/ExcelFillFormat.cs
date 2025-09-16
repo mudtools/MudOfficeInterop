@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -26,12 +26,8 @@ internal class ExcelFillFormat : IExcelFillFormat
 
         if (disposing)
         {
-            try
-            {
-                if (_fillFormat != null)
-                    Marshal.ReleaseComObject(_fillFormat);
-            }
-            catch { }
+            if (_fillFormat != null)
+                Marshal.ReleaseComObject(_fillFormat);
             _fillFormat = null;
         }
 
@@ -42,7 +38,7 @@ internal class ExcelFillFormat : IExcelFillFormat
 
     public MsoFillType Type
     {
-        get => _fillFormat != null ? (MsoFillType)_fillFormat.Type : MsoFillType.msoFillSolid;
+        get => _fillFormat != null ? _fillFormat.Type.EnumConvert(MsoFillType.msoFillSolid) : MsoFillType.msoFillSolid;
     }
 
     public IExcelColorFormat ForeColor
@@ -59,7 +55,7 @@ internal class ExcelFillFormat : IExcelFillFormat
 
     public MsoPatternType Pattern
     {
-        get => _fillFormat != null ? (MsoPatternType)_fillFormat.Pattern : MsoPatternType.msoPattern5Percent;
+        get => _fillFormat != null ? _fillFormat.Pattern.EnumConvert(MsoPatternType.msoPattern5Percent) : MsoPatternType.msoPattern5Percent;
     }
 
     public int Transparency
@@ -74,11 +70,11 @@ internal class ExcelFillFormat : IExcelFillFormat
 
     public bool Visible
     {
-        get => _fillFormat != null && Convert.ToBoolean(_fillFormat.Visible);
+        get => _fillFormat != null && _fillFormat.Visible.ConvertToBool();
         set
         {
             if (_fillFormat != null)
-                _fillFormat.Visible = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
+                _fillFormat.Visible = value.ConvertTriState();
         }
     }
 
@@ -86,7 +82,7 @@ internal class ExcelFillFormat : IExcelFillFormat
     {
         get
         {
-            return (MsoGradientColorType)_fillFormat.GradientColorType;
+            return _fillFormat.GradientColorType.EnumConvert(MsoGradientColorType.msoGradientColorMixed);
         }
     }
 
@@ -102,7 +98,7 @@ internal class ExcelFillFormat : IExcelFillFormat
     {
         get
         {
-            return (MsoGradientStyle)_fillFormat.GradientStyle;
+            return _fillFormat.GradientStyle.EnumConvert(MsoGradientStyle.msoGradientMixed);
         }
     }
 
@@ -119,14 +115,35 @@ internal class ExcelFillFormat : IExcelFillFormat
     {
         get
         {
-            return (MsoPresetGradientType)_fillFormat.PresetGradientType;
+            return _fillFormat.PresetGradientType.EnumConvert(MsoPresetGradientType.msoPresetGradientMixed);
         }
     }
     public MsoPresetTexture PresetTexture
     {
         get
         {
-            return (MsoPresetTexture)_fillFormat.PresetTexture;
+            return _fillFormat.PresetTexture.EnumConvert(MsoPresetTexture.msoPresetTextureMixed);
+        }
+    }
+
+    public MsoTextureType TextureType
+    {
+        get
+        {
+            return _fillFormat.TextureType.EnumConvert(MsoTextureType.msoTextureTypeMixed);
+        }
+    }
+
+    public MsoTextureAlignment TextureAlignment
+    {
+        get
+        {
+            return _fillFormat.TextureAlignment.EnumConvert(MsoTextureAlignment.msoTextureAlignmentMixed);
+        }
+        set
+        {
+            if (_fillFormat != null)
+                _fillFormat.TextureAlignment = value.EnumConvert(MsCore.MsoTextureAlignment.msoTextureAlignmentMixed);
         }
     }
 
@@ -137,6 +154,55 @@ internal class ExcelFillFormat : IExcelFillFormat
             return _fillFormat.TextureName;
         }
     }
+
+    public float TextureOffsetX
+    {
+        get => _fillFormat != null ? _fillFormat.TextureOffsetX : 0;
+        set
+        {
+            if (_fillFormat != null)
+                _fillFormat.TextureOffsetX = value;
+        }
+    }
+    public float TextureOffsetY
+    {
+        get => _fillFormat != null ? _fillFormat.TextureOffsetY : 0;
+        set
+        {
+            if (_fillFormat != null)
+                _fillFormat.TextureOffsetY = value;
+        }
+    }
+
+    public float TextureHorizontalScale
+    {
+        get => _fillFormat != null ? _fillFormat.TextureHorizontalScale : 0;
+        set
+        {
+            if (_fillFormat != null)
+                _fillFormat.TextureHorizontalScale = value;
+        }
+    }
+    public float TextureVerticalScale
+    {
+        get => _fillFormat != null ? _fillFormat.TextureVerticalScale : 0;
+        set
+        {
+            if (_fillFormat != null)
+                _fillFormat.TextureVerticalScale = value;
+        }
+    }
+
+    public bool TextureTile
+    {
+        get => _fillFormat != null ? _fillFormat.TextureTile.ConvertToBool() : false;
+        set
+        {
+            if (_fillFormat != null)
+                _fillFormat.TextureTile = value.ConvertTriState();
+        }
+    }
+
 
     public void UserPicture(string PictureFile)
     {
