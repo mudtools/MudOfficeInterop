@@ -58,6 +58,9 @@ internal class Utils
     /// <returns>类型信息</returns>
     public static object? CreateSelectionType(object selection)
     {
+        if (selection == null)
+            return null;
+
         try
         {
             return selection switch

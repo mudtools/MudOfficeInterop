@@ -776,7 +776,7 @@ internal partial class ExcelApplication : IExcelApplication
         {
             if (_application?.ActiveCell == null)
                 return null;
-            MsExcel.Range? range = _application?.ActiveCell as MsExcel.Range;
+            MsExcel.Range? range = _application?.ActiveCell;
             return range != null ? new ExcelRange(range) : null;
         }
     }
@@ -786,12 +786,17 @@ internal partial class ExcelApplication : IExcelApplication
     /// </summary>
     public object? Selection => Utils.CreateSelectionType(_application.Selection);
 
-
+    public T? SelectionWrap<T>() where T : IDisposable
+    {
+        if (_application?.Selection == null)
+            return default;
+        return Utils.CreateSelectionType(_application.Selection) is T sel ? sel : default;
+    }
 
     /// <summary>
     /// 表示用户当前在Excel界面中选中Range对象，用于操作工作表中的单元格或单元格区域。
     /// </summary>
-    public IExcelRange? SelectionRang
+    public IExcelRange? SelectionRange
     {
         get
         {

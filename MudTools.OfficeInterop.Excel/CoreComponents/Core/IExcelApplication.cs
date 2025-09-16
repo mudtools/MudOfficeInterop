@@ -293,14 +293,21 @@ namespace MudTools.OfficeInterop.Excel
         IExcelRange? ActiveCell { get; }
 
         /// <summary>
-        /// 表示用户当前在Excel界面中选中的对象，并且在绝大多数情况下，它返回的是一个Range对象，用于操作工作表中的单元格或单元格区域。
+        /// 表示用户当前在Excel界面中选中的对象，并且在绝大多数情况下，它可能返回的是一个Range、Chart、ChartObject、Shape、PivotTable。
         /// </summary>
         object? Selection { get; }
 
         /// <summary>
+        /// 表示用户当前在Excel界面中选中的对象，并且在绝大多数情况下，它可能返回的是一个Range、Chart、ChartObject、Shape、PivotTable。
+        /// </summary>
+        /// <typeparam name="T">IExcelRange、IExcelChart、IExcelShape等类型</typeparam>
+        /// <returns></returns>
+        T? SelectionWrap<T>() where T : IDisposable;
+
+        /// <summary>
         /// 表示用户当前在Excel界面中选中Range对象，用于操作工作表中的单元格或单元格区域。
         /// </summary>
-        IExcelRange? SelectionRang { get; }
+        IExcelRange? SelectionRange { get; }
 
         /// <summary>
         /// 获取当前活动行集合

@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -13,6 +13,82 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
     private bool _disposedValue;
 
     public int Count => _drawingObjects.Count;
+
+    public int ZOrder => _drawingObjects.ZOrder;
+
+    public double Width
+    {
+        get => _drawingObjects.Width;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Width = value;
+        }
+    }
+    public double Height
+    {
+        get => _drawingObjects.Height;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Height = value;
+        }
+    }
+
+    public double Top
+    {
+        get => _drawingObjects.Top;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Top = value;
+        }
+    }
+    public double Left
+    {
+        get => _drawingObjects.Left;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Left = value;
+        }
+    }
+    public bool Locked
+    {
+        get => _drawingObjects.Locked;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Locked = value;
+        }
+    }
+
+
+    public bool Enabled
+    {
+        get => _drawingObjects.Enabled;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Enabled = value;
+        }
+    }
+
+
+    public bool Visible
+    {
+        get => _drawingObjects.Visible;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Visible = value;
+        }
+    }
+
+
+
+    public IExcelShapeRange ShapeRange =>
+        _drawingObjects != null ? new ExcelShapeRange(_drawingObjects.ShapeRange) : null;
 
     public IExcelDrawing this[int index] => new ExcelDrawing(_drawingObjects.Item(index) as MsExcel.Drawing);
 
