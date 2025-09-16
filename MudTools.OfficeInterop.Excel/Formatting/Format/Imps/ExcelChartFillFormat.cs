@@ -80,12 +80,22 @@ internal class ExcelChartFillFormat : IExcelChartFillFormat
     /// <summary>
     /// 获取或设置填充类型
     /// </summary>
-    public MsoFillType? FillType => _chartFillFormat?.Type.EnumConvert(MsoFillType.msoFillMixed);
+    public MsoFillType? Type => _chartFillFormat?.Type.EnumConvert(MsoFillType.msoFillMixed);
 
     /// <summary>
     /// 获取或设置图案类型
     /// </summary>
     public MsoPatternType? Pattern => _chartFillFormat?.Pattern.EnumConvert(MsoPatternType.msoPattern10Percent);
+
+    public MsoTextureType? TextureType => _chartFillFormat?.TextureType.EnumConvert(MsoTextureType.msoTextureTypeMixed);
+
+    public MsoPresetTexture? PresetTexture => _chartFillFormat?.PresetTexture.EnumConvert(MsoPresetTexture.msoPresetTextureMixed);
+
+    public MsoPresetGradientType? PresetGradientType => _chartFillFormat?.PresetGradientType.EnumConvert(MsoPresetGradientType.msoPresetGradientMixed);
+
+    public string TextureName => _chartFillFormat.TextureName;
+
+    public float GradientDegree => _chartFillFormat.GradientDegree;
 
     /// <summary>
     /// 获取或设置渐变填充的样式

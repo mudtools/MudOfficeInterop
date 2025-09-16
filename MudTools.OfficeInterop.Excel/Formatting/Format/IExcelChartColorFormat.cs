@@ -7,6 +7,11 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
+/// <summary>
+/// Excel ChartColorFormat 对象的二次封装接口
+/// 提供对 Microsoft.Office.Interop.Excel.ChartColorFormat 的安全访问和操作
+/// 用于设置形状或图表元素的颜色
+/// </summary>
 public interface IExcelChartColorFormat : IDisposable
 {
     /// <summary>
