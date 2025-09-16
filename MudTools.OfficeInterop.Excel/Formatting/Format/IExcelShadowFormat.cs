@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -16,6 +16,36 @@ public interface IExcelShadowFormat : IDisposable
     /// 获取或设置阴影类型
     /// </summary>
     MsoShadowType Type { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影前景色
+    /// </summary>
+    IExcelColorFormat? ForeColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影大小
+    /// </summary>
+    float Size { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影模糊度
+    /// </summary>
+    float Blur { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影样式
+    /// </summary>
+    MsoShadowStyle Style { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影是否被遮挡
+    /// </summary>
+    bool Obscured { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影是否随形状旋转
+    /// </summary>
+    bool RotateWithShape { get; set; }
 
     /// <summary>
     /// 获取或设置阴影颜色
@@ -41,4 +71,16 @@ public interface IExcelShadowFormat : IDisposable
     /// 获取或设置是否可见
     /// </summary>
     bool Visible { get; set; }
+
+    /// <summary>
+    /// 按指定增量增加阴影X轴偏移量
+    /// </summary>
+    /// <param name="Increment">增加的偏移量</param>
+    void IncrementOffsetX(float Increment);
+
+    /// <summary>
+    /// 按指定增量增加阴影Y轴偏移量
+    /// </summary>
+    /// <param name="Increment">增加的偏移量</param>
+    void IncrementOffsetY(float Increment);
 }

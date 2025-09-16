@@ -137,8 +137,19 @@ internal static class ObjectExtensions
             short s => s != 0,
             long l => l != 0,
             double d => d != 0,
+            MsCore.MsoTriState t => t == MsCore.MsoTriState.msoTrue || t == MsCore.MsoTriState.msoCTrue,
             _ => TryParseOrThrow<bool>(result, bool.TryParse, nameof(Boolean))
         };
+    }
+
+    public static MsCore.MsoTriState ConvertTriState(this bool? b)
+    {
+        return b != null && b.Value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
+    }
+
+    public static MsCore.MsoTriState ConvertTriState(this bool b)
+    {
+        return b ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
     }
 
     /// <summary>
