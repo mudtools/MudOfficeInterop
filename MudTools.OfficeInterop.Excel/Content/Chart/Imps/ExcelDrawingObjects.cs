@@ -53,6 +53,188 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
                 _drawingObjects.Left = value;
         }
     }
+
+    public int Value
+    {
+        get => _drawingObjects.Value;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Value = value;
+        }
+    }
+    public string Caption
+    {
+        get => _drawingObjects.Caption;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Caption = value;
+        }
+    }
+
+
+    public string Text
+    {
+        get => _drawingObjects.Text;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Text = value;
+        }
+    }
+
+    public int ReadingOrder
+    {
+        get => _drawingObjects.ReadingOrder;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.ReadingOrder = value;
+        }
+    }
+
+    public int Max
+    {
+        get => _drawingObjects.Max;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Max = value;
+        }
+    }
+
+    public int Min
+    {
+        get => _drawingObjects.Min;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Min = value;
+        }
+    }
+
+    public int LargeChange
+    {
+        get => _drawingObjects.LargeChange;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.LargeChange = value;
+        }
+    }
+
+    public string LinkedCell
+    {
+        get => _drawingObjects.LinkedCell;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.LinkedCell = value;
+        }
+    }
+
+    public string ListFillRange
+    {
+        get => _drawingObjects.ListFillRange;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.ListFillRange = value;
+        }
+    }
+
+    public int ListIndex
+    {
+        get => _drawingObjects.ListIndex;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.ListIndex = value;
+        }
+    }
+
+    public int InputType
+    {
+        get => _drawingObjects.InputType;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.InputType = value;
+        }
+    }
+
+    public int SmallChange
+    {
+        get => _drawingObjects.SmallChange;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.SmallChange = value;
+        }
+    }
+
+    public int DropDownLines
+    {
+        get => _drawingObjects.DropDownLines;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.DropDownLines = value;
+        }
+    }
+
+    public bool DefaultButton
+    {
+        get => _drawingObjects.DefaultButton;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.DefaultButton = value;
+        }
+    }
+
+    public bool DismissButton
+    {
+        get => _drawingObjects.DismissButton;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.DismissButton = value;
+        }
+    }
+
+    public bool Display3DShading
+    {
+        get => _drawingObjects.Display3DShading;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Display3DShading = value;
+        }
+    }
+
+
+    public bool DisplayVerticalScrollBar
+    {
+        get => _drawingObjects.DisplayVerticalScrollBar;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.DisplayVerticalScrollBar = value;
+        }
+    }
+
+    public bool LockedText
+    {
+        get => _drawingObjects.LockedText;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.LockedText = value;
+        }
+    }
+
     public bool Locked
     {
         get => _drawingObjects.Locked;
@@ -60,6 +242,46 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
         {
             if (_drawingObjects != null)
                 _drawingObjects.Locked = value;
+        }
+    }
+
+    public bool MultiLine
+    {
+        get => _drawingObjects.MultiLine;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.MultiLine = value;
+        }
+    }
+
+    public bool MultiSelect
+    {
+        get => _drawingObjects.MultiSelect;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.MultiSelect = value;
+        }
+    }
+
+    public bool RoundedCorners
+    {
+        get => _drawingObjects.RoundedCorners;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.RoundedCorners = value;
+        }
+    }
+
+    public bool Shadow
+    {
+        get => _drawingObjects.Shadow;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.Shadow = value;
         }
     }
 
@@ -74,6 +296,15 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
         }
     }
 
+    public bool PrintObject
+    {
+        get => _drawingObjects.PrintObject;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.PrintObject = value;
+        }
+    }
 
     public bool Visible
     {
@@ -85,14 +316,35 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
         }
     }
 
+    public bool AddIndent
+    {
+        get => _drawingObjects.AddIndent;
+        set
+        {
+            if (_drawingObjects != null)
+                _drawingObjects.AddIndent = value;
+        }
+    }
+
+    public IExcelBorder? Border =>
+    _drawingObjects != null ? new ExcelBorder(_drawingObjects.Border) : null;
+
+    public IExcelCharacters? Characters =>
+     _drawingObjects != null ? new ExcelCharacters(_drawingObjects.Characters, null) : null;
+
+    public IExcelFont? Font =>
+      _drawingObjects != null ? new ExcelFont(_drawingObjects.Font) : null;
+
+    public IExcelInterior? Interior =>
+        _drawingObjects != null ? new ExcelInterior(_drawingObjects.Interior) : null;
 
 
-    public IExcelShapeRange ShapeRange =>
+    public IExcelShapeRange? ShapeRange =>
         _drawingObjects != null ? new ExcelShapeRange(_drawingObjects.ShapeRange) : null;
 
-    public IExcelDrawing this[int index] => new ExcelDrawing(_drawingObjects.Item(index) as MsExcel.Drawing);
+    public IExcelDrawing? this[int index] => new ExcelDrawing(_drawingObjects.Item(index) as MsExcel.Drawing);
 
-    public IExcelDrawing this[string name] => new ExcelDrawing(_drawingObjects.Item(name) as MsExcel.Drawing);
+    public IExcelDrawing? this[string name] => new ExcelDrawing(_drawingObjects.Item(name) as MsExcel.Drawing);
 
     internal ExcelDrawingObjects(MsExcel.DrawingObjects drawingObjects)
     {
