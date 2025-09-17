@@ -15,7 +15,7 @@ public interface IWordSelection : IDisposable
     /// <summary>
     /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取选择区域的文本内容
@@ -125,7 +125,7 @@ public interface IWordSelection : IDisposable
     /// <summary>
     /// 获取关联的文档
     /// </summary>
-    IWordDocument Document { get; }
+    IWordDocument? Document { get; }
 
     /// <summary>
     /// 获取或设置字体名称
@@ -245,82 +245,82 @@ public interface IWordSelection : IDisposable
     /// <summary>
     /// 获取选择区域中的书签集合
     /// </summary>
-    IWordBookmarks Bookmarks { get; }
+    IWordBookmarks? Bookmarks { get; }
 
     /// <summary>
     /// 获取选择区域中的节集合
     /// </summary>
-    IWordSections Sections { get; }
+    IWordSections? Sections { get; }
 
     /// <summary>
     /// 获取选择区域中的单元格集合
     /// </summary>
-    IWordCells Cells { get; }
+    IWordCells? Cells { get; }
 
     /// <summary>
     /// 获取选择区域中的列集合
     /// </summary>
-    IWordColumns Columns { get; }
+    IWordColumns? Columns { get; }
 
     /// <summary>
     /// 获取选择区域中的行集合
     /// </summary>
-    IWordRows Rows { get; }
+    IWordRows? Rows { get; }
 
     /// <summary>
     /// 获取选择区域中的页眉/页脚设置
     /// </summary>
-    IWordHeaderFooter HeaderFooter { get; }
+    IWordHeaderFooter? HeaderFooter { get; }
 
     /// <summary>
     /// 获取选择区域中的批注集合
     /// </summary>
-    IWordComments Comments { get; }
+    IWordComments? Comments { get; }
 
     /// <summary>
     /// 获取选择区域中的尾注集合
     /// </summary>
-    IWordEndnotes Endnotes { get; }
+    IWordEndnotes? Endnotes { get; }
 
     /// <summary>
     /// 获取选择区域中的脚注集合
     /// </summary>
-    IWordFootnotes Footnotes { get; }
+    IWordFootnotes? Footnotes { get; }
 
     /// <summary>
     /// 获取选择区域中的字符集合
     /// </summary>
-    IWordCharacters Characters { get; }
+    IWordCharacters? Characters { get; }
 
     /// <summary>
     /// 获取选择区域中的句子集合
     /// </summary>
-    IWordSentences Sentences { get; }
+    IWordSentences? Sentences { get; }
 
     /// <summary>
     /// 获取选择区域中的表格集合
     /// </summary>
-    IWordTables Tables { get; }
+    IWordTables? Tables { get; }
 
     /// <summary>
     /// 获取选择区域中的单词集合
     /// </summary>
-    IWordWords Words { get; }
+    IWordWords? Words { get; }
 
     /// <summary>
     /// 获取选择区域的带格式文本
     /// </summary>
-    IWordRange FormattedText { get; }
+    IWordRange? FormattedText { get; }
 
     /// <summary>
     /// 获取查找对象
     /// </summary>
-    IWordFind Find { get; }
+    IWordFind? Find { get; }
 
     /// <summary>
     /// 获取范围对象
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 激活选择区域
