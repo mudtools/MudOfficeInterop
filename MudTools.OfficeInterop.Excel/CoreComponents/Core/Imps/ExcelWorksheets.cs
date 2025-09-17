@@ -14,7 +14,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// <summary>
     /// 底层的 COM Worksheets 集合对象
     /// </summary>
-    private MsExcel.Worksheets _worksheets;
+    private MsExcel.Sheets _worksheets;
     private static readonly ILog log = LogManager.GetLogger(typeof(ExcelWorksheets));
 
     #region 构造函数和释放
@@ -23,7 +23,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// 初始化 ExcelWorksheets 实例
     /// </summary>
     /// <param name="worksheets">底层的 COM Worksheets 集合对象</param>
-    internal ExcelWorksheets(MsExcel.Worksheets worksheets)
+    internal ExcelWorksheets(MsExcel.Sheets worksheets)
     {
         _worksheets = worksheets;
         _disposedValue = false;
@@ -65,7 +65,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public override IExcelComSheet? this[int index]
+    public IExcelWorksheet? this[int index]
     {
         get
         {
@@ -92,7 +92,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    public override IExcelComSheet? this[string name]
+    public IExcelWorksheet? this[string name]
     {
         get
         {
@@ -112,6 +112,18 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
                 return null;
             }
         }
+    }
+    protected override IEnumerable<IExcelComSheet> EnumerateSheets()
+    {
+        for (int i = 1; i <= Count; i++)
+        {
+            yield return this[i];
+        }
+    }
+
+    protected override IExcelComSheet ItemByIndex(int index)
+    {
+        return this[index];
     }
 
 
@@ -640,7 +652,12 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
     }
 
-    public override IEnumerator<IExcelComSheet> GetEnumerator()
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public IEnumerator<IExcelWorksheet> GetEnumerator()
     {
         for (int i = 0; i < Count; i++)
         {

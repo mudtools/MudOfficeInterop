@@ -46,46 +46,9 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
     }
     #endregion
 
-    #region IEnumerable<IExcelWorksheet> Support
-    public abstract IEnumerator<IExcelComSheet> GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-    #endregion
-
     #region IExcelCommonSheets Implementation
     /// <inheritdoc/>
     public abstract int Count { get; }
-
-    /// <inheritdoc/>
-    public abstract IExcelComSheet? this[int index] { get; }
-
-    /// <inheritdoc/>
-    public abstract IExcelComSheet? this[string name] { get; }
-
-
-    /// <inheritdoc/>
-    public IExcelComSheet[] this[params string[] names]
-    {
-        get
-        {
-            if (names == null)
-                return [];
-            if (names.Length < 1)
-                return [];
-
-            List<IExcelComSheet> results = [];
-            foreach (string name in names)
-            {
-                IExcelComSheet[] result = FindByName(name);
-                if (result != null && result.Length > 0)
-                    results.AddRange(result);
-            }
-            return [.. results];
-        }
-    }
 
     protected abstract object NativeSheets { get; }
 
@@ -341,13 +304,9 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
     }
 
-    private IEnumerable<IExcelComSheet> EnumerateSheets()
-    {
-        for (int i = 1; i <= Count; i++)
-        {
-            yield return this[i];
-        }
-    }
+    protected abstract IEnumerable<IExcelComSheet> EnumerateSheets();
+
+    protected abstract IExcelComSheet ItemByIndex(int index);
 
     #region 查找和筛选
     /// <inheritdoc/>
@@ -391,7 +350,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         List<IExcelComSheet> result = [];
         for (int i = startIndex; i <= Math.Min(endIndex, Count); i++)
         {
-            IExcelComSheet worksheet = this[i];
+            IExcelComSheet worksheet = ItemByIndex(i);
             if (worksheet != null)
                 result.Add(worksheet);
         }
@@ -463,7 +422,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                this[i]?.Protect(password);
+                ItemByIndex(i)?.Protect(password);
             }
         }
         catch (COMException ce)
@@ -488,7 +447,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                this[i]?.Unprotect(password);
+                ItemByIndex(i)?.Unprotect(password);
             }
         }
         catch (COMException ce)

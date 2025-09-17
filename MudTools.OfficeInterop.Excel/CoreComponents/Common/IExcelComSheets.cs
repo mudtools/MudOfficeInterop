@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel工作表集合的公共接口
 /// </summary>
-public interface IExcelComSheets : IEnumerable<IExcelComSheet>, IDisposable
+public interface IExcelComSheets : IDisposable
 {
     #region 基础属性
 
@@ -18,28 +18,6 @@ public interface IExcelComSheets : IEnumerable<IExcelComSheet>, IDisposable
     /// 获取工作表集合中的工作表数量
     /// </summary>
     int Count { get; }
-
-    /// <summary>
-    /// 获取指定索引的工作表对象
-    /// 索引从1开始
-    /// </summary>
-    /// <param name="index">工作表索引（从1开始）</param>
-    /// <returns>工作表对象</returns>
-    IExcelComSheet? this[int index] { get; }
-
-    /// <summary>
-    /// 获取指定名称的工作表对象
-    /// </summary>
-    /// <param name="name">工作表名称</param>
-    /// <returns>工作表对象</returns>
-    IExcelComSheet? this[string name] { get; }
-
-    /// <summary>
-    /// 获取指定名称的工作表对象
-    /// </summary>
-    /// <param name="names">工作表名称</param>
-    /// <returns>工作表对象</returns>
-    IExcelComSheet[] this[params string[] names] { get; }
 
     /// <summary>
     /// 获取工作表集合所在的父对象（通常是 Workbook）

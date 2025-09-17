@@ -314,12 +314,12 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 工作表集合缓存
     /// </summary>
-    private IExcelSheets? _worksheets;
+    private IExcelWorksheets? _worksheets;
 
     /// <summary>
     /// 获取工作簿中的所有工作表集合
     /// </summary>
-    public IExcelSheets Worksheets => _worksheets ??= new ExcelSheets(_workbook?.Worksheets);
+    public IExcelWorksheets Worksheets => _worksheets ??= new ExcelWorksheets(_workbook?.Worksheets);
 
     /// <summary>
     /// 工作表集合缓存（所有类型）

@@ -45,23 +45,9 @@ internal class ExcelChartObjects : IExcelChartObjects
 
         if (disposing)
         {
-            try
-            {
-                // 释放所有子图表对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var chartObject = this[i] as ExcelChartObject;
-                    chartObject?.Dispose();
-                }
-
-                // 释放底层COM对象
-                if (_chartObjects != null)
-                    Marshal.ReleaseComObject(_chartObjects);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_chartObjects != null)
+                Marshal.ReleaseComObject(_chartObjects);
             _chartObjects = null;
         }
 
@@ -77,7 +63,7 @@ internal class ExcelChartObjects : IExcelChartObjects
 
     #region 基础属性
 
-    public IExcelApplication Application => new ExcelApplication(_chartObjects.Application as MsExcel.Application);
+    public IExcelApplication Application => new ExcelApplication(_chartObjects.Application);
 
     /// <summary>
     /// 获取图表对象集合中的图表数量

@@ -29,7 +29,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public override IExcelComSheet? this[int index]
+    public IExcelComSheet? this[int index]
     {
         get
         {
@@ -58,7 +58,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    public override IExcelComSheet? this[string name]
+    public IExcelComSheet? this[string name]
     {
         get
         {
@@ -509,7 +509,26 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region IEnumerable<IExcelWorksheet> Support
-    public override IEnumerator<IExcelComSheet> GetEnumerator()
+    protected override IEnumerable<IExcelComSheet> EnumerateSheets()
+    {
+        for (int i = 1; i <= Count; i++)
+        {
+            yield return this[i];
+        }
+    }
+
+    protected override IExcelComSheet ItemByIndex(int index)
+    {
+        return this[index];
+    }
+
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public IEnumerator<IExcelComSheet> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {

@@ -10,8 +10,23 @@ namespace MudTools.OfficeInterop.Excel
     /// <summary>
     /// Excel工作表集合接口 (适用于 Worksheets 对象)
     /// </summary>
-    public interface IExcelWorksheets : IExcelComSheets
+    public interface IExcelWorksheets : IEnumerable<IExcelWorksheet>, IExcelComSheets
     {
+        /// <summary>
+        /// 获取指定索引的工作表对象
+        /// 索引从1开始
+        /// </summary>
+        /// <param name="index">工作表索引（从1开始）</param>
+        /// <returns>工作表对象</returns>
+        IExcelWorksheet? this[int index] { get; }
+
+        /// <summary>
+        /// 获取指定名称的工作表对象
+        /// </summary>
+        /// <param name="name">工作表名称</param>
+        /// <returns>工作表对象</returns>
+        IExcelWorksheet? this[string name] { get; }
+
         #region 创建和添加
         /// <summary>
         /// 批量添加工作表

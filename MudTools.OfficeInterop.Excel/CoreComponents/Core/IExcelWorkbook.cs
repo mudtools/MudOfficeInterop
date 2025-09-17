@@ -135,7 +135,7 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取工作簿中的所有工作表集合
     /// </summary>
-    IExcelSheets Worksheets { get; }
+    IExcelWorksheets Worksheets { get; }
 
     /// <summary>
     /// 获取工作簿中的所有工作表集合（包括图表工作表等）
