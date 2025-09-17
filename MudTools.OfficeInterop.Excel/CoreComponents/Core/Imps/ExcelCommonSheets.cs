@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// <summary>
 /// Excel工作表集合的公共基类实现
 /// </summary>
-internal abstract class ExcelCommonSheets : IExcelCommonSheets
+internal abstract class ExcelCommonSheets : IExcelComSheets
 {
     #region IDisposable Support
     protected bool _disposedValue = false;
@@ -47,7 +47,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     #endregion
 
     #region IEnumerable<IExcelWorksheet> Support
-    public abstract IEnumerator<IExcelCommonSheet> GetEnumerator();
+    public abstract IEnumerator<IExcelComSheet> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -60,14 +60,14 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     public abstract int Count { get; }
 
     /// <inheritdoc/>
-    public abstract IExcelCommonSheet? this[int index] { get; }
+    public abstract IExcelComSheet? this[int index] { get; }
 
     /// <inheritdoc/>
-    public abstract IExcelCommonSheet? this[string name] { get; }
+    public abstract IExcelComSheet? this[string name] { get; }
 
 
     /// <inheritdoc/>
-    public IExcelCommonSheet[] this[params string[] names]
+    public IExcelComSheet[] this[params string[] names]
     {
         get
         {
@@ -76,10 +76,10 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
             if (names.Length < 1)
                 return [];
 
-            List<IExcelCommonSheet> results = [];
+            List<IExcelComSheet> results = [];
             foreach (string name in names)
             {
-                IExcelCommonSheet[] result = FindByName(name);
+                IExcelComSheet[] result = FindByName(name);
                 if (result != null && result.Length > 0)
                     results.AddRange(result);
             }
@@ -149,11 +149,11 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     public abstract void Delete(string name);
 
     /// <inheritdoc/>
-    public abstract void Delete(IExcelCommonSheet sheet);
+    public abstract void Delete(IExcelComSheet sheet);
 
 
     /// <inheritdoc/>
-    public IExcelCommonSheet AddSheet(AddSheetOptions options)
+    public IExcelComSheet AddSheet(AddSheetOptions options)
     {
         if (options == null)
             options = new AddSheetOptions();
@@ -252,7 +252,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     }
 
     /// <inheritdoc/>
-    public IExcelCommonSheet CopySheet(IExcelCommonSheet source, CopySheetOptions options)
+    public IExcelComSheet CopySheet(IExcelComSheet source, CopySheetOptions options)
     {
         if (source == null)
             throw new ArgumentNullException(nameof(source));
@@ -341,7 +341,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
         }
     }
 
-    private IEnumerable<IExcelCommonSheet> EnumerateSheets()
+    private IEnumerable<IExcelComSheet> EnumerateSheets()
     {
         for (int i = 1; i <= Count; i++)
         {
@@ -351,23 +351,23 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
 
     #region 查找和筛选
     /// <inheritdoc/>
-    public IExcelCommonSheet[] GetVisibleSheets() =>
+    public IExcelComSheet[] GetVisibleSheets() =>
         EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetVisible).ToArray();
 
     /// <inheritdoc/>
-    public IExcelCommonSheet[] GetHiddenSheets() =>
+    public IExcelComSheet[] GetHiddenSheets() =>
         EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetHidden).ToArray();
 
     /// <inheritdoc/>
-    public IExcelCommonSheet[] GetVeryHiddenSheets() =>
+    public IExcelComSheet[] GetVeryHiddenSheets() =>
         EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetVeryHidden).ToArray();
 
     /// <inheritdoc/>
-    public IExcelCommonSheet[] GetProtectedSheets() =>
+    public IExcelComSheet[] GetProtectedSheets() =>
         EnumerateSheets().Where(s => s.IsProtected).ToArray();
 
     /// <inheritdoc/>
-    public virtual IExcelCommonSheet[] FindByName(string name, bool matchCase = false)
+    public virtual IExcelComSheet[] FindByName(string name, bool matchCase = false)
     {
         if (string.IsNullOrEmpty(name) || Count == 0)
             return [];
@@ -378,20 +378,20 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     }
 
     /// <inheritdoc/>
-    public virtual IExcelCommonSheet[] FindByType(XlSheetType type)
+    public virtual IExcelComSheet[] FindByType(XlSheetType type)
         => EnumerateSheets().Where(s => s.Type == type).ToArray();
 
     /// <inheritdoc/>
-    public virtual IExcelCommonSheet[] FindByIndexRange(int startIndex, int endIndex)
+    public virtual IExcelComSheet[] FindByIndexRange(int startIndex, int endIndex)
     {
         if (Count == 0 || startIndex < 1 || endIndex > Count)
             return [];
 
 
-        List<IExcelCommonSheet> result = [];
+        List<IExcelComSheet> result = [];
         for (int i = startIndex; i <= Math.Min(endIndex, Count); i++)
         {
-            IExcelCommonSheet worksheet = this[i];
+            IExcelComSheet worksheet = this[i];
             if (worksheet != null)
                 result.Add(worksheet);
         }
@@ -431,7 +431,7 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     public abstract void Select(params string[] worksheetNames);
 
     /// <inheritdoc/>
-    public abstract IExcelCommonSheet? ActiveWorksheet { get; }
+    public abstract IExcelComSheet? ActiveWorksheet { get; }
 
     /// <inheritdoc/>
     public abstract void PrintOutAll(bool preview = false);
@@ -443,12 +443,12 @@ internal abstract class ExcelCommonSheets : IExcelCommonSheets
     /// <inheritdoc/>
     public abstract void RefreshAll();
 
-    public abstract IExcelWorksheet? AddSheet(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null, int? count = 1);
+    public abstract IExcelWorksheet? AddSheet(IExcelComSheet? before = null, IExcelComSheet? after = null, int? count = 1);
 
     /// <inheritdoc/>
-    public abstract IExcelCommonSheet? Add(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null, int? count = 1, XlSheetType? type = null);
+    public abstract IExcelComSheet? Add(IExcelComSheet? before = null, IExcelComSheet? after = null, int? count = 1, XlSheetType? type = null);
 
-    public abstract IExcelCommonSheet? CreateFromTemplate(string filename, string sheetName, IExcelCommonSheet? before = null, IExcelCommonSheet? after = null);
+    public abstract IExcelComSheet? CreateFromTemplate(string filename, string sheetName, IExcelComSheet? before = null, IExcelComSheet? after = null);
 
 
     /// <summary>

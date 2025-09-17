@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Sheet公共接口，Excel的Sheet类型：WordSheet、Chart。
 /// </summary>
-public interface IExcelCommonSheet : IDisposable
+public interface IExcelComSheet : IDisposable
 {
     /// <summary>
     /// 获取图表所在的 Excel Application 对象
@@ -134,7 +134,7 @@ public interface IExcelCommonSheet : IDisposable
     /// </summary>
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
-    void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null);
+    void Copy(IExcelComSheet? before = null, IExcelComSheet? after = null);
 
     /// <summary>
     /// 移动工作表
@@ -142,7 +142,7 @@ public interface IExcelCommonSheet : IDisposable
     /// </summary>
     /// <param name="before">移动到指定工作表之前</param>
     /// <param name="after">移动到指定工作表之后</param>
-    void Move(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null);
+    void Move(IExcelComSheet? before = null, IExcelComSheet? after = null);
 
     /// <summary>
     /// 获取工作表中的OLE对象集合或指定索引的OLE对象

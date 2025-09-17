@@ -432,12 +432,12 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 活动工作表缓存
     /// </summary>
-    private IExcelCommonSheet? _activeWorksheet;
+    private IExcelComSheet? _activeWorksheet;
 
     /// <summary>
     /// 获取活动工作表
     /// </summary>
-    public IExcelCommonSheet? ActiveSheet
+    public IExcelComSheet? ActiveSheet
     {
         get
         {

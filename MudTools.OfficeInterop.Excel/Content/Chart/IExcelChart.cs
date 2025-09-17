@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Chart 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Chart 的安全访问和操作
 /// </summary>
-public interface IExcelChart : IExcelCommonSheet, IDisposable
+public interface IExcelChart : IExcelComSheet, IDisposable
 {
     #region 基础属性
 

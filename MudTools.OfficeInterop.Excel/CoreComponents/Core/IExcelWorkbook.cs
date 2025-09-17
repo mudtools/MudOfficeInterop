@@ -183,7 +183,7 @@ public interface IExcelWorkbook : IDisposable
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
-    IExcelCommonSheet? ActiveSheet { get; }
+    IExcelComSheet? ActiveSheet { get; }
 
     /// <summary>
     /// 获取活动工作表

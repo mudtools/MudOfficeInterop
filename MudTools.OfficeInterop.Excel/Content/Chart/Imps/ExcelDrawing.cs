@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -10,6 +10,38 @@ internal class ExcelDrawing : IExcelDrawing
 {
     private MsExcel.Drawing _drawing;
     private bool _disposedValue;
+
+    /// <summary>
+    /// 获取图表所在的 Excel Application 对象
+    /// </summary>
+    public IExcelApplication Application => new ExcelApplication(_drawing.Application);
+
+    /// <summary>
+    /// 获取图表对象所在的父对象
+    /// </summary>
+    public object? Parent
+    {
+        get
+        {
+            if (_drawing?.Parent == null)
+            {
+                return null;
+            }
+            if (_drawing.Parent is MsExcel.DrawingObjects chartObjs)
+            {
+                return new ExcelDrawingObjects(chartObjs);
+            }
+            if (_drawing.Parent is MsExcel.Workbook workbook)
+            {
+                return new ExcelWorkbook(workbook);
+            }
+            if (_drawing.Parent is MsExcel.Worksheet worksheet)
+            {
+                return new ExcelWorksheet(worksheet);
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取绘图对象的索引
@@ -52,7 +84,15 @@ internal class ExcelDrawing : IExcelDrawing
         get => _drawing.Visible;
         set => _drawing.Visible = value;
     }
-
+    public bool PrintObject
+    {
+        get => _drawing.PrintObject;
+        set
+        {
+            if (_drawing != null)
+                _drawing.PrintObject = value;
+        }
+    }
 
     public bool Locked
     {
@@ -60,21 +100,16 @@ internal class ExcelDrawing : IExcelDrawing
         set => _drawing.Locked = !value;
     }
 
+    public IExcelBorder? Border => _drawing != null ? new ExcelBorder(_drawing.Border) : null;
 
-    public IExcelBorder Border
-    {
-        get => new ExcelBorder(_drawing.Border);
-    }
-
-    public IExcelInterior Interior
-    {
-        get => new ExcelInterior(_drawing.Interior);
-    }
+    public IExcelInterior? Interior => _drawing != null ? new ExcelInterior(_drawing.Interior) : null;
 
 
-    public IExcelDrawingObjects Parent => new ExcelDrawingObjects(_drawing?.Parent as MsExcel.DrawingObjects);
+    public IExcelDrawingObjects ParentDrawing => new ExcelDrawingObjects(_drawing?.Parent as MsExcel.DrawingObjects);
 
     public IExcelWorksheet Worksheet => new ExcelWorksheet(_drawing?.Parent as MsExcel.Worksheet);
+
+    public IExcelRange? TopLeftCell => _drawing != null ? new ExcelRange(_drawing.TopLeftCell) : null;
 
 
     public string Text
@@ -180,6 +215,23 @@ internal class ExcelDrawing : IExcelDrawing
         {
             throw new InvalidOperationException("无法调整绘图对象大小。", ex);
         }
+    }
+
+
+    /// <summary>
+    /// 将图表对象置于最前面
+    /// </summary>
+    public void BringToFront()
+    {
+        _drawing?.BringToFront();
+    }
+
+    /// <summary>
+    /// 将图表对象置于最后面
+    /// </summary>
+    public void SendToBack()
+    {
+        _drawing?.SendToBack();
     }
 
 

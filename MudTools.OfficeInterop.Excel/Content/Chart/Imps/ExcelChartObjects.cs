@@ -5,7 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-
 namespace MudTools.OfficeInterop.Excel.Imps;
 
 /// <summary>
@@ -78,10 +77,109 @@ internal class ExcelChartObjects : IExcelChartObjects
 
     #region 基础属性
 
+    public IExcelApplication Application => new ExcelApplication(_chartObjects.Application as MsExcel.Application);
+
     /// <summary>
     /// 获取图表对象集合中的图表数量
     /// </summary>
     public int Count => _chartObjects?.Count ?? 0;
+
+    public IExcelShapeRange? ShapeRange =>
+      _chartObjects != null ? new ExcelShapeRange(_chartObjects.ShapeRange) : null;
+
+    public IExcelBorder? Border =>
+     _chartObjects != null ? new ExcelBorder(_chartObjects.Border) : null;
+
+    public IExcelInterior? Interior =>
+     _chartObjects != null ? new ExcelInterior(_chartObjects.Interior) : null;
+
+    public double Width
+    {
+        get => _chartObjects.Width;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.Width = value;
+        }
+    }
+    public double Height
+    {
+        get => _chartObjects.Height;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.Height = value;
+        }
+    }
+
+    public double Top
+    {
+        get => _chartObjects.Top;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.Top = value;
+        }
+    }
+    public double Left
+    {
+        get => _chartObjects.Left;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.Left = value;
+        }
+    }
+
+    public bool Visible
+    {
+        get => _chartObjects.Visible;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.Visible = value;
+        }
+    }
+
+    public bool Shadow
+    {
+        get => _chartObjects.Shadow;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.Shadow = value;
+        }
+    }
+
+    public bool ProtectChartObject
+    {
+        get => _chartObjects.ProtectChartObject;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.ProtectChartObject = value;
+        }
+    }
+
+    public bool Locked
+    {
+        get => _chartObjects.Locked;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.Locked = value;
+        }
+    }
+
+    public bool PrintObject
+    {
+        get => _chartObjects.PrintObject;
+        set
+        {
+            if (_chartObjects != null)
+                _chartObjects.PrintObject = value;
+        }
+    }
 
     /// <summary>
     /// 获取指定索引的图表对象
@@ -150,14 +248,14 @@ internal class ExcelChartObjects : IExcelChartObjects
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的图表对象</returns>
-    public IExcelChartObject Add(double left, double top, double width, double height)
+    public IExcelChartObject? Add(double left, double top, double width, double height)
     {
         if (_chartObjects == null)
             return null;
 
         try
         {
-            var chartObject = _chartObjects.Add(left, top, width, height) as MsExcel.ChartObject;
+            var chartObject = _chartObjects.Add(left, top, width, height);
             return chartObject != null ? new ExcelChartObject(chartObject) : null;
         }
         catch
@@ -182,17 +280,10 @@ internal class ExcelChartObjects : IExcelChartObjects
         var result = new System.Collections.Generic.List<IExcelChartObject>();
         for (int i = 1; i <= Count; i++)
         {
-            try
+            var chartObject = this[i];
+            if (chartObject != null && chartObject.Name?.Contains(name) == true)
             {
-                var chartObject = this[i];
-                if (chartObject != null && chartObject.Name?.Contains(name) == true)
-                {
-                    result.Add(chartObject);
-                }
-            }
-            catch
-            {
-                // 忽略单个图表对象访问异常
+                result.Add(chartObject);
             }
         }
         return result.ToArray();
@@ -208,28 +299,21 @@ internal class ExcelChartObjects : IExcelChartObjects
     public IExcelChartObject[] FindByPosition(double left, double top, double tolerance = 10)
     {
         if (_chartObjects == null || Count == 0)
-            return new IExcelChartObject[0];
+            return [];
 
-        var result = new System.Collections.Generic.List<IExcelChartObject>();
+        var result = new List<IExcelChartObject>();
         for (int i = 1; i <= Count; i++)
         {
-            try
+            var chartObject = this[i];
+            if (chartObject != null)
             {
-                var chartObject = this[i];
-                if (chartObject != null)
-                {
-                    double objLeft = chartObject.Left;
-                    double objTop = chartObject.Top;
+                double objLeft = chartObject.Left;
+                double objTop = chartObject.Top;
 
-                    if (Math.Abs(objLeft - left) <= tolerance && Math.Abs(objTop - top) <= tolerance)
-                    {
-                        result.Add(chartObject);
-                    }
+                if (Math.Abs(objLeft - left) <= tolerance && Math.Abs(objTop - top) <= tolerance)
+                {
+                    result.Add(chartObject);
                 }
-            }
-            catch
-            {
-                // 忽略单个图表对象访问异常
             }
         }
         return result.ToArray();
@@ -245,28 +329,21 @@ internal class ExcelChartObjects : IExcelChartObjects
     public IExcelChartObject[] FindBySize(double width, double height, double tolerance = 10)
     {
         if (_chartObjects == null || Count == 0)
-            return new IExcelChartObject[0];
+            return [];
 
         var result = new System.Collections.Generic.List<IExcelChartObject>();
         for (int i = 1; i <= Count; i++)
         {
-            try
+            var chartObject = this[i];
+            if (chartObject != null)
             {
-                var chartObject = this[i];
-                if (chartObject != null)
-                {
-                    double objWidth = chartObject.Width;
-                    double objHeight = chartObject.Height;
+                double objWidth = chartObject.Width;
+                double objHeight = chartObject.Height;
 
-                    if (Math.Abs(objWidth - width) <= tolerance && Math.Abs(objHeight - height) <= tolerance)
-                    {
-                        result.Add(chartObject);
-                    }
+                if (Math.Abs(objWidth - width) <= tolerance && Math.Abs(objHeight - height) <= tolerance)
+                {
+                    result.Add(chartObject);
                 }
-            }
-            catch
-            {
-                // 忽略单个图表对象访问异常
             }
         }
         return result.ToArray();
@@ -280,7 +357,7 @@ internal class ExcelChartObjects : IExcelChartObjects
     public IExcelChartObject[] GetChartsInRange(IExcelRange range)
     {
         if (_chartObjects == null || range == null || Count == 0)
-            return new IExcelChartObject[0];
+            return [];
 
         var result = new System.Collections.Generic.List<IExcelChartObject>();
         // 注意：Excel ChartObjects集合不直接支持区域筛选
@@ -306,17 +383,10 @@ internal class ExcelChartObjects : IExcelChartObjects
         var result = new List<IExcelChartObject>();
         for (int i = 1; i <= Count; i++)
         {
-            try
+            var chartObject = this[i];
+            if (chartObject != null && chartObject.Visible)
             {
-                var chartObject = this[i];
-                if (chartObject != null && chartObject.IsVisible)
-                {
-                    result.Add(chartObject);
-                }
-            }
-            catch
-            {
-                // 忽略单个图表对象访问异常
+                result.Add(chartObject);
             }
         }
         return result.ToArray();
@@ -333,25 +403,16 @@ internal class ExcelChartObjects : IExcelChartObjects
     {
         if (_chartObjects == null) return;
 
-        try
+        // 从后往前删除，避免索引变化问题
+        for (int i = Count; i >= 1; i--)
         {
-            // 从后往前删除，避免索引变化问题
-            for (int i = Count; i >= 1; i--)
-            {
-                try
-                {
-                    ((MsExcel.ChartObject)_chartObjects.Item(i)).Delete();
-                }
-                catch
-                {
-                    // 忽略删除过程中的异常
-                }
-            }
+            ((MsExcel.ChartObject)_chartObjects.Item(i)).Delete();
         }
-        catch
-        {
-            // 忽略清空过程中的异常
-        }
+    }
+
+    public void Delete()
+    {
+        _chartObjects?.Delete();
     }
 
     /// <summary>
@@ -363,14 +424,7 @@ internal class ExcelChartObjects : IExcelChartObjects
         if (_chartObjects == null || index < 1 || index > Count)
             return;
 
-        try
-        {
-            ((MsExcel.ChartObject)_chartObjects.Item(index)).Delete();
-        }
-        catch
-        {
-            // 忽略删除过程中的异常
-        }
+        ((MsExcel.ChartObject)_chartObjects.Item(index)).Delete();
     }
 
     /// <summary>
@@ -382,14 +436,7 @@ internal class ExcelChartObjects : IExcelChartObjects
         if (_chartObjects == null || chartObject == null)
             return;
 
-        try
-        {
-            chartObject.Delete();
-        }
-        catch
-        {
-            // 忽略删除过程中的异常
-        }
+        chartObject.Delete();
     }
 
     /// <summary>
@@ -410,6 +457,16 @@ internal class ExcelChartObjects : IExcelChartObjects
         }
     }
 
+    public object Copy()
+    {
+        return _chartObjects.Copy();
+    }
+
+    public object Cut()
+    {
+        return _chartObjects.Cut();
+    }
+
     /// <summary>
     /// 选择所有图表对象
     /// </summary>
@@ -418,44 +475,8 @@ internal class ExcelChartObjects : IExcelChartObjects
     {
         if (_chartObjects == null || Count == 0)
             return;
-
-        try
-        {
-            // 选择所有图表对象
-            object[] chartObjectsArray = new object[Count];
-            for (int i = 1; i <= Count; i++)
-            {
-                chartObjectsArray[i - 1] = _chartObjects.Item(i);
-            }
-            // 注意：Excel中没有直接选择所有ChartObjects的方法
-            // 这里提供一个空实现以保持接口一致性
-        }
-        catch
-        {
-            // 忽略选择过程中的异常
-        }
+        _chartObjects.Select(replace);
     }
-
-    /// <summary>
-    /// 取消选择所有图表对象
-    /// </summary>
-    public void DeselectAll()
-    {
-        // Excel中没有直接取消选择的方法
-        // 这里提供一个空实现以保持接口一致性
-    }
-
-
-
-    /// <summary>
-    /// 刷新图表对象显示
-    /// </summary>
-    public void Refresh()
-    {
-        // Excel ChartObjects通常会自动刷新
-        // 这里提供一个空实现以保持接口一致性
-    }
-
     #endregion
 
     public IEnumerator<IExcelChartObject> GetEnumerator()

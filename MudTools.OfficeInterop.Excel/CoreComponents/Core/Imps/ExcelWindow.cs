@@ -19,7 +19,7 @@ internal class ExcelWindow : IExcelWindow
     private double _savedWidth;
     private double _savedLeft;
     private double _savedTop;
-    private IExcelCommonSheet? _activeSheet;
+    private IExcelComSheet? _activeSheet;
 
     public IExcelRange? ActiveCell =>
         _window != null ? new ExcelRange(_window.ActiveCell) : null;
@@ -30,7 +30,7 @@ internal class ExcelWindow : IExcelWindow
     public IExcelPane? ActivePane =>
        _window != null ? new ExcelPane(_window.ActivePane) : null;
 
-    public IExcelCommonSheet? ActiveSheet
+    public IExcelComSheet? ActiveSheet
     {
         get
         {

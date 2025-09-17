@@ -29,7 +29,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public override IExcelCommonSheet? this[int index]
+    public override IExcelComSheet? this[int index]
     {
         get
         {
@@ -58,7 +58,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    public override IExcelCommonSheet? this[string name]
+    public override IExcelComSheet? this[string name]
     {
         get
         {
@@ -92,8 +92,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 
     #region 创建和添加
     public override IExcelWorksheet? AddSheet(
-        IExcelCommonSheet? before = null,
-        IExcelCommonSheet? after = null,
+        IExcelComSheet? before = null,
+        IExcelComSheet? after = null,
         int? count = 1)
     {
         object? beforeObj = before switch
@@ -121,8 +121,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     }
 
     public IExcelChart? AddChart(
-       IExcelCommonSheet? before = null,
-       IExcelCommonSheet? after = null,
+       IExcelComSheet? before = null,
+       IExcelComSheet? after = null,
        int? count = 1)
     {
         object? beforeObj = before switch
@@ -149,9 +149,9 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         return null;
     }
 
-    public override IExcelCommonSheet? Add(
-                                    IExcelCommonSheet? before = null,
-                                    IExcelCommonSheet? after = null,
+    public override IExcelComSheet? Add(
+                                    IExcelComSheet? before = null,
+                                    IExcelComSheet? after = null,
                                     int? count = 1,
                                     XlSheetType? type = null)
     {
@@ -183,11 +183,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         };
     }
 
-    public override IExcelCommonSheet? CreateFromTemplate(
+    public override IExcelComSheet? CreateFromTemplate(
                                         string templatePath,
                                         string sheetName,
-                                        IExcelCommonSheet? before = null,
-                                        IExcelCommonSheet? after = null)
+                                        IExcelComSheet? before = null,
+                                        IExcelComSheet? after = null)
     {
         if (_worksheets == null || string.IsNullOrEmpty(templatePath))
             return null;
@@ -238,8 +238,8 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
     /// </remarks>
     public void CopyTo(
-        IExcelCommonSheet? beforeSheet = null,
-        IExcelCommonSheet? afterSheet = null)
+        IExcelComSheet? beforeSheet = null,
+        IExcelComSheet? afterSheet = null)
     {
         // 检查内部对象是否为 null
         if (_worksheets == null)
@@ -301,7 +301,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// 如果 beforeSheet 和 afterSheet 都为 null，行为可能不确定（可能移动到新工作簿或失败）。
     /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
     /// </remarks>
-    public void MoveTo(IExcelCommonSheet? beforeSheet = null, IExcelCommonSheet? afterSheet = null)
+    public void MoveTo(IExcelComSheet? beforeSheet = null, IExcelComSheet? afterSheet = null)
     {
         // 检查内部对象是否为 null
         if (_worksheets == null)
@@ -447,7 +447,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
     }
 
-    public override void Delete(IExcelCommonSheet sheet)
+    public override void Delete(IExcelComSheet sheet)
     {
         if (sheet == null || _worksheets == null) return;
 
@@ -509,7 +509,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region IEnumerable<IExcelWorksheet> Support
-    public override IEnumerator<IExcelCommonSheet> GetEnumerator()
+    public override IEnumerator<IExcelComSheet> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {
@@ -592,7 +592,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
-    public override IExcelCommonSheet? ActiveWorksheet
+    public override IExcelComSheet? ActiveWorksheet
     {
         get
         {
@@ -627,7 +627,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             for (int i = 2; i <= Count; i++) // 保留第一个可见
             {
-                if (this[i] is IExcelCommonSheet sheet)
+                if (this[i] is IExcelComSheet sheet)
                     sheet.Visible = XlSheetVisibility.xlSheetHidden;
             }
         }
@@ -648,7 +648,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             for (int i = 1; i <= Count; i++)
             {
-                if (this[i] is IExcelCommonSheet sheet)
+                if (this[i] is IExcelComSheet sheet)
                     sheet.Visible = XlSheetVisibility.xlSheetVisible;
             }
         }

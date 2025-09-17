@@ -748,12 +748,12 @@ internal partial class ExcelApplication : IExcelApplication
         }
     }
 
-    private IExcelCommonSheet? _activeSheet;
+    private IExcelComSheet? _activeSheet;
 
     /// <summary>
     /// 获取当前活动的工作表
     /// </summary>
-    public IExcelCommonSheet? ActiveSheet
+    public IExcelComSheet? ActiveSheet
     {
         get
         {

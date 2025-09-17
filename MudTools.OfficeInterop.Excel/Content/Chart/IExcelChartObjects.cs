@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,15 +10,13 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ChartObjects 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.ChartObjects 的安全访问和操作
 /// </summary>
-public interface IExcelChartObjects : IEnumerable<IExcelChartObject>, IDisposable
+public interface IExcelChartObjects : IExcelComGraphObjects, IEnumerable<IExcelChartObject>, IDisposable
 {
     #region 基础属性
-
     /// <summary>
-    /// 获取图表对象集合中的图表数量
-    /// 对应 ChartObjects.Count 属性
+    /// 获取或设置一个布尔值，指示图表对象是否受到保护
     /// </summary>
-    int Count { get; }
+    bool ProtectChartObject { get; set; }
 
     /// <summary>
     /// 获取指定索引的图表对象
@@ -53,7 +51,7 @@ public interface IExcelChartObjects : IEnumerable<IExcelChartObject>, IDisposabl
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的图表对象</returns>
-    IExcelChartObject Add(double left, double top, double width, double height);
+    IExcelChartObject? Add(double left, double top, double width, double height);
     #endregion
 
     #region 查找和筛选
@@ -123,23 +121,6 @@ public interface IExcelChartObjects : IEnumerable<IExcelChartObject>, IDisposabl
     /// </summary>
     /// <param name="indices">要删除的图表对象索引数组</param>
     void DeleteRange(int[] indices);
-
-    /// <summary>
-    /// 选择所有图表对象
-    /// </summary>
-    /// <param name="replace">是否替换当前选择</param>
-    void SelectAll(bool replace = true);
-
-    /// <summary>
-    /// 取消选择所有图表对象
-    /// </summary>
-    void DeselectAll();
-
-    /// <summary>
-    /// 刷新图表对象显示
-    /// </summary>
-    void Refresh();
-
     #endregion
 
 }

@@ -89,6 +89,11 @@ internal class ExcelChartObject : IExcelChartObject
     /// </summary>
     public IExcelApplication Application => new ExcelApplication(_chartObject.Application);
 
+    public IExcelBorder? Border => _chartObject != null ? new ExcelBorder(_chartObject.Border) : null;
+
+    public IExcelInterior? Interior => _chartObject != null ? new ExcelInterior(_chartObject.Interior) : null;
+
+    public IExcelRange? TopLeftCell => _chartObject != null ? new ExcelRange(_chartObject.TopLeftCell) : null;
 
     /// <summary>
     /// 获取或设置图表对象的名称
@@ -109,23 +114,33 @@ internal class ExcelChartObject : IExcelChartObject
     public int Index => _chartObject?.Index ?? 0;
 
 
-    public XlSheetVisibility Visible
-    {
-        get => _chartObject != null && _chartObject.Visible ? XlSheetVisibility.xlSheetVisible : XlSheetVisibility.xlSheetHidden;
-        set
-        {
-            if (_chartObject != null)
-                _chartObject.Visible = value == XlSheetVisibility.xlSheetVisible;
-        }
-    }
-
-    public bool IsVisible
+    public bool Visible
     {
         get => _chartObject != null && _chartObject.Visible;
         set
         {
             if (_chartObject != null)
                 _chartObject.Visible = value;
+        }
+    }
+
+    public bool PrintObject
+    {
+        get => _chartObject.PrintObject;
+        set
+        {
+            if (_chartObject != null)
+                _chartObject.PrintObject = value;
+        }
+    }
+
+    public bool Locked
+    {
+        get => _chartObject != null && _chartObject.Locked;
+        set
+        {
+            if (_chartObject != null)
+                _chartObject.Locked = value;
         }
     }
 

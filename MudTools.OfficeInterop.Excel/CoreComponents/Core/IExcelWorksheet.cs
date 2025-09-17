@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Worksheet 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Worksheet 的安全访问和操作
 /// </summary>
-public interface IExcelWorksheet : IExcelCommonSheet, IDisposable
+public interface IExcelWorksheet : IExcelComSheet, IDisposable
 {
     #region 基础属性
     /// <summary>

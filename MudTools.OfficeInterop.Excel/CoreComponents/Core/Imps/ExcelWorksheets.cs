@@ -65,7 +65,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    public override IExcelCommonSheet? this[int index]
+    public override IExcelComSheet? this[int index]
     {
         get
         {
@@ -92,7 +92,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    public override IExcelCommonSheet? this[string name]
+    public override IExcelComSheet? this[string name]
     {
         get
         {
@@ -138,8 +138,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
 
     #region 创建和添加
     public override IExcelWorksheet? AddSheet(
-       IExcelCommonSheet? before = null,
-       IExcelCommonSheet? after = null,
+       IExcelComSheet? before = null,
+       IExcelComSheet? after = null,
        int? count = 1)
     {
         object? beforeObj = before switch
@@ -174,9 +174,9 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// <param name="count">添加的工作表数量</param>
     /// <param name="type">工作表类型</param>
     /// <returns>新创建的工作表对象</returns>
-    public override IExcelCommonSheet? Add(
-                                IExcelCommonSheet? before = null,
-                                IExcelCommonSheet? after = null,
+    public override IExcelComSheet? Add(
+                                IExcelComSheet? before = null,
+                                IExcelComSheet? after = null,
                                 int? count = 1,
                                 XlSheetType? type = null)
     {
@@ -252,8 +252,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// <param name="before">添加到指定工作表之前</param>
     /// <param name="after">添加到指定工作表之后</param>
     /// <returns>新创建的工作表对象</returns>
-    public override IExcelCommonSheet? CreateFromTemplate(string templatePath, string name = "",
-                                            IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
+    public override IExcelComSheet? CreateFromTemplate(string templatePath, string name = "",
+                                            IExcelComSheet? before = null, IExcelComSheet? after = null)
     {
         if (_worksheets == null || string.IsNullOrEmpty(templatePath))
             return null;
@@ -351,7 +351,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
 
     public override void Delete(string name) => DeleteInternal(name);
 
-    public override void Delete(IExcelCommonSheet worksheet)
+    public override void Delete(IExcelComSheet worksheet)
     {
         if (worksheet is IExcelWorksheet ws)
             ws.Delete();
@@ -509,7 +509,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
-    public override IExcelCommonSheet? ActiveWorksheet
+    public override IExcelComSheet? ActiveWorksheet
     {
         get
         {
@@ -640,7 +640,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
     }
 
-    public override IEnumerator<IExcelCommonSheet> GetEnumerator()
+    public override IEnumerator<IExcelComSheet> GetEnumerator()
     {
         for (int i = 0; i < Count; i++)
         {

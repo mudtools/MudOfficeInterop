@@ -12,6 +12,9 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
     private MsExcel.DrawingObjects _drawingObjects;
     private bool _disposedValue;
 
+
+    public IExcelApplication Application => new ExcelApplication(_drawingObjects.Application as MsExcel.Application);
+
     public int Count => _drawingObjects.Count;
 
     public int ZOrder => _drawingObjects.ZOrder;
@@ -431,16 +434,30 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
         }
     }
 
-    public void SelectAll()
+    public object Copy()
     {
-        try
-        {
-            _drawingObjects.Select();
-        }
-        catch (COMException ex)
-        {
-            throw new InvalidOperationException("无法选择所有绘图对象。", ex);
-        }
+        return _drawingObjects.Copy();
+    }
+
+    public object Cut()
+    {
+        return _drawingObjects.Cut();
+    }
+
+    public void Delete()
+    {
+        _drawingObjects?.Delete();
+    }
+
+    /// <summary>
+    /// 选择所有图表对象
+    /// </summary>
+    /// <param name="replace">是否替换当前选择</param>
+    public void SelectAll(bool replace = true)
+    {
+        if (_drawingObjects == null || Count == 0)
+            return;
+        _drawingObjects.Select(replace);
     }
 
     public IEnumerable<IExcelDrawing> VisibleItems

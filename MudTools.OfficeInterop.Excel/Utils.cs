@@ -17,11 +17,11 @@ internal class Utils
     /// </summary>
     private static readonly ILog log = LogManager.GetLogger(typeof(Utils));
 
-    public static IExcelCommonSheet? CreateSheetObj(object workSheet)
+    public static IExcelComSheet? CreateSheetObj(object workSheet)
     {
         try
         {
-            IExcelCommonSheet? sheet = null;
+            IExcelComSheet? sheet = null;
             if (workSheet is MsExcel.Worksheet)
             {
                 MsExcel.Worksheet ws = (MsExcel.Worksheet)workSheet;

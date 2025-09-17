@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel
     /// <summary>
     /// Excel工作表集合接口 (适用于 Worksheets 对象)
     /// </summary>
-    public interface IExcelWorksheets : IExcelCommonSheets
+    public interface IExcelWorksheets : IExcelComSheets
     {
         #region 创建和添加
         /// <summary>

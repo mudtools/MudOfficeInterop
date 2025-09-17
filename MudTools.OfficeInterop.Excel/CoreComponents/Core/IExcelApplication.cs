@@ -278,7 +278,7 @@ namespace MudTools.OfficeInterop.Excel
         /// 获取当前活动的工作表
         /// 对应 Application.ActiveSheet 属性
         /// </summary>
-        IExcelCommonSheet? ActiveSheet { get; }
+        IExcelComSheet? ActiveSheet { get; }
 
         /// <summary>
         /// 获取当前活动的工作表

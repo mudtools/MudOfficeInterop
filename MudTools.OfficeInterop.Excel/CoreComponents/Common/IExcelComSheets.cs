@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel工作表集合的公共接口
 /// </summary>
-public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposable
+public interface IExcelComSheets : IEnumerable<IExcelComSheet>, IDisposable
 {
     #region 基础属性
 
@@ -25,21 +25,21 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// </summary>
     /// <param name="index">工作表索引（从1开始）</param>
     /// <returns>工作表对象</returns>
-    IExcelCommonSheet? this[int index] { get; }
+    IExcelComSheet? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的工作表对象
     /// </summary>
     /// <param name="name">工作表名称</param>
     /// <returns>工作表对象</returns>
-    IExcelCommonSheet? this[string name] { get; }
+    IExcelComSheet? this[string name] { get; }
 
     /// <summary>
     /// 获取指定名称的工作表对象
     /// </summary>
     /// <param name="names">工作表名称</param>
     /// <returns>工作表对象</returns>
-    IExcelCommonSheet[] this[params string[] names] { get; }
+    IExcelComSheet[] this[params string[] names] { get; }
 
     /// <summary>
     /// 获取工作表集合所在的父对象（通常是 Workbook）
@@ -73,8 +73,8 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// <param name="count">要添加的工作表数量</param>
     /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
     IExcelWorksheet? AddSheet(
-        IExcelCommonSheet? before = null,
-        IExcelCommonSheet? after = null,
+        IExcelComSheet? before = null,
+        IExcelComSheet? after = null,
         int? count = 1);
 
     /// <summary>
@@ -86,9 +86,9 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// <param name="count">要添加的工作表数量</param>
     /// <param name="type">工作表类型</param>
     /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
-    IExcelCommonSheet? Add(
-        IExcelCommonSheet? before = null,
-        IExcelCommonSheet? after = null,
+    IExcelComSheet? Add(
+        IExcelComSheet? before = null,
+        IExcelComSheet? after = null,
         int? count = 1,
         XlSheetType? type = null);
 
@@ -100,11 +100,11 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// <param name="before">在哪个工作表之前插入</param>
     /// <param name="after">在哪个工作表之后插入</param>
     /// <returns>新创建的工作表对象</returns>
-    IExcelCommonSheet? CreateFromTemplate(
+    IExcelComSheet? CreateFromTemplate(
         string filename,
         string sheetName,
-        IExcelCommonSheet? before = null,
-        IExcelCommonSheet? after = null);
+        IExcelComSheet? before = null,
+        IExcelComSheet? after = null);
     #endregion
 
     #region 查找和筛选
@@ -112,25 +112,25 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// 获取可见的工作表
     /// </summary>
     /// <returns>可见工作表数组</returns>
-    IExcelCommonSheet[] GetVisibleSheets();
+    IExcelComSheet[] GetVisibleSheets();
 
     /// <summary>
     /// 获取隐藏的工作表
     /// </summary>
     /// <returns>隐藏工作表数组</returns>
-    IExcelCommonSheet[] GetHiddenSheets();
+    IExcelComSheet[] GetHiddenSheets();
 
     /// <summary>
     /// 获取非常隐藏的工作表 (xlSheetVeryHidden)
     /// </summary>
     /// <returns>非常隐藏工作表数组</returns>
-    IExcelCommonSheet[] GetVeryHiddenSheets();
+    IExcelComSheet[] GetVeryHiddenSheets();
 
     /// <summary>
     /// 获取受保护的工作表
     /// </summary>
     /// <returns>受保护工作表数组</returns>
-    IExcelCommonSheet[] GetProtectedSheets();
+    IExcelComSheet[] GetProtectedSheets();
 
     /// <summary>
     /// 根据名称查找工作表
@@ -138,14 +138,14 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// <param name="name">工作表名称</param>
     /// <param name="matchCase">是否区分大小写</param>
     /// <returns>匹配的工作表数组</returns>
-    IExcelCommonSheet[] FindByName(string name, bool matchCase = false);
+    IExcelComSheet[] FindByName(string name, bool matchCase = false);
 
     /// <summary>
     /// 根据类型查找工作表 (例如: xlWorksheet, xlChart, xlExcel4MacroSheet, xlExcel4IntlMacroSheet)
     /// </summary>
     /// <param name="type">工作表类型</param>
     /// <returns>匹配的工作表数组</returns>
-    IExcelCommonSheet[] FindByType(XlSheetType type);
+    IExcelComSheet[] FindByType(XlSheetType type);
 
     /// <summary>
     /// 根据索引范围查找工作表
@@ -153,7 +153,7 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// <param name="startIndex">起始索引</param>
     /// <param name="endIndex">结束索引</param>
     /// <returns>匹配的工作表数组</returns>
-    IExcelCommonSheet[] FindByIndexRange(int startIndex, int endIndex);
+    IExcelComSheet[] FindByIndexRange(int startIndex, int endIndex);
 
     #endregion
 
@@ -164,7 +164,7 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// </summary>
     /// <param name="options">添加选项</param>
     /// <returns>新创建的工作表</returns>
-    IExcelCommonSheet AddSheet(AddSheetOptions options);
+    IExcelComSheet AddSheet(AddSheetOptions options);
 
     /// <summary>
     /// 复制工作表
@@ -172,7 +172,7 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// <param name="source">源工作表</param>
     /// <param name="options">复制选项</param>
     /// <returns>新创建的工作表副本</returns>
-    IExcelCommonSheet CopySheet(IExcelCommonSheet source, CopySheetOptions options);
+    IExcelComSheet CopySheet(IExcelComSheet source, CopySheetOptions options);
 
     /// <summary>
     /// 删除指定索引的工作表
@@ -190,7 +190,7 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// 删除指定的工作表对象
     /// </summary>
     /// <param name="sheet">要删除的工作表对象</param>
-    void Delete(IExcelCommonSheet sheet);
+    void Delete(IExcelComSheet sheet);
 
     /// <summary>
     /// 批量删除工作表
@@ -218,7 +218,7 @@ public interface IExcelCommonSheets : IEnumerable<IExcelCommonSheet>, IDisposabl
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
-    IExcelCommonSheet? ActiveWorksheet { get; }
+    IExcelComSheet? ActiveWorksheet { get; }
 
     /// <summary>
     /// 打印所有工作表

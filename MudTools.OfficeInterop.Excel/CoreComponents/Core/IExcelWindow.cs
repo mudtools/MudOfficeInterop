@@ -35,7 +35,7 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <summary>
     /// 获取当前活动工作表
     /// </summary>
-    IExcelCommonSheet? ActiveSheet { get; }
+    IExcelComSheet? ActiveSheet { get; }
 
     /// <summary>
     /// 获取当前活动工作表

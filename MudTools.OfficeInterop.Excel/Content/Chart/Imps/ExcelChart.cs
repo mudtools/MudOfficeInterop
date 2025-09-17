@@ -332,7 +332,7 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     /// <param name="before">复制到指定工作表之前</param>
     /// <param name="after">复制到指定工作表之后</param>
-    public void Copy(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
+    public void Copy(IExcelComSheet? before = null, IExcelComSheet? after = null)
     {
         if (_chart == null) return;
 
@@ -400,7 +400,7 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     /// <param name="before">移动到指定工作表之前</param>
     /// <param name="after">移动到指定工作表之后</param>
-    public void Move(IExcelCommonSheet? before = null, IExcelCommonSheet? after = null)
+    public void Move(IExcelComSheet? before = null, IExcelComSheet? after = null)
     {
         if (_chart == null) return;
 

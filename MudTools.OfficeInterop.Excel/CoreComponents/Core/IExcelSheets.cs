@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel
     /// <summary>
     /// Excel工作表集合接口 (适用于 Sheets 对象)
     /// </summary>
-    public interface IExcelSheets : IExcelCommonSheets
+    public interface IExcelSheets : IExcelComSheets
     {
         #region 操作方法
         /// <summary>
@@ -22,8 +22,8 @@ namespace MudTools.OfficeInterop.Excel
         /// <param name="count">要添加的工作表数量</param>
         /// <returns>新创建的工作表对象 (或第一个，如果添加了多个)</returns>
         IExcelChart? AddChart(
-                   IExcelCommonSheet? before = null,
-                   IExcelCommonSheet? after = null,
+                   IExcelComSheet? before = null,
+                   IExcelComSheet? after = null,
                    int? count = 1);
         /// <summary>
         /// 将此 Sheets 集合中的所有工作表复制到指定位置。
@@ -47,7 +47,7 @@ namespace MudTools.OfficeInterop.Excel
         /// 如果 beforeSheet 和 afterSheet 都为 null，则 Excel 通常会创建一个新工作簿来容纳复制的工作表。
         /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
         /// </remarks>
-        void CopyTo(IExcelCommonSheet? beforeSheet = null, IExcelCommonSheet? afterSheet = null);
+        void CopyTo(IExcelComSheet? beforeSheet = null, IExcelComSheet? afterSheet = null);
         /// <summary>
         /// 将此 Sheets 集合中的所有工作表移动到指定位置。
         /// 这是对 Microsoft.Office.Interop.Excel.Sheets.Move 方法的封装。
@@ -70,7 +70,7 @@ namespace MudTools.OfficeInterop.Excel
         /// 如果 beforeSheet 和 afterSheet 都为 null，行为可能不确定（可能移动到新工作簿或失败）。
         /// 如果同时指定了 beforeSheet 和 afterSheet，行为可能不确定（通常 After 会被忽略）。
         /// </remarks>
-        void MoveTo(IExcelCommonSheet? beforeSheet = null, IExcelCommonSheet? afterSheet = null);
+        void MoveTo(IExcelComSheet? beforeSheet = null, IExcelComSheet? afterSheet = null);
 
         /// <summary>
         /// 将指定区域的内容和格式填充到此 Sheets 集合中所有工作表的对应区域。

@@ -11,13 +11,8 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel工作表中的绘图对象集合，提供对图表、形状等绘图对象的管理功能。
 /// 该接口继承自IDisposable和IEnumerable&lt;IExcelDrawing&gt;，支持资源释放和遍历操作。
 /// </summary>
-public interface IExcelDrawingObjects : IDisposable, IEnumerable<IExcelDrawing>
+public interface IExcelDrawingObjects : IExcelComGraphObjects, IEnumerable<IExcelDrawing>, IDisposable
 {
-    /// <summary>
-    /// 获取绘图对象集合中的对象数量
-    /// </summary>
-    int Count { get; }
-
     /// <summary>
     /// 获取绘图对象的堆叠次序
     /// </summary>
@@ -78,25 +73,6 @@ public interface IExcelDrawingObjects : IDisposable, IEnumerable<IExcelDrawing>
     /// </summary>
     string Text { get; set; }
 
-    /// <summary>
-    /// 获取或设置控件的宽度
-    /// </summary>
-    double Width { get; set; }
-
-    /// <summary>
-    /// 获取或设置控件的高度
-    /// </summary>
-    double Height { get; set; }
-
-    /// <summary>
-    /// 获取或设置控件上边缘到工作表上边缘的距离
-    /// </summary>
-    double Top { get; set; }
-
-    /// <summary>
-    /// 获取或设置控件左边缘到工作表左边缘的距离
-    /// </summary>
-    double Left { get; set; }
 
     /// <summary>
     /// 获取或设置列表框中当前选中项的索引
@@ -128,15 +104,6 @@ public interface IExcelDrawingObjects : IDisposable, IEnumerable<IExcelDrawing>
     /// </summary>
     int Value { get; set; }
 
-    /// <summary>
-    /// 获取或设置控件是否显示阴影效果
-    /// </summary>
-    bool Shadow { get; set; }
-
-    /// <summary>
-    /// 获取或设置控件是否被锁定
-    /// </summary>
-    bool Locked { get; set; }
 
     /// <summary>
     /// 获取或设置控件的标题
@@ -168,20 +135,7 @@ public interface IExcelDrawingObjects : IDisposable, IEnumerable<IExcelDrawing>
     /// </summary>
     bool Enabled { get; set; }
 
-    /// <summary>
-    /// 获取或设置打印工作表时是否打印该控件
-    /// </summary>
-    bool PrintObject { get; set; }
 
-    /// <summary>
-    /// 获取或设置控件是否可见
-    /// </summary>
-    bool Visible { get; set; }
-
-    /// <summary>
-    /// 获取控件的边框属性
-    /// </summary>
-    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取控件的字符属性
@@ -193,15 +147,6 @@ public interface IExcelDrawingObjects : IDisposable, IEnumerable<IExcelDrawing>
     /// </summary>
     IExcelFont? Font { get; }
 
-    /// <summary>
-    /// 获取控件的内部属性
-    /// </summary>
-    IExcelInterior? Interior { get; }
-
-    /// <summary>
-    /// 获取控件的形状区域属性
-    /// </summary>
-    IExcelShapeRange? ShapeRange { get; }
 
     /// <summary>
     /// 根据索引获取绘图对象（索引从1开始）
@@ -241,11 +186,6 @@ public interface IExcelDrawingObjects : IDisposable, IEnumerable<IExcelDrawing>
     /// 清除所有绘图对象
     /// </summary>
     void Clear();
-
-    /// <summary>
-    /// 选择所有绘图对象
-    /// </summary>
-    void SelectAll();
 
     /// <summary>
     /// 获取可见的绘图对象
