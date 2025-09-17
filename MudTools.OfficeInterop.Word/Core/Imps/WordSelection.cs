@@ -22,28 +22,160 @@ internal class WordSelection : IWordSelection
     public string Text
     {
         get => _selection.Text;
-        set => _selection.TypeText(value);
+        set => _selection.Text = value;
     }
 
-    public WdSelectionType Type => (WdSelectionType)_selection.Type;
+    public WdBuiltinStyle Style
+    {
+        get => (WdBuiltinStyle)(int)_selection.get_Style();
+        set => _selection.set_Style(value.EnumConvert(MsWord.WdBuiltinStyle.wdStyleBodyText));
+    }
 
+    public WdTextOrientation Orientation
+    {
+        get => _selection.Orientation.EnumConvert(WdTextOrientation.wdTextOrientationHorizontal);
+        set => _selection.Orientation = value.EnumConvert(MsWord.WdTextOrientation.wdTextOrientationHorizontal);
+    }
+
+    public WdSelectionType Type => _selection.Type.EnumConvert(WdSelectionType.wdNoSelection);
+
+    public WdStoryType StoryType => _selection.StoryType.EnumConvert(WdStoryType.wdMainTextStory);
+
+    public WdSelectionFlags Flags => _selection.Flags.EnumConvert(WdSelectionFlags.wdSelReplace);
+
+    public WdLanguageID LanguageID
+    {
+        get => _selection.LanguageID.EnumConvert(WdLanguageID.wdLanguageNone);
+        set => _selection.LanguageID = value.EnumConvert(MsWord.WdLanguageID.wdLanguageNone);
+    }
+
+    public WdLanguageID LanguageIDFarEast
+    {
+        get => _selection.LanguageIDFarEast.EnumConvert(WdLanguageID.wdLanguageNone);
+        set => _selection.LanguageIDFarEast = value.EnumConvert(MsWord.WdLanguageID.wdLanguageNone);
+    }
+
+    public WdLanguageID LanguageIDOther
+    {
+        get => _selection.LanguageIDOther.EnumConvert(WdLanguageID.wdLanguageNone);
+        set => _selection.LanguageIDOther = value.EnumConvert(MsWord.WdLanguageID.wdLanguageNone);
+    }
     public int Start
     {
         get => _selection.Start;
-        set => _selection.SetRange(value, _selection.End);
+        set => _selection.Start = value;
     }
 
     public int End
     {
         get => _selection.End;
-        set => _selection.SetRange(_selection.Start, value);
+        set => _selection.End = value;
+    }
+
+    public int StoryLength
+    {
+        get => _selection.StoryLength;
+    }
+
+    public int BookmarkID
+    {
+        get => _selection.BookmarkID;
+    }
+
+    public int PreviousBookmarkID
+    {
+        get => _selection.PreviousBookmarkID;
+    }
+
+    public bool IsEndOfRowMark
+    {
+        get => _selection.IsEndOfRowMark;
+    }
+
+    public bool Active
+    {
+        get => _selection.Active;
+    }
+
+    public bool StartIsActive
+    {
+        get => _selection.StartIsActive;
+        set => _selection.StartIsActive = value;
+    }
+
+    public bool ExtendMode
+    {
+        get => _selection.ExtendMode;
+        set => _selection.ExtendMode = value;
+    }
+
+    public bool ColumnSelectMode
+    {
+        get => _selection.ColumnSelectMode;
+        set => _selection.ColumnSelectMode = value;
+    }
+
+    public bool IPAtEndOfLine
+    {
+        get => _selection.IPAtEndOfLine;
     }
 
     public int Length => _selection.End - _selection.Start;
 
     public object Parent => _selection.Parent;
 
-    public IWordDocument Document => _selection != null ? new WordDocument(_selection.Document) : null;
+    public IWordDocument? Document => _selection != null ? new WordDocument(_selection.Document) : null;
+
+    public IWordFont? Font => _selection != null ? new WordFont(_selection.Font) : null;
+
+    public IWordShapeRange? ShapeRange => _selection != null ? new WordShapeRange(_selection.ShapeRange) : null;
+
+    public IWordInlineShapes? InlineShapes => _selection != null ? new WordInlineShapes(_selection.InlineShapes) : null;
+
+    public IWordParagraphs? Paragraphs => _selection != null ? new WordParagraphs(_selection.Paragraphs) : null;
+
+    public IWordBorders? Borders => _selection != null ? new WordBorders(_selection.Borders) : null;
+
+    public IWordShading? Shading => _selection != null ? new WordShading(_selection.Shading) : null;
+
+    public IWordFields? Fields => _selection != null ? new WordFields(_selection.Fields) : null;
+
+    public IWordFormFields? FormFields => _selection != null ? new WordFormFields(_selection.FormFields) : null;
+
+    public IWordFrames? Frames => _selection != null ? new WordFrames(_selection.Frames) : null;
+
+    public IWordParagraphFormat? ParagraphFormat => _selection != null ? new WordParagraphFormat(_selection.ParagraphFormat) : null;
+
+    public IWordPageSetup? PageSetup => _selection != null ? new WordPageSetup(_selection.PageSetup) : null;
+
+    public IWordBookmarks Bookmarks => _selection != null ? new WordBookmarks(_selection.Bookmarks) : null;
+
+    public IWordSections Sections => _selection != null ? new WordSections(_selection.Sections) : null;
+
+    public IWordCells Cells => _selection != null ? new WordCells(_selection.Cells) : null;
+
+    public IWordColumns Columns => _selection != null ? new WordColumns(_selection.Columns) : null;
+
+    public IWordRows Rows => _selection != null ? new WordRows(_selection.Rows) : null;
+
+    public IWordHeaderFooter HeaderFooter => _selection != null ? new WordHeaderFooter(_selection.HeaderFooter) : null;
+
+    public IWordComments Comments => _selection != null ? new WordComments(_selection.Comments) : null;
+
+    public IWordEndnotes Endnotes => _selection != null ? new WordEndnotes(_selection.Endnotes) : null;
+
+    public IWordFootnotes Footnotes => _selection != null ? new WordFootnotes(_selection.Footnotes) : null;
+
+    public IWordCharacters Characters => _selection != null ? new WordCharacters(_selection.Characters) : null;
+
+    public IWordSentences Sentences => _selection != null ? new WordSentences(_selection.Sentences) : null;
+
+    public IWordWords Words => _selection != null ? new WordWords(_selection.Words) : null;
+
+    public IWordTables Tables => _selection != null ? new WordTables(_selection.Tables) : null;
+
+    public IWordRange FormattedText => _selection != null ? new WordRange(_selection.FormattedText) : null;
+
 
     public string FontName
     {
@@ -232,13 +364,47 @@ internal class WordSelection : IWordSelection
     {
         try
         {
-            _selection.TypeParagraph();
+            _selection.InsertParagraph();
         }
         catch (Exception ex)
         {
             throw new InvalidOperationException("Failed to insert paragraph.", ex);
         }
     }
+
+    public void InsertParagraphAfter()
+    {
+        try
+        {
+            _selection.InsertParagraphAfter();
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to insert paragraph.", ex);
+        }
+    }
+
+    public void InsertParagraphBefore()
+    {
+        try
+        {
+            _selection.InsertParagraphBefore();
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to insert paragraph.", ex);
+        }
+    }
+
+    public void InsertBefore(string text)
+    {
+        _selection?.InsertBefore(text);
+    }
+    public void InsertAfter(string text)
+    {
+        _selection?.InsertAfter(text);
+    }
+
 
     public void InsertLineBreak()
     {
@@ -252,16 +418,33 @@ internal class WordSelection : IWordSelection
         }
     }
 
+    public void InsertNewPage()
+    {
+        _selection?.InsertNewPage();
+    }
+
     public void InsertPageBreak()
     {
         try
         {
-            _selection.InsertBreak(MsWord.WdBreakType.wdPageBreak);
+            _selection?.InsertBreak(MsWord.WdBreakType.wdPageBreak);
         }
         catch (Exception ex)
         {
             throw new InvalidOperationException("Failed to insert page break.", ex);
         }
+    }
+
+    public IWordRange? Next(WdUnits unit, int count)
+    {
+        var range = _selection?.Next(unit.EnumConvert(MsWord.WdUnits.wdLine), count);
+        return range != null ? new WordRange(range) : null;
+    }
+
+    public IWordRange? Previous(WdUnits unit, int count)
+    {
+        var range = _selection?.Previous(unit.EnumConvert(MsWord.WdUnits.wdLine), count);
+        return range != null ? new WordRange(range) : null;
     }
 
     public IWordTable InsertTable(int rows, int columns)
@@ -278,6 +461,47 @@ internal class WordSelection : IWordSelection
         {
             throw new InvalidOperationException("Failed to insert table.", ex);
         }
+    }
+
+    public void PasteExcelTable(bool linkedToExcel, bool wordFormatting, bool RTF)
+    {
+        _selection?.PasteExcelTable(linkedToExcel, wordFormatting, RTF);
+    }
+
+    public void PasteFormat()
+    {
+        _selection?.PasteFormat();
+    }
+
+    public void PasteAsNestedTable()
+    {
+        _selection?.PasteAsNestedTable();
+    }
+
+    public void PasteSpecial(bool? iconIndex,
+        bool? link, WdOLEPlacement? placement,
+        bool? displayAsIcon, WdPasteDataType? dataType,
+        bool? iconFileName, bool? iconLabel)
+    {
+        _selection?.PasteSpecial(
+            IconIndex: iconIndex.ComArgsVal(),
+            Link: link.ComArgsVal(),
+            Placement: placement.ComArgsConvert(d => d.EnumConvert(MsWord.WdOLEPlacement.wdInLine)),
+            DisplayAsIcon: displayAsIcon.ComArgsVal(),
+            DataType: dataType.ComArgsConvert(d => d.EnumConvert(MsWord.WdPasteDataType.wdPasteText)),
+            IconFileName: iconFileName.ComArgsVal(),
+            IconLabel: iconLabel.ComArgsVal()
+            );
+    }
+
+    public void PasteAppendTable()
+    {
+        _selection?.PasteAppendTable();
+    }
+
+    public void PasteAndFormat(WdRecoveryType Type)
+    {
+        _selection?.PasteAndFormat(Type.EnumConvert(MsWord.WdRecoveryType.wdFormatPlainText));
     }
 
     public int MoveLeft(int unit = 1, int count = 1)
@@ -328,11 +552,97 @@ internal class WordSelection : IWordSelection
         }
     }
 
+    public void SetRange(int start, int end)
+    {
+        _selection.SetRange(start, end);
+    }
+
+    public void Select()
+    {
+        try
+        {
+            _selection.Select();
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to select  content.", ex);
+        }
+    }
+    public bool InRange(IWordRange range)
+    {
+        if (_selection == null || range == null)
+            return false;
+
+        return _selection.InRange(((WordRange)range)._range);
+    }
+
+    public void Shrink()
+    {
+        _selection?.Shrink();
+    }
+
+    public void SplitTable()
+    {
+        _selection?.SplitTable();
+    }
+
+    public int? StartOf(WdUnits? unit, WdMovementType? extend)
+    {
+        return _selection?.StartOf(
+            unit.ComArgsConvert(d => d.EnumConvert(MsWord.WdUnits.wdCharacter)),
+            extend.ComArgsConvert(d => d.EnumConvert(MsWord.WdMovementType.wdMove)));
+    }
+
+    public void SelectCell()
+    {
+        _selection?.SelectCell();
+    }
+
+    public void SelectColumn()
+    {
+        _selection?.SelectColumn();
+    }
+
+    public void SelectCurrentAlignment()
+    {
+        _selection?.SelectCurrentAlignment();
+    }
+
+    public void SelectCurrentColor()
+    {
+        _selection?.SelectCurrentColor();
+    }
+
+    public void SelectCurrentFont()
+    {
+        _selection?.SelectCurrentFont();
+    }
+
+    public void SelectCurrentIndent()
+    {
+        _selection?.SelectCurrentIndent();
+    }
+
+    public void SelectCurrentSpacing()
+    {
+        _selection?.SelectCurrentSpacing();
+    }
+
+    public void SelectCurrentTabs()
+    {
+        _selection?.SelectCurrentTabs();
+    }
+
+    public void SelectRow()
+    {
+        _selection?.SelectRow();
+    }
+
     public void SelectAll()
     {
         try
         {
-            _selection.WholeStory();
+            _selection?.WholeStory();
         }
         catch (Exception ex)
         {
@@ -504,46 +814,6 @@ internal class WordSelection : IWordSelection
         catch (Exception ex)
         {
             throw new InvalidOperationException($"Failed to add hyperlink to '{address}'.", ex);
-        }
-    }
-
-    public IEnumerable<IWordBookmark> Bookmarks
-    {
-        get
-        {
-            var bookmarks = new List<IWordBookmark>();
-            try
-            {
-                foreach (MsWord.Bookmark bookmark in _selection.Bookmarks)
-                {
-                    bookmarks.Add(new WordBookmark(bookmark));
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to enumerate bookmarks.", ex);
-            }
-            return bookmarks;
-        }
-    }
-
-    public IEnumerable<IWordTable> Tables
-    {
-        get
-        {
-            var tables = new List<IWordTable>();
-            try
-            {
-                foreach (MsWord.Table table in _selection.Tables)
-                {
-                    tables.Add(new WordTable(table));
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to enumerate tables.", ex);
-            }
-            return tables;
         }
     }
 

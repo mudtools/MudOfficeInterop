@@ -121,7 +121,7 @@ internal class WordSection : IWordSection
     {
         try
         {
-            _section.Range.Delete();
+            _section?.Range.Delete();
         }
         catch (Exception ex)
         {
