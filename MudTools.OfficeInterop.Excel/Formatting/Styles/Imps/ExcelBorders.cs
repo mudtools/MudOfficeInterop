@@ -49,12 +49,6 @@ internal class ExcelBorders : IExcelBorders
         {
             try
             {
-                // 释放所有子边框对象
-                foreach (object? item in _borders)
-                {
-                    ExcelBorder? border = item as ExcelBorder;
-                    border?.Dispose();
-                }
                 // 释放底层COM对象
                 if (_borders != null)
                     Marshal.ReleaseComObject(_borders);
@@ -133,28 +127,54 @@ internal class ExcelBorders : IExcelBorders
 
     public XlLineStyle LineStyle
     {
-        get => (XlLineStyle)_borders?.LineStyle;
+        get => _borders != null ? (XlLineStyle)Enum.ToObject(typeof(XlLineStyle), _borders.ColorIndex) : XlLineStyle.xlContinuous;
         set
         {
-            _borders.LineStyle = (MsExcel.XlLineStyle)value;
-            SetLineStyle(LineStyle);
+            if (_borders != null)
+                _borders.ColorIndex = (MsExcel.XlLineStyle)Enum.ToObject(typeof(MsExcel.XlLineStyle), (int)value);
         }
     }
 
     public XlBorderWeight Weight
     {
-        get => (XlBorderWeight)_borders?.Weight;
+        get => _borders != null ? (XlBorderWeight)Enum.ToObject(typeof(XlBorderWeight), _borders.Weight) : XlBorderWeight.xlThin;
         set
         {
-            _borders.Weight = (MsExcel.XlBorderWeight)value;
-            SetWeight(Convert.ToInt32(value));
+            if (_borders != null)
+                _borders.Weight = (MsExcel.XlBorderWeight)Enum.ToObject(typeof(MsExcel.XlBorderWeight), (int)value);
         }
     }
 
     /// <summary>
-    /// 获取或设置字体颜色（RGB值）
+    /// 获取或设置边框的颜色
     /// </summary>
-    public Color Color { get; set; }
+    public Color Color
+    {
+        get
+        {
+            if (_borders != null)
+            {
+                var color = Convert.ToInt32(_borders.Color);
+                return Color.FromArgb((int)(color & 0xFF), (int)((color >> 8) & 0xFF), (int)((color >> 16) & 0xFF));
+            }
+            return Color.White;
+        }
+        set
+        {
+            if (_borders != null)
+                _borders.Color = (int)((value.B << 16) | (value.G << 8) | value.R);
+        }
+    }
+
+    public XlColorIndex ColorIndex
+    {
+        get => _borders != null ? (XlColorIndex)Enum.ToObject(typeof(XlColorIndex), _borders.ColorIndex) : XlColorIndex.xlColorIndexAutomatic;
+        set
+        {
+            if (_borders != null)
+                _borders.ColorIndex = (MsExcel.XlColorIndex)Enum.ToObject(typeof(MsExcel.XlColorIndex), (int)value);
+        }
+    }
     #endregion   
 
     #region 查找和筛选

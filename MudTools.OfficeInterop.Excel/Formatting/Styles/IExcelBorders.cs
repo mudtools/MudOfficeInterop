@@ -64,11 +64,17 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     XlBorderWeight Weight { get; set; }
 
     /// <summary>
-    /// 获取或设置字体颜色（RGB值）
+    /// 获取或设置边框颜色
     /// </summary>
     Color Color { get; set; }
 
-    #endregion   
+    /// <summary>
+    /// 获取或设置边框的颜色。
+    /// 对应 Border.ColorIndex 属性
+    /// </summary>
+    XlColorIndex ColorIndex { get; set; }
+
+    #endregion
 
     #region 查找和筛选
 
