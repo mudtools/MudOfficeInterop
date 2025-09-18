@@ -323,11 +323,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public XlHAlign HorizontalAlignment
     {
-        get
-        {
-            try { return (XlHAlign)InternalRange.HorizontalAlignment; }
-            catch { return XlHAlign.xlHAlignGeneral; }
-        }
+        get => (XlHAlign)InternalRange.HorizontalAlignment;
         set => InternalRange.HorizontalAlignment = (MsExcel.XlHAlign)value;
     }
 
@@ -336,11 +332,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public XlVAlign VerticalAlignment
     {
-        get
-        {
-            try { return (XlVAlign)InternalRange.VerticalAlignment; }
-            catch { return XlVAlign.xlVAlignBottom; }
-        }
+        get => (XlVAlign)InternalRange.VerticalAlignment;
         set => InternalRange.VerticalAlignment = (MsExcel.XlVAlign)value;
     }
 

@@ -20,7 +20,7 @@ public interface IExcelSort : IDisposable
     /// <summary>
     /// 获取或设置排序范围
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 获取或设置排序头行
@@ -36,13 +36,17 @@ public interface IExcelSort : IDisposable
     /// <summary>
     /// 获取排序字段集合
     /// </summary>
-    IExcelSortFields SortFields { get; }
+    IExcelSortFields? SortFields { get; }
 
     /// <summary>
     /// 获取父级工作表
     /// </summary>
     object Parent { get; }
 
+    /// <summary>
+    /// 设置排序范围
+    /// </summary>
+    /// <param name="range">要排序的单元格范围</param>
     void SetRange(IExcelRange range);
 
     /// <summary>

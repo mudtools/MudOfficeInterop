@@ -12,12 +12,19 @@ internal class ExcelListObject : IExcelListObject
     private MsExcel.ListObject _listObject;
     private bool _disposedValue;
 
+    internal ExcelListObject(MsExcel.ListObject listObject)
+    {
+        _listObject = listObject ?? throw new ArgumentNullException(nameof(listObject));
+        _disposedValue = false;
+    }
+
     public string Name
     {
         get => _listObject.Name;
         set => _listObject.Name = value;
     }
     public IExcelRange? Range => _listObject != null ? new ExcelRange(_listObject.Range) : null;
+
     public IExcelRange? DataRange => _listObject != null ? new ExcelRange(_listObject.DataBodyRange) : null;
 
     public IExcelRange? HeaderRowRange => _listObject != null ? new ExcelRange(_listObject.HeaderRowRange) : null;
@@ -35,6 +42,10 @@ internal class ExcelListObject : IExcelListObject
     public IExcelSort? Sort => _listObject != null ? new ExcelSort(_listObject.Sort) : null;
 
     public IExcelQueryTable? QueryTable => _listObject != null ? new ExcelQueryTable(_listObject.QueryTable) : null;
+
+    public IExcelTableObject? TableObject => _listObject != null ? new ExcelTableObject(_listObject.TableObject) : null;
+
+    public IExcelSlicers? Slicers => _listObject != null ? new ExcelSlicers(_listObject.Slicers) : null;
 
     public bool DisplayRightToLeft
     {
@@ -125,11 +136,6 @@ internal class ExcelListObject : IExcelListObject
 
     public string WorksheetName => _listObject.Range.Worksheet.Name;
 
-    internal ExcelListObject(MsExcel.ListObject listObject)
-    {
-        _listObject = listObject ?? throw new ArgumentNullException(nameof(listObject));
-        _disposedValue = false;
-    }
 
     public void ExportToVisio()
     {

@@ -50,6 +50,12 @@ public interface IExcelWorkbook : IDisposable
     bool MultiUserEditing { get; }
 
     /// <summary>
+    /// 获取或设置工作簿的关键词属性
+    /// 对应 Workbook.Keywords 属性
+    /// </summary>
+    string? Keywords { get; set; }
+
+    /// <summary>
     /// 获取工作簿是否已保存
     /// 对应 Workbook.Saved 属性
     /// </summary>
@@ -62,10 +68,52 @@ public interface IExcelWorkbook : IDisposable
     bool ProtectStructure { get; }
 
     /// <summary>
+    /// 获取工作簿窗口的保护状态
+    /// 对应 Workbook.ProtectWindows 属性
+    /// </summary>
+    bool ProtectWindows { get; }
+
+    /// <summary>
+    /// 获取工作簿的个人视图打印设置状态
+    /// 对应 Workbook.PersonalViewPrintSettings 属性
+    /// </summary>
+    bool PersonalViewPrintSettings { get; }
+
+    /// <summary>
+    /// 获取工作簿的个人视图列表设置状态
+    /// 对应 Workbook.PersonalViewListSettings 属性
+    /// </summary>
+    bool PersonalViewListSettings { get; }
+
+    /// <summary>
+    /// 获取或设置工作簿的精确计算状态
+    /// 对应 Workbook.PrecisionAsDisplayed 属性
+    /// </summary>
+    bool PrecisionAsDisplayed { get; set; }
+
+    /// <summary>
+    /// 获取工作簿是否包含VB工程
+    /// 对应 Workbook.HasVBProject 属性
+    /// </summary>
+    bool HasVBProject { get; }
+
+    /// <summary>
+    /// 获取工作簿是否为插件工作簿
+    /// 对应 Workbook.IsAddin 属性
+    /// </summary>
+    bool IsAddin { get; }
+
+    /// <summary>
     /// 获取或设置工作簿中图形对象的显示方式
     /// 对应 Workbook.DisplayDrawingObjects 属性
     /// </summary>
     XlDisplayDrawingObjects DisplayDrawingObjects { get; set; }
+
+    /// <summary>
+    /// 获取工作簿的格式
+    /// 对应 Workbook.FileFormat 属性
+    /// </summary>
+    XlFileFormat FileFormat { get; }
 
     /// <summary>
     /// 获取工作簿是否受保护
@@ -129,6 +177,29 @@ public interface IExcelWorkbook : IDisposable
     /// </summary>
     string CodeName { get; }
 
+    /// <summary>
+    /// 获取或设置工作簿保存时要执行的宏名称
+    /// 对应 Workbook.OnSave 属性
+    /// </summary>
+    string? OnSave { get; set; }
+
+    /// <summary>
+    /// 获取或设置工作表激活时要执行的宏名称
+    /// 对应 Workbook.OnSheetActivate 属性
+    /// </summary>
+    string? OnSheetActivate { get; set; }
+
+    /// <summary>
+    /// 获取或设置工作表失焦时要执行的宏名称
+    /// 对应 Workbook.OnSheetDeactivate 属性
+    /// </summary>
+    string? OnSheetDeactivate { get; set; }
+
+    /// <summary>
+    /// 获取或设置工作簿的主题
+    /// 对应 Workbook.Subject 属性
+    /// </summary>
+    string? Subject { get; set; }
     #endregion
 
     #region 工作表管理 
@@ -142,6 +213,11 @@ public interface IExcelWorkbook : IDisposable
     /// 对应 Workbook.Sheets 属性
     /// </summary>
     IExcelSheets Sheets { get; }
+
+    /// <summary>
+    /// 获取工作簿中的所有模块集合
+    /// </summary>
+    IExcelSheets? Modules { get; }
 
     /// <summary>
     /// 获取工作簿中的工作表数量
@@ -180,6 +256,23 @@ public interface IExcelWorkbook : IDisposable
     void DeleteWorksheet(IExcelWorksheet worksheet);
 
     /// <summary>
+    /// 打开工作簿中的链接
+    /// </summary>
+    /// <param name="name">链接的名称，如果为null则打开所有链接</param>
+    /// <param name="readOnly">是否以只读方式打开链接，如果为null则使用默认设置</param>
+    /// <param name="type">链接的类型，参考XlLink枚举，如果为null则包括所有类型的链接</param>
+    void OpenLinks(string? name, bool? readOnly, XlLink? type);
+
+    /// <summary>
+    /// 获取工作簿中某个链接的日期及其更新状态等信息
+    /// </summary>
+    /// <param name="name">链接的名称</param>
+    /// <param name="linkInfo">要返回的信息类型，如更新状态、版本日期或链接状态</param>
+    /// <param name="linkInfoType">要为之返回信息的链接的类型，默认为null</param>
+    /// <returns>返回关于链接的信息，具体取决于linkInfo参数的值</returns>
+    object? LinkInfo(string? name, XlLinkInfo linkInfo, XlLinkInfoType? linkInfoType = null);
+
+    /// <summary>
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>
@@ -193,6 +286,26 @@ public interface IExcelWorkbook : IDisposable
     #endregion
 
     #region 保护和安全
+    /// <summary>
+    /// 更改工作簿的访问模式和权限
+    /// 对应 Workbook.ChangeFileAccess 方法
+    /// </summary>
+    /// <param name="Mode">指定文件访问模式的枚举值，可为只读或读写模式</param>
+    /// <param name="WritePassword">写访问所需密码，如果不需要密码则可以为 null</param>
+    /// <param name="Notify">指定当文件不能立即访问时是否通知用户，true 表示通知，false 表示不通知</param>
+    void ChangeFileAccess(XlFileAccess Mode, string? WritePassword, bool? Notify);
+
+    /// <summary>
+    /// 删除工作簿的数字格式
+    /// 对应 Workbook.DeleteNumberFormat 方法
+    /// </summary>
+    /// <param name="NumberFormatName">要删除的数字格式名称</param>
+    void DeleteNumberFormat(string NumberFormatName);
+
+    /// <summary>
+    /// 获取工作簿的独占访问权
+    /// </summary>
+    void ExclusiveAccess();
 
     /// <summary>
     /// 保护工作簿结构和窗口
@@ -225,6 +338,10 @@ public interface IExcelWorkbook : IDisposable
     #endregion
 
     #region 操作方法
+    /// <summary>
+    /// 创建一个新的窗口
+    /// </summary>
+    IExcelWindow? NewWindow();
 
     /// <summary>
     /// 将工作簿导出为固定格式文件（如 PDF 或 XPS）
@@ -332,6 +449,15 @@ public interface IExcelWorkbook : IDisposable
     /// </summary>
     void RefreshAll();
 
+    void Reply();
+
+    void ReplyAll();
+
+    void RemoveUser(int index);
+
+    void Route();
+
+    bool Routed { get; }
 
     /// <summary>
     /// 清除工作簿中的所有内容
@@ -348,6 +474,16 @@ public interface IExcelWorkbook : IDisposable
     /// 获取工作簿的样式集合
     /// </summary>
     IExcelStyles Styles { get; }
+
+    /// <summary>
+    /// 获取工作簿的切片器缓存集合
+    /// </summary>
+    IExcelSlicerCaches SlicerCaches { get; }
+
+    /// <summary>
+    /// 获取工作簿的活动切片器
+    /// </summary>
+    IExcelSlicer ActiveSlicer { get; }
 
     /// <summary>
     /// 获取工作簿的图表集合

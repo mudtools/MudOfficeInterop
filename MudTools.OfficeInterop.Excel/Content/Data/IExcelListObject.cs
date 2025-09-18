@@ -69,6 +69,11 @@ public interface IExcelListObject : IDisposable
     IExcelQueryTable? QueryTable { get; }
 
     /// <summary>
+    /// 获取表格的切片器集合
+    /// </summary>
+    IExcelSlicers? Slicers { get; }
+
+    /// <summary>
     /// 获取是否从右到左显示表格
     /// </summary>
     bool DisplayRightToLeft { get; }

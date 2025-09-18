@@ -58,8 +58,11 @@ internal partial class ExcelWorkbook : IExcelWorkbook
                 _vbeVBProject?.Dispose();
                 _worksheets?.Dispose();
                 _sheets?.Dispose();
+                _modules?.Dispose();
                 _names?.Dispose();
                 _styles?.Dispose();
+                _slicerCaches?.Dispose();
+                _activeSlicer?.Dispose();
                 _charts?.Dispose();
                 _activeWorksheet?.Dispose();
                 DisConnectEvent();
@@ -72,9 +75,12 @@ internal partial class ExcelWorkbook : IExcelWorkbook
                 // 忽略释放过程中的异常
             }
         }
+        _slicerCaches = null;
+        _activeSlicer = null;
         _workbookEvents_Event = null;
         _worksheets = null;
         _sheets = null;
+        _modules = null;
         _names = null;
         _styles = null;
         _charts = null;
@@ -128,19 +134,111 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         }
     }
 
+    public string? Keywords
+    {
+        get => _workbook?.Keywords;
+        set
+        {
+            if (_workbook != null)
+                _workbook.Keywords = value;
+        }
+    }
+
+    public string? OnSave
+    {
+        get => _workbook?.OnSave;
+        set
+        {
+            if (_workbook != null)
+                _workbook.OnSave = value;
+        }
+    }
+
+    public string? OnSheetActivate
+    {
+        get => _workbook?.OnSheetActivate;
+        set
+        {
+            if (_workbook != null)
+                _workbook.OnSheetActivate = value;
+        }
+    }
+
+    public string? OnSheetDeactivate
+    {
+        get => _workbook?.OnSheetDeactivate;
+        set
+        {
+            if (_workbook != null)
+                _workbook.OnSheetDeactivate = value;
+        }
+    }
+
+    public string? Subject
+    {
+        get => _workbook?.Subject;
+        set
+        {
+            if (_workbook != null)
+                _workbook.Subject = value;
+        }
+    }
+
+    public bool IsAddin
+    {
+        get => _workbook != null && _workbook.IsAddin;
+    }
+
     public bool ProtectStructure
     {
         get => _workbook != null && _workbook.ProtectStructure;
     }
 
-    public XlDisplayDrawingObjects DisplayDrawingObjects
+    public bool ProtectWindows
     {
-        get => (XlDisplayDrawingObjects)_workbook.DisplayDrawingObjects;
+        get => _workbook != null && _workbook.ProtectWindows;
+    }
+
+
+
+    public bool PersonalViewListSettings
+    {
+        get => _workbook != null && _workbook.PersonalViewListSettings;
+    }
+
+    public bool PersonalViewPrintSettings
+    {
+        get => _workbook != null && _workbook.PersonalViewPrintSettings;
+    }
+
+    public bool PrecisionAsDisplayed
+    {
+        get => _workbook != null && _workbook.PrecisionAsDisplayed;
         set
         {
             if (_workbook != null)
-                _workbook.DisplayDrawingObjects = (MsExcel.XlDisplayDrawingObjects)value;
+                _workbook.PrecisionAsDisplayed = value;
         }
+    }
+
+    public bool HasVBProject
+    {
+        get => _workbook != null && _workbook.HasVBProject;
+    }
+
+    public XlDisplayDrawingObjects DisplayDrawingObjects
+    {
+        get => _workbook.DisplayDrawingObjects.EnumConvert(XlDisplayDrawingObjects.xlHide);
+        set
+        {
+            if (_workbook != null)
+                _workbook.DisplayDrawingObjects = value.EnumConvert(MsExcel.XlDisplayDrawingObjects.xlHide);
+        }
+    }
+
+    public XlFileFormat FileFormat
+    {
+        get => _workbook.FileFormat.EnumConvert(XlFileFormat.xlWorkbookDefault);
     }
 
     /// <summary>
@@ -326,10 +424,14 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// </summary>
     private IExcelSheets? _sheets;
 
+    private IExcelSheets? _modules;
+
     /// <summary>
     /// 获取工作簿中的所有工作表集合（包括图表工作表等）
     /// </summary>
-    public IExcelSheets Sheets => _sheets ??= new ExcelSheets(_workbook?.Sheets);
+    public IExcelSheets? Sheets => _sheets ??= new ExcelSheets(_workbook?.Sheets);
+
+    public IExcelSheets? Modules => _modules ??= new ExcelSheets(_workbook?.Modules);
 
     /// <summary>
     /// 获取工作簿中的工作表数量
@@ -376,6 +478,12 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         {
             return null;
         }
+    }
+    public IExcelWindow? NewWindow()
+    {
+        if (_workbook == null)
+            return null;
+        return new ExcelWindow(_workbook.NewWindow());
     }
 
     /// <summary>
@@ -429,6 +537,11 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         }
     }
 
+    public void ExclusiveAccess()
+    {
+        _workbook?.ExclusiveAccess();
+    }
+
     /// <summary>
     /// 活动工作表缓存
     /// </summary>
@@ -467,6 +580,18 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     #endregion
 
     #region 保护和安全
+    public void ChangeFileAccess(XlFileAccess Mode, string? WritePassword, bool? Notify)
+    {
+        _workbook?.ChangeFileAccess(Mode.EnumConvert(MsExcel.XlFileAccess.xlReadOnly), WritePassword.ComArgsVal(), Notify.ComArgsVal());
+    }
+
+    public void DeleteNumberFormat(string NumberFormatName)
+    {
+        _workbook?.DeleteNumberFormat(NumberFormatName);
+    }
+
+
+
     /// <summary>
     /// 保护工作簿结构和窗口
     /// </summary>
@@ -517,6 +642,20 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     #endregion
 
     #region 操作方法
+
+    public void OpenLinks(string? name, bool? readOnly, XlLink? type)
+    {
+        _workbook?.OpenLinks(name, readOnly.ComArgsVal(), type.ComArgsConvert(d => d.EnumConvert(MsExcel.XlLink.xlExcelLinks)));
+    }
+    public object? LinkInfo(string? name, XlLinkInfo linkInfo, XlLinkInfoType? linkInfoType = null)
+    {
+
+        return _workbook?.LinkInfo(name != null ? Name : "",
+                                    linkInfo.EnumConvert(MsExcel.XlLinkInfo.xlUpdateState),
+                                    linkInfoType.ComArgsConvert(d => d.EnumConvert(MsExcel.XlLinkInfoType.xlLinkInfoOLELinks)));
+    }
+
+
     public void ExportAsFixedFormat(
         XlFixedFormatType Type,
         string Filename,
@@ -702,13 +841,41 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         }
     }
 
+    public void Reply()
+    {
+        _workbook?.Reply();
+    }
+
+    public void ReplyAll()
+    {
+        _workbook?.ReplyAll();
+    }
+
+    public void RemoveUser(int index)
+    {
+        _workbook?.RemoveUser(index);
+    }
+
+    public void Route()
+    {
+        _workbook?.Route();
+    }
+
+    public bool Routed
+    {
+        get
+        {
+            return _workbook?.Routed ?? false;
+        }
+    }
+
 
     /// <summary>
     /// 刷新工作簿
     /// </summary>
     public void RefreshAll()
     {
-        _workbook.RefreshAll();
+        _workbook?.RefreshAll();
     }
 
     /// <summary>
@@ -752,6 +919,14 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// 获取工作簿的样式集合
     /// </summary>
     public IExcelStyles Styles => _styles ??= new ExcelStyles(_workbook?.Styles);
+
+    private IExcelSlicerCaches _slicerCaches;
+
+    public IExcelSlicerCaches SlicerCaches => _slicerCaches ??= new ExcelSlicerCaches(_workbook?.SlicerCaches);
+
+    private IExcelSlicer _activeSlicer;
+
+    public IExcelSlicer ActiveSlicer => _activeSlicer ??= new ExcelSlicer(_workbook?.ActiveSlicer);
 
     /// <summary>
     /// 图表集合缓存

@@ -26,7 +26,7 @@ public interface IExcelAutoFilter : IDisposable
     /// <summary>
     /// 获取筛选器应用的范围
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 获取筛选器的父级对象
@@ -36,12 +36,12 @@ public interface IExcelAutoFilter : IDisposable
     /// <summary>
     /// 获取筛选器的父级自动筛选器集合
     /// </summary>
-    IExcelFilters Filters { get; }
+    IExcelFilters? Filters { get; }
 
     /// <summary>
     /// 获取与此自动筛选关联的排序对象
     /// </summary>
-    IExcelSort Sort { get; }
+    IExcelSort? Sort { get; }
 
     /// <summary>
     /// 应用筛选条件

@@ -28,8 +28,34 @@ internal class ExcelCharacters : IExcelCharacters
 
     public string Text
     {
-        get => _characters.Text;
-        set => _characters.Text = value;
+        get => _characters != null ? _characters.Text : string.Empty;
+        set
+        {
+            if (_characters != null)
+                _characters.Text = value;
+        }
+    }
+
+    public string Caption
+    {
+        get => _characters != null ? _characters.Caption : string.Empty;
+        set
+        {
+            if (_characters != null)
+                _characters.Caption = value;
+        }
+
+    }
+
+    public string PhoneticCharacters
+    {
+        get => _characters != null ? _characters.PhoneticCharacters : string.Empty;
+        set
+        {
+            if (_characters != null)
+                _characters.PhoneticCharacters = value;
+        }
+
     }
 
 

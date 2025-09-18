@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 internal class ExcelSort : IExcelSort
 {
     private MsExcel.Sort _sort;
@@ -17,10 +18,7 @@ internal class ExcelSort : IExcelSort
         _disposedValue = false;
     }
 
-    public IExcelRange Range
-    {
-        get => new ExcelRange(_sort.Rng);
-    }
+    public IExcelRange? Range => _sort != null ? new ExcelRange(_sort.Rng) : null;
 
     public IExcelApplication Application
     {
@@ -31,20 +29,26 @@ internal class ExcelSort : IExcelSort
         }
     }
 
+    public XlSortOrientation Orientation
+    {
+        get => _sort.Orientation.EnumConvert(XlSortOrientation.xlSortColumns);
+        set => _sort.Orientation = value.EnumConvert(MsExcel.XlSortOrientation.xlSortColumns);
+    }
+
     public XlYesNoGuess Header
     {
-        get => (XlYesNoGuess)(int)_sort.Header;
-        set => _sort.Header = (MsExcel.XlYesNoGuess)value;
+        get => _sort.Header.EnumConvert(XlYesNoGuess.xlNo);
+        set => _sort.Header = value.EnumConvert(MsExcel.XlYesNoGuess.xlNo);
     }
 
 
     public XlSortMethod SortMethod
     {
-        get => (XlSortMethod)(int)_sort.SortMethod;
-        set => _sort.SortMethod = (MsExcel.XlSortMethod)value;
+        get => _sort.SortMethod.EnumConvert(XlSortMethod.xlPinYin);
+        set => _sort.SortMethod = value.EnumConvert(MsExcel.XlSortMethod.xlPinYin);
     }
 
-    public IExcelSortFields SortFields => new ExcelSortFields(_sort.SortFields);
+    public IExcelSortFields? SortFields => _sort != null ? new ExcelSortFields(_sort.SortFields) : null;
 
     public object Parent => _sort.Parent;
 
@@ -53,12 +57,6 @@ internal class ExcelSort : IExcelSort
     {
         get => _sort.MatchCase;
         set => _sort.MatchCase = value;
-    }
-
-    public XlSortOrientation Orientation
-    {
-        get => (XlSortOrientation)(int)_sort.Orientation;
-        set => _sort.Orientation = (MsExcel.XlSortOrientation)value;
     }
 
     public void SetRange(IExcelRange range)
@@ -87,11 +85,7 @@ internal class ExcelSort : IExcelSort
 
         if (disposing && _sort != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_sort);
-            }
-            catch { }
+            Marshal.ReleaseComObject(_sort);
             _sort = null;
         }
 

@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 internal class ExcelAutoFilter : IExcelAutoFilter
 {
     private MsExcel.AutoFilter _autoFilter;
@@ -22,13 +23,15 @@ internal class ExcelAutoFilter : IExcelAutoFilter
         }
     }
 
-    public IExcelRange Range => new ExcelRange(_autoFilter.Range);
+    public IExcelRange? Range => _autoFilter != null ? new ExcelRange(_autoFilter.Range) : null;
+
+
+    public IExcelFilters? Filters => _autoFilter != null ? new ExcelFilters(_autoFilter.Filters) : null;
 
     public object Parent => _autoFilter.Parent;
 
-    public IExcelFilters Filters => new ExcelFilters(_autoFilter.Filters);
 
-    public IExcelSort Sort => new ExcelSort(_autoFilter.Sort);
+    public IExcelSort? Sort => _autoFilter != null ? new ExcelSort(_autoFilter.Sort) : null;
 
     internal ExcelAutoFilter(MsExcel.AutoFilter autoFilter)
     {
