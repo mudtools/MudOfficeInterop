@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -47,6 +49,7 @@ internal class WordRange : IWordRange
     private IWordContentControls? _contentControls;
     private IWordConflicts? _conflicts;
     private IWordEditors? _editors;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordRange));
 
     /// <summary>
     /// 初始化 <see cref="WordRange"/> 类的新实例。
@@ -180,30 +183,30 @@ internal class WordRange : IWordRange
     /// <inheritdoc/>
     public WdUnderline Underline
     {
-        get => _range?.Underline != null ? (WdUnderline)(int)_range?.Underline : WdUnderline.wdUnderlineNone;
+        get => _range?.Underline != null ? _range.Underline.EnumConvert(WdUnderline.wdUnderlineNone) : WdUnderline.wdUnderlineNone;
         set
         {
-            if (_range != null) _range.Underline = (MsWord.WdUnderline)(int)value;
+            if (_range != null) _range.Underline = value.EnumConvert(MsWord.WdUnderline.wdUnderlineNone);
         }
     }
 
     /// <inheritdoc/>
     public WdColorIndex HighlightColorIndex
     {
-        get => _range?.HighlightColorIndex != null ? (WdColorIndex)(int)_range?.HighlightColorIndex : WdColorIndex.wdRed;
+        get => _range?.HighlightColorIndex != null ? _range.HighlightColorIndex.EnumConvert(WdColorIndex.wdAuto) : WdColorIndex.wdAuto;
         set
         {
-            if (_range != null) _range.HighlightColorIndex = (MsWord.WdColorIndex)(int)value;
+            if (_range != null) _range.HighlightColorIndex = value.EnumConvert(MsWord.WdColorIndex.wdAuto);
         }
     }
 
     /// <inheritdoc/>
     public WdCharacterCase Case
     {
-        get => _range?.Case != null ? (WdCharacterCase)(int)_range?.Case : WdCharacterCase.wdLowerCase;
+        get => _range?.Case != null ? _range.Case.EnumConvert(WdCharacterCase.wdNextCase) : WdCharacterCase.wdNextCase;
         set
         {
-            if (_range != null) _range.Case = (MsWord.WdCharacterCase)(int)value;
+            if (_range != null) _range.Case = value.EnumConvert(MsWord.WdCharacterCase.wdNextCase);
         }
     }
 
@@ -544,7 +547,7 @@ internal class WordRange : IWordRange
         }
         catch (COMException ex)
         {
-            System.Diagnostics.Debug.WriteLine($"CopyAsText failed: {ex.Message}");
+            log.Error($"CopyAsText failed: {ex.Message}", ex);
         }
     }
 
@@ -745,41 +748,42 @@ internal class WordRange : IWordRange
     /// <inheritdoc/>
     public WdEmphasisMark EmphasisMark
     {
-        get => _range?.EmphasisMark != null ? (WdEmphasisMark)(int)_range?.EmphasisMark : WdEmphasisMark.wdEmphasisMarkNone;
+        get => _range?.EmphasisMark != null ? _range.EmphasisMark.EnumConvert(WdEmphasisMark.wdEmphasisMarkNone) : WdEmphasisMark.wdEmphasisMarkNone;
         set
         {
-            if (_range != null) _range.EmphasisMark = (MsWord.WdEmphasisMark)(int)value;
+            if (_range != null) _range.EmphasisMark = value.EnumConvert(MsWord.WdEmphasisMark.wdEmphasisMarkNone);
         }
     }
 
     /// <inheritdoc/>
     public WdCharacterWidth CharacterWidth
     {
-        get => _range?.CharacterWidth != null ? (WdCharacterWidth)(int)_range?.CharacterWidth : WdCharacterWidth.wdWidthHalfWidth;
+        get => _range?.CharacterWidth != null ? _range.CharacterWidth.EnumConvert(WdCharacterWidth.wdWidthFullWidth) : WdCharacterWidth.wdWidthFullWidth;
         set
         {
-            if (_range != null) _range.CharacterWidth = (MsWord.WdCharacterWidth)(int)value;
+            if (_range != null) _range.CharacterWidth = value.EnumConvert(MsWord.WdCharacterWidth.wdWidthFullWidth);
         }
     }
 
     /// <inheritdoc/>
     public WdHorizontalInVerticalType HorizontalInVertical
     {
-        get => _range?.HorizontalInVertical != null ? (WdHorizontalInVerticalType)(int)_range?.HorizontalInVertical : WdHorizontalInVerticalType.wdHorizontalInVerticalNone;
+        get => _range?.HorizontalInVertical != null ? _range.HorizontalInVertical.EnumConvert(WdHorizontalInVerticalType.wdHorizontalInVerticalNone) : WdHorizontalInVerticalType.wdHorizontalInVerticalNone;
         set
         {
-            if (_range != null) _range.HorizontalInVertical = (MsWord.WdHorizontalInVerticalType)(int)value;
+            if (_range != null) _range.HorizontalInVertical = value.EnumConvert(MsWord.WdHorizontalInVerticalType.wdHorizontalInVerticalNone);
         }
     }
 
     /// <inheritdoc/>
     public WdTextOrientation Orientation
     {
-        get => _range?.Orientation != null ? (WdTextOrientation)(int)_range?.Orientation : WdTextOrientation.wdTextOrientationDownward;
+        get => _range?.Orientation != null ? (WdTextOrientation)(int)_range?.Orientation : WdTextOrientation.wdTextOrientationHorizontal;
         set
         {
-            if (_range != null) _range.Orientation = (MsWord.WdTextOrientation)(int)value;
+            if (_range != null) _range.Orientation = value.EnumConvert(MsWord.WdTextOrientation.wdTextOrientationHorizontal);
         }
+    }
     }
 
     /// <inheritdoc/>
@@ -788,37 +792,37 @@ internal class WordRange : IWordRange
         get => _range?.TwoLinesInOne != null ? (WdTwoLinesInOneType)(int)_range?.TwoLinesInOne : WdTwoLinesInOneType.wdTwoLinesInOneNone;
         set
         {
-            if (_range != null) _range.TwoLinesInOne = (MsWord.WdTwoLinesInOneType)(int)value;
+            if (_range != null) _range.TwoLinesInOne = value.EnumConvert(MsWord.WdTwoLinesInOneType.wdTwoLinesInOneNone);
         }
     }
 
     /// <inheritdoc/>
     public WdLanguageID LanguageID
     {
-        get => _range?.LanguageID != null ? (WdLanguageID)(int)_range?.LanguageID : WdLanguageID.wdSimplifiedChinese;
+        get => _range?.LanguageID != null ? _range.LanguageID.EnumConvert(WdLanguageID.wdLanguageNone) : WdLanguageID.wdLanguageNone;
         set
         {
-            if (_range != null) _range.LanguageID = (MsWord.WdLanguageID)(int)value;
+            if (_range != null) _range.LanguageID = value.EnumConvert(MsWord.WdLanguageID.wdLanguageNone);
         }
     }
 
     /// <inheritdoc/>
     public WdLanguageID LanguageIDFarEast
     {
-        get => _range?.LanguageIDFarEast != null ? (WdLanguageID)(int)_range?.LanguageIDFarEast : WdLanguageID.wdSimplifiedChinese;
+        get => _range?.LanguageIDFarEast != null ? _range.LanguageIDFarEast.EnumConvert(WdLanguageID.wdLanguageNone) : WdLanguageID.wdLanguageNone;
         set
         {
-            if (_range != null) _range.LanguageIDFarEast = (MsWord.WdLanguageID)(int)value;
+            if (_range != null) _range.LanguageIDFarEast = value.EnumConvert(MsWord.WdLanguageID.wdLanguageNone);
         }
     }
 
     /// <inheritdoc/>
     public WdLanguageID LanguageIDOther
     {
-        get => _range?.LanguageIDOther != null ? (WdLanguageID)(int)_range?.LanguageIDOther : WdLanguageID.wdSimplifiedChinese;
+        get => _range?.LanguageIDOther != null ? _range.LanguageIDOther.EnumConvert(WdLanguageID.wdLanguageNone) : WdLanguageID.wdLanguageNone;
         set
         {
-            if (_range != null) _range.LanguageIDOther = (MsWord.WdLanguageID)(int)value;
+            if (_range != null) _range.LanguageIDOther = value.EnumConvert(MsWord.WdLanguageID.wdLanguageNone);
         }
     }
 
@@ -904,8 +908,7 @@ internal class WordRange : IWordRange
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"SaveAsText failed: {ex.Message}");
-            // 可以选择抛出异常
+            log.Error($"SaveAsText failed: {ex.Message}", ex);
         }
     }
 
@@ -977,6 +980,5 @@ internal class WordRange : IWordRange
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
     #endregion
 }

@@ -338,18 +338,18 @@ internal class WordDocument : IWordDocument
     /// <inheritdoc/>
     public WdDocumentKind Kind
     {
-        get => _document?.Kind != null ? (WdDocumentKind)(int)_document?.Kind : WdDocumentKind.wdDocumentNotSpecified;
+        get => _document?.Kind != null ? _document.Kind.EnumConvert(WdDocumentKind.wdDocumentNotSpecified) : WdDocumentKind.wdDocumentNotSpecified;
         set
         {
-            if (_document != null) _document.Kind = (MsWord.WdDocumentKind)(int)value;
+            if (_document != null) _document.Kind = value.EnumConvert(MsWord.WdDocumentKind.wdDocumentNotSpecified);
         }
     }
 
     public bool ReadOnly => _document.ReadOnly;
 
-    public WdProtectionType ProtectionType => (WdProtectionType)(int)_document.ProtectionType;
+    public WdProtectionType ProtectionType => _document.ProtectionType.EnumConvert(WdProtectionType.wdNoProtection);
 
-    public WdDocumentType Type => (WdDocumentType)(int)_document.Type;
+    public WdDocumentType Type => _document.Type.EnumConvert(WdDocumentType.wdTypeDocument);
 
     public int PageCount => (int)_document.Range().Information[MsWord.WdInformation.wdNumberOfPagesInDocument];
 
@@ -608,8 +608,9 @@ internal class WordDocument : IWordDocument
 
     public WdViewType ViewType
     {
-        get => (WdViewType)_document.ActiveWindow.View.Type;
-        set => _document.ActiveWindow.View.Type = (MsWord.WdViewType)value;
+        get => _document.ActiveWindow.View.Type.EnumConvert<MsWord.WdViewType, WdViewType>();
+        set => _document.ActiveWindow.View.Type = value.EnumConvert<WdViewType, MsWord.WdViewType>();
+
     }
 
     public bool ShowParagraphs

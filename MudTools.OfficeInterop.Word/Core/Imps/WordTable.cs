@@ -182,20 +182,20 @@ internal class WordTable : IWordTable
     /// <inheritdoc/>
     public WdPreferredWidthType PreferredWidthType
     {
-        get => _table?.PreferredWidthType != null ? (WdPreferredWidthType)(int)_table?.PreferredWidthType : WdPreferredWidthType.wdPreferredWidthAuto;
+        get => _table != null ? _table.PreferredWidthType.EnumConvert(WdPreferredWidthType.wdPreferredWidthAuto) : WdPreferredWidthType.wdPreferredWidthAuto;
         set
         {
-            if (_table != null) _table.PreferredWidthType = (MsWord.WdPreferredWidthType)(int)value;
+            if (_table != null) _table.PreferredWidthType = value.EnumConvert(MsWord.WdPreferredWidthType.wdPreferredWidthAuto);
         }
     }
 
     /// <inheritdoc/>
     public WdTableDirection TableDirection
     {
-        get => _table?.TableDirection != null ? (WdTableDirection)(int)_table?.TableDirection : WdTableDirection.wdTableDirectionLtr;
+        get => _table?.TableDirection != null ? _table.TableDirection.EnumConvert(WdTableDirection.wdTableDirectionRtl) : WdTableDirection.wdTableDirectionRtl;
         set
         {
-            if (_table != null) _table.TableDirection = (MsWord.WdTableDirection)(int)value;
+            if (_table != null) _table.TableDirection = value.EnumConvert(MsWord.WdTableDirection.wdTableDirectionRtl);
         }
     }
 

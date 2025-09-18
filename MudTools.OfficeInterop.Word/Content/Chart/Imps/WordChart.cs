@@ -32,10 +32,10 @@ internal class WordChart : IWordChart
     /// <inheritdoc/>
     public MsoChartType ChartType
     {
-        get => _chart?.ChartType != null ? (MsoChartType)(int)_chart?.ChartType : MsoChartType.xlLine;
+        get => _chart?.ChartType != null ? _chart.ChartType.EnumConvert(MsoChartType.xlLine) : MsoChartType.xlLine;
         set
         {
-            if (_chart != null) _chart.ChartType = (MsCore.XlChartType)(int)value;
+            if (_chart != null) _chart.ChartType = value.EnumConvert(MsCore.XlChartType.xlLine);
         }
     }
 

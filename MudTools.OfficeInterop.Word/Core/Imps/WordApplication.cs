@@ -133,10 +133,10 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public WdWindowState WordWindowState
     {
-        get => _application?.WindowState != null ? (WdWindowState)(int)_application?.WindowState : WdWindowState.wdWindowStateNormal;
+        get => _application?.WindowState != null ? _application.WindowState.EnumConvert(WdWindowState.wdWindowStateNormal) : WdWindowState.wdWindowStateNormal;
         set
         {
-            if (_application != null) _application.WindowState = (MsWord.WdWindowState)(int)value;
+            if (_application != null) _application.WindowState = value.EnumConvert(MsWord.WdWindowState.wdWindowStateNormal);
         }
     }
 
@@ -449,10 +449,10 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public WdAlertLevel DisplayAlerts
     {
-        get => _application?.DisplayAlerts != null ? (WdAlertLevel)(int)_application?.DisplayAlerts : WdAlertLevel.wdAlertsNone;
+        get => _application?.DisplayAlerts != null ? _application.DisplayAlerts.EnumConvert(WdAlertLevel.wdAlertsNone) : WdAlertLevel.wdAlertsNone;
         set
         {
-            if (_application != null) _application.DisplayAlerts = (MsWord.WdAlertLevel)(int)value;
+            if (_application != null) _application.DisplayAlerts = value.EnumConvert(MsWord.WdAlertLevel.wdAlertsNone);
         }
     }
 
@@ -496,11 +496,12 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public WdEnableCancelKey EnableCancelKey
     {
-        get => _application?.EnableCancelKey != null ? (WdEnableCancelKey)(int)_application?.EnableCancelKey : WdEnableCancelKey.wdCancelDisabled;
+        get => _application?.EnableCancelKey.EnumConvert(WdEnableCancelKey.wdCancelDisabled) ?? WdEnableCancelKey.wdCancelDisabled;
         set
         {
-            if (_application != null) _application.EnableCancelKey = (MsWord.WdEnableCancelKey)(int)value;
+            if (_application != null) _application.EnableCancelKey = value.EnumConvert(MsWord.WdEnableCancelKey.wdCancelDisabled);
         }
+    }
     }
 
     /// <summary>
@@ -1113,7 +1114,7 @@ internal partial class WordApplication : IWordApplication
     /// <summary>
     /// 获取邮件系统的类型。
     /// </summary>
-    public WdMailSystem MailSystem => _application?.MailSystem != null ? (WdMailSystem)(int)_application.MailSystem : WdMailSystem.wdNoMailSystem;
+    public WdMailSystem MailSystem => _application?.MailSystem != null ? _application.MailSystem.EnumConvert(WdMailSystem.wdNoMailSystem) : WdMailSystem.wdNoMailSystem;
 
     /// <summary>
     /// 获取一个值，该值指示是否安装了 MAPI。
@@ -1145,10 +1146,10 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public MsoAutomationSecurity AutomationSecurity
     {
-        get => _application?.AutomationSecurity != null ? (MsoAutomationSecurity)(int)_application?.AutomationSecurity : MsoAutomationSecurity.msoAutomationSecurityByUI;
+        get => _application?.AutomationSecurity != null ? _application.AutomationSecurity.EnumConvert(MsoAutomationSecurity.msoAutomationSecurityLow) : MsoAutomationSecurity.msoAutomationSecurityLow;
         set
         {
-            if (_application != null) _application.AutomationSecurity = (MsCore.MsoAutomationSecurity)(int)value;
+            if (_application != null) _application.AutomationSecurity = value.EnumConvert(MsCore.MsoAutomationSecurity.msoAutomationSecurityLow);
         }
     }
 
@@ -1158,10 +1159,10 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public MsoFileValidationMode FileValidation
     {
-        get => _application?.FileValidation != null ? (MsoFileValidationMode)(int)_application?.FileValidation : MsoFileValidationMode.msoFileValidationDefault;
+        get => _application?.FileValidation != null ? _application.FileValidation.EnumConvert(MsoFileValidationMode.msoFileValidationDefault) : MsoFileValidationMode.msoFileValidationDefault;
         set
         {
-            if (_application != null) _application.FileValidation = (MsCore.MsoFileValidationMode)(int)value;
+            if (_application != null) _application.FileValidation = value.EnumConvert(MsCore.MsoFileValidationMode.msoFileValidationDefault);
         }
     }
 
@@ -1443,7 +1444,7 @@ internal partial class WordApplication : IWordApplication
     /// 获取表示所选 Microsoft Word 用户界面的语言设置。
     /// </summary>
     public MsoLanguageID Language =>
-        _application?.Language != null ? (MsoLanguageID)(int)_application.Language : MsoLanguageID.msoLanguageIDSimplifiedChinese;
+        _application?.Language != null ? _application.Language.EnumConvert(MsoLanguageID.msoLanguageIDSimplifiedChinese) : MsoLanguageID.msoLanguageIDSimplifiedChinese;
 
     /// <summary>
     /// 获取表示语言设置的 LanguageSettings 对象
@@ -1758,7 +1759,7 @@ internal partial class WordApplication : IWordApplication
                         object saveChanges = MsWord.WdSaveOptions.wdDoNotSaveChanges;
                         object originalFormat = Type.Missing;
                         object routeDocument = Type.Missing;
-                        
+
                         try
                         {
                             _application.Quit(ref saveChanges, ref originalFormat, ref routeDocument);

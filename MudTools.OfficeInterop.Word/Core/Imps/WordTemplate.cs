@@ -70,19 +70,22 @@ internal class WordTemplate : IWordTemplate
 
     public WdJustificationMode JustificationMode
     {
-        get => (WdJustificationMode)(int)_template?.JustificationMode;
-        set => _template.JustificationMode = (MsWord.WdJustificationMode)(int)value;
+        get => _template != null ? _template.JustificationMode.EnumConvert(WdJustificationMode.wdJustificationModeCompress) : WdJustificationMode.wdJustificationModeCompress;
+        set => _template.JustificationMode = value.EnumConvert(MsWord.WdJustificationMode.wdJustificationModeCompress);
     }
 
     public WdFarEastLineBreakLevel FarEastLineBreakLevel
     {
-        get => (WdFarEastLineBreakLevel)(int)_template?.FarEastLineBreakLevel;
-        set => _template.FarEastLineBreakLevel = (MsWord.WdFarEastLineBreakLevel)(int)value;
+        get => _template != null ? _template.FarEastLineBreakLevel.EnumConvert(WdFarEastLineBreakLevel.wdFarEastLineBreakLevelNormal) : WdFarEastLineBreakLevel.wdFarEastLineBreakLevelNormal;
+        set => _template.FarEastLineBreakLevel = value.EnumConvert(MsWord.WdFarEastLineBreakLevel.wdFarEastLineBreakLevelNormal);
     }
+
+
+
     public WdFarEastLineBreakLanguageID FarEastLineBreakLanguage
     {
-        get => (WdFarEastLineBreakLanguageID)(int)_template?.FarEastLineBreakLanguage;
-        set => _template.FarEastLineBreakLanguage = (MsWord.WdFarEastLineBreakLanguageID)(int)value;
+        get => _template != null ? _template.FarEastLineBreakLanguage.EnumConvert(WdFarEastLineBreakLanguageID.wdLineBreakJapanese) : WdFarEastLineBreakLanguageID.wdLineBreakJapanese;
+        set => _template.FarEastLineBreakLanguage = value.EnumConvert(MsWord.WdFarEastLineBreakLanguageID.wdLineBreakJapanese);
     }
 
 

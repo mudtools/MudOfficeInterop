@@ -105,20 +105,20 @@ internal class WordPageSetup : IWordPageSetup
 
     public WdOrientation Orientation
     {
-        get => (WdOrientation)_pageSetup.Orientation;
-        set => _pageSetup.Orientation = (MsWord.WdOrientation)value;
+        get => _pageSetup.Orientation.EnumConvert(WdOrientation.wdOrientPortrait);
+        set => _pageSetup.Orientation = value.EnumConvert(MsWord.WdOrientation.wdOrientPortrait);
     }
 
     public WdVerticalAlignment VerticalAlignment
     {
-        get => (WdVerticalAlignment)_pageSetup.VerticalAlignment;
-        set => _pageSetup.VerticalAlignment = (MsWord.WdVerticalAlignment)value;
+        get => _pageSetup.VerticalAlignment.EnumConvert(WdVerticalAlignment.wdAlignVerticalTop);
+        set => _pageSetup.VerticalAlignment = value.EnumConvert(MsWord.WdVerticalAlignment.wdAlignVerticalTop);
     }
 
     public WdLayoutMode LayoutMode
     {
-        get => (WdLayoutMode)_pageSetup.LayoutMode;
-        set => _pageSetup.LayoutMode = (MsWord.WdLayoutMode)value;
+        get => _pageSetup.LayoutMode.EnumConvert(WdLayoutMode.wdLayoutModeDefault);
+        set => _pageSetup.LayoutMode = value.EnumConvert(MsWord.WdLayoutMode.wdLayoutModeDefault);
     }
 
     #endregion
@@ -139,14 +139,14 @@ internal class WordPageSetup : IWordPageSetup
 
     public WdGutterStyle GutterPos
     {
-        get => (WdGutterStyle)_pageSetup.GutterPos;
-        set => _pageSetup.GutterPos = (MsWord.WdGutterStyle)value;
+        get => _pageSetup.GutterPos.EnumConvert(WdGutterStyle.wdGutterPosLeft);
+        set => _pageSetup.GutterPos = value.EnumConvert(MsWord.WdGutterStyle.wdGutterPosLeft);
     }
 
     public WdGutterStyleOld GutterStyle
     {
-        get => (WdGutterStyleOld)_pageSetup.GutterStyle;
-        set => _pageSetup.GutterStyle = (MsWord.WdGutterStyleOld)value;
+        get => _pageSetup.GutterStyle.EnumConvert(WdGutterStyleOld.wdGutterStyleBidi);
+        set => _pageSetup.GutterStyle = value.EnumConvert(MsWord.WdGutterStyleOld.wdGutterStyleBidi);
     }
 
     #endregion
@@ -183,14 +183,14 @@ internal class WordPageSetup : IWordPageSetup
 
     public WdSectionDirection SectionDirection
     {
-        get => (WdSectionDirection)_pageSetup.SectionDirection;
-        set => _pageSetup.SectionDirection = (MsWord.WdSectionDirection)value;
+        get => _pageSetup.SectionDirection.EnumConvert(WdSectionDirection.wdSectionDirectionLtr);
+        set => _pageSetup.SectionDirection = value.EnumConvert(MsWord.WdSectionDirection.wdSectionDirectionLtr);
     }
 
     public WdSectionStart SectionStart
     {
-        get => (WdSectionStart)_pageSetup.SectionStart;
-        set => _pageSetup.SectionStart = (MsWord.WdSectionStart)value;
+        get => _pageSetup.SectionStart.EnumConvert(WdSectionStart.wdSectionContinuous);
+        set => _pageSetup.SectionStart = value.EnumConvert(MsWord.WdSectionStart.wdSectionContinuous);
     }
 
     #endregion
@@ -221,20 +221,21 @@ internal class WordPageSetup : IWordPageSetup
 
     public WdPaperTray FirstPageTray
     {
-        get => (WdPaperTray)_pageSetup.FirstPageTray;
-        set => _pageSetup.FirstPageTray = (MsWord.WdPaperTray)value;
+        get => _pageSetup.FirstPageTray.EnumConvert(WdPaperTray.wdPrinterDefaultBin);
+        set => _pageSetup.FirstPageTray = value.EnumConvert(MsWord.WdPaperTray.wdPrinterDefaultBin);
+
     }
 
     public WdPaperTray OtherPagesTray
     {
-        get => (WdPaperTray)_pageSetup.OtherPagesTray;
-        set => _pageSetup.OtherPagesTray = (MsWord.WdPaperTray)value;
+        get => _pageSetup.OtherPagesTray.EnumConvert(WdPaperTray.wdPrinterDefaultBin);
+        set => _pageSetup.OtherPagesTray = value.EnumConvert(MsWord.WdPaperTray.wdPrinterDefaultBin);
     }
 
     public WdPaperSize PaperSize
     {
-        get => (WdPaperSize)_pageSetup.PaperSize;
-        set => _pageSetup.PaperSize = (MsWord.WdPaperSize)value;
+        get => _pageSetup.PaperSize.EnumConvert(WdPaperSize.wdPaperCustom);
+        set => _pageSetup.PaperSize = value.EnumConvert(MsWord.WdPaperSize.wdPaperCustom);
     }
 
     public bool TwoPagesOnOne

@@ -91,10 +91,10 @@ internal class WordProtectedViewWindow : IWordProtectedViewWindow
     /// </summary>
     public WdWindowState WindowState
     {
-        get => _protectedViewWindow?.WindowState != null ? (WdWindowState)(int)_protectedViewWindow?.WindowState : WdWindowState.wdWindowStateNormal;
+        get => _protectedViewWindow?.WindowState != null ? _protectedViewWindow.WindowState.EnumConvert(WdWindowState.wdWindowStateNormal) : WdWindowState.wdWindowStateNormal;
         set
         {
-            if (_protectedViewWindow != null) _protectedViewWindow.WindowState = (MsWord.WdWindowState)(int)value;
+            if (_protectedViewWindow != null) _protectedViewWindow.WindowState = value.EnumConvert(MsWord.WdWindowState.wdWindowStateNormal);
         }
     }
 
