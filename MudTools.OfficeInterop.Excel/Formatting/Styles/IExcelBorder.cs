@@ -34,6 +34,12 @@ public interface IExcelBorder : IDisposable
     Color Color { get; set; }
 
     /// <summary>
+    /// 获取或设置边框的颜色。
+    /// 对应 Border.ColorIndex 属性
+    /// </summary>
+    XlColorIndex ColorIndex { get; set; }
+
+    /// <summary>
     /// 获取或设置边框的主题颜色
     /// 对应 Border.ThemeColor 属性
     /// </summary>

@@ -118,6 +118,16 @@ internal class ExcelBorder : IExcelBorder
         }
     }
 
+    public XlColorIndex ColorIndex
+    {
+        get => _border != null ? (XlColorIndex)Enum.ToObject(typeof(XlColorIndex), _border.ColorIndex) : XlColorIndex.xlColorIndexAutomatic;
+        set
+        {
+            if (_border != null)
+                _border.ColorIndex = (MsExcel.XlColorIndex)Enum.ToObject(typeof(MsExcel.XlColorIndex), (int)value);
+        }
+    }
+
     /// <summary>
     /// 获取或设置边框的主题颜色
     /// </summary>
