@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel;
+
 /// <summary>
 /// Excel Line (边框线条) 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.LineFormat 的安全访问和操作
@@ -22,56 +23,151 @@ public interface IExcelLine : IDisposable
     /// <summary>
     /// 获取线条对象所在的 Application 对象
     /// </summary>
-    IExcelApplication Application { get; } // 假设 IExcelApplication 已定义
+    IExcelApplication Application { get; }
     #endregion
 
     #region 线条属性
     /// <summary>
-    /// 获取或设置线条的颜色 (RGB 颜色值)
-    /// 对应 LineFormat.ForeColor
+    /// 获取或设置线条的名称
     /// </summary>
-    int Color { get; set; }
+    string Name { get; set; }
 
     /// <summary>
-    /// 获取或设置线条的样式
-    /// 对应 LineFormat.Style (使用 MsoLineStyle 枚举对应的 int 值)
+    /// 获取或设置打印时是否包含该对象
     /// </summary>
-    MsoLineStyle Style { get; set; }
+    bool PrintObject { get; set; }
 
     /// <summary>
-    /// 获取或设置线条的粗细 (磅)
-    /// 对应 LineFormat.Weight
+    /// 获取或设置对象是否被锁定
     /// </summary>
-    float Weight { get; set; }
+    bool Locked { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条的宽度
+    /// </summary>
+    double Width { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条的高度
+    /// </summary>
+    double Height { get; set; }
+
+    /// <summary>
+    /// 获取线条在集合中的索引值
+    /// </summary>
+    int Index { get; }
+
+    /// <summary>
+    /// 获取线条的 Z 轴顺序
+    /// </summary>
+    int ZOrder { get; }
+
+    /// <summary>
+    /// 获取或设置线条距其顶部边界的距离
+    /// </summary>
+    double Top { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条距其左边界的距离
+    /// </summary>
+    double Left { get; set; }
+
+    /// <summary>
+    /// 获取或设置箭头头部样式
+    /// </summary>
+    XlArrowHeadStyle ArrowHeadStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置箭头头部宽度
+    /// </summary>
+    XlArrowHeadWidth ArrowHeadWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置箭头头部长度
+    /// </summary>
+    float ArrowHeadLength { get; set; }
+
+    /// <summary>
+    /// 获取线条左上角单元格
+    /// </summary>
+    IExcelRange? TopLeftCell { get; }
+
+    /// <summary>
+    /// 获取线条右下角单元格
+    /// </summary>
+    IExcelRange? BottomRightCell { get; }
+
+    /// <summary>
+    /// 获取线条的形状范围对象
+    /// </summary>
+    IExcelShapeRange? ShapeRange { get; }
+
+    /// <summary>
+    /// 获取线条的边框对象
+    /// </summary>
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取或设置线条是否可见
-    /// 对应 LineFormat.Visible (使用 MsoTriState 枚举对应的 int 值)
     /// </summary>
-    bool Visible { get; set; } // Using int for MsoTriState
+    bool Visible { get; set; }
 
     /// <summary>
-    /// 获取或设置线条的透明度 (0.0 = 不透明, 1.0 = 完全透明)
-    /// 对应 LineFormat.Transparency
+    /// 获取或设置线条是否启用
     /// </summary>
-    float Transparency { get; set; }
+    bool Enabled { get; set; }
+    #endregion
 
-    // --- 高级线条属性 (占位符) ---
-    // /// <summary>
-    // /// 获取或设置虚线样式 (如果 Style 支持)
-    // /// </summary>
-    // int DashStyle { get; set; } // MsoLineDashStyle
-    // /// <summary>
-    // /// 获取或设置线条端点类型
-    // /// </summary>
-    // int EndCap { get; set; } // MsoLineEndCap
-    // /// <summary>
-    // /// 获取或设置起始箭头样式
-    // /// </summary>
-    // int BeginArrowheadStyle { get; set; } // MsoArrowheadStyle
-    // /// <summary>
-    // /// 获取或设置结束箭头样式
-    // /// </summary>
-    // int EndArrowheadStyle { get; set; } // MsoArrowheadStyle
-    #endregion 
+    #region 方法
+    /// <summary>
+    /// 将对象放到最前面
+    /// </summary>
+    /// <returns>操作结果</returns>
+    object BringToFront();
+
+    /// <summary>
+    /// 将对象放到最后面
+    /// </summary>
+    /// <returns>操作结果</returns>
+    object SendToBack();
+
+    /// <summary>
+    /// 剪切对象
+    /// </summary>
+    /// <returns>操作结果</returns>
+    object Cut();
+
+    /// <summary>
+    /// 复制对象
+    /// </summary>
+    /// <returns>操作结果</returns>
+    object Copy();
+
+    /// <summary>
+    /// 删除对象
+    /// </summary>
+    /// <returns>操作结果</returns>
+    object Delete();
+
+    /// <summary>
+    /// 复制对象
+    /// </summary>
+    /// <returns>复制的对象</returns>
+    object Duplicate();
+
+    /// <summary>
+    /// 复制对象图片
+    /// </summary>
+    /// <param name="appearance">图片外观样式</param>
+    /// <param name="format">图片格式</param>
+    /// <returns>操作结果</returns>
+    object CopyPicture(XlPictureAppearance appearance, XlCopyPictureFormat format);
+
+    /// <summary>
+    /// 选择对象
+    /// </summary>
+    /// <param name="replace">是否替换当前选择</param>
+    /// <returns>操作结果</returns>
+    object Select(bool replace = true);
+    #endregion
 }

@@ -1,9 +1,11 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop.Imps;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
 /// <summary>
@@ -59,12 +61,104 @@ internal class ExcelChartFormat : IExcelChartFormat
     /// <summary>
     /// 获取图表元素的填充格式对象
     /// </summary>
-    public IExcelFillFormat Fill => new ExcelFillFormat(_chartFormat.Fill);
+    public IExcelFillFormat Fill
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new ExcelFillFormat(_chartFormat.Fill);
+            else
+                return null;
+        }
+    }
 
-    /// <summary>
-    /// 获取图表元素的边框线条格式对象
-    /// </summary>
-    public IExcelLine Line => new ExcelLine(_chartFormat.Line);
+    public IExcelLineFormat Line
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new ExcelLineFormat(_chartFormat.Line);
+            else
+                return null;
+        }
+    }
+
+    public IExcelShadowFormat Shadow
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new ExcelShadowFormat(_chartFormat.Shadow);
+            else
+                return null;
+        }
+    }
+
+    public IExcelThreeDFormat ThreeD
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new ExcelThreeDFormat(_chartFormat.ThreeD);
+            else
+                return null;
+        }
+    }
+
+    public IExcelAdjustments Adjustments
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new ExcelAdjustments(_chartFormat.Adjustments);
+            else
+                return null;
+        }
+    }
+
+    public IExcelPictureFormat PictureFormat
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new ExcelPictureFormat(_chartFormat.PictureFormat);
+            else
+                return null;
+        }
+    }
+
+    public IOfficeSoftEdgeFormat SoftEdge
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new OfficeSoftEdgeFormat(_chartFormat.SoftEdge);
+            else
+                return null;
+        }
+    }
+
+    public IOfficeGlowFormat Glow
+    {
+        get
+        {
+            if (_chartFormat != null)
+                return new OfficeGlowFormat(_chartFormat.Glow);
+            else
+                return null;
+        }
+    }
+
+
+    public MsoAutoShapeType AutoShapeType
+    {
+        get => _chartFormat != null ? (MsoAutoShapeType)Enum.ToObject(typeof(MsoAutoShapeType), _chartFormat.AutoShapeType) : MsoAutoShapeType.msoShapeMixed;
+        set
+        {
+            if (_chartFormat != null)
+                _chartFormat.AutoShapeType = (MsCore.MsoAutoShapeType)Enum.ToObject(typeof(MsCore.MsoAutoShapeType), (int)value);
+        }
+    }
 
     #endregion
 

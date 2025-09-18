@@ -246,6 +246,8 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
 
     #region 数据操作
 
+    IExcelQueryTables QueryTables { get; }
+
     /// <summary>
     /// 获取或设置工作表的默认行高
     /// </summary>

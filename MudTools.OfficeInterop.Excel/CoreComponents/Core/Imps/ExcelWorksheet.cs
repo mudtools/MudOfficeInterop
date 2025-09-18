@@ -60,6 +60,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
                 _listObjects?.Dispose();
                 _names?.Dispose();
                 _vPageBreaks?.Dispose();
+                _queryTables?.Dispose();
                 _hPageBreaks?.Dispose();
                 _cells?.Dispose();
                 _circularReference?.Dispose();
@@ -93,6 +94,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         _circularReference = null;
         _listObjects = null;
         _hPageBreaks = null;
+        _queryTables = null;
         _vPageBreaks = null;
         _names = null;
         _cells = null;
@@ -160,6 +162,19 @@ internal partial class ExcelWorksheet : IExcelWorksheet
                 return _vPageBreaks;
             _vPageBreaks = new ExcelVPageBreaks(_worksheet.VPageBreaks);
             return _vPageBreaks;
+        }
+    }
+
+    public IExcelQueryTables _queryTables;
+
+    public IExcelQueryTables QueryTables
+    {
+        get
+        {
+            if (_queryTables != null)
+                return _queryTables;
+            _queryTables = new ExcelQueryTables(_worksheet.QueryTables);
+            return _queryTables;
         }
     }
 

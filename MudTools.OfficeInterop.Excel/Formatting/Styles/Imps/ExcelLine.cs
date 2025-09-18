@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 /// <summary>
 /// Excel Line (边框线条) 对象的二次封装实现类
 /// 实现 IExcelLine 接口
@@ -15,9 +16,9 @@ internal class ExcelLine : IExcelLine
     #region 私有字段
 
     /// <summary>
-    /// 内部持有的 Microsoft.Office.Interop.Excel.LineFormat 对象引用
+    /// 内部持有的 Microsoft.Office.Interop.Excel.Line 对象引用
     /// </summary>
-    private MsExcel.LineFormat _lineFormat;
+    private MsExcel.Line _line;
 
     /// <summary>
     /// 标记对象是否已被释放，用于防止重复释放
@@ -31,10 +32,10 @@ internal class ExcelLine : IExcelLine
     /// <summary>
     /// 初始化 ExcelLine 实例
     /// </summary>
-    /// <param name="lineFormat">要封装的 Microsoft.Office.Interop.Excel.LineFormat 对象</param>
-    internal ExcelLine(MsExcel.LineFormat lineFormat)
+    /// <param name="line">要封装的 Microsoft.Office.Interop.Excel.Line 对象</param>
+    internal ExcelLine(MsExcel.Line line)
     {
-        _lineFormat = lineFormat ?? throw new ArgumentNullException(nameof(lineFormat));
+        _line = line ?? throw new ArgumentNullException(nameof(line));
     }
 
     #endregion
@@ -44,97 +45,188 @@ internal class ExcelLine : IExcelLine
     /// <summary>
     /// 获取线条所在的父对象
     /// </summary>
-    public object Parent => _lineFormat.Parent;
+    public object Parent => _line.Parent;
 
-    /// <summary>
-    /// 获取线条对象所在的 Application 对象
-    /// </summary>
     public IExcelApplication Application
     {
         get
         {
-            var parent = Parent;
-            if (parent is MsExcel.Chart chart)
-            {
-                return new ExcelApplication(chart.Application);
-            }
-            return null;
+            return _line?.Application is MsExcel.Application application ? new ExcelApplication(application) : null;
         }
     }
 
     #endregion
 
     #region 线条属性 (IExcelLine)
-
-    /// <summary>
-    /// 获取或设置线条的颜色 (RGB 颜色值)
-    /// </summary>
-    public int Color
+    public string Name
     {
         get
         {
-            try
-            {
-                return _lineFormat.ForeColor.RGB;
-            }
-            catch { }
-            return 0; // Default black or error
+            return _line.Name;
         }
         set
         {
-            try
-            {
-                _lineFormat.ForeColor.RGB = value;
-            }
-            catch { }
+            _line.Name = value;
         }
     }
 
-    /// <summary>
-    /// 获取或设置线条的样式
-    /// </summary>
-    public MsoLineStyle Style
+    public bool PrintObject
     {
         get
         {
-            try
-            {
-                return (MsoLineStyle)_lineFormat.Style;
-            }
-            catch { }
-            return MsoLineStyle.msoLineSingle; // Default
+            return _line.PrintObject;
         }
         set
         {
-            try
-            {
-                _lineFormat.Style = (MsCore.MsoLineStyle)value;
-            }
-            catch { }
+            _line.PrintObject = value;
         }
     }
+
+    public bool Locked
+    {
+        get
+        {
+            return _line.Locked;
+        }
+        set
+        {
+            _line.Locked = value;
+        }
+    }
+
 
     /// <summary>
     /// 获取或设置线条的粗细
     /// </summary>
-    public float Weight
+    public double Width
     {
         get
         {
-            try
-            {
-                return _lineFormat.Weight;
-            }
-            catch { }
-            return 1.0f; // Default weight
+            return _line.Width;
         }
         set
         {
-            try
-            {
-                _lineFormat.Weight = value;
-            }
-            catch { }
+            _line.Width = value;
+        }
+    }
+
+    public double Height
+    {
+        get
+        {
+            return _line.Height;
+        }
+        set
+        {
+            _line.Height = value;
+        }
+    }
+
+    public int Index
+    {
+        get
+        {
+            return _line.Index;
+        }
+    }
+
+    public int ZOrder
+    {
+        get
+        {
+            return _line.ZOrder;
+        }
+
+    }
+
+    public double Top
+    {
+        get
+        {
+            return _line.Top;
+        }
+        set
+        {
+            _line.Top = value;
+        }
+    }
+
+    public double Left
+    {
+        get
+        {
+            return _line.Left;
+        }
+        set
+        {
+            _line.Left = value;
+        }
+    }
+
+    public XlArrowHeadStyle ArrowHeadStyle
+    {
+        get => _line != null ? (XlArrowHeadStyle)Enum.ToObject(typeof(XlArrowHeadStyle), _line.ArrowHeadStyle) : XlArrowHeadStyle.xlArrowHeadStyleClosed;
+        set
+        {
+            if (_line != null)
+                _line.ArrowHeadStyle = (MsExcel.XlArrowHeadStyle)Enum.ToObject(typeof(MsExcel.XlArrowHeadStyle), (int)value);
+        }
+    }
+
+    public XlArrowHeadWidth ArrowHeadWidth
+    {
+        get
+        {
+            return _line != null ? (XlArrowHeadWidth)Enum.ToObject(typeof(XlArrowHeadWidth), _line.ArrowHeadWidth) : XlArrowHeadWidth.xlArrowHeadWidthMedium;
+        }
+        set
+        {
+            if (_line != null)
+                _line.ArrowHeadWidth = (MsExcel.XlArrowHeadWidth)Enum.ToObject(typeof(MsExcel.XlArrowHeadWidth), (int)value);
+        }
+    }
+
+    public float ArrowHeadLength
+    {
+        get
+        {
+            return _line.ArrowHeadLength.ConvertToFloat();
+        }
+        set
+        {
+            _line.ArrowHeadLength = value;
+        }
+    }
+
+    public IExcelRange? TopLeftCell
+    {
+        get
+        {
+            return _line.TopLeftCell is MsExcel.Range range ? new ExcelRange(range) : null;
+        }
+    }
+
+    public IExcelRange? BottomRightCell
+    {
+        get
+        {
+            return _line.BottomRightCell is MsExcel.Range range ? new ExcelRange(range) : null;
+        }
+    }
+
+    public IExcelShapeRange? ShapeRange
+    {
+        get
+        {
+            return _line.ShapeRange is MsExcel.ShapeRange shapeRange ? new ExcelShapeRange(shapeRange) : null;
+        }
+    }
+
+    public IExcelBorder? Border
+    {
+        get
+        {
+            return _line.Border is MsExcel.Border border ? new ExcelBorder(border) : null;
         }
     }
 
@@ -145,49 +237,65 @@ internal class ExcelLine : IExcelLine
     {
         get
         {
-            try
-            {
-                return _lineFormat.Visible == MsCore.MsoTriState.msoTrue;
-            }
-            catch { }
-            return false;
+            return _line.Visible;
         }
         set
         {
-            try
-            {
-                _lineFormat.Visible = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
-            }
-            catch { }
+            _line.Visible = value;
         }
     }
 
-    /// <summary>
-    /// 获取或设置线条的透明度
-    /// </summary>
-    public float Transparency
+    public bool Enabled
     {
         get
         {
-            try
-            {
-                return _lineFormat.Transparency;
-            }
-            catch { }
-            return 0.0f; // Default opaque
+            return _line.Enabled;
         }
         set
         {
-            try
-            {
-                _lineFormat.Transparency = value;
-            }
-            catch { }
+            _line.Enabled = value;
         }
     }
-
     #endregion
 
+    public object BringToFront()
+    {
+        return _line.BringToFront();
+    }
+    public object SendToBack()
+    {
+        return _line.SendToBack();
+    }
+
+    public object Cut()
+    {
+        return _line.Cut();
+    }
+
+    public object Copy()
+    {
+        return _line.Copy();
+    }
+
+    public object Delete()
+    {
+        return _line.Delete();
+    }
+
+    public object Duplicate()
+    {
+        return _line.Duplicate();
+    }
+
+    public object CopyPicture(XlPictureAppearance appearance, XlCopyPictureFormat format)
+    {
+        return _line.CopyPicture(appearance.EnumConvert(MsExcel.XlPictureAppearance.xlScreen), format.EnumConvert(MsExcel.XlCopyPictureFormat.xlPicture));
+    }
+
+    public object Select(bool replace = true)
+    {
+        return _line.Select(replace);
+    }
 
     #region IDisposable Support
     /// <summary>
@@ -199,13 +307,9 @@ internal class ExcelLine : IExcelLine
 
         if (disposing)
         {
-            try
-            {
-                if (_lineFormat != null)
-                    Marshal.ReleaseComObject(_lineFormat);
-            }
-            catch { }
-            _lineFormat = null;
+            if (_line != null)
+                Marshal.ReleaseComObject(_line);
+            _line = null;
         }
         _disposedValue = true;
     }

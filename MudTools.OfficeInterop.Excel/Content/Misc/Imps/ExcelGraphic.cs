@@ -48,8 +48,8 @@ internal class ExcelGraphic : IExcelGraphic
 
     public MsoPictureColorType ColorType
     {
-        get => (MsoPictureColorType)(int)_graphic.ColorType;
-        set => _graphic.ColorType = (MsCore.MsoPictureColorType)value;
+        get => _graphic.ColorType.EnumConvert(MsoPictureColorType.msoPictureAutomatic);
+        set => _graphic.ColorType = value.EnumConvert(MsCore.MsoPictureColorType.msoPictureAutomatic);
     }
 
     public string Filename

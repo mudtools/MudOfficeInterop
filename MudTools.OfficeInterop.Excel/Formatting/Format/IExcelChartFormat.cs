@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -27,24 +27,55 @@ public interface IExcelChartFormat : IDisposable
     #endregion
 
     #region 格式设置
+
+    // ========== 格式子对象 ==========
+
     /// <summary>
     /// 获取图表元素的填充格式对象
-    /// 对应 ChartFormat.Fill 属性
     /// </summary>
-    IExcelFillFormat Fill { get; }
+    IExcelFillFormat? Fill { get; }
 
     /// <summary>
-    /// 获取图表元素的边框线条格式对象
-    /// 对应 ChartFormat.Line 属性
+    /// 获取线条格式对象
     /// </summary>
-    IExcelLine Line { get; } // 假设 IExcelLine 已定义
+    IExcelLineFormat? Line { get; }
 
-    // 注意：ChartFormat 还可能包含其他属性，如 Glow, Shadow, SoftEdge, TextFrame2 等，
-    // 它们通常用于更高级的形状格式设置。可以根据需要继续扩展此接口。
-    // IExcelGlow Glow { get; }
-    // IExcelShadow Shadow { get; }
-    // IExcelSoftEdge SoftEdge { get; }
-    // MsExcel.TextFrame2 TextFrame2 { get; } // 直接暴露或进一步封装
+    /// <summary>
+    /// 获取阴影格式对象
+    /// </summary>
+    IExcelShadowFormat? Shadow { get; }
 
-    #endregion  
+    /// <summary>
+    /// 获取三维格式对象
+    /// </summary>
+    IExcelThreeDFormat? ThreeD { get; }
+
+    /// <summary>
+    /// 获取调整点集合对象（用于自定义形状）
+    /// </summary>
+    IExcelAdjustments? Adjustments { get; }
+
+    /// <summary>
+    /// 获取图片格式对象
+    /// </summary>
+    IExcelPictureFormat? PictureFormat { get; }
+
+    /// <summary>
+    /// 获取柔化边缘效果对象（Office 2010+）
+    /// </summary>
+    IOfficeSoftEdgeFormat? SoftEdge { get; }
+
+    /// <summary>
+    /// 获取发光效果对象（Office 2010+）
+    /// </summary>
+    IOfficeGlowFormat? Glow { get; }
+
+
+    // ========== 其他属性 ==========
+
+    /// <summary>
+    /// 获取或设置自动形状类型
+    /// </summary>
+    MsoAutoShapeType AutoShapeType { get; set; }
+    #endregion
 }

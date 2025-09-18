@@ -12,6 +12,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// </summary>
 public interface IExcelFillFormat : IDisposable
 {
+    #region 基础属性
+    /// <summary>
+    /// 获取 ChartFormat 对象的父对象
+    /// 父对象通常是 ChartArea, PlotArea, Series 等图表元素
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取 ChartFormat 对象所在的 Application 对象
+    /// </summary>
+    IExcelApplication Application { get; }
+    #endregion
+
     /// <summary>
     /// 获取或设置填充类型
     /// </summary>

@@ -13,33 +13,33 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelPage : IDisposable
 {
     /// <summary>
-/// 获取左页眉设置
-/// </summary>
+    /// 获取左页眉设置
+    /// </summary>
     IExcelHeaderFooter? LeftHeader { get; }
 
     /// <summary>
-/// 获取中页眉设置
-/// </summary>
+    /// 获取中页眉设置
+    /// </summary>
     IExcelHeaderFooter? CenterHeader { get; }
 
     /// <summary>
-/// 获取右页眉设置
-/// </summary>
+    /// 获取右页眉设置
+    /// </summary>
     IExcelHeaderFooter? RightHeader { get; }
 
     /// <summary>
-/// 获取左页脚设置
-/// </summary>
+    /// 获取左页脚设置
+    /// </summary>
     IExcelHeaderFooter? LeftFooter { get; }
 
     /// <summary>
-/// 获取中页脚设置
-/// </summary>
+    /// 获取中页脚设置
+    /// </summary>
     IExcelHeaderFooter? CenterFooter { get; }
 
     /// <summary>
-/// 获取右页脚设置
-/// </summary>
+    /// 获取右页脚设置
+    /// </summary>
     IExcelHeaderFooter? RightFooter { get; }
 
 }

@@ -36,6 +36,10 @@ internal class ExcelFillFormat : IExcelFillFormat
 
     public void Dispose() => Dispose(true);
 
+    public object Parent => _fillFormat.Parent;
+
+    public IExcelApplication Application => new ExcelApplication(_fillFormat.Application as MsExcel.Application);
+
     public MsoFillType Type
     {
         get => _fillFormat != null ? _fillFormat.Type.EnumConvert(MsoFillType.msoFillSolid) : MsoFillType.msoFillSolid;

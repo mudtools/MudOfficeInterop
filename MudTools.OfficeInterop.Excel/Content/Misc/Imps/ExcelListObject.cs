@@ -17,17 +17,69 @@ internal class ExcelListObject : IExcelListObject
         get => _listObject.Name;
         set => _listObject.Name = value;
     }
-    public IExcelRange Range => new ExcelRange(_listObject.Range);
-    public IExcelRange DataRange => new ExcelRange(_listObject.DataBodyRange);
+    public IExcelRange? Range => _listObject != null ? new ExcelRange(_listObject.Range) : null;
+    public IExcelRange? DataRange => _listObject != null ? new ExcelRange(_listObject.DataBodyRange) : null;
 
-    public IExcelRange HeaderRowRange => new ExcelRange(_listObject.HeaderRowRange);
+    public IExcelRange? HeaderRowRange => _listObject != null ? new ExcelRange(_listObject.HeaderRowRange) : null;
 
-    public IExcelRange TotalsRowRange => new ExcelRange(_listObject.TotalsRowRange);
+    public IExcelRange? TotalsRowRange => _listObject != null ? new ExcelRange(_listObject.TotalsRowRange) : null;
+
+    public IExcelRange? InsertRowRange => _listObject != null ? new ExcelRange(_listObject.InsertRowRange) : null;
+
+    public IExcelListColumns? ListColumns => _listObject != null ? new ExcelListColumns(_listObject.ListColumns) : null;
+
+    public IExcelListRows? ListRows => _listObject != null ? new ExcelListRows(_listObject.ListRows) : null;
+
+    public IExcelAutoFilter? AutoFilter => _listObject != null ? new ExcelAutoFilter(_listObject.AutoFilter) : null;
+
+    public IExcelSort? Sort => _listObject != null ? new ExcelSort(_listObject.Sort) : null;
+
+    public IExcelQueryTable? QueryTable => _listObject != null ? new ExcelQueryTable(_listObject.QueryTable) : null;
+
+    public bool DisplayRightToLeft
+    {
+        get => _listObject.DisplayRightToLeft;
+    }
 
     public bool ShowHeaders
     {
         get => _listObject.ShowHeaders;
         set => _listObject.ShowHeaders = value;
+    }
+
+    public bool ShowAutoFilter
+    {
+        get => _listObject.ShowAutoFilter;
+        set => _listObject.ShowAutoFilter = value;
+    }
+
+    public bool ShowTableStyleFirstColumn
+    {
+        get => _listObject.ShowTableStyleFirstColumn;
+        set => _listObject.ShowTableStyleFirstColumn = value;
+    }
+
+    public bool ShowTableStyleLastColumn
+    {
+        get => _listObject.ShowTableStyleLastColumn;
+        set => _listObject.ShowTableStyleLastColumn = value;
+    }
+
+    public bool ShowTableStyleRowStripes
+    {
+        get => _listObject.ShowTableStyleRowStripes;
+        set => _listObject.ShowTableStyleRowStripes = value;
+    }
+
+    public bool ShowTableStyleColumnStripes
+    {
+        get => _listObject.ShowTableStyleColumnStripes;
+        set => _listObject.ShowTableStyleColumnStripes = value;
+    }
+
+    public string SharePointURL
+    {
+        get => _listObject.SharePointURL;
     }
 
     public bool ShowTotals
@@ -36,12 +88,59 @@ internal class ExcelListObject : IExcelListObject
         set => _listObject.ShowTotals = value;
     }
 
+    public string DisplayName
+    {
+        get => _listObject.DisplayName;
+        set => _listObject.DisplayName = value;
+    }
+
+    public string Comment
+    {
+        get => _listObject.Comment;
+        set => _listObject.Comment = value;
+    }
+
+    public string AlternativeText
+    {
+        get => _listObject.AlternativeText;
+        set => _listObject.AlternativeText = value;
+    }
+
+    public string Summary
+    {
+        get => _listObject.Summary;
+        set => _listObject.Summary = value;
+    }
+
+    public bool ShowAutoFilterDropDown
+    {
+        get => _listObject.ShowAutoFilterDropDown;
+        set => _listObject.ShowAutoFilterDropDown = value;
+    }
+
+    public XlListObjectSourceType SourceType
+    {
+        get => _listObject.SourceType.EnumConvert(XlListObjectSourceType.xlSrcRange);
+    }
+
     public string WorksheetName => _listObject.Range.Worksheet.Name;
 
     internal ExcelListObject(MsExcel.ListObject listObject)
     {
         _listObject = listObject ?? throw new ArgumentNullException(nameof(listObject));
         _disposedValue = false;
+    }
+
+    public void ExportToVisio()
+    {
+        try
+        {
+            _listObject.ExportToVisio();
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法将 ListObject 导出到 Visio。", ex);
+        }
     }
 
     public void Refresh()
