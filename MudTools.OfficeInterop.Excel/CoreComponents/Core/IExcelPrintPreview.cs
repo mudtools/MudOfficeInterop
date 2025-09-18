@@ -52,7 +52,7 @@ public interface IExcelPrintPreview : IDisposable
     /// <summary>
     /// 获取或设置是否显示注释
     /// </summary>
-    int ShowComments { get; set; }
+    XlPrintLocation ShowComments { get; set; }
     #endregion
 
     #region 页面设置
@@ -60,12 +60,12 @@ public interface IExcelPrintPreview : IDisposable
     /// <summary>
     /// 获取或设置页面方向（纵向或横向）
     /// </summary>
-    int Orientation { get; set; }
+    XlPageOrientation Orientation { get; set; }
 
     /// <summary>
     /// 获取或设置纸张大小
     /// </summary>
-    int PaperSize { get; set; }
+    XlPaperSize PaperSize { get; set; }
     #endregion
 
     #region 页边距设置
@@ -136,36 +136,8 @@ public interface IExcelPrintPreview : IDisposable
 
     #endregion
 
-    #region 操作方法
-
-    /// <summary>
-    /// 显示打印预览窗口
-    /// </summary>
-    /// <param name="enableChanges">是否允许在预览中进行更改</param>
-    void Show(bool enableChanges = true);
-
-    /// <summary>
-    /// 刷新打印预览显示
-    /// </summary>
-    void Refresh();
-
-    /// <summary>
-    /// 打印当前预览的内容
-    /// </summary>
-    /// <param name="copies">打印份数</param>
-    /// <param name="collate">是否逐份打印</param>
-    void Print(int copies = 1, bool collate = true);
-
-    /// <summary>
-    /// 导出预览为PDF文件
-    /// </summary>
-    /// <param name="filename">PDF文件路径</param>
-    void ExportToPDF(string filename);
-
-    #endregion
 
     #region 高级功能
-
     /// <summary>
     /// 获取或设置是否显示黑白预览
     /// </summary>

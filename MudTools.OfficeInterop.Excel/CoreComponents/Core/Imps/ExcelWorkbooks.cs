@@ -45,23 +45,9 @@ internal class ExcelWorkbooks : IExcelWorkbooks
 
         if (disposing)
         {
-            try
-            {
-                // 释放所有子工作簿对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var workbook = this[i] as ExcelWorkbook;
-                    workbook?.Dispose();
-                }
-
-                // 释放底层COM对象
-                if (_workbooks != null)
-                    Marshal.ReleaseComObject(_workbooks);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_workbooks != null)
+                Marshal.ReleaseComObject(_workbooks);
             _workbooks = null;
         }
 

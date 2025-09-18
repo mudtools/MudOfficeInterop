@@ -14,26 +14,6 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 internal class ExcelPrintPreview : IExcelPrintPreview
 {
     /// <summary>
-    /// 底层的 COM 对象（可以是Worksheet、Workbook或Application）
-    /// </summary>
-    private object _parentObject;
-
-    /// <summary>
-    /// 父对象类型
-    /// </summary>
-    private enum ParentType
-    {
-        Worksheet,
-        Workbook,
-        Application
-    }
-
-    /// <summary>
-    /// 父对象类型
-    /// </summary>
-    private ParentType _parentType;
-
-    /// <summary>
     /// 标记对象是否已被释放
     /// </summary>
     private bool _disposedValue;
@@ -41,53 +21,16 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// <summary>
     /// 当前页面设置（用于预览设置）
     /// </summary>
-    private MsExcel.PageSetup _pageSetup;
+    private MsExcel.PageSetup? _pageSetup;
 
     #region 构造函数和释放
-
-    /// <summary>
-    /// 初始化 ExcelPrintPreview 实例（基于Worksheet）
-    /// </summary>
-    /// <param name="worksheet">底层的 COM Worksheet 对象</param>
-    internal ExcelPrintPreview(MsExcel.Worksheet worksheet)
-    {
-        _parentObject = worksheet ?? throw new ArgumentNullException(nameof(worksheet));
-        _parentType = ParentType.Worksheet;
-        _pageSetup = worksheet.PageSetup;
-        _disposedValue = false;
-    }
-
     /// <summary>
     /// 初始化 ExcelPrintPreview 实例（基于Workbook）
     /// </summary>
-    /// <param name="workbook">底层的 COM Workbook 对象</param>
-    internal ExcelPrintPreview(MsExcel.Workbook workbook)
+    /// <param name="pageSetup">底层的 COM PageSetup 对象</param>
+    internal ExcelPrintPreview(MsExcel.PageSetup pageSetup)
     {
-        _parentObject = workbook ?? throw new ArgumentNullException(nameof(workbook));
-        _parentType = ParentType.Workbook;
-        // Workbook没有直接的PageSetup，使用第一个工作表的PageSetup
-        try
-        {
-            var firstSheet = workbook.Worksheets[1] as MsExcel.Worksheet;
-            _pageSetup = firstSheet?.PageSetup;
-        }
-        catch
-        {
-            _pageSetup = null;
-        }
-        _disposedValue = false;
-    }
-
-    /// <summary>
-    /// 初始化 ExcelPrintPreview 实例（基于Application）
-    /// </summary>
-    /// <param name="application">底层的 COM Application 对象</param>
-    internal ExcelPrintPreview(MsExcel.Application application)
-    {
-        _parentObject = application ?? throw new ArgumentNullException(nameof(application));
-        _parentType = ParentType.Application;
-        // Application没有直接的PageSetup
-        _pageSetup = null;
+        _pageSetup = pageSetup ?? throw new ArgumentNullException(nameof(pageSetup));
         _disposedValue = false;
     }
 
@@ -101,17 +44,9 @@ internal class ExcelPrintPreview : IExcelPrintPreview
 
         if (disposing)
         {
-            try
-            {
-                // 释放PageSetup对象
-                if (_pageSetup != null)
-                    Marshal.ReleaseComObject(_pageSetup);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
-            _parentObject = null;
+            // 释放PageSetup对象
+            if (_pageSetup != null)
+                Marshal.ReleaseComObject(_pageSetup);
             _pageSetup = null;
         }
 
@@ -129,7 +64,7 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// <summary>
     /// 获取打印预览窗口的父对象
     /// </summary>
-    public object Parent => _parentObject;
+    public object Parent => _pageSetup.Parent;
     #endregion
 
     #region 显示设置
@@ -213,43 +148,43 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// <summary>
     /// 获取或设置是否显示注释
     /// </summary>
-    public int ShowComments
+    public XlPrintLocation ShowComments
     {
-        get => _pageSetup != null ? Convert.ToInt32(_pageSetup.PrintComments) : 0;
+        get => _pageSetup != null ? _pageSetup.PrintComments.EnumConvert(XlPrintLocation.xlPrintNoComments) : XlPrintLocation.xlPrintNoComments;
         set
         {
             if (_pageSetup != null)
-                _pageSetup.PrintComments = (MsExcel.XlPrintLocation)value;
+                _pageSetup.PrintComments = value.EnumConvert(MsExcel.XlPrintLocation.xlPrintNoComments);
         }
     }
 
     #endregion
 
-    #region 页面设置
-
-    /// <summary>
-    /// 获取或设置页面方向
-    /// </summary>
-    public int Orientation
-    {
-        get => _pageSetup != null ? Convert.ToInt32(_pageSetup.Orientation) : 0;
-        set
-        {
-            if (_pageSetup != null)
-                _pageSetup.Orientation = (MsExcel.XlPageOrientation)value;
-        }
-    }
+    #region 页面设置  
 
     /// <summary>
     /// 获取或设置纸张大小
     /// </summary>
-    public int PaperSize
+    public XlPaperSize PaperSize
     {
-        get => _pageSetup != null ? Convert.ToInt32(_pageSetup.PaperSize) : 0;
+        get => _pageSetup != null ? _pageSetup.PaperSize.EnumConvert(XlPaperSize.xlPaperA4) : XlPaperSize.xlPaperA4;
         set
         {
             if (_pageSetup != null)
-                _pageSetup.PaperSize = (MsExcel.XlPaperSize)value;
+                _pageSetup.PaperSize = value.EnumConvert(MsExcel.XlPaperSize.xlPaperA4);
+        }
+    }
+
+    /// <summary>
+    /// 获取或设置页面方向
+    /// </summary>
+    public XlPageOrientation Orientation
+    {
+        get => _pageSetup != null ? _pageSetup.Orientation.EnumConvert(XlPageOrientation.xlPortrait) : XlPageOrientation.xlPortrait;
+        set
+        {
+            if (_pageSetup != null)
+                _pageSetup.Orientation = value.EnumConvert(MsExcel.XlPageOrientation.xlPortrait);
         }
     }
     #endregion
@@ -343,7 +278,7 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// </summary>
     public string LeftHeader
     {
-        get => _pageSetup?.LeftHeader?.ToString();
+        get => _pageSetup?.LeftHeader;
         set
         {
             if (_pageSetup != null && value != null)
@@ -356,7 +291,7 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// </summary>
     public string CenterHeader
     {
-        get => _pageSetup?.CenterHeader?.ToString();
+        get => _pageSetup?.CenterHeader;
         set
         {
             if (_pageSetup != null && value != null)
@@ -369,7 +304,7 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// </summary>
     public string RightHeader
     {
-        get => _pageSetup?.RightHeader?.ToString();
+        get => _pageSetup?.RightHeader;
         set
         {
             if (_pageSetup != null && value != null)
@@ -382,7 +317,7 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// </summary>
     public string LeftFooter
     {
-        get => _pageSetup?.LeftFooter?.ToString();
+        get => _pageSetup?.LeftFooter;
         set
         {
             if (_pageSetup != null && value != null)
@@ -395,7 +330,7 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// </summary>
     public string CenterFooter
     {
-        get => _pageSetup?.CenterFooter?.ToString();
+        get => _pageSetup?.CenterFooter;
         set
         {
             if (_pageSetup != null && value != null)
@@ -408,144 +343,13 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// </summary>
     public string RightFooter
     {
-        get => _pageSetup?.RightFooter?.ToString();
+        get => _pageSetup?.RightFooter;
         set
         {
             if (_pageSetup != null && value != null)
                 _pageSetup.RightFooter = value;
         }
     }
-
-    #endregion
-
-    #region 操作方法
-
-    /// <summary>
-    /// 显示打印预览窗口
-    /// </summary>
-    /// <param name="enableChanges">是否允许在预览中进行更改</param>
-    public void Show(bool enableChanges = true)
-    {
-        try
-        {
-            switch (_parentType)
-            {
-                case ParentType.Worksheet:
-                    var worksheet = _parentObject as MsExcel.Worksheet;
-                    worksheet?.PrintPreview(enableChanges);
-                    break;
-                case ParentType.Workbook:
-                    var workbook = _parentObject as MsExcel.Workbook;
-                    workbook?.PrintPreview(enableChanges);
-                    break;
-                case ParentType.Application:
-                    var application = _parentObject as MsExcel.Application;
-                    application?.ThisWorkbook?.PrintPreview(enableChanges);
-                    break;
-            }
-        }
-        catch
-        {
-            // 忽略显示预览过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 刷新打印预览显示
-    /// </summary>
-    public void Refresh()
-    {
-        // 重新显示预览以实现刷新效果
-        Show();
-    }
-
-    /// <summary>
-    /// 打印当前预览的内容
-    /// </summary>
-    /// <param name="copies">打印份数</param>
-    /// <param name="collate">是否逐份打印</param>
-    public void Print(int copies = 1, bool collate = true)
-    {
-        try
-        {
-            switch (_parentType)
-            {
-                case ParentType.Worksheet:
-                    var worksheet = _parentObject as MsExcel.Worksheet;
-                    worksheet?.PrintOut(
-                        Type.Missing, Type.Missing, copies, collate,
-                        Type.Missing, Type.Missing, Type.Missing, Type.Missing
-                    );
-                    break;
-                case ParentType.Workbook:
-                    var workbook = _parentObject as MsExcel.Workbook;
-                    workbook?.PrintOut(
-                        Type.Missing, Type.Missing, copies, collate,
-                        Type.Missing, Type.Missing, Type.Missing, Type.Missing
-                    );
-                    break;
-                case ParentType.Application:
-                    var application = _parentObject as MsExcel.Application;
-                    application?.ThisWorkbook?.PrintOut(
-                        Type.Missing, Type.Missing, copies, collate,
-                        Type.Missing, Type.Missing, Type.Missing, Type.Missing
-                    );
-                    break;
-            }
-        }
-        catch
-        {
-            // 忽略打印过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 导出预览为PDF文件
-    /// </summary>
-    /// <param name="filename">PDF文件路径</param>
-    public void ExportToPDF(string filename)
-    {
-        if (string.IsNullOrEmpty(filename)) return;
-
-        try
-        {
-            switch (_parentType)
-            {
-                case ParentType.Worksheet:
-                    var worksheet = _parentObject as MsExcel.Worksheet;
-                    worksheet?.ExportAsFixedFormat(
-                        MsExcel.XlFixedFormatType.xlTypePDF,
-                        filename,
-                        MsExcel.XlFixedFormatQuality.xlQualityStandard,
-                        true, true, Type.Missing, Type.Missing, false, Type.Missing
-                    );
-                    break;
-                case ParentType.Workbook:
-                    var workbook = _parentObject as MsExcel.Workbook;
-                    workbook?.ExportAsFixedFormat(
-                        MsExcel.XlFixedFormatType.xlTypePDF,
-                        filename,
-                        MsExcel.XlFixedFormatQuality.xlQualityStandard,
-                        true, true, Type.Missing, Type.Missing, false, Type.Missing
-                    );
-                    break;
-                case ParentType.Application:
-                    var application = _parentObject as MsExcel.Application;
-                    application?.ThisWorkbook?.ExportAsFixedFormat(
-                        MsExcel.XlFixedFormatType.xlTypePDF,
-                        filename,
-                        MsExcel.XlFixedFormatQuality.xlQualityStandard,
-                        true, true, Type.Missing, Type.Missing, false, Type.Missing
-                    );
-                    break;
-            }
-        }
-        catch
-        {
-            // 忽略导出过程中的异常
-        }
-    }
-
     #endregion
 
     #region 高级功能

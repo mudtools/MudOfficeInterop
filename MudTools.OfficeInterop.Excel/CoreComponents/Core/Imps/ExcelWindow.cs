@@ -92,14 +92,14 @@ internal class ExcelWindow : IExcelWindow
 
     public XlWindowState WindowState
     {
-        get => (XlWindowState)(int)_window.WindowState;
-        set => _window.WindowState = (MsExcel.XlWindowState)(int)value;
+        get => _window.WindowState.EnumConvert(XlWindowState.xlNormal);
+        set => _window.WindowState = value.EnumConvert(MsExcel.XlWindowState.xlNormal);
     }
 
     public XlWindowView View
     {
-        get => (XlWindowView)(int)_window.View;
-        set => _window.View = (MsExcel.XlWindowView)(int)value;
+        get => _window.View.EnumConvert(XlWindowView.xlNormalView);
+        set => _window.View = value.EnumConvert(MsExcel.XlWindowView.xlNormalView);
     }
 
     public double Zoom
@@ -134,8 +134,7 @@ internal class ExcelWindow : IExcelWindow
 
     public IExcelRange? VisibleRange => _window != null ? new ExcelRange(_window.VisibleRange) : null;
 
-    public IExcelSheetViews SheetViews => _window != null ? new ExcelSheetViews(_window.SheetViews) : null;
-
+    public IExcelSheetViews? SheetViews => _window != null ? new ExcelSheetViews(_window.SheetViews) : null;
 
     /// <summary>
     /// 获取或设置是否显示网格线
@@ -281,8 +280,8 @@ internal class ExcelWindow : IExcelWindow
     /// </summary>
     public XlColorIndex GridlineColorIndex
     {
-        get => (XlColorIndex)_window.GridlineColorIndex;
-        set => _window.GridlineColorIndex = (MsExcel.XlColorIndex)value;
+        get => _window.GridlineColorIndex.EnumConvert(XlColorIndex.xlColorIndexAutomatic);
+        set => _window.GridlineColorIndex = value.EnumConvert(MsExcel.XlColorIndex.xlColorIndexAutomatic);
     }
 
     /// <summary>
@@ -305,8 +304,7 @@ internal class ExcelWindow : IExcelWindow
     {
         get
         {
-            MsExcel.Range? range = _window.Selection as MsExcel.Range;
-            return range != null ? new ExcelRange(range) : null;
+            return _window.Selection is MsExcel.Range range ? new ExcelRange(range) : null;
         }
     }
 
@@ -352,7 +350,7 @@ internal class ExcelWindow : IExcelWindow
     /// <summary>
     /// 获取窗口类型（工作表/图表）
     /// </summary>
-    public XlWindowType Type => (XlWindowType)(int)_window.Type;
+    public XlWindowType Type => _window.Type.EnumConvert(XlWindowType.xlWorkbook);
 
     /// <summary>
     /// 获取窗口可用高度（排除工具栏等）

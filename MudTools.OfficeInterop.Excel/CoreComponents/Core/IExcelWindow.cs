@@ -180,7 +180,7 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <summary>
     /// 获取工作表视图集合
     /// </summary>
-    IExcelSheetViews SheetViews { get; }
+    IExcelSheetViews? SheetViews { get; }
 
     /// <summary>
     /// 获取或设置水平拆分位置（像素）

@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 internal class ExcelProtectedViewWindow : IExcelProtectedViewWindow
 {
     private MsExcel.ProtectedViewWindow _protectedViewWindow;
@@ -55,12 +56,12 @@ internal class ExcelProtectedViewWindow : IExcelProtectedViewWindow
 
     public XlProtectedViewWindowState WindowState
     {
-        get => (XlProtectedViewWindowState)(int)_protectedViewWindow.WindowState;
-        set => _protectedViewWindow.WindowState = (MsExcel.XlProtectedViewWindowState)value;
+        get => _protectedViewWindow.WindowState.EnumConvert(XlProtectedViewWindowState.xlProtectedViewWindowNormal);
+        set => _protectedViewWindow.WindowState = value.EnumConvert(MsExcel.XlProtectedViewWindowState.xlProtectedViewWindowNormal);
     }
 
 
-    public IExcelWorkbook Workbook => new ExcelWorkbook(_protectedViewWindow.Workbook);
+    public IExcelWorkbook? Workbook => _protectedViewWindow != null ? new ExcelWorkbook(_protectedViewWindow.Workbook) : null;
 
     public string SourcePath => _protectedViewWindow.SourcePath;
 

@@ -5,7 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using log4net;
 using System.Drawing;
 using System.Reflection;
 
@@ -59,6 +58,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
                 // 释放子COM组件
                 _listObjects?.Dispose();
                 _names?.Dispose();
+                _printPreview?.Dispose();
                 _vPageBreaks?.Dispose();
                 _queryTables?.Dispose();
                 _hPageBreaks?.Dispose();
@@ -97,6 +97,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         _queryTables = null;
         _vPageBreaks = null;
         _names = null;
+        _printPreview = null;
         _cells = null;
         _sort = null;
         _columns = null;
@@ -126,6 +127,21 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     #endregion
 
     #region 基础属性
+
+    private IExcelPrintPreview? _printPreview;
+
+    public IExcelPrintPreview? PrintPreview
+    {
+        get
+        {
+            if (_worksheet == null)
+                return null;
+            if (_printPreview != null)
+                return _printPreview;
+            _printPreview = new ExcelPrintPreview(_worksheet.PageSetup);
+            return _printPreview;
+        }
+    }
 
     /// <summary>
     /// 获取或设置工作表的名称
@@ -1137,11 +1153,6 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     public void Delete()
     {
         _worksheet?.Delete();
-    }
-
-    public void PrintPreview()
-    {
-        _worksheet?.PrintPreview();
     }
 
     /// <summary>

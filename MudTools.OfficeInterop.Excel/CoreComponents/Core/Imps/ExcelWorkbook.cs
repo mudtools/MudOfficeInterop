@@ -5,7 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using log4net;
 using MudTools.OfficeInterop.Vbe;
 using MudTools.OfficeInterop.Vbe.Imp;
 
@@ -106,17 +105,17 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 获取或设置工作簿的名称
     /// </summary>
-    public string Name => _workbook?.Name?.ToString();
+    public string Name => _workbook?.Name;
 
     /// <summary>
     /// 获取工作簿的完整路径
     /// </summary>
-    public string FullName => _workbook?.FullName?.ToString();
+    public string FullName => _workbook?.FullName;
 
     /// <summary>
     /// 获取工作簿的路径
     /// </summary>
-    public string Path => _workbook?.Path?.ToString();
+    public string Path => _workbook?.Path;
 
 
     public bool MultiUserEditing => _workbook.MultiUserEditing;
@@ -395,19 +394,18 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     {
         get
         {
-            MsExcel.Application? application = _workbook?.Application as MsExcel.Application;
-            return application != null ? new ExcelApplication(application) : null;
+            return _workbook?.Application is MsExcel.Application application ? new ExcelApplication(application) : null;
         }
     }
 
     /// <summary>
     /// 获取工作簿的编码名称
     /// </summary>
-    public string CodeName => _workbook?.CodeName?.ToString();
+    public string CodeName => _workbook?.CodeName;
 
     #endregion
 
-    #region 工作表管理
+    #region 工作表管理   
 
     /// <summary>
     /// 工作表集合缓存
@@ -757,17 +755,6 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     }
 
     /// <summary>
-    /// 复制工作簿
-    /// </summary>
-    /// <param name="before">复制到指定工作簿之前</param>
-    /// <param name="after">复制到指定工作簿之后</param>
-    public void Copy(IExcelWorkbook before = null, IExcelWorkbook after = null)
-    {
-        // 注意：Excel中工作簿不能直接复制
-        // 这里提供一个空实现以保持接口一致性
-    }
-
-    /// <summary>
     /// 打印工作簿
     /// </summary>
     /// <param name="preview">是否打印预览</param>
@@ -803,9 +790,9 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         {
             _workbook.SendMail(recipients, subject, returnReceipt);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略发送过程中的异常
+            log.Error($"发送文件失败:{x.Message}", x);
         }
     }
 
@@ -823,42 +810,63 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         {
             for (int i = 1; i <= _worksheets.Count; i++)
             {
-                try
-                {
-                    if (_worksheets[i] != null
-                        && _worksheets[i] is IExcelWorksheet worksheet)
-                        worksheet?.Calculate();
-                }
-                catch
-                {
-                    // 忽略单个工作表计算异常
-                }
+                if (_worksheets[i] != null
+                      && _worksheets[i] is IExcelWorksheet worksheet)
+                    worksheet?.Calculate();
             }
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略计算过程中的异常
+            log.Error($"计算工作表失败:{x.Message}", x);
         }
     }
 
     public void Reply()
     {
-        _workbook?.Reply();
+        try
+        {
+            _workbook?.Reply();
+        }
+        catch (Exception x)
+        {
+            log.Error($"回复邮件失败:{x.Message}", x);
+        }
     }
 
     public void ReplyAll()
     {
-        _workbook?.ReplyAll();
+        try
+        {
+            _workbook?.ReplyAll();
+        }
+        catch (Exception x)
+        {
+            log.Error($"回复邮件失败:{x.Message}", x);
+        }
     }
 
     public void RemoveUser(int index)
     {
-        _workbook?.RemoveUser(index);
+        try
+        {
+            _workbook?.RemoveUser(index);
+        }
+        catch (Exception x)
+        {
+            log.Error($"移除用户失败:{x.Message}", x);
+        }
     }
 
     public void Route()
     {
-        _workbook?.Route();
+        try
+        {
+            _workbook?.Route();
+        }
+        catch (Exception x)
+        {
+            log.Error($"发送文件失败:{x.Message}", x);
+        }
     }
 
     public bool Routed
@@ -875,7 +883,14 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// </summary>
     public void RefreshAll()
     {
-        _workbook?.RefreshAll();
+        try
+        {
+            _workbook?.RefreshAll();
+        }
+        catch (Exception x)
+        {
+            log.Error($"刷新工作簿失败:{x.Message}", x);
+        }
     }
 
     /// <summary>
@@ -886,16 +901,19 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         var worksheets = Sheets;
         if (worksheets != null)
         {
-            for (int i = 1; i <= worksheets.Count; i++)
+            try
             {
-                try
+                for (int i = 1; i <= worksheets.Count; i++)
                 {
-                    worksheets[i]?.ClearAll();
+                    if (worksheets[i] != null
+                        && worksheets[i] is IExcelWorksheet worksheet)
+                        worksheet.ClearAll();
                 }
-                catch
-                {
-                    // 忽略单个工作表异常
-                }
+            }
+            catch (Exception x)
+            {
+                log.Error($"清除工作簿内容失败:{x.Message}", x);
+
             }
         }
     }
@@ -941,12 +959,20 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 获取工作簿的透视表缓存集合
     /// </summary>
-    public IExcelPivotCaches PivotCaches()
+    public IExcelPivotCaches? PivotCaches()
     {
-        var caches = _workbook?.PivotCaches();
-        if (caches != null)
-            return new ExcelPivotCaches(caches);
-        return null;
+        try
+        {
+            var caches = _workbook?.PivotCaches();
+            if (caches != null)
+                return new ExcelPivotCaches(caches);
+            return null;
+        }
+        catch (Exception x)
+        {
+            log.Error($"获取透视表缓存集合失败:{x.Message}", x);
+            return null;
+        }
     }
 
     #endregion
@@ -983,11 +1009,11 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// </summary>
     public XlWindowState WindowState
     {
-        get => (XlWindowState)(_workbook?.Windows[1]?.WindowState ?? 0);
+        get => (XlWindowState)(_workbook?.Windows[1]?.WindowState.EnumConvert(XlWindowState.xlNormal));
         set
         {
             if (_workbook?.Windows[1] != null)
-                _workbook.Windows[1].WindowState = (MsExcel.XlWindowState)value;
+                _workbook.Windows[1].WindowState = value.EnumConvert(MsExcel.XlWindowState.xlNormal);
         }
     }
 
@@ -1075,11 +1101,11 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// </summary>
     public XlCalculation Calculation
     {
-        get => (XlCalculation)(_workbook?.Application?.Calculation ?? 0);
+        get => _workbook.Application.Calculation.EnumConvert(XlCalculation.xlCalculationAutomatic);
         set
         {
             if (_workbook?.Application != null)
-                _workbook.Application.Calculation = (MsExcel.XlCalculation)value;
+                _workbook.Application.Calculation = value.EnumConvert(MsExcel.XlCalculation.xlCalculationAutomatic);
         }
     }
 

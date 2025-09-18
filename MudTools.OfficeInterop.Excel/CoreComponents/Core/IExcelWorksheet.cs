@@ -22,6 +22,8 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// </summary>
     IExcelNames Names { get; }
 
+    IExcelPrintPreview? PrintPreview { get; }
+
     /// <summary>
     /// 获取工作表的垂直分页符集合
     /// </summary>

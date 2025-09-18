@@ -13,6 +13,11 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelProtectedViewWindow : IExcelCommonWindow, IDisposable
 {
     /// <summary>
+    /// 获取与受保护视图窗口关联的工作簿对象
+    /// </summary>
+    IExcelWorkbook? Workbook { get; }
+
+    /// <summary>
     /// 获取受保护视图窗口的状态
     /// </summary>
     XlProtectedViewWindowState WindowState { get; set; }

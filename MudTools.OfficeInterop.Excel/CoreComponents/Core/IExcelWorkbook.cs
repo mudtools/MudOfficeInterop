@@ -414,14 +414,6 @@ public interface IExcelWorkbook : IDisposable
     void Select(bool replace = true);
 
     /// <summary>
-    /// 复制工作簿
-    /// 对应 Workbook.FollowHyperlink 方法（简化实现）
-    /// </summary>
-    /// <param name="before">复制到指定工作簿之前</param>
-    /// <param name="after">复制到指定工作簿之后</param>
-    void Copy(IExcelWorkbook before = null, IExcelWorkbook after = null);
-
-    /// <summary>
     /// 打印工作簿
     /// </summary>
     /// <param name="preview">是否打印预览</param>
@@ -449,14 +441,35 @@ public interface IExcelWorkbook : IDisposable
     /// </summary>
     void RefreshAll();
 
+    /// <summary>
+    /// 回复当前工作簿的发送者
+    /// 对应 Workbook.Reply 方法
+    /// </summary>
     void Reply();
 
+    /// <summary>
+    /// 回复当前工作簿的所有收件人
+    /// 对应 Workbook.ReplyAll 方法
+    /// </summary>
     void ReplyAll();
 
+    /// <summary>
+    /// 从共享工作簿中删除指定用户
+    /// 对应 Workbook.RemoveUser 方法
+    /// </summary>
+    /// <param name="index">要删除的用户索引</param>
     void RemoveUser(int index);
 
+    /// <summary>
+    /// 发送当前工作簿的路由
+    /// 对应 Workbook.Route 方法
+    /// </summary>
     void Route();
 
+    /// <summary>
+    /// 获取一个值，指示工作簿是否已路由
+    /// 对应 Workbook.Routed 属性
+    /// </summary>
     bool Routed { get; }
 
     /// <summary>
@@ -468,32 +481,32 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取工作簿的名称集合
     /// </summary>
-    IExcelNames Names { get; }
+    IExcelNames? Names { get; }
 
     /// <summary>
     /// 获取工作簿的样式集合
     /// </summary>
-    IExcelStyles Styles { get; }
+    IExcelStyles? Styles { get; }
 
     /// <summary>
     /// 获取工作簿的切片器缓存集合
     /// </summary>
-    IExcelSlicerCaches SlicerCaches { get; }
+    IExcelSlicerCaches? SlicerCaches { get; }
 
     /// <summary>
     /// 获取工作簿的活动切片器
     /// </summary>
-    IExcelSlicer ActiveSlicer { get; }
+    IExcelSlicer? ActiveSlicer { get; }
 
     /// <summary>
     /// 获取工作簿的图表集合
     /// </summary>
-    IExcelSheets Charts { get; }
+    IExcelSheets? Charts { get; }
 
     /// <summary>
     /// 获取工作簿的透视表缓存集合
     /// </summary>
-    IExcelPivotCaches PivotCaches();
+    IExcelPivotCaches? PivotCaches();
 
     #endregion
 

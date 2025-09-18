@@ -97,11 +97,6 @@ public interface IExcelComSheet : IDisposable
     void SaveAs(string filePath);
 
     /// <summary>
-    /// 打印预览
-    /// </summary>
-    void PrintPreview();
-
-    /// <summary>
     /// 打印工作表
     /// </summary>
     /// <param name="preview">是否打印预览</param>

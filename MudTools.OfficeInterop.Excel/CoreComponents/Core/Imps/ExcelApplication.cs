@@ -161,6 +161,8 @@ internal partial class ExcelApplication : IExcelApplication
 
     #region 基础属性
 
+
+
     /// <summary>
     /// 获取或设置单元格拖放功能是否启用
     /// </summary>
