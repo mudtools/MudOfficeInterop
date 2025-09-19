@@ -16,7 +16,7 @@ internal class ExcelShape : IExcelShape
     /// <summary>
     /// 底层的 COM Shape 对象
     /// </summary>
-    private MsExcel.Shape? _shape;
+    internal MsExcel.Shape? _shape;
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -93,14 +93,37 @@ internal class ExcelShape : IExcelShape
         }
     }
 
-    public IExcelOLEFormat OLEFormat => _shape != null ? new ExcelOLEFormat(_shape.OLEFormat) : null;
+    public IExcelOLEFormat? OLEFormat => _shape != null ? new ExcelOLEFormat(_shape.OLEFormat) : null;
 
-    public IExcelGroupShapes GroupItems => _shape != null ? new ExcelGroupShapes(_shape.GroupItems) : null;
+    public IExcelGroupShapes? GroupItems => _shape != null ? new ExcelGroupShapes(_shape.GroupItems) : null;
+
+    public IExcelConnectorFormat? ConnectorFormat => _shape != null ? new ExcelConnectorFormat(_shape.ConnectorFormat) : null;
+
+    public IExcelShapeNodes? ShapeNodes => _shape != null ? new ExcelShapeNodes(_shape.Nodes) : null;
+
+    public IExcelLinkFormat? LinkFormat => _shape != null ? new ExcelLinkFormat(_shape.LinkFormat) : null;
+
+    public IExcelControlFormat? ControlFormat => _shape != null ? new ExcelControlFormat(_shape.ControlFormat) : null;
 
     /// <summary>
     /// 获取形状的类型
     /// </summary>
     public MsoShapeType Type => _shape != null ? _shape.Type.EnumConvert(MsoShapeType.msoShapeTypeMixed) : MsoShapeType.msoShapeTypeMixed;
+
+    public MsoBlackWhiteMode BlackWhiteMode
+    {
+        get => _shape != null ? _shape.BlackWhiteMode.EnumConvert(MsoBlackWhiteMode.msoBlackWhiteMixed) : MsoBlackWhiteMode.msoBlackWhiteMixed;
+        set
+        {
+            if (_shape != null)
+                _shape.BlackWhiteMode = value.EnumConvert(MsCore.MsoBlackWhiteMode.msoBlackWhiteMixed);
+        }
+    }
+
+    public XlFormControl FormControlType
+    {
+        get => _shape != null ? _shape.FormControlType.EnumConvert(XlFormControl.xlButtonControl) : XlFormControl.xlButtonControl;
+    }
 
     /// <summary>
     /// 获取形状的ID
@@ -111,6 +134,35 @@ internal class ExcelShape : IExcelShape
     {
         get => _shape.LockAspectRatio.ConvertToBool();
         set => _shape.LockAspectRatio = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
+    }
+    public bool HorizontalFlip
+    {
+        get => _shape.HorizontalFlip.ConvertToBool();
+    }
+
+    public IExcelCalloutFormat? Callout
+    {
+        get => _shape != null ? new ExcelCalloutFormat(_shape.Callout) : null;
+    }
+
+    public IExcelPictureFormat? PictureFormat
+    {
+        get => _shape != null ? new ExcelPictureFormat(_shape.PictureFormat) : null;
+    }
+
+    public IExcelTextEffectFormat? TextEffect
+    {
+        get => _shape != null ? new ExcelTextEffectFormat(_shape.TextEffect) : null;
+    }
+
+    public IExcelHyperlink? Hyperlink
+    {
+        get => _shape != null ? new ExcelHyperlink(_shape.Hyperlink) : null;
+    }
+
+    public bool Connector
+    {
+        get => _shape != null ? _shape.Connector.ConvertToBool() : false;
     }
 
     /// <summary>
@@ -125,6 +177,16 @@ internal class ExcelShape : IExcelShape
         {
             if (_shape != null)
                 _shape.Placement = value.EnumConvert(MsExcel.XlPlacement.xlFreeFloating);
+        }
+    }
+
+    public MsoAutoShapeType AutoShapeType
+    {
+        get => _shape != null ? _shape.AutoShapeType.EnumConvert(MsoAutoShapeType.msoShapeMixed) : MsoAutoShapeType.msoShapeMixed;
+        set
+        {
+            if (_shape != null)
+                _shape.AutoShapeType = value.EnumConvert(MsCore.MsoAutoShapeType.msoShapeMixed);
         }
     }
 
@@ -227,6 +289,10 @@ internal class ExcelShape : IExcelShape
         }
     }
 
+    public int ZOrderPosition
+    {
+        get => _shape != null ? _shape.ZOrderPosition : 0;
+    }
 
 
     #endregion
@@ -432,6 +498,11 @@ internal class ExcelShape : IExcelShape
         _shape?.IncrementRotation((float)rotationIncrement);
     }
 
+    public void ZOrder(MsoZOrderCmd orderCmd)
+    {
+        _shape?.ZOrder(orderCmd.EnumConvert(MsCore.MsoZOrderCmd.msoBringToFront));
+    }
+
     /// <summary>
     /// 将形状置于最前面
     /// </summary>
@@ -452,10 +523,10 @@ internal class ExcelShape : IExcelShape
     /// 取消组合形状
     /// </summary>
     /// <returns>取消组合后的形状集合</returns>
-    public IExcelShapes Ungroup()
+    public IExcelShapeRange Ungroup()
     {
-        var shapes = _shape?.Ungroup() as MsExcel.Shapes;
-        return shapes != null ? new ExcelShapes(shapes) : null;
+        var shape = _shape?.Ungroup();
+        return shape != null ? new ExcelShapeRange(shape) : null;
     }
 
     /// <summary>

@@ -18,13 +18,37 @@ public interface IExcelShape : IDisposable
     /// 获取形状的 OLE 格式设置属性
     /// 对应 Shape.OLEFormat 属性，提供对嵌入的 OLE 对象格式设置的访问
     /// </summary>
-    IExcelOLEFormat OLEFormat { get; }
+    IExcelOLEFormat? OLEFormat { get; }
 
     /// <summary>
     /// 获取组合形状中单个子形状的集合
     /// 对应 Shape.GroupItems 属性，仅当形状为组合形状时可用
     /// </summary>
-    IExcelGroupShapes GroupItems { get; }
+    IExcelGroupShapes? GroupItems { get; }
+
+    /// <summary>
+    /// 获取形状的连接符格式设置属性
+    /// 对应 Shape.ConnectorFormat 属性，用于控制连接符的类型、起始/终止连接对象及连接点
+    /// </summary>
+    IExcelConnectorFormat? ConnectorFormat { get; }
+
+    /// <summary>
+    /// 获取自由形状中所有路径节点的集合
+    /// 对应 Shape.Nodes 属性，支持遍历、索引访问和节点操作
+    /// </summary>
+    IExcelShapeNodes? ShapeNodes { get; }
+
+    /// <summary>
+    /// 获取形状的链接格式设置属性
+    /// 对应 Shape.LinkFormat 属性，用于管理链接源、更新方式、断开链接等操作
+    /// </summary>
+    IExcelLinkFormat? LinkFormat { get; }
+
+    /// <summary>
+    /// 获取形状的控件格式设置属性
+    /// 对应 Shape.ControlFormat 属性，用于管理表单控件的列表项、当前值、范围、多选等属性
+    /// </summary>
+    IExcelControlFormat? ControlFormat { get; }
 
     /// <summary>
     /// 获取或设置形状的名称
@@ -55,8 +79,41 @@ public interface IExcelShape : IDisposable
     /// </summary>
     XlPlacement Placement { get; set; }
 
+    /// <summary>
+    /// 获取形状是否为连接符
+    /// 对应 Shape.Connector 属性，用于判断形状是否为连接符类型
+    /// </summary>
+    bool Connector { get; }
 
+    /// <summary>
+    /// 获取或设置形状的宽高比锁定状态
+    /// 对应 Shape.LockAspectRatio 属性，当设置为 true 时，调整形状大小会保持原始宽高比
+    /// </summary>
     bool LockAspectRatio { get; set; }
+
+    /// <summary>
+    /// 获取形状是否已水平翻转
+    /// 对应 Shape.HorizontalFlip 属性，用于判断形状是否经过水平翻转
+    /// </summary>
+    bool HorizontalFlip { get; }
+
+    /// <summary>
+    /// 获取或设置自选图形的类型
+    /// 对应 Shape.AutoShapeType 属性，用于指定自选图形的具体类型（如矩形、圆形等）
+    /// </summary>
+    MsoAutoShapeType AutoShapeType { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状在黑白模式下的显示方式
+    /// 对应 Shape.BlackWhiteMode 属性，用于控制形状在黑白视图中的显示效果
+    /// </summary>
+    MsoBlackWhiteMode BlackWhiteMode { get; set; }
+
+    /// <summary>
+    /// 获取表单控件的类型
+    /// 对应 Shape.FormControlType 属性，用于确定表单控件的具体类型（如按钮、复选框等）
+    /// </summary>
+    XlFormControl FormControlType { get; }
 
     #endregion
 
@@ -111,35 +168,64 @@ public interface IExcelShape : IDisposable
     #region 格式设置
 
     /// <summary>
+    /// 获取形状在 Z 轴上的堆叠顺序位置
+    /// 对应 Shape.ZOrderPosition 属性，返回形状在当前工作表中相对于其他形状的堆叠顺序
+    /// </summary>
+    int ZOrderPosition { get; }
+
+    /// <summary>
+    /// 获取形状的标注线格式设置属性
+    /// 对应 Shape.Callout 属性，用于控制标注线的类型、角度、长度等属性
+    /// </summary>
+    IExcelCalloutFormat Callout { get; }
+
+    /// <summary>
+    /// 获取形状的图片格式设置属性
+    /// 对应 Shape.PictureFormat 属性，用于控制图片的亮度、对比度、透明度、裁剪等属性
+    /// </summary>
+    IExcelPictureFormat? PictureFormat { get; }
+
+    /// <summary>
+    /// 获取形状的文本特效格式设置属性
+    /// 对应 Shape.TextEffect 属性，用于控制文本特效的字体、大小、样式等属性
+    /// </summary>
+    IExcelTextEffectFormat? TextEffect { get; }
+
+    /// <summary>
+    /// 获取与形状关联的超链接对象
+    /// 对应 Shape.Hyperlink 属性，用于访问和管理形状上的超链接设置
+    /// </summary>
+    IExcelHyperlink? Hyperlink { get; }
+
+    /// <summary>
     /// 获取形状的填充格式对象
-    /// 对应 Shape.Fill 属性
+    /// 对应 Shape.Fill 属性，用于设置形状的填充颜色、渐变、图案等外观特性
     /// </summary>
     IExcelFillFormat Fill { get; }
 
     /// <summary>
     /// 获取形状的线条格式对象
-    /// 对应 Shape.Line 属性
+    /// 对应 Shape.Line 属性，用于设置形状轮廓线的颜色、粗细、样式等外观特性
     /// </summary>
     IExcelLineFormat Line { get; }
 
     /// <summary>
     /// 获取形状的文本框架对象
-    /// 对应 Shape.TextFrame 属性
+    /// 对应 Shape.TextFrame 属性，用于控制文本的边距、方向、自动调整等布局属性
     /// </summary>
     IExcelTextFrame TextFrame { get; }
 
     /// <summary>
     /// 获取形状的阴影格式对象
-    /// 对应 Shape.Shadow 属性
+    /// 对应 Shape.Shadow 属性，用于设置形状阴影的颜色、偏移量、模糊度等视觉效果
     /// </summary>
     IExcelShadowFormat Shadow { get; }
 
     /// <summary>
     /// 获取形状的三维格式对象
-    /// 对应 Shape.ThreeD 属性
+    /// 对应 Shape.ThreeD 属性，用于设置形状的深度、透视、表面材质等三维效果
     /// </summary>
     IExcelThreeDFormat ThreeD { get; }
-
     #endregion
 
     #region 文本属性
@@ -243,6 +329,8 @@ public interface IExcelShape : IDisposable
     /// <param name="rotationIncrement">旋转角度增量（度）</param>
     void Rotate(double rotationIncrement);
 
+    void ZOrder(MsoZOrderCmd orderCmd);
+
     /// <summary>
     /// 将形状置于最前面
     /// 对应 Shape.ZOrder 方法
@@ -260,7 +348,7 @@ public interface IExcelShape : IDisposable
     /// 对应 Shape.Ungroup 方法
     /// </summary>
     /// <returns>取消组合后的形状集合</returns>
-    IExcelShapes Ungroup();
+    IExcelShapeRange Ungroup();
 
     /// <summary>
     /// 应用自动调整选项

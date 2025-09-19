@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -71,41 +71,42 @@ internal class ExcelTextFrame : IExcelTextFrame
 
     public XlHAlign HorizontalAlignment
     {
-        get => _textFrame != null ? (XlHAlign)_textFrame.HorizontalAlignment : XlHAlign.xlHAlignCenter;
+        get => _textFrame != null ? _textFrame.HorizontalAlignment.EnumConvert(XlHAlign.xlHAlignCenter) : XlHAlign.xlHAlignCenter;
         set
         {
             if (_textFrame != null)
-                _textFrame.HorizontalAlignment = (MsExcel.XlHAlign)value;
+                _textFrame.HorizontalAlignment = value.EnumConvert(MsExcel.XlHAlign.xlHAlignCenter);
         }
     }
 
     public XlVAlign VerticalAlignment
     {
-        get => _textFrame != null ? (XlVAlign)_textFrame.VerticalAlignment : XlVAlign.xlVAlignCenter;
+        get => _textFrame != null ? _textFrame.VerticalAlignment.EnumConvert(XlVAlign.xlVAlignCenter) : XlVAlign.xlVAlignCenter;
         set
         {
             if (_textFrame != null)
-                _textFrame.VerticalAlignment = (MsExcel.XlVAlign)value;
+                _textFrame.VerticalAlignment = value.EnumConvert(MsExcel.XlVAlign.xlVAlignCenter);
         }
     }
 
     public XlOartVerticalOverflow VerticalOverflow
     {
-        get => _textFrame != null ? (XlOartVerticalOverflow)_textFrame.VerticalOverflow : XlOartVerticalOverflow.xlOartVerticalOverflowEllipsis;
+        get => _textFrame != null ? _textFrame.VerticalOverflow.EnumConvert(XlOartVerticalOverflow.xlOartVerticalOverflowClip) : XlOartVerticalOverflow.xlOartVerticalOverflowClip;
         set
         {
             if (_textFrame != null)
-                _textFrame.VerticalOverflow = (MsExcel.XlOartVerticalOverflow)value;
+                _textFrame.VerticalOverflow = value.EnumConvert(MsExcel.XlOartVerticalOverflow.xlOartVerticalOverflowClip);
         }
+
     }
 
     public XlOartHorizontalOverflow HorizontalOverflow
     {
-        get => _textFrame != null ? (XlOartHorizontalOverflow)_textFrame.HorizontalOverflow : XlOartHorizontalOverflow.xlOartHorizontalOverflowEllipsis;
+        get => _textFrame != null ? _textFrame.HorizontalOverflow.EnumConvert(XlOartHorizontalOverflow.xlOartHorizontalOverflowClip) : XlOartHorizontalOverflow.xlOartHorizontalOverflowClip;
         set
         {
             if (_textFrame != null)
-                _textFrame.HorizontalOverflow = (MsExcel.XlOartHorizontalOverflow)value;
+                _textFrame.HorizontalOverflow = value.EnumConvert(MsExcel.XlOartHorizontalOverflow.xlOartHorizontalOverflowClip);
         }
     }
 
