@@ -1026,6 +1026,23 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         }
         catch { return false; }
     }
+    public void CopyPicture(XlPictureAppearance appearance = XlPictureAppearance.xlScreen, XlCopyPictureFormat format = XlCopyPictureFormat.xlPicture)
+    {
+        if (InternalRange == null) return;
+
+        try
+        {
+            InternalRange.CopyPicture(
+                appearance.EnumConvert(MsExcel.XlPictureAppearance.xlScreen),
+                format.EnumConvert(MsExcel.XlCopyPictureFormat.xlPicture));
+        }
+        catch (Exception ex)
+        {
+            _log.Error($"复制图片操作失败: {ex.Message}", ex);
+            throw;
+        }
+
+    }
 
     /// <summary>
     /// 复制当前区域到目标区域
@@ -1070,7 +1087,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"复制粘贴操作失败: {ex.Message}");
+            _log.Error($"复制粘贴操作失败: {ex.Message}", ex);
             return false;
         }
     }

@@ -483,6 +483,8 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <param name="destination">目标区域</param>
     void Copy(T destination);
 
+    void CopyPicture(XlPictureAppearance appearance = XlPictureAppearance.xlScreen, XlCopyPictureFormat format = XlCopyPictureFormat.xlPicture);
+
     /// <summary>
     /// 复制Range区域并粘贴到指定位置
     /// </summary>
