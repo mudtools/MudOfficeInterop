@@ -17,6 +17,16 @@ public interface IExcelTextFrame : IDisposable
     MsoTextOrientation Orientation { get; set; }
 
     /// <summary>
+    /// 获取或设置是否自动调整边距
+    /// </summary>
+    bool AutoMargins { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本阅读顺序
+    /// </summary>
+    int ReadingOrder { get; set; }
+
+    /// <summary>
     /// 获取或设置自动调整大小
     /// </summary>
     bool AutoSize { get; set; }
@@ -30,6 +40,16 @@ public interface IExcelTextFrame : IDisposable
     /// 获取或设置垂直对齐方式
     /// </summary>
     XlVAlign VerticalAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本垂直溢出行为
+    /// </summary>
+    XlOartVerticalOverflow VerticalOverflow { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本水平溢出行为
+    /// </summary>
+    XlOartHorizontalOverflow HorizontalOverflow { get; set; }
 
     /// <summary>
     /// 获取或设置边距

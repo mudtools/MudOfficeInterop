@@ -81,7 +81,7 @@ internal class ExcelStyle : IExcelStyle
     /// <summary>
     /// 获取样式名称
     /// </summary>
-    public string Name => _style?.Name?.ToString();
+    public string Name => _style?.Name;
 
 
     /// <summary>
@@ -187,11 +187,11 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public XlHAlign HorizontalAlignment
     {
-        get => _style != null ? (XlHAlign)_style.HorizontalAlignment : 0;
+        get => _style != null ? _style.HorizontalAlignment.EnumConvert(XlHAlign.xlHAlignGeneral) : XlHAlign.xlHAlignGeneral;
         set
         {
             if (_style != null)
-                _style.HorizontalAlignment = (MsExcel.XlHAlign)value;
+                _style.HorizontalAlignment = value.EnumConvert(MsExcel.XlHAlign.xlHAlignGeneral);
         }
     }
 
@@ -200,11 +200,11 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public XlVAlign VerticalAlignment
     {
-        get => _style != null ? (XlVAlign)_style.VerticalAlignment : 0;
+        get => _style != null ? _style.VerticalAlignment.EnumConvert(XlVAlign.xlVAlignCenter) : XlVAlign.xlVAlignCenter;
         set
         {
             if (_style != null)
-                _style.VerticalAlignment = (MsExcel.XlVAlign)value;
+                _style.VerticalAlignment = value.EnumConvert(MsExcel.XlVAlign.xlVAlignCenter);
         }
     }
 
@@ -252,11 +252,11 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public XlOrientation Orientation
     {
-        get => _style != null ? (XlOrientation)_style.Orientation : 0;
+        get => _style != null ? _style.Orientation.EnumConvert(XlOrientation.xlHorizontal) : XlOrientation.xlHorizontal;
         set
         {
             if (_style != null)
-                _style.Orientation = (MsExcel.XlOrientation)value;
+                _style.Orientation = value.EnumConvert(MsExcel.XlOrientation.xlHorizontal);
         }
     }
 
@@ -452,24 +452,6 @@ internal class ExcelStyle : IExcelStyle
     }
 
     /// <summary>
-    /// 更新样式
-    /// </summary>
-    public void Update()
-    {
-        // Excel样式通常会自动更新
-        // 这里提供一个空实现以保持接口一致性
-    }
-
-    /// <summary>
-    /// 刷新样式
-    /// </summary>
-    public void Refresh()
-    {
-        // Excel样式通常会自动刷新
-        // 这里提供一个空实现以保持接口一致性
-    }
-
-    /// <summary>
     /// 重置样式为默认值
     /// </summary>
     public void Reset()
@@ -531,84 +513,5 @@ internal class ExcelStyle : IExcelStyle
             return null;
         }
     }
-
-    /// <summary>
-    /// 导出样式到文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <returns>是否导出成功</returns>
-    public bool Export(string filename)
-    {
-        if (_style == null || string.IsNullOrEmpty(filename))
-            return false;
-
-        try
-        {
-            using (var writer = new System.IO.StreamWriter(filename, false, System.Text.Encoding.UTF8))
-            {
-                writer.WriteLine("Excel Style Export");
-                writer.WriteLine("==================");
-                writer.WriteLine($"Export Date: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-                writer.WriteLine($"Style Name: {Name}");
-                writer.WriteLine($"BuiltIn: {BuiltIn}");
-                writer.WriteLine();
-
-                writer.WriteLine("Style Properties:");
-                writer.WriteLine($"NumberFormat: {NumberFormat}");
-                writer.WriteLine($"HorizontalAlignment: {HorizontalAlignment}");
-                writer.WriteLine($"VerticalAlignment: {VerticalAlignment}");
-                writer.WriteLine($"WrapText: {WrapText}");
-                writer.WriteLine($"IndentLevel: {IndentLevel}");
-                writer.WriteLine($"Orientation: {Orientation}");
-                writer.WriteLine($"ShrinkToFit: {ShrinkToFit}");
-                writer.WriteLine($"MergeCells: {MergeCells}");
-                writer.WriteLine($"Locked: {Locked}");
-                writer.WriteLine($"FormulaHidden: {FormulaHidden}");
-                writer.WriteLine();
-
-                writer.WriteLine("Font Properties:");
-                writer.WriteLine($"Font Name: {Font?.Name}");
-                writer.WriteLine($"Font Size: {Font?.Size}");
-                writer.WriteLine($"Font Bold: {Font?.Bold}");
-                writer.WriteLine($"Font Italic: {Font?.Italic}");
-                writer.WriteLine($"Font Color: {Font?.Color}");
-                writer.WriteLine($"Font Underline: {Font?.Underline}");
-                writer.WriteLine();
-
-                writer.WriteLine("Interior Properties:");
-                writer.WriteLine($"Interior Color: {Interior?.Color}");
-                writer.WriteLine($"Interior Pattern: {Interior?.Pattern}");
-                writer.WriteLine($"Interior PatternColor: {Interior?.PatternColor}");
-            }
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// 从文件导入样式
-    /// </summary>
-    /// <param name="filename">导入文件路径</param>
-    /// <returns>是否导入成功</returns>
-    public bool Import(string filename)
-    {
-        if (_style == null || string.IsNullOrEmpty(filename))
-            return false;
-
-        try
-        {
-            // 注意：Excel Style对象不支持直接从文件导入
-            // 这里提供一个示例实现框架
-            return false;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
     #endregion
 }

@@ -194,16 +194,6 @@ public interface IExcelStyle : IDisposable
     void ApplyTo(IExcelRange range, bool includeFont = true, bool includeBorder = true, bool includeFill = true);
 
     /// <summary>
-    /// 更新样式
-    /// </summary>
-    void Update();
-
-    /// <summary>
-    /// 刷新样式
-    /// </summary>
-    void Refresh();
-
-    /// <summary>
     /// 重置样式为默认值
     /// </summary>
     void Reset();
@@ -217,20 +207,5 @@ public interface IExcelStyle : IDisposable
     /// </summary>
     /// <returns>克隆的样式对象</returns>
     IExcelStyle Clone();
-
-    /// <summary>
-    /// 导出样式到文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <returns>是否导出成功</returns>
-    bool Export(string filename);
-
-    /// <summary>
-    /// 从文件导入样式
-    /// </summary>
-    /// <param name="filename">导入文件路径</param>
-    /// <returns>是否导入成功</returns>
-    bool Import(string filename);
-
     #endregion
 }

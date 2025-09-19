@@ -26,12 +26,8 @@ internal class ExcelTextFrame : IExcelTextFrame
 
         if (disposing)
         {
-            try
-            {
-                if (_textFrame != null)
-                    Marshal.ReleaseComObject(_textFrame);
-            }
-            catch { }
+            if (_textFrame != null)
+                Marshal.ReleaseComObject(_textFrame);
             _textFrame = null;
         }
 
@@ -42,33 +38,74 @@ internal class ExcelTextFrame : IExcelTextFrame
 
     public MsoTextOrientation Orientation
     {
-        get => _textFrame != null ? (MsoTextOrientation)_textFrame.Orientation : 0;
+        get => _textFrame != null ? _textFrame.Orientation.EnumConvert(MsoTextOrientation.msoTextOrientationMixed) : MsoTextOrientation.msoTextOrientationMixed;
         set
         {
             if (_textFrame != null)
-                _textFrame.Orientation = (MsCore.MsoTextOrientation)value;
+                _textFrame.Orientation = value.EnumConvert(MsCore.MsoTextOrientation.msoTextOrientationMixed);
         }
+    }
+
+    public bool AutoMargins
+    {
+        get => _textFrame != null && _textFrame.AutoMargins;
+        set { if (_textFrame != null) _textFrame.AutoMargins = value; }
     }
 
     public bool AutoSize
     {
-        get => _textFrame != null && Convert.ToBoolean(_textFrame.AutoSize);
+        get => _textFrame != null && _textFrame.AutoSize;
         set { if (_textFrame != null) _textFrame.AutoSize = value; }
+    }
+
+
+    public int ReadingOrder
+    {
+        get => _textFrame != null ? _textFrame.ReadingOrder : 0;
+        set
+        {
+            if (_textFrame != null)
+                _textFrame.ReadingOrder = value;
+        }
     }
 
     public XlHAlign HorizontalAlignment
     {
-        get => _textFrame != null ? (XlHAlign)_textFrame.HorizontalAlignment : XlHAlign.xlHAlignLeft;
-        set { if (_textFrame != null) _textFrame.HorizontalAlignment = (MsExcel.XlHAlign)value; }
+        get => _textFrame != null ? (XlHAlign)_textFrame.HorizontalAlignment : XlHAlign.xlHAlignCenter;
+        set
+        {
+            if (_textFrame != null)
+                _textFrame.HorizontalAlignment = (MsExcel.XlHAlign)value;
+        }
     }
 
     public XlVAlign VerticalAlignment
     {
-        get => _textFrame != null ? (XlVAlign)_textFrame.VerticalAlignment : XlVAlign.xlVAlignJustify;
+        get => _textFrame != null ? (XlVAlign)_textFrame.VerticalAlignment : XlVAlign.xlVAlignCenter;
         set
         {
             if (_textFrame != null)
                 _textFrame.VerticalAlignment = (MsExcel.XlVAlign)value;
+        }
+    }
+
+    public XlOartVerticalOverflow VerticalOverflow
+    {
+        get => _textFrame != null ? (XlOartVerticalOverflow)_textFrame.VerticalOverflow : XlOartVerticalOverflow.xlOartVerticalOverflowEllipsis;
+        set
+        {
+            if (_textFrame != null)
+                _textFrame.VerticalOverflow = (MsExcel.XlOartVerticalOverflow)value;
+        }
+    }
+
+    public XlOartHorizontalOverflow HorizontalOverflow
+    {
+        get => _textFrame != null ? (XlOartHorizontalOverflow)_textFrame.HorizontalOverflow : XlOartHorizontalOverflow.xlOartHorizontalOverflowEllipsis;
+        set
+        {
+            if (_textFrame != null)
+                _textFrame.HorizontalOverflow = (MsExcel.XlOartHorizontalOverflow)value;
         }
     }
 
@@ -108,6 +145,7 @@ internal class ExcelTextFrame : IExcelTextFrame
         if (_textFrame?.Parent is MsExcel.ShapeRange shapeRange)
             if (shapeRange.Parent is MsExcel.Range r3)
                 range = r3;
+        if (range == null) return null;
         return charactersObj != null ? new ExcelCharacters(charactersObj, range) : null;
     }
 }

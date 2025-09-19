@@ -48,23 +48,9 @@ internal class ExcelStyles : IExcelStyles
 
         if (disposing)
         {
-            try
-            {
-                // 释放所有子样式对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var style = this[i] as ExcelStyle;
-                    style?.Dispose();
-                }
-
-                // 释放底层COM对象
-                if (_styles != null)
-                    Marshal.ReleaseComObject(_styles);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_styles != null)
+                Marshal.ReleaseComObject(_styles);
             _styles = null;
         }
 
@@ -706,8 +692,6 @@ internal class ExcelStyles : IExcelStyles
 
 
     #region 私有辅助方法
-
-
     public IEnumerator<IExcelStyle> GetEnumerator()
     {
         for (var i = 0; i < Count; i++)
