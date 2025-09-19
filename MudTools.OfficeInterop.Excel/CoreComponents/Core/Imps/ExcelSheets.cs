@@ -507,7 +507,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     #endregion
 
     #region IEnumerable<IExcelWorksheet> Support
-    public override IEnumerable<IExcelComSheet> EnumerateSheets()
+    public override IEnumerable<IExcelComSheet> Items()
     {
         for (int i = 1; i <= Count; i++)
         {

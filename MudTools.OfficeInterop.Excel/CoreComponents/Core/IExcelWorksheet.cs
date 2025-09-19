@@ -276,7 +276,6 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     bool DisplayPageLayout { get; set; }
     #endregion
 
-
     #region 操作方法  
 
     /// <summary>

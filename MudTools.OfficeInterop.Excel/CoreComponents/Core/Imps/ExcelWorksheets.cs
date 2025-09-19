@@ -111,7 +111,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             }
         }
     }
-    public override IEnumerable<IExcelComSheet> EnumerateSheets()
+    public override IEnumerable<IExcelComSheet> Items()
     {
         for (int i = 1; i <= Count; i++)
         {

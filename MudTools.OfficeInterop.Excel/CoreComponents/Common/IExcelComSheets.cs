@@ -146,7 +146,7 @@ public interface IExcelComSheets : IDisposable
     /// 获取公共的枚举器。
     /// </summary>
     /// <returns></returns>
-    IEnumerable<IExcelComSheet> EnumerateSheets();
+    IEnumerable<IExcelComSheet> Items();
 
     /// <summary>
     /// 添加新工作表

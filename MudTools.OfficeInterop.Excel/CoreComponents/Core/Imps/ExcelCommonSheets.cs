@@ -324,26 +324,26 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
     }
 
-    public abstract IEnumerable<IExcelComSheet> EnumerateSheets();
+    public abstract IEnumerable<IExcelComSheet> Items();
 
     protected abstract IExcelComSheet ItemByIndex(int index);
 
     #region 查找和筛选
     /// <inheritdoc/>
     public IExcelComSheet[] GetVisibleSheets() =>
-        EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetVisible).ToArray();
+        Items().Where(s => s.Visible == XlSheetVisibility.xlSheetVisible).ToArray();
 
     /// <inheritdoc/>
     public IExcelComSheet[] GetHiddenSheets() =>
-        EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetHidden).ToArray();
+        Items().Where(s => s.Visible == XlSheetVisibility.xlSheetHidden).ToArray();
 
     /// <inheritdoc/>
     public IExcelComSheet[] GetVeryHiddenSheets() =>
-        EnumerateSheets().Where(s => s.Visible == XlSheetVisibility.xlSheetVeryHidden).ToArray();
+        Items().Where(s => s.Visible == XlSheetVisibility.xlSheetVeryHidden).ToArray();
 
     /// <inheritdoc/>
     public IExcelComSheet[] GetProtectedSheets() =>
-        EnumerateSheets().Where(s => s.IsProtected).ToArray();
+        Items().Where(s => s.IsProtected).ToArray();
 
     /// <inheritdoc/>
     public virtual IExcelComSheet[] FindByName(string name, bool matchCase = false)
@@ -351,14 +351,14 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         if (string.IsNullOrEmpty(name) || Count == 0)
             return [];
 
-        return EnumerateSheets().Where(s => matchCase ?
+        return Items().Where(s => matchCase ?
                         s.Name.Contains(name) :
                         s.Name.ToLower().Contains(name.ToLower())).ToArray();
     }
 
     /// <inheritdoc/>
     public virtual IExcelComSheet[] FindByType(XlSheetType type)
-        => EnumerateSheets().Where(s => s.Type == type).ToArray();
+        => Items().Where(s => s.Type == type).ToArray();
 
     /// <inheritdoc/>
     public virtual IExcelComSheet[] FindByIndexRange(int startIndex, int endIndex)
