@@ -136,6 +136,17 @@ public interface IExcelComSheets : IDisposable
     #endregion
 
     #region 操作方法
+    /// <summary>
+    /// 获取指定名称的工作表对象
+    /// </summary>
+    /// <param name="names">工作表名称</param>
+    /// <returns>工作表对象</returns>
+    IExcelComSheet[] this[params string[] names] { get; }
+    /// <summary>
+    /// 获取公共的枚举器。
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<IExcelComSheet> EnumerateSheets();
 
     /// <summary>
     /// 添加新工作表
