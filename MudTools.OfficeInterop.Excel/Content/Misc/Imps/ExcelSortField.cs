@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 internal class ExcelSortField : IExcelSortField
 {
     private MsExcel.SortField _sortField;
@@ -25,16 +26,18 @@ internal class ExcelSortField : IExcelSortField
         get => new ExcelRange(_sortField.Key);
     }
 
-    public XlSortOn SortOn
-    {
-        get => (XlSortOn)(int)_sortField.SortOn;
-        set => _sortField.SortOn = (MsExcel.XlSortOn)value;
-    }
 
     public XlSortOrder Order
     {
-        get => (XlSortOrder)(int)_sortField.Order;
-        set => _sortField.Order = (MsExcel.XlSortOrder)value;
+        get => _sortField.Order.EnumConvert(XlSortOrder.xlAscending);
+        set => _sortField.Order = value.EnumConvert(MsExcel.XlSortOrder.xlAscending);
+    }
+
+
+    public XlSortOn SortOn
+    {
+        get => _sortField.SortOn.EnumConvert(XlSortOn.xlSortOnValues);
+        set => _sortField.SortOn = value.EnumConvert(MsExcel.XlSortOn.xlSortOnValues);
     }
 
     public object CustomOrder
@@ -45,8 +48,8 @@ internal class ExcelSortField : IExcelSortField
 
     public XlSortDataOption DataOption
     {
-        get => (XlSortDataOption)(int)_sortField.DataOption;
-        set => _sortField.DataOption = (MsExcel.XlSortDataOption)value;
+        get => _sortField.DataOption.EnumConvert(XlSortDataOption.xlSortNormal);
+        set => _sortField.DataOption = value.EnumConvert(MsExcel.XlSortDataOption.xlSortNormal);
     }
 
     public object SortOnValue
@@ -78,6 +81,26 @@ internal class ExcelSortField : IExcelSortField
         catch (COMException ex)
         {
             throw new InvalidOperationException("无法删除排序字段。", ex);
+        }
+    }
+
+    public void ModifyKey(IExcelRange key)
+    {
+        if (key == null) throw new ArgumentNullException(nameof(key));
+
+        try
+        {
+            MsExcel.Range? comRange = null;
+            if (key is ExcelRange excelRange)
+            {
+                comRange = excelRange.InternalRange;
+            }
+
+            _sortField.ModifyKey(comRange);
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法修改排序字段的键。", ex);
         }
     }
 
