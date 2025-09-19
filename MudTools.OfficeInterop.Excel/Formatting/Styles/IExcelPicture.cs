@@ -42,31 +42,31 @@ public interface IExcelPicture : IDisposable
     /// 获取图片的底层形状对象
     /// 对应 Picture.Shape 属性
     /// </summary>
-    IExcelShapeRange ShapeRange { get; }
+    IExcelShapeRange? ShapeRange { get; }
 
     /// <summary>
     /// 获取图片的边框格式
     /// 对应 Picture.Border 属性
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取图片的内部填充格式
     /// 对应 Picture.Interior 属性
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取图片左上角所在的单元格
     /// 对应 Picture.TopLeftCell 属性
     /// </summary>
-    IExcelRange TopLeftCell { get; }
+    IExcelRange? TopLeftCell { get; }
 
     /// <summary>
     /// 获取图片右下角所在的单元格
     /// 对应 Picture.BottomRightCell 属性
     /// </summary>
-    IExcelRange BottomRightCell { get; }
+    IExcelRange? BottomRightCell { get; }
 
     /// <summary>
     /// 获取或设置图片是否在打印时可见
@@ -124,6 +124,16 @@ public interface IExcelPicture : IDisposable
 
     #region 图片属性
     /// <summary>
+    /// 获取或设置图片的公式
+    /// 对应 Picture.Formula 属性
+    /// </summary>
+    string? Formula { get; set; }
+    /// <summary>
+    /// 获取或设置图片是否显示阴影效果
+    /// 对应 Picture.Shadow 属性
+    /// </summary>
+    bool? Shadow { get; set; }
+    /// <summary>
     /// 获取图片的原始宽度
     /// </summary>
     double OriginalWidth { get; }
@@ -141,6 +151,17 @@ public interface IExcelPicture : IDisposable
     #endregion
 
     #region 操作方法
+    /// <summary>
+    /// 将图片置于底层
+    /// 对应 Picture.SendToBack 方法
+    /// </summary>
+    void SendToBack();
+
+    /// <summary>
+    /// 将图片置于顶层
+    /// 对应 Picture.BringToFront 方法
+    /// </summary>
+    void BringToFront();
 
     /// <summary>
     /// 选择图片
@@ -161,6 +182,13 @@ public interface IExcelPicture : IDisposable
     /// </summary>
     /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
     IExcelPicture? Copy();
+
+    /// <summary>
+    /// 创建图片的副本
+    /// 对应 Picture.Duplicate 方法
+    /// </summary>
+    /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
+    IExcelPicture? Duplicate();
 
     /// <summary>
     /// 将图片复制为指定格式的图片对象

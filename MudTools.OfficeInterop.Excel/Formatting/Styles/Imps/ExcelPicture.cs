@@ -15,7 +15,7 @@ internal class ExcelPicture : IExcelPicture
     /// <summary>
     /// 底层的 COM Picture 对象
     /// </summary>
-    private MsExcel.Picture _picture;
+    private MsExcel.Picture? _picture;
 
 
     /// <summary>
@@ -79,7 +79,7 @@ internal class ExcelPicture : IExcelPicture
     /// </summary>
     public string Name
     {
-        get => _picture?.Name?.ToString();
+        get => _picture?.Name;
         set
         {
             if (_picture != null && value != null)
@@ -139,10 +139,11 @@ internal class ExcelPicture : IExcelPicture
 
     private IExcelRange _topLeftCellRange;
 
-    public IExcelRange TopLeftCell
+    public IExcelRange? TopLeftCell
     {
         get
         {
+            if (_picture == null) return null;
             _topLeftCellRange ??= new ExcelRange(_picture.TopLeftCell);
             return _topLeftCellRange;
         }
@@ -150,10 +151,11 @@ internal class ExcelPicture : IExcelPicture
 
     private IExcelRange _bottomRightCellRange;
 
-    public IExcelRange BottomRightCell
+    public IExcelRange? BottomRightCell
     {
         get
         {
+            if (_picture == null) return null;
             _bottomRightCellRange ??= new ExcelRange(_picture.BottomRightCell);
             return _bottomRightCellRange;
         }
@@ -161,10 +163,11 @@ internal class ExcelPicture : IExcelPicture
 
     private IExcelInterior _interior;
 
-    public IExcelInterior Interior
+    public IExcelInterior? Interior
     {
         get
         {
+            if (_picture == null) return null;
             _interior ??= new ExcelInterior(_picture.Interior);
             return _interior;
         }
@@ -172,10 +175,11 @@ internal class ExcelPicture : IExcelPicture
 
     private IExcelBorder _border;
 
-    public IExcelBorder Border
+    public IExcelBorder? Border
     {
         get
         {
+            if (_picture == null) return null;
             _border ??= new ExcelBorder(_picture.Border);
             return _border;
         }
@@ -189,10 +193,11 @@ internal class ExcelPicture : IExcelPicture
     /// <summary>
     /// 获取图片的底层形状对象
     /// </summary>
-    public IExcelShapeRange ShapeRange
+    public IExcelShapeRange? ShapeRange
     {
         get
         {
+            if (_picture == null) return null;
             _excelShape ??= new ExcelShapeRange(_picture.ShapeRange);
             return _excelShape;
         }
@@ -261,7 +266,25 @@ internal class ExcelPicture : IExcelPicture
     #endregion
 
     #region 图片属性
+    public string? Formula
+    {
+        get => _picture?.Formula;
+        set
+        {
+            if (_picture != null)
+                _picture.Formula = value;
+        }
+    }
 
+    public bool? Shadow
+    {
+        get => _picture?.Shadow;
+        set
+        {
+            if (_picture != null && value != null)
+                _picture.Shadow = value.Value;
+        }
+    }
 
 
     /// <summary>
@@ -300,6 +323,16 @@ internal class ExcelPicture : IExcelPicture
         _picture?.Select(replace);
     }
 
+    public void SendToBack()
+    {
+        _picture?.SendToBack();
+    }
+
+    public void BringToFront()
+    {
+        _picture?.BringToFront();
+    }
+
 
     /// <summary>
     /// 删除图片
@@ -312,6 +345,14 @@ internal class ExcelPicture : IExcelPicture
     public IExcelPicture? Copy()
     {
         var obj = _picture?.Copy();
+        if (obj != null && obj is MsExcel.Picture pic)
+            return new ExcelPicture(pic);
+        return null;
+    }
+
+    public IExcelPicture? Duplicate()
+    {
+        var obj = _picture?.Duplicate();
         if (obj != null && obj is MsExcel.Picture pic)
             return new ExcelPicture(pic);
         return null;

@@ -16,7 +16,7 @@ internal class ExcelShape : IExcelShape
     /// <summary>
     /// 底层的 COM Shape 对象
     /// </summary>
-    private MsExcel.Shape _shape;
+    private MsExcel.Shape? _shape;
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -85,7 +85,7 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public string Name
     {
-        get => _shape?.Name?.ToString();
+        get => _shape?.Name;
         set
         {
             if (_shape != null && value != null)
@@ -93,20 +93,14 @@ internal class ExcelShape : IExcelShape
         }
     }
 
-    public IExcelOLEFormat OLEFormat
-    {
-        get => new ExcelOLEFormat(_shape.OLEFormat);
-    }
+    public IExcelOLEFormat OLEFormat => _shape != null ? new ExcelOLEFormat(_shape.OLEFormat) : null;
 
-    public IExcelGroupShapes GroupItems
-    {
-        get => new ExcelGroupShapes(_shape.GroupItems);
-    }
+    public IExcelGroupShapes GroupItems => _shape != null ? new ExcelGroupShapes(_shape.GroupItems) : null;
 
     /// <summary>
     /// 获取形状的类型
     /// </summary>
-    public MsoShapeType Type => _shape != null ? (MsoShapeType)_shape.Type : MsoShapeType.msoShapeTypeMixed;
+    public MsoShapeType Type => _shape != null ? _shape.Type.EnumConvert(MsoShapeType.msoShapeTypeMixed) : MsoShapeType.msoShapeTypeMixed;
 
     /// <summary>
     /// 获取形状的ID
@@ -115,7 +109,7 @@ internal class ExcelShape : IExcelShape
 
     public bool LockAspectRatio
     {
-        get => _shape.LockAspectRatio == MsCore.MsoTriState.msoTrue;
+        get => _shape.LockAspectRatio.ConvertToBool();
         set => _shape.LockAspectRatio = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
     }
 
@@ -126,13 +120,11 @@ internal class ExcelShape : IExcelShape
 
     public XlPlacement Placement
     {
-        get
-        {
-            return (XlPlacement)_shape?.Placement;
-        }
+        get => _shape != null ? _shape.Placement.EnumConvert(XlPlacement.xlFreeFloating) : XlPlacement.xlFreeFloating;
         set
         {
-            _shape.Placement = (MsExcel.XlPlacement)value;
+            if (_shape != null)
+                _shape.Placement = value.EnumConvert(MsExcel.XlPlacement.xlFreeFloating);
         }
     }
 
@@ -214,7 +206,7 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public bool Visible
     {
-        get => _shape != null && Convert.ToBoolean(_shape.Visible);
+        get => _shape != null && _shape.Visible.ConvertToBool();
         set
         {
             if (_shape != null)
@@ -227,7 +219,7 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public bool Locked
     {
-        get => _shape != null && Convert.ToBoolean(_shape.Locked);
+        get => _shape != null && _shape.Locked;
         set
         {
             if (_shape != null)
@@ -249,7 +241,7 @@ internal class ExcelShape : IExcelShape
     /// <summary>
     /// 获取形状的填充格式对象
     /// </summary>
-    public IExcelFillFormat Fill => _fill ?? (_fill = new ExcelFillFormat(_shape?.Fill));
+    public IExcelFillFormat Fill => _fill ??= new ExcelFillFormat(_shape?.Fill);
 
     /// <summary>
     /// 线条格式对象缓存
@@ -326,11 +318,11 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public XlHAlign HorizontalAlignment
     {
-        get => _shape?.TextFrame != null ? (XlHAlign)_shape.TextFrame.HorizontalAlignment : XlHAlign.xlHAlignLeft;
+        get => _shape?.TextFrame != null ? _shape.TextFrame.HorizontalAlignment.EnumConvert(XlHAlign.xlHAlignCenter) : XlHAlign.xlHAlignCenter;
         set
         {
             if (_shape?.TextFrame != null)
-                _shape.TextFrame.HorizontalAlignment = (MsExcel.XlHAlign)value;
+                _shape.TextFrame.HorizontalAlignment = value.EnumConvert(MsExcel.XlHAlign.xlHAlignCenter);
         }
     }
 
@@ -339,20 +331,17 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public XlVAlign VerticalAlignment
     {
-        get => _shape?.TextFrame != null ? (XlVAlign)_shape.TextFrame.VerticalAlignment : XlVAlign.xlVAlignJustify;
+        get => _shape?.TextFrame != null ? _shape.TextFrame.VerticalAlignment.EnumConvert(XlVAlign.xlVAlignBottom) : XlVAlign.xlVAlignBottom;
         set
         {
             if (_shape?.TextFrame != null)
-                _shape.TextFrame.VerticalAlignment = (MsExcel.XlVAlign)value;
+                _shape.TextFrame.VerticalAlignment = value.EnumConvert(MsExcel.XlVAlign.xlVAlignBottom);
         }
     }
 
     #endregion
 
     #region 操作方法
-
-
-
     /// <summary>
     /// 选择形状
     /// </summary>
@@ -372,7 +361,9 @@ internal class ExcelShape : IExcelShape
 
     public void CopyPicture(XlPictureAppearance? Appearance, XlCopyPictureFormat? Format)
     {
-        _shape?.CopyPicture(Appearance.ComArgsVal(), Format.ComArgsVal());
+        _shape?.CopyPicture(
+            Appearance.ComArgsConvert(d => d.EnumConvert(XlPictureAppearance.xlScreen)),
+            Format.ComArgsConvert(d => d.EnumConvert(XlCopyPictureFormat.xlBitmap)));
     }
 
     /// <summary>
