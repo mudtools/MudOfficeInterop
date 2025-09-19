@@ -502,7 +502,6 @@ internal partial class WordApplication : IWordApplication
             if (_application != null) _application.EnableCancelKey = value.EnumConvert(MsWord.WdEnableCancelKey.wdCancelDisabled);
         }
     }
-    }
 
     /// <summary>
     /// 获取或设置一个值，该值指示 Microsoft Word 在键入时是否自动检测所使用的语言。

@@ -46,7 +46,6 @@ internal class WordTable : IWordTable
     /// <inheritdoc/>
     public IWordShading? Shading => _table?.Shading != null ? new WordShading(_table.Shading) : null;
 
-
     /// <inheritdoc/>
     public IWordBorders? Borders => _table?.Borders != null ? new WordBorders(_table.Borders) : null;
 

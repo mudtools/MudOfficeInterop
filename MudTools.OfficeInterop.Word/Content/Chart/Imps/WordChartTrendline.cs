@@ -38,10 +38,10 @@ internal class WordChartTrendline : IWordChartTrendline
     /// <inheritdoc/>
     public XlTrendlineType Type
     {
-        get => _trendline?.Type != null ? (XlTrendlineType)(int)_trendline?.Type : XlTrendlineType.xlLinear;
+        get => _trendline?.Type != null ? _trendline.Type.EnumConvert(XlTrendlineType.xlLinear) : XlTrendlineType.xlLinear;
         set
         {
-            if (_trendline != null) _trendline.Type = (MsWord.XlTrendlineType)(int)value;
+            if (_trendline != null) _trendline.Type = value.EnumConvert(MsWord.XlTrendlineType.xlLinear);
         }
     }
 

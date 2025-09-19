@@ -115,7 +115,7 @@ internal class WordChartArea : IWordChartArea
     /// <inheritdoc/>
     public bool Fill
     {
-        get => _chartArea?.Fill.Visible == MsCore.MsoTriState.msoTrue;
+        get => _chartArea != null ? _chartArea.Fill.Visible.ConvertToBool() : false;
         set
         {
             if (_chartArea?.Fill != null)

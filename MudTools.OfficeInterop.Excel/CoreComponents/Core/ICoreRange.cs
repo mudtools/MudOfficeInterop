@@ -48,6 +48,8 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// </summary>
     object Formula { get; set; }
 
+    XlFormulaLabel FormulaLabel { get; set; }
+
     /// <summary>
     /// 获取单元格的前缀字符。前缀字符可以是用于标识文本标签的字符，
     /// 如单引号(')表示左对齐，双引号(")表示右对齐，插入符(^)表示居中对齐，
@@ -97,7 +99,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// 获取单元格区域的内部属性对象，用于设置单元格的背景色、图案等样式。
     /// 对应 Range.Interior 属性
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取或设置缩进级别（0-15）
@@ -653,7 +655,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <summary>
     /// 获取或设置当前区域中文本的旋转角度（以度为单位，范围 -90 到 90 度）。
     /// </summary>
-    int Orientation { get; set; }
+    XlOrientation Orientation { get; set; }
 
     /// <summary>
     /// 获取或设置当前区域的超链接地址。设置后该区域将变为可点击的超链接。

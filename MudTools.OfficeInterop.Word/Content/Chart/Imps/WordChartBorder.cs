@@ -44,17 +44,17 @@ internal class WordChartBorder : IWordChartBorder
     /// <inheritdoc/>
     public XlColorIndex ColorIndex
     {
-        get => _chartBorder?.ColorIndex != null ? (XlColorIndex)(int)_chartBorder?.ColorIndex : XlColorIndex.xlColorIndexNone;
+        get => _chartBorder?.ColorIndex != null ? _chartBorder.ColorIndex.ObjectConvertEnum(XlColorIndex.xlColorIndexNone) : XlColorIndex.xlColorIndexNone;
         set
         {
-            if (_chartBorder != null) _chartBorder.ColorIndex = (MsCore.XlColorIndex)(int)value;
+            if (_chartBorder != null) _chartBorder.ColorIndex = value.EnumConvert(MsCore.XlColorIndex.xlColorIndexAutomatic);
         }
     }
 
     /// <inheritdoc/>
     public XlLineStyle LineStyle
     {
-        get => _chartBorder?.LineStyle != null ? (XlLineStyle)(int)_chartBorder?.LineStyle : XlLineStyle.xlLineStyleNone;
+        get => _chartBorder?.LineStyle != null ? _chartBorder.LineStyle.ObjectConvertEnum(XlLineStyle.xlLineStyleNone) : XlLineStyle.xlLineStyleNone;
         set
         {
             if (_chartBorder != null) _chartBorder.LineStyle = (MsWord.XlLineStyle)(int)value;

@@ -22,6 +22,8 @@ public interface IWordChartGroup : IDisposable
     /// </summary>
     object Parent { get; }
 
+    XlAxisGroup AxisGroup { get; set; }
+
     /// <summary>
     /// 获取或设置是否显示趋势线。
     /// </summary>

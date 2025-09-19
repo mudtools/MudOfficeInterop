@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -36,7 +36,13 @@ internal static class ObjectExtensions
         where T : struct, Enum
         where TReturn : struct, Enum
     {
-        return val.HasValue ? ConvertEnumValue(val.Value, defaultVal.Value) : defaultVal;
+        if (!val.HasValue)
+            return defaultVal;
+
+        var underlyingValue = GetUnderlyingValue(val.Value);
+        return Enum.IsDefined(typeof(TReturn), underlyingValue)
+            ? (TReturn)Enum.ToObject(typeof(TReturn), underlyingValue)
+            : defaultVal;
     }
 
     /// <summary>
@@ -52,6 +58,7 @@ internal static class ObjectExtensions
             : defaultVal;
     }
 
+
     /// <summary>
     /// 获取枚举的底层数值
     /// </summary>
@@ -59,6 +66,40 @@ internal static class ObjectExtensions
     {
         return Convert.ChangeType(val, Enum.GetUnderlyingType(typeof(T)));
     }
+
+    /// <summary>
+    /// 将对象转换为指定的枚举类型
+    /// </summary>
+    /// <typeparam name="TReturn">目标枚举类型</typeparam>
+    /// <param name="val">需要转换的对象值</param>
+    /// <param name="defaultVal">当转换失败时返回的默认值</param>
+    /// <returns>转换成功则返回对应的枚举值，否则返回默认值</returns>
+    public static TReturn ObjectConvertEnum<TReturn>(this object? val, TReturn defaultVal = default)
+    where TReturn : struct, Enum
+    {
+        if (val == null)
+            return defaultVal;
+
+        try
+        {
+            var targetType = typeof(TReturn);
+            var underlyingType = Enum.GetUnderlyingType(targetType);
+
+            // 检查val是否已经是目标枚举类型
+            if (val.GetType() == targetType)
+                return (TReturn)val;
+
+            var underlyingValue = Convert.ChangeType(val, underlyingType);
+            return Enum.IsDefined(targetType, underlyingValue)
+                ? (TReturn)Enum.ToObject(targetType, underlyingValue)
+                : defaultVal;
+        }
+        catch (Exception) when (val != null)
+        {
+            return defaultVal;
+        }
+    }
+
 
     /// <summary>
     /// 将可空值转换为 COM 参数值，若为空或不满足条件则返回 Type.Missing。

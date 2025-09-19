@@ -76,22 +76,24 @@ internal class WordChartSeries : IWordChartSeries
     /// <inheritdoc/>
     public MsoChartType ChartType
     {
-        get => _series?.ChartType != null ? (MsoChartType)(int)_series?.ChartType : MsoChartType.xlArea;
+        get => _series?.ChartType != null ? _series.ChartType.EnumConvert(MsoChartType.xlArea) : MsoChartType.xlArea;
         set
         {
-            if (_series != null) _series.ChartType = (MsCore.XlChartType)(int)value;
+            if (_series != null) _series.ChartType = value.EnumConvert(MsCore.XlChartType.xlArea);
         }
     }
 
     /// <inheritdoc/>
     public XlAxisGroup AxisGroup
     {
-        get => _series?.AxisGroup != null ? (XlAxisGroup)(int)_series?.AxisGroup : XlAxisGroup.xlPrimary;
+        get => _series?.AxisGroup != null ? _series.AxisGroup.EnumConvert(XlAxisGroup.xlPrimary) : XlAxisGroup.xlPrimary;
         set
         {
-            if (_series != null) _series.AxisGroup = (MsWord.XlAxisGroup)(int)value;
+            if (_series != null) _series.AxisGroup = value.EnumConvert(MsWord.XlAxisGroup.xlPrimary);
         }
+
     }
+
 
     /// <inheritdoc/>
     public bool Smooth
@@ -107,10 +109,11 @@ internal class WordChartSeries : IWordChartSeries
     /// <inheritdoc/>
     public XlMarkerStyle MarkerStyle
     {
-        get => _series?.MarkerStyle != null ? (XlMarkerStyle)(int)_series?.MarkerStyle : XlMarkerStyle.xlMarkerStyleNone;
+        get => _series?.MarkerStyle != null ? _series.MarkerStyle.EnumConvert(XlMarkerStyle.xlMarkerStyleNone) : XlMarkerStyle.xlMarkerStyleNone;
         set
         {
-            if (_series != null) _series.MarkerStyle = (MsWord.XlMarkerStyle)(int)value;
+            if (_series != null)
+                _series.MarkerStyle = value.EnumConvert(MsWord.XlMarkerStyle.xlMarkerStyleNone);
         }
     }
 

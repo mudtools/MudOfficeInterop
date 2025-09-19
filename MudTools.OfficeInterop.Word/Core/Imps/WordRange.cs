@@ -778,18 +778,17 @@ internal class WordRange : IWordRange
     /// <inheritdoc/>
     public WdTextOrientation Orientation
     {
-        get => _range?.Orientation != null ? (WdTextOrientation)(int)_range?.Orientation : WdTextOrientation.wdTextOrientationHorizontal;
+        get => _range?.Orientation != null ? _range.Orientation.EnumConvert(WdTextOrientation.wdTextOrientationHorizontal) : WdTextOrientation.wdTextOrientationHorizontal;
         set
         {
             if (_range != null) _range.Orientation = value.EnumConvert(MsWord.WdTextOrientation.wdTextOrientationHorizontal);
         }
     }
-    }
 
     /// <inheritdoc/>
     public WdTwoLinesInOneType TwoLinesInOne
     {
-        get => _range?.TwoLinesInOne != null ? (WdTwoLinesInOneType)(int)_range?.TwoLinesInOne : WdTwoLinesInOneType.wdTwoLinesInOneNone;
+        get => _range?.TwoLinesInOne != null ? _range.TwoLinesInOne.EnumConvert(WdTwoLinesInOneType.wdTwoLinesInOneNone) : WdTwoLinesInOneType.wdTwoLinesInOneNone;
         set
         {
             if (_range != null) _range.TwoLinesInOne = value.EnumConvert(MsWord.WdTwoLinesInOneType.wdTwoLinesInOneNone);

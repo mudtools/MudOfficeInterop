@@ -51,7 +51,7 @@ internal class SlicerPivotTables : ISlicerPivotTables
     {
         for (int i = 1; i <= _pivotTables.Count; i++)
         {
-            yield return new ExcelPivotTable((MsExcel.PivotTable)_pivotTables[i]);
+            yield return new ExcelPivotTable(_pivotTables[i]);
         }
     }
 

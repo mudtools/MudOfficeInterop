@@ -92,10 +92,10 @@ internal class WordChartFont : IWordChartFont
     /// <inheritdoc/>
     public XlColorIndex ColorIndex
     {
-        get => _chartFont?.ColorIndex != null ? (XlColorIndex)(int)_chartFont?.ColorIndex : XlColorIndex.xlColorIndexNone;
+        get => _chartFont?.ColorIndex != null ? _chartFont.ColorIndex.ObjectConvertEnum(XlColorIndex.xlColorIndexNone) : XlColorIndex.xlColorIndexNone;
         set
         {
-            if (_chartFont != null) _chartFont.ColorIndex = (MsCore.XlColorIndex)(int)value;
+            if (_chartFont != null) _chartFont.ColorIndex = value.EnumConvert(MsWord.XlColorIndex.xlColorIndexNone);
         }
     }
     #endregion

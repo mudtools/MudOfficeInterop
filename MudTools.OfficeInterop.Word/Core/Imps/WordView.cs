@@ -34,20 +34,20 @@ internal class WordView : IWordView
     /// <inheritdoc/>
     public WdViewType Type
     {
-        get => _view?.Type != null ? (WdViewType)(int)_view?.Type : WdViewType.wdNormalView;
+        get => _view?.Type != null ? _view.Type.EnumConvert(WdViewType.wdNormalView) : WdViewType.wdNormalView;
         set
         {
-            if (_view != null) _view.Type = (MsWord.WdViewType)(int)value;
+            if (_view != null) _view.Type = value.EnumConvert(MsWord.WdViewType.wdNormalView);
         }
     }
 
     /// <inheritdoc/>
     public WdSeekView SeekView
     {
-        get => _view?.SeekView != null ? (WdSeekView)(int)_view?.SeekView : WdSeekView.wdSeekMainDocument;
+        get => _view?.SeekView != null ? _view.SeekView.EnumConvert(WdSeekView.wdSeekMainDocument) : WdSeekView.wdSeekMainDocument;
         set
         {
-            if (_view != null) _view.SeekView = (MsWord.WdSeekView)(int)value;
+            if (_view != null) _view.SeekView = value.EnumConvert(MsWord.WdSeekView.wdSeekMainDocument);
         }
     }
 
@@ -173,20 +173,20 @@ internal class WordView : IWordView
     /// <inheritdoc/>
     public WdRevisionsView RevisionsView
     {
-        get => _view?.RevisionsView != null ? (WdRevisionsView)(int)_view?.RevisionsView : WdRevisionsView.wdRevisionsViewOriginal;
+        get => _view?.RevisionsView != null ? _view.RevisionsView.EnumConvert(WdRevisionsView.wdRevisionsViewFinal) : WdRevisionsView.wdRevisionsViewFinal;
         set
         {
-            if (_view != null) _view.RevisionsView = (MsWord.WdRevisionsView)(int)value;
+            if (_view != null) _view.RevisionsView = value.EnumConvert(MsWord.WdRevisionsView.wdRevisionsViewFinal);
         }
     }
 
     /// <inheritdoc/>
     public WdRevisionsMode RevisionsMode
     {
-        get => _view?.RevisionsMode != null ? (WdRevisionsMode)(int)_view?.RevisionsMode : WdRevisionsMode.wdBalloonRevisions;
+        get => _view?.RevisionsMode != null ? _view.RevisionsMode.EnumConvert(WdRevisionsMode.wdBalloonRevisions) : WdRevisionsMode.wdBalloonRevisions;
         set
         {
-            if (_view != null) _view.RevisionsMode = (MsWord.WdRevisionsMode)(int)value;
+            if (_view != null) _view.RevisionsMode = value.EnumConvert(MsWord.WdRevisionsMode.wdBalloonRevisions);
         }
     }
 
@@ -231,10 +231,10 @@ internal class WordView : IWordView
     /// <inheritdoc/>
     public WdRevisionsBalloonWidthType RevisionsBalloonWidthType
     {
-        get => _view?.RevisionsBalloonWidthType != null ? (WdRevisionsBalloonWidthType)(int)_view?.RevisionsBalloonWidthType : WdRevisionsBalloonWidthType.wdBalloonWidthPercent;
+        get => _view?.RevisionsBalloonWidthType != null ? _view.RevisionsBalloonWidthType.EnumConvert(WdRevisionsBalloonWidthType.wdBalloonWidthPercent) : WdRevisionsBalloonWidthType.wdBalloonWidthPercent;
         set
         {
-            if (_view != null) _view.RevisionsBalloonWidthType = (MsWord.WdRevisionsBalloonWidthType)(int)value;
+            if (_view != null) _view.RevisionsBalloonWidthType = value.EnumConvert(MsWord.WdRevisionsBalloonWidthType.wdBalloonWidthPercent);
         }
     }
 

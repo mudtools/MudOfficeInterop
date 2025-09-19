@@ -43,11 +43,11 @@ internal class WordChartTitle : IWordChartTitle
     /// <inheritdoc/>
     public XlChartElementPosition Position
     {
-        get => _chartTitle?.Position != null ? (XlChartElementPosition)(int)_chartTitle?.Position : XlChartElementPosition.xlChartElementPositionAutomatic;
+        get => _chartTitle?.Position != null ? _chartTitle.Position.EnumConvert(XlChartElementPosition.xlChartElementPositionAutomatic) : XlChartElementPosition.xlChartElementPositionAutomatic;
         set
         {
             if (_chartTitle != null)
-                _chartTitle.Position = (MsWord.XlChartElementPosition)(int)value;
+                _chartTitle.Position = value.EnumConvert(MsWord.XlChartElementPosition.xlChartElementPositionAutomatic);
         }
     }
 
@@ -108,22 +108,22 @@ internal class WordChartTitle : IWordChartTitle
     /// <inheritdoc/>
     public XlHAlign HorizontalAlignment
     {
-        get => _chartTitle?.HorizontalAlignment != null ? (XlHAlign)(int)_chartTitle?.HorizontalAlignment : XlHAlign.xlHAlignLeft;
+        get => _chartTitle?.HorizontalAlignment != null ? _chartTitle.HorizontalAlignment.ObjectConvertEnum(XlHAlign.xlHAlignLeft) : XlHAlign.xlHAlignLeft;
         set
         {
             if (_chartTitle != null)
-                _chartTitle.HorizontalAlignment = (MsWord.XlHAlign)(int)value;
+                _chartTitle.HorizontalAlignment = value.EnumConvert(MsWord.XlHAlign.xlHAlignLeft);
         }
     }
 
     /// <inheritdoc/>
     public XlVAlign VerticalAlignment
     {
-        get => _chartTitle?.VerticalAlignment != null ? (XlVAlign)(int)_chartTitle?.VerticalAlignment : XlVAlign.xlVAlignJustify;
+        get => _chartTitle?.VerticalAlignment != null ? _chartTitle.VerticalAlignment.ObjectConvertEnum(XlVAlign.xlVAlignCenter) : XlVAlign.xlVAlignCenter;
         set
         {
             if (_chartTitle != null)
-                _chartTitle.VerticalAlignment = (MsWord.XlVAlign)(int)value;
+                _chartTitle.VerticalAlignment = value.EnumConvert(MsWord.XlVAlign.xlVAlignCenter);
         }
     }
 

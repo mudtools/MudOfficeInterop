@@ -5,7 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using log4net;
 using System.Drawing;
 using System.Reflection;
 
@@ -132,6 +131,16 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     {
         get => InternalRange.Formula;
         set => InternalRange.Formula = value;
+    }
+
+    public XlFormulaLabel FormulaLabel
+    {
+        get => InternalRange != null ? InternalRange.FormulaLabel.EnumConvert(XlFormulaLabel.xlNoLabels) : XlFormulaLabel.xlNoLabels;
+        set
+        {
+            if (InternalRange != null)
+                InternalRange.FormulaLabel = value.EnumConvert(MsExcel.XlFormulaLabel.xlNoLabels);
+        }
     }
 
 
@@ -323,8 +332,12 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public XlHAlign HorizontalAlignment
     {
-        get => (XlHAlign)InternalRange.HorizontalAlignment;
-        set => InternalRange.HorizontalAlignment = (MsExcel.XlHAlign)value;
+        get => InternalRange != null ? InternalRange.HorizontalAlignment.ObjectConvertEnum(XlHAlign.xlHAlignGeneral) : XlHAlign.xlHAlignGeneral;
+        set
+        {
+            if (InternalRange != null)
+                InternalRange.HorizontalAlignment = value.EnumConvert(MsExcel.XlHAlign.xlHAlignGeneral);
+        }
     }
 
     /// <summary>
@@ -332,21 +345,25 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public XlVAlign VerticalAlignment
     {
-        get => (XlVAlign)InternalRange.VerticalAlignment;
-        set => InternalRange.VerticalAlignment = (MsExcel.XlVAlign)value;
+        get => InternalRange != null ? InternalRange.VerticalAlignment.ObjectConvertEnum(XlVAlign.xlVAlignBottom) : XlVAlign.xlVAlignBottom;
+        set
+        {
+            if (InternalRange != null)
+                InternalRange.VerticalAlignment = value.EnumConvert(MsExcel.XlVAlign.xlVAlignBottom);
+        }
     }
 
     /// <summary>
     /// 获取或设置文本旋转角度（-90到90度）
     /// </summary>
-    public int Orientation
+    public XlOrientation Orientation
     {
-        get
+        get => InternalRange != null ? InternalRange.Orientation.ObjectConvertEnum(XlOrientation.xlDownward) : XlOrientation.xlDownward;
+        set
         {
-            try { return Convert.ToInt32(InternalRange.Orientation); }
-            catch { return 0; }
+            if (InternalRange != null)
+                InternalRange.Orientation = value.EnumConvert(MsExcel.XlOrientation.xlDownward);
         }
-        set => InternalRange.Orientation = value;
     }
 
     /// <summary>
@@ -358,7 +375,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         set => InternalRange.WrapText = value;
     }
 
-    public IExcelInterior Interior
+    public IExcelInterior? Interior
     {
         get
         {
@@ -380,8 +397,12 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public XlPattern Pattern
     {
-        get => (XlPattern)InternalRange.Interior.Pattern;
-        set => InternalRange.Interior.Pattern = (MsExcel.XlPattern)value;
+        get => InternalRange != null ? InternalRange.Interior.Pattern.ObjectConvertEnum(XlPattern.xlPatternNone) : XlPattern.xlPatternNone;
+        set
+        {
+            if (InternalRange != null)
+                InternalRange.Interior.Pattern = value.EnumConvert(MsExcel.XlPattern.xlPatternNone);
+        }
     }
 
     /// <summary>
@@ -1121,7 +1142,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     {
         try
         {
-            InternalRange.Insert(
+            InternalRange?.Insert(
                 Shift: (MsExcel.XlInsertShiftDirection)direction,
                 CopyOrigin: (MsExcel.XlInsertFormatOrigin)origin);
             return true;
@@ -1141,7 +1162,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     {
         try
         {
-            InternalRange.Delete(Shift: (MsExcel.XlDeleteShiftDirection)direction);
+            InternalRange?.Delete(Shift: (MsExcel.XlDeleteShiftDirection)direction);
             return true;
         }
         catch (Exception ex)
@@ -1155,7 +1176,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public void ClearContents()
     {
-        InternalRange.ClearContents();
+        InternalRange?.ClearContents();
     }
 
     /// <summary>
@@ -1163,7 +1184,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public void Clear()
     {
-        InternalRange.Clear();
+        InternalRange?.Clear();
     }
 
     public object Parse(string? parseLine = null, TR? range = default)
@@ -1172,7 +1193,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         if (range != null && range is CoreRange<T, TR> otherRange)
             r = otherRange.InternalRange;
 
-        return InternalRange.Parse(parseLine.ComArgsVal(), r);
+        return InternalRange?.Parse(parseLine.ComArgsVal(), r);
     }
 
     /// <summary>
@@ -1420,19 +1441,19 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     {
         InternalRange.Sort(
             Key1: key1,
-            Order1: (MsExcel.XlSortOrder)order1,
+            Order1: order1.EnumConvert(MsExcel.XlSortOrder.xlAscending),
             Key2: key2,
-            Order2: (MsExcel.XlSortOrder)order2,
+            Order2: order2.EnumConvert(MsExcel.XlSortOrder.xlAscending),
             Key3: key3,
-            Order3: (MsExcel.XlSortOrder)order3,
-            Header: (MsExcel.XlYesNoGuess)header,
+            Order3: order3.EnumConvert(MsExcel.XlSortOrder.xlAscending),
+            Header: header.EnumConvert(MsExcel.XlYesNoGuess.xlNo),
             OrderCustom: orderCustom,
             MatchCase: matchCase,
-            Orientation: (MsExcel.XlSortOrientation)orientation,
-            SortMethod: (MsExcel.XlSortMethod)sortMethod,
-            DataOption1: (MsExcel.XlSortDataOption)dataOption1,
-            DataOption2: (MsExcel.XlSortDataOption)dataOption2,
-            DataOption3: (MsExcel.XlSortDataOption)dataOption3);
+            Orientation: orientation.EnumConvert(MsExcel.XlSortOrientation.xlSortRows),
+            SortMethod: sortMethod.EnumConvert(MsExcel.XlSortMethod.xlPinYin),
+            DataOption1: dataOption1.EnumConvert(MsExcel.XlSortDataOption.xlSortNormal),
+            DataOption2: dataOption2.EnumConvert(MsExcel.XlSortDataOption.xlSortNormal),
+            DataOption3: dataOption3.EnumConvert(MsExcel.XlSortDataOption.xlSortNormal));
     }
 
     #endregion
@@ -1487,15 +1508,15 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
 
         object lookInObj = Type.Missing;
         if (lookIn != null)
-            lookInObj = (MsExcel.XlFindLookIn)(int)lookIn;
+            lookInObj = lookIn.EnumConvert(MsExcel.XlFindLookIn.xlValues);
 
         object lookAtObj = Type.Missing;
         if (lookAt != null)
-            lookAtObj = (MsExcel.XlLookAt)(int)lookAt;
+            lookAtObj = lookAt.EnumConvert(MsExcel.XlLookAt.xlPart);
 
         object searchOrderObj = Type.Missing;
         if (searchOrder != null)
-            searchOrderObj = (MsExcel.XlSearchOrder)(int)searchOrder;
+            searchOrderObj = searchOrder.EnumConvert(MsExcel.XlSearchOrder.xlByRows);
 
         searchFormat ??= Type.Missing;
 
@@ -1505,7 +1526,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
                     LookIn: lookInObj,
                     LookAt: lookAtObj,
                     SearchOrder: searchOrderObj,
-                    SearchDirection: (MsExcel.XlSearchDirection)(int)searchDirection,
+                    SearchDirection: searchDirection.EnumConvert(MsExcel.XlSearchDirection.xlNext),
                     MatchCase: matchCase.ComArgsVal(),
                     MatchByte: matchByte.ComArgsVal(),
                     SearchFormat: searchFormat);
@@ -1520,11 +1541,11 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     {
         object lookAtObj = Type.Missing;
         if (LookAt != null)
-            lookAtObj = (MsExcel.XlLookAt)(int)LookAt;
+            lookAtObj = LookAt.EnumConvert(MsExcel.XlLookAt.xlPart);
 
         object searchOrderObj = Type.Missing;
         if (SearchOrder != null)
-            searchOrderObj = (MsExcel.XlSearchOrder)(int)SearchOrder;
+            searchOrderObj = SearchOrder.EnumConvert(MsExcel.XlSearchOrder.xlByRows);
 
         SearchFormat ??= Type.Missing;
         ReplaceFormat ??= Type.Missing;
@@ -1548,7 +1569,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         try
         {
             value ??= Type.Missing;
-            MsExcel.Range range = InternalRange.SpecialCells((MsExcel.XlCellType)(int)type, value);
+            MsExcel.Range range = InternalRange.SpecialCells(type.EnumConvert(MsExcel.XlCellType.xlCellTypeBlanks), value);
             return CreateRangeObject(range);
         }
         catch

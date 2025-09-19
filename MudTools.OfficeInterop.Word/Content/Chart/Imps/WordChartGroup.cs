@@ -30,13 +30,13 @@ internal class WordChartGroup : IWordChartGroup
     public object Parent => _chartGroup?.Parent;
 
     /// <inheritdoc/>
-    public MsWord.XlAxisGroup AxisGroup
+    public XlAxisGroup AxisGroup
     {
-        get => _chartGroup?.AxisGroup ?? MsWord.XlAxisGroup.xlPrimary;
+        get => _chartGroup != null ? _chartGroup.AxisGroup.EnumConvert(XlAxisGroup.xlPrimary) : XlAxisGroup.xlPrimary;
         set
         {
             if (_chartGroup != null)
-                _chartGroup.AxisGroup = value;
+                _chartGroup.AxisGroup = value.EnumConvert(MsWord.XlAxisGroup.xlPrimary);
         }
     }
 
@@ -144,10 +144,11 @@ internal class WordChartGroup : IWordChartGroup
     /// <inheritdoc/>
     public XlSizeRepresents SizeRepresents
     {
-        get => _chartGroup?.SizeRepresents != null ? (XlSizeRepresents)(int)_chartGroup?.SizeRepresents : XlSizeRepresents.xlSizeIsArea;
+        get => _chartGroup != null ? _chartGroup.SizeRepresents.EnumConvert(XlSizeRepresents.xlSizeIsArea) : XlSizeRepresents.xlSizeIsArea;
         set
         {
-            if (_chartGroup != null) _chartGroup.SizeRepresents = (MsWord.XlSizeRepresents)(int)value;
+            if (_chartGroup != null)
+                _chartGroup.SizeRepresents = value.EnumConvert(MsWord.XlSizeRepresents.xlSizeIsArea);
         }
     }
 

@@ -127,16 +127,9 @@ internal class WordChartSeriesCollection : IWordChartSeriesCollection
         var names = new List<string>();
         for (int i = 1; i <= Count; i++)
         {
-            try
-            {
-                var series = _seriesCollection[i];
-                if (series?.Name != null)
-                    names.Add(series.Name.ToString());
-            }
-            catch
-            {
-                // 忽略无法访问的系列
-            }
+            var series = _seriesCollection[i];
+            if (series?.Name != null)
+                names.Add(series.Name.ToString());
         }
         return names;
     }

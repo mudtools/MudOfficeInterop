@@ -39,13 +39,13 @@ internal class WordChartFillFormat : IWordChartFillFormat
     /// <inheritdoc/>
     public MsoPatternType Pattern
     {
-        get => _chartFillFormat?.Pattern != null ? (MsoPatternType)(int)_chartFillFormat?.Pattern : MsoPatternType.msoPatternMixed;
+        get => _chartFillFormat?.Pattern != null ? _chartFillFormat.Pattern.EnumConvert(MsoPatternType.msoPatternMixed) : MsoPatternType.msoPatternMixed;
     }
 
     /// <inheritdoc/>
     public MsoFillType Type
     {
-        get => _chartFillFormat?.Type != null ? (MsoFillType)(int)_chartFillFormat?.Type : MsoFillType.msoFillMixed;
+        get => _chartFillFormat?.Type != null ? _chartFillFormat.Type.EnumConvert(MsoFillType.msoFillMixed) : MsoFillType.msoFillMixed;
     }
 
     #endregion
