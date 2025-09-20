@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -28,26 +28,26 @@ public interface IExcelStyles : IEnumerable<IExcelStyle>, IDisposable
     /// </summary>
     /// <param name="index">样式索引（从1开始）</param>
     /// <returns>样式对象</returns>
-    IExcelStyle this[int index] { get; }
+    IExcelStyle? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的样式对象
     /// </summary>
     /// <param name="name">样式名称</param>
     /// <returns>样式对象</returns>
-    IExcelStyle this[string name] { get; }
+    IExcelStyle? this[string name] { get; }
 
     /// <summary>
     /// 获取样式集合所在的父对象（通常是工作簿）
     /// 对应 Styles.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取样式集合所在的Application对象
     /// 对应 Styles.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     #endregion
 
@@ -59,7 +59,7 @@ public interface IExcelStyles : IEnumerable<IExcelStyle>, IDisposable
     /// </summary>
     /// <param name="name">样式名称</param>
     /// <returns>新创建的样式对象</returns>
-    IExcelStyle Add(string name);
+    IExcelStyle? Add(string name);
 
     /// <summary>
     /// 基于现有样式创建新样式
@@ -67,7 +67,7 @@ public interface IExcelStyles : IEnumerable<IExcelStyle>, IDisposable
     /// <param name="name">新样式名称</param>
     /// <param name="basedOn">基础样式</param>
     /// <returns>新创建的样式对象</returns>
-    IExcelStyle AddBasedOn(string name, IExcelStyle basedOn);
+    IExcelStyle? AddBasedOn(string name, IExcelStyle basedOn);
 
     /// <summary>
     /// 批量添加样式
@@ -77,24 +77,10 @@ public interface IExcelStyles : IEnumerable<IExcelStyle>, IDisposable
     int AddRange(string[] styleNames);
 
     /// <summary>
-    /// 创建内置样式
+    /// 将另一个工作簿中的样式合并到集合中
     /// </summary>
-    /// <param name="builtinStyle">内置样式类型</param>
-    /// <param name="name">样式名称</param>
-    /// <returns>创建的样式对象</returns>
-    IExcelStyle CreateBuiltinStyle(int builtinStyle, string name = "");
-
-    /// <summary>
-    /// 从模板创建工作簿样式
-    /// </summary>
-    /// <param name="templatePath">模板文件路径</param>
-    /// <param name="includeFonts">是否包含字体</param>
-    /// <param name="includeColors">是否包含颜色</param>
-    /// <param name="includeBorders">是否包含边框</param>
-    /// <returns>成功导入的样式数量</returns>
-    int ImportFromTemplate(string templatePath, bool includeFonts = true,
-                          bool includeColors = true, bool includeBorders = true);
-
+    /// <param name="workbook">目标工作簿对象</param>
+    void Merge(IExcelWorkbook workbook);
     #endregion
 
     #region 查找和筛选

@@ -49,13 +49,6 @@ internal class ExcelPictures : IExcelPictures
         {
             try
             {
-                // 释放所有子图片对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var picture = this[i] as ExcelPicture;
-                    picture?.Dispose();
-                }
-
                 // 释放底层COM对象
                 if (_pictures != null)
                     Marshal.ReleaseComObject(_pictures);
@@ -140,6 +133,137 @@ internal class ExcelPictures : IExcelPictures
     /// </summary>
     public object Parent => _pictures?.Parent;
 
+    public bool? Enabled
+    {
+        get => _pictures?.Enabled;
+        set
+        {
+            if (_pictures != null && value != null)
+                _pictures.Enabled = value.Value;
+        }
+    }
+
+    public bool? Visible
+    {
+        get => _pictures?.Visible;
+        set
+        {
+            if (_pictures != null && value != null)
+                _pictures.Visible = value.Value;
+        }
+    }
+
+    public int? ZOrder
+    {
+        get => _pictures?.ZOrder;
+    }
+
+    public bool? Locked
+    {
+        get => _pictures?.Locked;
+        set
+        {
+            if (_pictures != null && value != null)
+                _pictures.Locked = value.Value;
+        }
+    }
+
+    public bool? Shadow
+    {
+        get => _pictures?.Shadow;
+        set
+        {
+            if (_pictures != null && value != null)
+                _pictures.Shadow = value.Value;
+        }
+    }
+
+    public bool? PrintObject
+    {
+        get => _pictures?.PrintObject;
+        set
+        {
+            if (_pictures != null && value != null)
+                _pictures.PrintObject = value.Value;
+        }
+    }
+
+    public string? OnAction
+    {
+        get => _pictures?.OnAction;
+        set
+        {
+            if (_pictures != null)
+                _pictures.OnAction = value;
+        }
+    }
+
+    public string? Formula
+    {
+        get => _pictures?.Formula;
+        set
+        {
+            if (_pictures != null)
+                _pictures.Formula = value;
+        }
+
+    }
+
+    public XlPlacement Placeholder
+    {
+        get => _pictures != null ? _pictures.Placement.ObjectConvertEnum(XlPlacement.xlFreeFloating) : XlPlacement.xlFreeFloating;
+        set
+        {
+            if (_pictures != null)
+                _pictures.Placement = value;
+        }
+    }
+
+    public double Height
+    {
+        get => _pictures?.Height ?? 0;
+        set
+        {
+            if (_pictures != null)
+                _pictures.Height = value;
+        }
+    }
+
+    public double Width
+    {
+        get => _pictures?.Width ?? 0;
+        set
+        {
+            if (_pictures != null)
+                _pictures.Width = value;
+        }
+    }
+
+    public double Left
+    {
+        get => _pictures?.Left ?? 0;
+        set
+        {
+            if (_pictures != null)
+                _pictures.Left = value;
+        }
+    }
+
+    public double Top
+    {
+        get => _pictures?.Top ?? 0;
+        set
+        {
+            if (_pictures != null)
+                _pictures.Top = value;
+        }
+    }
+
+    public IExcelShapeRange? ShapeRange => _pictures != null ? new ExcelShapeRange(_pictures.ShapeRange) : null;
+
+    public IExcelBorder? Border => _pictures != null ? new ExcelBorder(_pictures.Border) : null;
+
+    public IExcelInterior? Interior => _pictures != null ? new ExcelInterior(_pictures.Interior) : null;
     #endregion
 
     #region 创建和添加
@@ -171,6 +295,40 @@ internal class ExcelPictures : IExcelPictures
         catch (Exception ex)
         {
             log.Error($"插入图片 '{filename}' 时发生异常", ex);
+            return null;
+        }
+    }
+
+    public IExcelPicture? Add(double Left, double Top, double Width, double Height)
+    {
+        if (_pictures == null)
+            return null;
+
+        try
+        {
+            var picture = _pictures.Add(Left, Top, Width, Height);
+            return picture != null ? new ExcelPicture(picture) : null;
+        }
+        catch (Exception ex)
+        {
+            log.Error($"添加图片时发生异常", ex);
+            return null;
+        }
+    }
+
+    public IExcelGroupObject Group()
+    {
+        if (_pictures == null)
+            return null;
+
+        try
+        {
+            var groupObject = _pictures.Group();
+            return groupObject != null ? new ExcelGroupObject(groupObject) : null;
+        }
+        catch (Exception ex)
+        {
+            log.Error($"添加图片组时发生异常", ex);
             return null;
         }
     }
@@ -384,7 +542,7 @@ internal class ExcelPictures : IExcelPictures
 
         try
         {
-            picture.Delete();
+            _pictures.Delete();
         }
         catch (Exception ex)
         {
@@ -411,6 +569,91 @@ internal class ExcelPictures : IExcelPictures
         }
     }
 
+    public void BringToFront()
+    {
+        if (_pictures == null)
+            return;
+        try
+        {
+            _pictures.BringToFront();
+        }
+        catch (Exception ex)
+        {
+            log.Warn("将图片 BringToFront 时发生异常", ex);
+        }
+    }
+
+    public void SendToBack()
+    {
+        if (_pictures == null)
+            return;
+        try
+        {
+            _pictures.SendToBack();
+        }
+        catch (Exception ex)
+        {
+            log.Warn("将图片 SendToBack 时发生异常", ex);
+        }
+    }
+
+    public void Copy()
+    {
+        if (_pictures == null)
+            return;
+        try
+        {
+            _pictures.Copy();
+        }
+        catch (Exception ex)
+        {
+            log.Warn("将图片 Copy 时发生异常", ex);
+        }
+    }
+
+    public void Cut()
+    {
+        if (_pictures == null)
+            return;
+        try
+        {
+            _pictures.Cut();
+        }
+        catch (Exception ex)
+        {
+            log.Warn("将图片 Cut 时发生异常", ex);
+        }
+    }
+
+    public void CopyPicture(XlPictureAppearance Appearance = XlPictureAppearance.xlPrinter,
+                            XlCopyPictureFormat Format = XlCopyPictureFormat.xlPicture)
+    {
+        if (_pictures == null)
+            return;
+        try
+        {
+            _pictures.CopyPicture(Appearance.EnumConvert(MsExcel.XlPictureAppearance.xlPrinter),
+            Format.EnumConvert(MsExcel.XlCopyPictureFormat.xlPicture));
+        }
+        catch (Exception ex)
+        {
+            log.Warn("将图片 CopyPicture 时发生异常", ex);
+        }
+    }
+
+    public void Duplicate()
+    {
+        if (_pictures == null)
+            return;
+        try
+        {
+            _pictures.Duplicate();
+        }
+        catch (Exception ex)
+        {
+            log.Warn("将图片 Duplicate 时发生异常", ex);
+        }
+    }
 
     #endregion
 

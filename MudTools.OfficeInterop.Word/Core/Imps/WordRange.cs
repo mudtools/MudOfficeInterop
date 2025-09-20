@@ -959,14 +959,7 @@ internal class WordRange : IWordRange
             // 释放COM对象
             if (_range != null)
             {
-                try
-                {
-                    Marshal.ReleaseComObject(_range);
-                }
-                catch
-                {
-                    // 忽略释放COM对象时可能发生的异常
-                }
+                Marshal.ReleaseComObject(_range);
                 _range = null;
             }
         }
