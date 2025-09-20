@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using MudTools.OfficeInterop.Imps;
+
 namespace MudTools.OfficeInterop.Excel.Imps;
 /// <summary>
 /// Excel Shapes 集合对象的二次封装实现类
@@ -42,23 +44,9 @@ internal class ExcelShapes : IExcelShapes
 
         if (disposing)
         {
-            try
-            {
-                // 释放所有子形状对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var shape = this[i] as ExcelShape;
-                    shape?.Dispose();
-                }
-
-                // 释放底层COM对象
-                if (_shapes != null)
-                    Marshal.ReleaseComObject(_shapes);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_shapes != null)
+                Marshal.ReleaseComObject(_shapes);
             _shapes = null;
         }
 
@@ -80,7 +68,7 @@ internal class ExcelShapes : IExcelShapes
     /// </summary>
     /// <param name="index">形状索引（从1开始）</param>
     /// <returns>形状对象</returns>
-    public IExcelShape this[int index]
+    public IExcelShape? this[int index]
     {
         get
         {
@@ -97,22 +85,15 @@ internal class ExcelShapes : IExcelShapes
     /// </summary>
     /// <param name="name">形状名称</param>
     /// <returns>形状对象</returns>
-    public IExcelShape this[string name]
+    public IExcelShape? this[string name]
     {
         get
         {
             if (_shapes == null || string.IsNullOrEmpty(name))
                 return null;
 
-            try
-            {
-                var shape = _shapes.Item(name);
-                return shape != null ? new ExcelShape(shape) : null;
-            }
-            catch
-            {
-                return null;
-            }
+            var shape = _shapes.Item(name);
+            return shape != null ? new ExcelShape(shape) : null;
         }
     }
 
@@ -125,12 +106,89 @@ internal class ExcelShapes : IExcelShapes
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    public IExcelShape AddTextbox(int orientation, double left, double top, double width, double height)
+    public IExcelShape? AddTextbox(int orientation, float left, float top, float width, float height)
     {
         if (_shapes == null)
             return null;
 
-        return _shapes.AddTextbox((MsCore.MsoTextOrientation)orientation, (float)left, (float)top, (float)width, (float)height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+        return _shapes.AddTextbox((MsCore.MsoTextOrientation)orientation, left, top, width, height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+    public IExcelShape? AddShape(MsoAutoShapeType shapeType, float left, float top, float width, float height)
+    {
+        if (_shapes == null)
+            return null;
+
+        return _shapes.AddShape(shapeType.EnumConvert(MsCore.MsoAutoShapeType.msoShapeRectangle), left, top, width, height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+    public IExcelShape? AddConnector(MsoConnectorType type, float BeginX, float BeginY, float EndX, float EndY)
+    {
+        if (_shapes == null)
+            return null;
+        return _shapes.AddConnector(type.EnumConvert(MsCore.MsoConnectorType.msoConnectorTypeMixed), BeginX, BeginY, EndX, EndY) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+    public IExcelShape? AddLabel(MsoTextOrientation Orientation, float Left, float Top, float Width, float Height)
+    {
+        if (_shapes == null)
+            return null;
+        return _shapes.AddLabel(Orientation.EnumConvert(MsCore.MsoTextOrientation.msoTextOrientationMixed), Left, Top, Width, Height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+    public IExcelShape? AddDiagram(MsoDiagramType Type, float Left, float Top, float Width, float Height)
+    {
+        if (_shapes == null)
+            return null;
+
+        return _shapes.AddDiagram(Type.EnumConvert(MsCore.MsoDiagramType.msoDiagramOrgChart), Left, Top, Width, Height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+    public IExcelShape? AddCanvas(float Left, float Top, float Width, float Height)
+    {
+        if (_shapes == null)
+            return null;
+        return _shapes.AddCanvas(Left, Top, Width, Height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+    public IExcelShape? AddCurve(float[,] points)
+    {
+        if (_shapes == null)
+            return null;
+        return _shapes.AddCurve(points) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+
+    public IExcelShape? AddChart(XlChartType XlChartType, float Left, float Top, float Width, float Height)
+    {
+        if (_shapes == null)
+            return null;
+        return _shapes.AddChart(XlChartType.EnumConvert(MsCore.XlChartType.xlColumnClustered), Left, Top, Width, Height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+    public IExcelShape? AddSmartArt(IOfficeSmartArtLayout Layout, float Left, float Top, float Width, float Height)
+    {
+        if (_shapes == null)
+            return null;
+        if (Layout is not OfficeSmartArtLayout officeSmartArtLayout)
+            return null;
+        return _shapes.AddSmartArt(officeSmartArtLayout._smartArtLayout, Left, Top, Width, Height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+
+
+    public IExcelShape? AddTextEffect(
+        MsoPresetTextEffect PresetTextEffect,
+        string Text, string FontName,
+        float FontSize, bool FontBold,
+        bool FontItalic, float Left, float Top)
+    {
+        if (_shapes == null)
+            return null;
+
+        return _shapes.AddTextEffect(PresetTextEffect.EnumConvert(MsCore.MsoPresetTextEffect.msoTextEffect1),
+         Text, FontName, FontSize, FontBold.ConvertTriState(), FontItalic.ConvertTriState(),
+          Left, Top) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
     }
 
     /// <summary>
@@ -141,12 +199,12 @@ internal class ExcelShapes : IExcelShapes
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    public IExcelShape AddRectangle(double left, double top, double width, double height)
+    public IExcelShape? AddRectangle(float left, float top, float width, float height)
     {
         if (_shapes == null)
             return null;
 
-        var shape = _shapes.AddShape(MsCore.MsoAutoShapeType.msoShapeRectangle, (float)left, (float)top, (float)width, (float)height) as MsExcel.Shape;
+        var shape = _shapes.AddShape(MsCore.MsoAutoShapeType.msoShapeRectangle, left, top, width, height) as MsExcel.Shape;
         return shape != null ? new ExcelShape(shape) : null;
     }
 
@@ -158,12 +216,12 @@ internal class ExcelShapes : IExcelShapes
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    public IExcelShape AddEllipse(double left, double top, double width, double height)
+    public IExcelShape? AddEllipse(float left, float top, float width, float height)
     {
         if (_shapes == null)
             return null;
 
-        var shape = _shapes.AddShape(MsCore.MsoAutoShapeType.msoShapeOval, (float)left, (float)top, (float)width, (float)height) as MsExcel.Shape;
+        var shape = _shapes.AddShape(MsCore.MsoAutoShapeType.msoShapeOval, left, top, width, height) as MsExcel.Shape;
         return shape != null ? new ExcelShape(shape) : null;
     }
 
@@ -175,13 +233,21 @@ internal class ExcelShapes : IExcelShapes
     /// <param name="x2">终点X坐标</param>
     /// <param name="y2">终点Y坐标</param>
     /// <returns>新创建的形状对象</returns>
-    public IExcelShape AddLine(double x1, double y1, double x2, double y2)
+    public IExcelShape? AddLine(float x1, float y1, float x2, float y2)
     {
         if (_shapes == null)
             return null;
 
-        var shape = _shapes.AddLine((float)x1, (float)y1, (float)x2, (float)y2) as MsExcel.Shape;
-        return shape != null ? new ExcelShape(shape) : null;
+        return _shapes.AddLine(x1, y1, x2, y2) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+    }
+
+
+    public IExcelShape? AddPolyline(float[,] points)
+    {
+        if (_shapes == null)
+            return null;
+
+        return _shapes.AddPolyline(points) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
     }
 
     /// <summary>
@@ -199,10 +265,10 @@ internal class ExcelShapes : IExcelShapes
         string filename,
         bool linkToFile,
         bool saveWithDocument,
-        double left,
-        double top,
-        double width,
-        double height)
+        float left,
+        float top,
+        float width,
+        float height)
     {
         if (_shapes == null || string.IsNullOrEmpty(filename))
             return null;
@@ -210,7 +276,7 @@ internal class ExcelShapes : IExcelShapes
         var shape = _shapes.AddPicture(filename,
             linkToFile ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
             saveWithDocument ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
-            (float)left, (float)top, (float)width, (float)height);
+            left, top, width, height);
         return shape != null ? new ExcelShape(shape) : null;
     }
 

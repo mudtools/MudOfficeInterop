@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeSmartArtLayout : IOfficeSmartArtLayout
 {
-    private MsCore.SmartArtLayout _smartArtLayout;
+    internal MsCore.SmartArtLayout _smartArtLayout;
     private bool _disposedValue;
 
     /// <summary>

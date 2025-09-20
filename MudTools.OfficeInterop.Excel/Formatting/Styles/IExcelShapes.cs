@@ -24,14 +24,14 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     /// </summary>
     /// <param name="index">形状索引（从1开始）</param>
     /// <returns>形状对象</returns>
-    IExcelShape this[int index] { get; }
+    IExcelShape? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的形状对象
     /// </summary>
     /// <param name="name">形状名称</param>
     /// <returns>形状对象</returns>
-    IExcelShape this[string name] { get; }
+    IExcelShape? this[string name] { get; }
 
     /// <summary>
     /// 添加文本框形状
@@ -42,7 +42,7 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    IExcelShape AddTextbox(int orientation, double left, double top, double width, double height);
+    IExcelShape? AddTextbox(int orientation, float left, float top, float width, float height);
 
     /// <summary>
     /// 添加矩形形状
@@ -52,7 +52,7 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    IExcelShape AddRectangle(double left, double top, double width, double height);
+    IExcelShape? AddRectangle(float left, float top, float width, float height);
 
     /// <summary>
     /// 添加椭圆形状
@@ -62,7 +62,7 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    IExcelShape AddEllipse(double left, double top, double width, double height);
+    IExcelShape? AddEllipse(float left, float top, float width, float height);
 
     /// <summary>
     /// 添加线条形状
@@ -72,7 +72,7 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     /// <param name="x2">终点X坐标</param>
     /// <param name="y2">终点Y坐标</param>
     /// <returns>新创建的形状对象</returns>
-    IExcelShape AddLine(double x1, double y1, double x2, double y2);
+    IExcelShape? AddLine(float x1, float y1, float x2, float y2);
 
     /// <summary>
     /// 添加图片形状
@@ -85,8 +85,115 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    IExcelShape? AddPicture(string filename, bool linkToFile, bool saveWithDocument, double left, double top, double width, double height);
+    IExcelShape? AddPicture(string filename, bool linkToFile, bool saveWithDocument, float left, float top, float width, float height);
 
+    /// <summary>
+    /// 添加图表形状
+    /// </summary>
+    /// <param name="Type">图表类型</param>
+    /// <param name="Left">左边距</param>
+    /// <param name="Top">顶边距</param>
+    /// <param name="Width">宽度</param>
+    /// <param name="Height">高度</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddDiagram(MsoDiagramType Type, float Left, float Top, float Width, float Height);
+
+    /// <summary>
+    /// 添加画布形状
+    /// </summary>
+    /// <param name="Left">左边距</param>
+    /// <param name="Top">顶边距</param>
+    /// <param name="Width">宽度</param>
+    /// <param name="Height">高度</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddCanvas(float Left, float Top, float Width, float Height);
+
+    /// <summary>
+    /// 添加图表形状
+    /// </summary>
+    /// <param name="XlChartType">图表类型</param>
+    /// <param name="Left">左边距</param>
+    /// <param name="Top">顶边距</param>
+    /// <param name="Width">宽度</param>
+    /// <param name="Height">高度</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddChart(XlChartType XlChartType, float Left, float Top, float Width, float Height);
+
+    /// <summary>
+    /// 添加SmartArt形状
+    /// </summary>
+    /// <param name="Layout">SmartArt布局</param>
+    /// <param name="Left">左边距</param>
+    /// <param name="Top">顶边距</param>
+    /// <param name="Width">宽度</param>
+    /// <param name="Height">高度</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddSmartArt(IOfficeSmartArtLayout Layout, float Left, float Top, float Width, float Height);
+
+    /// <summary>
+    /// 添加多段线形状
+    /// </summary>
+    /// <param name="points">点坐标数组</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddPolyline(float[,] points);
+
+    /// <summary>
+    /// 添加曲线形状
+    /// </summary>
+    /// <param name="points">点坐标数组</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddCurve(float[,] points);
+
+    /// <summary>
+    /// 添加标签形状
+    /// </summary>
+    /// <param name="Orientation">文本方向</param>
+    /// <param name="Left">左边距</param>
+    /// <param name="Top">顶边距</param>
+    /// <param name="Width">宽度</param>
+    /// <param name="Height">高度</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddLabel(MsoTextOrientation Orientation, float Left, float Top, float Width, float Height);
+
+    /// <summary>
+    /// 添加连接符形状
+    /// </summary>
+    /// <param name="type">连接符类型</param>
+    /// <param name="BeginX">起点X坐标</param>
+    /// <param name="BeginY">起点Y坐标</param>
+    /// <param name="EndX">终点X坐标</param>
+    /// <param name="EndY">终点Y坐标</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddConnector(MsoConnectorType type, float BeginX, float BeginY, float EndX, float EndY);
+
+    /// <summary>
+    /// 添加自定义形状
+    /// </summary>
+    /// <param name="shapeType">形状类型</param>
+    /// <param name="left">左边距</param>
+    /// <param name="top">顶边距</param>
+    /// <param name="width">宽度</param>
+    /// <param name="height">高度</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddShape(MsoAutoShapeType shapeType, float left, float top, float width, float height);
+
+    /// <summary>
+    /// 添加艺术字形状
+    /// </summary>
+    /// <param name="PresetTextEffect">预设文本效果样式</param>
+    /// <param name="Text">艺术字文本内容</param>
+    /// <param name="FontName">字体名称</param>
+    /// <param name="FontSize">字体大小</param>
+    /// <param name="FontBold">是否粗体</param>
+    /// <param name="FontItalic">是否斜体</param>
+    /// <param name="Left">左边距</param>
+    /// <param name="Top">顶边距</param>
+    /// <returns>新创建的形状对象</returns>
+    public IExcelShape? AddTextEffect(
+       MsoPresetTextEffect PresetTextEffect,
+       string Text, string FontName,
+       float FontSize, bool FontBold,
+       bool FontItalic, float Left, float Top);
 
     /// <summary>
     /// 获取指定索引或名称的形状区域对象
