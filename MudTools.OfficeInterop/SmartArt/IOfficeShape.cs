@@ -100,5 +100,5 @@ public interface IOfficeShape : IDisposable
     /// 复制形状并返回新形状的引用
     /// </summary>
     /// <returns>新形状</returns>
-    IOfficeShape Duplicate();
+    IOfficeShape? Duplicate();
 }

@@ -13,23 +13,23 @@ namespace MudTools.OfficeInterop.Excel;
 public enum XlArrowHeadStyle
 {
     /// <summary>
-/// 闭合箭头样式
-/// </summary>
+    /// 闭合箭头样式
+    /// </summary>
     xlArrowHeadStyleClosed = 3,
     /// <summary>
-/// 双闭合箭头样式
-/// </summary>
+    /// 双闭合箭头样式
+    /// </summary>
     xlArrowHeadStyleDoubleClosed = 5,
     /// <summary>
-/// 双开箭头样式
-/// </summary>
+    /// 双开箭头样式
+    /// </summary>
     xlArrowHeadStyleDoubleOpen = 4,
     /// <summary>
-/// 无箭头样式
-/// </summary>
+    /// 无箭头样式
+    /// </summary>
     xlArrowHeadStyleNone = -4142,
     /// <summary>
-/// 开放箭头样式
-/// </summary>
+    /// 开放箭头样式
+    /// </summary>
     xlArrowHeadStyleOpen = 2
 }

@@ -16,12 +16,12 @@ public enum XlArrowHeadWidth
     /// 中等宽度箭头头部
     /// </summary>
     xlArrowHeadWidthMedium = -4138,
-    
+
     /// <summary>
     /// 窄箭头头部
     /// </summary>
     xlArrowHeadWidthNarrow = 1,
-    
+
     /// <summary>
     /// 宽箭头头部
     /// </summary>

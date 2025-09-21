@@ -51,6 +51,52 @@ public interface IExcelShape : IDisposable
     IExcelControlFormat? ControlFormat { get; }
 
     /// <summary>
+    /// 获取形状的柔化边缘格式设置属性
+    /// 对应 Office.Interop 中的 SoftEdgeFormat 对象
+    /// </summary>
+    IOfficeSoftEdgeFormat? SoftEdge { get; }
+
+    /// <summary>
+    /// 获取形状的发光格式设置属性
+    /// 对应 Office.Interop 中的 GlowFormat 对象
+    /// </summary>
+    IOfficeGlowFormat? Glow { get; }
+
+    /// <summary>
+    /// 获取形状的父级组合形状
+    /// 当前形状是组合形状的一部分时，返回其父级组合形状
+    /// </summary>
+    IExcelShape? ParentGroup { get; }
+
+    /// <summary>
+    /// 获取形状中的 SmartArt 对象
+    /// 当形状包含 SmartArt 图形时可用
+    /// </summary>
+    IOfficeSmartArt? SmartArt { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否包含图表
+    /// </summary>
+    bool HasChart { get; }
+
+    /// <summary>
+    /// 获取或设置形状样式
+    /// 对应 Office.Core 中的 MsoShapeStyleIndex 枚举值
+    /// </summary>
+    MsoShapeStyleIndex ShapeStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状背景样式
+    /// 对应 Office.Core 中的 MsoBackgroundStyleIndex 枚举值
+    /// </summary>
+    MsoBackgroundStyleIndex BackgroundStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状的标题
+    /// </summary>
+    string Title { get; set; }
+
+    /// <summary>
     /// 获取或设置形状的名称
     /// 对应 Shape.Name 属性
     /// </summary>
@@ -65,6 +111,7 @@ public interface IExcelShape : IDisposable
     /// <summary>
     /// 获取形状的ID
     /// 对应 Shape.ID 属性
+    /// </summary>
     int ID { get; }
 
     /// <summary>
@@ -329,7 +376,67 @@ public interface IExcelShape : IDisposable
     /// <param name="rotationIncrement">旋转角度增量（度）</param>
     void Rotate(float rotationIncrement);
 
+    /// <summary>
+    /// 设置形状的堆叠顺序（Z轴顺序）
+    /// 对应 Shape.ZOrder 方法
+    /// </summary>
+    /// <param name="orderCmd">Z轴顺序命令，指定如何重新排列对象的堆叠顺序</param>
     void ZOrder(MsoZOrderCmd orderCmd);
+
+    /// <summary>
+    /// 按指定增量调整形状的水平位置
+    /// 对应 Shape.IncrementLeft 方法
+    /// </summary>
+    /// <param name="Increment">水平位置增量，以磅为单位</param>
+    void IncrementLeft(float Increment);
+
+    /// <summary>
+    /// 按指定增量调整形状的垂直位置
+    /// 对应 Shape.IncrementTop 方法
+    /// </summary>
+    /// <param name="Increment">垂直位置增量，以磅为单位</param>
+    void IncrementTop(float Increment);
+
+    /// <summary>
+    /// 绕水平或垂直轴翻转形状
+    /// 对应 Shape.Flip 方法
+    /// </summary>
+    /// <param name="FlipCmd">翻转方向命令，指定是水平翻转还是垂直翻转</param>
+    void Flip(MsoFlipCmd FlipCmd);
+
+    /// <summary>
+    /// 重新路由任何连接符附加到该形状的连接点
+    /// 对应 Shape.RerouteConnections 方法
+    /// </summary>
+    void RerouteConnections();
+
+    /// <summary>
+    /// 裁剪画布的左侧
+    /// 对应 Shape.CanvasCropLeft 方法
+    /// </summary>
+    /// <param name="Increment">裁剪增量，以磅为单位</param>
+    void CanvasCropLeft(float Increment);
+
+    /// <summary>
+    /// 裁剪画布的顶部
+    /// 对应 Shape.CanvasCropTop 方法
+    /// </summary>
+    /// <param name="Increment">裁剪增量，以磅为单位</param>
+    void CanvasCropTop(float Increment);
+
+    /// <summary>
+    /// 裁剪画布的右侧
+    /// 对应 Shape.CanvasCropRight 方法
+    /// </summary>
+    /// <param name="Increment">裁剪增量，以磅为单位</param>
+    void CanvasCropRight(float Increment);
+
+    /// <summary>
+    /// 裁剪画布的底部
+    /// 对应 Shape.CanvasCropBottom 方法
+    /// </summary>
+    /// <param name="Increment">裁剪增量，以磅为单位</param>
+    void CanvasCropBottom(float Increment);
 
     /// <summary>
     /// 将形状置于最前面
@@ -370,19 +477,19 @@ public interface IExcelShape : IDisposable
     /// 获取形状所在的区域对象（如果适用）
     /// 对应 Shape.TopLeftCell 属性
     /// </summary>
-    IExcelRange TopLeftCell { get; }
+    IExcelRange? TopLeftCell { get; }
 
     /// <summary>
     /// 获取形状所在的区域对象（如果适用）
     /// 对应 Shape.BottomRightCell 属性
     /// </summary>
-    IExcelRange BottomRightCell { get; }
+    IExcelRange? BottomRightCell { get; }
 
     /// <summary>
     /// 获取形状所在的图表对象（如果是图表）
     /// 对应 Shape.Chart 属性
     /// </summary>
-    IExcelChart Chart { get; }
+    IExcelChart? Chart { get; }
 
     #endregion
 }

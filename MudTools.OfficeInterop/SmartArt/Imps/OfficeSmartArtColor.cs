@@ -53,8 +53,6 @@ internal class OfficeSmartArtColor : IOfficeSmartArtColor
             return null;
         }
     }
-
-
     #endregion
 
     #region IDisposable 实现
@@ -69,14 +67,7 @@ internal class OfficeSmartArtColor : IOfficeSmartArtColor
 
         if (disposing && _smartArtColor != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_smartArtColor);
-            }
-            catch
-            {
-                // 忽略释放异常
-            }
+            Marshal.ReleaseComObject(_smartArtColor);
             _smartArtColor = null;
         }
 

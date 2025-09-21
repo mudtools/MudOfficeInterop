@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using MudTools.OfficeInterop.Imps;
+
 namespace MudTools.OfficeInterop.Excel.Imps;
 
 /// <summary>
@@ -105,6 +107,56 @@ internal class ExcelShape : IExcelShape
     public IExcelLinkFormat? LinkFormat => _shape != null ? new ExcelLinkFormat(_shape.LinkFormat) : null;
 
     public IExcelControlFormat? ControlFormat => _shape != null ? new ExcelControlFormat(_shape.ControlFormat) : null;
+
+    public IExcelShape? ParentGroup => _shape != null ? new ExcelShape(_shape.ParentGroup) : null;
+
+    public IOfficeSoftEdgeFormat? SoftEdge => _shape != null ? new OfficeSoftEdgeFormat(_shape.SoftEdge) : null;
+
+    public IOfficeGlowFormat? Glow => _shape != null ? new OfficeGlowFormat(_shape.Glow) : null;
+
+    public IOfficeReflectionFormat? Reflection => _shape != null ? new OfficeReflectionFormat(_shape.Reflection) : null;
+
+    public IOfficeSmartArt? SmartArt => _shape != null ? new OfficeSmartArt(_shape.SmartArt) : null;
+
+    public bool HasChart
+    {
+        get => _shape != null ? _shape.HasChart.ConvertToBool() : false;
+    }
+
+    public bool HasSmartArt
+    {
+        get => _shape != null ? _shape.HasSmartArt.ConvertToBool() : false;
+    }
+
+    public string Title
+    {
+        get => _shape != null ? _shape.Title : string.Empty;
+        set
+        {
+            if (_shape != null)
+                _shape.Title = value;
+        }
+    }
+
+    public MsoShapeStyleIndex ShapeStyle
+    {
+        get => _shape != null ? _shape.ShapeStyle.EnumConvert(MsoShapeStyleIndex.msoShapeStyleMixed) : MsoShapeStyleIndex.msoShapeStyleMixed;
+        set
+        {
+            if (_shape != null)
+                _shape.ShapeStyle = value.EnumConvert(MsCore.MsoShapeStyleIndex.msoShapeStyleMixed);
+        }
+    }
+
+    public MsoBackgroundStyleIndex BackgroundStyle
+    {
+        get => _shape != null ? _shape.BackgroundStyle.EnumConvert(MsoBackgroundStyleIndex.msoBackgroundStyleMixed) : MsoBackgroundStyleIndex.msoBackgroundStyleMixed;
+        set
+        {
+            if (_shape != null)
+                _shape.BackgroundStyle = value.EnumConvert(MsCore.MsoBackgroundStyleIndex.msoBackgroundStyleMixed);
+        }
+    }
 
     /// <summary>
     /// 获取形状的类型
@@ -577,6 +629,48 @@ internal class ExcelShape : IExcelShape
         }
     }
 
+    public void IncrementLeft(float Increment)
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.IncrementLeft(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状左边距失败: {x.Message}");
+        }
+    }
+
+    public void IncrementTop(float Increment)
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.IncrementTop(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状顶边距失败: {x.Message}");
+        }
+    }
+
+    public void Flip(MsoFlipCmd FlipCmd)
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Flip(FlipCmd.EnumConvert(MsCore.MsoFlipCmd.msoFlipHorizontal));
+        }
+        catch (Exception x)
+        {
+            log.Error($"翻转形状失败: {x.Message}");
+        }
+    }
+
     /// <summary>
     /// 旋转形状
     /// </summary>
@@ -697,7 +791,75 @@ internal class ExcelShape : IExcelShape
         }
     }
 
+    public void RerouteConnections()
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.RerouteConnections();
+        }
+        catch (Exception x)
+        {
+            log.Error($"重新连接形状失败: {x.Message}");
+        }
+    }
 
+    public void CanvasCropLeft(float Increment)
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.CanvasCropLeft(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
+
+    public void CanvasCropTop(float Increment)
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.CanvasCropTop(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
+
+    public void CanvasCropRight(float Increment)
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.CanvasCropRight(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
+
+    public void CanvasCropBottom(float Increment)
+    {
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.CanvasCropBottom(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
     #endregion
 
     #region 层次结构
@@ -705,12 +867,21 @@ internal class ExcelShape : IExcelShape
     /// <summary>
     /// 左上角单元格缓存
     /// </summary>
-    private IExcelRange _topLeftCell;
+    private IExcelRange? _topLeftCell;
 
     /// <summary>
     /// 获取形状所在的区域对象（左上角）
     /// </summary>
-    public IExcelRange TopLeftCell => _topLeftCell ??= new ExcelRange(_shape?.TopLeftCell);
+    public IExcelRange? TopLeftCell
+    {
+        get
+        {
+            if (_shape == null)
+                return null;
+            _topLeftCell ??= new ExcelRange(_shape.TopLeftCell);
+            return _topLeftCell;
+        }
+    }
 
     /// <summary>
     /// 右下角单元格缓存
@@ -720,7 +891,16 @@ internal class ExcelShape : IExcelShape
     /// <summary>
     /// 获取形状所在的区域对象（右下角）
     /// </summary>
-    public IExcelRange BottomRightCell => _bottomRightCell ??= new ExcelRange(_shape?.BottomRightCell);
+    public IExcelRange? BottomRightCell
+    {
+        get
+        {
+            if (_shape == null)
+                return new ExcelRange();
+            _bottomRightCell ??= new ExcelRange(_shape.BottomRightCell);
+            return _bottomRightCell;
+        }
+    }
 
     /// <summary>
     /// 图表对象缓存
@@ -730,7 +910,16 @@ internal class ExcelShape : IExcelShape
     /// <summary>
     /// 获取形状所在的图表对象（如果是图表）
     /// </summary>
-    public IExcelChart Chart => _chart ??= new ExcelChart(_shape?.Chart);
+    public IExcelChart? Chart
+    {
+        get
+        {
+            if (_shape == null)
+                return null;
+            _chart ??= new ExcelChart(_shape.Chart);
+            return _chart;
+        }
+    }
 
     #endregion
 }

@@ -22,14 +22,14 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// </summary>
     /// <param name="index">形状的索引（从1开始）</param>
     /// <returns>指定索引处的形状</returns>
-    IOfficeShape this[int index] { get; }
+    IOfficeShape? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取形状
     /// </summary>
     /// <param name="name">形状的名称</param>
     /// <returns>具有指定名称的形状</returns>
-    IOfficeShape this[string name] { get; }
+    IOfficeShape? this[string name] { get; }
 
     /// <summary>
     /// 向集合中添加新形状
@@ -63,11 +63,6 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// </summary>
     /// <param name="name">形状名称</param>
     /// <returns>选定的形状</returns>
-    IOfficeShape SelectByName(string name);
+    IOfficeShape? SelectByName(string name);
 
-    /// <summary>
-    /// 获取集合中所有形状的范围
-    /// </summary>
-    /// <returns>形状范围</returns>
-    IEnumerable<IOfficeShape> GetRange();
 }

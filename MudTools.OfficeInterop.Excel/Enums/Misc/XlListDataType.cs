@@ -16,62 +16,62 @@ public enum XlListDataType
     /// 无特定数据类型
     /// </summary>
     xlListDataTypeNone,
-    
+
     /// <summary>
     /// 文本数据类型
     /// </summary>
     xlListDataTypeText,
-    
+
     /// <summary>
     /// 多行文本数据类型
     /// </summary>
     xlListDataTypeMultiLineText,
-    
+
     /// <summary>
     /// 数字数据类型
     /// </summary>
     xlListDataTypeNumber,
-    
+
     /// <summary>
     /// 货币数据类型
     /// </summary>
     xlListDataTypeCurrency,
-    
+
     /// <summary>
     /// 日期时间数据类型
     /// </summary>
     xlListDataTypeDateTime,
-    
+
     /// <summary>
     /// 选择数据类型（单选）
     /// </summary>
     xlListDataTypeChoice,
-    
+
     /// <summary>
     /// 选择数据类型（多选）
     /// </summary>
     xlListDataTypeChoiceMulti,
-    
+
     /// <summary>
     /// 列表查找数据类型
     /// </summary>
     xlListDataTypeListLookup,
-    
+
     /// <summary>
     /// 复选框数据类型
     /// </summary>
     xlListDataTypeCheckbox,
-    
+
     /// <summary>
     /// 超链接数据类型
     /// </summary>
     xlListDataTypeHyperLink,
-    
+
     /// <summary>
     /// 计数器数据类型
     /// </summary>
     xlListDataTypeCounter,
-    
+
     /// <summary>
     /// 多行富文本数据类型
     /// </summary>

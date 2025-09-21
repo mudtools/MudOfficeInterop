@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
+
 namespace MudTools.OfficeInterop.Imps;
 /// <summary>
 /// 对 Microsoft.Office.Core.Shape 的二次封装实现类。
@@ -12,7 +14,8 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeShape : IOfficeShape
 {
-    internal MsCore.Shape _shape;
+    private static readonly ILog log = LogManager.GetLogger(typeof(OfficeShape));
+    internal MsCore.Shape? _shape;
     private bool _disposedValue;
 
     /// <summary>
@@ -42,7 +45,7 @@ internal class OfficeShape : IOfficeShape
     }
 
     /// <inheritdoc/>
-    public MsoShapeType Type => _shape?.Type != null ? (MsoShapeType)(int)_shape?.Type : MsoShapeType.msoAutoShape;
+    public MsoShapeType Type => _shape?.Type != null ? _shape.Type.EnumConvert(MsoShapeType.msoAutoShape) : MsoShapeType.msoAutoShape;
 
     /// <inheritdoc/>
     public string Title => _shape?.Title ?? string.Empty;
@@ -61,11 +64,11 @@ internal class OfficeShape : IOfficeShape
     /// <inheritdoc/>
     public bool Visible
     {
-        get => _shape?.Visible == MsCore.MsoTriState.msoTrue;
+        get => _shape != null ? _shape.Visible.ConvertToBool() : false;
         set
         {
             if (_shape != null)
-                _shape.Visible = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
+                _shape.Visible = value.ConvertTriState();
         }
     }
 
@@ -123,51 +126,110 @@ internal class OfficeShape : IOfficeShape
     /// <inheritdoc/>
     public void Delete()
     {
-        _shape?.Delete();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape?.Delete();
+        }
+        catch (Exception x)
+        {
+            log.Error($"删除形状失败: {x.Message}");
+        }
     }
 
     /// <inheritdoc/>
     public void ZOrder(MsoZOrderCmd ZOrderCmd)
     {
-        _shape?.ZOrder((MsCore.MsoZOrderCmd)(int)ZOrderCmd);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.ZOrder(ZOrderCmd.EnumConvert(MsCore.MsoZOrderCmd.msoSendToBack));
+        }
+        catch (Exception x)
+        {
+            log.Error($"形状Z轴顺序操作失败: {x.Message}");
+        }
     }
 
     /// <inheritdoc/>
     public void Apply()
     {
-        _shape?.Apply();
+        if (_shape == null)
+            return;
+
+        try
+        {
+            _shape.Apply();
+        }
+        catch (Exception x)
+        {
+            log.Error($"应用自动调整选项失败: {x.Message}");
+        }
     }
 
     /// <inheritdoc/>
     public void Resize(float width, float height)
     {
-        if (_shape != null)
+        if (_shape == null)
+            return;
+        try
         {
             _shape.Width = width;
             _shape.Height = height;
+        }
+        catch (Exception x)
+        {
+            log.Error($"形状调整大小失败: {x.Message}");
         }
     }
 
     /// <inheritdoc/>
     public void Copy()
     {
-        _shape?.Copy();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Copy();
+        }
+        catch (Exception x)
+        {
+            log.Error($"复制形状失败: {x.Message}");
+        }
     }
 
     /// <inheritdoc/>
     public void Cut()
     {
-        _shape?.Cut();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Cut();
+        }
+        catch (Exception x)
+        {
+            log.Error($"剪切形状失败: {x.Message}");
+        }
     }
 
     /// <inheritdoc/>
-    public IOfficeShape Duplicate()
+    public IOfficeShape? Duplicate()
     {
         if (_shape == null)
             return null;
-
-        var duplicatedShape = _shape.Duplicate();
-        return duplicatedShape != null ? new OfficeShape(duplicatedShape) : null;
+        try
+        {
+            var duplicatedShape = _shape.Duplicate();
+            return duplicatedShape != null ? new OfficeShape(duplicatedShape) : null;
+        }
+        catch (Exception x)
+        {
+            log.Error($"复制形状失败: {x.Message}");
+            return null;
+        }
     }
 
     #endregion
@@ -197,6 +259,5 @@ internal class OfficeShape : IOfficeShape
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
     #endregion
 }

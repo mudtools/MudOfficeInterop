@@ -16,12 +16,12 @@ public enum XlBackground
     /// 自动背景设置
     /// </summary>
     xlBackgroundAutomatic = -4105,
-    
+
     /// <summary>
     /// 不透明背景
     /// </summary>
     xlBackgroundOpaque = 3,
-    
+
     /// <summary>
     /// 透明背景
     /// </summary>

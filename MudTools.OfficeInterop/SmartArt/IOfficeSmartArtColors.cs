@@ -23,14 +23,14 @@ public interface IOfficeSmartArtColors : IEnumerable<IOfficeSmartArtColor>, IDis
     /// </summary>
     /// <param name="index">SmartArt 颜色方案索引。</param>
     /// <returns>SmartArt 颜色方案对象。</returns>
-    IOfficeSmartArtColor this[int index] { get; }
+    IOfficeSmartArtColor? this[int index] { get; }
 
     /// <summary>
     /// 通过 ID 获取 SmartArt 颜色方案。
     /// </summary>
     /// <param name="id">SmartArt 颜色方案 ID。</param>
     /// <returns>SmartArt 颜色方案对象。</returns>
-    IOfficeSmartArtColor this[string id] { get; }
+    IOfficeSmartArtColor? this[string id] { get; }
 
     /// <summary>
     /// 获取 SmartArt 颜色方案集合的父对象。
@@ -42,5 +42,5 @@ public interface IOfficeSmartArtColors : IEnumerable<IOfficeSmartArtColor>, IDis
     /// </summary>
     /// <param name="colorName">颜色方案名称。</param>
     /// <returns>SmartArt 颜色方案对象。</returns>
-    IOfficeSmartArtColor FindByName(string colorName);
+    IOfficeSmartArtColor? FindByName(string colorName);
 }

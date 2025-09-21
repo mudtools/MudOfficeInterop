@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
+
 namespace MudTools.OfficeInterop.Imps;
 
 /// <summary>
@@ -13,6 +15,8 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeShapes : IOfficeShapes
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(OfficeShapes));
+
     private MsCore.Shapes _shapes;
     private bool _disposedValue;
 
@@ -32,7 +36,7 @@ internal class OfficeShapes : IOfficeShapes
     public int Count => _shapes?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IOfficeShape this[int index]
+    public IOfficeShape? this[int index]
     {
         get
         {
@@ -44,16 +48,16 @@ internal class OfficeShapes : IOfficeShapes
                 var shape = _shapes.Item(index);
                 return shape != null ? new OfficeShape(shape) : null;
             }
-            catch (ArgumentException)
+            catch (Exception e)
             {
-                // 索引超出范围时返回null
+                log.Error($"获取形状失败：{e.Message}");
                 return null;
             }
         }
     }
 
     /// <inheritdoc/>
-    public IOfficeShape this[string name]
+    public IOfficeShape? this[string name]
     {
         get
         {
@@ -65,9 +69,9 @@ internal class OfficeShapes : IOfficeShapes
                 var shape = _shapes.Item(name);
                 return shape != null ? new OfficeShape(shape) : null;
             }
-            catch (ArgumentException)
+            catch (Exception e)
             {
-                // 名称不存在时返回null
+                log.Error($"获取形状失败：{e.Message}");
                 return null;
             }
         }
@@ -83,8 +87,16 @@ internal class OfficeShapes : IOfficeShapes
         if (_shapes == null)
             return null;
 
-        var shape = _shapes.AddShape((MsCore.MsoAutoShapeType)(int)type, left, top, width, height);
-        return shape != null ? new OfficeShape(shape) : null;
+        try
+        {
+            var shape = _shapes.AddShape(type.EnumConvert(MsCore.MsoAutoShapeType.msoShapeRectangle), left, top, width, height);
+            return shape != null ? new OfficeShape(shape) : null;
+        }
+        catch (Exception e)
+        {
+            log.Error($"添加形状失败：{e.Message}");
+            return null;
+        }
     }
 
     /// <inheritdoc/>
@@ -93,8 +105,16 @@ internal class OfficeShapes : IOfficeShapes
         if (_shapes == null)
             return null;
 
-        var textbox = _shapes.AddTextbox((MsCore.MsoTextOrientation)(int)orientation, left, top, width, height);
-        return textbox != null ? new OfficeShape(textbox) : null;
+        try
+        {
+            var shape = _shapes.AddTextbox(orientation.EnumConvert(MsCore.MsoTextOrientation.msoTextOrientationMixed), left, top, width, height);
+            return shape != null ? new OfficeShape(shape) : null;
+        }
+        catch (Exception e)
+        {
+            log.Error($"添加文本框形状失败：{e.Message}");
+            return null;
+        }
     }
 
     /// <inheritdoc/>
@@ -110,15 +130,15 @@ internal class OfficeShapes : IOfficeShapes
             {
                 _shapes.Item(i).Delete();
             }
-            catch
+            catch (Exception e)
             {
-                // 忽略删除过程中可能出现的异常
+                log.Error($"删除形状失败：{e.Message}");
             }
         }
     }
 
     /// <inheritdoc/>
-    public IOfficeShape SelectByName(string name)
+    public IOfficeShape? SelectByName(string name)
     {
         if (_shapes == null || string.IsNullOrWhiteSpace(name))
             return null;
@@ -128,26 +148,12 @@ internal class OfficeShapes : IOfficeShapes
             _shapes.Item(name).Select();
             return this[name];
         }
-        catch
+        catch (Exception e)
         {
+            log.Error($"选择形状失败：{e.Message}");
             return null;
         }
     }
-
-    /// <inheritdoc/>
-    public IEnumerable<IOfficeShape> GetRange()
-    {
-        if (_shapes == null)
-            yield break;
-
-        for (int i = 1; i <= Count; i++)
-        {
-            var shape = _shapes.Item(i);
-            if (shape != null)
-                yield return new OfficeShape(shape);
-        }
-    }
-
     #endregion
 
     #region IEnumerable<IOfficeShape> 实现
@@ -199,6 +205,5 @@ internal class OfficeShapes : IOfficeShapes
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
     #endregion
 }

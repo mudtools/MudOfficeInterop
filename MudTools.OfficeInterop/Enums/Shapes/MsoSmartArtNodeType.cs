@@ -5,35 +5,19 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop.Excel;
+namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 刻度标签位置枚举
-/// 用于指定图表坐标轴上刻度标签的位置
+/// 指定SmartArt节点类型
 /// </summary>
-public enum XlTickLabelPosition
+public enum MsoSmartArtNodeType
 {
     /// <summary>
-    /// 高位置
-    /// 刻度标签显示在坐标轴的上方或右侧
+    /// 默认节点类型
     /// </summary>
-    xlTickLabelPositionHigh = -4127,
-
+    msoSmartArtNodeTypeDefault = 1,
     /// <summary>
-    /// 低位置
-    /// 刻度标签显示在坐标轴的下方或左侧
+    /// 助理节点类型
     /// </summary>
-    xlTickLabelPositionLow = -4134,
-
-    /// <summary>
-    /// 紧邻坐标轴
-    /// 刻度标签紧邻坐标轴显示
-    /// </summary>
-    xlTickLabelPositionNextToAxis = 4,
-
-    /// <summary>
-    /// 无标签
-    /// 不显示刻度标签
-    /// </summary>
-    xlTickLabelPositionNone = -4142
+    msoSmartArtNodeTypeAssistant
 }

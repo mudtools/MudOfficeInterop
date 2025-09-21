@@ -34,7 +34,7 @@ internal class OfficeSmartArtColors : IOfficeSmartArtColors
     public int Count => _smartArtColors?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IOfficeSmartArtColor this[int index]
+    public IOfficeSmartArtColor? this[int index]
     {
         get
         {
@@ -55,7 +55,7 @@ internal class OfficeSmartArtColors : IOfficeSmartArtColors
     }
 
     /// <inheritdoc/>
-    public IOfficeSmartArtColor this[string id]
+    public IOfficeSmartArtColor? this[string id]
     {
         get
         {
@@ -83,7 +83,7 @@ internal class OfficeSmartArtColors : IOfficeSmartArtColors
     #region 方法实现
 
     /// <inheritdoc/>
-    public IOfficeSmartArtColor FindByName(string colorName)
+    public IOfficeSmartArtColor? FindByName(string colorName)
     {
         if (_smartArtColors == null || string.IsNullOrEmpty(colorName))
             return null;
@@ -146,14 +146,7 @@ internal class OfficeSmartArtColors : IOfficeSmartArtColors
 
         if (disposing && _smartArtColors != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_smartArtColors);
-            }
-            catch
-            {
-                // 忽略释放异常
-            }
+            Marshal.ReleaseComObject(_smartArtColors);
             _smartArtColors = null;
         }
 
