@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -11,6 +11,24 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelGroupShapes : IExcelGroupShapes
 {
+
+    #region 构造函数与私有字段
+
+    private MsExcel.GroupShapes _groupShapes;
+    private bool _disposedValue;
+
+    /// <summary>
+    /// 初始化 ExcelGroupShapes 实例
+    /// </summary>
+    /// <param name="groupShapes">原始 COM GroupShapes 对象</param>
+    internal ExcelGroupShapes(MsExcel.GroupShapes groupShapes)
+    {
+        _groupShapes = groupShapes ?? throw new ArgumentNullException(nameof(groupShapes));
+        _disposedValue = false;
+    }
+
+    #endregion
+
     #region 属性封装
 
     /// <summary>
@@ -50,22 +68,6 @@ internal class ExcelGroupShapes : IExcelGroupShapes
 
     #endregion
 
-    #region 构造函数与私有字段
-
-    private MsExcel.GroupShapes _groupShapes;
-    private bool _disposedValue;
-
-    /// <summary>
-    /// 初始化 ExcelGroupShapes 实例
-    /// </summary>
-    /// <param name="groupShapes">原始 COM GroupShapes 对象</param>
-    internal ExcelGroupShapes(MsExcel.GroupShapes groupShapes)
-    {
-        _groupShapes = groupShapes ?? throw new ArgumentNullException(nameof(groupShapes));
-        _disposedValue = false;
-    }
-
-    #endregion
 
     #region IDisposable 模式实现
 
@@ -79,14 +81,7 @@ internal class ExcelGroupShapes : IExcelGroupShapes
 
         if (disposing && _groupShapes != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_groupShapes) > 0) { }
-            }
-            catch
-            {
-                // 忽略释放 COM 对象时的异常
-            }
+            Marshal.ReleaseComObject(_groupShapes);
             _groupShapes = null;
         }
 

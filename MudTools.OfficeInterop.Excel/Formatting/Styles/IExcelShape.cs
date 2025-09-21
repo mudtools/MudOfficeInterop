@@ -71,7 +71,7 @@ public interface IExcelShape : IDisposable
     /// 获取形状的父对象
     /// 对应 Shape.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置形状的定位方式
@@ -177,7 +177,7 @@ public interface IExcelShape : IDisposable
     /// 获取形状的标注线格式设置属性
     /// 对应 Shape.Callout 属性，用于控制标注线的类型、角度、长度等属性
     /// </summary>
-    IExcelCalloutFormat Callout { get; }
+    IExcelCalloutFormat? Callout { get; }
 
     /// <summary>
     /// 获取形状的图片格式设置属性
@@ -295,7 +295,7 @@ public interface IExcelShape : IDisposable
     /// <param name="Factor"></param>
     /// <param name="RelativeToOriginalSize">是否相对于原始大小</param>
     /// <param name="Scale">缩放比例</param>
-    void ScaleHeight(float Factor, bool RelativeToOriginalSize, double Scale);
+    void ScaleHeight(float Factor, bool RelativeToOriginalSize, float Scale);
 
     /// <summary>
     /// 宽度缩放
@@ -303,7 +303,7 @@ public interface IExcelShape : IDisposable
     /// <param name="Factor"></param>
     /// <param name="RelativeToOriginalSize">是否相对于原始大小</param>
     /// <param name="Scale">缩放比例</param>
-    void ScaleWidth(float Factor, bool RelativeToOriginalSize, double Scale);
+    void ScaleWidth(float Factor, bool RelativeToOriginalSize, float Scale);
 
     /// <summary>
     /// 调整形状大小
@@ -312,7 +312,7 @@ public interface IExcelShape : IDisposable
     /// <param name="widthScale">宽度缩放比例</param>
     /// <param name="heightScale">高度缩放比例</param>
     /// <param name="relativeToOriginalSize">是否相对于原始大小</param>
-    void Scale(double widthScale, double heightScale, bool relativeToOriginalSize = false);
+    void Scale(float widthScale, float heightScale, bool relativeToOriginalSize = false);
 
     /// <summary>
     /// 移动形状
@@ -320,14 +320,14 @@ public interface IExcelShape : IDisposable
     /// </summary>
     /// <param name="leftIncrement">左边距增量</param>
     /// <param name="topIncrement">顶边距增量</param>
-    void Move(double leftIncrement, double topIncrement);
+    void Move(float leftIncrement, float topIncrement);
 
     /// <summary>
     /// 旋转形状
     /// 对应 Shape.IncrementRotation 方法
     /// </summary>
     /// <param name="rotationIncrement">旋转角度增量（度）</param>
-    void Rotate(double rotationIncrement);
+    void Rotate(float rotationIncrement);
 
     void ZOrder(MsoZOrderCmd orderCmd);
 
@@ -348,7 +348,7 @@ public interface IExcelShape : IDisposable
     /// 对应 Shape.Ungroup 方法
     /// </summary>
     /// <returns>取消组合后的形状集合</returns>
-    IExcelShapeRange Ungroup();
+    IExcelShapeRange? Ungroup();
 
     /// <summary>
     /// 应用自动调整选项

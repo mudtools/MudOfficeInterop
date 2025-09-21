@@ -106,32 +106,175 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     /// 获取形状区域的填充格式对象
     /// 对应 ShapeRange.Fill 属性
     /// </summary>
-    IExcelFillFormat Fill { get; }
+    IExcelFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取形状区域的线条格式对象
     /// 对应 ShapeRange.Line 属性
     /// </summary>
-    IExcelLineFormat Line { get; }
+    IExcelLineFormat? Line { get; }
 
     /// <summary>
     /// 获取形状区域的文本框架对象
     /// 对应 ShapeRange.TextFrame 属性
     /// </summary>
-    IExcelTextFrame TextFrame { get; }
+    IExcelTextFrame? TextFrame { get; }
 
     /// <summary>
     /// 获取形状区域的阴影格式对象
     /// 对应 ShapeRange.Shadow 属性
     /// </summary>
-    IExcelShadowFormat Shadow { get; }
+    IExcelShadowFormat? Shadow { get; }
 
     /// <summary>
     /// 获取形状区域的三维格式对象
     /// 对应 ShapeRange.ThreeD 属性
     /// </summary>
-    IExcelThreeDFormat ThreeD { get; }
+    IExcelThreeDFormat? ThreeD { get; }
 
+    /// <summary>
+    /// 获取形状区域的文本特效格式对象
+    /// 对应 ShapeRange.TextEffect 属性
+    /// </summary>
+    IExcelTextEffectFormat TextEffect { get; }
+
+    /// <summary>
+    /// 获取形状区域的调整设置对象
+    /// 对应 ShapeRange.Adjustments 属性
+    /// </summary>
+    IExcelAdjustments? Adjustments { get; }
+
+    /// <summary>
+    /// 获取形状区域的标注线格式对象
+    /// 对应 ShapeRange.Callout 属性
+    /// </summary>
+    IExcelCalloutFormat? Callout { get; }
+
+    /// <summary>
+    /// 获取形状区域的连接线格式对象
+    /// 对应 ShapeRange.ConnectorFormat 属性
+    /// </summary>
+    IExcelConnectorFormat? ConnectorFormat { get; }
+
+    /// <summary>
+    /// 获取形状区域的图片格式对象
+    /// 对应 ShapeRange.PictureFormat 属性
+    /// </summary>
+    IExcelPictureFormat? PictureFormat { get; }
+
+    /// <summary>
+    /// 获取形状区域的柔边格式对象
+    /// 对应 ShapeRange.SoftEdge 属性
+    /// </summary>
+    IOfficeSoftEdgeFormat? SoftEdge { get; }
+
+    /// <summary>
+    /// 获取形状区域的发光格式对象
+    /// 对应 ShapeRange.Glow 属性
+    /// </summary>
+    IOfficeGlowFormat? Glow { get; }
+
+    /// <summary>
+    /// 获取形状区域的倒影格式对象
+    /// 对应 ShapeRange.Reflection 属性
+    /// </summary>
+    IOfficeReflectionFormat Reflection { get; }
+
+    /// <summary>
+    /// 获取组合形状中的单个形状对象集合
+    /// 对应 ShapeRange.GroupItems 属性
+    /// </summary>
+    IExcelGroupShapes? GroupItems { get; }
+
+    /// <summary>
+    /// 获取形状区域的节点对象集合
+    /// 对应 ShapeRange.Nodes 属性
+    /// </summary>
+    IExcelShapeNodes? Nodes { get; }
+
+    /// <summary>
+    /// 获取形状区域的父组合形状对象
+    /// 对应 ShapeRange.ParentGroup 属性
+    /// </summary>
+    IExcelShape? ParentGroup { get; }
+
+    /// <summary>
+    /// 获取或设置自动形状类型
+    /// 对应 ShapeRange.AutoShapeType 属性
+    /// </summary>
+    MsoAutoShapeType AutoShapeType { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状区域的标题
+    /// 对应 ShapeRange.Title 属性
+    /// </summary>
+    string Title { get; set; }
+
+    /// <summary>
+    /// 获取形状类型
+    /// 对应 ShapeRange.Type 属性
+    /// </summary>
+    MsoShapeType Type { get; }
+
+    /// <summary>
+    /// 获取或设置形状的黑白显示模式
+    /// 对应 ShapeRange.BlackWhiteMode 属性
+    /// </summary>
+    MsoBlackWhiteMode BlackWhiteMode { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状样式
+    /// 对应 ShapeRange.ShapeStyle 属性
+    /// </summary>
+    MsoShapeStyleIndex ShapeStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状背景样式
+    /// 对应 ShapeRange.BackgroundStyle 属性
+    /// </summary>
+    MsoBackgroundStyleIndex BackgroundStyle { get; set; }
+
+    /// <summary>
+    /// 获取连接点数量
+    /// 对应 ShapeRange.ConnectionSiteCount 属性
+    /// </summary>
+    int ConnectionSiteCount { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否为连接符
+    /// 对应 ShapeRange.Connector 属性
+    /// </summary>
+    bool Connector { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否包含图表
+    /// 对应 ShapeRange.HasChart 属性
+    /// </summary>
+    bool HasChart { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否水平翻转
+    /// 对应 ShapeRange.HorizontalFlip 属性
+    /// </summary>
+    bool HorizontalFlip { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否垂直翻转
+    /// 对应 ShapeRange.VerticalFlip 属性
+    /// </summary>
+    bool VerticalFlip { get; }
+
+    /// <summary>
+    /// 获取或设置是否锁定形状的纵横比
+    /// 对应 ShapeRange.LockAspectRatio 属性
+    /// </summary>
+    bool LockAspectRatio { get; set; }
+
+    /// <summary>
+    /// 获取形状在 Z 轴上的位置
+    /// 对应 ShapeRange.ZOrderPosition 属性
+    /// </summary>
+    int ZOrderPosition { get; }
     #endregion
 
     #region 文本属性
@@ -194,7 +337,7 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     /// <param name="x2">终点X坐标</param>
     /// <param name="y2">终点Y坐标</param>
     /// <returns>新创建的线条对象</returns>
-    IExcelShape AddLine(double x1, double y1, double x2, double y2);
+    IExcelShape? AddLine(double x1, double y1, double x2, double y2);
 
     /// <summary>
     /// 向形状区域添加图片
@@ -207,7 +350,7 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的图片对象</returns>
-    IExcelShape AddPicture(string filename, bool linkToFile, bool saveWithDocument,
+    IExcelShape? AddPicture(string filename, bool linkToFile, bool saveWithDocument,
                           double left, double top, double width, double height);
 
     #endregion
@@ -314,6 +457,82 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     void Align(MsoAlignCmd alignment, bool relativeTo = false);
 
     /// <summary>
+    /// 将形状区域中所有形状设置为默认属性
+    /// </summary>
+    void SetShapesDefaultProperties();
+
+    /// <summary>
+    /// 翻转形状区域中的形状
+    /// </summary>
+    /// <param name="FlipCmd">翻转方向，水平或垂直</param>
+    void Flip(MsoFlipCmd FlipCmd);
+
+    /// <summary>
+    /// 复制形状区域中的所有形状
+    /// </summary>
+    /// <returns>复制后的形状区域对象</returns>
+    IExcelShapeRange? Duplicate();
+
+    /// <summary>
+    /// 增量调整形状区域的水平位置
+    /// </summary>
+    /// <param name="Increment">水平位置增量</param>
+    void IncrementLeft(float Increment);
+
+    /// <summary>
+    /// 增量调整形状区域的垂直位置
+    /// </summary>
+    /// <param name="Increment">垂直位置增量</param>
+    void IncrementTop(float Increment);
+
+    /// <summary>
+    /// 增量调整形状区域的旋转角度
+    /// </summary>
+    /// <param name="Increment">旋转角度增量</param>
+    void IncrementRotation(float Increment);
+
+    /// <summary>
+    /// 重新路由连接线
+    /// </summary>
+    void RerouteConnections();
+
+    /// <summary>
+    /// 重新组合形状区域中的形状
+    /// </summary>
+    /// <returns>重新组合后的形状对象</returns>
+    IExcelShape? Regroup();
+
+    /// <summary>
+    /// 设置形状区域中形状的堆叠顺序（Z轴顺序）
+    /// </summary>
+    /// <param name="ZOrderCmd">Z轴顺序命令</param>
+    void ZOrder(MsoZOrderCmd ZOrderCmd);
+
+    /// <summary>
+    /// 从左侧裁剪画布
+    /// </summary>
+    /// <param name="Increment">裁剪增量</param>
+    void CanvasCropLeft(float Increment);
+
+    /// <summary>
+    /// 从顶部裁剪画布
+    /// </summary>
+    /// <param name="Increment">裁剪增量</param>
+    void CanvasCropTop(float Increment);
+
+    /// <summary>
+    /// 从右侧裁剪画布
+    /// </summary>
+    /// <param name="Increment">裁剪增量</param>
+    void CanvasCropRight(float Increment);
+
+    /// <summary>
+    /// 从底部裁剪画布
+    /// </summary>
+    /// <param name="Increment">裁剪增量</param>
+    void CanvasCropBottom(float Increment);
+
+    /// <summary>
     /// 分布形状区域中的形状
     /// </summary>
     /// <param name="distribution">分布方式</param>
@@ -334,14 +553,14 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     /// 对应 ShapeRange.Group 方法
     /// </summary>
     /// <returns>组合后的形状对象</returns>
-    IExcelShape Group();
+    IExcelShape? Group();
 
     /// <summary>
     /// 取消组合形状区域中的组合形状
     /// 对应 ShapeRange.Ungroup 方法
     /// </summary>
     /// <returns>取消组合后的形状区域</returns>
-    IExcelShapeRange Ungroup();
+    IExcelShapeRange? Ungroup();
 
     /// <summary>
     /// 获取形状区域中的所有子形状
@@ -411,6 +630,6 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     /// 获取形状区域所在的图表对象（如果是图表）
     /// 对应 ShapeRange.Chart 属性
     /// </summary>
-    IExcelChart Chart { get; }
+    IExcelChart? Chart { get; }
     #endregion   
 }

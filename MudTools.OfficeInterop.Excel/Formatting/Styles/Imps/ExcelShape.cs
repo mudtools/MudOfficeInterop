@@ -13,6 +13,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelShape : IExcelShape
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelShape));
     /// <summary>
     /// 底层的 COM Shape 对象
     /// </summary>
@@ -132,12 +133,16 @@ internal class ExcelShape : IExcelShape
 
     public bool LockAspectRatio
     {
-        get => _shape.LockAspectRatio.ConvertToBool();
-        set => _shape.LockAspectRatio = value ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse;
+        get => _shape != null ? _shape.LockAspectRatio.ConvertToBool() : false;
+        set
+        {
+            if (_shape != null)
+                _shape.LockAspectRatio = value.ConvertTriState();
+        }
     }
     public bool HorizontalFlip
     {
-        get => _shape.HorizontalFlip.ConvertToBool();
+        get => _shape != null ? _shape.HorizontalFlip.ConvertToBool() : false;
     }
 
     public IExcelCalloutFormat? Callout
@@ -168,7 +173,7 @@ internal class ExcelShape : IExcelShape
     /// <summary>
     /// 获取形状的父对象
     /// </summary>
-    public object Parent => _shape?.Parent;
+    public object? Parent => _shape?.Parent;
 
     public XlPlacement Placement
     {
@@ -414,7 +419,16 @@ internal class ExcelShape : IExcelShape
     /// <param name="replace">true表示替换当前选择，false表示添加到当前选择</param>
     public void Select(bool replace = true)
     {
-        _shape?.Select(replace);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Select(replace);
+        }
+        catch (Exception x)
+        {
+            log.Error($"选择形状失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -422,14 +436,33 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public void Copy()
     {
-        _shape?.Copy();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Copy();
+        }
+        catch (Exception x)
+        {
+            log.Error($"复制形状失败: {x.Message}");
+        }
     }
+
 
     public void CopyPicture(XlPictureAppearance? Appearance, XlCopyPictureFormat? Format)
     {
-        _shape?.CopyPicture(
-            Appearance.ComArgsConvert(d => d.EnumConvert(XlPictureAppearance.xlScreen)),
-            Format.ComArgsConvert(d => d.EnumConvert(XlCopyPictureFormat.xlBitmap)));
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.CopyPicture(
+                Appearance.HasValue ? Appearance.Value.EnumConvert(MsExcel.XlPictureAppearance.xlScreen) : MsExcel.XlPictureAppearance.xlScreen,
+                Format.HasValue ? Format.Value.EnumConvert(MsExcel.XlCopyPictureFormat.xlPicture) : MsExcel.XlCopyPictureFormat.xlPicture);
+        }
+        catch (Exception x)
+        {
+            log.Error($"复制图片操作失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -437,7 +470,16 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public void Cut()
     {
-        _shape?.Cut();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Cut();
+        }
+        catch (Exception x)
+        {
+            log.Error($"剪切形状失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -445,17 +487,48 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public void Delete()
     {
-        _shape?.Delete();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Delete();
+        }
+        catch (Exception x)
+        {
+            log.Error($"删除形状失败: {x.Message}");
+        }
     }
 
-    public void ScaleHeight(float Factor, bool RelativeToOriginalSize, double Scale)
+    public void ScaleHeight(float Factor, bool RelativeToOriginalSize, float Scale)
     {
-        _shape?.ScaleHeight(Factor, RelativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse, Scale);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.ScaleHeight(Factor,
+                RelativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
+                Scale);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状高度失败: {x.Message}");
+        }
     }
 
-    public void ScaleWidth(float Factor, bool RelativeToOriginalSize, double Scale)
+    public void ScaleWidth(float Factor, bool RelativeToOriginalSize, float Scale)
     {
-        _shape?.ScaleWidth(Factor, RelativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse, Scale);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.ScaleWidth(Factor,
+            RelativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
+            Scale);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状宽度失败: {x.Message}");
+        }
     }
 
 
@@ -465,16 +538,22 @@ internal class ExcelShape : IExcelShape
     /// <param name="widthScale">宽度缩放比例</param>
     /// <param name="heightScale">高度缩放比例</param>
     /// <param name="relativeToOriginalSize">是否相对于原始大小</param>
-    public void Scale(double widthScale, double heightScale, bool relativeToOriginalSize = false)
+    public void Scale(float widthScale, float heightScale, bool relativeToOriginalSize = false)
     {
-        if (_shape != null)
+        if (_shape == null)
+            return;
+        try
         {
-            _shape.ScaleWidth((float)widthScale,
+            _shape.ScaleWidth(widthScale,
+                 relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
+                 MsExcel.XlScaleType.xlScaleLinear);
+            _shape.ScaleHeight(heightScale,
                 relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
                 MsExcel.XlScaleType.xlScaleLinear);
-            _shape.ScaleHeight((float)heightScale,
-                relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
-                MsExcel.XlScaleType.xlScaleLinear);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状大小失败: {x.Message}");
         }
     }
 
@@ -483,24 +562,51 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     /// <param name="leftIncrement">左边距增量</param>
     /// <param name="topIncrement">顶边距增量</param>
-    public void Move(double leftIncrement, double topIncrement)
+    public void Move(float leftIncrement, float topIncrement)
     {
-        _shape?.IncrementLeft((float)leftIncrement);
-        _shape?.IncrementTop((float)topIncrement);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape?.IncrementLeft(leftIncrement);
+            _shape?.IncrementTop(topIncrement);
+        }
+        catch (Exception x)
+        {
+            log.Error($"移动形状失败: {x.Message}");
+        }
     }
 
     /// <summary>
     /// 旋转形状
     /// </summary>
     /// <param name="rotationIncrement">旋转角度增量（度）</param>
-    public void Rotate(double rotationIncrement)
+    public void Rotate(float rotationIncrement)
     {
-        _shape?.IncrementRotation((float)rotationIncrement);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.IncrementRotation(rotationIncrement);
+        }
+        catch (Exception x)
+        {
+            log.Error($"旋转形状失败: {x.Message}");
+        }
     }
 
     public void ZOrder(MsoZOrderCmd orderCmd)
     {
-        _shape?.ZOrder(orderCmd.EnumConvert(MsCore.MsoZOrderCmd.msoBringToFront));
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.ZOrder(orderCmd.EnumConvert(MsCore.MsoZOrderCmd.msoSendToBack));
+        }
+        catch (Exception x)
+        {
+            log.Error($"形状Z轴顺序操作失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -508,7 +614,16 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public void BringToFront()
     {
-        _shape?.ZOrder(MsCore.MsoZOrderCmd.msoBringToFront);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape?.ZOrder(MsCore.MsoZOrderCmd.msoBringToFront);
+        }
+        catch (Exception x)
+        {
+            log.Error($"将形状置于最顶层失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -516,17 +631,36 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public void SendToBack()
     {
-        _shape?.ZOrder(MsCore.MsoZOrderCmd.msoSendToBack);
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape?.ZOrder(MsCore.MsoZOrderCmd.msoSendToBack);
+        }
+        catch (Exception x)
+        {
+            log.Error($"将形状置于最后面失败: {x.Message}");
+        }
     }
 
     /// <summary>
     /// 取消组合形状
     /// </summary>
     /// <returns>取消组合后的形状集合</returns>
-    public IExcelShapeRange Ungroup()
+    public IExcelShapeRange? Ungroup()
     {
-        var shape = _shape?.Ungroup();
-        return shape != null ? new ExcelShapeRange(shape) : null;
+        if (_shape == null)
+            return null;
+        try
+        {
+            var ungroupedRange = _shape.Ungroup();
+            return ungroupedRange != null ? new ExcelShapeRange(ungroupedRange) : null;
+        }
+        catch (Exception x)
+        {
+            log.Error($"取消组合形状失败: {x.Message}");
+            return null;
+        }
     }
 
     /// <summary>
@@ -534,7 +668,16 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public void Apply()
     {
-        _shape?.Apply();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.Apply();
+        }
+        catch (Exception x)
+        {
+            log.Error($"应用自动调整选项失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -542,7 +685,16 @@ internal class ExcelShape : IExcelShape
     /// </summary>
     public void PickUp()
     {
-        _shape?.PickUp();
+        if (_shape == null)
+            return;
+        try
+        {
+            _shape.PickUp();
+        }
+        catch (Exception x)
+        {
+            log.Error($"复制形状的格式失败: {x.Message}");
+        }
     }
 
 

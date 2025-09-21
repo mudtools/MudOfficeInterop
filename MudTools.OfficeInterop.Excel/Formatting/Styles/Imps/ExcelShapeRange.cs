@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using MudTools.OfficeInterop.Imps;
+
 namespace MudTools.OfficeInterop.Excel.Imps;
 
 /// <summary>
@@ -13,6 +15,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelShapeRange : IExcelShapeRange
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelShape));
     /// <summary>
     /// 底层的 COM ShapeRange 对象
     /// </summary>
@@ -43,32 +46,54 @@ internal class ExcelShapeRange : IExcelShapeRange
     {
         if (_disposedValue) return;
 
-        if (disposing)
+        if (disposing && _shapeRange != null)
         {
             try
             {
-                // 释放所有子形状对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var shape = this[i] as ExcelShape;
-                    shape?.Dispose();
-                }
-
                 // 释放格式对象
-                (_fill as ExcelFillFormat)?.Dispose();
-                (_line as ExcelLineFormat)?.Dispose();
-                (_textFrame as ExcelTextFrame)?.Dispose();
-                (_shadow as ExcelShadowFormat)?.Dispose();
-                (_threeD as ExcelThreeDFormat)?.Dispose();
-                (_chart as ExcelChart)?.Dispose();
+                _fill?.Dispose();
+                _line?.Dispose();
+                _textFrame?.Dispose();
+                _shadow?.Dispose();
+                _threeD?.Dispose();
+                _chart?.Dispose();
+                _adjustments?.Dispose();
+                _callout?.Dispose();
+                _excelConnectorFormat?.Dispose();
+                _groupShapes?.Dispose();
+                _shapeNodes?.Dispose();
+                _effect?.Dispose();
+                _pictureFormat?.Dispose();
+                _parentGroup?.Dispose();
+                _edgeFormat?.Dispose();
+                _glow?.Dispose();
+                _reflection?.Dispose();
+
+                _fill = null;
+                _line = null;
+                _textFrame = null;
+                _shadow = null;
+                _threeD = null;
+                _chart = null;
+                _adjustments = null; ;
+                _callout = null;
+                _excelConnectorFormat = null;
+                _groupShapes = null;
+                _shapeNodes = null;
+                _effect = null;
+                _pictureFormat = null;
+                _edgeFormat = null;
+                _parentGroup = null;
+                _glow = null;
+                _reflection = null;
 
                 // 释放底层COM对象
                 if (_shapeRange != null)
                     Marshal.ReleaseComObject(_shapeRange);
             }
-            catch
+            catch (COMException ce)
             {
-                // 忽略释放过程中的异常
+                log.Error("释放资源时发生异常", ce);
             }
             _shapeRange = null;
         }
@@ -253,53 +278,332 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// <summary>
     /// 填充格式对象缓存
     /// </summary>
-    private IExcelFillFormat _fill;
+    private IExcelFillFormat? _fill;
 
     /// <summary>
     /// 获取形状区域的填充格式对象
     /// </summary>
-    public IExcelFillFormat Fill => _fill ?? (_fill = new ExcelFillFormat(_shapeRange?.Fill));
+    public IExcelFillFormat? Fill
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _fill ??= new ExcelFillFormat(_shapeRange.Fill);
+        }
+    }
 
     /// <summary>
     /// 线条格式对象缓存
     /// </summary>
-    private IExcelLineFormat _line;
+    private IExcelLineFormat? _line;
 
     /// <summary>
     /// 获取形状区域的线条格式对象
     /// </summary>
-    public IExcelLineFormat Line => _line ?? (_line = new ExcelLineFormat(_shapeRange?.Line));
+    public IExcelLineFormat? Line
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _line ??= new ExcelLineFormat(_shapeRange.Line);
+        }
+    }
 
     /// <summary>
     /// 文本框架对象缓存
     /// </summary>
-    private IExcelTextFrame _textFrame;
+    private IExcelTextFrame? _textFrame;
 
     /// <summary>
     /// 获取形状区域的文本框架对象
     /// </summary>
-    public IExcelTextFrame TextFrame => _textFrame ?? (_textFrame = new ExcelTextFrame(_shapeRange?.TextFrame));
+    public IExcelTextFrame? TextFrame
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _textFrame ??= new ExcelTextFrame(_shapeRange.TextFrame);
+        }
+    }
 
     /// <summary>
     /// 阴影格式对象缓存
     /// </summary>
-    private IExcelShadowFormat _shadow;
+    private IExcelShadowFormat? _shadow;
 
     /// <summary>
     /// 获取形状区域的阴影格式对象
     /// </summary>
-    public IExcelShadowFormat Shadow => _shadow ?? (_shadow = new ExcelShadowFormat(_shapeRange?.Shadow));
+    public IExcelShadowFormat? Shadow
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _shadow ??= new ExcelShadowFormat(_shapeRange.Shadow);
+        }
+    }
 
     /// <summary>
     /// 三维格式对象缓存
     /// </summary>
-    private IExcelThreeDFormat _threeD;
+    private IExcelThreeDFormat? _threeD;
 
     /// <summary>
     /// 获取形状区域的三维格式对象
     /// </summary>
-    public IExcelThreeDFormat ThreeD => _threeD ?? (_threeD = new ExcelThreeDFormat(_shapeRange?.ThreeD));
+    public IExcelThreeDFormat? ThreeD
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _threeD ??= new ExcelThreeDFormat(_shapeRange.ThreeD);
+        }
+    }
 
+    private IExcelAdjustments? _adjustments;
+
+    public IExcelAdjustments? Adjustments
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _adjustments ??= new ExcelAdjustments(_shapeRange.Adjustments);
+        }
+    }
+
+    private IExcelCalloutFormat? _callout;
+
+    public IExcelCalloutFormat? Callout
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _callout ??= new ExcelCalloutFormat(_shapeRange.Callout);
+        }
+    }
+
+    private IExcelConnectorFormat? _excelConnectorFormat;
+
+    public IExcelConnectorFormat? ConnectorFormat
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _excelConnectorFormat ??= new ExcelConnectorFormat(_shapeRange.ConnectorFormat);
+        }
+    }
+
+    private IExcelGroupShapes? _groupShapes;
+
+    public IExcelGroupShapes? GroupItems
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _groupShapes ??= new ExcelGroupShapes(_shapeRange.GroupItems);
+        }
+    }
+
+    private IExcelShapeNodes? _shapeNodes;
+
+    public IExcelShapeNodes? Nodes
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _shapeNodes ??= new ExcelShapeNodes(_shapeRange.Nodes);
+        }
+    }
+
+    private IExcelTextEffectFormat? _effect;
+
+    public IExcelTextEffectFormat? TextEffect
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _effect ??= new ExcelTextEffectFormat(_shapeRange.TextEffect);
+        }
+    }
+
+    private IExcelPictureFormat? _pictureFormat;
+
+    public IExcelPictureFormat? PictureFormat
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _pictureFormat ??= new ExcelPictureFormat(_shapeRange.PictureFormat);
+        }
+    }
+
+    private IOfficeSoftEdgeFormat? _edgeFormat;
+
+    public IOfficeSoftEdgeFormat? SoftEdge
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _edgeFormat ??= new OfficeSoftEdgeFormat(_shapeRange.SoftEdge);
+        }
+    }
+
+    private IOfficeGlowFormat? _glow;
+
+    public IOfficeGlowFormat? Glow
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _glow ??= new OfficeGlowFormat(_shapeRange.Glow);
+        }
+    }
+
+    private IOfficeReflectionFormat? _reflection;
+    public IOfficeReflectionFormat? Reflection
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _reflection ??= new OfficeReflectionFormat(_shapeRange.Reflection);
+        }
+    }
+
+    private IExcelShape? _parentGroup;
+
+    public IExcelShape? ParentGroup
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _parentGroup ??= new ExcelShape(_shapeRange.ParentGroup);
+        }
+    }
+
+    private IExcelChart? _chart;
+
+    public IExcelChart? Chart
+    {
+        get
+        {
+            if (_shapeRange == null)
+                return null;
+            return _chart ??= new ExcelChart(_shapeRange.Chart);
+        }
+    }
+
+
+    public MsoAutoShapeType AutoShapeType
+    {
+        get => _shapeRange != null ? _shapeRange.AutoShapeType.EnumConvert(MsoAutoShapeType.msoShapeMixed) : MsoAutoShapeType.msoShapeMixed;
+        set
+        {
+            if (_shapeRange != null)
+                _shapeRange.AutoShapeType = value.EnumConvert(MsCore.MsoAutoShapeType.msoShapeMixed);
+        }
+    }
+
+    public MsoShapeStyleIndex ShapeStyle
+    {
+        get => _shapeRange != null ? _shapeRange.ShapeStyle.EnumConvert(MsoShapeStyleIndex.msoShapeStyleMixed) : MsoShapeStyleIndex.msoShapeStyleMixed;
+        set
+        {
+            if (_shapeRange != null)
+                _shapeRange.ShapeStyle = value.EnumConvert(MsCore.MsoShapeStyleIndex.msoShapeStyleMixed);
+        }
+    }
+
+    public MsoBackgroundStyleIndex BackgroundStyle
+    {
+        get => _shapeRange != null ? _shapeRange.BackgroundStyle.EnumConvert(MsoBackgroundStyleIndex.msoBackgroundStyleMixed) : MsoBackgroundStyleIndex.msoBackgroundStyleMixed;
+        set
+        {
+            if (_shapeRange != null)
+                _shapeRange.BackgroundStyle = value.EnumConvert(MsCore.MsoBackgroundStyleIndex.msoBackgroundStyleMixed);
+        }
+    }
+
+    public MsoBlackWhiteMode BlackWhiteMode
+    {
+        get => _shapeRange != null ? _shapeRange.BlackWhiteMode.EnumConvert(MsoBlackWhiteMode.msoBlackWhiteMixed) : MsoBlackWhiteMode.msoBlackWhiteMixed;
+        set
+        {
+            if (_shapeRange != null)
+                _shapeRange.BlackWhiteMode = value.EnumConvert(MsCore.MsoBlackWhiteMode.msoBlackWhiteMixed);
+        }
+    }
+
+    public MsoShapeType Type
+    {
+        get => _shapeRange != null ? _shapeRange.Type.EnumConvert(MsoShapeType.msoShapeTypeMixed) : MsoShapeType.msoShapeTypeMixed;
+    }
+
+    public int ConnectionSiteCount
+    {
+        get => _shapeRange?.ConnectionSiteCount ?? 0;
+    }
+
+    public bool HasChart
+    {
+        get => _shapeRange != null && _shapeRange.HasChart.ConvertToBool();
+    }
+
+    public bool Connector
+    {
+        get => _shapeRange != null && _shapeRange.Connector.ConvertToBool();
+    }
+
+    public bool HorizontalFlip
+    {
+        get => _shapeRange != null && _shapeRange.HorizontalFlip.ConvertToBool();
+    }
+
+    public bool VerticalFlip
+    {
+        get => _shapeRange != null && _shapeRange.VerticalFlip.ConvertToBool();
+    }
+
+    public bool LockAspectRatio
+    {
+        get => _shapeRange != null && _shapeRange.LockAspectRatio.ConvertToBool();
+        set
+        {
+            if (_shapeRange != null)
+                _shapeRange.LockAspectRatio = value.ConvertTriState();
+        }
+    }
+
+    public int ZOrderPosition
+    {
+        get => _shapeRange?.ZOrderPosition ?? 0;
+    }
+
+    public string Title
+    {
+        get => _shapeRange != null ? _shapeRange.Title : string.Empty;
+        set
+        {
+            if (_shapeRange?.Title != null && value != null)
+                _shapeRange.Title = value;
+        }
+
+    }
     #endregion
 
     #region 文本属性
@@ -383,8 +687,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                                             (float)left, (float)top, (float)width, (float)height) as MsExcel.Shape;
             return shape != null ? new ExcelShape(shape) : null;
         }
-        catch
+        catch (Exception x)
         {
+            log.Error($"添加形状失败: {x.Message}", x);
             return null;
         }
     }
@@ -411,8 +716,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                                               (float)left, (float)top, (float)width, (float)height) as MsExcel.Shape;
             return shape != null ? new ExcelShape(shape) : null;
         }
-        catch
+        catch (Exception x)
         {
+            log.Error($"添加文本框失败: {x.Message}", x);
             return null;
         }
     }
@@ -425,7 +731,7 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// <param name="x2">终点X坐标</param>
     /// <param name="y2">终点Y坐标</param>
     /// <returns>新创建的线条对象</returns>
-    public IExcelShape AddLine(double x1, double y1, double x2, double y2)
+    public IExcelShape? AddLine(double x1, double y1, double x2, double y2)
     {
         if (_shapeRange?.Parent == null) return null;
 
@@ -437,8 +743,9 @@ internal class ExcelShapeRange : IExcelShapeRange
             var shape = parentShapes.AddLine((float)x1, (float)y1, (float)x2, (float)y2) as MsExcel.Shape;
             return shape != null ? new ExcelShape(shape) : null;
         }
-        catch
+        catch (Exception x)
         {
+            log.Error($"添加线条失败: {x.Message}", x);
             return null;
         }
     }
@@ -454,7 +761,7 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的图片对象</returns>
-    public IExcelShape AddPicture(string filename, bool linkToFile, bool saveWithDocument,
+    public IExcelShape? AddPicture(string filename, bool linkToFile, bool saveWithDocument,
                                 double left, double top, double width, double height)
     {
         if (_shapeRange?.Parent == null || string.IsNullOrEmpty(filename)) return null;
@@ -470,8 +777,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                 (float)left, (float)top, (float)width, (float)height) as MsExcel.Shape;
             return shape != null ? new ExcelShape(shape) : null;
         }
-        catch
+        catch (Exception x)
         {
+            log.Error($"添加图片失败: {x.Message}", x);
             return null;
         }
     }
@@ -486,7 +794,16 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// <param name="replace">true表示替换当前选择，false表示添加到当前选择</param>
     public void Select(bool replace = true)
     {
-        _shapeRange?.Select(replace);
+        if (_shapeRange == null)
+            return;
+        try
+        {
+            _shapeRange.Select(replace);
+        }
+        catch (Exception x)
+        {
+            log.Error($"选择形状区域失败: {x.Message}", x);
+        }
     }
 
     /// <summary>
@@ -494,7 +811,15 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// </summary>
     public void Delete()
     {
-        _shapeRange?.Delete();
+        if (_shapeRange == null) return;
+        try
+        {
+            _shapeRange.Delete();
+        }
+        catch (Exception x)
+        {
+            log.Error($"删除形状区域中的所有形状失败: {x.Message}", x);
+        }
     }
 
     /// <summary>
@@ -502,7 +827,15 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// </summary>
     public void Apply()
     {
-        _shapeRange?.Apply();
+        if (_shapeRange == null) return;
+        try
+        {
+            _shapeRange.Apply();
+        }
+        catch (Exception x)
+        {
+            log.Error($"应用自动调整选项失败: {x.Message}", x);
+        }
     }
 
     /// <summary>
@@ -510,7 +843,15 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// </summary>
     public void PickUp()
     {
-        _shapeRange?.PickUp();
+        if (_shapeRange == null) return;
+        try
+        {
+            _shapeRange.PickUp();
+        }
+        catch (Exception x)
+        {
+            log.Error($"复制形状区域的格式失败: {x.Message}", x);
+        }
     }
     #endregion
 
@@ -535,9 +876,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                 relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
                 MsExcel.XlScaleType.xlScaleLinear);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略缩放过程中的异常
+            log.Error($"调整形状大小失败: {x.Message}");
         }
     }
 
@@ -555,9 +896,9 @@ internal class ExcelShapeRange : IExcelShapeRange
             _shapeRange.IncrementLeft((float)leftIncrement);
             _shapeRange.IncrementTop((float)topIncrement);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略移动过程中的异常
+            log.Error($"移动形状失败: {x.Message}");
         }
     }
 
@@ -573,9 +914,9 @@ internal class ExcelShapeRange : IExcelShapeRange
         {
             _shapeRange.IncrementRotation((float)rotationIncrement);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略旋转过程中的异常
+            log.Error($"旋转形状失败: {x.Message}");
         }
     }
 
@@ -588,25 +929,40 @@ internal class ExcelShapeRange : IExcelShapeRange
     {
         if (_shapeRange == null) return;
 
-        object scaleObj = Type.Missing;
-        if (scale != null)
-            scaleObj = (MsCore.MsoScaleFrom)(int)scale;
+        try
+        {
+            object scaleObj = System.Type.Missing;
+            if (scale != null)
+                scaleObj = (MsCore.MsoScaleFrom)(int)scale;
 
-        _shapeRange.ScaleHeight(Factor: factor,
-            relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
-            Scale: scaleObj);
+            _shapeRange.ScaleHeight(Factor: factor,
+                relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
+                Scale: scaleObj);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状高度失败: {x.Message}");
+        }
+
     }
 
     public void ScaleWidth(float factor, bool relativeToOriginalSize, MsoScaleFrom? scale = null)
     {
         if (_shapeRange == null) return;
-        object scaleObj = Type.Missing;
-        if (scale != null)
-            scaleObj = (MsCore.MsoScaleFrom)(int)scale;
+        try
+        {
+            object scaleObj = System.Type.Missing;
+            if (scale != null)
+                scaleObj = (MsCore.MsoScaleFrom)(int)scale;
 
-        _shapeRange.ScaleWidth(Factor: factor,
-            relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
-            Scale: scaleObj);
+            _shapeRange.ScaleWidth(Factor: factor,
+                relativeToOriginalSize ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse,
+                Scale: scaleObj);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状宽度失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -614,7 +970,17 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// </summary>
     public void BringToFront()
     {
-        _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoBringToFront);
+        if (_shapeRange == null)
+            return;
+
+        try
+        {
+            _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoBringToFront);
+        }
+        catch (Exception x)
+        {
+            log.Error($"将形状置于最顶层失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -622,7 +988,16 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// </summary>
     public void SendToBack()
     {
-        _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoSendToBack);
+        if (_shapeRange == null)
+            return;
+        try
+        {
+            _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoSendToBack);
+        }
+        catch (Exception x)
+        {
+            log.Error($"将形状置于最后面失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -630,7 +1005,16 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// </summary>
     public void BringForward()
     {
-        _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoBringForward);
+        if (_shapeRange == null)
+            return;
+        try
+        {
+            _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoBringForward);
+        }
+        catch (Exception x)
+        {
+            log.Error($"将形状向前移动一层失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -638,7 +1022,16 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// </summary>
     public void SendBackward()
     {
-        _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoSendBackward);
+        if (_shapeRange == null)
+            return;
+        try
+        {
+            _shapeRange?.ZOrder(MsCore.MsoZOrderCmd.msoSendBackward);
+        }
+        catch (Exception x)
+        {
+            log.Error($"将形状向后移动一层失败: {x.Message}");
+        }
     }
 
     /// <summary>
@@ -654,9 +1047,195 @@ internal class ExcelShapeRange : IExcelShapeRange
         {
             _shapeRange.Align((MsCore.MsoAlignCmd)alignment, relativeTo ? MsCore.MsoTriState.msoTrue : MsCore.MsoTriState.msoFalse);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略对齐过程中的异常
+            log.Error($"对齐形状失败: {x.Message}");
+        }
+    }
+
+    public void SetShapesDefaultProperties()
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.SetShapesDefaultProperties();
+        }
+        catch (Exception x)
+        {
+            log.Error($"设置形状默认属性失败: {x.Message}");
+        }
+    }
+
+    public void IncrementLeft(float Increment)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.IncrementLeft(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状位置失败: {x.Message}");
+        }
+    }
+
+    public void IncrementTop(float Increment)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.IncrementTop(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状位置失败: {x.Message}");
+        }
+    }
+
+    public void IncrementRotation(float Increment)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.IncrementRotation(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"调整形状旋转失败: {x.Message}");
+        }
+    }
+
+    public void RerouteConnections()
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.RerouteConnections();
+        }
+        catch (Exception x)
+        {
+            log.Error($"重新连接形状失败: {x.Message}");
+        }
+    }
+
+    public void Flip(MsoFlipCmd FlipCmd)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.Flip(FlipCmd.EnumConvert(MsCore.MsoFlipCmd.msoFlipHorizontal));
+        }
+        catch (Exception x)
+        {
+            log.Error($"翻转形状失败: {x.Message}");
+        }
+    }
+
+    public IExcelShapeRange? Duplicate()
+    {
+        if (_shapeRange == null) return null;
+
+        try
+        {
+            var duplicatedShapeRange = _shapeRange.Duplicate();
+            return duplicatedShapeRange != null ? new ExcelShapeRange(duplicatedShapeRange) : null;
+        }
+        catch (Exception x)
+        {
+            log.Error($"复制形状区域失败: {x.Message}");
+            return null;
+        }
+    }
+
+    public void CanvasCropLeft(float Increment)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.CanvasCropLeft(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
+
+    public void CanvasCropTop(float Increment)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.CanvasCropTop(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
+
+    public void CanvasCropRight(float Increment)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.CanvasCropRight(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
+
+    public void CanvasCropBottom(float Increment)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.CanvasCropBottom(Increment);
+        }
+        catch (Exception x)
+        {
+            log.Error($"裁剪形状区域失败: {x.Message}");
+        }
+    }
+
+    public IExcelShape? Regroup()
+    {
+        if (_shapeRange == null) return null;
+
+        try
+        {
+            var regroupedShape = _shapeRange.Regroup();
+            return regroupedShape != null ? new ExcelShape(regroupedShape) : null;
+        }
+        catch (Exception x)
+        {
+            log.Error($"组合形状失败: {x.Message}");
+            return null;
+        }
+    }
+
+    public void ZOrder(MsoZOrderCmd ZOrderCmd)
+    {
+        if (_shapeRange == null) return;
+
+        try
+        {
+            _shapeRange.ZOrder(ZOrderCmd.EnumConvert(MsCore.MsoZOrderCmd.msoSendToBack));
+        }
+        catch (Exception x)
+        {
+            log.Error($"形状Z轴顺序操作失败: {x.Message}");
         }
     }
 
@@ -670,11 +1249,11 @@ internal class ExcelShapeRange : IExcelShapeRange
 
         try
         {
-            _shapeRange.Distribute((MsCore.MsoDistributeCmd)distribution, MsCore.MsoTriState.msoFalse);
+            _shapeRange.Distribute(distribution.EnumConvert(MsCore.MsoDistributeCmd.msoDistributeHorizontally), MsCore.MsoTriState.msoFalse);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略分布过程中的异常
+            log.Error($"分布形状失败: {x.Message}");
         }
     }
 
@@ -702,21 +1281,21 @@ internal class ExcelShapeRange : IExcelShapeRange
                     {
                         if (useWidth)
                         {
-                            double scale = standardWidth / shape.Width;
+                            float scale = (float)(standardWidth / shape.Width);
                             shape.Scale(scale, scale);
                         }
                         else
                         {
-                            double scale = standardHeight / shape.Height;
+                            float scale = (float)(standardHeight / shape.Height);
                             shape.Scale(scale, scale);
                         }
                     }
                 }
             }
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略统一大小过程中的异常
+            log.Error($"统一大小失败: {x.Message}");
         }
     }
 
@@ -728,17 +1307,18 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// 组合形状区域中的所有形状
     /// </summary>
     /// <returns>组合后的形状对象</returns>
-    public IExcelShape Group()
+    public IExcelShape? Group()
     {
         if (_shapeRange == null) return null;
 
         try
         {
-            var groupedShape = _shapeRange.Group() as MsExcel.Shape;
+            var groupedShape = _shapeRange.Group();
             return groupedShape != null ? new ExcelShape(groupedShape) : null;
         }
-        catch
+        catch (Exception x)
         {
+            log.Error($"组合形状失败: {x.Message}");
             return null;
         }
     }
@@ -747,17 +1327,18 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// 取消组合形状区域中的组合形状
     /// </summary>
     /// <returns>取消组合后的形状区域</returns>
-    public IExcelShapeRange Ungroup()
+    public IExcelShapeRange? Ungroup()
     {
         if (_shapeRange == null) return null;
 
         try
         {
-            var ungroupedRange = _shapeRange.Ungroup() as MsExcel.ShapeRange;
+            var ungroupedRange = _shapeRange.Ungroup();
             return ungroupedRange != null ? new ExcelShapeRange(ungroupedRange) : null;
         }
-        catch
+        catch (Exception x)
         {
+            log.Error($"取消组合形状失败: {x.Message}");
             return null;
         }
     }
@@ -769,7 +1350,7 @@ internal class ExcelShapeRange : IExcelShapeRange
     public IExcelShape[] GetChildShapes()
     {
         if (_shapeRange == null || Count == 0)
-            return new IExcelShape[0];
+            return [];
 
         var result = new List<IExcelShape>();
         for (int i = 1; i <= Count; i++)
@@ -787,7 +1368,6 @@ internal class ExcelShapeRange : IExcelShapeRange
     /// <returns>顶级形状数组</returns>
     public IExcelShape[] GetTopLevelShapes()
     {
-        // 在ShapeRange中，所有形状都是顶级的
         return GetChildShapes();
     }
 
@@ -816,9 +1396,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                     result.Add(shape);
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个形状访问异常
+                log.Error($"筛选形状失败: {x.Message}");
             }
         }
         return result.ToArray();
@@ -851,9 +1431,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                         result.Add(shape);
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个形状访问异常
+                log.Error($"按名称查找形状 {name} 时，访问索引为 {i} 的形状发生异常", x);
             }
         }
         return result.ToArray();
@@ -888,9 +1468,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                     }
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个形状访问异常
+                log.Error($"按位置查找形状时，访问索引为 {i} 的形状发生异常", x);
             }
         }
         return result.ToArray();
@@ -925,9 +1505,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                     }
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个形状访问异常
+                log.Error($"按大小查找形状时，访问索引为 {i} 的形状发生异常", x);
             }
         }
         return result.ToArray();
@@ -953,9 +1533,9 @@ internal class ExcelShapeRange : IExcelShapeRange
                     result.Add(shape);
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个形状访问异常
+                log.Error($"获取可见形状时，访问索引为 {i} 的形状发生异常", x);
             }
         }
         return result.ToArray();
@@ -981,28 +1561,15 @@ internal class ExcelShapeRange : IExcelShapeRange
                     result.Add(shape);
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个形状访问异常
+                log.Error($"获取隐藏形状时，访问索引为 {i} 的形状发生异常", x);
             }
         }
         return result.ToArray();
     }
-
     #endregion
 
-    #region 层次结构    
-    /// <summary>
-    /// 图表对象缓存
-    /// </summary>
-    private IExcelChart _chart;
-
-    /// <summary>
-    /// 获取形状区域所在的图表对象（如果是图表）
-    /// </summary>
-    public IExcelChart Chart => _chart ?? (_chart = new ExcelChart(_shapeRange?.Chart));
-
-    #endregion
 
 
     public IEnumerator<IExcelShape> GetEnumerator()
