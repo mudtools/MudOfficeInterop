@@ -13,7 +13,6 @@ internal class ExcelGroupShapes : IExcelGroupShapes
 {
 
     #region 构造函数与私有字段
-
     private MsExcel.GroupShapes _groupShapes;
     private bool _disposedValue;
 

@@ -15,6 +15,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelBorders : IExcelBorders
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelGroupObject));
     /// <summary>
     /// 底层的 COM Borders 集合对象
     /// </summary>
@@ -47,16 +48,8 @@ internal class ExcelBorders : IExcelBorders
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_borders != null)
-                    Marshal.ReleaseComObject(_borders);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            if (_borders != null)
+                Marshal.ReleaseComObject(_borders);
             _borders = null;
         }
 
@@ -88,7 +81,7 @@ internal class ExcelBorders : IExcelBorders
     /// </summary>
     /// <param name="borderType">边框类型</param>
     /// <returns>边框对象</returns>
-    public IExcelBorder this[XlBordersIndex borderType]
+    public IExcelBorder? this[XlBordersIndex borderType]
     {
         get
         {
@@ -101,8 +94,9 @@ internal class ExcelBorders : IExcelBorders
                 var border = _borders[bt];
                 return border != null ? new ExcelBorder(border) : null;
             }
-            catch
+            catch (Exception e)
             {
+                log.Error("获取指定类型的边框对象失败：" + e.Message, e);
                 return null;
             }
         }
@@ -127,21 +121,21 @@ internal class ExcelBorders : IExcelBorders
 
     public XlLineStyle LineStyle
     {
-        get => _borders != null ? (XlLineStyle)Enum.ToObject(typeof(XlLineStyle), _borders.ColorIndex) : XlLineStyle.xlContinuous;
+        get => _borders != null ? _borders.ColorIndex.ObjectConvertEnum(XlLineStyle.xlContinuous) : XlLineStyle.xlContinuous;
         set
         {
             if (_borders != null)
-                _borders.ColorIndex = (MsExcel.XlLineStyle)Enum.ToObject(typeof(MsExcel.XlLineStyle), (int)value);
+                _borders.ColorIndex = value.EnumConvert(MsExcel.XlLineStyle.xlContinuous);
         }
     }
 
     public XlBorderWeight Weight
     {
-        get => _borders != null ? (XlBorderWeight)Enum.ToObject(typeof(XlBorderWeight), _borders.Weight) : XlBorderWeight.xlThin;
+        get => _borders != null ? _borders.Weight.ObjectConvertEnum(XlBorderWeight.xlMedium) : XlBorderWeight.xlMedium;
         set
         {
             if (_borders != null)
-                _borders.Weight = (MsExcel.XlBorderWeight)Enum.ToObject(typeof(MsExcel.XlBorderWeight), (int)value);
+                _borders.Weight = value.EnumConvert(MsExcel.XlBorderWeight.xlMedium);
         }
     }
 
@@ -168,14 +162,19 @@ internal class ExcelBorders : IExcelBorders
 
     public XlColorIndex ColorIndex
     {
-        get => _borders != null ? (XlColorIndex)Enum.ToObject(typeof(XlColorIndex), _borders.ColorIndex) : XlColorIndex.xlColorIndexAutomatic;
+        get
+        {
+            if (_borders != null)
+                return _borders.ColorIndex.ObjectConvertEnum(XlColorIndex.xlColorIndexAutomatic);
+            return XlColorIndex.xlColorIndexAutomatic;
+        }
         set
         {
             if (_borders != null)
-                _borders.ColorIndex = (MsExcel.XlColorIndex)Enum.ToObject(typeof(MsExcel.XlColorIndex), (int)value);
+                _borders.ColorIndex = value.EnumConvert(MsExcel.XlColorIndex.xlColorIndexAutomatic);
         }
     }
-    #endregion   
+    #endregion
 
     #region 查找和筛选
 
@@ -200,9 +199,9 @@ internal class ExcelBorders : IExcelBorders
                     IExcelBorder excelBorder = new ExcelBorder(border);
                     result.Add(excelBorder);
                 }
-                catch
+                catch (Exception x)
                 {
-                    // 忽略单个边框访问异常
+                    log.Error($"根据线条样式查找边框时，访问索引的边框发生异常", x);
                 }
             }
         }
@@ -230,9 +229,9 @@ internal class ExcelBorders : IExcelBorders
                     IExcelBorder excelBorder = new ExcelBorder(border);
                     result.Add(excelBorder);
                 }
-                catch
+                catch (Exception x)
                 {
-                    // 忽略单个边框访问异常
+                    log.Error($"根据颜色查找边框时，访问索引的边框发生异常", x);
                 }
             }
         }
@@ -284,9 +283,9 @@ internal class ExcelBorders : IExcelBorders
             _borders[MsExcel.XlBordersIndex.xlEdgeTop].LineStyle = (MsExcel.XlLineStyle)lineStyle;
             _borders[MsExcel.XlBordersIndex.xlEdgeBottom].LineStyle = (MsExcel.XlLineStyle)lineStyle;
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略设置过程中的异常
+            log.Error($"设置所有边框的线条样式时，访问索引的边框发生异常", x);
         }
     }
 
@@ -309,9 +308,9 @@ internal class ExcelBorders : IExcelBorders
                 }
             }
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略设置过程中的异常
+            log.Error($"设置所有边框的颜色时，访问索引的边框发生异常", x);
         }
     }
 
@@ -334,9 +333,9 @@ internal class ExcelBorders : IExcelBorders
                 }
             }
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略设置过程中的异常
+            log.Error($"设置所有边框的粗细时，访问索引的边框发生异常", x);
         }
     }
 
@@ -363,9 +362,9 @@ internal class ExcelBorders : IExcelBorders
                 }
             }
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略统一格式过程中的异常
+            log.Error($"统一所有边框的格式时，访问索引的边框发生异常", x);
         }
     }
 
@@ -407,9 +406,9 @@ internal class ExcelBorders : IExcelBorders
                 }
             }
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略复制格式过程中的异常
+            log.Error($"复制边框格式时，访问索引的边框发生异常", x);
         }
     }
 
@@ -447,9 +446,9 @@ internal class ExcelBorders : IExcelBorders
                     break;
             }
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略应用预设样式过程中的异常
+            log.Error($"应用预设边框样式时，访问索引的边框发生异常", x);
         }
     }
 

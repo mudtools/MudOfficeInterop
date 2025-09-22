@@ -31,8 +31,8 @@ internal class ExcelColorScaleCriterion : IExcelColorScaleCriterion
 
     public XlConditionValueTypes Type
     {
-        get => (XlConditionValueTypes)_colorScaleCriterion.Type;
-        set => _colorScaleCriterion.Type = (MsExcel.XlConditionValueTypes)value;
+        get => _colorScaleCriterion.Type.EnumConvert(XlConditionValueTypes.xlConditionValueNone);
+        set => _colorScaleCriterion.Type = value.EnumConvert(MsExcel.XlConditionValueTypes.xlConditionValueNone);
     }
 
     public object Value
@@ -65,16 +65,9 @@ internal class ExcelColorScaleCriterion : IExcelColorScaleCriterion
 
         if (disposing)
         {
-            try
-            {
-                // 释放形状对象
-                if (_colorScaleCriterion != null)
-                    Marshal.ReleaseComObject(_colorScaleCriterion);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放形状对象
+            if (_colorScaleCriterion != null)
+                Marshal.ReleaseComObject(_colorScaleCriterion);
             _colorScaleCriterion = null;
         }
 

@@ -33,6 +33,16 @@ internal class ExcelDataBarBorder : IExcelDataBarBorder
         }
     }
 
+    public XlDataBarBorderType Type
+    {
+        get => _dataBarBorder != null ? _dataBarBorder.Type.EnumConvert(XlDataBarBorderType.xlDataBarBorderNone) : XlDataBarBorderType.xlDataBarBorderNone;
+        set
+        {
+            if (_dataBarBorder != null)
+                _dataBarBorder.Type = value.EnumConvert(MsExcel.XlDataBarBorderType.xlDataBarBorderNone);
+        }
+    }
+
     public int Color
     {
         get => Convert.ToInt32(_dataBarBorder.Color);

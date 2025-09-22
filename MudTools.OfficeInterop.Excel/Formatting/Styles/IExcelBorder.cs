@@ -84,16 +84,4 @@ public interface IExcelBorder : IDisposable
     void ApplyPresetStyle(int presetStyle);
 
     #endregion
-
-    #region 导出和转换
-
-    /// <summary>
-    /// 导出边框到文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <param name="overwrite">是否覆盖已存在文件</param>
-    /// <returns>是否导出成功</returns>
-    bool Export(string filename, bool overwrite = true);
-    #endregion
-
 }

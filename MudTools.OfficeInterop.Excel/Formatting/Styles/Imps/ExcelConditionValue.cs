@@ -35,7 +35,7 @@ internal class ExcelConditionValue : IExcelConditionValue
 
     public XlConditionValueTypes Type
     {
-        get => (XlConditionValueTypes)_conditionValue.Type;
+        get => _conditionValue.Type.EnumConvert(XlConditionValueTypes.xlConditionValueNone);
     }
 
     public object Value
@@ -51,16 +51,8 @@ internal class ExcelConditionValue : IExcelConditionValue
 
         if (disposing)
         {
-            try
-            {
-                // 释放形状对象
-                if (_conditionValue != null)
-                    Marshal.ReleaseComObject(_conditionValue);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            if (_conditionValue != null)
+                Marshal.ReleaseComObject(_conditionValue);
             _conditionValue = null;
         }
 

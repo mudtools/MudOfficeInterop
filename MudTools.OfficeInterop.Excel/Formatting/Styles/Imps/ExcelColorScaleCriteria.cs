@@ -53,7 +53,7 @@ internal class ExcelColorScaleCriteria : IExcelColorScaleCriteria
         }
     }
 
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
     }
@@ -66,16 +66,9 @@ internal class ExcelColorScaleCriteria : IExcelColorScaleCriteria
 
         if (disposing)
         {
-            try
-            {
-                // 释放形状对象
-                if (_colorScaleCriteria != null)
-                    Marshal.ReleaseComObject(_colorScaleCriteria);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放形状对象
+            if (_colorScaleCriteria != null)
+                Marshal.ReleaseComObject(_colorScaleCriteria);
             _colorScaleCriteria = null;
         }
 

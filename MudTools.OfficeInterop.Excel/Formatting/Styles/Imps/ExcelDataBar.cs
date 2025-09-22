@@ -50,8 +50,8 @@ internal class ExcelDataBar : IExcelDataBar
 
     public XlDataBarFillType BarFillType
     {
-        get => (XlDataBarFillType)_databar.BarFillType;
-        set => _databar.BarFillType = (MsExcel.XlDataBarFillType)value;
+        get => _databar.BarFillType.EnumConvert(XlDataBarFillType.xlDataBarFillSolid);
+        set => _databar.BarFillType = value.EnumConvert(MsExcel.XlDataBarFillType.xlDataBarFillSolid);
     }
 
     public bool ShowBarOnly

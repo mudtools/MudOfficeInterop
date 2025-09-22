@@ -16,6 +16,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelBorder : IExcelBorder
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelGroupObject));
     /// <summary>
     /// 底层的 COM Border 对象
     /// </summary>
@@ -76,11 +77,11 @@ internal class ExcelBorder : IExcelBorder
     /// </summary>
     public XlLineStyle LineStyle
     {
-        get => _border != null ? (XlLineStyle)Enum.ToObject(typeof(XlLineStyle), _border.LineStyle) : XlLineStyle.xlLineStyleNone;
+        get => _border != null ? _border.LineStyle.ObjectConvertEnum(XlLineStyle.xlLineStyleNone) : XlLineStyle.xlLineStyleNone;
         set
         {
             if (_border != null)
-                _border.LineStyle = (MsExcel.XlLineStyle)Enum.ToObject(typeof(MsExcel.XlLineStyle), (int)value);
+                _border.LineStyle = value.EnumConvert(MsExcel.XlLineStyle.xlContinuous);
         }
     }
 
@@ -120,11 +121,11 @@ internal class ExcelBorder : IExcelBorder
 
     public XlColorIndex ColorIndex
     {
-        get => _border != null ? (XlColorIndex)Enum.ToObject(typeof(XlColorIndex), _border.ColorIndex) : XlColorIndex.xlColorIndexAutomatic;
+        get => _border != null ? _border.ColorIndex.ObjectConvertEnum(XlColorIndex.xlColorIndexAutomatic) : XlColorIndex.xlColorIndexAutomatic;
         set
         {
             if (_border != null)
-                _border.ColorIndex = (MsExcel.XlColorIndex)Enum.ToObject(typeof(MsExcel.XlColorIndex), (int)value);
+                _border.ColorIndex = value.EnumConvert(MsExcel.XlColorIndex.xlColorIndexAutomatic);
         }
     }
 
@@ -195,9 +196,9 @@ internal class ExcelBorder : IExcelBorder
             Color = Color.Black;
             Weight = 2;     // xlThin
         }
-        catch
+        catch (Exception ex)
         {
-            // 忽略重置过程中的异常
+            log.Error("重置边框为默认值失败:" + ex.Message, ex);
         }
     }
 
@@ -215,9 +216,9 @@ internal class ExcelBorder : IExcelBorder
             Color = sourceBorder.Color;
             Weight = sourceBorder.Weight;
         }
-        catch
+        catch (Exception ex)
         {
-            // 忽略复制格式过程中的异常
+            log.Error("复制边框格式失败:" + ex.Message, ex);
         }
     }
 
@@ -266,58 +267,11 @@ internal class ExcelBorder : IExcelBorder
                     break;
             }
         }
-        catch
+        catch (Exception e)
         {
-            // 忽略应用预设样式过程中的异常
+            log.Error("应用预设样式失败：" + e.Message, e);
         }
     }
 
     #endregion
-
-    #region 导出和转换
-
-    /// <summary>
-    /// 导出边框到文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <param name="overwrite">是否覆盖已存在文件</param>
-    /// <returns>是否导出成功</returns>
-    public bool Export(string filename, bool overwrite = true)
-    {
-        if (_border == null || string.IsNullOrEmpty(filename))
-            return false;
-
-        try
-        {
-            // 验证文件扩展名
-            string extension = System.IO.Path.GetExtension(filename)?.ToLower();
-            if (string.IsNullOrEmpty(extension))
-            {
-                filename += ".txt";
-            }
-
-            // 检查是否覆盖
-            if (System.IO.File.Exists(filename) && !overwrite)
-                return false;
-
-            using (var writer = new System.IO.StreamWriter(filename, false, System.Text.Encoding.UTF8))
-            {
-                writer.WriteLine("Excel Border Export");
-                writer.WriteLine("==================");
-                writer.WriteLine($"Export Date: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-                writer.WriteLine($"Line Style: {LineStyle}");
-                writer.WriteLine($"Weight: {Weight}");
-                writer.WriteLine($"Color: {Color}");
-                writer.WriteLine($"Theme Color: {ThemeColor}");
-                writer.WriteLine($"Tint And Shade: {TintAndShade}");
-            }
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-    #endregion
-
 }

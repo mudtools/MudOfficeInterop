@@ -322,6 +322,10 @@ public interface IWordSelection : IDisposable
     /// </summary>
     IWordRange? Range { get; }
 
+    IWordShapeRange? ChildShapeRange { get; }
+
+    bool HasChildShapeRange { get; }
+
     /// <summary>
     /// 激活选择区域
     /// </summary>

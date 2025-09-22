@@ -179,11 +179,17 @@ internal class WordSelection : IWordSelection
 
     public IWordRange? FormattedText => _selection != null ? new WordRange(_selection.FormattedText) : null;
 
+    public IWordShapeRange? ChildShapeRange => _selection != null ? new WordShapeRange(_selection.ChildShapeRange) : null;
 
     public string FontName
     {
         get => _selection.Font.Name;
         set => _selection.Font.Name = value;
+    }
+
+    public bool HasChildShapeRange
+    {
+        get => _selection.HasChildShapeRange;
     }
 
     public float FontSize

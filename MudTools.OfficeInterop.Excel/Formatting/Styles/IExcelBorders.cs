@@ -39,7 +39,7 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// </summary>
     /// <param name="borderType">边框类型</param>
     /// <returns>边框对象</returns>
-    IExcelBorder this[XlBordersIndex borderType] { get; }
+    IExcelBorder? this[XlBordersIndex borderType] { get; }
 
     /// <summary>
     /// 获取边框集合所在的父对象
