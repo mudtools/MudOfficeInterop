@@ -2,7 +2,7 @@
 
 MudTools.OfficeInterop 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组织。<br/>
 
-![dotnetchina](https://gitee.com/dotnetchina/home/raw/master/assets/dotnetchina-raw.png "dotNET China LOGO")
+![dotnetchina](https://gitee.com/dotnetchina/home/raw/master/assets/logo.png "dotNET China LOGO")
 
 # MudTools.OfficeInterop
 
