@@ -1,64 +1,620 @@
-# .NET驾驭Word之力：结构化文档元素操作
+# .NET驾驭Word之力：打造专业文档 - 页面设置与打印控制完全指南
 
-在前几篇文章中，我们学习了Word对象模型的基础知识、文本操作与格式设置等内容。掌握了这些基础知识后，我们现在可以进一步深入到文档的结构化元素操作，包括段落与节的管理、表格的创建与操作以及图片的插入等。
+在前面的文章中，我们学习了如何操作Word文档中的文本内容以及如何设置字体和段落格式。掌握了这些技能后，我们现在可以进一步学习如何控制文档的页面布局和打印设置。页面设置对于创建专业、美观的文档至关重要，而打印控制则能帮助我们高效地输出文档。
 
-本文将详细介绍如何使用MudTools.OfficeInterop.Word库来操作Word文档中的结构化元素，包括段落与节的使用、表格的自动化操作以及图片与形状的插入。最后，我们将通过一个实战示例——创建一个包含多种结构化元素的员工信息表，来综合运用所学知识。
+你是否曾经遇到过这样的困扰：精心制作的文档在打印时格式混乱，或者因为页面设置不当导致内容被截断？你是否希望创建出既美观又专业的文档模板，让同事和客户对你的工作成果刮目相看？
 
-## 4.1 使用段落(Paragraphs)与节(Sections)
+本文将详细介绍如何使用MudTools.OfficeInterop.Word库来设置页面参数、管理页眉页脚以及控制文档打印。我们将深入探讨从基础的纸张设置到高级的分节页面控制，从简单的页眉页脚到复杂的多区域布局，以及如何精确控制文档的打印输出。最后，我们将通过一个实战示例，创建一个具有专业格式的文档模板，并演示如何进行打印设置，让你真正掌握Word自动化处理的精髓。
 
-段落和节是Word文档中重要的结构化元素。段落用于组织文本内容，而节则用于对文档进行分段，以便为不同部分设置不同的页面布局。
+## 页面设置 (PageSetup Object)
 
-### 遍历文档中的所有段落
+页面设置是文档格式化的重要组成部分，它决定了文档在纸张上的布局方式。通过[IWordPageSetup](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordPageSetup.cs#L13-L214)接口，我们可以控制页面的各个方面，包括纸张大小、方向、页边距等。
 
-在处理Word文档时，经常需要遍历文档中的所有段落以进行批量操作。通过[Paragraphs](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordDocument.cs#L317-L317)属性，我们可以轻松访问文档中的所有段落。
+想要创建出专业、美观的文档，第一步就是要掌握页面设置。无论是制作商务报告、学术论文还是其他类型的文档，合适的页面布局都是成功的关键。
+
+### 设置纸张大小、方向、页边距
+
+在Word文档处理中，最常见的页面设置需求是调整纸张大小、方向和页边距。这些设置直接影响文档的外观和可读性。
 
 ```csharp
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
+using System;
 
-// 打开现有文档
-using var wordApp = WordFactory.Open(@"C:\Documents\SampleDocument.docx");
+// 创建或打开文档
+using var wordApp = WordFactory.BlankWorkbook();
 var document = wordApp.ActiveDocument;
 
-// 遍历文档中的所有段落
-foreach (var paragraph in document.Paragraphs)
-{
-    // 输出段落文本
-    Console.WriteLine(paragraph.GetText());
-    
-    // 为每个段落设置12磅的段后间距
-    paragraph.SpaceAfter = 12;
-    
-    // 为每个段落设置1.5倍行距
-    paragraph.LineSpacingRule = WdLineSpacing.wdLineSpace15;
-}
+// 获取页面设置对象
+var pageSetup = document.Sections[1].PageSetup;
 
-// 或者通过索引访问特定段落
-for (int i = 1; i <= document.ParagraphCount; i++)
+// 设置纸张大小为A4
+pageSetup.PaperSize = WdPaperSize.wdPaperA4;
+
+// 设置页面方向为横向
+pageSetup.Orientation = WdOrientation.wdOrientLandscape;
+
+// 设置页边距（单位：磅）
+pageSetup.TopMargin = 72;     // 1英寸 = 72磅
+pageSetup.BottomMargin = 72;
+pageSetup.LeftMargin = 72;
+pageSetup.RightMargin = 72;
+
+// 或者使用页面宽度和高度直接设置（单位：磅）
+pageSetup.PageWidth = 595;    // A4纸宽度
+pageSetup.PageHeight = 842;   // A4纸高度
+```
+
+#### 应用场景：创建标准化报告模板
+
+在企业环境中，通常需要创建符合公司标准的报告模板。这些模板需要遵循特定的页面设置规范。
+
+```csharp
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
+
+// 报告模板生成器
+public class ReportTemplateGenerator
 {
-    var paragraph = document.Paragraphs[i];
-    // 处理段落内容
-    Console.WriteLine($"第{i}段: {paragraph.GetText()}");
+    /// <summary>
+    /// 创建标准化报告模板
+    /// </summary>
+    /// <param name="templateName">模板名称</param>
+    /// <param name="paperSize">纸张大小</param>
+    /// <param name="isLandscape">是否横向</param>
+    public void CreateStandardReportTemplate(string templateName, WdPaperSize paperSize, bool isLandscape = false)
+    {
+        try
+        {
+            // 创建新文档
+            using var wordApp = WordFactory.BlankWorkbook();
+            var document = wordApp.ActiveDocument;
+            
+            // 隐藏Word应用程序以提高性能
+            wordApp.Visibility = WordAppVisibility.Hidden;
+            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+            
+            // 遍历所有节并设置页面格式
+            foreach (IWordSection section in document.Sections)
+            {
+                var pageSetup = section.PageSetup;
+                
+                // 设置纸张大小
+                pageSetup.PaperSize = paperSize;
+                
+                // 设置页面方向
+                pageSetup.Orientation = isLandscape ? 
+                    WdOrientation.wdOrientLandscape : 
+                    WdOrientation.wdOrientPortrait;
+                
+                // 设置标准页边距（上下1英寸，左右1.25英寸）
+                pageSetup.TopMargin = 72;      // 1英寸
+                pageSetup.BottomMargin = 72;
+                pageSetup.LeftMargin = 90;     // 1.25英寸
+                pageSetup.RightMargin = 90;
+                
+                // 设置装订线（如果需要）
+                pageSetup.Gutter = 36;         // 0.5英寸装订线
+                pageSetup.GutterPos = WdGutterStyle.wdGutterPosLeft;
+            }
+            
+            // 保存为模板文件
+            string outputPath = $@"C:\Templates\{templateName}.dotx";
+            document.SaveAs(outputPath, WdSaveFormat.wdFormatXMLTemplate);
+            document.Close();
+            
+            Console.WriteLine($"标准化报告模板已创建: {outputPath}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"创建报告模板时发生错误: {ex.Message}");
+        }
+    }
+    
+    /// <summary>
+    /// 为现有文档应用标准页面设置
+    /// </summary>
+    /// <param name="documentPath">文档路径</param>
+    public void ApplyStandardPageSetup(string documentPath)
+    {
+        try
+        {
+            // 打开现有文档
+            using var wordApp = WordFactory.Open(documentPath);
+            var document = wordApp.ActiveDocument;
+            
+            // 隐藏Word应用程序以提高性能
+            wordApp.Visibility = WordAppVisibility.Hidden;
+            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+            
+            // 应用标准页面设置
+            foreach (IWordSection section in document.Sections)
+            {
+                var pageSetup = section.PageSetup;
+                
+                // 设置为A4纸张
+                pageSetup.PaperSize = WdPaperSize.wdPaperA4;
+                
+                // 设置纵向
+                pageSetup.Orientation = WdOrientation.wdOrientPortrait;
+                
+                // 设置标准页边距
+                pageSetup.TopMargin = 72;
+                pageSetup.BottomMargin = 72;
+                pageSetup.LeftMargin = 90;
+                pageSetup.RightMargin = 90;
+            }
+            
+            // 保存文档
+            document.Save();
+            document.Close();
+            
+            Console.WriteLine($"已为文档应用标准页面设置: {documentPath}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"应用页面设置时发生错误: {ex.Message}");
+        }
+    }
 }
 ```
 
-在上面的示例中，我们展示了两种遍历段落的方式：使用foreach循环和通过索引访问。每种方式都有其适用场景，foreach循环适用于需要处理所有段落的情况，而索引访问适用于需要精确控制处理顺序或只处理特定段落的情况。
+### 高级页面设置选项
 
-#### 应用场景：文档格式标准化
-
-在企业环境中，经常需要对大量文档进行格式标准化处理。例如，确保所有文档的段落间距、行距、字体等符合公司规范。
+除了基本的页面设置外，[IWordPageSetup](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordPageSetup.cs#L13-L214)还提供了更多高级选项，如文本列、行号、装订线等。
 
 ```csharp
-/// <summary>
-/// 文档格式标准化工具
-/// </summary>
-public class DocumentFormatter
+// 获取页面设置对象
+var pageSetup = document.Sections[1].PageSetup;
+
+// 设置文本列
+pageSetup.TextColumns.SetCount(2); // 设置为两列
+pageSetup.TextColumns.Width = 200; // 设置列宽
+pageSetup.TextColumns.Spacing = 30; // 设置列间距
+
+// 设置行号
+pageSetup.LineNumbering.Active = true; // 启用行号
+pageSetup.LineNumbering.RestartMode = WdNumberingRule.wdRestartContinuous; // 连续编号
+pageSetup.LineNumbering.DistanceFromText = 36; // 行号与文本距离
+
+// 设置装订线
+pageSetup.Gutter = 36; // 0.5英寸装订线
+pageSetup.GutterStyle = WdGutterStyleOld.wdGutterStyleLatin; // 装订线样式
+pageSetup.GutterPos = WdGutterStyle.wdGutterPosLeft; // 装订线位置
+```
+
+#### 应用场景：创建学术论文模板
+
+学术论文通常有特定的格式要求，包括多列布局、行号等。
+
+```csharp
+// 学术论文模板生成器
+public class AcademicPaperTemplateGenerator
 {
     /// <summary>
-    /// 标准化文档格式
+    /// 创建学术论文模板
+    /// </summary>
+    /// <param name="templatePath">模板保存路径</param>
+    public void CreateAcademicPaperTemplate(string templatePath)
+    {
+        try
+        {
+            // 创建新文档
+            using var wordApp = WordFactory.BlankWorkbook();
+            var document = wordApp.ActiveDocument;
+            
+            // 隐藏Word应用程序以提高性能
+            wordApp.Visibility = WordAppVisibility.Hidden;
+            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+            
+            // 设置整体页面格式
+            var pageSetup = document.Sections[1].PageSetup;
+            
+            // A4纸张，纵向
+            pageSetup.PaperSize = WdPaperSize.wdPaperA4;
+            pageSetup.Orientation = WdOrientation.wdOrientPortrait;
+            
+            // 设置页边距
+            pageSetup.TopMargin = 72;      // 1英寸
+            pageSetup.BottomMargin = 72;
+            pageSetup.LeftMargin = 72;
+            pageSetup.RightMargin = 72;
+            
+            // 为正文部分设置两列布局（通常用于摘要后的内容）
+            // 这里我们为第二节设置两列（假设第一节是标题和摘要）
+            if (document.Sections.Count > 1)
+            {
+                var bodyPageSetup = document.Sections[2].PageSetup;
+                bodyPageSetup.TextColumns.SetCount(2); // 两列
+                bodyPageSetup.TextColumns.EvenlySpaced = true;
+                bodyPageSetup.TextColumns.LineBetween = true; // 显示分隔线
+            }
+            
+            // 为特定节启用行号（如用于审稿的版本）
+            var reviewPageSetup = document.Sections[1].PageSetup;
+            reviewPageSetup.LineNumbering.Active = true;
+            reviewPageSetup.LineNumbering.RestartMode = WdNumberingRule.wdRestartContinuous;
+            reviewPageSetup.LineNumbering.DistanceFromText = 18; // 1/4英寸
+            
+            // 保存模板
+            document.SaveAs(templatePath, WdSaveFormat.wdFormatXMLTemplate);
+            document.Close();
+            
+            Console.WriteLine($"学术论文模板已创建: {templatePath}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"创建学术论文模板时发生错误: {ex.Message}");
+        }
+    }
+}
+```
+
+## 页眉与页脚 (HeadersFooters Collection)
+
+页眉和页脚是文档中重要的组成部分，它们通常包含页码、文档标题、日期等信息。通过[IWordHeadersFooters](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Helpers/Assist/IWordHeadersFooters.cs#L14-L50)和[IWordHeaderFooter](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Helpers/Assist/IWordHeaderFooter.cs#L14-L57)接口，我们可以灵活地控制每个节的页眉页脚。
+
+专业的文档不仅内容要精彩，外观也要精致。页眉页脚就像文档的"名片"，不仅提供导航信息，还能增强文档的专业性和一致性。通过巧妙地设计页眉页脚，你可以让文档在众多普通文档中脱颖而出。
+
+### 为不同节设置不同的页眉页脚
+
+在复杂文档中，可能需要为不同节设置不同的页眉页脚。这在章节结构复杂的文档中非常有用。
+
+```csharp
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
+
+// 打开或创建文档
+using var wordApp = WordFactory.BlankWorkbook();
+var document = wordApp.ActiveDocument;
+
+// 为第一节设置页眉页脚
+var firstSection = document.Sections[1];
+
+// 设置首页不同页眉页脚
+firstSection.PageSetup.DifferentFirstPageHeaderFooter = 1; // 1表示启用
+
+// 设置奇偶页不同页眉页脚
+firstSection.PageSetup.OddAndEvenPagesHeaderFooter = 1; // 1表示启用
+
+// 设置首页页眉
+var firstHeader = firstSection.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage];
+firstHeader.Range.Text = "这是首页页眉\n";
+
+// 设置奇数页页眉
+var oddHeader = firstSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+oddHeader.Range.Text = "这是奇数页页眉\n";
+
+// 设置偶数页页眉
+var evenHeader = firstSection.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages];
+evenHeader.Range.Text = "这是偶数页页眉\n";
+
+// 设置页脚（所有页相同）
+foreach (IWordSection section in document.Sections)
+{
+    var footer = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+    footer.Range.Text = "这是页脚内容\n";
+}
+```
+
+#### 应用场景：创建多章节技术文档
+
+技术文档通常包含多个章节，每个章节可能需要不同的页眉信息。
+
+```csharp
+// 技术文档页眉页脚管理器
+public class TechnicalDocumentHeaderFooterManager
+{
+    /// <summary>
+    /// 为技术文档设置页眉页脚
+    /// </summary>
+    /// <param name="document">Word文档</param>
+    /// <param name="documentTitle">文档标题</param>
+    public void SetupTechnicalDocumentHeadersFooters(IWordDocument document, string documentTitle)
+    {
+        try
+        {
+            // 为所有节设置首页不同
+            foreach (IWordSection section in document.Sections)
+            {
+                section.PageSetup.DifferentFirstPageHeaderFooter = 1;
+            }
+            
+            // 设置首页页眉（通常是文档标题）
+            var firstSection = document.Sections[1];
+            var firstHeader = firstSection.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage];
+            firstHeader.Range.Text = documentTitle;
+            firstHeader.Range.Font.Name = "微软雅黑";
+            firstHeader.Range.Font.Size = 16;
+            firstHeader.Range.Font.Bold = true;
+            firstHeader.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            
+            // 为各节设置页眉（显示章节标题）
+            for (int i = 1; i <= document.Sections.Count; i++)
+            {
+                var section = document.Sections[i];
+                var header = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+                
+                // 根据节号设置不同的页眉内容
+                switch (i)
+                {
+                    case 1:
+                        header.Range.Text = "引言";
+                        break;
+                    case 2:
+                        header.Range.Text = "系统架构";
+                        break;
+                    case 3:
+                        header.Range.Text = "详细设计";
+                        break;
+                    case 4:
+                        header.Range.Text = "实施指南";
+                        break;
+                    default:
+                        header.Range.Text = $"第{i}章";
+                        break;
+                }
+                
+                // 格式化页眉
+                header.Range.Font.Name = "微软雅黑";
+                header.Range.Font.Size = 10;
+                header.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            }
+            
+            // 设置页脚（显示页码）
+            foreach (IWordSection section in document.Sections)
+            {
+                var footer = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+                
+                // 插入页码
+                footer.Range.Text = "第 ";
+                footer.Range.Font.Name = "微软雅黑";
+                footer.Range.Font.Size = 9;
+                
+                // 添加页码域
+                var pageNumRange = footer.Range.Duplicate;
+                pageNumRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+                pageNumRange.Fields.Add(pageNumRange, WdFieldType.wdFieldPage);
+                
+                var totalPagesRange = footer.Range.Duplicate;
+                totalPagesRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+                totalPagesRange.Text = " 页，共 ";
+                totalPagesRange.Fields.Add(totalPagesRange, WdFieldType.wdFieldNumPages);
+                totalPagesRange.Text += " 页";
+                
+                // 设置页脚居中对齐
+                footer.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"设置页眉页脚时发生错误: {ex.Message}");
+        }
+    }
+}
+```
+
+### 在页眉页脚中插入页码、日期、公司Logo等信息
+
+页眉页脚中经常需要包含页码、日期、图片等元素。MudTools.OfficeInterop.Word提供了相应的方法来处理这些内容。
+
+```csharp
+// 为文档添加带有页码和日期的页脚
+var footer = document.Sections[1].Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+
+// 插入日期
+footer.Range.Text = "创建日期: ";
+footer.Range.Fields.Add(footer.Range, WdFieldType.wdFieldDate);
+footer.Range.Text += "     页面: ";
+
+// 插入当前页码
+var pageRange = footer.Range.Duplicate;
+pageRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+pageRange.Fields.Add(pageRange, WdFieldType.wdFieldPage);
+
+// 插入总页数
+pageRange.Text += " / ";
+pageRange.Fields.Add(pageRange, WdFieldType.wdFieldNumPages);
+
+// 插入公司Logo
+var logoRange = footer.Range.Duplicate;
+logoRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+var logoShape = logoRange.InlineShapes.AddPicture(@"C:\Images\CompanyLogo.png");
+logoShape.Width = 100;
+logoShape.Height = 30;
+```
+
+#### 应用场景：创建企业文档模板
+
+企业文档通常需要包含公司标识、页码等信息。
+
+```csharp
+// 企业文档模板生成器
+public class CorporateDocumentTemplateGenerator
+{
+    /// <summary>
+    /// 创建企业文档模板
+    /// </summary>
+    /// <param name="templatePath">模板路径</param>
+    /// <param name="companyLogoPath">公司Logo路径</param>
+    public void CreateCorporateDocumentTemplate(string templatePath, string companyLogoPath)
+    {
+        try
+        {
+            // 创建新文档
+            using var wordApp = WordFactory.BlankWorkbook();
+            var document = wordApp.ActiveDocument;
+            
+            // 隐藏Word应用程序以提高性能
+            wordApp.Visibility = WordAppVisibility.Hidden;
+            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+            
+            // 为所有节设置首页不同页眉页脚
+            foreach (IWordSection section in document.Sections)
+            {
+                section.PageSetup.DifferentFirstPageHeaderFooter = 1;
+            }
+            
+            // 设置首页页眉（包含公司Logo和文档标题）
+            var firstSection = document.Sections[1];
+            var firstHeader = firstSection.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage];
+            
+            // 插入公司Logo
+            if (System.IO.File.Exists(companyLogoPath))
+            {
+                var logoShape = firstHeader.Range.InlineShapes.AddPicture(companyLogoPath);
+                logoShape.Width = 120;
+                logoShape.Height = 40;
+            }
+            
+            // 添加文档标题占位符
+            var titleRange = firstHeader.Range.Duplicate;
+            titleRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+            titleRange.Text = "\n[文档标题]\n";
+            titleRange.Font.Name = "微软雅黑";
+            titleRange.Font.Size = 18;
+            titleRange.Font.Bold = true;
+            titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            
+            // 设置普通页页眉（仅包含公司名称）
+            foreach (IWordSection section in document.Sections)
+            {
+                var header = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+                header.Range.Text = "公司名称\n";
+                header.Range.Font.Name = "微软雅黑";
+                header.Range.Font.Size = 9;
+                header.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
+            }
+            
+            // 设置页脚（包含日期和页码）
+            foreach (IWordSection section in document.Sections)
+            {
+                var footer = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+                
+                // 左侧显示公司信息
+                footer.Range.Text = "公司名称 | 地址 | 电话\n";
+                footer.Range.Font.Name = "微软雅黑";
+                footer.Range.Font.Size = 8;
+                
+                // 右侧显示日期和页码
+                var rightFooterRange = footer.Range.Duplicate;
+                rightFooterRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+                rightFooterRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
+                
+                // 插入日期
+                rightFooterRange.Text = "打印日期: ";
+                rightFooterRange.Fields.Add(rightFooterRange, WdFieldType.wdFieldDate);
+                rightFooterRange.Text += "     第 ";
+                
+                // 插入页码
+                rightFooterRange.Fields.Add(rightFooterRange, WdFieldType.wdFieldPage);
+                rightFooterRange.Text += " 页";
+                
+                // 设置边框
+                footer.Range.Borders[WdBorderType.wdBorderTop].LineStyle = WdLineStyle.wdLineStyleSingle;
+                footer.Range.Borders[WdBorderType.wdBorderTop].LineWidth = WdLineWidth.wdLineWidth050pt;
+            }
+            
+            // 保存模板
+            document.SaveAs(templatePath, WdSaveFormat.wdFormatXMLTemplate);
+            document.Close();
+            
+            Console.WriteLine($"企业文档模板已创建: {templatePath}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"创建企业文档模板时发生错误: {ex.Message}");
+        }
+    }
+}
+```
+
+## 打印文档
+
+文档打印是Word自动化处理的最后一步。通过[PrintOut](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordDocument.cs#L403-L403)方法，我们可以控制文档的打印行为，包括打印份数、范围等。
+
+当你花费大量时间精心制作了一份文档，最终的打印输出却出现问题，是不是很让人沮丧？通过掌握精确的打印控制技巧，你可以确保文档以最佳状态呈现给读者，避免因打印设置不当而导致的尴尬。
+
+### 使用 Document.PrintOut 方法及其参数控制打印份数、范围等
+
+MudTools.OfficeInterop.Word提供了简洁的[PrintOut](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordDocument.cs#L403-L403)方法来控制文档打印。
+
+```csharp
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
+
+// 打开文档
+using var wordApp = WordFactory.Open(@"C:\Documents\MyDocument.docx");
+var document = wordApp.ActiveDocument;
+
+// 基本打印：打印一份完整文档
+document.PrintOut();
+
+// 打印两份完整文档
+document.PrintOut(copies: 2);
+
+// 打印指定页面（例如第3到第5页）
+document.PrintOut(pages: "3-5");
+
+// 打印多个不连续页面
+document.PrintOut(pages: "1,3,5-7");
+
+// 打印多份指定页面
+document.PrintOut(copies: 3, pages: "1-2");
+```
+
+#### 应用场景：批量打印文档
+
+在企业环境中，经常需要批量打印文档，并可能需要不同的打印设置。
+
+```csharp
+// 批量文档打印管理器
+public class BatchDocumentPrintManager
+{
+    /// <summary>
+    /// 批量打印文档
+    /// </summary>
+    /// <param name="documentPaths">文档路径列表</param>
+    /// <param name="copies">打印份数</param>
+    /// <param name="pageRange">页码范围</param>
+    public void BatchPrintDocuments(List<string> documentPaths, int copies = 1, string pageRange = "")
+    {
+        foreach (var documentPath in documentPaths)
+        {
+            try
+            {
+                // 打开文档
+                using var wordApp = WordFactory.Open(documentPath);
+                var document = wordApp.ActiveDocument;
+                
+                // 隐藏Word应用程序以提高性能
+                wordApp.Visibility = WordAppVisibility.Hidden;
+                wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+                
+                // 打印文档
+                document.PrintOut(copies: copies, pages: pageRange);
+                
+                // 关闭文档
+                document.Close(false); // 不保存更改
+                
+                Console.WriteLine($"文档已打印: {documentPath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"打印文档 {documentPath} 时发生错误: {ex.Message}");
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 根据文档类型应用不同的打印设置
     /// </summary>
     /// <param name="documentPath">文档路径</param>
-    public void StandardizeDocument(string documentPath)
+    /// <param name="documentType">文档类型</param>
+    public void PrintDocumentByType(string documentPath, string documentType)
     {
         try
         {
@@ -70,282 +626,120 @@ public class DocumentFormatter
             wordApp.Visibility = WordAppVisibility.Hidden;
             wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
             
-            // 遍历所有段落并标准化格式
-            foreach (var paragraph in document.Paragraphs)
+            // 根据文档类型应用不同的打印设置
+            switch (documentType.ToLower())
             {
-                // 设置段落格式
-                paragraph.SpaceAfter = 12;  // 段后间距12磅
-                paragraph.SpaceBefore = 0;  // 段前间距0磅
-                paragraph.LineSpacingRule = WdLineSpacing.wdLineSpace15; // 1.5倍行距
-                
-                // 设置字体格式
-                paragraph.Range.Font.Name = "微软雅黑";
-                paragraph.Range.Font.Size = 10.5f;
-                
-                // 设置对齐方式
-                paragraph.Alignment = WdParagraphAlignment.wdAlignParagraphJustify; // 两端对齐
+                case "report":
+                    // 报告类文档：打印所有页面，2份
+                    document.PrintOut(copies: 2);
+                    break;
+                    
+                case "contract":
+                    // 合同类文档：打印所有页面，1份
+                    document.PrintOut(copies: 1);
+                    break;
+                    
+                case "invoice":
+                    // 发票类文档：只打印第一页，2份
+                    document.PrintOut(copies: 2, pages: "1");
+                    break;
+                    
+                case "manual":
+                    // 手册类文档：打印指定页面，1份
+                    document.PrintOut(pages: "1-10");
+                    break;
+                    
+                default:
+                    // 默认打印所有页面，1份
+                    document.PrintOut();
+                    break;
             }
             
-            // 保存文档
-            document.Save();
-            document.Close();
+            // 关闭文档
+            document.Close(false);
             
-            Console.WriteLine($"文档 {documentPath} 格式标准化完成");
+            Console.WriteLine($"文档已按{documentType}类型打印: {documentPath}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"格式标准化过程中发生错误: {ex.Message}");
+            Console.WriteLine($"打印文档时发生错误: {ex.Message}");
         }
     }
 }
 ```
 
-### 使用节(Section)为文档的不同部分设置不同的页面布局
+### 高级打印控制
 
-节是Word文档中用于分隔具有不同页面布局设置的区域。通过节，我们可以为文档的不同部分设置不同的页眉页脚、纸张方向、页边距等。
-
-```csharp
-// 添加新节并设置不同的页面方向
-var sections = document.Sections;
-
-// 获取当前节的数量
-int sectionCount = sections.Count;
-
-// 在文档末尾添加分节符以创建新节
-document.AddSectionBreak(document.Content.End - 1, (int)WdSectionBreakType.wdSectionBreakNextPage);
-
-// 获取新添加的节
-var newSection = sections[sectionCount + 1];
-
-// 为新节设置横向页面
-newSection.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
-
-// 为不同节设置不同的页眉
-var firstSectionHeader = sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
-firstSectionHeader.Range.Text = "这是第一节的页眉";
-
-var newSectionHeader = newSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
-newSectionHeader.Range.Text = "这是新节的页眉";
-```
-
-通过以上代码，我们可以为文档的不同部分设置不同的页面布局。这对于制作包含多种内容类型的复杂文档非常有用，例如在同一篇文档中既有纵向的文字说明，又有横向的表格数据。
-
-#### 应用场景：制作混合布局报告
-
-在制作技术报告或商业文档时，经常需要在同一篇文档中包含不同类型的页面布局。例如，文档正文使用纵向布局，而数据表格使用横向布局。
+虽然MudTools.OfficeInterop.Word目前只提供了基本的打印参数，但在实际应用中，我们可以通过其他方式实现更精细的打印控制。
 
 ```csharp
-/// <summary>
-/// 混合布局报告生成器
-/// </summary>
-public class MixedLayoutReportGenerator
+// 文档打印配置器
+public class DocumentPrintConfigurer
 {
     /// <summary>
-    /// 生成混合布局报告
+    /// 配置并打印文档
     /// </summary>
-    /// <param name="templatePath">模板路径</param>
-    /// <param name="outputPath">输出路径</param>
-    public void GenerateReport(string templatePath, string outputPath)
+    /// <param name="documentPath">文档路径</param>
+    /// <param name="printerName">打印机名称</param>
+    /// <param name="copies">打印份数</param>
+    /// <param name="isCollated">是否逐份打印</param>
+    public void ConfigureAndPrintDocument(string documentPath, string printerName, int copies, bool isCollated)
     {
         try
         {
-            // 基于模板创建文档
-            using var wordApp = WordFactory.CreateFrom(templatePath);
+            // 打开文档
+            using var wordApp = WordFactory.Open(documentPath);
             var document = wordApp.ActiveDocument;
             
-            // 隐藏Word应用程序
+            // 设置打印机（如果指定）
+            if (!string.IsNullOrEmpty(printerName))
+            {
+                wordApp.ActivePrinter = printerName;
+            }
+            
+            // 隐藏Word应用程序以提高性能
             wordApp.Visibility = WordAppVisibility.Hidden;
             wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
             
-            // 在文档末尾添加分节符，创建新节用于横向表格
-            document.AddSectionBreak(document.Content.End - 1, 
-                (int)WdSectionBreakType.wdSectionBreakNextPage);
+            // 注意：当前版本的MudTools.OfficeInterop.Word只支持基本的打印参数
+            // 更高级的打印控制需要通过其他方式实现
             
-            // 获取新节
-            var dataSection = document.Sections[document.Sections.Count];
+            // 打印文档
+            document.PrintOut(copies: copies);
             
-            // 设置新节为横向布局
-            dataSection.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
+            // 关闭文档
+            document.Close(false);
             
-            // 在新节中添加标题
-            var range = dataSection.Range;
-            range.Collapse(WdCollapseDirection.wdCollapseStart);
-            range.Text = "数据汇总表\n";
-            range.Font.Bold = 1;
-            range.Font.Size = 14;
-            range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-            
-            // 添加表格
-            range.Collapse(WdCollapseDirection.wdCollapseEnd);
-            var table = document.Tables.Add(range, 10, 6); // 10行6列的表格
-            
-            // 填充表格数据
-            PopulateTableData(table);
-            
-            // 保存文档
-            document.SaveAs(outputPath, WdSaveFormat.wdFormatXMLDocument);
-            document.Close();
-            
-            Console.WriteLine($"混合布局报告已生成: {outputPath}");
+            Console.WriteLine($"文档已打印: {documentPath}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"生成报告时发生错误: {ex.Message}");
+            Console.WriteLine($"打印文档时发生错误: {ex.Message}");
         }
     }
-    
-    /// <summary>
-    /// 填充表格数据
-    /// </summary>
-    /// <param name="table">表格对象</param>
-    private void PopulateTableData(IWordTable table)
-    {
-        // 表头
-        string[] headers = { "序号", "产品名称", "销售数量", "单价", "总金额", "备注" };
-        for (int i = 0; i < headers.Length; i++)
-        {
-            table.Cell(1, i + 1).Range.Text = headers[i];
-            table.Cell(1, i + 1).Range.Font.Bold = 1;
-            table.Cell(1, i + 1).VerticalAlignment = 
-                WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-        }
-        
-        // 示例数据
-        string[,] data = {
-            {"1", "产品A", "100", "50.00", "5000.00", ""},
-            {"2", "产品B", "200", "30.00", "6000.00", ""},
-            {"3", "产品C", "150", "40.00", "6000.00", ""},
-            {"4", "产品D", "80", "70.00", "5600.00", ""},
-            {"5", "产品E", "120", "35.00", "4200.00", ""}
-        };
-        
-        // 填充数据
-        for (int i = 0; i < data.GetLength(0); i++)
-        {
-            for (int j = 0; j < data.GetLength(1); j++)
-            {
-                table.Cell(i + 2, j + 1).Range.Text = data[i, j];
-                table.Cell(i + 2, j + 1).VerticalAlignment = 
-                    WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            }
-        }
-        
-        // 设置表格样式
-        table.Borders.Enable = 1;
-        table.PreferredWidthType = WdPreferredWidthType.wdPreferredWidthPercent;
-        table.PreferredWidth = 100;
-    }
 }
 ```
 
-## 4.2 表格(Table)的自动化
+## 实战：创建一个具有专业格式的文档模板并演示打印设置
 
-表格是Word文档中用于组织和展示数据的重要元素。MudTools.OfficeInterop.Word库提供了丰富的API来创建、操作和格式化表格。
+现在，让我们综合运用前面学到的知识，创建一个具有专业格式的文档模板，并演示如何进行页面设置和打印控制。
 
-### 创建指定行数列的表格
-
-使用[Tables.Add](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Word/Core/IWordTables.cs#L32-L38)方法，我们可以轻松地在文档中创建指定行列数的表格。
+在实际工作中，我们经常需要创建符合公司标准的文档模板，并能够快速生成和打印文档。通过下面的完整示例，你将学会如何创建一个真正实用的专业文档模板，以及如何自动化整个文档生成和打印流程。
 
 ```csharp
-// 在文档末尾创建一个5行4列的表格
-var range = document.Content;
-range.Collapse(WdCollapseDirection.wdCollapseEnd); // 将范围折叠到末尾
+using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Word;
+using System;
+using System.Collections.Generic;
 
-var table = document.Tables.Add(range, 5, 4);
-
-// 设置表格标题行
-table.Rows[1].Cells[1].Range.Text = "姓名";
-table.Rows[1].Cells[2].Range.Text = "部门";
-table.Rows[1].Cells[3].Range.Text = "职位";
-table.Rows[1].Cells[4].Range.Text = "入职日期";
-
-// 填充表格数据
-string[,] employeeData = {
-    {"张三", "技术部", "软件工程师", "2022-01-15"},
-    {"李四", "市场部", "市场专员", "2021-11-20"},
-    {"王五", "人事部", "人事经理", "2020-05-10"},
-    {"赵六", "财务部", "会计师", "2022-03-08"}
-};
-
-for (int i = 0; i < employeeData.GetLength(0); i++)
-{
-    for (int j = 0; j < employeeData.GetLength(1); j++)
-    {
-        table.Cell(i + 2, j + 1).Range.Text = employeeData[i, j];
-    }
-}
-
-// 设置标题行为粗体
-for (int i = 1; i <= 4; i++)
-{
-    table.Cell(1, i).Range.Font.Bold = 1;
-}
-```
-
-### 遍历单元格、写入数据、设置表格样式和边框
-
-创建表格后，我们需要填充数据并设置样式。
-
-```csharp
-// 设置表格样式
-table.TableStyle = "网格型";
-
-// 设置表格边框
-table.Borders.Enable = 1;
-table.Borders.LineStyle = WdLineStyle.wdLineStyleSingle;
-table.Borders.LineWidth = WdLineWidth.wdLineWidth150pt;
-
-// 遍历所有单元格并设置对齐方式
-foreach (var row in table.Rows)
-{
-    foreach (var cell in row.Cells)
-    {
-        cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-        cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-    }
-}
-
-// 设置表格宽度
-table.PreferredWidthType = WdPreferredWidthType.wdPreferredWidthPercent;
-table.PreferredWidth = 100;
-```
-
-### 单元格合并与拆分
-
-在实际应用中，我们经常需要合并或拆分单元格以满足不同的布局需求。
-
-```csharp
-// 合并单元格示例：合并第一行的所有单元格作为标题
-var firstRow = table.Rows[1];
-firstRow.Cells[1].Merge(firstRow.Cells[4]);
-
-// 在合并后的单元格中添加标题文本
-firstRow.Cells[1].Range.Text = "员工信息表";
-firstRow.Cells[1].Range.Font.Bold = 1;
-firstRow.Cells[1].Range.Font.Size = 14;
-firstRow.Cells[1].Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-
-// 拆分单元格示例：拆分指定单元格
-var cellToSplit = table.Cell(3, 2);
-cellToSplit.Split(2, 1); // 拆分为2行1列
-```
-
-#### 应用场景：自动化生成财务报表
-
-在财务部门，经常需要生成各种财务报表，这些报表通常包含复杂的表格结构。通过自动化生成，可以大大提高工作效率并减少错误。
-
-```csharp
-/// <summary>
-/// 财务报表生成器
-/// </summary>
-public class FinancialReportGenerator
+// 专业文档模板创建器
+public class ProfessionalDocumentTemplateCreator
 {
     /// <summary>
-    /// 生成财务报表
+    /// 创建专业文档模板
     /// </summary>
-    /// <param name="financialData">财务数据</param>
-    /// <param name="outputPath">输出路径</param>
-    public void GenerateFinancialReport(FinancialData financialData, string outputPath)
+    /// <param name="templatePath">模板保存路径</param>
+    public void CreateProfessionalDocumentTemplate(string templatePath)
     {
         try
         {
@@ -353,738 +747,203 @@ public class FinancialReportGenerator
             using var wordApp = WordFactory.BlankWorkbook();
             var document = wordApp.ActiveDocument;
             
-            // 隐藏Word应用程序
+            // 隐藏Word应用程序以提高性能
             wordApp.Visibility = WordAppVisibility.Hidden;
             wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
             
-            // 添加标题
-            AddReportTitle(document, "年度财务报告");
+            // 设置页面格式
+            SetupPageFormat(document);
             
-            // 添加报告基本信息
-            AddReportInfo(document, financialData);
+            // 设置页眉页脚
+            SetupHeadersAndFooters(document);
             
-            // 添加收入明细表
-            AddIncomeStatement(document, financialData.IncomeItems);
+            // 添加模板内容示例
+            AddTemplateContent(document);
             
-            // 添加资产负债表
-            AddBalanceSheet(document, financialData.Assets, financialData.Liabilities, 
-                financialData.Equity);
-            
-            // 保存文档
-            document.SaveAs(outputPath, WdSaveFormat.wdFormatXMLDocument);
+            // 保存为模板
+            document.SaveAs(templatePath, WdSaveFormat.wdFormatXMLTemplate);
             document.Close();
             
-            Console.WriteLine($"财务报告已生成: {outputPath}");
+            Console.WriteLine($"专业文档模板已创建: {templatePath}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"生成财务报告时发生错误: {ex.Message}");
+            Console.WriteLine($"创建专业文档模板时发生错误: {ex.Message}");
         }
     }
     
     /// <summary>
-    /// 添加报告标题
+    /// 设置页面格式
     /// </summary>
-    /// <param name="document">文档对象</param>
-    /// <param name="title">标题文本</param>
-    private void AddReportTitle(IWordDocument document, string title)
+    /// <param name="document">Word文档</param>
+    private void SetupPageFormat(IWordDocument document)
     {
-        var titleParagraph = document.AddParagraph(0, title);
-        titleParagraph.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-        titleParagraph.Range.Font.Name = "微软雅黑";
-        titleParagraph.Range.Font.Size = 18;
-        titleParagraph.Range.Font.Bold = 1;
-        
-        // 添加空行
-        document.AddParagraph(document.Content.End - 1);
+        // 为所有节设置页面格式
+        foreach (IWordSection section in document.Sections)
+        {
+            var pageSetup = section.PageSetup;
+            
+            // 设置A4纸张，纵向
+            pageSetup.PaperSize = WdPaperSize.wdPaperA4;
+            pageSetup.Orientation = WdOrientation.wdOrientPortrait;
+            
+            // 设置页边距（标准商业文档）
+            pageSetup.TopMargin = 72;      // 1英寸
+            pageSetup.BottomMargin = 72;   // 1英寸
+            pageSetup.LeftMargin = 90;     // 1.25英寸
+            pageSetup.RightMargin = 90;    // 1.25英寸
+            
+            // 启用首页不同页眉页脚
+            section.PageSetup.DifferentFirstPageHeaderFooter = 1;
+        }
     }
     
     /// <summary>
-    /// 添加报告基本信息
+    /// 设置页眉页脚
     /// </summary>
-    /// <param name="document">文档对象</param>
-    /// <param name="financialData">财务数据</param>
-    private void AddReportInfo(IWordDocument document, FinancialData financialData)
+    /// <param name="document">Word文档</param>
+    private void SetupHeadersAndFooters(IWordDocument document)
     {
-        var infoParagraph = document.AddParagraph(document.Content.End - 1, 
-            $"报告期间: {financialData.Period}\n" +
-            $"编制单位: {financialData.CompanyName}\n" +
-            $"货币单位: 人民币元\n");
-        infoParagraph.Range.Font.Name = "微软雅黑";
-        infoParagraph.Range.Font.Size = 12;
+        // 设置首页页眉
+        var firstSection = document.Sections[1];
+        var firstHeader = firstSection.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage];
+        firstHeader.Range.Text = "专业文档模板\n";
+        firstHeader.Range.Font.Name = "微软雅黑";
+        firstHeader.Range.Font.Size = 20;
+        firstHeader.Range.Font.Bold = true;
+        firstHeader.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
         
-        // 添加空行
-        document.AddParagraph(document.Content.End - 1);
+        // 设置普通页页眉
+        foreach (IWordSection section in document.Sections)
+        {
+            var header = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+            header.Range.Text = "文档标题\n";
+            header.Range.Font.Name = "微软雅黑";
+            header.Range.Font.Size = 12;
+            header.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+        }
+        
+        // 设置页脚
+        foreach (IWordSection section in document.Sections)
+        {
+            var footer = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+            
+            // 左侧显示文档信息
+            footer.Range.Text = "保密等级: 内部使用\n";
+            footer.Range.Font.Name = "微软雅黑";
+            footer.Range.Font.Size = 8;
+            
+            // 右侧显示页码
+            var pageNumRange = footer.Range.Duplicate;
+            pageNumRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+            pageNumRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
+            pageNumRange.Text = "第 ";
+            pageNumRange.Fields.Add(pageNumRange, WdFieldType.wdFieldPage);
+            pageNumRange.Text += " 页";
+        }
     }
     
     /// <summary>
-    /// 添加收入明细表
+    /// 添加模板内容示例
     /// </summary>
-    /// <param name="document">文档对象</param>
-    /// <param name="incomeItems">收入项目</param>
-    private void AddIncomeStatement(IWordDocument document, List<IncomeItem> incomeItems)
+    /// <param name="document">Word文档</param>
+    private void AddTemplateContent(IWordDocument document)
     {
-        // 添加表标题
-        var titleParagraph = document.AddParagraph(document.Content.End - 1, "一、收入明细表");
-        titleParagraph.Range.Font.Bold = 1;
-        titleParagraph.Range.Font.Size = 14;
+        // 获取文档内容范围
+        var contentRange = document.Content;
         
-        // 添加空行
-        document.AddParagraph(document.Content.End - 1);
+        // 添加文档标题
+        contentRange.Text = "文档标题\n";
+        contentRange.Font.Name = "微软雅黑";
+        contentRange.Font.Size = 16;
+        contentRange.Font.Bold = true;
+        contentRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+        contentRange.ParagraphFormat.SpaceAfter = 12;
         
-        // 创建表格
-        var range = document.Content;
-        range.Collapse(WdCollapseDirection.wdCollapseEnd);
-        var table = document.Tables.Add(range, incomeItems.Count + 2, 4); // 数据行+标题行+合计行
+        // 添加文档信息
+        var infoRange = contentRange.Duplicate;
+        infoRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+        infoRange.Text = "文档编号: [编号]\n创建日期: [日期]\n版本: [版本号]\n\n";
+        infoRange.Font.Name = "微软雅黑";
+        infoRange.Font.Size = 10;
+        infoRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+        infoRange.ParagraphFormat.SpaceAfter = 6;
         
-        // 设置表头
-        string[] headers = { "项目", "本期金额", "上期金额", "增减率(%)" };
-        for (int i = 0; i < headers.Length; i++)
-        {
-            var cell = table.Cell(1, i + 1);
-            cell.Range.Text = headers[i];
-            cell.Range.Font.Bold = 1;
-            cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-        }
+        // 添加目录占位符
+        var tocRange = infoRange.Duplicate;
+        tocRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+        tocRange.Text = "目录\n";
+        tocRange.Font.Name = "微软雅黑";
+        tocRange.Font.Size = 14;
+        tocRange.Font.Bold = true;
+        tocRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+        tocRange.ParagraphFormat.SpaceAfter = 12;
         
-        // 填充数据
-        decimal totalCurrent = 0, totalPrevious = 0;
-        for (int i = 0; i < incomeItems.Count; i++)
-        {
-            var item = incomeItems[i];
-            table.Cell(i + 2, 1).Range.Text = item.Name;
-            table.Cell(i + 2, 2).Range.Text = item.CurrentAmount.ToString("N2");
-            table.Cell(i + 2, 3).Range.Text = item.PreviousAmount.ToString("N2");
-            table.Cell(i + 2, 4).Range.Text = item.ChangeRate.ToString("F2");
-            
-            totalCurrent += item.CurrentAmount;
-            totalPrevious += item.PreviousAmount;
-            
-            // 设置对齐方式
-            for (int j = 1; j <= 4; j++)
-            {
-                table.Cell(i + 2, j).VerticalAlignment = 
-                    WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                if (j > 1)
-                {
-                    table.Cell(i + 2, j).Range.ParagraphFormat.Alignment = 
-                        WdParagraphAlignment.wdAlignParagraphRight;
-                }
-            }
-        }
+        tocRange.Text += "[目录内容]\n\n";
+        tocRange.Font.Bold = false;
+        tocRange.Font.Size = 12;
+        tocRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
         
-        // 添加合计行
-        table.Cell(incomeItems.Count + 2, 1).Range.Text = "合计";
-        table.Cell(incomeItems.Count + 2, 1).Range.Font.Bold = 1;
-        table.Cell(incomeItems.Count + 2, 2).Range.Text = totalCurrent.ToString("N2");
-        table.Cell(incomeItems.Count + 2, 2).Range.Font.Bold = 1;
-        table.Cell(incomeItems.Count + 2, 3).Range.Text = totalPrevious.ToString("N2");
-        table.Cell(incomeItems.Count + 2, 3).Range.Font.Bold = 1;
+        // 添加正文内容示例
+        var bodyRange = tocRange.Duplicate;
+        bodyRange.Collapse(WdCollapseDirection.wdCollapseEnd);
+        bodyRange.Text = "1. 引言\n\n";
+        bodyRange.Font.Name = "微软雅黑";
+        bodyRange.Font.Size = 14;
+        bodyRange.Font.Bold = true;
+        bodyRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+        bodyRange.ParagraphFormat.SpaceAfter = 12;
         
-        var totalChangeRate = totalPrevious != 0 ? 
-            (totalCurrent - totalPrevious) / totalPrevious * 100 : 0;
-        table.Cell(incomeItems.Count + 2, 4).Range.Text = totalChangeRate.ToString("F2");
-        table.Cell(incomeItems.Count + 2, 4).Range.Font.Bold = 1;
-        
-        // 设置合计行对齐方式
-        for (int j = 1; j <= 4; j++)
-        {
-            table.Cell(incomeItems.Count + 2, j).VerticalAlignment = 
-                WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            if (j > 1)
-            {
-                table.Cell(incomeItems.Count + 2, j).Range.ParagraphFormat.Alignment = 
-                    WdParagraphAlignment.wdAlignParagraphRight;
-            }
-        }
-        
-        // 设置表格样式
-        table.Borders.Enable = 1;
-        table.PreferredWidthType = WdPreferredWidthType.wdPreferredWidthPercent;
-        table.PreferredWidth = 100;
-        
-        // 添加空行
-        document.AddParagraph(document.Content.End - 1);
-        document.AddParagraph(document.Content.End - 1);
+        bodyRange.Text += "这是文档正文内容的示例。在这里可以添加文档的主要内容。\n\n";
+        bodyRange.Font.Bold = false;
+        bodyRange.Font.Size = 12;
+        bodyRange.ParagraphFormat.FirstLineIndent = 28; // 首行缩进2字符
+        bodyRange.ParagraphFormat.LineSpacingRule = WdLineSpacing.wdLineSpace1pt5; // 1.5倍行距
     }
     
     /// <summary>
-    /// 添加资产负债表
+    /// 使用模板创建并打印文档
     /// </summary>
-    /// <param name="document">文档对象</param>
-    /// <param name="assets">资产项目</param>
-    /// <param name="liabilities">负债项目</param>
-    /// <param name="equity">权益项目</param>
-    private void AddBalanceSheet(IWordDocument document, List<AssetItem> assets, 
-        List<LiabilityItem> liabilities, List<EquityItem> equity)
-    {
-        // 添加表标题
-        var titleParagraph = document.AddParagraph(document.Content.End - 1, "二、资产负债表");
-        titleParagraph.Range.Font.Bold = 1;
-        titleParagraph.Range.Font.Size = 14;
-        
-        // 添加空行
-        document.AddParagraph(document.Content.End - 1);
-        
-        // 创建表格
-        var range = document.Content;
-        range.Collapse(WdCollapseDirection.wdCollapseEnd);
-        var table = document.Tables.Add(range, 
-            Math.Max(assets.Count, liabilities.Count + equity.Count) + 1, 4);
-        
-        // 设置表头
-        table.Cell(1, 1).Range.Text = "资产";
-        table.Cell(1, 1).Range.Font.Bold = 1;
-        table.Cell(1, 2).Range.Text = "金额";
-        table.Cell(1, 2).Range.Font.Bold = 1;
-        table.Cell(1, 3).Range.Text = "负债和权益";
-        table.Cell(1, 3).Range.Font.Bold = 1;
-        table.Cell(1, 4).Range.Text = "金额";
-        table.Cell(1, 4).Range.Font.Bold = 1;
-        
-        // 设置表头格式
-        for (int i = 1; i <= 4; i++)
-        {
-            table.Cell(1, i).VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            table.Cell(1, i).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-        }
-        
-        // 填充资产数据
-        for (int i = 0; i < assets.Count; i++)
-        {
-            table.Cell(i + 2, 1).Range.Text = assets[i].Name;
-            table.Cell(i + 2, 2).Range.Text = assets[i].Amount.ToString("N2");
-            
-            // 设置格式
-            table.Cell(i + 2, 1).VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            table.Cell(i + 2, 2).VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            table.Cell(i + 2, 2).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
-        }
-        
-        // 填充负债和权益数据
-        int liabilityStartRow = 2;
-        for (int i = 0; i < liabilities.Count; i++)
-        {
-            table.Cell(i + liabilityStartRow, 3).Range.Text = liabilities[i].Name;
-            table.Cell(i + liabilityStartRow, 4).Range.Text = liabilities[i].Amount.ToString("N2");
-            
-            // 设置格式
-            table.Cell(i + liabilityStartRow, 3).VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            table.Cell(i + liabilityStartRow, 4).VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            table.Cell(i + liabilityStartRow, 4).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
-        }
-        
-        // 填充权益数据
-        int equityStartRow = liabilityStartRow + liabilities.Count;
-        for (int i = 0; i < equity.Count; i++)
-        {
-            table.Cell(i + equityStartRow, 3).Range.Text = equity[i].Name;
-            table.Cell(i + equityStartRow, 4).Range.Text = equity[i].Amount.ToString("N2");
-            
-            // 设置格式
-            table.Cell(i + equityStartRow, 3).VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            table.Cell(i + equityStartRow, 4).VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-            table.Cell(i + equityStartRow, 4).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
-        }
-        
-        // 计算资产合计
-        decimal totalAssets = assets.Sum(a => a.Amount);
-        table.Cell(assets.Count + 2, 1).Range.Text = "资产总计";
-        table.Cell(assets.Count + 2, 1).Range.Font.Bold = 1;
-        table.Cell(assets.Count + 2, 2).Range.Text = totalAssets.ToString("N2");
-        table.Cell(assets.Count + 2, 2).Range.Font.Bold = 1;
-        
-        // 计算负债和权益合计
-        decimal totalLiabilities = liabilities.Sum(l => l.Amount);
-        decimal totalEquity = equity.Sum(e => e.Amount);
-        table.Cell(Math.Max(assets.Count, liabilities.Count + equity.Count) + 1, 3).Range.Text = "负债和权益总计";
-        table.Cell(Math.Max(assets.Count, liabilities.Count + equity.Count) + 1, 3).Range.Font.Bold = 1;
-        table.Cell(Math.Max(assets.Count, liabilities.Count + equity.Count) + 1, 4).Range.Text = 
-            (totalLiabilities + totalEquity).ToString("N2");
-        table.Cell(Math.Max(assets.Count, liabilities.Count + equity.Count) + 1, 4).Range.Font.Bold = 1;
-        
-        // 设置表格样式
-        table.Borders.Enable = 1;
-        table.PreferredWidthType = WdPreferredWidthType.wdPreferredWidthPercent;
-        table.PreferredWidth = 100;
-    }
-}
-
-/// <summary>
-/// 财务数据模型
-/// </summary>
-public class FinancialData
-{
-    /// <summary>
-    /// 报告期间
-    /// </summary>
-    public string Period { get; set; }
-    
-    /// <summary>
-    /// 公司名称
-    /// </summary>
-    public string CompanyName { get; set; }
-    
-    /// <summary>
-    /// 收入项目列表
-    /// </summary>
-    public List<IncomeItem> IncomeItems { get; set; }
-    
-    /// <summary>
-    /// 资产项目列表
-    /// </summary>
-    public List<AssetItem> Assets { get; set; }
-    
-    /// <summary>
-    /// 负债项目列表
-    /// </summary>
-    public List<LiabilityItem> Liabilities { get; set; }
-    
-    /// <summary>
-    /// 权益项目列表
-    /// </summary>
-    public List<EquityItem> Equity { get; set; }
-}
-
-/// <summary>
-/// 收入项目
-/// </summary>
-public class IncomeItem
-{
-    /// <summary>
-    /// 项目名称
-    /// </summary>
-    public string Name { get; set; }
-    
-    /// <summary>
-    /// 本期金额
-    /// </summary>
-    public decimal CurrentAmount { get; set; }
-    
-    /// <summary>
-    /// 上期金额
-    /// </summary>
-    public decimal PreviousAmount { get; set; }
-    
-    /// <summary>
-    /// 增减率
-    /// </summary>
-    public decimal ChangeRate => PreviousAmount != 0 ? 
-        (CurrentAmount - PreviousAmount) / PreviousAmount * 100 : 0;
-}
-
-/// <summary>
-/// 资产项目
-/// </summary>
-public class AssetItem
-{
-    /// <summary>
-    /// 项目名称
-    /// </summary>
-    public string Name { get; set; }
-    
-    /// <summary>
-    /// 金额
-    /// </summary>
-    public decimal Amount { get; set; }
-}
-
-/// <summary>
-/// 负债项目
-/// </summary>
-public class LiabilityItem
-{
-    /// <summary>
-    /// 项目名称
-    /// </summary>
-    public string Name { get; set; }
-    
-    /// <summary>
-    /// 金额
-    /// </summary>
-    public decimal Amount { get; set; }
-}
-
-/// <summary>
-/// 权益项目
-/// </summary>
-public class EquityItem
-{
-    /// <summary>
-    /// 项目名称
-    /// </summary>
-    public string Name { get; set; }
-    
-    /// <summary>
-    /// 金额
-    /// </summary>
-    public decimal Amount { get; set; }
-}
-```
-
-## 4.3 图片与形状的插入
-
-图片和形状能够丰富文档的视觉效果，使其更加生动和易于理解。Word提供了两种类型的图形对象：内嵌形状和浮动形状。
-
-### 使用InlineShapes.AddPicture方法插入图片
-
-内嵌形状是嵌入在文本行中的对象，它们随着文本移动而移动。
-
-```csharp
-// 在文档末尾插入内嵌图片
-var range = document.Content;
-range.Collapse(WdCollapseDirection.wdCollapseEnd);
-
-// 使用InlineShapes.AddPicture方法插入图片
-var inlineShape = document.InlineShapes.AddPicture(
-    fileName: @"C:\Images\company_logo.png",
-    linkToFile: false,        // 不链接到文件
-    saveWithDocument: true    // 与文档一起保存
-);
-
-// 设置图片大小
-inlineShape.Width = 100;
-inlineShape.Height = 50;
-
-// 添加图片说明文字
-range.InsertAfter("\n公司Logo\n");
-```
-
-### 使用Shapes.AddPicture方法插入浮动图片并设置环绕方式
-
-浮动形状是独立于文本流的对象，可以放置在页面上的任意位置，并可以设置文字环绕方式。
-
-```csharp
-// 插入浮动图片
-var shape = document.Shapes.AddPicture(
-    fileName: @"C:\Images\decorative_image.png",
-    linkToFile: false,
-    saveWithDocument: true,
-    left: 300,    // 距离页面左边距300磅
-    top: 150,     // 距离页面上边距150磅
-    width: 150,
-    height: 100
-);
-
-// 设置图片的环绕方式
-shape.WrapFormat.Type = WdWrapType.wdWrapSquare;
-shape.WrapFormat.DistanceTop = 10;
-shape.WrapFormat.DistanceBottom = 10;
-shape.WrapFormat.DistanceLeft = 10;
-shape.WrapFormat.DistanceRight = 10;
-
-// 设置图片的相对位置
-shape.RelativeHorizontalPosition = WdRelativeHorizontalPosition.wdRelativeHorizontalPositionPage;
-shape.RelativeVerticalPosition = WdRelativeVerticalPosition.wdRelativeVerticalPositionPage;
-```
-
-#### 应用场景：自动化制作产品宣传册
-
-在市场营销领域，经常需要制作产品宣传册。通过自动化生成，可以快速制作大量标准化的宣传材料。
-
-```csharp
-/// <summary>
-/// 产品宣传册生成器
-/// </summary>
-public class ProductBrochureGenerator
-{
-    /// <summary>
-    /// 生成产品宣传册
-    /// </summary>
-    /// <param name="products">产品列表</param>
     /// <param name="templatePath">模板路径</param>
-    /// <param name="outputPath">输出路径</param>
-    public void GenerateBrochure(List<Product> products, string templatePath, string outputPath)
+    /// <param name="outputPath">输出文档路径</param>
+    /// <param name="printCopies">打印份数</param>
+    public void CreateAndPrintDocument(string templatePath, string outputPath, int printCopies = 1)
     {
         try
         {
-            // 基于模板创建文档
+            // 基于模板创建新文档
             using var wordApp = WordFactory.CreateFrom(templatePath);
             var document = wordApp.ActiveDocument;
             
-            // 隐藏Word应用程序
+            // 隐藏Word应用程序以提高性能
             wordApp.Visibility = WordAppVisibility.Hidden;
             wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
             
-            // 为每个产品添加页面
-            foreach (var product in products)
-            {
-                AddProductPage(document, product);
-            }
+            // 替换模板中的占位符
+            document.FindAndReplace("[编号]", "DOC-2023-001");
+            document.FindAndReplace("[日期]", DateTime.Now.ToString("yyyy-MM-dd"));
+            document.FindAndReplace("[版本号]", "1.0");
+            document.FindAndReplace("[目录内容]", "1. 引言 .................... 1\n2. 主要内容 ................ 2\n3. 结论 .................... 3");
+            document.FindAndReplace("文档标题", "2023年度技术报告");
             
             // 保存文档
             document.SaveAs(outputPath, WdSaveFormat.wdFormatXMLDocument);
+            
+            // 打印文档
+            if (printCopies > 0)
+            {
+                document.PrintOut(copies: printCopies);
+                Console.WriteLine($"文档已打印 {printCopies} 份");
+            }
+            
+            // 关闭文档
             document.Close();
             
-            Console.WriteLine($"产品宣传册已生成: {outputPath}");
+            Console.WriteLine($"文档已创建: {outputPath}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"生成产品宣传册时发生错误: {ex.Message}");
-        }
-    }
-    
-    /// <summary>
-    /// 添加产品页面
-    /// </summary>
-    /// <param name="document">文档对象</param>
-    /// <param name="product">产品信息</param>
-    private void AddProductPage(IWordDocument document, Product product)
-    {
-        // 添加分页符
-        document.AddPageBreak(document.Content.End - 1);
-        
-        // 添加产品名称
-        var titleParagraph = document.AddParagraph(document.Content.End - 1, product.Name);
-        titleParagraph.Range.Font.Name = "微软雅黑";
-        titleParagraph.Range.Font.Size = 24;
-        titleParagraph.Range.Font.Bold = 1;
-        titleParagraph.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-        titleParagraph.SpaceAfter = 20;
-        
-        // 添加产品图片
-        if (File.Exists(product.ImagePath))
-        {
-            var range = document.Content;
-            range.Collapse(WdCollapseDirection.wdCollapseEnd);
-            var inlineShape = document.InlineShapes.AddPicture(
-                fileName: product.ImagePath,
-                linkToFile: false,
-                saveWithDocument: true
-            );
-            
-            // 设置图片大小（保持纵横比）
-            inlineShape.LockAspectRatio = true;
-            if (inlineShape.Width > 300)
-            {
-                inlineShape.Width = 300;
-            }
-            
-            // 居中对齐图片
-            range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-            
-            // 添加空行
-            document.AddParagraph(document.Content.End - 1);
-        }
-        
-        // 添加产品描述
-        var descriptionParagraph = document.AddParagraph(document.Content.End - 1, product.Description);
-        descriptionParagraph.Range.Font.Name = "微软雅黑";
-        descriptionParagraph.Range.Font.Size = 12;
-        descriptionParagraph.SpaceAfter = 15;
-        
-        // 添加产品特性列表
-        AddProductFeatures(document, product.Features);
-        
-        // 添加价格信息
-        var priceParagraph = document.AddParagraph(document.Content.End - 1, 
-            $"价格: ¥{product.Price.ToString("N2")}");
-        priceParagraph.Range.Font.Name = "微软雅黑";
-        priceParagraph.Range.Font.Size = 16;
-        priceParagraph.Range.Font.Bold = 1;
-        priceParagraph.Range.Font.Color = WdColor.wdColorRed;
-        priceParagraph.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-    }
-    
-    /// <summary>
-    /// 添加产品特性列表
-    /// </summary>
-    /// <param name="document">文档对象</param>
-    /// <param name="features">特性列表</param>
-    private void AddProductFeatures(IWordDocument document, List<string> features)
-    {
-        // 添加标题
-        var featuresTitle = document.AddParagraph(document.Content.End - 1, "产品特性:");
-        featuresTitle.Range.Font.Bold = 1;
-        featuresTitle.SpaceAfter = 10;
-        
-        // 添加特性列表
-        foreach (var feature in features)
-        {
-            var featureParagraph = document.AddParagraph(document.Content.End - 1, "• " + feature);
-            featureParagraph.Range.Font.Name = "微软雅黑";
-            featureParagraph.Range.Font.Size = 11;
-            featureParagraph.FirstLineIndent = -20; // 负缩进以对齐项目符号
-            featureParagraph.LeftIndent = 20;
-            featureParagraph.SpaceAfter = 5;
-        }
-        
-        // 添加空行
-        document.AddParagraph(document.Content.End - 1);
-    }
-}
-
-/// <summary>
-/// 产品信息模型
-/// </summary>
-public class Product
-{
-    /// <summary>
-    /// 产品名称
-    /// </summary>
-    public string Name { get; set; }
-    
-    /// <summary>
-    /// 产品描述
-    /// </summary>
-    public string Description { get; set; }
-    
-    /// <summary>
-    /// 产品特性列表
-    /// </summary>
-    public List<string> Features { get; set; }
-    
-    /// <summary>
-    /// 产品价格
-    /// </summary>
-    public decimal Price { get; set; }
-    
-    /// <summary>
-    /// 产品图片路径
-    /// </summary>
-    public string ImagePath { get; set; }
-}
-```
-
-## 实战案例：创建员工信息表
-
-现在，让我们通过一个完整的示例来综合运用所学知识，创建一个包含多种结构化元素的员工信息表。
-
-```csharp
-using MudTools.OfficeInterop;
-using MudTools.OfficeInterop.Word;
-using System;
-
-public class EmployeeInfoReportGenerator
-{
-    /// <summary>
-    /// 生成员工信息报告
-    /// </summary>
-    public void GenerateEmployeeReport()
-    {
-        try
-        {
-            // 创建新的Word文档
-            using var wordApp = WordFactory.BlankWorkbook();
-            var document = wordApp.ActiveDocument;
-            wordApp.Visibility = WordAppVisibility.Hidden;
-            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;
-
-            // 设置文档页面布局
-            document.PageSetup.Orientation = WdOrientation.wdOrientPortrait;
-            document.PageSetup.TopMargin = 72;    // 1英寸 = 72磅
-            document.PageSetup.BottomMargin = 72;
-            document.PageSetup.LeftMargin = 72;
-            document.PageSetup.RightMargin = 72;
-
-            // 添加标题
-            var titleParagraph = document.AddParagraph(0, "员工信息报告");
-            titleParagraph.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-            titleParagraph.Range.Font.Name = "微软雅黑";
-            titleParagraph.Range.Font.Size = 20;
-            titleParagraph.Range.Font.Bold = 1;
-
-            // 添加空行
-            document.AddParagraph(document.Content.End - 1);
-
-            // 添加报告日期
-            var dateParagraph = document.AddParagraph(document.Content.End - 1, $"生成日期: {DateTime.Now:yyyy年MM月dd日}");
-            dateParagraph.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
-            dateParagraph.Range.Font.Size = 12;
-
-            // 添加空行
-            document.AddParagraph(document.Content.End - 1);
-            document.AddParagraph(document.Content.End - 1);
-
-            // 创建员工信息表格
-            var tableRange = document.Content;
-            tableRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-            var table = document.Tables.Add(tableRange, 6, 5); // 5行数据+1行标题
-
-            // 设置表格标题行
-            string[] headers = { "员工编号", "姓名", "部门", "职位", "入职日期" };
-            for (int i = 1; i <= headers.Length; i++)
-            {
-                var cell = table.Cell(1, i);
-                cell.Range.Text = headers[i - 1];
-                cell.Range.Font.Bold = 1;
-                cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-            }
-
-            // 填充表格数据
-            string[,] employeeData = {
-                {"E001", "张三", "技术部", "高级软件工程师", "2020-03-15"},
-                {"E002", "李四", "市场部", "市场经理", "2019-07-22"},
-                {"E003", "王五", "人事部", "人事专员", "2021-01-10"},
-                {"E004", "赵六", "财务部", "财务主管", "2018-11-05"},
-                {"E005", "钱七", "技术部", "前端开发工程师", "2022-02-28"}
-            };
-
-            for (int i = 0; i < employeeData.GetLength(0); i++)
-            {
-                for (int j = 0; j < employeeData.GetLength(1); j++)
-                {
-                    var cell = table.Cell(i + 2, j + 1);
-                    cell.Range.Text = employeeData[i, j];
-                    cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                    cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                }
-            }
-
-            // 设置表格样式
-            table.Borders.Enable = 1;
-            table.Borders.LineStyle = WdLineStyle.wdLineStyleSingle;
-            table.Borders.LineWidth = WdLineWidth.wdLineWidth100pt;
-            table.PreferredWidthType = WdPreferredWidthType.wdPreferredWidthPercent;
-            table.PreferredWidth = 100;
-
-            // 调整列宽
-            table.Columns[1].PreferredWidth = 15;  // 员工编号列
-            table.Columns[2].PreferredWidth = 20;  // 姓名列
-            table.Columns[3].PreferredWidth = 20;  // 部门列
-            table.Columns[4].PreferredWidth = 25;  // 职位列
-            table.Columns[5].PreferredWidth = 20;  // 入职日期列
-
-            // 添加总结段落
-            document.AddParagraph(document.Content.End - 1);
-            var summaryParagraph = document.AddParagraph(document.Content.End - 1,
-                $"本报告共包含 {employeeData.GetLength(0)} 名员工的信息。所有数据均为最新更新。");
-            summaryParagraph.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
-            summaryParagraph.FirstLineIndent = 21; // 首行缩进
-            summaryParagraph.SpaceBefore = 12;
-            summaryParagraph.SpaceAfter = 12;
-
-            // 插入公司Logo（如果存在）
-            try
-            {
-                if (System.IO.File.Exists(@"C:\Images\company_logo.png"))
-                {
-                    document.AddParagraph(document.Content.End - 1);
-                    var logoRange = document.Content;
-                    logoRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    var logoShape = document.InlineShapes.AddPicture(@"C:\Images\company_logo.png", false, true);
-                    logoShape.Width = 120;
-                    logoShape.Height = 60;
-                    logoRange.InsertAfter("\n");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"插入Logo时发生错误: {ex.Message}");
-            }
-
-            // 保存文档
-            string outputPath = $@"C:\Reports\EmployeeReport_{DateTime.Now:yyyyMMdd}.docx";
-            document.SaveAs(outputPath, WdSaveFormat.wdFormatXMLDocument);
-            document.Close();
-
-            Console.WriteLine($"员工信息报告已生成: {outputPath}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"生成员工信息报告时发生错误: {ex.Message}");
+            Console.WriteLine($"创建和打印文档时发生错误: {ex.Message}");
         }
     }
 }
@@ -1094,22 +953,37 @@ class Program
 {
     static void Main(string[] args)
     {
-        var generator = new EmployeeInfoReportGenerator();
-        generator.GenerateEmployeeReport();
+        var creator = new ProfessionalDocumentTemplateCreator();
+        
+        // 创建专业文档模板
+        string templatePath = @"C:\Templates\ProfessionalDocumentTemplate.dotx";
+        creator.CreateProfessionalDocumentTemplate(templatePath);
+        
+        // 使用模板创建并打印文档
+        string documentPath = @"C:\Documents\TechnicalReport.docx";
+        creator.CreateAndPrintDocument(templatePath, documentPath, printCopies: 2);
+        
+        Console.WriteLine("操作完成！");
     }
 }
 ```
 
 ## 总结
 
-本文详细介绍了如何使用MudTools.OfficeInterop.Word库操作Word文档中的结构化元素，包括：
+本文详细介绍了如何使用MudTools.OfficeInterop.Word库进行页面设置和打印控制。我们学习了：
 
-1. **段落与节操作**：学习了如何遍历文档中的所有段落，以及如何使用节为文档的不同部分设置不同的页面布局。
+1. **页面设置**：如何设置纸张大小、方向和页边距，以及如何使用高级页面设置选项如文本列、行号等。
 
-2. **表格自动化**：掌握了创建表格、填充数据、设置样式和边框，以及合并拆分单元格等操作。
+2. **页眉页脚**：如何为不同节设置不同的页眉页脚，以及如何在页眉页脚中插入页码、日期、图片等元素。
 
-3. **图片与形状插入**：了解了内嵌形状和浮动形状的区别，以及如何插入图片并设置其属性。
+3. **打印控制**：如何使用PrintOut方法控制打印份数和范围，以及如何实现批量打印和根据不同文档类型应用不同打印设置。
 
-通过实战案例，我们综合运用了这些知识点，创建了一个完整的员工信息报告。这些技能对于开发文档自动化系统、报告生成工具等应用具有重要意义。
+通过实战示例，我们创建了一个专业文档模板，并演示了如何使用该模板创建和打印文档。这些技能在实际工作中非常有用，能够大大提高文档处理的效率和质量。
 
-在下一篇文章中，我们将学习Word文档的高级格式化技巧，包括样式应用、模板使用、邮件合并等高级功能，敬请期待！
+掌握了这些技巧后，你将能够：
+- 快速创建符合公司标准的文档模板
+- 灵活控制文档的页面布局和格式
+- 自动化处理复杂的页眉页脚需求
+- 精确控制文档的打印输出
+
+在下一篇文章中，我们将继续深入学习Word自动化处理的高级主题，包括文本替换、高级通配符替换、使用书签(Bookmarks)进行精准定位等内容。敬请期待！
