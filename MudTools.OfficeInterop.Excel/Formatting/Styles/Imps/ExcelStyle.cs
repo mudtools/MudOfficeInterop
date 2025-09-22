@@ -14,6 +14,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelStyle : IExcelStyle
 {
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelStyle));
     /// <summary>
     /// 底层的 COM Style 对象
     /// </summary>
@@ -141,7 +142,15 @@ internal class ExcelStyle : IExcelStyle
     /// <summary>
     /// 获取样式的字体对象
     /// </summary>
-    public IExcelFont Font => _font ??= new ExcelFont(_style?.Font);
+    public IExcelFont? Font
+    {
+        get
+        {
+            if (_font == null)
+                _font = new ExcelFont(_style.Font);
+            return _font;
+        }
+    }
 
     /// <summary>
     /// 边框对象缓存
@@ -151,7 +160,15 @@ internal class ExcelStyle : IExcelStyle
     /// <summary>
     /// 获取样式的边框对象
     /// </summary>
-    public IExcelBorders Borders => _borders ??= new ExcelBorders(_style?.Borders);
+    public IExcelBorders? Borders
+    {
+        get
+        {
+            if (_borders == null)
+                _borders = new ExcelBorders(_style.Borders);
+            return _borders;
+        }
+    }
 
     /// <summary>
     /// 内部格式对象缓存
@@ -161,14 +178,22 @@ internal class ExcelStyle : IExcelStyle
     /// <summary>
     /// 获取样式的内部格式对象
     /// </summary>
-    public IExcelInterior Interior => _interior ?? (_interior = new ExcelInterior(_style?.Interior));
+    public IExcelInterior? Interior
+    {
+        get
+        {
+            if (_interior == null)
+                _interior = new ExcelInterior(_style.Interior);
+            return _interior;
+        }
+    }
 
     /// <summary>
     /// 获取或设置样式的数字格式
     /// </summary>
     public string NumberFormat
     {
-        get => _style?.NumberFormat;
+        get => _style != null ? _style.NumberFormat : string.Empty;
         set
         {
             if (_style != null && value != null)
@@ -178,8 +203,12 @@ internal class ExcelStyle : IExcelStyle
 
     public string NumberFormatLocal
     {
-        get => _style?.NumberFormatLocal;
-        set => _style.NumberFormatLocal = value;
+        get => _style != null ? _style.NumberFormatLocal : string.Empty;
+        set
+        {
+            if (_style != null && value != null)
+                _style.NumberFormatLocal = value;
+        }
     }
 
     /// <summary>
@@ -265,7 +294,7 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public bool ShrinkToFit
     {
-        get => _style.ShrinkToFit;
+        get => _style != null && _style.ShrinkToFit;
         set
         {
             if (_style != null)
@@ -291,7 +320,7 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public bool Locked
     {
-        get => _style != null && Convert.ToBoolean(_style.Locked);
+        get => _style != null && _style.Locked;
         set
         {
             if (_style != null)
@@ -304,7 +333,7 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public bool FormulaHidden
     {
-        get => _style != null && Convert.ToBoolean(_style.FormulaHidden);
+        get => _style != null && _style.FormulaHidden;
         set
         {
             if (_style != null)
@@ -321,7 +350,16 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public void Delete()
     {
-        _style?.Delete();
+        if (_style == null)
+            return;
+        try
+        {
+            _style.Delete();
+        }
+        catch (Exception ex)
+        {
+            log.Error("删除样式对象时发生异常", ex);
+        }
     }
 
     /// <summary>
@@ -329,7 +367,7 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     /// <param name="newName">新样式名称</param>
     /// <returns>复制的样式对象</returns>
-    public IExcelStyle Copy(string newName)
+    public IExcelStyle? Copy(string newName)
     {
         if (_style?.Parent == null || string.IsNullOrEmpty(newName))
             return null;
@@ -367,8 +405,9 @@ internal class ExcelStyle : IExcelStyle
             }
             return null;
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error($"复制样式 {Name} 到 {newName} 时发生异常", ex);
             return null;
         }
     }
@@ -396,9 +435,9 @@ internal class ExcelStyle : IExcelStyle
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // 忽略重命名过程中的异常
+            log.Error($"重命名样式 {Name} 为 {newName} 时发生异常", ex);
         }
     }
 
@@ -445,9 +484,9 @@ internal class ExcelStyle : IExcelStyle
                 excelRange.FormulaHidden = FormulaHidden;
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // 忽略应用过程中的异常
+            log.Error($"应用样式 {Name} 到区域 {range.Address} 时发生异常", ex);
         }
     }
 
@@ -485,9 +524,9 @@ internal class ExcelStyle : IExcelStyle
             Interior.Pattern = -4142;  // xlPatternAutomatic
             Interior.PatternColor = Color.Black; // 黑色
         }
-        catch
+        catch (Exception ex)
         {
-            // 忽略重置过程中的异常
+            log.Error($"重置样式 {Name} 时发生异常", ex);
         }
     }
 
@@ -498,7 +537,7 @@ internal class ExcelStyle : IExcelStyle
     /// 克隆样式
     /// </summary>
     /// <returns>克隆的样式对象</returns>
-    public IExcelStyle Clone()
+    public IExcelStyle? Clone()
     {
         if (_style?.Parent == null)
             return null;
@@ -508,8 +547,9 @@ internal class ExcelStyle : IExcelStyle
             string cloneName = $"{Name}_Clone_{DateTime.Now:HHmmss}";
             return Copy(cloneName);
         }
-        catch
+        catch (Exception ex)
         {
+            log.Error($"克隆样式 {Name} 时发生异常", ex);
             return null;
         }
     }

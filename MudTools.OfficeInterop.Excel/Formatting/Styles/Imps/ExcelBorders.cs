@@ -15,7 +15,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelBorders : IExcelBorders
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelGroupObject));
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelBorders));
     /// <summary>
     /// 底层的 COM Borders 集合对象
     /// </summary>

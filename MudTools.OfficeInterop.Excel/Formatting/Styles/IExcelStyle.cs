@@ -75,19 +75,19 @@ public interface IExcelStyle : IDisposable
     /// 获取样式的字体对象
     /// 对应 Style.Font 属性
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取样式的边框对象
     /// 对应 Style.Borders 属性
     /// </summary>
-    IExcelBorders Borders { get; }
+    IExcelBorders? Borders { get; }
 
     /// <summary>
     /// 获取样式的内部格式对象
     /// 对应 Style.Interior 属性
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取样式的本地化数字格式
@@ -176,7 +176,7 @@ public interface IExcelStyle : IDisposable
     /// </summary>
     /// <param name="newName">新样式名称</param>
     /// <returns>复制的样式对象</returns>
-    IExcelStyle Copy(string newName);
+    IExcelStyle? Copy(string newName);
 
     /// <summary>
     /// 重命名样式
@@ -206,6 +206,6 @@ public interface IExcelStyle : IDisposable
     /// 克隆样式
     /// </summary>
     /// <returns>克隆的样式对象</returns>
-    IExcelStyle Clone();
+    IExcelStyle? Clone();
     #endregion
 }
