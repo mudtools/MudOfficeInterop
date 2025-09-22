@@ -70,33 +70,47 @@ internal class ExcelSmartTag : IExcelSmartTag
     /// <summary>
     /// 获取智能标记的名称
     /// </summary>
-    public string Name => _smartTag?.Name?.ToString();
+    public string? Name => _smartTag?.Name;
 
 
     /// <summary>
     /// 获取智能标记的XML字符串
     /// </summary>
-    public string XML => _smartTag?.XML?.ToString();
+    public string? XML => _smartTag?.XML;
 
     /// <summary>
     /// 区域对象缓存
     /// </summary>
-    private IExcelRange _range;
+    private IExcelRange? _range;
 
     /// <summary>
     /// 获取智能标记所在的区域对象
     /// </summary>
-    public IExcelRange Range => _range ?? (_range = new ExcelRange(_smartTag?.Range));
+    public IExcelRange? Range
+    {
+        get
+        {
+            _range ??= new ExcelRange(_smartTag?.Range);
+            return _range;
+        }
+    }
 
     /// <summary>
     /// 智能标记动作集合缓存
     /// </summary>
-    private IExcelSmartTagActions _smartTagActions;
+    private IExcelSmartTagActions? _smartTagActions;
 
     /// <summary>
     /// 获取智能标记的动作集合
     /// </summary>
-    public IExcelSmartTagActions SmartTagActions => _smartTagActions ?? (_smartTagActions = new ExcelSmartTagActions(_smartTag?.SmartTagActions));
+    public IExcelSmartTagActions? SmartTagActions
+    {
+        get
+        {
+            _smartTagActions ??= new ExcelSmartTagActions(_smartTag.SmartTagActions);
+            return _smartTagActions;
+        }
+    }
 
     /// <summary>
     /// 删除智能标记

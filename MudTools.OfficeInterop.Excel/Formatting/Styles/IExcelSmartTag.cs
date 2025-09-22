@@ -16,25 +16,25 @@ public interface IExcelSmartTag : IDisposable
     /// 获取智能标记的名称
     /// 对应 SmartTag.Name 属性
     /// </summary>
-    string Name { get; }
+    string? Name { get; }
 
     /// <summary>
     /// 获取智能标记的XML字符串
     /// 对应 SmartTag.XML 属性
     /// </summary>
-    string XML { get; }
+    string? XML { get; }
 
     /// <summary>
     /// 获取智能标记所在的区域对象
     /// 对应 SmartTag.Range 属性
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 获取智能标记的动作集合
     /// 对应 SmartTag.SmartTagActions 属性
     /// </summary>
-    IExcelSmartTagActions SmartTagActions { get; }
+    IExcelSmartTagActions? SmartTagActions { get; }
 
     /// <summary>
     /// 删除智能标记

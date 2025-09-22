@@ -42,19 +42,12 @@ internal class ExcelSmartTagAction : IExcelSmartTagAction
 
         if (disposing)
         {
-            try
-            {
-                // 释放父级COM组件
-                (_parent as ExcelSmartTag)?.Dispose();
+            // 释放父级COM组件
+            (_parent as ExcelSmartTag)?.Dispose();
 
-                // 释放底层COM对象
-                if (_smartTagAction != null)
-                    Marshal.ReleaseComObject(_smartTagAction);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_smartTagAction != null)
+                Marshal.ReleaseComObject(_smartTagAction);
             _smartTagAction = null;
         }
 
@@ -84,12 +77,24 @@ internal class ExcelSmartTagAction : IExcelSmartTagAction
     /// <summary>
     /// 父级智能标记对象缓存
     /// </summary>
-    private IExcelSmartTag _parent;
+    private IExcelSmartTag? _parent;
 
     /// <summary>
     /// 获取智能标记动作所在的智能标记对象
     /// </summary>
-    public IExcelSmartTag Parent => _parent ??= new ExcelSmartTag(_smartTagAction?.Parent as MsExcel.SmartTag);
+    public IExcelSmartTag? Parent
+    {
+        get
+        {
+            if (_parent == null)
+            {
+                if (_smartTagAction.Parent is MsExcel.SmartTag smartTag)
+                    _parent = new ExcelSmartTag(smartTag);
+            }
+            return _parent;
+        }
+
+    }
 
     /// <summary>
     /// 执行该智能标记动作
@@ -97,48 +102,5 @@ internal class ExcelSmartTagAction : IExcelSmartTagAction
     public void Execute()
     {
         _smartTagAction?.Execute();
-    }
-
-    /// <summary>
-    /// 获取智能标记动作的参数值
-    /// </summary>
-    /// <param name="parameterName">参数名称</param>
-    /// <returns>参数值</returns>
-    public string GetParameter(string parameterName)
-    {
-        if (_smartTagAction == null || string.IsNullOrEmpty(parameterName))
-            return null;
-
-        try
-        {
-            // 注意：SmartTagAction通常不直接提供参数获取方法
-            // 这里提供一个通用的实现框架
-            return _smartTagAction?.Application?.Name; // 示例实现
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    /// <summary>
-    /// 设置智能标记动作的参数值
-    /// </summary>
-    /// <param name="parameterName">参数名称</param>
-    /// <param name="parameterValue">参数值</param>
-    public void SetParameter(string parameterName, string parameterValue)
-    {
-        if (_smartTagAction == null || string.IsNullOrEmpty(parameterName))
-            return;
-
-        try
-        {
-            // 注意：SmartTagAction通常不直接提供参数设置方法
-            // 这里提供一个通用的实现框架
-        }
-        catch
-        {
-            // 忽略异常
-        }
     }
 }

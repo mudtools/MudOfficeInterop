@@ -33,25 +33,11 @@ public interface IExcelSmartTagAction : IDisposable
     /// 获取智能标记动作所在的智能标记对象
     /// 对应 SmartTagAction.Parent 属性
     /// </summary>
-    IExcelSmartTag Parent { get; }
+    IExcelSmartTag? Parent { get; }
 
     /// <summary>
     /// 执行该智能标记动作
     /// 对应 SmartTagAction.Execute 方法
     /// </summary>
     void Execute();
-
-    /// <summary>
-    /// 获取智能标记动作的参数值
-    /// </summary>
-    /// <param name="parameterName">参数名称</param>
-    /// <returns>参数值</returns>
-    string GetParameter(string parameterName);
-
-    /// <summary>
-    /// 设置智能标记动作的参数值
-    /// </summary>
-    /// <param name="parameterName">参数名称</param>
-    /// <param name="parameterValue">参数值</param>
-    void SetParameter(string parameterName, string parameterValue);
 }

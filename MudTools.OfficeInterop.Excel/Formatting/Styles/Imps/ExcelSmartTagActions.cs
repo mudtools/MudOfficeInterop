@@ -94,7 +94,7 @@ internal class ExcelSmartTagActions : IExcelSmartTagActions
 
             try
             {
-                var action = _smartTagActions[index] as MsExcel.SmartTagAction;
+                var action = _smartTagActions[index];
                 return action != null ? new ExcelSmartTagAction(action) : null;
             }
             catch (Exception ex)
@@ -119,7 +119,7 @@ internal class ExcelSmartTagActions : IExcelSmartTagActions
 
             try
             {
-                var action = _smartTagActions[name] as MsExcel.SmartTagAction;
+                var action = _smartTagActions[name];
                 return action != null ? new ExcelSmartTagAction(action) : null;
             }
             catch (Exception ex)
