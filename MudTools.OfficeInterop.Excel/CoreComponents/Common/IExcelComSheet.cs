@@ -35,7 +35,7 @@ public interface IExcelComSheet : IDisposable
     /// <summary>
     /// 获取工作表的超链接集合
     /// </summary>
-    IExcelHyperlinks Hyperlinks { get; }
+    IExcelHyperlinks? Hyperlinks { get; }
 
     /// <summary>
     /// 获取工作表所在的父对象（通常是工作簿）
@@ -78,7 +78,7 @@ public interface IExcelComSheet : IDisposable
     /// <summary>
     /// 获取工作表的页面设置对象
     /// </summary>
-    IExcelPageSetup PageSetup { get; }
+    IExcelPageSetup? PageSetup { get; }
 
     /// <summary>
     /// 获取工作表的形状集合

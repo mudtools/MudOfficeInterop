@@ -67,8 +67,12 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public MsoChartType ChartType
     {
-        get => (MsoChartType)_chart.ChartType;
-        set => _chart.ChartType = (MsExcel.XlChartType)value;
+        get => _chart != null ? _chart.ChartType.EnumConvert(MsoChartType.xl3DColumn) : MsoChartType.xl3DColumn;
+        set
+        {
+            if (_chart != null)
+                _chart.ChartType = value.EnumConvert(MsExcel.XlChartType.xl3DColumn);
+        }
     }
 
     /// <summary>
@@ -76,8 +80,12 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public XlSheetVisibility Visible
     {
-        get => (XlSheetVisibility)_chart.Visible;
-        set => _chart.Visible = (MsExcel.XlSheetVisibility)value;
+        get => _chart != null ? _chart.Visible.EnumConvert(XlSheetVisibility.xlSheetVisible) : XlSheetVisibility.xlSheetVisible;
+        set
+        {
+            if (_chart != null)
+                _chart.Visible = value.EnumConvert(MsExcel.XlSheetVisibility.xlSheetVisible);
+        }
     }
 
     public bool IsVisible
@@ -93,11 +101,11 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 获取图表内容是否被保护
     /// </summary>
-    public bool IsProtected => _chart.ProtectContents;
+    public bool IsProtected => _chart != null && _chart.ProtectionMode;
 
-    public bool ProtectContents => _chart.ProtectContents;
+    public bool ProtectContents => _chart != null && _chart.ProtectionMode;
 
-    public bool ProtectionMode => _chart.ProtectionMode;
+    public bool ProtectionMode => _chart != null && _chart.ProtectionMode;
 
 
     /// <summary>
@@ -175,7 +183,7 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 获取图表的代码名称 (只读)
     /// </summary>
-    public string CodeName => _chart.CodeName;
+    public string CodeName => _chart != null ? _chart.CodeName : "";
 
     #endregion
 
@@ -186,8 +194,12 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public double Rotation
     {
-        get => Convert.ToDouble(_chart.Rotation);
-        set => _chart.Rotation = value;
+        get => _chart != null ? Convert.ToDouble(_chart.Rotation) : 0;
+        set
+        {
+            if (_chart != null)
+                _chart.Rotation = Convert.ToInt32(value);
+        }
     }
 
     #endregion
@@ -196,10 +208,14 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 获取或设置数据绘制方式 (行/列优先)
     /// </summary>
-    public int PlotBy
+    public XlRowCol PlotBy
     {
-        get => (int)_chart.PlotBy;
-        set => _chart.PlotBy = (MsExcel.XlRowCol)value;
+        get => _chart != null ? (XlRowCol)_chart.PlotBy.EnumConvert(XlRowCol.xlColumns) : XlRowCol.xlColumns;
+        set
+        {
+            if (_chart != null)
+                _chart.PlotBy = value.EnumConvert(MsExcel.XlRowCol.xlColumns);
+        }
     }
 
     /// <summary>
@@ -207,8 +223,12 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public bool HasTitle
     {
-        get => _chart.HasTitle;
-        set => _chart.HasTitle = value;
+        get => _chart != null && _chart.HasTitle;
+        set
+        {
+            if (_chart != null)
+                _chart.HasTitle = value;
+        }
     }
 
     /// <summary>
@@ -216,11 +236,14 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public string ChartTitle
     {
-        get => HasTitle ? _chart.ChartTitle.Text : null;
+        get => _chart != null ? _chart.ChartTitle.Text : "";
         set
         {
-            HasTitle = true;
-            _chart.ChartTitle.Text = value;
+            if (_chart != null)
+            {
+                HasTitle = true;
+                _chart.ChartTitle.Text = value;
+            }
         }
     }
 
@@ -229,8 +252,12 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public bool HasLegend
     {
-        get => _chart.HasLegend;
-        set => _chart.HasLegend = value;
+        get => _chart != null && _chart.HasLegend;
+        set
+        {
+            if (_chart != null)
+                _chart.HasLegend = value;
+        }
     }
 
     /// <summary>
@@ -238,11 +265,11 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public XlLegendPosition LegendPosition
     {
-        get => HasLegend ? (XlLegendPosition)_chart.Legend.Position : XlLegendPosition.xlLegendPositionBottom;
+        get => _chart != null ? _chart.Legend.Position.EnumConvert(XlLegendPosition.xlLegendPositionRight) : XlLegendPosition.xlLegendPositionRight;
         set
         {
-            HasLegend = true;
-            _chart.Legend.Position = (MsExcel.XlLegendPosition)value;
+            if (_chart != null)
+                _chart.Legend.Position = value.EnumConvert(MsExcel.XlLegendPosition.xlLegendPositionRight);
         }
     }
 
@@ -284,22 +311,44 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 页面设置对象缓存
     /// </summary>
-    private IExcelPageSetup _pageSetup;
+    private IExcelPageSetup? _pageSetup;
 
     /// <summary>
     /// 获取工作表的页面设置对象
     /// </summary>
-    public IExcelPageSetup? PageSetup => _pageSetup ??= new ExcelPageSetup(_chart?.PageSetup);
+    public IExcelPageSetup? PageSetup
+    {
+        get
+        {
+            if (_chart == null)
+            {
+                return null;
+            }
+            _pageSetup ??= new ExcelPageSetup(_chart.PageSetup);
+            return _pageSetup;
+        }
+    }
 
     /// <summary>
     /// 超链接集合缓存
     /// </summary>
-    private IExcelHyperlinks _hyperlinks;
+    private IExcelHyperlinks? _hyperlinks;
 
     /// <summary>
     /// 获取工作表的超链接集合
     /// </summary>
-    public IExcelHyperlinks Hyperlinks => _hyperlinks ?? (_hyperlinks = new ExcelHyperlinks(_chart?.Hyperlinks));
+    public IExcelHyperlinks? Hyperlinks
+    {
+        get
+        {
+            if (_chart == null)
+            {
+                return null;
+            }
+            _hyperlinks ??= new ExcelHyperlinks(_chart.Hyperlinks);
+            return _hyperlinks;
+        }
+    }
 
     #endregion
 
@@ -310,18 +359,26 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public bool HasDataTable
     {
-        get => _chart.HasDataTable;
-        set => _chart.HasDataTable = value;
+        get => _chart != null && _chart.HasDataTable;
+        set
+        {
+            if (_chart != null)
+                _chart.HasDataTable = value;
+        }
     }
 
 
     /// <summary>
     /// 获取或设置图表样式编号
     /// </summary>
-    public int ChartStyle
+    public XlChartType ChartStyle
     {
-        get => (int)_chart.ChartStyle;
-        set => _chart.ChartStyle = value;
+        get => _chart != null ? _chart.ChartStyle.ObjectConvertEnum(XlChartType.xl3DColumn) : XlChartType.xl3DColumn;
+        set
+        {
+            if (_chart != null)
+                _chart.ChartStyle = value.EnumConvert(MsExcel.XlChartType.xl3DColumn);
+        }
     }
     #endregion
 

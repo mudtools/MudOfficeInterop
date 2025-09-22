@@ -43,7 +43,7 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// 获取或设置绘制方式
     /// 对应 Chart.PlotBy 属性
     /// </summary>
-    int PlotBy { get; set; }
+    XlRowCol PlotBy { get; set; }
 
     /// <summary>
     /// 获取或设置是否包含标题行
@@ -121,7 +121,7 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// 获取或设置图表样式
     /// 对应 Chart.ChartStyle 属性
     /// </summary>
-    int ChartStyle { get; set; }
+    XlChartType ChartStyle { get; set; }
 
     #endregion
 

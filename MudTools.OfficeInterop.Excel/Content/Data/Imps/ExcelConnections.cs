@@ -38,8 +38,8 @@ internal class ExcelConnections : IExcelConnections
         }
     }
 
-    public IExcelWorkbookConnection Add(string name, string description, string connectionString,
-                                       string commandText = null, XlCmdType lCmdType = XlCmdType.xlCmdSql)
+    public IExcelWorkbookConnection? Add(string name, string description, string connectionString,
+                                       string? commandText = null, XlCmdType lCmdType = XlCmdType.xlCmdSql)
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("连接名称不能为空。", nameof(name));
@@ -50,7 +50,7 @@ internal class ExcelConnections : IExcelConnections
         try
         {
             var connection = _connections.Add(name, description, connectionString, commandText ?? string.Empty,
-                                           (MsExcel.XlCmdType)lCmdType);
+                                         lCmdType.EnumConvert(MsExcel.XlCmdType.xlCmdSql));
             return connection != null ? new ExcelWorkbookConnection(connection) : null;
         }
         catch (COMException ex)

@@ -48,8 +48,8 @@ public interface IExcelConnections : IDisposable, IEnumerable<IExcelWorkbookConn
     /// <param name="commandText">命令文本</param>
     /// <param name="lCmdType">命令类型</param>
     /// <returns>新创建的工作簿连接对象</returns>
-    IExcelWorkbookConnection Add(string name, string description, string connectionString,
-                                string commandText = null, XlCmdType lCmdType = XlCmdType.xlCmdSql);
+    IExcelWorkbookConnection? Add(string name, string description, string connectionString,
+                                string? commandText = null, XlCmdType lCmdType = XlCmdType.xlCmdSql);
 
     /// <summary>
     /// 根据名称查找连接
