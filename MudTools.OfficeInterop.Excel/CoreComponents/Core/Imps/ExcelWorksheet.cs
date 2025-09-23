@@ -17,13 +17,13 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 internal partial class ExcelWorksheet : IExcelWorksheet
 {
     private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
+    private DisposableList _disposables = [];
     /// <summary>
     /// 底层的 COM Worksheet 对象
     /// </summary>
-    private MsExcel.Worksheet _worksheet;
+    private MsExcel.Worksheet? _worksheet;
 
-    internal MsExcel.Worksheet Worksheet => _worksheet;
+    internal MsExcel.Worksheet? Worksheet => _worksheet;
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -76,7 +76,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
                 _rows?.Dispose();
 
                 DisConnectEvent();
-
+                _disposables?.Dispose();
                 // 释放底层COM对象
                 if (_worksheet != null)
                     Marshal.ReleaseComObject(_worksheet);
@@ -148,7 +148,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     public string Name
     {
-        get => _worksheet?.Name?.ToString();
+        get => _worksheet != null ? _worksheet.Name : string.Empty;
         set
         {
             if (_worksheet != null && value != null)
@@ -158,10 +158,12 @@ internal partial class ExcelWorksheet : IExcelWorksheet
 
     private IExcelNames? _names = null;
 
-    public IExcelNames Names
+    public IExcelNames? Names
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_names != null)
                 return _names;
             _names = new ExcelNames(_worksheet.Names);
@@ -170,10 +172,12 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     }
     private IExcelVPageBreaks? _vPageBreaks = null;
 
-    public IExcelVPageBreaks VPageBreaks
+    public IExcelVPageBreaks? VPageBreaks
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_vPageBreaks != null)
                 return _vPageBreaks;
             _vPageBreaks = new ExcelVPageBreaks(_worksheet.VPageBreaks);
@@ -181,12 +185,14 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         }
     }
 
-    public IExcelQueryTables _queryTables;
+    public IExcelQueryTables? _queryTables;
 
-    public IExcelQueryTables QueryTables
+    public IExcelQueryTables? QueryTables
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_queryTables != null)
                 return _queryTables;
             _queryTables = new ExcelQueryTables(_worksheet.QueryTables);
@@ -196,10 +202,12 @@ internal partial class ExcelWorksheet : IExcelWorksheet
 
     private IExcelHPageBreaks? _hPageBreaks = null;
 
-    public IExcelHPageBreaks HPageBreaks
+    public IExcelHPageBreaks? HPageBreaks
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_hPageBreaks != null)
                 return _hPageBreaks;
             _hPageBreaks = new ExcelHPageBreaks(_worksheet.HPageBreaks);
@@ -207,12 +215,14 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         }
     }
 
-    private IExcelListObjects _listObjects;
+    private IExcelListObjects? _listObjects;
 
-    public IExcelListObjects ListObjects
+    public IExcelListObjects? ListObjects
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_listObjects != null)
                 return _listObjects;
             _listObjects = new ExcelListObjects(_worksheet.ListObjects);
@@ -221,10 +231,13 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     }
 
     private IExcelCells? _circularReference = null;
-    public IExcelCells CircularReference
+
+    public IExcelCells? CircularReference
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_circularReference != null)
                 return _circularReference;
             _circularReference = new ExcelCells(_worksheet.CircularReference);
@@ -233,10 +246,12 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     }
 
     private IExcelCells? _cells = null;
-    public IExcelCells Cells
+    public IExcelCells? Cells
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_cells != null)
                 return _cells;
             _cells = new ExcelCells(_worksheet.Cells);
@@ -244,10 +259,12 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         }
     }
     private IExcelSort? _sort = null;
-    public IExcelSort Sort
+    public IExcelSort? Sort
     {
         get
         {
+            if (_worksheet == null)
+                return null;
             if (_sort != null)
                 return _sort;
             _sort = new ExcelSort(_worksheet.Sort);
@@ -264,6 +281,8 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     {
         get
         {
+            if (_worksheet == null)
+                return Color.Empty;
             if (_tabColor == null && (int)_worksheet.Tab.Color != 0)
             {
                 _tabColor = ColorTranslator.FromOle((int)_worksheet.Tab.Color);
@@ -277,16 +296,21 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         }
     }
 
-    public bool ProtectDrawingObjects => _worksheet.ProtectDrawingObjects;
+    public bool ProtectDrawingObjects => _worksheet != null ? _worksheet.ProtectDrawingObjects : false;
 
-    public bool ProtectScenarios => _worksheet.ProtectScenarios;
+    public bool ProtectScenarios => _worksheet != null ? _worksheet.ProtectScenarios : false;
 
-    public bool ProtectionMode => _worksheet.ProtectionMode;
+    public bool ProtectionMode => _worksheet != null ? _worksheet.ProtectionMode : false;
 
     public bool TransitionExpEval
     {
-        get => _worksheet.TransitionExpEval;
-        set => _worksheet.TransitionExpEval = value;
+        get => _worksheet != null ? _worksheet.TransitionExpEval : false;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.TransitionExpEval = value;
+        }
     }
 
     /// <summary>
@@ -294,88 +318,131 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     public double StandardWidth
     {
-        get => _worksheet.StandardWidth;
-        set => _worksheet.StandardWidth = value;
+        get => _worksheet != null ? _worksheet.StandardWidth : 0;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.StandardWidth = value;
+        }
     }
 
     /// <summary>
     /// 获取大纲（分级显示）设置对象
     /// </summary>
-    public IExcelOutline Outline => new ExcelOutline(_worksheet.Outline);
+    public IExcelOutline? Outline => _worksheet != null ? new ExcelOutline(_worksheet.Outline) : null;
 
     /// <summary>
     /// 获取或设置自动筛选模式状态
     /// </summary>
     public bool AutoFilterMode
     {
-        get => _worksheet.AutoFilterMode;
-        set => _worksheet.AutoFilterMode = value;
+        get => _worksheet != null ? _worksheet.AutoFilterMode : false;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.AutoFilterMode = value;
+        }
+
     }
 
     public bool DisplayPageBreaks
     {
-        get => _worksheet.DisplayPageBreaks;
-        set => _worksheet.DisplayPageBreaks = value;
+        get => _worksheet != null ? _worksheet.DisplayPageBreaks : false;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.DisplayPageBreaks = value;
+        }
     }
 
-    public bool ProtectContents
-    {
-        get => _worksheet.ProtectContents;
-    }
+    public bool ProtectContents => _worksheet != null ? _worksheet.ProtectContents : false;
 
     /// <summary>
     /// 获取工作表当前是否处于筛选模式
     /// </summary>
-    public bool FilterMode => _worksheet.FilterMode;
+    public bool FilterMode => _worksheet != null ? _worksheet.FilterMode : false;
 
     public bool EnableOutlining
     {
-        get => _worksheet.EnableOutlining;
-        set => _worksheet.EnableOutlining = value;
+        get => _worksheet != null ? _worksheet.EnableOutlining : false;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.EnableOutlining = value;
+        }
     }
 
     public bool EnablePivotTable
     {
-        get => _worksheet.EnablePivotTable;
-        set => _worksheet.EnablePivotTable = value;
+        get => _worksheet != null ? _worksheet.EnablePivotTable : false;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.EnablePivotTable = value;
+        }
     }
 
     public string OnCalculate
     {
-        get => _worksheet.OnCalculate;
-        set => _worksheet.OnCalculate = value;
+        get => _worksheet != null ? _worksheet.OnCalculate : string.Empty;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.OnCalculate = value;
+        }
     }
 
     public string OnData
     {
-        get => _worksheet.OnData;
-        set => _worksheet.OnData = value;
+        get => _worksheet != null ? _worksheet.OnData : string.Empty;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.OnData = value;
+        }
     }
 
     public string OnDoubleClick
     {
-        get => _worksheet.OnDoubleClick;
-        set => _worksheet.OnDoubleClick = value;
+        get => _worksheet != null ? _worksheet.OnDoubleClick : string.Empty;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.OnDoubleClick = value;
+        }
     }
 
     public bool DisplayAutomaticPageBreaks
     {
-        get => _worksheet.DisplayAutomaticPageBreaks;
-        set => _worksheet.DisplayAutomaticPageBreaks = value;
+        get => _worksheet != null ? _worksheet.DisplayAutomaticPageBreaks : false;
+        set
+        {
+            if (_worksheet == null)
+                return;
+            _worksheet.DisplayAutomaticPageBreaks = value;
+        }
     }
 
     /// <summary>
     /// 获取工作表类型
     /// </summary>
-    public XlSheetType Type => (XlSheetType)(int)_worksheet.Type;
+    public XlSheetType Type => _worksheet != null ? _worksheet.Type.EnumConvert(XlSheetType.xlWorksheet) : XlSheetType.xlWorksheet;
 
     public XlEnableSelection EnableSelection
     {
-        get => (XlEnableSelection)_worksheet.EnableSelection;
+        get => _worksheet != null ? _worksheet.EnableSelection.EnumConvert(XlEnableSelection.xlNoSelection) : XlEnableSelection.xlNoSelection;
         set
         {
             if (_worksheet != null)
-                _worksheet.EnableSelection = (MsExcel.XlEnableSelection)(int)value;
+                _worksheet.EnableSelection = value.EnumConvert(MsExcel.XlEnableSelection.xlNoSelection);
         }
     }
 
@@ -389,11 +456,11 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     public XlSheetVisibility Visible
     {
-        get => _worksheet != null ? (XlSheetVisibility)_worksheet.Visible : XlSheetVisibility.xlSheetHidden;
+        get => _worksheet != null ? _worksheet.Visible.EnumConvert(XlSheetVisibility.xlSheetHidden) : XlSheetVisibility.xlSheetHidden;
         set
         {
             if (_worksheet != null)
-                _worksheet.Visible = (MsExcel.XlSheetVisibility)value;
+                _worksheet.Visible = value.EnumConvert(MsExcel.XlSheetVisibility.xlSheetHidden);
         }
     }
 
@@ -478,11 +545,11 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表所在的Application对象
     /// </summary>
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
-            var application = _worksheet?.Application as MsExcel.Application;
+            var application = _worksheet?.Application;
             return application != null ? new ExcelApplication(application) : null;
         }
     }
@@ -490,19 +557,12 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的下一个工作表
     /// </summary>
-    public IExcelWorksheet Next
+    public IExcelWorksheet? Next
     {
         get
         {
-            try
-            {
-                var nextSheet = _worksheet.Next as MsExcel.Worksheet;
-                return nextSheet != null ? new ExcelWorksheet(nextSheet) : null;
-            }
-            catch
-            {
-                return null;
-            }
+            if (_worksheet == null) return null;
+            return _worksheet.Next is MsExcel.Worksheet nextSheet ? new ExcelWorksheet(nextSheet) : null;
         }
     }
 
@@ -510,19 +570,13 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的上一个工作表
     /// </summary>
-    public IExcelWorksheet Previous
+    public IExcelWorksheet? Previous
     {
         get
         {
-            try
-            {
-                var previousSheet = _worksheet.Previous as MsExcel.Worksheet;
-                return previousSheet != null ? new ExcelWorksheet(previousSheet) : null;
-            }
-            catch
-            {
-                return null;
-            }
+            if (_worksheet == null) return null;
+            return _worksheet.Previous is MsExcel.Worksheet previousSheet ? new ExcelWorksheet(previousSheet) : null;
+
         }
     }
 
@@ -571,15 +625,9 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         {
             if (_worksheet == null) return null;
 
-            try
-            {
-                MsExcel.Range? range = _worksheet.Cells[row, column] as MsExcel.Range;
-                return range != null ? new ExcelRange(range) : null;
-            }
-            catch
-            {
-                return null;
-            }
+            var r = _worksheet.Cells[row, column] is MsExcel.Range range ? new ExcelRange(range) : null;
+            if (r != null) _disposables.Add(r);
+            return r;
         }
     }
 
@@ -588,15 +636,10 @@ internal partial class ExcelWorksheet : IExcelWorksheet
         get
         {
             if (_worksheet == null) return null;
-            try
-            {
-                var range = _worksheet.Range[address];
-                return range != null ? new ExcelRange(range) : null;
-            }
-            catch
-            {
-                return null;
-            }
+            var range = _worksheet.Range[address];
+            var r = range != null ? new ExcelRange(range) : null;
+            if (r != null) _disposables.Add(r);
+            return r;
         }
     }
 
@@ -608,19 +651,13 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     /// <param name="row">行号</param>
     /// <returns>行区域对象</returns>
-    public IExcelRange GetRow(int row)
+    public IExcelRange? GetRow(int row)
     {
         if (_worksheet == null) return null;
 
-        try
-        {
-            var range = _worksheet.Rows[row] as MsExcel.Range;
-            return range != null ? new ExcelRange(range) : null;
-        }
-        catch
-        {
-            return null;
-        }
+        var r = _worksheet.Rows[row] is MsExcel.Range range ? new ExcelRange(range) : null;
+        if (r != null) _disposables.Add(r);
+        return r;
     }
 
     /// <summary>
@@ -628,19 +665,13 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     /// <param name="column">列号</param>
     /// <returns>列区域对象</returns>
-    public IExcelRange GetColumn(int column)
+    public IExcelRange? GetColumn(int column)
     {
         if (_worksheet == null) return null;
 
-        try
-        {
-            var range = _worksheet.Columns[column] as MsExcel.Range;
-            return range != null ? new ExcelRange(range) : null;
-        }
-        catch
-        {
-            return null;
-        }
+        var r = _worksheet.Columns[column] is MsExcel.Range range ? new ExcelRange(range) : null;
+        if (r != null) _disposables.Add(r);
+        return r;
     }
 
     /// <summary>
@@ -651,7 +682,18 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的已使用区域
     /// </summary>
-    public IExcelRange UsedRange => _usedRange ??= new ExcelRange(_worksheet?.UsedRange);
+    public IExcelRange? UsedRange
+    {
+        get
+        {
+            if (_usedRange != null)
+                return _usedRange;
+            if (_worksheet == null)
+                return null;
+            _usedRange ??= new ExcelRange(_worksheet.UsedRange);
+            return _usedRange;
+        }
+    }
 
     /// <summary>
     /// 整个工作表区域缓存
@@ -661,7 +703,18 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的整个区域
     /// </summary>
-    public IExcelRange AllRange => _allRange ??= new ExcelRange(_worksheet?.Cells);
+    public IExcelRange? AllRange
+    {
+        get
+        {
+            if (_allRange != null)
+                return _allRange;
+            if (_worksheet == null)
+                return null;
+            _allRange ??= new ExcelRange(_worksheet.Range["A1", _worksheet.Cells[_worksheet.Rows.Count, _worksheet.Columns.Count]]);
+            return _allRange;
+        }
+    }
 
 
     private IExcelRange? _rows;
@@ -699,12 +752,20 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 页面设置对象缓存
     /// </summary>
-    private IExcelPageSetup _pageSetup;
+    private IExcelPageSetup? _pageSetup;
 
     /// <summary>
     /// 获取工作表的页面设置对象
     /// </summary>
-    public IExcelPageSetup PageSetup => _pageSetup ??= new ExcelPageSetup(_worksheet?.PageSetup);
+    public IExcelPageSetup? PageSetup
+    {
+        get
+        {
+            if (_worksheet == null) return null;
+            _pageSetup ??= new ExcelPageSetup(_worksheet.PageSetup);
+            return _pageSetup;
+        }
+    }
 
     #endregion
 
@@ -754,17 +815,33 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// <summary>
     /// 获取工作表的评论集合
     /// </summary>
-    public IExcelComments Comments => _comments ?? (_comments = new ExcelComments(_worksheet?.Comments));
+    public IExcelComments? Comments
+    {
+        get
+        {
+            if (_worksheet == null) return null;
+            _comments ??= new ExcelComments(_worksheet.Comments);
+            return _comments;
+        }
+    }
 
     /// <summary>
     /// 超链接集合缓存
     /// </summary>
-    private IExcelHyperlinks _hyperlinks;
+    private IExcelHyperlinks? _hyperlinks;
 
     /// <summary>
     /// 获取工作表的超链接集合
     /// </summary>
-    public IExcelHyperlinks Hyperlinks => _hyperlinks ?? (_hyperlinks = new ExcelHyperlinks(_worksheet?.Hyperlinks));
+    public IExcelHyperlinks? Hyperlinks
+    {
+        get
+        {
+            if (_worksheet == null) return null;
+            _hyperlinks ??= new ExcelHyperlinks(_worksheet.Hyperlinks);
+            return _hyperlinks;
+        }
+    }
 
     #endregion
 
@@ -1201,6 +1278,9 @@ internal partial class ExcelWorksheet : IExcelWorksheet
             throw new ArgumentException("目标位置不能为空");
         if (string.IsNullOrWhiteSpace(tableName))
             throw new ArgumentException("数据透视表名称不能为空");
+
+        if (_worksheet == null)
+            throw new InvalidOperationException("工作表不存在");
 
         try
         {

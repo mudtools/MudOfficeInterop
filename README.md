@@ -118,7 +118,7 @@ MudTools.OfficeInterop 适用于以下场景：
 所有工厂类都提供多种创建应用程序实例的方法：
 - `Connection` - 通过现有 COM 对象连接到已运行的应用程序实例
 - `BlankWorkbook` - 创建新的空白文档/工作簿/演示文稿
-- `CreateFrom` - 基于模板创建新的文档/工作簿/演示文稿
+- `CreateFrom` - 基于模板创建新的文档/工作簿/演示文稿（Word和Excel支持）
 - `Open` - 打开现有的文档/工作簿/演示文稿
 - `CreateInstance` - (仅 ExcelFactory) 通过 ProgID 创建特定版本的应用程序实例
 
@@ -130,19 +130,19 @@ MudTools.OfficeInterop 适用于以下场景：
 
 ```csharp
 // 创建 Excel 应用程序实例
-using var app = ExcelFactory.CreateApplication();
+using var app = ExcelFactory.BlankWorkbook();
 app.Visible = true;
 
-// 添加工作簿
-var workbook = app.Workbooks.Add();
-var worksheet = workbook.Worksheets.Add();
+// 获取活动工作表
+var worksheet = app.GetActiveSheet();
 
 // 操作单元格
-worksheet.Range["A1"].Value = "Hello";
-worksheet.Range["B1"].Value = "World";
+worksheet.Cells[1, 1].Value = "Hello";
+worksheet.Cells[1, 2].Value = "World";
 
 // 保存工作簿
-workbook.SaveAs(@"C:\temp\example.xlsx");
+app.ActiveWorkbook.SaveAs(@"C:\temp\example.xlsx");
+app.Quit();
 ```
 
 #### 从模板创建 Excel 工作簿
@@ -153,8 +153,8 @@ using var app = ExcelFactory.CreateFrom(@"C:\templates\ReportTemplate.xltx");
 var worksheet = app.GetActiveSheet();
 
 // 填充数据
-worksheet.Range["A1"].Value = "销售报告";
-worksheet.Range["A2"].Value = DateTime.Now.ToString("yyyy-MM-dd");
+worksheet.Cells[1, 1].Value = "销售报告";
+worksheet.Cells[2, 1].Value = DateTime.Now.ToString("yyyy-MM-dd");
 
 // 保存并关闭
 app.ActiveWorkbook.SaveAs(@"C:\reports\SalesReport.xlsx");
@@ -193,14 +193,14 @@ using var app = ExcelFactory.BlankWorkbook();
 var worksheet = app.GetActiveSheet();
 
 // 添加示例数据
-worksheet.Range["A1"].Value = "月份";
-worksheet.Range["B1"].Value = "销售额";
-worksheet.Range["A2"].Value = "一月";
-worksheet.Range["B2"].Value = 10000;
-worksheet.Range["A3"].Value = "二月";
-worksheet.Range["B3"].Value = 15000;
-worksheet.Range["A4"].Value = "三月";
-worksheet.Range["B4"].Value = 12000;
+worksheet.Cells[1, 1].Value = "月份";
+worksheet.Cells[1, 2].Value = "销售额";
+worksheet.Cells[2, 1].Value = "一月";
+worksheet.Cells[2, 2].Value = 10000;
+worksheet.Cells[3, 1].Value = "二月";
+worksheet.Cells[3, 2].Value = 15000;
+worksheet.Cells[4, 1].Value = "三月";
+worksheet.Cells[4, 2].Value = 12000;
 
 // 创建图表
 var chartObjects = worksheet.ChartObjects();
@@ -221,11 +221,11 @@ app.Quit();
 
 ```csharp
 // 创建 Word 应用程序实例
-using var app = WordFactory.CreateApplication();
+using var app = WordFactory.BlankWorkbook();
 app.Visible = true;
 
-// 创建新文档
-var document = app.Documents.Add();
+// 获取活动文档
+var document = app.ActiveDocument;
 
 // 添加内容
 var range = document.Range();
@@ -233,6 +233,7 @@ range.Text = "Hello World!";
 
 // 保存文档
 document.SaveAs2(@"C:\temp\example.docx");
+app.Quit();
 ```
 
 #### 使用模板创建 Word 文档
@@ -243,13 +244,11 @@ using var app = WordFactory.CreateFrom(@"C:\templates\ReportTemplate.dotx");
 var document = app.ActiveDocument;
 
 // 替换模板中的占位符
-var selection = app.Selection;
-selection.Find.Text = "{REPORT_TITLE}";
-selection.Find.Replacement.Text = "季度销售报告";
-selection.Find.Execute(Replace: Word.WdReplace.wdReplaceAll);
+document.FindAndReplace("{REPORT_TITLE}", "季度销售报告");
 
 // 添加表格
-var table = document.Tables.Add(document.Range(document.Content.End - 1, document.Content.End - 1), 3, 3);
+var tableRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+var table = document.Tables.Add(tableRange, 3, 3);
 table.Cell(1, 1).Range.Text = "产品";
 table.Cell(1, 2).Range.Text = "销量";
 table.Cell(1, 3).Range.Text = "收入";
@@ -264,7 +263,7 @@ using var app = WordFactory.BlankWorkbook();
 var document = app.ActiveDocument;
 
 // 添加标题
-var titleRange = document.Range();
+var titleRange = document.Range(0, 0);
 titleRange.Text = "文档标题\n";
 titleRange.Font.Bold = 1;
 titleRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
@@ -290,11 +289,11 @@ app.Quit();
 
 ```csharp
 // 创建 PowerPoint 应用程序实例
-using var app = PowerPointFactory.CreateApplication();
+using var app = PowerPointFactory.BlankWorkbook();
 app.Visible = true;
 
-// 创建新演示文稿
-var presentation = app.Presentations.Add();
+// 获取演示文稿
+var presentation = app.ActivePresentation;
 
 // 添加幻灯片
 var slide = presentation.Slides.Add(1, PowerPoint.PpSlideLayout.ppLayoutTitle);
@@ -307,6 +306,7 @@ slide.Shapes.Placeholders[2].TextFrame.TextRange.Text = "这是演示文稿的�
 
 // 保存演示文稿
 presentation.SaveAs(@"C:\presentations\example.pptx");
+app.Quit();
 ```
 
 #### 操作现有演示文稿

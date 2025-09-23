@@ -53,32 +53,32 @@ public delegate void WorkbookBeforeSaveEventHandler(IExcelWorkbook workbook, boo
 /// </summary>
 /// <param name="sheet">发生变化的工作表</param>
 /// <param name="target">发生变化的单元格区域</param>
-public delegate void SheetChangeEventHandler(IExcelWorksheet sheet, IExcelRange target);
+public delegate void SheetChangeEventHandler(IExcelComSheet sheet, IExcelRange target);
 
 /// <summary>
 /// SheetActivate事件处理委托
 /// </summary>
 /// <param name="sheet">激活的工作表</param>
-public delegate void SheetActivateEventHandler(IExcelWorksheet sheet);
+public delegate void SheetActivateEventHandler(IExcelComSheet sheet);
 
 /// <summary>
 /// 工作表删除前事件处理委托
 /// </summary>
 /// <param name="sheet">即将被删除的工作表</param>
-public delegate void SheetBeforeDeleteEventHandler(IExcelWorksheet sheet);
+public delegate void SheetBeforeDeleteEventHandler(IExcelComSheet sheet);
 
 /// <summary>
 /// SheetDeactivate事件处理委托
 /// </summary>
 /// <param name="sheet">取消激活的工作表</param>
-public delegate void SheetDeactivateEventHandler(IExcelWorksheet sheet);
+public delegate void SheetDeactivateEventHandler(IExcelComSheet sheet);
 
 /// <summary>
 /// SheetSelectionChange事件处理委托
 /// </summary>
 /// <param name="sheet">工作表</param>
 /// <param name="target">选中的区域</param>
-public delegate void SheetSelectionChangeEventHandler(IExcelWorksheet sheet, IExcelRange target);
+public delegate void SheetSelectionChangeEventHandler(IExcelComSheet sheet, IExcelRange target);
 
 /// <summary>
 /// SheetBeforeDoubleClick事件处理委托
@@ -86,7 +86,7 @@ public delegate void SheetSelectionChangeEventHandler(IExcelWorksheet sheet, IEx
 /// <param name="sheet">工作表</param>
 /// <param name="target">双击的区域</param>
 /// <param name="cancel">是否取消默认操作</param>
-public delegate void SheetBeforeDoubleClickEventHandler(IExcelWorksheet sheet, IExcelRange target, ref bool cancel);
+public delegate void SheetBeforeDoubleClickEventHandler(IExcelComSheet sheet, IExcelRange target, ref bool cancel);
 
 /// <summary>
 /// SheetBeforeRightClick事件处理委托
@@ -94,13 +94,13 @@ public delegate void SheetBeforeDoubleClickEventHandler(IExcelWorksheet sheet, I
 /// <param name="sheet">工作表</param>
 /// <param name="target">右键单击的区域</param>
 /// <param name="cancel">是否取消默认操作</param>
-public delegate void SheetBeforeRightClickEventHandler(IExcelWorksheet sheet, IExcelRange target, ref bool cancel);
+public delegate void SheetBeforeRightClickEventHandler(IExcelComSheet sheet, IExcelRange target, ref bool cancel);
 
 /// <summary>
 /// SheetCalculate事件处理委托
 /// </summary>
 /// <param name="sheet">工作表</param>
-public delegate void SheetCalculateEventHandler(IExcelWorksheet sheet);
+public delegate void SheetCalculateEventHandler(IExcelComSheet sheet);
 
 
 /// <summary>

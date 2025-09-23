@@ -368,13 +368,16 @@ partial class ExcelApplication
     /// <param name="range">发生变化的单元格区域</param>
     private void OnSheetChange(object sheet, MsExcel.Range range)
     {
-        _activeSheet?.Dispose();
-        _activeSheet = null;
-        if (_sheetChange != null && sheet != null && range != null)
+        IExcelComSheet? excelComSheet = null;
+        if (sheet != null)
+            excelComSheet = Utils.CreateSheetObj(sheet);
+        IExcelRange? excelRange = null;
+        if (range != null)
+            excelRange = new ExcelRange(range);
+
+        if (_sheetChange != null && excelComSheet != null && excelRange != null)
         {
-            var excelWorksheet = new ExcelWorksheet(sheet as MsExcel.Worksheet);
-            var excelRange = new ExcelRange(range);
-            _sheetChange(excelWorksheet, excelRange);
+            _sheetChange(excelComSheet, excelRange);
         }
     }
 
@@ -384,12 +387,12 @@ partial class ExcelApplication
     /// <param name="sheet">激活的工作表</param>
     private void OnSheetActivate(object sheet)
     {
-        _activeSheet?.Dispose();
-        _activeSheet = null;
-        if (_sheetActivate != null && sheet != null)
+        IExcelComSheet? excelComSheet = null;
+        if (sheet != null)
+            excelComSheet = Utils.CreateSheetObj(sheet);
+        if (_sheetActivate != null && excelComSheet != null)
         {
-            var excelWorksheet = new ExcelWorksheet(sheet as MsExcel.Worksheet);
-            _sheetActivate(excelWorksheet);
+            _sheetActivate(excelComSheet);
         }
     }
 
@@ -399,12 +402,12 @@ partial class ExcelApplication
     /// <param name="sheet">取消激活的工作表</param>
     private void OnSheetDeactivate(object sheet)
     {
-        _activeSheet?.Dispose();
-        _activeSheet = null;
-        if (_sheetDeactivate != null && sheet != null)
+        IExcelComSheet? excelComSheet = null;
+        if (sheet != null)
+            excelComSheet = Utils.CreateSheetObj(sheet);
+        if (_sheetDeactivate != null && excelComSheet != null)
         {
-            var excelWorksheet = new ExcelWorksheet(sheet as MsExcel.Worksheet);
-            _sheetDeactivate(excelWorksheet);
+            _sheetDeactivate(excelComSheet);
         }
     }
 
@@ -412,14 +415,19 @@ partial class ExcelApplication
     /// 处理SheetSelectionChange事件
     /// </summary>
     /// <param name="sheet">工作表</param>
-    /// <param name="target">选中的区域</param>
-    private void OnSheetSelectionChange(object sheet, MsExcel.Range target)
+    /// <param name="range">选中的区域</param>
+    private void OnSheetSelectionChange(object sheet, MsExcel.Range range)
     {
-        if (_sheetSelectionChange != null && sheet != null && target != null)
+        IExcelComSheet? excelComSheet = null;
+        if (sheet != null)
+            excelComSheet = Utils.CreateSheetObj(sheet);
+        IExcelRange? excelRange = null;
+        if (range != null)
+            excelRange = new ExcelRange(range);
+
+        if (_sheetSelectionChange != null && excelComSheet != null && excelRange != null)
         {
-            var excelWorksheet = new ExcelWorksheet(sheet as MsExcel.Worksheet);
-            var excelRange = new ExcelRange(target);
-            _sheetSelectionChange(excelWorksheet, excelRange);
+            _sheetSelectionChange(excelComSheet, excelRange);
         }
     }
 
@@ -427,15 +435,20 @@ partial class ExcelApplication
     /// 处理SheetBeforeDoubleClick事件
     /// </summary>
     /// <param name="sheet">工作表</param>
-    /// <param name="target">双击的单元格</param>
+    /// <param name="range">双击的单元格</param>
     /// <param name="cancel">是否取消默认操作</param>
-    private void OnSheetBeforeDoubleClick(object sheet, MsExcel.Range target, ref bool cancel)
+    private void OnSheetBeforeDoubleClick(object sheet, MsExcel.Range range, ref bool cancel)
     {
-        if (_sheetBeforeDoubleClick != null && sheet != null && target != null)
+        IExcelComSheet? excelComSheet = null;
+        if (sheet != null)
+            excelComSheet = Utils.CreateSheetObj(sheet);
+        IExcelRange? excelRange = null;
+        if (range != null)
+            excelRange = new ExcelRange(range);
+
+        if (_sheetBeforeDoubleClick != null && excelComSheet != null && excelRange != null)
         {
-            var excelWorksheet = new ExcelWorksheet(sheet as MsExcel.Worksheet);
-            var excelRange = new ExcelRange(target);
-            _sheetBeforeDoubleClick(excelWorksheet, excelRange, ref cancel);
+            _sheetBeforeDoubleClick(excelComSheet, excelRange, ref cancel);
         }
     }
 
@@ -443,15 +456,20 @@ partial class ExcelApplication
     /// 处理SheetBeforeRightClick事件
     /// </summary>
     /// <param name="sheet">工作表</param>
-    /// <param name="target">右击的单元格</param>
+    /// <param name="range">右击的单元格</param>
     /// <param name="cancel">是否取消默认操作</param>
-    private void OnSheetBeforeRightClick(object sheet, MsExcel.Range target, ref bool cancel)
+    private void OnSheetBeforeRightClick(object sheet, MsExcel.Range range, ref bool cancel)
     {
-        if (_sheetBeforeRightClick != null && sheet != null && target != null)
+        IExcelComSheet? excelComSheet = null;
+        if (sheet != null)
+            excelComSheet = Utils.CreateSheetObj(sheet);
+        IExcelRange? excelRange = null;
+        if (range != null)
+            excelRange = new ExcelRange(range);
+
+        if (_sheetBeforeRightClick != null && excelComSheet != null && excelRange != null)
         {
-            var excelWorksheet = new ExcelWorksheet(sheet as MsExcel.Worksheet);
-            var excelRange = new ExcelRange(target);
-            _sheetBeforeRightClick(excelWorksheet, excelRange, ref cancel);
+            _sheetBeforeRightClick(excelComSheet, excelRange, ref cancel);
         }
     }
 

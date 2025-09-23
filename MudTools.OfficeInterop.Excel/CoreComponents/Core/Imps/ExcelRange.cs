@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -36,7 +36,9 @@ internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRa
     {
         get
         {
-            return _range?.Item[row.ComArgsVal(i => i > 0), column.ComArgsVal(i => i > 0)] is MsExcel.Range rang ? new ExcelRange(rang) : null;
+            var range = _range?.Item[row.ComArgsVal(i => i > 0), column.ComArgsVal(i => i > 0)] is MsExcel.Range rang && rang != null ? new ExcelRange(rang) : null;
+            if (range != null) _disposableList.Add(range);
+            return range;
         }
     }
 
@@ -50,7 +52,9 @@ internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRa
     {
         get
         {
-            return _range?.Item[rowAddress.ComArgsVal(), columnAddress.ComArgsVal()] is MsExcel.Range rang ? new ExcelRange(rang) : null;
+            var range = _range?.Item[rowAddress.ComArgsVal(), columnAddress.ComArgsVal()] is MsExcel.Range rang && rang != null ? new ExcelRange(rang) : null;
+            if (range != null) _disposableList.Add(range);
+            return range;
         }
     }
 
@@ -64,7 +68,9 @@ internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRa
         {
             if (string.IsNullOrWhiteSpace(address))
                 throw new ArgumentException("地址不能为空");
-            return _range?[address] is MsExcel.Range rang ? new ExcelRange(rang) : null;
+            var range = _range?[address] is MsExcel.Range rang && rang != null ? new ExcelRange(rang) : null;
+            if (range != null) _disposableList.Add(range);
+            return range;
         }
     }
 

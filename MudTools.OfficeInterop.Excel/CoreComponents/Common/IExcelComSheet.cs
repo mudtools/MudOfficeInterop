@@ -15,7 +15,7 @@ public interface IExcelComSheet : IDisposable
     /// <summary>
     /// 获取图表所在的 Excel Application 对象
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置工作表的名称

@@ -216,7 +216,7 @@ partial class ExcelWorkbook
     private void _workbookEvents_Event_SheetChange(object Sh, MsExcel.Range Target)
     {
         using var range = new ExcelRange(Target);
-        _workBookSheetChangeEventHandler.Invoke(Sh, range);
+        _workBookSheetChangeEventHandler?.Invoke(Sh, range);
     }
 
     private void _workbookEvents_Event_Sync(MsCore.MsoSyncEventType SyncEventType)

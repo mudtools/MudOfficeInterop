@@ -20,19 +20,19 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// 获取工作表的命名区域集合
     /// 对应 Worksheet.Names 属性
     /// </summary>
-    IExcelNames Names { get; }
+    IExcelNames? Names { get; }
 
     IExcelPrintPreview? PrintPreview { get; }
 
     /// <summary>
     /// 获取工作表的垂直分页符集合
     /// </summary>
-    IExcelVPageBreaks VPageBreaks { get; }
+    IExcelVPageBreaks? VPageBreaks { get; }
 
     /// <summary>
     /// 获取工作表的水平分页符集合
     /// </summary>
-    IExcelHPageBreaks HPageBreaks { get; }
+    IExcelHPageBreaks? HPageBreaks { get; }
 
     /// <summary>
     /// 获取一个值，该值指示工作表中的图形对象是否受到保护
@@ -52,17 +52,17 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// <summary>
     /// 获取工作表单元格
     /// </summary>
-    IExcelCells Cells { get; }
+    IExcelCells? Cells { get; }
 
     /// <summary>
     /// 获取工作表中的循环引用单元格集合
     /// </summary>
-    IExcelCells CircularReference { get; }
+    IExcelCells? CircularReference { get; }
 
     /// <summary>
     /// 获取工作表的排序操作对象
     /// </summary>
-    IExcelSort Sort { get; }
+    IExcelSort? Sort { get; }
 
     /// <summary>
     /// 获取或设置标准列宽
@@ -72,7 +72,7 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// <summary>
     /// 获取大纲（分级显示）设置对象
     /// </summary>
-    IExcelOutline Outline { get; }
+    IExcelOutline? Outline { get; }
 
     /// <summary>
     /// 获取或设置自动筛选模式状态
@@ -83,7 +83,7 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// 获取工作表的自动筛选器对象
     /// 对应 Worksheet.AutoFilter 属性
     /// </summary>
-    IExcelAutoFilter AutoFilter { get; }
+    IExcelAutoFilter? AutoFilter { get; }
 
     /// <summary>
     /// 获取或设置是否显示分页符
@@ -148,13 +148,13 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// 获取工作表的下一个工作表
     /// 对应 Worksheet.Next 属性
     /// </summary>
-    IExcelWorksheet Next { get; }
+    IExcelWorksheet? Next { get; }
 
     /// <summary>
     /// 获取工作表的上一个工作表
     /// 对应 Worksheet.Previous 属性
     /// </summary>
-    IExcelWorksheet Previous { get; }
+    IExcelWorksheet? Previous { get; }
 
     #endregion
 
@@ -204,25 +204,25 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// </summary>
     /// <param name="row">行号</param>
     /// <returns>行区域对象</returns>
-    IExcelRange GetRow(int row);
+    IExcelRange? GetRow(int row);
 
     /// <summary>
     /// 获取工作表中指定列的区域对象
     /// </summary>
     /// <param name="column">列号</param>
     /// <returns>列区域对象</returns>
-    IExcelRange GetColumn(int column);
+    IExcelRange? GetColumn(int column);
 
     /// <summary>
     /// 获取工作表的已使用区域
     /// 对应 Worksheet.UsedRange 属性
     /// </summary>
-    IExcelRange UsedRange { get; }
+    IExcelRange? UsedRange { get; }
 
     /// <summary>
     /// 获取工作表的整个区域
     /// </summary>
-    IExcelRange AllRange { get; }
+    IExcelRange? AllRange { get; }
 
     #endregion
 
@@ -232,7 +232,7 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// 获取工作表的列表对象集合
     /// 对应 Worksheet.ListObjects 属性
     /// </summary>
-    IExcelListObjects ListObjects { get; }
+    IExcelListObjects? ListObjects { get; }
 
     /// <summary>
     /// 获取工作表的图片集合
@@ -242,13 +242,13 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     /// <summary>
     /// 获取工作表的评论集合
     /// </summary>
-    IExcelComments Comments { get; }
+    IExcelComments? Comments { get; }
 
     #endregion
 
     #region 数据操作
 
-    IExcelQueryTables QueryTables { get; }
+    IExcelQueryTables? QueryTables { get; }
 
     /// <summary>
     /// 获取或设置工作表的默认行高
