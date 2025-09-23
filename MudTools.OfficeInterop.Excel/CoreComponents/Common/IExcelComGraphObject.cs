@@ -15,17 +15,17 @@ public interface IExcelComGraphObject : IDisposable
     /// <summary>
     /// 获取图表所在的 Excel Application 对象
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取绘图对象的边框格式设置
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取绘图对象的内部格式设置
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取图表对象的左上角单元格
@@ -35,7 +35,7 @@ public interface IExcelComGraphObject : IDisposable
     /// <summary>
     /// 获取绘图对象的范围（如果是图表或列表对象）
     /// </summary>
-    IExcelShapeRange ShapeRange { get; }
+    IExcelShapeRange? ShapeRange { get; }
 
     /// <summary>
     /// 获取图表对象所在的父对象（通常是工作簿）

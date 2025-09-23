@@ -6,9 +6,10 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 internal class ExcelDrawing : IExcelDrawing
 {
-    private MsExcel.Drawing _drawing;
+    private MsExcel.Drawing? _drawing;
     private bool _disposedValue;
 
     /// <summary>
@@ -46,47 +47,72 @@ internal class ExcelDrawing : IExcelDrawing
     /// <summary>
     /// 获取绘图对象的索引
     /// </summary>
-    public int Index => _drawing.Index;
+    public int Index => _drawing != null ? _drawing.Index : -1;
 
     public string Name
     {
-        get => _drawing.Name;
-        set => _drawing.Name = value;
+        get => _drawing != null ? _drawing.Name : string.Empty;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Name = value;
+        }
     }
 
     public double Left
     {
-        get => _drawing.Left;
-        set => _drawing.Left = (float)value;
+        get => _drawing != null ? _drawing.Left : 0;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Left = value;
+        }
     }
 
     public double Top
     {
-        get => _drawing.Top;
-        set => _drawing.Top = (float)value;
+        get => _drawing != null ? _drawing.Top : 0;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Top = value;
+        }
     }
 
     public double Width
     {
-        get => _drawing.Width;
-        set => _drawing.Width = (float)value;
+        get => _drawing != null ? _drawing.Width : 0;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Width = value;
+        }
     }
 
     public double Height
     {
-        get => _drawing.Height;
-        set => _drawing.Height = (float)value;
+        get => _drawing != null ? _drawing.Height : 0;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Height = value;
+        }
     }
 
 
     public bool Visible
     {
-        get => _drawing.Visible;
-        set => _drawing.Visible = value;
+        get => _drawing != null ? _drawing.Visible : false;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Visible = value;
+        }
     }
+
     public bool PrintObject
     {
-        get => _drawing.PrintObject;
+        get => _drawing != null ? _drawing.PrintObject : false;
         set
         {
             if (_drawing != null)
@@ -96,8 +122,12 @@ internal class ExcelDrawing : IExcelDrawing
 
     public bool Locked
     {
-        get => _drawing.Locked;
-        set => _drawing.Locked = !value;
+        get => _drawing != null ? _drawing.Locked : false;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Locked = value;
+        }
     }
 
     public IExcelBorder? Border => _drawing != null ? new ExcelBorder(_drawing.Border) : null;
@@ -105,36 +135,51 @@ internal class ExcelDrawing : IExcelDrawing
     public IExcelInterior? Interior => _drawing != null ? new ExcelInterior(_drawing.Interior) : null;
 
 
-    public IExcelDrawingObjects ParentDrawing => new ExcelDrawingObjects(_drawing?.Parent as MsExcel.DrawingObjects);
+    public IExcelDrawingObjects? ParentDrawing => _drawing != null && _drawing.Parent is MsExcel.DrawingObjects dObj && dObj != null ? new ExcelDrawingObjects(dObj) : null;
 
-    public IExcelWorksheet Worksheet => new ExcelWorksheet(_drawing?.Parent as MsExcel.Worksheet);
+    public IExcelWorksheet? Worksheet => _drawing != null && _drawing.Parent is MsExcel.Worksheet worksheet && worksheet != null ? new ExcelWorksheet(worksheet) : null;
 
     public IExcelRange? TopLeftCell => _drawing != null ? new ExcelRange(_drawing.TopLeftCell) : null;
 
 
     public string Text
     {
-        get => _drawing.Text;
-        set => _drawing.Text = value;
+        get => _drawing != null ? _drawing.Text : string.Empty;
+        set
+        {
+            if (_drawing != null)
+                _drawing.Text = value;
+        }
     }
 
-    public IExcelFont Font => new ExcelFont(_drawing.Font);
+    public IExcelFont? Font => _drawing != null ? new ExcelFont(_drawing.Font) : null;
 
     public XlHAlign HorizontalAlignment
     {
-        get => (XlHAlign)(int)_drawing.HorizontalAlignment;
-        set => _drawing.HorizontalAlignment = (MsExcel.XlHAlign)value;
+        get => _drawing != null ? _drawing.HorizontalAlignment.ObjectConvertEnum(XlHAlign.xlHAlignGeneral) : XlHAlign.xlHAlignGeneral;
+        set
+        {
+            if (_drawing == null)
+                return;
+            _drawing.HorizontalAlignment = value.EnumConvert(MsExcel.XlHAlign.xlHAlignGeneral);
+        }
     }
 
     public XlVAlign VerticalAlignment
     {
-        get => (XlVAlign)(int)_drawing.VerticalAlignment;
-        set => _drawing.VerticalAlignment = (MsExcel.XlVAlign)value;
+        get => _drawing != null ? _drawing.VerticalAlignment.ObjectConvertEnum(XlVAlign.xlVAlignBottom) : XlVAlign.xlVAlignBottom;
+        set
+        {
+            if (_drawing == null)
+                return;
+            _drawing.VerticalAlignment = value.EnumConvert(MsExcel.XlVAlign.xlVAlignBottom);
+        }
+
     }
 
-    public IExcelShapeRange ShapeRange
+    public IExcelShapeRange? ShapeRange
     {
-        get => new ExcelShapeRange(_drawing.ShapeRange);
+        get => _drawing != null ? new ExcelShapeRange(_drawing.ShapeRange) : null;
     }
 
     internal ExcelDrawing(MsExcel.Drawing shape)
@@ -147,7 +192,7 @@ internal class ExcelDrawing : IExcelDrawing
     {
         try
         {
-            _drawing.Select(replace);
+            _drawing?.Select(replace);
         }
         catch (COMException ex)
         {
@@ -159,7 +204,7 @@ internal class ExcelDrawing : IExcelDrawing
     {
         try
         {
-            _drawing.Delete();
+            _drawing?.Delete();
         }
         catch (COMException ex)
         {
@@ -171,7 +216,7 @@ internal class ExcelDrawing : IExcelDrawing
     {
         try
         {
-            _drawing.Copy();
+            _drawing?.Copy();
         }
         catch (COMException ex)
         {
@@ -183,7 +228,7 @@ internal class ExcelDrawing : IExcelDrawing
     {
         try
         {
-            _drawing.Cut();
+            _drawing?.Cut();
         }
         catch (COMException ex)
         {
@@ -193,10 +238,11 @@ internal class ExcelDrawing : IExcelDrawing
 
     public void Move(double left, double top)
     {
+        if (_drawing == null) return;
         try
         {
-            _drawing.Left = (float)left;
-            _drawing.Top = (float)top;
+            _drawing.Left = left;
+            _drawing.Top = top;
         }
         catch (COMException ex)
         {
@@ -206,10 +252,11 @@ internal class ExcelDrawing : IExcelDrawing
 
     public void Resize(double width, double height)
     {
+        if (_drawing == null) return;
         try
         {
-            _drawing.Width = (float)width;
-            _drawing.Height = (float)height;
+            _drawing.Width = width;
+            _drawing.Height = height;
         }
         catch (COMException ex)
         {
@@ -241,11 +288,7 @@ internal class ExcelDrawing : IExcelDrawing
 
         if (disposing && _drawing != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_drawing) > 0) { }
-            }
-            catch { }
+            Marshal.ReleaseComObject(_drawing);
             _drawing = null;
         }
 

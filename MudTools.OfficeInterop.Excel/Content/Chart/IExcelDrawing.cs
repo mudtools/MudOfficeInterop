@@ -17,12 +17,12 @@ public interface IExcelDrawing : IExcelComGraphObject, IDisposable
     /// <summary>
     /// 获取父级绘图对象集合
     /// </summary>
-    IExcelDrawingObjects ParentDrawing { get; }
+    IExcelDrawingObjects? ParentDrawing { get; }
 
     /// <summary>
     /// 获取关联的工作表
     /// </summary>
-    IExcelWorksheet Worksheet { get; }
+    IExcelWorksheet? Worksheet { get; }
 
     /// <summary>
     /// 获取或设置绘图对象的文本内容（如果是文本框或形状）
@@ -32,7 +32,7 @@ public interface IExcelDrawing : IExcelComGraphObject, IDisposable
     /// <summary>
     /// 获取绘图对象的字体属性（如果是文本对象）
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取或设置绘图对象的水平对齐方式
