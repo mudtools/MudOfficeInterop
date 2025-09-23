@@ -24,7 +24,7 @@ public interface IExcelQueryTables : IEnumerable<IExcelQueryTable>, IDisposable
     /// </summary>
     /// <param name="index">查询表索引（1-based）</param>
     /// <returns>对应的查询表对象</returns>
-    IExcelQueryTable this[int index] { get; }
+    IExcelQueryTable? this[int index] { get; }
 
     /// <summary>
     /// 获取此集合所属的父对象（通常是 Worksheet）。
@@ -34,7 +34,7 @@ public interface IExcelQueryTables : IEnumerable<IExcelQueryTable>, IDisposable
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 向集合中添加一个新查询表。
@@ -43,5 +43,5 @@ public interface IExcelQueryTables : IEnumerable<IExcelQueryTable>, IDisposable
     /// <param name="destination">目标范围（数据导入位置）</param>
     /// <param name="sql">可选 SQL 查询语句</param>
     /// <returns>新创建的查询表对象</returns>
-    IExcelQueryTable Add(object connection, IExcelRange destination, object sql = null);
+    IExcelQueryTable? Add(object connection, IExcelRange destination, object sql = null);
 }

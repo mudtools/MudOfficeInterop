@@ -24,14 +24,14 @@ public interface IExcelProtectedViewWindows : IDisposable, IEnumerable<IExcelPro
     /// </summary>
     /// <param name="index">窗口索引</param>
     /// <returns>受保护视图窗口对象</returns>
-    IExcelProtectedViewWindow this[int index] { get; }
+    IExcelProtectedViewWindow? this[int index] { get; }
 
     /// <summary>
     /// 根据窗口标题获取受保护视图窗口
     /// </summary>
     /// <param name="caption">窗口标题</param>
     /// <returns>受保护视图窗口对象</returns>
-    IExcelProtectedViewWindow this[string caption] { get; }
+    IExcelProtectedViewWindow? this[string caption] { get; }
 
     /// <summary>
     /// 打开文件到受保护视图
@@ -41,7 +41,7 @@ public interface IExcelProtectedViewWindows : IDisposable, IEnumerable<IExcelPro
     /// <param name="readOnlyRecommended">是否推荐只读</param>
     /// <param name="editable">是否可编辑</param>
     /// <returns>受保护视图窗口对象</returns>
-    IExcelProtectedViewWindow Open(string filename, string password = null,
+    IExcelProtectedViewWindow? Open(string filename, string? password = null,
                                   bool readOnlyRecommended = false, bool editable = false);
 
     /// <summary>
@@ -49,25 +49,25 @@ public interface IExcelProtectedViewWindows : IDisposable, IEnumerable<IExcelPro
     /// </summary>
     /// <param name="filename">文件路径</param>
     /// <returns>受保护视图窗口对象</returns>
-    IExcelProtectedViewWindow FindByFilename(string filename);
+    IExcelProtectedViewWindow? FindByFilename(string filename);
 
     /// <summary>
     /// 根据窗口标题查找受保护视图窗口
     /// </summary>
     /// <param name="caption">窗口标题</param>
     /// <returns>受保护视图窗口对象</returns>
-    IExcelProtectedViewWindow FindByCaption(string caption);
+    IExcelProtectedViewWindow? FindByCaption(string caption);
 
 
     /// <summary>
     /// 获取父级应用程序
     /// </summary>
-    IExcelApplication Parent { get; }
+    IExcelApplication? Parent { get; }
 
     /// <summary>
     /// 获取活动的受保护视图窗口
     /// </summary>
-    IExcelProtectedViewWindow ActiveProtectedViewWindow { get; }
+    IExcelProtectedViewWindow? ActiveProtectedViewWindow { get; }
 
     /// <summary>
     /// 获取可见的受保护视图窗口

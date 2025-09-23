@@ -13,8 +13,8 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 internal class ExcelQueryTables : IExcelQueryTables
 {
     private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-    internal MsExcel.QueryTables _queryTables;
+    private DisposableList _disposables = [];
+    internal MsExcel.QueryTables? _queryTables;
     private bool _disposedValue = false;
 
     internal ExcelQueryTables(MsExcel.QueryTables queryTables)
@@ -22,16 +22,31 @@ internal class ExcelQueryTables : IExcelQueryTables
         _queryTables = queryTables ?? throw new ArgumentNullException(nameof(queryTables));
     }
 
-    public int Count => _queryTables.Count;
+    public int Count => _queryTables != null ? _queryTables.Count : 0;
 
-    public IExcelQueryTable this[int index]
+    public IExcelQueryTable? this[int index]
     {
         get
         {
             if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelQueryTables));
+            if (_queryTables == null)
+                return null;
+            if (index < 1 || index > Count)
+            {
+                log.Error($"索引 {index} 超出范围");
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
             try
             {
-                return new ExcelQueryTable((MsExcel.QueryTable)_queryTables[index]);
+                var r = new ExcelQueryTable(_queryTables[index]);
+                _disposables.Add(r);
+                return r;
+            }
+            catch (COMException comEx)
+            {
+                log.Error($"获取第 {index} 个查询表失败: {comEx.Message}", comEx);
+                throw;
             }
             catch (Exception ex)
             {
@@ -41,13 +56,16 @@ internal class ExcelQueryTables : IExcelQueryTables
         }
     }
 
-    public object Parent => _queryTables.Parent;
-    public IExcelApplication Application => new ExcelApplication(_queryTables.Application);
+    public object? Parent => _queryTables != null ? _queryTables.Parent : 0;
+    public IExcelApplication? Application => _queryTables != null ? new ExcelApplication(_queryTables.Application) : null;
 
-    public IExcelQueryTable Add(object connection, IExcelRange destination, object sql = null)
+    public IExcelQueryTable? Add(object connection, IExcelRange destination, object sql = null)
     {
         if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelQueryTables));
         if (destination == null) throw new ArgumentNullException(nameof(destination));
+
+        if (_queryTables == null)
+            return null;
 
         try
         {
@@ -61,6 +79,11 @@ internal class ExcelQueryTables : IExcelQueryTables
                 qt = _queryTables.Add(connection, destRange);
 
             return new ExcelQueryTable(qt);
+        }
+        catch (COMException comEx)
+        {
+            log.Error($"添加查询表失败: {comEx.Message}", comEx);
+            throw;
         }
         catch (Exception ex)
         {
@@ -101,11 +124,16 @@ internal class ExcelQueryTables : IExcelQueryTables
         {
             try
             {
+                _disposables?.Dispose();
                 if (_queryTables != null)
                 {
                     Marshal.ReleaseComObject(_queryTables);
                     _queryTables = null;
                 }
+            }
+            catch (COMException comEx)
+            {
+                log.Error($"释放 QueryTables 时发生异常: {comEx.Message}", comEx);
             }
             catch (Exception ex)
             {
