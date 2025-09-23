@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelDataTable : IExcelDataTable
 {
-    private MsExcel.DataTable _dataTable;
+    private MsExcel.DataTable? _dataTable;
     private bool _disposedValue = false;
 
     internal ExcelDataTable(MsExcel.DataTable dataTable)
@@ -22,65 +22,107 @@ internal class ExcelDataTable : IExcelDataTable
     }
 
     #region 基础属性  
-    public object Parent => _dataTable.Parent;
+    public object? Parent => _dataTable != null ? _dataTable.Parent : null;
 
-    public IExcelApplication Application => new ExcelApplication(_dataTable.Application);
+    public IExcelApplication? Application => _dataTable != null ? new ExcelApplication(_dataTable.Application) : null;
     #endregion
 
     #region 格式设置
-    public IExcelFont Font => new ExcelFont(_dataTable.Font);
+    public IExcelFont? Font
+    {
+        get
+        {
+            if (_dataTable == null)
+                return null;
+            return new ExcelFont(_dataTable.Font);
+        }
+    }
+
+    public IExcelBorder? Border
+    {
+        get
+        {
+            if (_dataTable == null)
+                return null;
+            return new ExcelBorder(_dataTable.Border);
+        }
+    }
+
+    public IExcelChartFormat? Format
+    {
+        get
+        {
+            if (_dataTable == null)
+                return null;
+            return new ExcelChartFormat(_dataTable.Format);
+        }
+    }
 
     public bool AutoScaleFont
     {
-        get => Convert.ToBoolean(_dataTable.AutoScaleFont);
-        set => _dataTable.AutoScaleFont = value;
+        get => _dataTable != null ? _dataTable.AutoScaleFont.ConvertToBool() : false;
+        set
+        {
+            if (_dataTable == null)
+                return;
+            _dataTable.AutoScaleFont = value;
+        }
     }
-
-    public IExcelBorder Border => new ExcelBorder(_dataTable.Border);
-
-    public IExcelChartFormat Format => new ExcelChartFormat(_dataTable.Format);
 
     public bool ShowLegendKey
     {
-        get => _dataTable.ShowLegendKey;
-        set => _dataTable.ShowLegendKey = value;
+        get => _dataTable != null ? _dataTable.ShowLegendKey : false;
+        set
+        {
+            if (_dataTable == null)
+                return;
+            _dataTable.ShowLegendKey = value;
+        }
     }
 
     public bool HasBorderHorizontal
     {
-        get => _dataTable.HasBorderHorizontal;
-        set => _dataTable.HasBorderHorizontal = value;
+        get => _dataTable != null ? _dataTable.HasBorderHorizontal : false;
+        set
+        {
+            if (_dataTable == null)
+                return;
+            _dataTable.HasBorderHorizontal = value;
+        }
     }
 
     public bool HasBorderVertical
     {
-        get => _dataTable.HasBorderVertical;
-        set => _dataTable.HasBorderVertical = value;
+        get => _dataTable != null ? _dataTable.HasBorderVertical : false;
+        set
+        {
+            if (_dataTable == null)
+                return;
+            _dataTable.HasBorderVertical = value;
+        }
     }
 
     public bool HasBorderOutline
     {
-        get => _dataTable.HasBorderOutline;
-        set => _dataTable.HasBorderOutline = value;
+        get => _dataTable != null ? _dataTable.HasBorderOutline : false;
+        set
+        {
+            if (_dataTable == null)
+                return;
+            _dataTable.HasBorderOutline = value;
+        }
     }
-    #endregion  
+    #endregion
 
     #region 操作方法
     public void Select()
     {
-        _dataTable.Select();
+        _dataTable?.Select();
     }
 
     public void Delete()
     {
-        try
-        {
-            _dataTable.Delete();
-        }
-        catch
-        {
-            System.Diagnostics.Debug.WriteLine("Direct deletion of DataTable object is not standard. Consider setting Chart.HasDataTable = false.");
-        }
+        _dataTable?.Delete();
     }
 
     #endregion
@@ -102,16 +144,8 @@ internal class ExcelDataTable : IExcelDataTable
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_dataTable != null)
-                    Marshal.ReleaseComObject(_dataTable);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            if (_dataTable != null)
+                Marshal.ReleaseComObject(_dataTable);
             _dataTable = null;
         }
         _disposedValue = true;

@@ -18,13 +18,13 @@ public interface IExcelDataTable : IDisposable
     /// 获取数据表对象的父对象 (通常是 Chart)
     /// 对应 DataTable.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据表对象所在的 Application 对象
     /// 对应 DataTable.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 格式设置
@@ -32,7 +32,7 @@ public interface IExcelDataTable : IDisposable
     /// 获取数据表的字体对象
     /// 对应 DataTable.Font 属性
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取或设置是否自动缩放字体
@@ -44,13 +44,13 @@ public interface IExcelDataTable : IDisposable
     /// 获取数据表的边框对象
     /// 对应 DataTable.Border 属性
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取数据表的格式对象
     /// 对应 DataTable.Format 属性
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
 
     /// <summary>
     /// 获取或设置是否在数据表中显示图例项标示
