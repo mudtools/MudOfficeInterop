@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelChartTitle : IExcelChartTitle
 {
-    private MsExcel.ChartTitle _chartTitle;
+    private MsExcel.ChartTitle? _chartTitle;
     private bool _disposedValue = false;
 
     internal ExcelChartTitle(MsExcel.ChartTitle chartTitle)
@@ -23,98 +23,263 @@ internal class ExcelChartTitle : IExcelChartTitle
     #region 基础属性
     public string Name
     {
-        get => _chartTitle.Name;
+        get => _chartTitle != null ? _chartTitle.Name : string.Empty;
     }
 
 
     public string Text
     {
-        get => _chartTitle.Text;
-        set => _chartTitle.Text = value;
+        get => _chartTitle != null ? _chartTitle.Text : string.Empty;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Text = value;
+        }
     }
 
-    public object Parent => _chartTitle.Parent;
+    public string Caption
+    {
+        get => _chartTitle != null ? _chartTitle.Caption : string.Empty;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Caption = value;
+        }
+    }
 
-    public IExcelApplication Application => new ExcelApplication(_chartTitle.Application);
+    public object? Parent => _chartTitle?.Parent;
+
+    public IExcelApplication? Application => _chartTitle != null ? new ExcelApplication(_chartTitle.Application) : null;
     #endregion
 
     #region 位置和大小
     public double Left
     {
-        get => _chartTitle.Left;
-        set => _chartTitle.Left = value;
+        get => _chartTitle != null ? _chartTitle.Left : 0;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Left = value;
+        }
     }
 
     public double Top
     {
-        get => _chartTitle.Top;
-        set => _chartTitle.Top = value;
+        get => _chartTitle != null ? _chartTitle.Top : 0;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Top = value;
+        }
     }
 
     public double Width
     {
-        get => _chartTitle.Width;
+        get => _chartTitle != null ? _chartTitle.Width : 0;
     }
 
     public double Height
     {
-        get => _chartTitle.Height;
+        get => _chartTitle != null ? _chartTitle.Height : 0;
     }
     #endregion
 
     #region 格式设置
-    public IExcelFont Font => new ExcelFont(_chartTitle.Font);
+    public bool AutoScaleFont
+    {
+        get => _chartTitle != null ? _chartTitle.AutoScaleFont.ConvertToBool() : false;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.AutoScaleFont = value;
+        }
+    }
 
-    public IExcelChartFormat Format => new ExcelChartFormat(_chartTitle.Format);
+    public bool IncludeInLayout
+    {
+        get => _chartTitle != null ? _chartTitle.IncludeInLayout : false;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.IncludeInLayout = value;
+        }
+    }
+
+    public bool Shadow
+    {
+        get => _chartTitle != null ? _chartTitle.Shadow : false;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Shadow = value;
+        }
+    }
+
+    public string Formula
+    {
+        get => _chartTitle != null ? _chartTitle.Formula : string.Empty;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Formula = value;
+        }
+    }
+
+    public string FormulaR1C1
+    {
+        get => _chartTitle != null ? _chartTitle.FormulaR1C1 : string.Empty;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.FormulaR1C1 = value;
+        }
+    }
+
+    public string FormulaLocal
+    {
+        get => _chartTitle != null ? _chartTitle.FormulaLocal : string.Empty;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.FormulaLocal = value;
+        }
+    }
+
+    public string FormulaR1C1Local
+    {
+        get => _chartTitle != null ? _chartTitle.FormulaR1C1Local : string.Empty;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.FormulaR1C1Local = value;
+        }
+    }
+
+    public XlChartElementPosition Position
+    {
+        get => _chartTitle != null ? _chartTitle.Position.ObjectConvertEnum(XlChartElementPosition.xlChartElementPositionAutomatic) : XlChartElementPosition.xlChartElementPositionAutomatic;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Position = value.EnumConvert(MsExcel.XlChartElementPosition.xlChartElementPositionAutomatic);
+        }
+    }
+
+    public IExcelFont? Font
+    {
+        get
+        {
+            if (_chartTitle == null)
+                return null;
+            return new ExcelFont(_chartTitle.Font);
+        }
+    }
+
+    public IExcelChartFormat? Format
+    {
+        get
+        {
+            if (_chartTitle == null)
+                return null;
+            return new ExcelChartFormat(_chartTitle.Format);
+        }
+    }
+
+    public IExcelBorder? Border
+    {
+        get
+        {
+            if (_chartTitle == null)
+                return null;
+            return new ExcelBorder(_chartTitle.Border);
+        }
+    }
 
     /// <summary>
     /// 获取样式的内部格式对象
     /// </summary>
-    public IExcelInterior Interior => new ExcelInterior(_chartTitle.Interior);
-
-
-    public bool AutoScaleFont
+    public IExcelInterior? Interior
     {
-        get => Convert.ToBoolean(_chartTitle.AutoScaleFont);
-        set => _chartTitle.AutoScaleFont = value;
+        get
+        {
+            if (_chartTitle == null)
+                return null;
+            return new ExcelInterior(_chartTitle.Interior);
+        }
     }
 
-    public IExcelChartFillFormat Fill => new ExcelChartFillFormat(_chartTitle.Fill);
-
-    public int HorizontalAlignment
+    public IExcelChartFillFormat? Fill
     {
-        get => (int)_chartTitle.HorizontalAlignment;
-        set => _chartTitle.HorizontalAlignment = (MsExcel.XlHAlign)value;
+        get
+        {
+            if (_chartTitle == null)
+                return null;
+            return new ExcelChartFillFormat(_chartTitle.Fill);
+        }
     }
 
-    public int VerticalAlignment
+    public IExcelCharacters? Characters
     {
-        get => (int)_chartTitle.VerticalAlignment;
-        set => _chartTitle.VerticalAlignment = (MsExcel.XlVAlign)value;
+        get
+        {
+            if (_chartTitle == null)
+                return null;
+            return new ExcelCharacters(_chartTitle.Characters);
+        }
+
     }
+
 
     public int ReadingOrder
     {
-        get => _chartTitle.ReadingOrder;
-        set => _chartTitle.ReadingOrder = value;
+        get => _chartTitle != null ? _chartTitle.ReadingOrder : 0;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.ReadingOrder = value;
+        }
     }
 
-    public int Orientation
+    public XlOrientation Orientation
     {
-        get => (int)_chartTitle.Orientation;
-        set => _chartTitle.Orientation = value; // value 应为 MsExcel.XlOrientation 枚举值对应的 int
+        get => _chartTitle != null ? _chartTitle.Orientation.ObjectConvertEnum(XlOrientation.xlUpward) : XlOrientation.xlUpward;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.Orientation = value.EnumConvert(MsExcel.XlOrientation.xlUpward);
+        }
+    }
+
+    public XlHAlign HorizontalAlignment
+    {
+        get => _chartTitle != null ? _chartTitle.HorizontalAlignment.ObjectConvertEnum(XlHAlign.xlHAlignGeneral) : XlHAlign.xlHAlignGeneral;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.HorizontalAlignment = value.EnumConvert(MsExcel.XlHAlign.xlHAlignGeneral);
+        }
+    }
+
+    public XlVAlign VerticalAlignment
+    {
+        get => _chartTitle != null ? _chartTitle.VerticalAlignment.ObjectConvertEnum(XlVAlign.xlVAlignJustify) : XlVAlign.xlVAlignJustify;
+        set
+        {
+            if (_chartTitle == null) return;
+            _chartTitle.VerticalAlignment = value.EnumConvert(MsExcel.XlVAlign.xlVAlignJustify);
+        }
     }
     #endregion
 
     #region 操作方法
     public void Select()
     {
-        _chartTitle.Select();
+        _chartTitle?.Select();
     }
 
     public void Delete()
     {
-        _chartTitle.Delete();
+        _chartTitle?.Delete();
     }
     #endregion
 
@@ -125,16 +290,9 @@ internal class ExcelChartTitle : IExcelChartTitle
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_chartTitle != null)
-                    Marshal.ReleaseComObject(_chartTitle);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_chartTitle != null)
+                Marshal.ReleaseComObject(_chartTitle);
             _chartTitle = null;
         }
         _disposedValue = true;

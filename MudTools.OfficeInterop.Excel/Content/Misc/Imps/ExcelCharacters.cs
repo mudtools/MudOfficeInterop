@@ -10,7 +10,6 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 internal class ExcelCharacters : IExcelCharacters
 {
     private MsExcel.Characters _characters;
-    private MsExcel.Range _rang;
     private bool _disposedValue;
 
     public object Parent => _characters.Parent;
@@ -61,10 +60,9 @@ internal class ExcelCharacters : IExcelCharacters
 
     public IExcelFont Font => new ExcelFont(_characters.Font);
 
-    internal ExcelCharacters(MsExcel.Characters characters, MsExcel.Range rang)
+    internal ExcelCharacters(MsExcel.Characters characters)
     {
         _characters = characters ?? throw new ArgumentNullException(nameof(characters));
-        _rang = rang;
         _disposedValue = false;
     }
 
@@ -80,35 +78,7 @@ internal class ExcelCharacters : IExcelCharacters
         }
     }
 
-    public IExcelCharacters this[int? start, int? length]
-    {
-        get
-        {
-            // 检查对象是否已释放
-            if (_disposedValue)
-                throw new ObjectDisposedException(nameof(ExcelCharacters));
-
-            // 验证参数范围
-            if (start < 1 || start > Count)
-                throw new ArgumentOutOfRangeException("开始索引超出字符范围。");
-
-            if (length < 0 || (start + length - 1) > Count)
-                throw new ArgumentOutOfRangeException("截取长度超出字符范围。");
-
-            try
-            {
-                // 创建子字符范围
-                var subChars = _rang.Characters[start.ComArgsVal(), length.ComArgsVal()];
-                return new ExcelCharacters(subChars, this._rang);
-            }
-            catch (COMException ex)
-            {
-                throw new InvalidOperationException("字符内容截取失败:" + ex.Message, ex);
-            }
-        }
-    }
-
-    public IExcelCharacters Insert(string text)
+    public IExcelCharacters? Insert(string text)
     {
         if (string.IsNullOrEmpty(text))
             throw new ArgumentException("文本不能为空。", nameof(text));
@@ -116,7 +86,7 @@ internal class ExcelCharacters : IExcelCharacters
         try
         {
             var result = _characters.Insert(text) as MsExcel.Characters;
-            return result != null ? new ExcelCharacters(result, this._rang) : null;
+            return result != null ? new ExcelCharacters(result) : null;
         }
         catch (COMException ex)
         {

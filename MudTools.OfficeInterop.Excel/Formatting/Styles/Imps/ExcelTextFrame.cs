@@ -147,6 +147,6 @@ internal class ExcelTextFrame : IExcelTextFrame
             if (shapeRange.Parent is MsExcel.Range r3)
                 range = r3;
         if (range == null) return null;
-        return charactersObj != null ? new ExcelCharacters(charactersObj, range) : null;
+        return charactersObj != null ? new ExcelCharacters(charactersObj) : null;
     }
 }

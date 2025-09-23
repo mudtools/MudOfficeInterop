@@ -52,9 +52,6 @@ public interface IExcelCharacters : IDisposable
     /// </summary>
     void Delete();
 
-
-    IExcelCharacters this[int? start, int? length] { get; }
-
     /// <summary>
     /// 插入文本到指定位置
     /// </summary>

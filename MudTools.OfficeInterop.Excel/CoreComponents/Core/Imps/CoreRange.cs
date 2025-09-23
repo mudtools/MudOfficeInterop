@@ -170,7 +170,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         {
             if (_characters != null)
                 return _characters;
-            _characters = _range != null ? new ExcelCharacters(_range.Characters, _range) : null;
+            _characters = _range != null ? new ExcelCharacters(_range.Characters) : null;
             return _characters;
         }
     }

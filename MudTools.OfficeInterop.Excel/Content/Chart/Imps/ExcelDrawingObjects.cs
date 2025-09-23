@@ -333,7 +333,7 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
     _drawingObjects != null ? new ExcelBorder(_drawingObjects.Border) : null;
 
     public IExcelCharacters? Characters =>
-     _drawingObjects != null ? new ExcelCharacters(_drawingObjects.Characters, null) : null;
+     _drawingObjects != null ? new ExcelCharacters(_drawingObjects.Characters) : null;
 
     public IExcelFont? Font =>
       _drawingObjects != null ? new ExcelFont(_drawingObjects.Font) : null;
