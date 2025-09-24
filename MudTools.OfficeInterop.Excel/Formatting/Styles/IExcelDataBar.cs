@@ -63,12 +63,17 @@ public interface IExcelDataBar : IDisposable
     /// <summary>
     /// 获取数据条的边框对象
     /// </summary>
-    IExcelDataBarBorder Borders { get; }
+    IExcelDataBarBorder? Borders { get; }
+
+    /// <summary>
+    /// 获取数据条的颜色格式设置对象
+    /// </summary>
+    IExcelFormatColor? Color { get; }
 
     /// <summary>
     /// 获取负值数据条的格式设置对象
     /// </summary>
-    IExcelNegativeBarFormat NegativeBarFormat { get; }
+    IExcelNegativeBarFormat? NegativeBarFormat { get; }
 
     /// <summary>
     /// 获取数据条的字体对象

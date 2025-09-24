@@ -100,13 +100,15 @@ internal class ExcelDataBar : IExcelDataBar
         }
     }
 
-    public IExcelFormatColor Color
+    public IExcelFormatColor? Color
     {
         get
         {
             if (_databar == null)
                 return null;
-            return new ExcelFormatColor(_databar.Color);
+            if (_databar.BarColor is MsExcel.FormatColor formatColor)
+                return new ExcelFormatColor(formatColor);
+            return null;
         }
     }
 

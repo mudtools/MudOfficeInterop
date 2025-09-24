@@ -1,4 +1,6 @@
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Excel.Imps;
 
 /// <summary>
@@ -55,13 +57,13 @@ internal class ExcelFormatColor : IExcelFormatColor
     /// <summary>
     /// 获取此对象的父对象（如 FillFormat、ShadowFormat 等）。
     /// </summary>
-    public object Parent => _colorFormat?.Parent;
+    public object? Parent => _colorFormat?.Parent;
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// 返回封装后的 <see cref="IExcelApplication"/> 接口实例。
     /// </summary>
-    public IExcelApplication Application =>
+    public IExcelApplication? Application =>
         _colorFormat?.Application != null
             ? new ExcelApplication(_colorFormat.Application)
             : null;
@@ -73,13 +75,47 @@ internal class ExcelFormatColor : IExcelFormatColor
     /// </summary>
     public int RGB
     {
-        get => _colorFormat != null ? _colorFormat.RGB : 0;
+        get => _colorFormat != null ? _colorFormat.Color.ConvertToInt() : 0;
 
         set
         {
             if (_colorFormat != null)
             {
-                _colorFormat.RGB = value;
+                _colorFormat.Color = value;
+            }
+        }
+    }
+
+    public Color Color
+    {
+        get
+        {
+            if (_colorFormat != null)
+            {
+                return Color.FromArgb(_colorFormat.Color.ConvertToInt());
+            }
+            return Color.Empty;
+        }
+        set
+        {
+            if (_colorFormat != null)
+            {
+                _colorFormat.Color = value.ToArgb();
+            }
+        }
+    }
+
+    public XlColorIndex ColorIndex
+    {
+        get => _colorFormat != null
+            ? _colorFormat.ColorIndex.EnumConvert(XlColorIndex.xlColorIndexAutomatic)
+            : XlColorIndex.xlColorIndexAutomatic;
+
+        set
+        {
+            if (_colorFormat != null)
+            {
+                _colorFormat.ColorIndex = value.EnumConvert(MsExcel.XlColorIndex.xlColorIndexAutomatic);
             }
         }
     }
@@ -92,7 +128,7 @@ internal class ExcelFormatColor : IExcelFormatColor
     public MsoThemeColorIndex ThemeColor
     {
         get => _colorFormat != null
-            ? _colorFormat.ThemeColor.EnumConvert(MsoThemeColorIndex.msoThemeColorMixed)
+            ? _colorFormat.ThemeColor.ObjectConvertEnum(MsoThemeColorIndex.msoThemeColorMixed)
             : MsoThemeColorIndex.msoThemeColorMixed;
 
         set
@@ -111,7 +147,7 @@ internal class ExcelFormatColor : IExcelFormatColor
     /// </summary>
     public float TintAndShade
     {
-        get => _colorFormat != null ? _colorFormat.TintAndShade : 0f;
+        get => _colorFormat != null ? _colorFormat.TintAndShade.ConvertToFloat() : 0f;
 
         set
         {
@@ -123,32 +159,4 @@ internal class ExcelFormatColor : IExcelFormatColor
             }
         }
     }
-
-    /// <summary>
-    /// 获取或设置颜色的透明度（0-100，0=完全不透明，100=完全透明）。
-    /// 内部自动转换为 COM 所需的 0.0~1.0 浮点值。
-    /// 若 COM 对象为空，设置无效，获取返回 0。
-    /// </summary>
-    public int Transparency
-    {
-        get => _colorFormat != null ? Convert.ToInt32(_colorFormat.Transparency * 100) : 0;
-
-        set
-        {
-            if (_colorFormat != null)
-            {
-                float val = Math.Max(0, Math.Min(100, value)) / 100.0f;
-                _colorFormat.Transparency = val;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 获取当前颜色类型（RGB、主题色等）。
-    /// 默认值：msoColorTypeMixed
-    /// </summary>
-    public MsoColorType Type =>
-        _colorFormat != null
-            ? _colorFormat.Type.EnumConvert(MsoColorType.msoColorTypeMixed)
-            : MsoColorType.msoColorTypeMixed;
 }

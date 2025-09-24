@@ -167,6 +167,23 @@ internal static class ObjectExtensions
     }
 
     /// <summary>
+    /// 将对象转换为 Int
+    /// </summary>
+    public static int ConvertToInt(this object result)
+    {
+        return result switch
+        {
+            double d => (int)d,
+            int i => i,
+            float f => (int)f,
+            long l => (int)l,
+            short s => s,
+            decimal dec => (int)dec,
+            _ => TryParseOrThrow<int>(result, int.TryParse, nameof(Int32))
+        };
+    }
+
+    /// <summary>
     /// 将对象转换为 bool
     /// </summary>
     public static bool ConvertToBool(this object result)
