@@ -22,12 +22,12 @@ public interface IExcelComSheets : IDisposable
     /// <summary>
     /// 获取工作表集合所在的父对象（通常是 Workbook）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取工作表集合所在的Application对象
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取工作表的水平分页符集合

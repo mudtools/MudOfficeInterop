@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -16,7 +16,9 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     /// <summary>
     /// 底层的 COM Workbooks 集合对象
     /// </summary>
-    private MsExcel.Workbooks _workbooks;
+    private MsExcel.Workbooks? _workbooks;
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelWorkbooks));
+    private DisposableList _disposables = [];
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -46,6 +48,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         if (disposing)
         {
             // 释放底层COM对象
+            _disposables?.Dispose();
             if (_workbooks != null)
                 Marshal.ReleaseComObject(_workbooks);
             _workbooks = null;
@@ -73,7 +76,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     /// </summary>
     /// <param name="index">工作簿索引（从1开始）</param>
     /// <returns>工作簿对象</returns>
-    public IExcelWorkbook this[int index]
+    public IExcelWorkbook? this[int index]
     {
         get
         {
@@ -82,8 +85,11 @@ internal class ExcelWorkbooks : IExcelWorkbooks
 
             try
             {
-                var workbook = _workbooks[index] as MsExcel.Workbook;
-                return workbook != null ? new ExcelWorkbook(workbook) : null;
+                var workbook = _workbooks[index];
+                var wb = workbook != null ? new ExcelWorkbook(workbook) : null;
+                if (wb != null)
+                    _disposables.Add(wb);
+                return wb;
             }
             catch
             {
@@ -97,7 +103,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     /// </summary>
     /// <param name="name">工作簿名称</param>
     /// <returns>工作簿对象</returns>
-    public IExcelWorkbook this[string name]
+    public IExcelWorkbook? this[string name]
     {
         get
         {
@@ -126,11 +132,11 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     /// <summary>
     /// 获取工作簿集合所在的Application对象
     /// </summary>
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
-            var application = _workbooks?.Application as MsExcel.Application;
+            var application = _workbooks?.Application;
             return application != null ? new ExcelApplication(application) : null;
         }
     }
@@ -139,49 +145,39 @@ internal class ExcelWorkbooks : IExcelWorkbooks
 
     #region 创建和打开
 
-    /// <summary>
-    /// 打开工作簿
-    /// </summary>
-    /// <param name="filename">文件路径</param>
-    /// <param name="updateLinks">是否更新链接</param>
-    /// <param name="readOnly">是否只读</param>
-    /// <param name="format">文件格式</param>
-    /// <param name="password">打开密码</param>
-    /// <param name="writeResPassword">写入密码</param>
-    /// <param name="ignoreReadOnlyRecommended">是否忽略只读建议</param>
-    /// <param name="origin">文本来源</param>
-    /// <param name="delimiter">文本分隔符</param>
-    /// <param name="editable">是否可编辑</param>
-    /// <param name="notify">是否通知</param>
-    /// <param name="converter">格式转换器</param>
-    /// <param name="addToMru">是否添加到最近使用文件</param>
-    /// <returns>打开的工作簿对象</returns>
-    public IExcelWorkbook Open(string filename, int updateLinks = 0, bool readOnly = false,
-                              int format = 1, string password = "", string writeResPassword = "",
-                              bool ignoreReadOnlyRecommended = false, int origin = 0,
-                              string delimiter = ",", bool editable = true, bool notify = false,
-                              int converter = 0, bool addToMru = true, object? local = null, XlCorruptLoad? corruptLoad = null)
+    /// <inheritdoc/>
+    /// <exception cref="InvalidOperationException"></exception>
+    public IExcelWorkbook? Open(string filename, int? updateLinks = 0, bool? readOnly = false,
+                       int? format = 1, string? password = null, string? writeResPassword = null,
+                       bool? ignoreReadOnlyRecommended = false, XlPlatform? origin = null,
+                       string? delimiter = ",", bool? editable = null, bool? notify = null,
+                       int? converter = null, bool? addToMru = false, bool? local = null,
+                        XlCorruptLoad? corruptLoad = XlCorruptLoad.xlNormalLoad)
     {
         if (_workbooks == null || string.IsNullOrEmpty(filename))
             return null;
-
-        var corruptLoadObj = Type.Missing;
-        if (corruptLoad != null)
-            corruptLoadObj = (MsExcel.XlCorruptLoad)(int)corruptLoad;
-
-
         try
         {
             var workbook = _workbooks.Open(
-                filename, updateLinks, readOnly, format, password, writeResPassword,
-                ignoreReadOnlyRecommended, origin, delimiter, editable, notify,
-                converter, addToMru, local ?? Type.Missing, corruptLoadObj);
+                filename, updateLinks.ComArgsVal(), readOnly.ComArgsVal(), format.ComArgsVal(),
+                password.ComArgsVal(), writeResPassword.ComArgsVal(), ignoreReadOnlyRecommended.ComArgsVal(),
+                origin.ComArgsConvert(d => d.EnumConvert(MsExcel.XlPlatform.xlWindows)),
+                delimiter.ComArgsVal(), editable.ComArgsVal(), notify.ComArgsVal(),
+                converter.ComArgsVal(), addToMru.ComArgsVal(), local.ComArgsVal(),
+                corruptLoad.ComArgsConvert(d => d.EnumConvert(MsExcel.XlCorruptLoad.xlNormalLoad)));
 
             return workbook != null ? new ExcelWorkbook(workbook) : null;
         }
-        catch
+        catch (COMException ce)
         {
-            return null;
+            if (ce.ErrorCode == -2147221040)
+                throw new InvalidOperationException("Failed to open workbook. The file is corrupted.", ce);
+            else
+                throw new InvalidOperationException("Failed to open workbook.", ce);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to open workbook.", ex);
         }
     }
 
@@ -191,12 +187,19 @@ internal class ExcelWorkbooks : IExcelWorkbooks
             return null;
         try
         {
-            MsExcel.Workbook workbook = _workbooks.Add(template);
+            MsExcel.Workbook workbook = _workbooks.Add(template.EnumConvert(MsExcel.XlWBATemplate.xlWBATWorksheet));
             return workbook != null ? new ExcelWorkbook(workbook) : null;
         }
-        catch
+        catch (COMException ce)
         {
-            return null;
+            if (ce.ErrorCode == -2147221040)
+                throw new InvalidOperationException("Failed to create workbook from template. The file is corrupted.", ce);
+            else
+                throw new InvalidOperationException("Failed to create workbook from template.", ce);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to create workbook from template.", ex);
         }
     }
 
@@ -215,18 +218,25 @@ internal class ExcelWorkbooks : IExcelWorkbooks
             MsExcel.Workbook workbook;
             if (string.IsNullOrEmpty(template))
             {
-                workbook = _workbooks.Add() as MsExcel.Workbook;
+                workbook = _workbooks.Add();
             }
             else
             {
-                workbook = _workbooks.Add(template) as MsExcel.Workbook;
+                workbook = _workbooks.Add(template);
             }
 
             return workbook != null ? new ExcelWorkbook(workbook) : null;
         }
-        catch
+        catch (COMException ce)
         {
-            return null;
+            if (ce.ErrorCode == -2147221040)
+                throw new InvalidOperationException("Failed to create workbook from template. The file is corrupted.", ce);
+            else
+                throw new InvalidOperationException("Failed to create workbook from template.", ce);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to create workbook from template.", ex);
         }
     }
 
@@ -237,7 +247,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     /// <param name="readOnly">是否只读</param>
     /// <param name="password">密码</param>
     /// <returns>打开的工作簿对象</returns>
-    public IExcelWorkbook OpenSimple(string filename, bool readOnly = false, string password = "")
+    public IExcelWorkbook? OpenSimple(string filename, bool readOnly = false, string password = "")
     {
         return Open(filename, 0, readOnly, 1, password, "", false, 0, ",", true, false, 0, true);
     }
@@ -282,7 +292,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             try
             {
-                IExcelWorkbook workbook = this[i];
+                IExcelWorkbook? workbook = this[i];
                 if (workbook != null && workbook.Name != null)
                 {
                     bool match = matchCase ?
@@ -293,9 +303,9 @@ internal class ExcelWorkbooks : IExcelWorkbooks
                         result.Add(workbook);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // 忽略单个工作簿访问异常
+                log.Error($"按名称查找工作簿 {name} 时，访问索引为 {i} 的工作簿发生异常", ex);
             }
         }
         return [.. result];
@@ -316,47 +326,20 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             try
             {
-                IExcelWorkbook workbook = this[i];
+                IExcelWorkbook? workbook = this[i];
                 if (workbook != null && workbook.Path?.Contains(path) == true)
                 {
                     result.Add(workbook);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // 忽略单个工作簿访问异常
+                log.Error(ex);
             }
         }
         return [.. result];
     }
 
-    /// <summary>
-    /// 根据修改时间查找工作簿
-    /// </summary>
-    /// <param name="fromTime">起始时间</param>
-    /// <param name="toTime">结束时间</param>
-    /// <returns>匹配的工作簿数组</returns>
-    public IExcelWorkbook[] FindByModifiedTime(DateTime fromTime, DateTime toTime)
-    {
-        if (_workbooks == null || Count == 0)
-            return new IExcelWorkbook[0];
-
-        var result = new System.Collections.Generic.List<IExcelWorkbook>();
-        for (int i = 1; i <= Count; i++)
-        {
-            try
-            {
-                var workbook = this[i];
-                // 注意：COM对象通常不直接提供修改时间属性
-                // 这里提供一个示例实现
-            }
-            catch
-            {
-                // 忽略单个工作簿访问异常
-            }
-        }
-        return [.. result];
-    }
 
     /// <summary>
     /// 获取已保存的工作簿
@@ -372,7 +355,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             try
             {
-                IExcelWorkbook workbook = this[i];
+                IExcelWorkbook? workbook = this[i];
                 if (workbook != null && workbook.Saved)
                 {
                     result.Add(workbook);
@@ -400,15 +383,15 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             try
             {
-                IExcelWorkbook workbook = this[i];
+                IExcelWorkbook? workbook = this[i];
                 if (workbook != null && !workbook.Saved)
                 {
                     result.Add(workbook);
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个工作簿访问异常
+                log.Error("获取未保存的工作簿失败：" + x.Message, x);
             }
         }
         return result.ToArray();
@@ -428,15 +411,15 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             try
             {
-                IExcelWorkbook workbook = this[i];
+                IExcelWorkbook? workbook = this[i];
                 if (workbook != null && workbook.IsProtected)
                 {
                     result.Add(workbook);
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个工作簿访问异常
+                log.Error("获取受保护的工作簿失败：" + x.Message, x);
             }
         }
         return [.. result];
@@ -462,9 +445,9 @@ internal class ExcelWorkbooks : IExcelWorkbooks
                     result.Add(workbook);
                 }
             }
-            catch
+            catch (Exception x)
             {
-                // 忽略单个工作簿访问异常
+                log.Error("获取只读的工作簿失败：" + x.Message, x);
             }
         }
         return [.. result];
@@ -477,14 +460,20 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     /// <summary>
     /// 关闭所有工作簿
     /// </summary>
-    /// <param name="saveChanges">是否保存更改</param>
-    public void CloseAll(bool saveChanges = true)
+    public void CloseAll()
     {
-        _workbooks?.Close();
+        try
+        {
+            _workbooks?.Close();
+        }
+        catch (Exception x)
+        {
+            log.Error("关闭所有工作簿时发生异常", x);
+        }
     }
 
     /// <summary>
-    /// 删除指定索引的工作簿
+    /// 关闭指定索引的工作簿
     /// </summary>
     /// <param name="index">要删除的工作簿索引</param>
     /// <param name="saveChanges">是否保存更改</param>
@@ -497,16 +486,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             this[index]?.Close(saveChanges);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略关闭过程中的异常
+            log.Error($"关闭索引为 {index} 的工作簿时发生异常", x);
         }
     }
 
     /// <summary>
-    /// 删除指定名称的工作簿
+    /// 关闭指定名称的工作簿
     /// </summary>
-    /// <param name="name">要删除的工作簿名称</param>
+    /// <param name="name">要关闭的工作簿名称</param>
     /// <param name="saveChanges">是否保存更改</param>
     public void Close(string name, bool saveChanges = true)
     {
@@ -518,16 +507,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
             var workbook = this[name];
             workbook?.Close(saveChanges);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略关闭过程中的异常
+            log.Error($"关闭名称为 {name} 的工作簿时发生异常", x);
         }
     }
 
     /// <summary>
-    /// 删除指定的工作簿
+    /// 关闭指定的工作簿
     /// </summary>
-    /// <param name="workbook">要删除的工作簿对象</param>
+    /// <param name="workbook">要关闭的工作簿对象</param>
     /// <param name="saveChanges">是否保存更改</param>
     public void Close(IExcelWorkbook workbook, bool saveChanges = true)
     {
@@ -538,9 +527,9 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             workbook.Close(saveChanges);
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略关闭过程中的异常
+            log.Error($"关闭工作簿时发生异常", x);
         }
     }
 
@@ -567,23 +556,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     {
         if (_workbooks == null) return;
 
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            for (int i = 1; i <= Count; i++)
+            try
             {
-                try
-                {
-                    this[i]?.Save();
-                }
-                catch
-                {
-                    // 忽略单个工作簿保存异常
-                }
+                this[i]?.Save();
             }
-        }
-        catch
-        {
-            // 忽略保存过程中的异常
+            catch (Exception x)
+            {
+                log.Error($"保存索引为 {i} 的工作簿时发生异常", x);
+            }
         }
     }
 
@@ -600,9 +582,9 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             workbook.Save();
         }
-        catch
+        catch (Exception x)
         {
-            // 忽略保存过程中的异常
+            log.Error($"保存工作簿时发生异常", x);
         }
     }
 
@@ -617,37 +599,29 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         if (_workbooks == null || Count == 0 || string.IsNullOrEmpty(folderPath))
             return 0;
 
-        try
-        {
-            // 确保文件夹存在
-            if (!System.IO.Directory.Exists(folderPath))
-                System.IO.Directory.CreateDirectory(folderPath);
+        // 确保文件夹存在
+        if (!Directory.Exists(folderPath))
+            Directory.CreateDirectory(folderPath);
 
-            int savedCount = 0;
-            for (int i = 1; i <= Count; i++)
+        int savedCount = 0;
+        for (int i = 1; i <= Count; i++)
+        {
+            try
             {
-                try
+                if (this[i] is ExcelWorkbook workbook)
                 {
-                    var workbook = this[i] as ExcelWorkbook;
-                    if (workbook != null)
-                    {
-                        string filename = System.IO.Path.Combine(folderPath,
-                            $"{workbook.Name}.{fileFormat}");
-                        workbook.SaveAs(filename);
-                        savedCount++;
-                    }
-                }
-                catch
-                {
-                    // 忽略单个工作簿另存为异常
+                    string filename = Path.Combine(folderPath,
+                        $"{workbook.Name}.{fileFormat}");
+                    workbook.SaveAs(filename);
+                    savedCount++;
                 }
             }
-            return savedCount;
+            catch (Exception x)
+            {
+                log.Error($"保存索引为 {i} 的工作簿时发生异常", x);
+            }
         }
-        catch
-        {
-            return 0;
-        }
+        return savedCount;
     }
 
     #endregion
@@ -664,8 +638,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
         {
             try
             {
-                var app = _workbooks?.Parent as MsExcel.Application;
-                if (app == null)
+                if (_workbooks?.Parent is not MsExcel.Application app)
                 {
                     return null;
                 }
@@ -673,9 +646,11 @@ internal class ExcelWorkbooks : IExcelWorkbooks
                 var activeWorkbook = app.ActiveWorkbook;
                 return activeWorkbook != null ? new ExcelWorkbook(activeWorkbook) : null;
             }
-            catch
+            catch (Exception x)
             {
+                log.Error("获取活动工作簿时发生异常", x);
                 return null;
+
             }
         }
     }
@@ -698,8 +673,9 @@ internal class ExcelWorkbooks : IExcelWorkbooks
                 var thisWorkbook = app.ThisWorkbook;
                 return thisWorkbook != null ? new ExcelWorkbook(thisWorkbook) : null;
             }
-            catch
+            catch (Exception x)
             {
+                log.Error("获取ThisWorkbook时发生异常", x);
                 return null;
             }
         }
@@ -713,23 +689,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     {
         if (_workbooks == null) return;
 
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            for (int i = 1; i <= Count; i++)
+            try
             {
-                try
-                {
-                    this[i]?.PrintOut(preview);
-                }
-                catch
-                {
-                    // 忽略单个工作簿打印异常
-                }
+                this[i]?.PrintOut(preview);
             }
-        }
-        catch
-        {
-            // 忽略打印过程中的异常
+            catch (Exception x)
+            {
+                log.Error($"打印索引为 {i} 的工作簿时发生异常", x);
+            }
         }
     }
 
@@ -740,23 +709,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     {
         if (_workbooks == null) return;
 
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            for (int i = 1; i <= Count; i++)
+            try
             {
-                try
-                {
-                    this[i]?.CalculateAll();
-                }
-                catch
-                {
-                    // 忽略单个工作簿计算异常
-                }
+                this[i]?.CalculateAll();
             }
-        }
-        catch
-        {
-            // 忽略计算过程中的异常
+            catch (Exception x)
+            {
+                log.Error($"计算索引为 {i} 的工作簿时发生异常", x);
+            }
         }
     }
 
@@ -767,23 +729,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     {
         if (_workbooks == null) return;
 
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            for (int i = 1; i <= Count; i++)
+            try
             {
-                try
-                {
-                    this[i]?.RefreshAll();
-                }
-                catch
-                {
-                    // 忽略单个工作簿刷新异常
-                }
+                this[i]?.RefreshAll();
             }
-        }
-        catch
-        {
-            // 忽略刷新过程中的异常
+            catch (Exception x)
+            {
+                log.Error($"刷新索引为 {i} 的工作簿时发生异常", x);
+            }
         }
     }
 
@@ -795,23 +750,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     {
         if (_workbooks == null) return;
 
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            for (int i = 1; i <= Count; i++)
+            try
             {
-                try
-                {
-                    this[i]?.Protect(password);
-                }
-                catch
-                {
-                    // 忽略单个工作簿保护异常
-                }
+                this[i]?.Protect(password);
             }
-        }
-        catch
-        {
-            // 忽略保护过程中的异常
+            catch (Exception x)
+            {
+                log.Error($"保护索引为 {i} 的工作簿时发生异常", x);
+            }
         }
     }
 
@@ -823,23 +771,16 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     {
         if (_workbooks == null) return;
 
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            for (int i = 1; i <= Count; i++)
+            try
             {
-                try
-                {
-                    this[i]?.Unprotect(password);
-                }
-                catch
-                {
-                    // 忽略单个工作簿取消保护异常
-                }
+                this[i]?.Unprotect(password);
             }
-        }
-        catch
-        {
-            // 忽略取消保护过程中的异常
+            catch (Exception x)
+            {
+                log.Error($"取消保护索引为 {i} 的工作簿时发生异常", x);
+            }
         }
     }
 

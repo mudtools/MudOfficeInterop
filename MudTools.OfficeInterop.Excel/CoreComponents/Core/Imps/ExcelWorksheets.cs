@@ -12,7 +12,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// <summary>
     /// 底层的 COM Worksheets 集合对象
     /// </summary>
-    private MsExcel.Sheets _worksheets;
+    private MsExcel.Sheets? _worksheets;
+    private DisposableList _disposables = [];
     private static readonly ILog log = LogManager.GetLogger(typeof(ExcelWorksheets));
 
     #region 构造函数和释放
@@ -37,6 +38,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
 
         if (disposing)
         {
+            _disposables?.Dispose();
             if (_worksheets != null)
                 Marshal.ReleaseComObject(_worksheets);
             _worksheets = null;
@@ -73,9 +75,13 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             try
             {
                 var sheet = _worksheets[index];
+                ExcelWorksheet? excelWorksheet = null;
                 if (sheet != null && sheet is MsExcel.Worksheet worksheet)
-                    return new ExcelWorksheet(worksheet);
-                return null;
+                {
+                    excelWorksheet = new ExcelWorksheet(worksheet);
+                    _disposables.Add(excelWorksheet);
+                }
+                return excelWorksheet;
             }
             catch (Exception ex)
             {
@@ -100,8 +106,12 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             try
             {
                 var sheet = _worksheets.Item[name];
+                ExcelWorksheet? excelWorksheet = null;
                 if (sheet != null && sheet is MsExcel.Worksheet worksheet)
-                    return new ExcelWorksheet(worksheet);
+                {
+                    excelWorksheet = new ExcelWorksheet(worksheet);
+                    _disposables.Add(excelWorksheet);
+                }
                 return null;
             }
             catch (Exception ex)
@@ -119,7 +129,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
     }
 
-    protected override IExcelComSheet ItemByIndex(int index)
+    protected override IExcelComSheet? ItemByIndex(int index)
     {
         return this[index];
     }
@@ -128,18 +138,18 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// <summary>
     /// 获取工作表集合所在的父对象
     /// </summary>
-    public override object Parent => _worksheets?.Parent;
+    public override object? Parent => _worksheets?.Parent;
 
-    protected override object NativeSheets => _worksheets;
+    protected override object? NativeSheets => _worksheets;
 
     /// <summary>
     /// 获取工作表集合所在的Application对象
     /// </summary>
-    public override IExcelApplication Application
+    public override IExcelApplication? Application
     {
         get
         {
-            MsExcel.Application? application = _worksheets?.Application as MsExcel.Application;
+            MsExcel.Application? application = _worksheets?.Application;
             return application != null ? new ExcelApplication(application) : null;
         }
     }
@@ -165,7 +175,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             _ => Type.Missing
         };
 
-        object result = _worksheets.Add(
+        object? result = _worksheets?.Add(
                         beforeObj,
                         afterObj,
                         count.ComArgsVal(),

@@ -5,18 +5,46 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using Microsoft.Vbe.Interop;
+
 namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
 {
-    private MsExcel.ProtectedViewWindows _protectedViewWindows;
+    private DisposableList _disposables = [];
+    private MsExcel.ProtectedViewWindows? _protectedViewWindows;
     private bool _disposedValue;
 
-    public int Count => _protectedViewWindows.Count;
+    public int Count => _protectedViewWindows != null ? _protectedViewWindows.Count : 0;
 
-    public IExcelProtectedViewWindow this[int index] => new ExcelProtectedViewWindow(_protectedViewWindows[index]);
+    public IExcelProtectedViewWindow? this[int index]
+    {
+        get
+        {
+            if (_protectedViewWindows == null)
+                return null;
 
-    public IExcelProtectedViewWindow this[string caption] => new ExcelProtectedViewWindow(_protectedViewWindows[caption]);
+            if (index < 1 || index > Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            var win = new ExcelProtectedViewWindow(_protectedViewWindows[index]);
+            _disposables.Add(win);
+            return win;
+        }
+    }
+
+    public IExcelProtectedViewWindow? this[string caption]
+    {
+        get
+        {
+            if (_protectedViewWindows == null)
+                return null;
+
+            var win = new ExcelProtectedViewWindow(_protectedViewWindows[caption]);
+            _disposables.Add(win);
+            return win;
+        }
+    }
 
     internal ExcelProtectedViewWindows(MsExcel.ProtectedViewWindows protectedViewWindows)
     {
@@ -24,12 +52,13 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
         _disposedValue = false;
     }
 
-    public IExcelProtectedViewWindow Open(string filename, string password = null,
+    public IExcelProtectedViewWindow? Open(string filename, string password = null,
                                          bool readOnlyRecommended = false, bool editable = false)
     {
         if (string.IsNullOrEmpty(filename))
             throw new ArgumentException("文件路径不能为空。", nameof(filename));
-
+        if (_protectedViewWindows == null)
+            return null;
         try
         {
             var window = _protectedViewWindows.Open(filename, password ?? string.Empty,
@@ -40,13 +69,19 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
         {
             throw new InvalidOperationException($"无法打开文件到受保护视图: {filename}", ex);
         }
+        catch (Exception x)
+        {
+            throw new InvalidOperationException($"无法打开文件到受保护视图: {filename}", x);
+        }
     }
 
-    public IExcelProtectedViewWindow FindByFilename(string filename)
+    /// <inheritdoc/>
+    public IExcelProtectedViewWindow? FindByFilename(string filename)
     {
         if (string.IsNullOrEmpty(filename))
             throw new ArgumentException("文件路径不能为空。", nameof(filename));
-
+        if (_protectedViewWindows == null)
+            return null;
         try
         {
             for (int i = 1; i <= Count; i++)
@@ -59,10 +94,15 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
             }
             return null;
         }
-        catch (COMException)
+        catch (COMException ex)
         {
-            return null;
+            throw new InvalidOperationException($"无法打开文件到受保护视图: {filename}", ex);
         }
+        catch (Exception x)
+        {
+            throw new InvalidOperationException($"无法打开文件到受保护视图: {filename}", x);
+        }
+
     }
 
     public IExcelProtectedViewWindow FindByCaption(string caption)
@@ -82,15 +122,19 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
             }
             return null;
         }
-        catch (COMException)
+        catch (COMException ex)
         {
-            return null;
+            throw new InvalidOperationException($"无法打开文件到受保护视图: {caption}", ex);
+        }
+        catch (Exception x)
+        {
+            throw new InvalidOperationException($"无法打开文件到受保护视图: {caption}", x);
         }
     }
 
-    public IExcelApplication Parent => new ExcelApplication(_protectedViewWindows.Application);
+    public IExcelApplication? Parent => _protectedViewWindows != null ? new ExcelApplication(_protectedViewWindows.Application) : null;
 
-    public IExcelProtectedViewWindow ActiveProtectedViewWindow => new ExcelProtectedViewWindow(_protectedViewWindows.Application.ActiveProtectedViewWindow);
+    public IExcelProtectedViewWindow? ActiveProtectedViewWindow => _protectedViewWindows != null ? new ExcelProtectedViewWindow(_protectedViewWindows.Application.ActiveProtectedViewWindow) : null;
 
     public IEnumerable<IExcelProtectedViewWindow> VisibleWindows
     {
@@ -108,9 +152,13 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
                     }
                 }
             }
-            catch (COMException)
+            catch (COMException ce)
             {
-                // 忽略异常，返回已找到的结果
+                throw new InvalidOperationException("无法获取受保护视图窗口。", ce);
+            }
+            catch (Exception x)
+            {
+                throw new InvalidOperationException("无法获取受保护视图窗口。", x);
             }
             return result;
         }
@@ -132,9 +180,13 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
                     }
                 }
             }
-            catch (COMException)
+            catch (COMException ce)
             {
-                // 忽略异常，返回已找到的结果
+                throw new InvalidOperationException("无法获取受保护视图窗口。", ce);
+            }
+            catch (Exception x)
+            {
+                throw new InvalidOperationException("无法获取受保护视图窗口。", x);
             }
             return result;
         }
@@ -156,9 +208,13 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
                     }
                 }
             }
-            catch (COMException)
+            catch (COMException ce)
             {
-                // 忽略异常，返回已找到的结果
+                throw new InvalidOperationException("无法获取受保护视图窗口。", ce);
+            }
+            catch (Exception x)
+            {
+                throw new InvalidOperationException("无法获取受保护视图窗口。", x);
             }
             return result;
         }
@@ -178,9 +234,13 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
                 }
             }
         }
-        catch (COMException)
+        catch (COMException ce)
         {
-            // 忽略异常，返回已找到的结果
+            throw new InvalidOperationException("无法获取受保护视图窗口。", ce);
+        }
+        catch (Exception x)
+        {
+            throw new InvalidOperationException("无法获取受保护视图窗口。", x);
         }
         return result;
     }
@@ -201,11 +261,8 @@ internal class ExcelProtectedViewWindows : IExcelProtectedViewWindows
 
         if (disposing && _protectedViewWindows != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_protectedViewWindows) > 0) { }
-            }
-            catch { }
+            _disposables?.Dispose();
+            Marshal.ReleaseComObject(_protectedViewWindows);
             _protectedViewWindows = null;
         }
 

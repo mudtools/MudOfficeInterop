@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 {
     private MsExcel.Sheets _worksheets;
+    private DisposableList _disposables = [];
     /// <summary>
     /// 用于记录此类型运行时日志的 logger 实例。
     /// </summary>
@@ -37,10 +38,17 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             try
             {
                 var sheet = _worksheets[index];
+                IExcelComSheet? excelComSheet = null;
                 if (sheet != null && sheet is MsExcel.Worksheet worksheet)
-                    return new ExcelWorksheet(worksheet);
+                    excelComSheet = new ExcelWorksheet(worksheet);
                 if (sheet != null && sheet is MsExcel.Chart chart)
-                    return new ExcelChart(chart);
+                    excelComSheet = new ExcelChart(chart);
+                if (excelComSheet != null) _disposables.Add(excelComSheet);
+                return excelComSheet;
+            }
+            catch (COMException ex)
+            {
+                log.Warn($"Failed to retrieve sheet at index {index}: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -66,10 +74,17 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             try
             {
                 var sheet = _worksheets[name];
+                IExcelComSheet? excelComSheet = null;
                 if (sheet != null && sheet is MsExcel.Worksheet worksheet)
-                    return new ExcelWorksheet(worksheet);
+                    excelComSheet = new ExcelWorksheet(worksheet);
                 if (sheet != null && sheet is MsExcel.Chart chart)
-                    return new ExcelChart(chart);
+                    excelComSheet = new ExcelChart(chart);
+                if (excelComSheet != null) _disposables.Add(excelComSheet);
+                return excelComSheet;
+            }
+            catch (COMException ex)
+            {
+                log.Warn($"Failed to retrieve sheet with name '{name}': {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -107,15 +122,29 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             ExcelChart chart => chart._chart,
             _ => Type.Missing
         };
+        try
+        {
 
-        object result = _worksheets.Add(
-                        beforeObj,
-                        afterObj,
-                        count.ComArgsVal(),
-                        MsExcel.XlSheetType.xlWorksheet);
-        if (result is MsExcel.Worksheet workSheet)
-            return new ExcelWorksheet(workSheet);
-        return null;
+
+            object result = _worksheets.Add(
+                            beforeObj,
+                            afterObj,
+                            count.ComArgsVal(),
+                            MsExcel.XlSheetType.xlWorksheet);
+            if (result is MsExcel.Worksheet workSheet)
+                return new ExcelWorksheet(workSheet);
+            return null;
+        }
+        catch (COMException ex)
+        {
+            log?.Warn($"Failed to add sheet: {ex.Message}");
+            return null;
+        }
+        catch (Exception ex)
+        {
+            log?.Warn($"Failed to add sheet: {ex.Message}");
+            return null;
+        }
     }
 
     public IExcelChart? AddChart(
@@ -136,15 +165,29 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             ExcelChart chart => chart._chart,
             _ => Type.Missing
         };
+        try
+        {
 
-        object result = _worksheets.Add(
-                        beforeObj,
-                        afterObj,
-                        count.ComArgsVal(),
-                        MsExcel.XlSheetType.xlChart);
-        if (result is MsExcel.Chart workSheet)
-            return new ExcelChart(workSheet);
-        return null;
+
+            object result = _worksheets.Add(
+                            beforeObj,
+                            afterObj,
+                            count.ComArgsVal(),
+                            MsExcel.XlSheetType.xlChart);
+            if (result is MsExcel.Chart workSheet)
+                return new ExcelChart(workSheet);
+            return null;
+        }
+        catch (COMException ex)
+        {
+            log?.Warn($"Failed to add chart: {ex.Message}");
+            return null;
+        }
+        catch (Exception ex)
+        {
+            log?.Warn($"Failed to add chart: {ex.Message}");
+            return null;
+        }
     }
 
     public override IExcelComSheet? Add(
@@ -166,19 +209,33 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             ExcelChart chart => chart._chart,
             _ => Type.Missing
         };
-
-        object result = _worksheets.Add(
-                        beforeObj,
-                        afterObj,
-                        count.ComArgsVal(),
-                        type.ComArgsConvert(x => (MsExcel.XlSheetType)(int)x).ComArgsVal());
-
-        return result switch
+        try
         {
-            MsExcel.Worksheet ws => new ExcelWorksheet(ws),
-            MsExcel.Chart nchart => new ExcelChart(nchart),
-            _ => null
-        };
+
+
+            object result = _worksheets.Add(
+                            beforeObj,
+                            afterObj,
+                            count.ComArgsVal(),
+                            type.ComArgsConvert(x => (MsExcel.XlSheetType)(int)x).ComArgsVal());
+
+            return result switch
+            {
+                MsExcel.Worksheet ws => new ExcelWorksheet(ws),
+                MsExcel.Chart nchart => new ExcelChart(nchart),
+                _ => null
+            };
+        }
+        catch (COMException ex)
+        {
+            log.Warn($"Failed to add sheet: {ex.Message}");
+            return null;
+        }
+        catch (Exception ex)
+        {
+            log.Warn($"Failed to add sheet: {ex.Message}");
+            return null;
+        }
     }
 
     public override IExcelComSheet? CreateFromTemplate(
@@ -203,6 +260,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                 excelWorksheet.Name = sheetName;
 
             return excelWorksheet;
+        }
+        catch (COMException ex)
+        {
+            log.Warn($"Failed to create sheet from template '{templatePath}': {ex.Message}");
+            return null;
         }
         catch (Exception ex)
         {
@@ -422,6 +484,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             else if (_worksheets[index] is MsExcel.Chart chart)
                 chart.Delete();
         }
+        catch (COMException comEx)
+        {
+            log.Warn($"Failed to delete sheet at index {index}: {comEx.Message}");
+        }
         catch (Exception ex)
         {
             log.Warn($"Failed to delete sheet at index {index}: {ex.Message}");
@@ -439,6 +505,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             else if (_worksheets[name] is MsExcel.Chart chart)
                 chart.Delete();
         }
+        catch (COMException comEx)
+        {
+            log.Warn($"Failed to delete sheet named '{name}': {comEx.Message}");
+        }
         catch (Exception ex)
         {
             log.Warn($"Failed to delete sheet named '{name}': {ex.Message}");
@@ -455,6 +525,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                 ws.Worksheet.Delete();
             else if (sheet is ExcelChart chart)
                 chart._chart.Delete();
+        }
+        catch (COMException comEx)
+        {
+            log.Warn($"Failed to delete sheet: {comEx.Message}");
         }
         catch (Exception ex)
         {
@@ -474,6 +548,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         try
         {
             _worksheets.Select(worksheetNames.Cast<object>().ToArray());
+        }
+        catch (COMException comEx)
+        {
+            log.Warn($"Failed to select worksheets: {comEx.Message}");
         }
         catch (Exception ex)
         {
@@ -496,6 +574,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             {
                 sheet.SaveAs(fileName);
                 count++;
+            }
+            catch (COMException comEx)
+            {
+                log.Warn($"Failed to export sheet '{sheet.Name}' to {fileName}: {comEx.Message}");
             }
             catch (Exception ex)
             {
@@ -552,6 +634,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                 {
                     ws.Calculate();
                 }
+                catch (COMException comEx)
+                {
+                    log.Warn($"Failed to calculate sheet '{ws.Name}': {comEx.Message}");
+                }
                 catch (Exception ex)
                 {
                     log.Warn($"Failed to calculate sheet '{ws.Name}': {ex.Message}");
@@ -576,6 +662,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                 _worksheets.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                                      Type.Missing, Type.Missing, Type.Missing, Type.Missing);
         }
+        catch (COMException comEx)
+        {
+            log.Warn($"Failed to print all sheets: {comEx.Message}");
+        }
         catch (Exception ex)
         {
             log.Warn($"Failed to print all sheets: {ex.Message}");
@@ -596,6 +686,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                 try
                 {
                     ws.Recalculate();
+                }
+                catch (COMException comEx)
+                {
+                    log.Warn($"Failed to refresh sheet '{ws.Name}': {comEx.Message}");
                 }
                 catch (Exception ex)
                 {
@@ -625,6 +719,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                     _ => null
                 };
             }
+            catch (COMException comEx)
+            {
+                log.Warn($"Failed to get active sheet: {comEx.Message}");
+                return null;
+            }
             catch (Exception ex)
             {
                 log.Warn($"Failed to get active sheet: {ex.Message}");
@@ -648,6 +747,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                     sheet.Visible = XlSheetVisibility.xlSheetHidden;
             }
         }
+        catch (COMException comEx)
+        {
+            log.Warn($"Failed to hide all sheets: {comEx.Message}");
+        }
         catch (Exception ex)
         {
             log.Warn($"Failed to hide all sheets: {ex.Message}");
@@ -669,6 +772,10 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                     sheet.Visible = XlSheetVisibility.xlSheetVisible;
             }
         }
+        catch (COMException comEx)
+        {
+            log.Warn($"Failed to show all sheets: {comEx.Message}");
+        }
         catch (Exception ex)
         {
             log.Warn($"Failed to show all sheets: {ex.Message}");
@@ -682,6 +789,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         {
             if (disposing)
             {
+                _disposables?.Dispose();
                 if (_worksheets != null)
                 {
                     Marshal.ReleaseComObject(_worksheets);

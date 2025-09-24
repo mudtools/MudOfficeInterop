@@ -70,13 +70,13 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
     /// <inheritdoc/>
     public abstract int Count { get; }
 
-    protected abstract object NativeSheets { get; }
+    protected abstract object? NativeSheets { get; }
 
     /// <inheritdoc/>
-    public abstract object Parent { get; }
+    public abstract object? Parent { get; }
 
     /// <inheritdoc/>
-    public abstract IExcelApplication Application { get; }
+    public abstract IExcelApplication? Application { get; }
 
 
     private IExcelHPageBreaks? _hpageBreaks = null;

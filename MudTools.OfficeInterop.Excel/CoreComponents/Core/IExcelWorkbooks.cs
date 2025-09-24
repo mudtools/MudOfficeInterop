@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -27,14 +27,14 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// </summary>
     /// <param name="index">工作簿索引（从1开始）</param>
     /// <returns>工作簿对象</returns>
-    IExcelWorkbook this[int index] { get; }
+    IExcelWorkbook? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的工作簿对象
     /// </summary>
     /// <param name="name">工作簿名称</param>
     /// <returns>工作簿对象</returns>
-    IExcelWorkbook this[string name] { get; }
+    IExcelWorkbook? this[string name] { get; }
 
     /// <summary>
     /// 获取工作簿集合所在的父对象（通常是Application）
@@ -46,7 +46,7 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// 获取工作簿集合所在的Application对象
     /// 对应 Workbooks.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     #endregion
 
@@ -69,12 +69,15 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// <param name="notify">是否通知</param>
     /// <param name="converter">格式转换器</param>
     /// <param name="addToMru">是否添加到最近使用文件</param>
+    /// <param name="local">是否本地</param>
+    /// <param name="corruptLoad">是否损坏加载</param>
     /// <returns>打开的工作簿对象</returns>
-    IExcelWorkbook Open(string filename, int updateLinks = 0, bool readOnly = false,
-                       int format = 1, string password = "", string writeResPassword = "",
-                       bool ignoreReadOnlyRecommended = false, int origin = 0,
-                       string delimiter = ",", bool editable = true, bool notify = false,
-                       int converter = 0, bool addToMru = true, object? local = null, XlCorruptLoad? corruptLoad = null);
+    IExcelWorkbook? Open(string filename, int? updateLinks = 0, bool? readOnly = false,
+                       int? format = 1, string? password = null, string? writeResPassword = null,
+                       bool? ignoreReadOnlyRecommended = false, XlPlatform? origin = null,
+                       string? delimiter = ",", bool? editable = null, bool? notify = null,
+                       int? converter = null, bool? addToMru = false, bool? local = null,
+                        XlCorruptLoad? corruptLoad = XlCorruptLoad.xlNormalLoad);
 
     /// <summary>
     /// 新建工作簿
@@ -100,7 +103,7 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// <param name="readOnly">是否只读</param>
     /// <param name="password">密码</param>
     /// <returns>打开的工作簿对象</returns>
-    IExcelWorkbook OpenSimple(string filename, bool readOnly = false, string password = "");
+    IExcelWorkbook? OpenSimple(string filename, bool readOnly = false, string password = "");
 
     /// <summary>
     /// 批量打开工作簿
@@ -122,8 +125,6 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// <returns>匹配的工作簿数组</returns>
     IExcelWorkbook[] FindByName(string name, bool matchCase = false);
 
-
-
     /// <summary>
     /// 根据路径查找工作簿
     /// </summary>
@@ -131,13 +132,6 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// <returns>匹配的工作簿数组</returns>
     IExcelWorkbook[] FindByPath(string path);
 
-    /// <summary>
-    /// 根据修改时间查找工作簿
-    /// </summary>
-    /// <param name="fromTime">起始时间</param>
-    /// <param name="toTime">结束时间</param>
-    /// <returns>匹配的工作簿数组</returns>
-    IExcelWorkbook[] FindByModifiedTime(DateTime fromTime, DateTime toTime);
 
     /// <summary>
     /// 获取已保存的工作簿
@@ -171,8 +165,7 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// 关闭所有工作簿
     /// 对应 Workbooks.Close 方法
     /// </summary>
-    /// <param name="saveChanges">是否保存更改</param>
-    void CloseAll(bool saveChanges = true);
+    void CloseAll();
 
     /// <summary>
     /// 删除指定索引的工作簿
