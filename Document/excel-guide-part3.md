@@ -1,480 +1,605 @@
-# Excel 操作指南（第三部分）：图表、数据透视表和数据系列
+# .NET驾驭Excel之力：工作簿 (IExcelWorkbook) 的完全指南
 
-## 适用场景与解决问题
+在前两篇文章中，我们介绍了如何搭建MudTools.OfficeInterop.Excel开发环境，以及如何创建第一个Excel自动化程序。现在，让我们深入了解Excel对象模型中的一个重要组件——工作簿（Workbook）。
 
-想要让你的数据"活起来"吗？想要通过图表和数据透视表展示数据的魅力吗？这篇指南将带你进入Excel数据可视化的精彩世界！
+工作簿是Excel中数据组织的基本单位，一个Excel应用程序可以同时打开多个工作簿，每个工作簿又包含多个工作表。理解和掌握工作簿的各种操作是进行Excel自动化开发的关键。
 
-本指南适用于需要在 Excel 中创建和操作图表、数据透视表的开发者，解决以下问题：
-- 如何创建和自定义图表
-- 如何操作数据透视表
-- 如何管理数据系列
-- 如何简化复杂数据可视化操作
+## 理解工作簿在Excel对象模型中的位置
 
-> "一图胜千言，一表知天下。数据可视化让你的数据自己'说话'！" - 某位数据可视化专家
+在Excel对象模型中，工作簿位于应用程序和工作表之间，其层级结构如下：
 
-## IExcelChart - 图表操作接口
 
-[IExcelChart](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelChart.cs#L14-L262) 提供了对 Excel 图表的全面管理功能。它就像你的"数据艺术家"，帮你把枯燥的数字变成生动的图表！
+1. **IExcelApplication（Excel应用程序）** - 代表整个Excel应用程序实例
+2. **IExcelWorkbooks（工作簿集合）** - 包含所有打开的工作簿
+3. **IExcelWorkbook（工作簿）** - 代表单个工作簿文件
+4. **IExcelWorksheets、IExcelSheets、IExcelComSheets（工作表集合）** - 包含工作簿中的所有工作表
+5. **IExcelWorksheet、IExcelComSheet（工作表）** - 代表单个工作表
+6. **IExcelRange（单元格区域）** - 代表工作表中的单元格或单元格区域
 
-### 创建图表
+工作簿作为连接应用程序和工作表的桥梁，承载了大量重要的功能和属性。
 
-```csharp
-// 创建图表工作表
-var chart = worksheet.Parent.Charts.Add() as IExcelChart;
+## 典型应用场景
 
-// 设置图表数据源
-chart.SetSourceData(worksheet.Range("A1:B10"));
+在实际开发中，工作簿操作有多种常见应用场景：
 
-// 设置图表类型
-chart.ChartType = MsoChartType.msoChartLine;
-```
+### 场景1：数据合并
 
-### 图表属性设置
+当需要将多个部门或来源的数据合并到一个主工作簿中时，我们需要打开多个工作簿，读取其中的数据，然后将这些数据整合到目标工作簿中。
 
-```csharp
-// 设置图表标题
-chart.HasTitle = true;
-chart.ChartTitle = "销售数据图表";
+### 场景2：批量转换
 
-// 设置图例
-chart.HasLegend = true;
-chart.SetLegendPosition(XlLegendPosition.xlLegendPositionRight);
+在企业环境中，经常会遇到需要将一批旧格式（如.xls）的Excel文件批量转换为新格式（.xlsx）的情况，这时就需要打开每个文件并以新格式保存。
 
-// 设置图表样式
-chart.ChartStyle = 206; // 使用内置样式
-```
+### 场景3：模板化报告生成
 
-### 图表元素操作
+企业中经常需要根据固定模板生成各种报告，这时我们可以打开一个预设格式的模板工作簿，填充数据后另存为新的报告文件。
 
-```csharp
-// 获取图表区域
-var chartArea = chart.ChartArea;
+### 场景4：数据备份与版本管理
 
-// 获取绘图区
-var plotArea = chart.PlotArea;
+定期备份重要的Excel文件，或为工作簿创建带有时间戳的版本快照，是数据安全管理的重要环节。
 
-// 获取坐标轴
-var axes = chart.Axes;
+### 场景5：格式标准化
 
-// 获取数据系列集合
-var seriesCollection = chart.SeriesCollection();
-```
+企业可能需要将一批Excel文件统一为特定的格式、样式或保护设置，以确保文档的一致性和专业性。
 
-### 图表格式设置
+## 工作簿的基本操作
+
+### 1. 打开现有工作簿
+
+使用[IExcelWorkbooks.Open](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbooks.cs#L58-L80)方法可以打开现有的Excel文件：
 
 ```csharp
-// 设置背景色
-chart.SetBackgroundColor(Color.LightBlue.ToArgb());
+using MudTools.OfficeInterop;
+using System;
 
-// 设置前景色
-chart.SetForegroundColor(Color.White.ToArgb());
-
-// 旋转图表
-chart.Rotate(30);
-```
-
-### 图表导出
-
-```csharp
-// 导出为图片
-chart.ExportToImage(@"C:\Output\Chart.png", "png");
-
-// 获取图片字节数据
-byte[] imageBytes = chart.GetImageBytes("jpg");
-```
-
-## IExcelSeries - 数据系列接口
-
-[IExcelSeries](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelSeries.cs#L12-L261) 用于管理图表中的数据系列。它是图表的"演员"，每个系列都在图表舞台上扮演着自己的角色！
-
-### 数据系列操作
-
-```csharp
-// 获取图表中的数据系列
-var series = chart.SeriesCollection(1);
-
-// 设置系列名称
-series.Name = "销售额";
-
-// 设置X轴值
-series.XValues = worksheet.Range("A2:A10");
-
-// 设置Y轴值
-series.Values = worksheet.Range("B2:B10");
-```
-
-### 系列格式设置
-
-```csharp
-// 设置标记
-series.MarkerStyle = 3; // 方形标记
-series.MarkerSize = 5;
-series.MarkerBackgroundColor = Color.Red.ToArgb();
-series.MarkerForegroundColor = Color.White.ToArgb();
-
-// 设置线条样式
-series.Border.Color = Color.Blue.ToArgb();
-series.Border.Weight = 2;
-
-// 设置填充
-series.Fill.ForeColor = Color.Green.ToArgb();
-```
-
-### 数据标签
-
-```csharp
-// 显示数据标签
-series.HasDataLabels = true;
-
-// 应用数据标签
-series.ApplyDataLabels(
-    showValue: true,
-    showSeriesName: true,
-    showCategoryName: true
-);
-```
-
-### 系列操作方法
-
-```csharp
-// 选择系列
-series.Select();
-
-// 清除格式
-series.ClearFormats();
-
-// 删除系列
-series.Delete();
-```
-
-## IExcelPivotTable - 数据透视表接口
-
-[IExcelPivotTable](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelPivotTable.cs#L12-L229) 提供了对 Excel 数据透视表的全面管理功能。它是你的"数据分析大师"，帮你从海量数据中挖掘出有价值的洞察！
-
-### 创建数据透视表
-
-```csharp
-// 创建数据透视表缓存
-var pivotCache = workbook.PivotCaches().Create(
-    sourceType: XlPivotTableSourceType.xlDatabase,
-    sourceData: worksheet.Range("A1:D100")
-);
-
-// 创建数据透视表
-var pivotTable = pivotCache.CreatePivotTable(
-    tableDestination: worksheet2.Range("A1"),
-    tableName: "销售数据透视表"
-);
-```
-
-### 字段设置
-
-```csharp
-// 添加行字段
-var rowField = pivotTable.PivotFields("产品类别");
-rowField.Orientation = XlPivotFieldOrientation.xlRowField;
-
-// 添加列字段
-var columnField = pivotTable.PivotFields("月份");
-columnField.Orientation = XlPivotFieldOrientation.xlColumnField;
-
-// 添加数据字段
-var dataField = pivotTable.PivotFields("销售额");
-dataField.Orientation = XlPivotFieldOrientation.xlDataField;
-dataField.Function = XlConsolidationFunction.xlSum;
-```
-
-### 数据透视表格式
-
-```csharp
-// 设置表格样式
-pivotTable.TableStyle = workbook.TableStyles["TableStyleMedium2"];
-
-// 显示行条纹
-pivotTable.ShowRowStripes = true;
-
-// 显示列条纹
-pivotTable.ShowColumnStripes = true;
-```
-
-### 数据透视表操作
-
-```csharp
-// 刷新数据
-pivotTable.Refresh();
-
-// 更新数据
-pivotTable.Update();
-
-// 清除内容
-pivotTable.Clear();
-
-// 清除格式
-pivotTable.ClearFormats();
-
-// 清除所有
-pivotTable.ClearAll();
-```
-
-## IExcelPivotCache - 数据透视表缓存接口
-
-[IExcelPivotCache](https://gitee.com/mudtools/OfficeInterop/tree/master/MudTools.OfficeInterop.Excel/Chart/IExcelPivotCache.cs#L12-L85) 管理数据透视表的数据源缓存。它是数据透视表的"数据仓库管理员"，确保数据的准确和及时！
-
-### 缓存操作
-
-```csharp
-// 获取工作簿中的所有数据透视表缓存
-var pivotCaches = workbook.PivotCaches();
-
-// 创建新的缓存
-var newCache = pivotCaches.Create(
-    sourceType: XlPivotTableSourceType.xlDatabase,
-    sourceData: worksheet.Range("A1:E1000")
-);
-
-// 刷新缓存
-newCache.Refresh();
-```
-
-### 缓存属性
-
-```csharp
-// 设置缓存属性
-pivotCache.RefreshOnFileOpen = true;
-pivotCache.MissingItemsLimit = XlPivotTableMissingItems.xlMissingItemsNone;
-
-// 获取缓存索引
-int cacheIndex = pivotCache.Index;
-
-// 获取创建版本
-int version = pivotCache.Creator;
-```
-
-## 实际应用示例
-
-### 创建销售数据图表
-
-```csharp
-// 创建包含销售数据的工作表
-using var excelApp = ExcelFactory.BlankWorkbook();
-var worksheet = excelApp.ActiveSheet;
-
-// 填充示例数据
-worksheet.Cells[1, 1].Value = "月份";
-worksheet.Cells[1, 2].Value = "销售额";
-worksheet.Cells[1, 3].Value = "利润";
-
-string[] months = { "1月", "2月", "3月", "4月", "5月", "6月" };
-int[] sales = { 10000, 12000, 15000, 11000, 13000, 16000 };
-int[] profits = { 2000, 2500, 3000, 2200, 2600, 3200 };
-
-for (int i = 0; i < months.Length; i++)
+namespace ExcelWorkbookDemo
 {
-    worksheet.Cells[i + 2, 1].Value = months[i];
-    worksheet.Cells[i + 2, 2].Value = sales[i];
-    worksheet.Cells[i + 2, 3].Value = profits[i];
-}
-
-// 创建图表工作表
-var chart = worksheet.Parent.Charts.Add() as IExcelChart;
-chart.SetSourceData(worksheet.Range("A1:C7"));
-chart.ChartType = MsoChartType.msoChartColumnClustered;
-
-// 设置图表属性
-chart.HasTitle = true;
-chart.ChartTitle = "月度销售数据";
-chart.HasLegend = true;
-
-// 获取并设置数据系列
-var salesSeries = chart.SeriesCollection(1);
-salesSeries.Name = "销售额";
-
-var profitSeries = chart.SeriesCollection(2);
-profitSeries.Name = "利润";
-
-// 格式化图表
-chart.ChartStyle = 206;
-chart.SetBackgroundColor(Color.White.ToArgb());
-
-// 保存文件
-excelApp.ActiveWorkbook.SaveAs(@"C:\Output\SalesChart.xlsx");
-```
-
-### 创建数据透视表分析报告
-
-```csharp
-// 创建数据透视表分析报告
-using var excelApp = ExcelFactory.BlankWorkbook();
-var dataSheet = excelApp.ActiveSheet;
-dataSheet.Name = "原始数据";
-
-// 填充示例数据
-dataSheet.Cells[1, 1].Value = "销售员";
-dataSheet.Cells[1, 2].Value = "产品";
-dataSheet.Cells[1, 3].Value = "地区";
-dataSheet.Cells[1, 4].Value = "销售额";
-dataSheet.Cells[1, 5].Value = "日期";
-
-// 生成示例数据
-string[] salespersons = { "张三", "李四", "王五" };
-string[] products = { "产品A", "产品B", "产品C" };
-string[] regions = { "北京", "上海", "广州" };
-
-Random random = new Random();
-int row = 2;
-for (int i = 0; i < 100; i++)
-{
-    dataSheet.Cells[row, 1].Value = salespersons[random.Next(salespersons.Length)];
-    dataSheet.Cells[row, 2].Value = products[random.Next(products.Length)];
-    dataSheet.Cells[row, 3].Value = regions[random.Next(regions.Length)];
-    dataSheet.Cells[row, 4].Value = random.Next(1000, 10000);
-    dataSheet.Cells[row, 5].Value = DateTime.Now.AddDays(-random.Next(30));
-    row++;
-}
-
-// 创建数据透视表
-var pivotSheet = excelApp.AddWorksheet(after: dataSheet);
-pivotSheet.Name = "数据透视表";
-
-var pivotCache = excelApp.ActiveWorkbook.PivotCaches().Create(
-    sourceType: XlPivotTableSourceType.xlDatabase,
-    sourceData: dataSheet.UsedRange
-);
-
-var pivotTable = pivotCache.CreatePivotTable(
-    tableDestination: pivotSheet.Range("A1"),
-    tableName: "销售分析"
-);
-
-// 设置字段
-var salespersonField = pivotTable.PivotFields("销售员");
-salespersonField.Orientation = XlPivotFieldOrientation.xlRowField;
-
-var productField = pivotTable.PivotFields("产品");
-productField.Orientation = XlPivotFieldOrientation.xlColumnField;
-
-var dataField = pivotTable.PivotFields("销售额");
-dataField.Orientation = XlPivotFieldOrientation.xlDataField;
-dataField.Function = XlConsolidationFunction.xlSum;
-dataField.NumberFormat = "#,##0";
-
-// 格式化数据透视表
-pivotTable.TableStyle = excelApp.ActiveWorkbook.TableStyles["TableStyleMedium9"];
-pivotTable.ShowRowStripes = true;
-
-// 保存文件
-excelApp.ActiveWorkbook.SaveAs(@"C:\Output\SalesPivotReport.xlsx");
-```
-
-## 性能优化建议
-
-### 图表操作优化
-
-```csharp
-// 在操作图表时禁用屏幕更新
-excelApp.ScreenUpdating = false;
-
-try
-{
-    // 执行大量图表操作
-    for (int i = 1; i <= 10; i++)
+    class Program
     {
-        var chart = worksheet.Parent.Charts.Add() as IExcelChart;
-        chart.SetSourceData(worksheet.Range($"A1:C{i * 10}"));
-        chart.ChartType = MsoChartType.msoChartLine;
+        static void Main(string[] args)
+        {
+            try
+            {
+                // 创建Excel应用程序实例
+                using var excelApp = ExcelFactory.BlankWorkbook();
+                excelApp.Visible = false;
+                excelApp.DisplayAlerts = false;
+                
+                // 打开现有工作簿
+                string filePath = @"C:\data\sales_data.xlsx";
+                var workbook = excelApp.Workbooks.Open(filePath);
+                
+                if (workbook != null)
+                {
+                    Console.WriteLine($"成功打开工作簿: {workbook.Name}");
+                    Console.WriteLine($"完整路径: {workbook.FullName}");
+                }
+                else
+                {
+                    Console.WriteLine("打开工作簿失败");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"操作失败: {ex.Message}");
+            }
+        }
     }
 }
-finally
+```
+
+### 2. 遍历所有已打开的工作簿
+
+通过[IExcelApplication.Workbooks](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/Imps/ExcelApplication.cs#L171-L179)属性可以访问所有已打开的工作簿：
+
+```csharp
+using MudTools.OfficeInterop;
+using System;
+
+namespace ExcelWorkbookDemo
 {
-    excelApp.ScreenUpdating = true;
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                // 创建Excel应用程序实例
+                using var excelApp = ExcelFactory.BlankWorkbook();
+                excelApp.Visible = false;
+                excelApp.DisplayAlerts = false;
+                
+                // 打开多个工作簿示例
+                excelApp.Workbooks.Open(@"C:\data\sales_2022.xlsx");
+                excelApp.Workbooks.Open(@"C:\data\sales_2023.xlsx");
+                
+                // 遍历所有已打开的工作簿
+                Console.WriteLine("已打开的工作簿:");
+                for (int i = 1; i <= excelApp.Workbooks.Count; i++)
+                {
+                    var workbook = excelApp.Workbooks[i];
+                    Console.WriteLine($"  {i}. {workbook.Name} - {workbook.FullName}");
+                }
+                
+                // 或者使用foreach遍历
+                Console.WriteLine("\n使用foreach遍历:");
+                foreach (var workbook in excelApp.Workbooks)
+                {
+                    Console.WriteLine($"  {workbook.Name}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"操作失败: {ex.Message}");
+            }
+        }
+    }
 }
 ```
 
-### 数据透视表优化
+### 3. 工作簿的多种保存方式
+
+工作簿提供了多种保存方法，满足不同的需求：
+
+#### Save方法
+
+[Save](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L346-L346)方法用于保存对当前工作簿的更改，如果工作簿之前已保存过，则保存到原文件：
 
 ```csharp
-// 批量设置数据透视表字段
-excelApp.ScreenUpdating = false;
+// 保存对当前工作簿的更改
+workbook.Save();
+```
 
-try
+#### SaveAs方法
+
+[SaveAs](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L356-L363)方法用于将工作簿另存为新文件或以不同格式保存：
+
+```csharp
+// 另存为新文件
+workbook.SaveAs(@"C:\data\new_sales_data.xlsx");
+
+// 以不同格式保存
+workbook.SaveAs(
+    @"C:\data\sales_data.xls", 
+    XlFileFormat.xlExcel8  // 保存为.xls格式
+);
+
+// 保存时添加密码保护
+workbook.SaveAs(
+    @"C:\data\protected_sales_data.xlsx",
+    XlFileFormat.xlWorkbookDefault,
+    password: "mypassword"
+);
+```
+
+#### SaveCopyAs方法
+
+虽然在接口定义中没有直接看到SaveCopyAs方法，但我们可以通过SaveAs实现类似功能，即保存工作簿的副本而不改变当前工作簿的状态：
+
+```csharp
+// 保存工作簿副本
+workbook.SaveAs(@"C:\data\sales_data_backup.xlsx");
+```
+
+### 4. 关闭工作簿并处理保存提示
+
+使用[IExcelWorkbook.Close](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L373-L373)方法可以关闭工作簿，并通过参数控制是否保存更改：
+
+```csharp
+// 关闭工作簿并保存更改（默认行为）
+workbook.Close();
+
+// 关闭工作簿但不保存更改
+workbook.Close(saveChanges: false);
+
+// 关闭工作簿并保存为新文件
+workbook.Close(
+    saveChanges: true, 
+    filename: @"C:\data\final_sales_report.xlsx"
+);
+```
+
+## 实战案例：数据合并
+
+让我们通过一个完整的示例来演示如何实现数据合并场景。假设我们有多个部门的销售数据文件，需要将它们合并到一个主工作簿中：
+
+```csharp
+using MudTools.OfficeInterop;
+using System;
+using System.IO;
+
+namespace ExcelDataMergeDemo
 {
-    // 创建数据透视表
-    var pivotTable = CreatePivotTable();
-    
-    // 批量设置字段，避免逐个刷新
-    pivotTable.ManualUpdate = true;
-    
-    // 设置所有字段
-    SetupPivotFields(pivotTable);
-    
-    // 完成后刷新
-    pivotTable.ManualUpdate = false;
-    pivotTable.Refresh();
-}
-finally
-{
-    excelApp.ScreenUpdating = true;
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 部门数据文件路径
+            string[] departmentFiles = {
+                @"C:\data\sales_marketing.xlsx",
+                @"C:\data\sales_finance.xlsx",
+                @"C:\data\sales_operations.xlsx"
+            };
+            
+            string masterFile = @"C:\data\master_sales_report.xlsx";
+            
+            try
+            {
+                // 创建Excel应用程序实例
+                using var excelApp = ExcelFactory.BlankWorkbook();
+                excelApp.Visible = false;
+                excelApp.DisplayAlerts = false;
+                
+                // 创建主工作簿
+                var masterWorkbook = excelApp.ActiveWorkbook;
+                var masterWorksheet = masterWorkbook.ActiveSheetWrap;
+                
+                // 设置主工作簿表头
+                masterWorksheet.Cells[1, 1].Value = "部门";
+                masterWorksheet.Cells[1, 2].Value = "月份";
+                masterWorksheet.Cells[1, 3].Value = "销售额";
+                masterWorksheet.Cells[1, 4].Value = "利润";
+                
+                // 设置表头格式
+                var headerRange = masterWorksheet.Range("A1", "D1");
+                headerRange.Font.Bold = true;
+                headerRange.Interior.Color = System.Drawing.Color.LightBlue;
+                
+                int currentRow = 2;
+                
+                // 遍历所有部门文件
+                foreach (string filePath in departmentFiles)
+                {
+                    if (File.Exists(filePath))
+                    {
+                        // 打开部门数据文件
+                        var deptWorkbook = excelApp.Workbooks.Open(filePath);
+                        var deptWorksheet = deptWorkbook.ActiveSheetWrap;
+                        
+                        // 获取文件名作为部门名称（去除扩展名）
+                        string departmentName = Path.GetFileNameWithoutExtension(filePath);
+                        
+                        // 从第二行开始读取数据（第一行为表头）
+                        int row = 2;
+                        while (true)
+                        {
+                            // 读取单元格值
+                            var monthValue = deptWorksheet.Cells[row, 1].Value;
+                            var salesValue = deptWorksheet.Cells[row, 2].Value;
+                            var profitValue = deptWorksheet.Cells[row, 3].Value;
+                            
+                            // 如果月份为空，说明到达数据末尾
+                            if (monthValue == null || string.IsNullOrEmpty(monthValue.ToString()))
+                                break;
+                            
+                            // 将数据写入主工作簿
+                            masterWorksheet.Cells[currentRow, 1].Value = departmentName;
+                            masterWorksheet.Cells[currentRow, 2].Value = monthValue;
+                            masterWorksheet.Cells[currentRow, 3].Value = salesValue;
+                            masterWorksheet.Cells[currentRow, 4].Value = profitValue;
+                            
+                            currentRow++;
+                            row++;
+                        }
+                        
+                        // 关闭部门工作簿，不保存更改
+                        deptWorkbook.Close(saveChanges: false);
+                        
+                        Console.WriteLine($"已处理部门数据: {departmentName}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"文件不存在: {filePath}");
+                    }
+                }
+                
+                // 自动调整列宽
+                masterWorksheet.Columns.AutoFit();
+                
+                // 保存主工作簿
+                masterWorkbook.SaveAs(masterFile);
+                
+                Console.WriteLine($"数据合并完成，结果保存到: {masterFile}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"操作失败: {ex.Message}");
+            }
+        }
+    }
 }
 ```
 
-## 最佳实践
+## 实战案例：批量格式转换
 
-### 错误处理
+下面是一个批量转换Excel文件格式的示例：
+
+```csharp
+using MudTools.OfficeInterop;
+using System;
+using System.IO;
+
+namespace ExcelBatchConvertDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 源文件夹和目标文件夹
+            string sourceFolder = @"C:\data\old_format";
+            string targetFolder = @"C:\data\new_format";
+            
+            try
+            {
+                // 确保目标文件夹存在
+                if (!Directory.Exists(targetFolder))
+                {
+                    Directory.CreateDirectory(targetFolder);
+                }
+                
+                // 创建Excel应用程序实例
+                using var excelApp = ExcelFactory.BlankWorkbook();
+                excelApp.Visible = false;
+                excelApp.DisplayAlerts = false;
+                
+                // 获取源文件夹中所有.xls文件
+                string[] oldFiles = Directory.GetFiles(sourceFolder, "*.xls");
+                
+                Console.WriteLine($"找到 {oldFiles.Length} 个.xls文件需要转换");
+                
+                int successCount = 0;
+                
+                foreach (string oldFilePath in oldFiles)
+                {
+                    try
+                    {
+                        // 打开旧格式文件
+                        var workbook = excelApp.Workbooks.Open(oldFilePath);
+                        
+                        // 生成新文件路径
+                        string fileName = Path.GetFileNameWithoutExtension(oldFilePath);
+                        string newFilePath = Path.Combine(targetFolder, $"{fileName}.xlsx");
+                        
+                        // 另存为新格式
+                        workbook.SaveAs(newFilePath, XlFileFormat.xlOpenXMLWorkbook);
+                        
+                        // 关闭工作簿
+                        workbook.Close(saveChanges: false);
+                        
+                        Console.WriteLine($"转换成功: {fileName}");
+                        successCount++;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"转换失败 {Path.GetFileName(oldFilePath)}: {ex.Message}");
+                    }
+                }
+                
+                Console.WriteLine($"转换完成，成功转换 {successCount}/{oldFiles.Length} 个文件");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"操作失败: {ex.Message}");
+            }
+        }
+    }
+}
+```
+
+## 实战案例：模板化报告生成
+
+在企业环境中，经常需要根据固定模板生成各种报告。以下示例演示如何使用模板创建工作簿：
+
+```csharp
+using MudTools.OfficeInterop;
+using System;
+
+namespace ExcelTemplateReportDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string templatePath = @"C:\templates\sales_report_template.xlsx";
+            string outputPath = @"C:\reports\";
+            
+            try
+            {
+                // 创建Excel应用程序实例
+                using var excelApp = ExcelFactory.BlankWorkbook();
+                excelApp.Visible = false;
+                excelApp.DisplayAlerts = false;
+                
+                // 打开模板文件
+                var templateWorkbook = excelApp.Workbooks.Open(templatePath);
+                
+                // 填充数据
+                var worksheet = templateWorkbook.ActiveSheetWrap;
+                
+                // 填充报告标题
+                worksheet.Cells[1, 1].Value = $"销售报告 - {DateTime.Now:yyyy年MM月}";
+                
+                // 填充数据
+                worksheet.Cells[3, 2].Value = "张三";
+                worksheet.Cells[4, 2].Value = DateTime.Now.ToString("yyyy-MM-dd");
+                worksheet.Cells[5, 2].Value = 150000;
+                worksheet.Cells[6, 2].Value = 120000;
+                worksheet.Cells[7, 2].Value = 30000;
+                
+                // 生成带时间戳的文件名
+                string fileName = $"销售报告_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                string fullPath = System.IO.Path.Combine(outputPath, fileName);
+                
+                // 另存为新文件
+                templateWorkbook.SaveAs(fullPath);
+                
+                // 关闭工作簿
+                templateWorkbook.Close(saveChanges: false);
+                
+                Console.WriteLine($"报告已生成: {fullPath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"操作失败: {ex.Message}");
+            }
+        }
+    }
+}
+```
+
+## 实战案例：数据备份与版本管理
+
+定期备份重要Excel文件是数据安全管理的重要环节，以下示例演示如何实现自动备份功能：
+
+```csharp
+using MudTools.OfficeInterop;
+using System;
+using System.IO;
+
+namespace ExcelBackupDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string sourceFile = @"C:\data\important_data.xlsx";
+            string backupFolder = @"C:\data\backups";
+            
+            try
+            {
+                // 确保备份文件夹存在
+                if (!Directory.Exists(backupFolder))
+                {
+                    Directory.CreateDirectory(backupFolder);
+                }
+                
+                // 创建Excel应用程序实例
+                using var excelApp = ExcelFactory.BlankWorkbook();
+                excelApp.Visible = false;
+                excelApp.DisplayAlerts = false;
+                
+                // 打开源文件
+                var workbook = excelApp.Workbooks.Open(sourceFile);
+                
+                // 生成带时间戳的备份文件名
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(sourceFile);
+                string fileExtension = Path.GetExtension(sourceFile);
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string backupFileName = $"{fileNameWithoutExtension}_backup_{timestamp}{fileExtension}";
+                string backupFilePath = Path.Combine(backupFolder, backupFileName);
+                
+                // 保存备份副本
+                workbook.SaveAs(backupFilePath);
+                
+                // 关闭工作簿
+                workbook.Close(saveChanges: false);
+                
+                Console.WriteLine($"备份完成: {backupFilePath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"操作失败: {ex.Message}");
+            }
+        }
+    }
+}
+```
+
+## 工作簿重要属性和方法详解
+
+### 基础属性
+
+工作簿提供了许多有用的属性来获取工作簿的状态和信息：
+
+- [Name](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L26-L26)：获取工作簿的名称
+- [FullName](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L33-L33)：获取工作簿的完整路径
+- [Path](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L40-L40)：获取工作簿所在的文件夹路径
+- [Saved](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L61-L61)：获取或设置工作簿是否已保存
+- [ReadOnly](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L124-L124)：获取工作簿是否为只读模式
+- [FileFormat](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L103-L103)：获取工作簿的文件格式
+
+### 工作表管理
+
+工作簿中包含工作表集合，可以通过以下属性访问：
+
+- [Worksheets](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L178-L178)：获取普通工作表集合
+- [Sheets](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L186-L186)：获取所有类型的工作表集合（包括图表工作表）
+- [ActiveSheet](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L252-L252)：获取活动工作表
+- [ActiveSheetWrap](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L260-L260)：获取活动工作表（包装类型）
+
+### 保护和安全
+
+工作簿支持多种保护机制：
+
+- [Protect](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L285-L285)：保护工作簿结构和窗口
+- [Unprotect](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L294-L294)：取消保护工作簿
+- [HasPassword](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/IExcelWorkbook.cs#L19-L19)：检查工作簿是否受密码保护
+
+## 最佳实践和注意事项
+
+### 1. 正确处理资源释放
+
+始终使用`using`语句或确保在适当时候调用[Dispose](file:///D:/Repos/OfficeInterop/main/MudTools.OfficeInterop.Excel/CoreComponents/Core/Imps/ExcelWorkbook.cs#L1404-L1418)方法来释放COM资源：
+
+```csharp
+using var excelApp = ExcelFactory.BlankWorkbook();
+// ... 执行操作 ...
+// 资源会自动释放
+```
+
+### 2. 异常处理
+
+COM操作可能会抛出各种异常，应该妥善处理：
 
 ```csharp
 try
 {
-    // 创建图表
-    var chart = worksheet.Parent.Charts.Add() as IExcelChart;
-    
-    // 设置数据源
-    chart.SetSourceData(dataRange);
-    
-    // 设置图表类型
-    chart.ChartType = MsoChartType.msoChartColumnClustered;
+    var workbook = excelApp.Workbooks.Open(filePath);
+    // ... 执行操作 ...
 }
-catch (ExcelOperationException ex)
+catch (System.Runtime.InteropServices.COMException ex)
 {
-    // 处理Excel操作异常
-    Console.WriteLine($"图表创建失败: {ex.Message}");
+    Console.WriteLine($"COM操作失败: {ex.Message}");
 }
 catch (Exception ex)
 {
-    // 处理其他异常
     Console.WriteLine($"操作失败: {ex.Message}");
 }
 ```
 
-### 资源管理
+### 3. 合理设置应用程序属性
+
+在批量处理时，建议设置以下属性以提高性能：
 
 ```csharp
-// 使用using语句确保资源正确释放
-using var excelApp = ExcelFactory.BlankWorkbook();
-try
+excelApp.Visible = false;           // 隐藏Excel应用程序
+excelApp.DisplayAlerts = false;     // 禁用警告对话框
+excelApp.ScreenUpdating = false;    // 禁用屏幕更新（如果可用）
+```
+
+### 4. 检查文件存在性
+
+在打开文件之前，检查文件是否存在：
+
+```csharp
+if (File.Exists(filePath))
 {
-    // 执行Excel操作
-    PerformExcelOperations(excelApp);
-    
-    // 保存工作簿
-    excelApp.ActiveWorkbook.SaveAs(@"C:\Output\Report.xlsx");
+    var workbook = excelApp.Workbooks.Open(filePath);
+    // ... 执行操作 ...
 }
-finally
+else
 {
-    // 确保Excel应用程序正确关闭
-    excelApp.Quit();
+    Console.WriteLine($"文件不存在: {filePath}");
 }
 ```
 
 ## 总结
 
-通过使用 IExcelChart、IExcelPivotTable、IExcelSeries 和 IExcelPivotCache 接口，开发者可以：
+通过本文的学习，我们掌握了以下关键知识点：
 
-1. 轻松创建和自定义各种类型的图表
-2. 高效操作数据透视表进行数据分析
-3. 精确控制数据系列的显示和格式
-4. 简化复杂数据可视化的实现过程
-5. 避免手动处理 COM 对象的复杂性
+1. **工作簿在Excel对象模型中的位置** - 理解了工作簿作为连接应用程序和工作表的桥梁作用
+2. **工作簿的基本操作** - 学会了如何打开、遍历、保存和关闭工作簿
+3. **实际应用场景** - 通过数据合并、批量转换、模板化报告生成、数据备份等多个案例，看到了工作簿操作在实际业务中的应用
+4. **最佳实践** - 了解了资源管理、异常处理等关键注意事项
 
-这些接口提供了对 Excel 高级数据分析和可视化功能的全面封装，使开发者能够专注于业务逻辑而不是底层的 COM 交互细节。
-
-掌握了这些技能，你就能轻松地将枯燥的数据变成生动的图表和深入的分析报告了！Excel数据可视化的世界正等待你去探索！
+在下一篇文章中，我们将深入探讨工作表（Worksheet）的各种操作，包括单元格数据处理、格式设置、图表创建等高级功能。通过不断学习和实践，你将能够充分利用.NET和MudTools.OfficeInterop.Excel的强大功能，实现更复杂的Excel自动化任务。

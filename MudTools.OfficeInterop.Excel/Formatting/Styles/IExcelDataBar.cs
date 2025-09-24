@@ -26,17 +26,19 @@ public interface IExcelDataBar : IDisposable
     /// </summary>
     IExcelApplication Application { get; }
 
+    IExcelRange? AppliesTo { get; }
+
     /// <summary>
     /// 获取或设置最小条件值
     /// 对应 Databar.MinPoint 属性
     /// </summary>
-    IExcelConditionValue MinPoint { get; }
+    IExcelConditionValue? MinPoint { get; }
 
     /// <summary>
     /// 获取或设置最大条件值
     /// 对应 Databar.MaxPoint 属性
     /// </summary>
-    IExcelConditionValue MaxPoint { get; }
+    IExcelConditionValue? MaxPoint { get; }
 
     /// <summary>
     /// 获取或设置数据条的方向

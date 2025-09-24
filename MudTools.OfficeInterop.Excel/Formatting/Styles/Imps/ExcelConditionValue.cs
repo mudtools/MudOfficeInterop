@@ -44,6 +44,14 @@ internal class ExcelConditionValue : IExcelConditionValue
     }
     #endregion
 
+    public void Modify(XlConditionValueTypes newtype, object? newvalue = null)
+    {
+        _conditionValue?.Modify(
+          newtype.EnumConvert(MsExcel.XlConditionValueTypes.xlConditionValueNone),
+          newvalue);
+    }
+
+
     #region IDisposable Support
     protected virtual void Dispose(bool disposing)
     {

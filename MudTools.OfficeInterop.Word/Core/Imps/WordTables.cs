@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordTables : IWordTables
 {
-    private MsWord.Tables _tables;
+    private MsWord.Tables? _tables;
+    private DisposableList _disposables = [];
     private bool _disposedValue;
 
     public IWordApplication? Application => _tables != null ? new WordApplication(_tables.Application) : null;
@@ -20,7 +21,7 @@ internal class WordTables : IWordTables
     /// <summary>
     /// 获取表格数量
     /// </summary>
-    public int Count => _tables.Count;
+    public int Count => _tables?.Count ?? 0;
 
     /// <summary>
     /// 构造函数
@@ -33,7 +34,7 @@ internal class WordTables : IWordTables
     }
 
     /// <inheritdoc/>
-    public IWordTable this[int index]
+    public IWordTable? this[int index]
     {
         get
         {
@@ -41,11 +42,18 @@ internal class WordTables : IWordTables
             try
             {
                 var comTable = _tables[index];
-                return comTable != null ? new WordTable(comTable) : null;
+                var table = comTable != null ? new WordTable(comTable) : null;
+                if (table != null)
+                    _disposables.Add(table);
+                return table;
             }
-            catch (COMException)
+            catch (COMException ex)
             {
-                return null;
+                throw new ExcelOperationException("Failed to get table.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to get table.", ex);
             }
         }
     }
@@ -57,18 +65,23 @@ internal class WordTables : IWordTables
     /// <param name="columns">列数</param>
     /// <param name="range">插入范围</param>
     /// <returns>表格对象</returns>
-    public IWordTable Add(IWordRange range, int rows, int columns)
+    public IWordTable? Add(IWordRange range, int rows, int columns)
     {
         if (rows <= 0 || columns <= 0)
             throw new ArgumentException("Rows and columns must be greater than zero.");
         if (range == null)
             throw new ArgumentNullException(nameof(range));
-
+        if (_tables == null)
+            return null;
         try
         {
             var comRange = GetComRange(range);
             var table = _tables.Add(comRange, rows, columns);
             return new WordTable(table);
+        }
+        catch (COMException ex)
+        {
+            throw new ExcelOperationException("Failed to add table.", ex);
         }
         catch (Exception ex)
         {
@@ -85,7 +98,11 @@ internal class WordTables : IWordTables
         try
         {
             var table = this[index];
-            table.Delete();
+            table?.Delete();
+        }
+        catch (COMException ex)
+        {
+            throw new ExcelOperationException($"Failed to delete table at index {index}.", ex);
         }
         catch (Exception ex)
         {
@@ -134,6 +151,7 @@ internal class WordTables : IWordTables
 
         if (disposing && _tables != null)
         {
+            _disposables?.Dispose();
             Marshal.ReleaseComObject(_tables);
             _tables = null;
         }

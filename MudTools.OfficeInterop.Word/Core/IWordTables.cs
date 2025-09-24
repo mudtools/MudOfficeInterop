@@ -14,7 +14,7 @@ public interface IWordTables : IDisposable, IEnumerable<IWordTable>
     /// <summary>
     /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取表格数量
@@ -24,7 +24,7 @@ public interface IWordTables : IDisposable, IEnumerable<IWordTable>
     /// <summary>
     /// 根据索引获取表格
     /// </summary>
-    IWordTable this[int index] { get; }
+    IWordTable? this[int index] { get; }
 
     /// <summary>
     /// 添加表格
@@ -33,7 +33,7 @@ public interface IWordTables : IDisposable, IEnumerable<IWordTable>
     /// <param name="columns">列数</param>
     /// <param name="range">插入范围</param>
     /// <returns>表格对象</returns>
-    IWordTable Add(IWordRange range, int rows, int columns);
+    IWordTable? Add(IWordRange range, int rows, int columns);
 
     /// <summary>
     /// 删除表格

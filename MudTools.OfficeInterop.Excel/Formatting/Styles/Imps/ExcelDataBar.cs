@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelDataBar : IExcelDataBar
 {
-    private MsExcel.Databar _databar;
+    private MsExcel.Databar? _databar;
     private bool _disposedValue = false;
 
     internal ExcelDataBar(MsExcel.Databar databar)
@@ -32,20 +32,44 @@ internal class ExcelDataBar : IExcelDataBar
         }
     }
 
-    public IExcelConditionValue MinPoint
+    public IExcelRange? AppliesTo
     {
-        get => new ExcelConditionValue(_databar.MinPoint);
+        get
+        {
+            if (_databar == null)
+                return null;
+            return new ExcelRange(_databar.AppliesTo);
+        }
     }
 
-    public IExcelConditionValue MaxPoint
+    public IExcelConditionValue? MinPoint
     {
-        get => new ExcelConditionValue(_databar.MaxPoint);
+        get
+        {
+            if (_databar == null)
+                return null;
+            return new ExcelConditionValue(_databar.MinPoint);
+        }
+    }
+
+    public IExcelConditionValue? MaxPoint
+    {
+        get
+        {
+            if (_databar == null)
+                return null;
+            return new ExcelConditionValue(_databar.MaxPoint);
+        }
     }
 
     public int Direction
     {
-        get => (int)_databar.Direction;
-        set => _databar.Direction = value;
+        get => _databar != null ? _databar.Direction : 0;
+        set
+        {
+            if (_databar != null)
+                _databar.Direction = value;
+        }
     }
 
     public XlDataBarFillType BarFillType
@@ -56,20 +80,69 @@ internal class ExcelDataBar : IExcelDataBar
 
     public bool ShowBarOnly
     {
-        get => _databar.ShowValue == false;
-        set => _databar.ShowValue = !value;
+        get => _databar != null ? _databar.ShowValue : false;
+        set
+        {
+            if (_databar != null)
+                _databar.ShowValue = value;
+        }
     }
     #endregion
 
     #region 格式设置
-    public IExcelDataBarBorder Borders => new ExcelDataBarBorder(_databar.BarBorder);
+    public IExcelDataBarBorder? Borders
+    {
+        get
+        {
+            if (_databar == null)
+                return null;
+            return new ExcelDataBarBorder(_databar.BarBorder);
+        }
+    }
 
-    public IExcelNegativeBarFormat NegativeBarFormat => new ExcelNegativeBarFormat(_databar.NegativeBarFormat);
+    public IExcelFormatColor Color
+    {
+        get
+        {
+            if (_databar == null)
+                return null;
+            return new ExcelFormatColor(_databar.Color);
+        }
+    }
+
+    public IExcelNegativeBarFormat? NegativeBarFormat
+    {
+        get
+        {
+            if (_databar == null)
+                return null;
+            return new ExcelNegativeBarFormat(_databar.NegativeBarFormat);
+        }
+    }
 
     public string Formula
     {
-        get => _databar.Formula;
-        set => _databar.Formula = value;
+        get
+        {
+            if (_databar == null)
+                return string.Empty;
+            return _databar.Formula;
+        }
+        set
+        {
+            if (_databar != null)
+                _databar.Formula = value;
+        }
+    }
+
+    public bool ShowValue
+    {
+        get => _databar != null ? _databar.ShowValue : false;
+        set
+        {
+            if (_databar != null)
+                _databar.ShowValue = value;
+        }
     }
     #endregion
 

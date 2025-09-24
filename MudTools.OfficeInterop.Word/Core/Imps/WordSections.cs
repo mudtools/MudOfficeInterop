@@ -16,7 +16,9 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordSections : IWordSections
 {
     private static readonly ILog log = LogManager.GetLogger(typeof(WordSections));
-    private MsWord.Sections _sections;
+    private MsWord.Sections? _sections;
+
+    private DisposableList _disposables = [];
     private bool _disposedValue;
 
     /// <summary>
@@ -43,12 +45,90 @@ internal class WordSections : IWordSections
     /// <inheritdoc/>
     public int Count => _sections?.Count ?? 0;
 
+    /// <inheritdoc/>
+    public IWordSection? First
+    {
+        get
+        {
+            if (_sections == null) return null;
+            try
+            {
+                var comSection = _sections.First;
+                var section = comSection != null ? new WordSection(comSection) : null;
+                if (section != null) _disposables.Add(section);
+                return section;
+            }
+            catch (COMException ce)
+            {
+                log.Error($"Failed to retrieve first section: {ce.Message}", ce);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Failed to retrieve first section: {ex.Message}", ex);
+                return null;
+            }
+        }
+    }
+
+    /// <inheritdoc/>
+    public IWordSection? Last
+    {
+        get
+        {
+            if (_sections == null) return null;
+            try
+            {
+                var comSection = _sections.Last;
+                var section = comSection != null ? new WordSection(comSection) : null;
+                if (section != null) _disposables.Add(section);
+                return section;
+            }
+            catch (COMException ce)
+            {
+                log.Error($"Failed to retrieve last section: {ce.Message}", ce);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Failed to retrieve last section: {ex.Message}", ex);
+                return null;
+            }
+        }
+    }
+
+    /// <inheritdoc/>
+    public IWordPageSetup? PageSetup
+    {
+        get
+        {
+            if (_sections == null) return null;
+            try
+            {
+                var comPageSetup = _sections.PageSetup;
+                var pageSetup = comPageSetup != null ? new WordPageSetup(comPageSetup) : null;
+                if (pageSetup != null) _disposables.Add(pageSetup);
+                return pageSetup;
+            }
+            catch (COMException ce)
+            {
+                log.Error($"Failed to retrieve page setup: {ce.Message}", ce);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Failed to retrieve page setup: {ex.Message}", ex);
+                return null;
+            }
+        }
+    }
+
     #endregion
 
     #region 集合索引器实现 (Collection Indexer Implementation)
 
     /// <inheritdoc/>
-    public IWordSection this[int index]
+    public IWordSection? this[int index]
     {
         get
         {
@@ -56,11 +136,18 @@ internal class WordSections : IWordSections
             try
             {
                 var comSection = _sections[index];
-                return comSection != null ? new WordSection(comSection) : null;
+                var section = comSection != null ? new WordSection(comSection) : null;
+                if (section != null) _disposables.Add(section);
+                return section;
             }
             catch (COMException ce)
             {
                 log.Error($"Failed to retrieve object based on index: {ce.Message}", ce);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Failed to retrieve object based on index: {ex.Message}", ex);
                 return null;
             }
         }
@@ -99,6 +186,7 @@ internal class WordSections : IWordSections
 
         if (disposing && _sections != null)
         {
+            _disposables?.Dispose();
             Marshal.ReleaseComObject(_sections);
             _sections = null;
         }

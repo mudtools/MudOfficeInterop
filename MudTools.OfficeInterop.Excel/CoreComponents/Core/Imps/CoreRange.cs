@@ -70,20 +70,20 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public object Value
     {
-        get => InternalRange.Value;
-        set => InternalRange.Value = value;
+        get => InternalRange.Value2;
+        set => InternalRange.Value2 = value;
     }
 
     public object[,] ArrayValue
     {
         get
         {
-            var obj = InternalRange.Value;
+            var obj = InternalRange.Value2;
             if (obj is object[,] objs && objs != null)
                 return objs;
             return null;
         }
-        set => InternalRange.Value = value;
+        set => InternalRange.Value2 = value;
     }
 
     public int PageBreak
