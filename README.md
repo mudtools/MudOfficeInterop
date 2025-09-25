@@ -134,7 +134,7 @@ using var app = ExcelFactory.BlankWorkbook();
 app.Visible = true;
 
 // 获取活动工作表
-var worksheet = app.GetActiveSheet();
+var worksheet = app.ActiveSheetWrap;
 
 // 操作单元格
 worksheet.Cells[1, 1].Value = "Hello";
@@ -150,7 +150,7 @@ app.Quit();
 ```csharp
 // 基于模板创建工作簿
 using var app = ExcelFactory.CreateFrom(@"C:\templates\ReportTemplate.xltx");
-var worksheet = app.GetActiveSheet();
+var worksheet = app.ActiveSheetWrap;
 
 // 填充数据
 worksheet.Cells[1, 1].Value = "销售报告";
@@ -208,7 +208,7 @@ var chartObject = chartObjects.Add(100, 50, 300, 200);
 var chart = chartObject.Chart;
 
 // 设置图表数据源
-chart.SetSourceData(worksheet.Range["A1:B4"]);
+chart.SetSourceData(worksheet.Range("A1:B4"));
 chart.ChartType = XlChartType.xlColumnClustered;
 
 app.ActiveWorkbook.SaveAs(@"C:\charts\SalesChart.xlsx");
