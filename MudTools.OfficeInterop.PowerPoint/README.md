@@ -28,7 +28,7 @@ MudTools.OfficeInterop.PowerPoint 是专门用于操作 Microsoft PowerPoint 应
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.2" />
+<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.8" />
 ```
 
 ## 核心组件

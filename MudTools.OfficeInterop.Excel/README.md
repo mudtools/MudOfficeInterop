@@ -29,7 +29,7 @@ MudTools.OfficeInterop.Excel 是专门用于操作 Microsoft Excel 应用程序�
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.2" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.8" />
 ```
 
 ## 核心组件
@@ -58,8 +58,8 @@ var workbook = app.Workbooks.Add();
 var worksheet = workbook.Worksheets.Add();
 
 // 操作单元格
-worksheet.Range["A1"].Value = "Hello";
-worksheet.Range["B1"].Value = "World";
+worksheet.Range("A1").Value = "Hello";
+worksheet.Range("B1").Value = "World";
 
 // 保存工作簿
 workbook.SaveAs(@"C:\temp\example.xlsx");
@@ -70,11 +70,11 @@ workbook.SaveAs(@"C:\temp\example.xlsx");
 ```csharp
 // 基于模板创建工作簿
 using var app = ExcelFactory.CreateFrom(@"C:\templates\ReportTemplate.xltx");
-var worksheet = app.GetActiveSheet();
+var worksheet = app.ActiveSheetWrap;
 
 // 填充数据
-worksheet.Range["A1"].Value = "销售报告";
-worksheet.Range["A2"].Value = DateTime.Now.ToString("yyyy-MM-dd");
+worksheet.Range("A1").Value = "销售报告";
+worksheet.Range("A2").Value = DateTime.Now.ToString("yyyy-MM-dd");
 
 // 保存并关闭
 app.ActiveWorkbook.SaveAs(@"C:\reports\SalesReport.xlsx");
@@ -89,7 +89,7 @@ using var app = ExcelFactory.Open(@"C:\data\SalesData.xlsx");
 var worksheet = app.Worksheets[1];
 
 // 读取数据范围
-var dataRange = worksheet.Range["A1:D100"];
+var dataRange = worksheet.Range("A1:D100");
 var rowCount = dataRange.Rows.Count;
 var columnCount = dataRange.Columns.Count;
 
@@ -113,14 +113,14 @@ using var app = ExcelFactory.BlankWorkbook();
 var worksheet = app.GetActiveSheet();
 
 // 添加示例数据
-worksheet.Range["A1"].Value = "月份";
-worksheet.Range["B1"].Value = "销售额";
-worksheet.Range["A2"].Value = "一月";
-worksheet.Range["B2"].Value = 10000;
-worksheet.Range["A3"].Value = "二月";
-worksheet.Range["B3"].Value = 15000;
-worksheet.Range["A4"].Value = "三月";
-worksheet.Range["B4"].Value = 12000;
+worksheet.Range("A1").Value = "月份";
+worksheet.Range("B1").Value = "销售额";
+worksheet.Range("A2").Value = "一月";
+worksheet.Range("B2").Value = 10000;
+worksheet.Range("A3").Value = "二月";
+worksheet.Range("B3").Value = 15000;
+worksheet.Range("A4").Value = "三月";
+worksheet.Range("B4").Value = 12000;
 
 // 创建图表
 var chartObjects = worksheet.ChartObjects();
@@ -128,7 +128,7 @@ var chartObject = chartObjects.Add(100, 50, 300, 200);
 var chart = chartObject.Chart;
 
 // 设置图表数据源
-chart.SetSourceData(worksheet.Range["A1:B4"]);
+chart.SetSourceData(worksheet.Range("A1:B4"));
 chart.ChartType = XlChartType.xlColumnClustered;
 
 app.ActiveWorkbook.SaveAs(@"C:\charts\SalesChart.xlsx");

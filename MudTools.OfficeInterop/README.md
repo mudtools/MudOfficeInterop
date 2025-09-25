@@ -29,7 +29,7 @@ MudTools.OfficeInterop 是整个 Office 互操作库的核心模块，提供了 
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop" Version="1.1.2" />
+<PackageReference Include="MudTools.OfficeInterop" Version="1.1.8" />
 ```
 
 ## 核心组件

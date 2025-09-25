@@ -99,11 +99,11 @@ MudTools.OfficeInterop 适用于以下场景：
 该项目依赖于 Microsoft Office COM 组件，使用前需要确保系统中已安装相应版本的 Microsoft Office。
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop" Version="1.1.7" />
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.7" />
-<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.7" />
-<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.7" />
-<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.7" />
+<PackageReference Include="MudTools.OfficeInterop" Version="1.1.8" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.8" />
+<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.8" />
+<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.8" />
+<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.8" />
 ```
 
 ## 工厂类使用说明
@@ -169,7 +169,7 @@ using var app = ExcelFactory.Open(@"C:\data\SalesData.xlsx");
 var worksheet = app.Worksheets[1];
 
 // 读取数据范围
-var dataRange = worksheet.Range["A1:D100"];
+var dataRange = worksheet.Range("A1:D100");
 var rowCount = dataRange.Rows.Count;
 var columnCount = dataRange.Columns.Count;
 
@@ -190,7 +190,7 @@ app.Quit();
 
 ```csharp
 using var app = ExcelFactory.BlankWorkbook();
-var worksheet = app.GetActiveSheet();
+var worksheet = app.ActiveSheetWrap;
 
 // 添加示例数据
 worksheet.Cells[1, 1].Value = "月份";

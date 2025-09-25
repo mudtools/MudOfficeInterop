@@ -30,7 +30,7 @@ MudTools.OfficeInterop.Vbe 是专门用于操作 Microsoft Visual Basic Editor (
 ## 安装
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.2" />
+<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.8" />
 ```
 
 ## 核心组件

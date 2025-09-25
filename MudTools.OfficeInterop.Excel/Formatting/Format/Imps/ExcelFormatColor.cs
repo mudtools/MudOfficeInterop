@@ -92,7 +92,7 @@ internal class ExcelFormatColor : IExcelFormatColor
         {
             if (_colorFormat != null)
             {
-                return Color.FromArgb(_colorFormat.Color.ConvertToInt());
+                return ColorTranslator.FromOle(_colorFormat.Color.ConvertToInt());
             }
             return Color.Empty;
         }
@@ -100,7 +100,7 @@ internal class ExcelFormatColor : IExcelFormatColor
         {
             if (_colorFormat != null)
             {
-                _colorFormat.Color = value.ToArgb();
+                _colorFormat.Color = ColorTranslator.ToOle(value);
             }
         }
     }
