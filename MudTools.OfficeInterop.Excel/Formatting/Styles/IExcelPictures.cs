@@ -39,7 +39,7 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     /// 获取图片集合所属的父对象（如 Worksheet）。
     /// 若底层对象无效，返回 null。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置图片集合是否启用（可交互）。
@@ -163,7 +163,7 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     /// 将当前图片集合中的所有图片组合成一个组对象。
     /// </summary>
     /// <returns>组合后的组对象，或 null</returns>
-    IExcelGroupObject Group();
+    IExcelGroupObject? Group();
 
     /// <summary>
     /// 从字节数组插入图片（支持内存中图片数据）。
@@ -176,7 +176,7 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     /// <param name="width">宽度（单位：磅，默认 -1 表示原始尺寸）</param>
     /// <param name="height">高度（单位：磅，默认 -1 表示原始尺寸）</param>
     /// <returns>新创建的图片对象，或 null</returns>
-    IExcelPicture AddFromBytes(byte[] imageBytes, string imageFormat = "png",
+    IExcelPicture? AddFromBytes(byte[] imageBytes, string imageFormat = "png",
                               double left = 0, double top = 0, double width = -1, double height = -1);
 
     #endregion

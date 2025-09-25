@@ -21,7 +21,9 @@ internal class ExcelStyles : IExcelStyles
     /// <summary>
     /// 底层的 COM Styles 集合对象
     /// </summary>
-    private MsExcel.Styles _styles;
+    private MsExcel.Styles? _styles;
+
+    private DisposableList _disposables = [];
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -50,6 +52,7 @@ internal class ExcelStyles : IExcelStyles
 
         if (disposing)
         {
+            _disposables.Dispose();
             // 释放底层COM对象
             if (_styles != null)
                 Marshal.ReleaseComObject(_styles);
@@ -87,7 +90,10 @@ internal class ExcelStyles : IExcelStyles
 
             try
             {
-                return _styles[index] is MsExcel.Style style ? new ExcelStyle(style) : null;
+                var s = _styles[index] is MsExcel.Style style ? new ExcelStyle(style) : null;
+                if (s != null)
+                    _disposables.Add(s);
+                return s;
             }
             catch (Exception ex)
             {
@@ -111,7 +117,10 @@ internal class ExcelStyles : IExcelStyles
 
             try
             {
-                return _styles[name] is MsExcel.Style style ? new ExcelStyle(style) : null;
+                var s = _styles[name] is MsExcel.Style style ? new ExcelStyle(style) : null;
+                if (s != null)
+                    _disposables.Add(s);
+                return s;
             }
             catch (Exception ex)
             {
@@ -133,7 +142,7 @@ internal class ExcelStyles : IExcelStyles
     {
         get
         {
-            return _styles?.Application is MsExcel.Application application ? new ExcelApplication(application) : null;
+            return _styles != null ? new ExcelApplication(_styles.Application) : null;
         }
     }
 
@@ -644,7 +653,7 @@ internal class ExcelStyles : IExcelStyles
     /// <param name="sourceStyle">源样式</param>
     /// <param name="targetName">目标样式名称</param>
     /// <returns>复制的样式对象</returns>
-    public IExcelStyle Copy(IExcelStyle sourceStyle, string targetName)
+    public IExcelStyle? Copy(IExcelStyle sourceStyle, string targetName)
     {
         if (_styles == null || sourceStyle == null || string.IsNullOrEmpty(targetName))
             return null;
@@ -660,9 +669,6 @@ internal class ExcelStyles : IExcelStyles
         }
     }
     #endregion
-
-
-
 
     #region 私有辅助方法
     public IEnumerator<IExcelStyle> GetEnumerator()

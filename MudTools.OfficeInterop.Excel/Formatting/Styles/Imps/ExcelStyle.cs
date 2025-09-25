@@ -18,7 +18,7 @@ internal class ExcelStyle : IExcelStyle
     /// <summary>
     /// 底层的 COM Style 对象
     /// </summary>
-    internal MsExcel.Style _style;
+    internal MsExcel.Style? _style;
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -77,12 +77,12 @@ internal class ExcelStyle : IExcelStyle
 
     #region 基础属性
 
-    public string NameLocal => _style?.NameLocal;
+    public string NameLocal => _style != null ? _style.NameLocal : string.Empty;
 
     /// <summary>
     /// 获取样式名称
     /// </summary>
-    public string Name => _style?.Name;
+    public string Name => _style != null ? _style.Name : string.Empty;
 
 
     /// <summary>
@@ -93,7 +93,7 @@ internal class ExcelStyle : IExcelStyle
     /// <summary>
     /// 获取样式所在的父对象
     /// </summary>
-    public object Parent => _style?.Parent;
+    public object? Parent => _style?.Parent;
 
     /// <summary>
     /// 获取样式所在的Application对象
@@ -112,24 +112,43 @@ internal class ExcelStyle : IExcelStyle
 
     public bool IncludeNumber
     {
-        get => _style.IncludeNumber;
-        set => _style.IncludeNumber = value;
+        get => _style != null && _style.IncludeNumber;
+        set
+        {
+            if (_style != null)
+                _style.IncludeNumber = value;
+        }
     }
 
     public bool IncludeFont
     {
-        get => _style.IncludeFont;
-        set => _style.IncludeFont = value;
+        get => _style != null && _style.IncludeFont;
+        set
+        {
+            if (_style != null)
+                _style.IncludeFont = value;
+        }
     }
+
+
     public bool IncludeAlignment
     {
-        get => _style.IncludeAlignment;
-        set => _style.IncludeAlignment = value;
+        get => _style != null && _style.IncludeAlignment;
+        set
+        {
+            if (_style != null)
+                _style.IncludeAlignment = value;
+        }
     }
+
     public bool AddIndent
     {
-        get => _style.AddIndent;
-        set => _style.AddIndent = value;
+        get => _style != null && _style.AddIndent;
+        set
+        {
+            if (_style != null)
+                _style.AddIndent = value;
+        }
     }
 
 
@@ -146,8 +165,9 @@ internal class ExcelStyle : IExcelStyle
     {
         get
         {
-            if (_font == null)
-                _font = new ExcelFont(_style.Font);
+            if (_style == null)
+                return null;
+            _font ??= new ExcelFont(_style.Font);
             return _font;
         }
     }
@@ -164,8 +184,9 @@ internal class ExcelStyle : IExcelStyle
     {
         get
         {
-            if (_borders == null)
-                _borders = new ExcelBorders(_style.Borders);
+            if (_style == null)
+                return null;
+            _borders ??= new ExcelBorders(_style.Borders);
             return _borders;
         }
     }
@@ -182,8 +203,9 @@ internal class ExcelStyle : IExcelStyle
     {
         get
         {
-            if (_interior == null)
-                _interior = new ExcelInterior(_style.Interior);
+            if (_style == null)
+                return null;
+            _interior ??= new ExcelInterior(_style.Interior);
             return _interior;
         }
     }
@@ -307,7 +329,7 @@ internal class ExcelStyle : IExcelStyle
     /// </summary>
     public bool MergeCells
     {
-        get => _style != null && Convert.ToBoolean(_style.MergeCells);
+        get => _style != null && _style.MergeCells.ConvertToBool();
         set
         {
             if (_style != null)

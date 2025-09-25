@@ -22,17 +22,17 @@ public interface IExcelShapeNodes : IEnumerable<IExcelShapeNode>, IDisposable
     /// </summary>
     /// <param name="index">节点索引（1-based）</param>
     /// <returns>对应的节点对象</returns>
-    IExcelShapeNode this[int index] { get; }
+    IExcelShapeNode? this[int index] { get; }
 
     /// <summary>
     /// 获取此集合所属的父对象（通常是 Shape）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 在指定索引位置插入一个新节点。

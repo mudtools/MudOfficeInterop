@@ -182,7 +182,7 @@ public interface IExcelStyles : IEnumerable<IExcelStyle>, IDisposable
     /// <param name="sourceStyle">源样式</param>
     /// <param name="targetName">目标样式名称</param>
     /// <returns>复制的样式对象</returns>
-    IExcelStyle Copy(IExcelStyle sourceStyle, string targetName);
+    IExcelStyle? Copy(IExcelStyle sourceStyle, string targetName);
 
 
     #endregion

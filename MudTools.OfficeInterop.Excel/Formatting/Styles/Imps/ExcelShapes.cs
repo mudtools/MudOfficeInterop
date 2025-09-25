@@ -17,12 +17,14 @@ internal class ExcelShapes : IExcelShapes
     /// <summary>
     /// 底层的 COM Shapes 集合对象
     /// </summary>
-    private MsExcel.Shapes _shapes;
+    private MsExcel.Shapes? _shapes;
 
     /// <summary>
     /// 标记对象是否已被释放
     /// </summary>
     private bool _disposedValue;
+
+    private DisposableList _disposables = [];
 
     /// <summary>
     /// 初始化 ExcelShapes 实例
@@ -44,6 +46,7 @@ internal class ExcelShapes : IExcelShapes
 
         if (disposing)
         {
+            _disposables.Dispose();
             // 释放底层COM对象
             if (_shapes != null)
                 Marshal.ReleaseComObject(_shapes);
@@ -76,7 +79,10 @@ internal class ExcelShapes : IExcelShapes
                 return null;
 
             var shape = _shapes.Item(index);
-            return shape != null ? new ExcelShape(shape) : null;
+            var s = shape != null ? new ExcelShape(shape) : null;
+            if (s != null)
+                _disposables.Add(s);
+            return s;
         }
     }
 
@@ -93,7 +99,10 @@ internal class ExcelShapes : IExcelShapes
                 return null;
 
             var shape = _shapes.Item(name);
-            return shape != null ? new ExcelShape(shape) : null;
+            var s = shape != null ? new ExcelShape(shape) : null;
+            if (s != null)
+                _disposables.Add(s);
+            return s;
         }
     }
 

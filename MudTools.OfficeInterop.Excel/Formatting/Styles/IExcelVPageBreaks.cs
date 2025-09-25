@@ -22,28 +22,28 @@ public interface IExcelVPageBreaks : IDisposable, IEnumerable<IExcelVPageBreak>
     /// </summary>
     /// <param name="index">分页符索引</param>
     /// <returns>垂直分页符对象</returns>
-    IExcelVPageBreak this[int index] { get; }
+    IExcelVPageBreak? this[int index] { get; }
 
     /// <summary>
     /// 添加新的垂直分页符
     /// </summary>
     /// <param name="before">分页符位置（在指定范围之前）</param>
     /// <returns>新创建的垂直分页符对象</returns>
-    IExcelVPageBreak Add(IExcelRange before);
+    IExcelVPageBreak? Add(IExcelRange before);
 
     /// <summary>
     /// 根据范围查找垂直分页符
     /// </summary>
     /// <param name="range">范围对象</param>
     /// <returns>垂直分页符对象</returns>
-    IExcelVPageBreak FindByRange(IExcelRange range);
+    IExcelVPageBreak? FindByRange(IExcelRange range);
 
     /// <summary>
     /// 根据列号查找垂直分页符
     /// </summary>
     /// <param name="column">列号</param>
     /// <returns>垂直分页符对象</returns>
-    IExcelVPageBreak FindByColumn(int column);
+    IExcelVPageBreak? FindByColumn(int column);
 
     /// <summary>
     /// 移除指定索引的垂直分页符
@@ -66,10 +66,10 @@ public interface IExcelVPageBreaks : IDisposable, IEnumerable<IExcelVPageBreak>
     /// <summary>
     /// 获取父级工作表
     /// </summary>
-    IExcelWorksheet Parent { get; }
+    IExcelWorksheet? Parent { get; }
 
     /// <summary>
     /// 获取分页符应用的范围
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 }

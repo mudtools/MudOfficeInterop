@@ -26,26 +26,26 @@ public interface IExcelNames : IEnumerable<IExcelName>, IDisposable
     /// </summary>
     /// <param name="index">名称索引（从1开始）</param>
     /// <returns>名称对象</returns>
-    IExcelName this[int index] { get; }
+    IExcelName? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的名称对象
     /// </summary>
     /// <param name="name">名称</param>
     /// <returns>名称对象</returns>
-    IExcelName this[string name] { get; }
+    IExcelName? this[string name] { get; }
 
     /// <summary>
     /// 获取名称集合所在的父对象（通常是工作簿或工作表）
     /// 对应 Names.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取名称集合所在的Application对象
     /// 对应 Names.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     #endregion
 
@@ -95,7 +95,6 @@ public interface IExcelNames : IEnumerable<IExcelName>, IDisposable
     #endregion
 
     #region 查找和筛选
-
     /// <summary>
     /// 根据名称查找
     /// </summary>
@@ -182,50 +181,5 @@ public interface IExcelNames : IEnumerable<IExcelName>, IDisposable
     /// </summary>
     /// <param name="names">要删除的名称数组</param>
     void DeleteRange(string[] names);
-
-    /// <summary>
-    /// 选择所有名称
-    /// </summary>
-    void SelectAll();
-
-    /// <summary>
-    /// 取消选择所有名称
-    /// </summary>
-    void DeselectAll();
-
-    /// <summary>
-    /// 刷新所有名称
-    /// </summary>
-    void Refresh();
-
-    #endregion
-
-    #region 导出和导入
-
-    /// <summary>
-    /// 导出所有名称到文本文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <param name="includeHidden">是否包含隐藏名称</param>
-    /// <returns>是否导出成功</returns>
-    bool ExportToText(string filename, bool includeHidden = false);
-
-    /// <summary>
-    /// 从文本文件导入名称
-    /// </summary>
-    /// <param name="filename">导入文件路径</param>
-    /// <returns>成功导入的名称数量</returns>
-    int ImportFromText(string filename);
-
-    #endregion
-
-
-    #region 高级功能
-
-    /// <summary>
-    /// 获取活动名称
-    /// </summary>
-    /// <returns>活动名称对象</returns>
-    IExcelName ActiveName { get; }
     #endregion
 }

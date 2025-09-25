@@ -20,8 +20,8 @@ internal class ExcelNames : IExcelNames
     /// <summary>
     /// 底层的 COM Names 集合对象
     /// </summary>
-    private MsExcel.Names _names;
-
+    private MsExcel.Names? _names;
+    private DisposableList _disposables = [];
     /// <summary>
     /// 标记对象是否已被释放
     /// </summary>
@@ -51,20 +51,18 @@ internal class ExcelNames : IExcelNames
         {
             try
             {
-                // 释放所有子名称对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var name = this[i] as ExcelName;
-                    name?.Dispose();
-                }
-
+                _disposables.Dispose();
                 // 释放底层COM对象
                 if (_names != null)
                     Marshal.ReleaseComObject(_names);
             }
+            catch (COMException cx)
+            {
+                log.Warn("释放ExcelNames资源时发生异常:" + cx.Message, cx);
+            }
             catch (Exception ex)
             {
-                log.Warn("释放ExcelNames资源时发生异常", ex);
+                log.Warn("释放ExcelNames资源时发生异常:" + ex.Message, ex);
                 // 忽略释放过程中的异常
             }
             _names = null;
@@ -92,7 +90,7 @@ internal class ExcelNames : IExcelNames
     /// </summary>
     /// <param name="index">名称索引（从1开始）</param>
     /// <returns>名称对象</returns>
-    public IExcelName this[int index]
+    public IExcelName? this[int index]
     {
         get
         {
@@ -102,11 +100,19 @@ internal class ExcelNames : IExcelNames
             try
             {
                 var name = _names.Item(index);
-                return name != null ? new ExcelName(name) : null;
+                var n = name != null ? new ExcelName(name) : null;
+                if (n != null)
+                    _disposables.Add(n);
+                return n;
+            }
+            catch (COMException cx)
+            {
+                log.Warn($"获取索引为 {index} 的名称时发生异常：" + cx.Message, cx);
+                return null;
             }
             catch (Exception ex)
             {
-                log.Warn($"获取索引为 {index} 的名称时发生异常", ex);
+                log.Warn($"获取索引为 {index} 的名称时发生异常：" + ex.Message, ex);
                 return null;
             }
         }
@@ -117,7 +123,7 @@ internal class ExcelNames : IExcelNames
     /// </summary>
     /// <param name="name">名称</param>
     /// <returns>名称对象</returns>
-    public IExcelName this[string name]
+    public IExcelName? this[string name]
     {
         get
         {
@@ -127,11 +133,19 @@ internal class ExcelNames : IExcelNames
             try
             {
                 var excelName = _names.Item(name);
-                return excelName != null ? new ExcelName(excelName) : null;
+                var n = excelName != null ? new ExcelName(excelName) : null;
+                if (n != null)
+                    _disposables.Add(n);
+                return n;
+            }
+            catch (COMException cx)
+            {
+                log.Warn($"获取名称为 '{name}' 的名称对象时发生异常:" + cx.Message, cx);
+                return null;
             }
             catch (Exception ex)
             {
-                log.Warn($"获取名称为 '{name}' 的名称对象时发生异常", ex);
+                log.Warn($"获取名称为 '{name}' 的名称对象时发生异常:" + ex.Message, ex);
                 return null;
             }
         }
@@ -140,12 +154,12 @@ internal class ExcelNames : IExcelNames
     /// <summary>
     /// 获取名称集合所在的父对象
     /// </summary>
-    public object Parent => _names?.Parent;
+    public object? Parent => _names?.Parent;
 
     /// <summary>
     /// 获取名称集合所在的Application对象
     /// </summary>
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
@@ -190,9 +204,14 @@ internal class ExcelNames : IExcelNames
 
             return excelName != null ? new ExcelName(excelName) : null;
         }
+        catch (COMException cx)
+        {
+            log.Error($"添加名称 '{name}' 时发生异常:" + cx.Message, cx);
+            return null;
+        }
         catch (Exception ex)
         {
-            log.Error($"添加名称 '{name}' 时发生异常", ex);
+            log.Error($"添加名称 '{name}' 时发生异常:" + ex.Message, ex);
             return null;
         }
     }
@@ -224,9 +243,14 @@ internal class ExcelNames : IExcelNames
             }
             return null;
         }
+        catch (COMException cx)
+        {
+            log.Error("基于区域创建名称时发生异常:" + cx.Message, cx);
+            return null;
+        }
         catch (Exception ex)
         {
-            log.Error("基于区域创建名称时发生异常", ex);
+            log.Error("基于区域创建名称时发生异常:" + ex.Message, ex);
             return null;
         }
     }
@@ -250,9 +274,14 @@ internal class ExcelNames : IExcelNames
 
             return Add(worksheetName, refersTo);
         }
+        catch (COMException cx)
+        {
+            log.Error("创建工作表名称时发生COM异常:" + cx.Message, cx);
+            return null;
+        }
         catch (Exception ex)
         {
-            log.Error("创建工作表名称时发生异常", ex);
+            log.Error("创建工作表名称时发生异常:" + ex.Message, ex);
             return null;
         }
     }
@@ -270,9 +299,9 @@ internal class ExcelNames : IExcelNames
     public IExcelName[] FindByName(string name, bool matchCase = false)
     {
         if (_names == null || string.IsNullOrEmpty(name) || Count == 0)
-            return new IExcelName[0];
+            return [];
 
-        var result = new System.Collections.Generic.List<IExcelName>();
+        var result = new List<IExcelName>();
         for (int i = 1; i <= Count; i++)
         {
             try
@@ -288,10 +317,13 @@ internal class ExcelNames : IExcelNames
                         result.Add(excelName);
                 }
             }
+            catch (COMException cx)
+            {
+                log.Warn($"查找名称过程中访问索引为 {i} 的名称时发生异常:" + cx.Message, cx);
+            }
             catch (Exception ex)
             {
-                log.Warn($"查找名称过程中访问索引为 {i} 的名称时发生异常", ex);
-                // 忽略单个名称访问异常
+                log.Warn($"查找名称过程中访问索引为 {i} 的名称时发生异常:" + ex.Message, ex);
             }
         }
         return result.ToArray();
@@ -305,9 +337,9 @@ internal class ExcelNames : IExcelNames
     public IExcelName[] FindByRefersTo(string refersTo)
     {
         if (_names == null || string.IsNullOrEmpty(refersTo) || Count == 0)
-            return new IExcelName[0];
+            return [];
 
-        var result = new System.Collections.Generic.List<IExcelName>();
+        var result = new List<IExcelName>();
         for (int i = 1; i <= Count; i++)
         {
             try
@@ -318,10 +350,13 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
+            catch (COMException cx)
+            {
+                log.Warn($"根据引用查找过程中访问索引为 {i} 的名称时发生异常:" + cx.Message, cx);
+            }
             catch (Exception ex)
             {
-                log.Warn($"查找引用过程中访问索引为 {i} 的名称时发生异常", ex);
-                // 忽略单个名称访问异常
+                log.Warn($"查找引用过程中访问索引为 {i} 的名称时发生异常:" + ex.Message, ex);
             }
         }
         return result.ToArray();
@@ -335,9 +370,9 @@ internal class ExcelNames : IExcelNames
     public IExcelName[] FindByVisibility(bool visible)
     {
         if (_names == null || Count == 0)
-            return new IExcelName[0];
+            return [];
 
-        var result = new System.Collections.Generic.List<IExcelName>();
+        var result = new List<IExcelName>();
         for (int i = 1; i <= Count; i++)
         {
             try
@@ -348,10 +383,13 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
+            catch (COMException cx)
+            {
+                log.Warn($"根据可见性查找过程中访问索引为 {i} 的名称时发生异常:" + cx.Message, cx);
+            }
             catch (Exception ex)
             {
-                log.Warn($"根据可见性查找过程中访问索引为 {i} 的名称时发生异常", ex);
-                // 忽略单个名称访问异常
+                log.Warn($"根据可见性查找过程中访问索引为 {i} 的名称时发生异常:" + ex.Message, ex);
             }
         }
         return result.ToArray();
@@ -365,9 +403,9 @@ internal class ExcelNames : IExcelNames
     public IExcelName[] FindByCategory(string category)
     {
         if (_names == null || string.IsNullOrEmpty(category) || Count == 0)
-            return new IExcelName[0];
+            return [];
 
-        var result = new System.Collections.Generic.List<IExcelName>();
+        var result = new List<IExcelName>();
         for (int i = 1; i <= Count; i++)
         {
             try
@@ -378,9 +416,14 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
+            catch (COMException cx)
+            {
+                log.Warn($"根据类别查找过程中访问索引为 {i} 的名称时发生异常:" + cx.Message, cx);
+                // 忽略单个名称访问异常
+            }
             catch (Exception ex)
             {
-                log.Warn($"根据类别查找过程中访问索引为 {i} 的名称时发生异常", ex);
+                log.Warn($"根据类别查找过程中访问索引为 {i} 的名称时发生异常:" + ex.Message, ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -412,9 +455,9 @@ internal class ExcelNames : IExcelNames
     public IExcelName[] GetWorkbookNames()
     {
         if (_names == null || Count == 0)
-            return new IExcelName[0];
+            return [];
 
-        var result = new System.Collections.Generic.List<IExcelName>();
+        var result = new List<IExcelName>();
         for (int i = 1; i <= Count; i++)
         {
             try
@@ -426,9 +469,14 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
+            catch (COMException cx)
+            {
+                log.Warn($"获取工作簿级别名称过程中访问索引为 {i} 的名称时发生异常:" + cx.Message, cx);
+                // 忽略单个名称访问异常
+            }
             catch (Exception ex)
             {
-                log.Warn($"获取工作簿级别名称过程中访问索引为 {i} 的名称时发生异常", ex);
+                log.Warn($"获取工作簿级别名称过程中访问索引为 {i} 的名称时发生异常:" + ex.Message, ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -444,7 +492,7 @@ internal class ExcelNames : IExcelNames
         if (_names == null || Count == 0)
             return new IExcelName[0];
 
-        var result = new System.Collections.Generic.List<IExcelName>();
+        var result = new List<IExcelName>();
         for (int i = 1; i <= Count; i++)
         {
             try
@@ -456,9 +504,14 @@ internal class ExcelNames : IExcelNames
                     result.Add(excelName);
                 }
             }
+            catch (COMException cx)
+            {
+                log.Warn($"获取工作表级别名称过程中访问索引为 {i} 的名称时发生异常:" + cx.Message, cx);
+                // 忽略单个名称访问异常
+            }
             catch (Exception ex)
             {
-                log.Warn($"获取工作表级别名称过程中访问索引为 {i} 的名称时发生异常", ex);
+                log.Warn($"获取工作表级别名称过程中访问索引为 {i} 的名称时发生异常:" + ex.Message, ex);
                 // 忽略单个名称访问异常
             }
         }
@@ -476,26 +529,21 @@ internal class ExcelNames : IExcelNames
     {
         if (_names == null) return;
 
-        try
+        // 从后往前删除，避免索引变化问题
+        for (int i = Count; i >= 1; i--)
         {
-            // 从后往前删除，避免索引变化问题
-            for (int i = Count; i >= 1; i--)
+            try
             {
-                try
-                {
-                    _names.Item(i).Delete();
-                }
-                catch (Exception ex)
-                {
-                    log.Warn($"清空名称时删除索引为 {i} 的名称时发生异常", ex);
-                    // 忽略删除过程中的异常
-                }
+                _names.Item(i).Delete();
             }
-        }
-        catch (Exception ex)
-        {
-            log.Warn("清空所有名称时发生异常", ex);
-            // 忽略清空过程中的异常
+            catch (COMException cx)
+            {
+                log.Warn($"清空名称时删除索引为 {i} 的名称时发生异常:" + cx.Message, cx);
+            }
+            catch (Exception ex)
+            {
+                log.Warn($"清空名称时删除索引为 {i} 的名称时发生异常:" + ex.Message, ex);
+            }
         }
     }
 
@@ -512,10 +560,13 @@ internal class ExcelNames : IExcelNames
         {
             _names.Item(index).Delete();
         }
+        catch (COMException cx)
+        {
+            log.Warn($"删除索引为 {index} 的名称时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn($"删除索引为 {index} 的名称时发生异常", ex);
-            // 忽略删除过程中的异常
+            log.Warn($"删除索引为 {index} 的名称时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -533,10 +584,13 @@ internal class ExcelNames : IExcelNames
             var excelName = _names.Item(name);
             excelName?.Delete();
         }
+        catch (COMException cx)
+        {
+            log.Warn($"删除名称 '{name}' 时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn($"删除名称 '{name}' 时发生异常", ex);
-            // 忽略删除过程中的异常
+            log.Warn($"删除名称 '{name}' 时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -553,10 +607,13 @@ internal class ExcelNames : IExcelNames
         {
             nameObject.Delete();
         }
+        catch (COMException cx)
+        {
+            log.Warn("删除指定名称对象时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("删除指定名称对象时发生异常", ex);
-            // 忽略删除过程中的异常
+            log.Warn("删除指定名称对象时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -574,248 +631,9 @@ internal class ExcelNames : IExcelNames
             Delete(name);
         }
     }
-
-    /// <summary>
-    /// 选择所有名称
-    /// </summary>
-    public void SelectAll()
-    {
-        // Excel中没有直接选择所有名称的方法
-        // 这里提供一个空实现以保持接口一致性
-    }
-
-    /// <summary>
-    /// 取消选择所有名称
-    /// </summary>
-    public void DeselectAll()
-    {
-        // Excel中没有直接取消选择的方法
-        // 这里提供一个空实现以保持接口一致性
-    }
-
-    /// <summary>
-    /// 刷新所有名称
-    /// </summary>
-    public void Refresh()
-    {
-        // Excel名称通常会自动刷新
-        // 这里提供一个空实现以保持接口一致性
-    }
-
-    #endregion
-
-    #region 导出和导入
-
-    /// <summary>
-    /// 导出所有名称到文本文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <param name="includeHidden">是否包含隐藏名称</param>
-    /// <returns>是否导出成功</returns>
-    public bool ExportToText(string filename, bool includeHidden = false)
-    {
-        if (_names == null || Count == 0 || string.IsNullOrEmpty(filename))
-            return false;
-
-        try
-        {
-            using (var writer = new System.IO.StreamWriter(filename, false, System.Text.Encoding.UTF8))
-            {
-                writer.WriteLine("Excel Names Export");
-                writer.WriteLine("==================");
-                writer.WriteLine($"Export Date: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-                writer.WriteLine($"Total Names: {Count}");
-                writer.WriteLine($"Include Hidden: {includeHidden}");
-                writer.WriteLine();
-
-                for (int i = 1; i <= Count; i++)
-                {
-                    try
-                    {
-                        var excelName = this[i];
-                        if (excelName != null && (excelName.Visible || includeHidden))
-                        {
-                            writer.WriteLine($"Name #{i}");
-                            writer.WriteLine($"Name: {excelName.Name}");
-                            writer.WriteLine($"NameLocal: {excelName.NameLocal}");
-                            writer.WriteLine($"RefersTo: {excelName.RefersTo}");
-                            writer.WriteLine($"RefersToLocal: {excelName.RefersToLocal}");
-                            writer.WriteLine($"RefersToR1C1: {excelName.RefersToR1C1}");
-                            writer.WriteLine($"RefersToR1C1Local: {excelName.RefersToR1C1Local}");
-                            writer.WriteLine($"Visible: {excelName.Visible}");
-                            writer.WriteLine($"Category: {excelName.Category}");
-                            writer.WriteLine($"MacroType: {excelName.MacroType}");
-                            writer.WriteLine($"ShortcutKey: {excelName.ShortcutKey}");
-                            writer.WriteLine($"Comment: {excelName.Comment}");
-                            writer.WriteLine(new string('-', 50));
-                            writer.WriteLine();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Warn($"导出名称过程中访问索引为 {i} 的名称时发生异常", ex);
-                        // 忽略单个名称导出异常
-                    }
-                }
-            }
-            return true;
-        }
-        catch (Exception ex)
-        {
-            log.Error($"导出名称到文件 '{filename}' 时发生异常", ex);
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// 从文本文件导入名称
-    /// </summary>
-    /// <param name="filename">导入文件路径</param>
-    /// <returns>成功导入的名称数量</returns>
-    public int ImportFromText(string filename)
-    {
-        if (_names == null || string.IsNullOrEmpty(filename))
-            return 0;
-
-        // 注意：Excel Names不支持直接导入
-        // 这里提供一个示例实现框架
-        return 0;
-    }
-    #endregion
-
-    #region 高级功能
-
-    /// <summary>
-    /// 获取活动名称
-    /// </summary>
-    /// <returns>活动名称对象</returns>
-    public IExcelName ActiveName
-    {
-        get
-        {
-            // Excel中没有直接的活动名称概念
-            // 这里提供一个空实现以保持接口一致性
-            return null;
-        }
-    }
     #endregion
 
     #region 私有辅助方法
-
-    /// <summary>
-    /// 获取引用类型
-    /// </summary>
-    /// <param name="reference">引用</param>
-    /// <returns>引用类型</returns>
-    private string GetReferenceType(string reference)
-    {
-        if (string.IsNullOrEmpty(reference))
-            return "Empty";
-
-        if (reference.StartsWith("="))
-            return "Formula";
-
-        if (reference.StartsWith("#"))
-            return "Error";
-
-        if (reference.All(c => char.IsDigit(c) || c == '.' || c == '-'))
-            return "Constant";
-
-        if (reference.Contains(":") || reference.Contains("$") ||
-            reference.Any(c => char.IsLetter(c)))
-            return "Range";
-
-        return "Other";
-    }
-
-    /// <summary>
-    /// 从引用中获取工作表名称
-    /// </summary>
-    /// <param name="reference">引用</param>
-    /// <returns>工作表名称</returns>
-    private string GetWorksheetNameFromReference(string reference)
-    {
-        if (string.IsNullOrEmpty(reference) || !reference.Contains("!"))
-            return "";
-
-        try
-        {
-            string[] parts = reference.Split('!');
-            return parts.Length > 0 ? parts[0].Trim('\'', '"') : "";
-        }
-        catch (Exception ex)
-        {
-            log.Warn("从引用中获取工作表名称时发生异常", ex);
-            return "";
-        }
-    }
-
-    /// <summary>
-    /// 从引用中获取区域地址
-    /// </summary>
-    /// <param name="reference">引用</param>
-    /// <returns>区域地址</returns>
-    private string GetRangeAddressFromReference(string reference)
-    {
-        if (string.IsNullOrEmpty(reference))
-            return "";
-
-        try
-        {
-            if (reference.Contains("!"))
-            {
-                string[] parts = reference.Split('!');
-                return parts.Length > 1 ? parts[1] : reference;
-            }
-            return reference;
-        }
-        catch (Exception ex)
-        {
-            log.Warn("从引用中获取区域地址时发生异常", ex);
-            return "";
-        }
-    }
-
-    /// <summary>
-    /// 判断是否为区域引用
-    /// </summary>
-    /// <param name="reference">引用</param>
-    /// <returns>是否为区域引用</returns>
-    private bool IsRangeReference(string reference)
-    {
-        if (string.IsNullOrEmpty(reference))
-            return false;
-
-        return reference.Contains(":") || reference.Contains("$") ||
-               reference.Any(c => char.IsLetter(c));
-    }
-
-    /// <summary>
-    /// 判断是否为常量引用
-    /// </summary>
-    /// <param name="reference">引用</param>
-    /// <returns>是否为常量引用</returns>
-    private bool IsConstantReference(string reference)
-    {
-        if (string.IsNullOrEmpty(reference))
-            return false;
-
-        return reference.All(c => char.IsDigit(c) || c == '.' || c == '-');
-    }
-
-    /// <summary>
-    /// 判断是否为公式引用
-    /// </summary>
-    /// <param name="reference">引用</param>
-    /// <returns>是否为公式引用</returns>
-    private bool IsFormulaReference(string reference)
-    {
-        if (string.IsNullOrEmpty(reference))
-            return false;
-
-        return reference.StartsWith("=");
-    }
-
     public IEnumerator<IExcelName> GetEnumerator()
     {
         for (int i = 0; i < Count; i++)

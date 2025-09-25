@@ -6,9 +6,11 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 // =============================================
 internal class ExcelShapeNodes : IExcelShapeNodes
 {
-    internal MsExcel.ShapeNodes _shapeNodes;
+    internal MsExcel.ShapeNodes? _shapeNodes;
     private static readonly ILog log = LogManager.GetLogger(typeof(ExcelPictures));
     private bool _disposedValue = false;
+
+    private DisposableList _disposables = [];
 
     /// <summary>
     /// 构造函数，初始化封装对象。
@@ -22,21 +24,24 @@ internal class ExcelShapeNodes : IExcelShapeNodes
     /// <summary>
     /// 获取集合中节点的总数。
     /// </summary>
-    public int Count => _shapeNodes.Count;
+    public int Count => _shapeNodes != null ? _shapeNodes.Count : 0;
 
     /// <summary>
     /// 通过索引（从 1 开始）获取指定的节点。
     /// </summary>
     /// <param name="index">节点索引（1-based）</param>
     /// <returns>对应的节点对象</returns>
-    public IExcelShapeNode this[int index]
+    public IExcelShapeNode? this[int index]
     {
         get
         {
             if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelShapeNodes));
             try
             {
-                return new ExcelShapeNode((MsExcel.ShapeNode)_shapeNodes.Item(index));
+                var node = _shapeNodes != null ? new ExcelShapeNode(_shapeNodes.Item(index)) : null;
+                if (node != null)
+                    _disposables.Add(node);
+                return node;
             }
             catch (Exception ex)
             {
@@ -49,12 +54,12 @@ internal class ExcelShapeNodes : IExcelShapeNodes
     /// <summary>
     /// 获取此集合所属的父对象（通常是 Shape）。
     /// </summary>
-    public object Parent => _shapeNodes.Parent;
+    public object? Parent => _shapeNodes != null ? _shapeNodes.Parent : null;
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
-    public IExcelApplication Application => new ExcelApplication(_shapeNodes.Application as MsExcel.Application);
+    public IExcelApplication? Application => _shapeNodes != null ? new ExcelApplication(_shapeNodes.Application as MsExcel.Application) : null;
 
     /// <summary>
     /// 在指定索引位置插入一个新节点。
@@ -78,6 +83,8 @@ internal class ExcelShapeNodes : IExcelShapeNodes
         float x3 = 0, float y3 = 0)
     {
         if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelShapeNodes));
+        if (_shapeNodes == null)
+            return;
 
         try
         {
@@ -102,6 +109,8 @@ internal class ExcelShapeNodes : IExcelShapeNodes
     /// <param name="y1">节点 Y 坐标</param>
     public void SetPosition(int index, float x1, float y1)
     {
+        if (_shapeNodes == null)
+            return;
         if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelShapeNodes));
 
         try
@@ -154,6 +163,8 @@ internal class ExcelShapeNodes : IExcelShapeNodes
     public IEnumerator<IExcelShapeNode> GetEnumerator()
     {
         if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelShapeNodes));
+        if (_shapeNodes == null)
+            yield break;
 
         for (int i = 1; i <= _shapeNodes.Count; i++)
         {
@@ -184,18 +195,11 @@ internal class ExcelShapeNodes : IExcelShapeNodes
 
         if (disposing)
         {
-            try
+            _disposables.Dispose();
+            if (_shapeNodes != null)
             {
-                if (_shapeNodes != null)
-                {
-                    Marshal.ReleaseComObject(_shapeNodes);
-                    _shapeNodes = null;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"释放 ShapeNodes 时发生异常: {ex.Message}");
-                // 忽略释放异常，避免掩盖更严重的问题
+                Marshal.ReleaseComObject(_shapeNodes);
+                _shapeNodes = null;
             }
         }
 

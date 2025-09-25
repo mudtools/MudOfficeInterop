@@ -17,13 +17,14 @@ internal class ExcelPictures : IExcelPictures
     /// <summary>
     /// 底层的 COM Pictures 集合对象
     /// </summary>
-    private MsExcel.Pictures _pictures;
+    private MsExcel.Pictures? _pictures;
 
     private static readonly ILog log = LogManager.GetLogger(typeof(ExcelPictures));
     /// <summary>
     /// 标记对象是否已被释放
     /// </summary>
     private bool _disposedValue;
+    private DisposableList _disposables = [];
 
     #region 构造函数和释放
 
@@ -49,14 +50,18 @@ internal class ExcelPictures : IExcelPictures
         {
             try
             {
+                _disposables.Dispose();
                 // 释放底层COM对象
                 if (_pictures != null)
                     Marshal.ReleaseComObject(_pictures);
             }
+            catch (COMException ex)
+            {
+                log.Warn("释放ExcelPictures资源时发生COM异常", ex);
+            }
             catch (Exception ex)
             {
                 log.Warn("释放ExcelPictures资源时发生异常", ex);
-                // 忽略释放过程中的异常
             }
             _pictures = null;
         }
@@ -93,7 +98,15 @@ internal class ExcelPictures : IExcelPictures
             try
             {
                 MsExcel.Picture? picture = _pictures.Item(index) as MsExcel.Picture;
-                return picture != null ? new ExcelPicture(picture) : null;
+                var pic = picture != null ? new ExcelPicture(picture) : null;
+                if (pic != null)
+                    _disposables.Add(pic);
+                return pic;
+            }
+            catch (COMException ex)
+            {
+                log.Warn($"获取索引为 {index} 的图片时发生COM异常", ex);
+                return null;
             }
             catch (Exception ex)
             {
@@ -118,7 +131,15 @@ internal class ExcelPictures : IExcelPictures
             try
             {
                 var picture = _pictures.Item(name) as MsExcel.Picture;
-                return picture != null ? new ExcelPicture(picture) : null;
+                var pic = picture != null ? new ExcelPicture(picture) : null;
+                if (pic != null)
+                    _disposables.Add(pic);
+                return pic;
+            }
+            catch (COMException ex)
+            {
+                log.Warn($"获取名称为 '{name}' 的图片时发生COM异常", ex);
+                return null;
             }
             catch (Exception ex)
             {
@@ -131,7 +152,7 @@ internal class ExcelPictures : IExcelPictures
     /// <summary>
     /// 获取图片集合所在的父对象
     /// </summary>
-    public object Parent => _pictures?.Parent;
+    public object? Parent => _pictures != null ? _pictures?.Parent : null;
 
     public bool? Enabled
     {
@@ -316,7 +337,7 @@ internal class ExcelPictures : IExcelPictures
         }
     }
 
-    public IExcelGroupObject Group()
+    public IExcelGroupObject? Group()
     {
         if (_pictures == null)
             return null;
@@ -326,9 +347,14 @@ internal class ExcelPictures : IExcelPictures
             var groupObject = _pictures.Group();
             return groupObject != null ? new ExcelGroupObject(groupObject) : null;
         }
+        catch (COMException cx)
+        {
+            log.Warn($"添加图片组时发生异常:" + cx.Message, cx);
+            return null;
+        }
         catch (Exception ex)
         {
-            log.Error($"添加图片组时发生异常", ex);
+            log.Error($"添加图片组时发生异常:" + ex.Message, ex);
             return null;
         }
     }
@@ -344,7 +370,7 @@ internal class ExcelPictures : IExcelPictures
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新创建的图片对象</returns>
-    public IExcelPicture AddFromBytes(byte[] imageBytes, string imageFormat = "png",
+    public IExcelPicture? AddFromBytes(byte[] imageBytes, string imageFormat = "png",
                                     double left = 0, double top = 0, double width = -1, double height = -1)
     {
         if (_pictures == null || imageBytes == null || imageBytes.Length == 0)
@@ -371,9 +397,14 @@ internal class ExcelPictures : IExcelPictures
 
             return picture;
         }
+        catch (COMException cx)
+        {
+            log.Warn("从字节数组添加图片时发生异常:" + cx.Message, cx);
+            return null;
+        }
         catch (Exception ex)
         {
-            log.Error("从字节数组添加图片时发生异常", ex);
+            log.Error("从字节数组添加图片时发生异常:" + ex.Message, ex);
             return null;
         }
     }
@@ -504,10 +535,13 @@ internal class ExcelPictures : IExcelPictures
                 ((MsExcel.Picture)_pictures.Item(i)).Delete();
             }
         }
+        catch (COMException cx)
+        {
+            log.Warn("清空所有图片时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("清空所有图片时发生异常", ex);
-            // 忽略清空过程中的异常
+            log.Warn("清空所有图片时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -524,10 +558,13 @@ internal class ExcelPictures : IExcelPictures
         {
             ((MsExcel.Picture)_pictures.Item(index)).Delete();
         }
+        catch (COMException cx)
+        {
+            log.Warn($"删除索引为 {index} 的图片时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn($"删除索引为 {index} 的图片时发生异常", ex);
-            // 忽略删除过程中的异常
+            log.Warn($"删除索引为 {index} 的图片时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -544,10 +581,13 @@ internal class ExcelPictures : IExcelPictures
         {
             _pictures.Delete();
         }
+        catch (COMException cx)
+        {
+            log.Warn("删除指定图片时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("删除指定图片时发生异常", ex);
-            // 忽略删除过程中的异常
+            log.Error("删除指定图片时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -577,9 +617,13 @@ internal class ExcelPictures : IExcelPictures
         {
             _pictures.BringToFront();
         }
+        catch (COMException cx)
+        {
+            log.Warn("将图片 BringToFront 时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("将图片 BringToFront 时发生异常", ex);
+            log.Warn("将图片 BringToFront 时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -591,9 +635,13 @@ internal class ExcelPictures : IExcelPictures
         {
             _pictures.SendToBack();
         }
+        catch (COMException cx)
+        {
+            log.Warn("将图片 SendToBack 时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("将图片 SendToBack 时发生异常", ex);
+            log.Warn("将图片 SendToBack 时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -605,9 +653,13 @@ internal class ExcelPictures : IExcelPictures
         {
             _pictures.Copy();
         }
+        catch (COMException cx)
+        {
+            log.Warn("将图片 Cut 时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("将图片 Copy 时发生异常", ex);
+            log.Warn("将图片 Cut 时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -619,9 +671,13 @@ internal class ExcelPictures : IExcelPictures
         {
             _pictures.Cut();
         }
+        catch (COMException cx)
+        {
+            log.Warn("将图片 Cut 时发生异常:" + cx.Message, cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("将图片 Cut 时发生异常", ex);
+            log.Warn("将图片 Cut 时发生异常:" + ex.Message, ex);
         }
     }
 
@@ -635,9 +691,13 @@ internal class ExcelPictures : IExcelPictures
             _pictures.CopyPicture(Appearance.EnumConvert(MsExcel.XlPictureAppearance.xlPrinter),
             Format.EnumConvert(MsExcel.XlCopyPictureFormat.xlPicture));
         }
+        catch (COMException cx)
+        {
+            log.Error($"将图片复制为图片时发生异常: {cx.Message}", cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("将图片 CopyPicture 时发生异常", ex);
+            log.Error($"将组合形状复制为图片时发生异常: {ex.Message}", ex);
         }
     }
 
@@ -649,9 +709,13 @@ internal class ExcelPictures : IExcelPictures
         {
             _pictures.Duplicate();
         }
+        catch (COMException cx)
+        {
+            log.Error($"复制图片时发生异常: {cx.Message}", cx);
+        }
         catch (Exception ex)
         {
-            log.Warn("将图片 Duplicate 时发生异常", ex);
+            log.Error($"复制图片时发生异常: {ex.Message}", ex);
         }
     }
 

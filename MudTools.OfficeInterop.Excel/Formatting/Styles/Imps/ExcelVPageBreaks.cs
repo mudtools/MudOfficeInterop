@@ -9,12 +9,26 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelVPageBreaks : IExcelVPageBreaks
 {
-    private MsExcel.VPageBreaks _vPageBreaks;
+    private MsExcel.VPageBreaks? _vPageBreaks;
+    private DisposableList _disposables = [];
+
     private bool _disposedValue;
 
-    public int Count => _vPageBreaks.Count;
+    public int Count => _vPageBreaks != null ? _vPageBreaks.Count : 0;
 
-    public IExcelVPageBreak this[int index] => new ExcelVPageBreak(_vPageBreaks[index]);
+    public IExcelVPageBreak? this[int index]
+    {
+        get
+        {
+            if (_vPageBreaks == null)
+                return null;
+            var vPageBreak = _vPageBreaks[index];
+            var pageBreak = vPageBreak != null ? new ExcelVPageBreak(vPageBreak) : null;
+            if (pageBreak != null)
+                _disposables.Add(pageBreak);
+            return pageBreak;
+        }
+    }
 
 
     internal ExcelVPageBreaks(MsExcel.VPageBreaks vPageBreaks)
@@ -23,14 +37,16 @@ internal class ExcelVPageBreaks : IExcelVPageBreaks
         _disposedValue = false;
     }
 
-    public IExcelVPageBreak Add(IExcelRange before)
+    public IExcelVPageBreak? Add(IExcelRange before)
     {
+        if (_vPageBreaks == null)
+            return null;
         if (before == null)
             throw new ArgumentNullException(nameof(before));
 
         try
         {
-            MsExcel.Range comRange = null;
+            MsExcel.Range? comRange = null;
             if (before is ExcelRange excelRange)
             {
                 comRange = excelRange.InternalRange;
@@ -43,34 +59,35 @@ internal class ExcelVPageBreaks : IExcelVPageBreaks
         {
             throw new InvalidOperationException("无法添加垂直分页符。", ex);
         }
+        catch (Exception x)
+        {
+            throw new InvalidOperationException("无法添加垂直分页符。", x);
+        }
     }
 
 
-    public IExcelVPageBreak FindByRange(IExcelRange range)
+    public IExcelVPageBreak? FindByRange(IExcelRange range)
     {
+        if (_vPageBreaks == null)
+            return null;
         if (range == null)
             throw new ArgumentNullException(nameof(range));
 
-        try
+        for (int i = 1; i <= Count; i++)
         {
-            for (int i = 1; i <= Count; i++)
+            var pageBreak = this[i];
+            if (pageBreak != null && pageBreak.OverlapsWith(range))
             {
-                var pageBreak = this[i];
-                if (pageBreak.OverlapsWith(range))
-                {
-                    return pageBreak;
-                }
+                return pageBreak;
             }
-            return null;
         }
-        catch (COMException)
-        {
-            return null;
-        }
+        return null;
     }
 
-    public IExcelVPageBreak FindByColumn(int column)
+    public IExcelVPageBreak? FindByColumn(int column)
     {
+        if (_vPageBreaks == null)
+            return null;
         if (column < 1)
             throw new ArgumentOutOfRangeException(nameof(column));
 
@@ -98,16 +115,22 @@ internal class ExcelVPageBreaks : IExcelVPageBreaks
 
         try
         {
-            this[index].Delete();
+            this[index]?.Delete();
         }
         catch (COMException ex)
         {
             throw new InvalidOperationException($"无法移除索引为 {index} 的垂直分页符。", ex);
         }
+        catch (Exception x)
+        {
+            throw new InvalidOperationException($"无法移除索引为 {index} 的垂直分页符。", x);
+        }
     }
 
     public void RemoveByRange(IExcelRange range)
     {
+        if (_vPageBreaks == null)
+            return;
         if (range == null)
             throw new ArgumentNullException(nameof(range));
 
@@ -124,6 +147,8 @@ internal class ExcelVPageBreaks : IExcelVPageBreaks
 
     public void RemoveByColumn(int column)
     {
+        if (_vPageBreaks == null)
+            return;
         if (column < 1)
             throw new ArgumentOutOfRangeException(nameof(column));
 
@@ -139,9 +164,17 @@ internal class ExcelVPageBreaks : IExcelVPageBreaks
     }
 
 
-    public IExcelWorksheet Parent => new ExcelWorksheet(_vPageBreaks.Parent as MsExcel.Worksheet);
+    public IExcelWorksheet? Parent
+    {
+        get
+        {
+            if (_vPageBreaks == null)
+                return null;
+            return _vPageBreaks.Parent is MsExcel.Worksheet sheet ? new ExcelWorksheet(sheet) : null;
+        }
+    }
 
-    public IExcelRange Range => Parent.UsedRange;
+    public IExcelRange? Range => Parent?.UsedRange;
 
 
 
@@ -162,11 +195,8 @@ internal class ExcelVPageBreaks : IExcelVPageBreaks
 
         if (disposing && _vPageBreaks != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_vPageBreaks) > 0) { }
-            }
-            catch { }
+            _disposables.Dispose();
+            Marshal.ReleaseComObject(_vPageBreaks);
             _vPageBreaks = null;
         }
 

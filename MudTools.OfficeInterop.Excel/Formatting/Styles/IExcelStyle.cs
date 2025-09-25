@@ -38,7 +38,7 @@ public interface IExcelStyle : IDisposable
     /// 获取样式所在的父对象
     /// 对应 Style.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取样式所在的Application对象
