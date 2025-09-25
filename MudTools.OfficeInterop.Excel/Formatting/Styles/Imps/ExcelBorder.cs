@@ -88,13 +88,13 @@ internal class ExcelBorder : IExcelBorder
     /// <summary>
     /// 获取或设置边框的粗细
     /// </summary>
-    public int Weight
+    public XlBorderWeight Weight
     {
-        get => _border != null ? Convert.ToInt32(_border.Weight) : 0;
+        get => _border != null ? _border.Weight.ObjectConvertEnum(XlBorderWeight.xlMedium) : XlBorderWeight.xlMedium;
         set
         {
             if (_border != null)
-                _border.Weight = value;
+                _border.Weight = value.EnumConvert(MsExcel.XlBorderWeight.xlMedium);
         }
     }
 
@@ -194,7 +194,7 @@ internal class ExcelBorder : IExcelBorder
         {
             LineStyle = XlLineStyle.xlContinuous;
             Color = Color.Black;
-            Weight = 2;     // xlThin
+            Weight = XlBorderWeight.xlThin;     // xlThin
         }
         catch (Exception ex)
         {
@@ -237,33 +237,33 @@ internal class ExcelBorder : IExcelBorder
                 case 1: // 实线边框
                     LineStyle = XlLineStyle.xlContinuous;
                     Color = Color.Black;
-                    Weight = 2;     // xlThin
+                    Weight = XlBorderWeight.xlThin;     // xlThin
                     break;
                 case 2: // 虚线边框
                     LineStyle = XlLineStyle.xlDash;
                     Color = Color.Black;
-                    Weight = 2;        // xlThin
+                    Weight = XlBorderWeight.xlThin;        // xlThin
                     break;
                 case 3: // 点线边框
                     LineStyle = XlLineStyle.xlDot;
                     Color = Color.Black;
-                    Weight = 2;        // xlThin
+                    Weight = XlBorderWeight.xlThin;        // xlThin
                     break;
                 case 4: // 双线边框
                     LineStyle = XlLineStyle.xlDouble;
                     Color = Color.Black;
-                    Weight = 3;        // xlMedium
+                    Weight = XlBorderWeight.xlMedium;        // xlMedium
                     break;
                 case 5: // 粗边框
                     LineStyle = XlLineStyle.xlContinuous;
                     Color = Color.Black;
-                    Weight = 4;     // xlThick
+                    Weight = XlBorderWeight.xlThick;     // xlThick
                     break;
                 default:
                     // 默认样式
                     LineStyle = XlLineStyle.xlContinuous;
                     Color = Color.Black;
-                    Weight = 2;     // xlThin
+                    Weight = XlBorderWeight.xlThin;     // xlThin
                     break;
             }
         }

@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -345,7 +345,7 @@ internal class ExcelBorders : IExcelBorders
     /// <param name="lineStyle">线条样式</param>
     /// <param name="color">边框颜色</param>
     /// <param name="weight">边框粗细</param>
-    public void UniformFormat(Color color, XlLineStyle lineStyle = XlLineStyle.xlLineStyleNone, int weight = 2)
+    public void UniformFormat(Color color, XlLineStyle lineStyle = XlLineStyle.xlLineStyleNone, XlBorderWeight weight = XlBorderWeight.xlThin)
     {
         if (_borders == null || Count == 0)
             return;
@@ -426,23 +426,23 @@ internal class ExcelBorders : IExcelBorders
             switch (presetStyle)
             {
                 case 1: // 实线边框
-                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, 2); // xlContinuous, black, xlThin
+                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, XlBorderWeight.xlThin); // xlContinuous, black, xlThin
                     break;
                 case 2: // 虚线边框
-                    UniformFormat(Color.Black, XlLineStyle.xlDash, 2); // xlDash, black, xlThin
+                    UniformFormat(Color.Black, XlLineStyle.xlDash, XlBorderWeight.xlThin); // xlDash, black, xlThin
                     break;
                 case 3: // 点线边框
-                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, 2); // xlDot, black, xlThin
+                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, XlBorderWeight.xlThin); // xlDot, black, xlThin
                     break;
                 case 4: // 双线边框
-                    UniformFormat(Color.Black, XlLineStyle.xlDouble, 3); // xlDouble, black, xlMedium
+                    UniformFormat(Color.Black, XlLineStyle.xlDouble, XlBorderWeight.xlMedium); // xlDouble, black, xlMedium
                     break;
                 case 5: // 粗边框
-                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, 4); // xlContinuous, black, xlThick
+                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, XlBorderWeight.xlThick); // xlContinuous, black, xlThick
                     break;
                 default:
                     // 默认样式
-                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, 2);
+                    UniformFormat(Color.Black, XlLineStyle.xlContinuous, XlBorderWeight.xlThin);
                     break;
             }
         }

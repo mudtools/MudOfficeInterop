@@ -25,7 +25,7 @@ public interface IExcelBorder : IDisposable
     /// 获取或设置边框的粗细
     /// 对应 Border.Weight 属性
     /// </summary>
-    int Weight { get; set; }
+    XlBorderWeight Weight { get; set; }
 
     /// <summary>
     /// 获取或设置边框的颜色

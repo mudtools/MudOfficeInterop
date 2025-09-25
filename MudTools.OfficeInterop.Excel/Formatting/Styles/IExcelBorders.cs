@@ -127,7 +127,7 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// <param name="lineStyle">线条样式</param>
     /// <param name="color">边框颜色</param>
     /// <param name="weight">边框粗细</param>
-    void UniformFormat(Color color, XlLineStyle lineStyle = XlLineStyle.xlLineStyleNone, int weight = 2);
+    void UniformFormat(Color color, XlLineStyle lineStyle = XlLineStyle.xlLineStyleNone, XlBorderWeight weight = XlBorderWeight.xlThin);
 
     /// <summary>
     /// 复制边框格式

@@ -55,52 +55,56 @@ internal class ExcelAxis : IExcelAxis
     #endregion
 
     #region 坐标轴属性 (IExcelAxis)
+    public bool HasTitle
+    {
+        get => _axis != null ? _axis.HasTitle : false;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.HasTitle = value;
+            }
+        }
+    }
 
     /// <summary>
     /// 获取坐标轴的类型
     /// </summary>
-    public int AxisType => (int)_axis.Type;
+    public XlAxisType Type
+    {
+        get => _axis != null ? _axis.Type.EnumConvert(XlAxisType.xlCategory) : XlAxisType.xlCategory;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.Type = value.EnumConvert(MsExcel.XlAxisType.xlCategory);
+            }
+        }
+    }
 
     /// <summary>
     /// 获取坐标轴的分组
     /// </summary>
-    public int AxisGroup => (int)_axis.AxisGroup;
-
-    /// <summary>
-    /// 获取或设置坐标轴标题
-    /// </summary>
-    public string AxisTitle
+    public XlAxisGroup AxisGroup
     {
-        get
-        {
-            if (_axis.HasTitle)
-            {
-                return _axis.AxisTitle.Text;
-            }
-            return null;
-        }
-        set
-        {
-            if (!string.IsNullOrEmpty(value))
-            {
-                _axis.HasTitle = true;
-                _axis.AxisTitle.Text = value;
-            }
-            else
-            {
-                _axis.HasTitle = false;
-            }
-        }
+        get => _axis != null ? _axis.AxisGroup.EnumConvert(XlAxisGroup.xlPrimary) : XlAxisGroup.xlPrimary;
     }
+
 
 
     /// <summary>
     /// 获取或设置坐标轴的位置类型
     /// </summary>
-    public int Crosses
+    public XlAxisCrosses Crosses
     {
-        get => (int)_axis.Crosses;
-        set => _axis.Crosses = (MsExcel.XlAxisCrosses)value;
+        get => _axis != null ? _axis.Crosses.EnumConvert(XlAxisCrosses.xlAxisCrossesAutomatic) : XlAxisCrosses.xlAxisCrossesAutomatic;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.Crosses = value.EnumConvert(MsExcel.XlAxisCrosses.xlAxisCrossesAutomatic);
+            }
+        }
     }
 
     /// <summary>
@@ -108,8 +112,14 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public double CrossesAt
     {
-        get => (double)_axis.CrossesAt;
-        set => _axis.CrossesAt = value;
+        get => _axis != null ? _axis.CrossesAt : 0;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.CrossesAt = value;
+            }
+        }
     }
 
     /// <summary>
@@ -117,8 +127,14 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public bool AxisBetweenCategories
     {
-        get => _axis.AxisBetweenCategories;
-        set => _axis.AxisBetweenCategories = value;
+        get => _axis != null ? _axis.AxisBetweenCategories : false;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.AxisBetweenCategories = value;
+            }
+        }
     }
 
     /// <summary>
@@ -126,8 +142,14 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public double MinimumScale
     {
-        get => (double)_axis.MinimumScale;
-        set => _axis.MinimumScale = value;
+        get => _axis != null ? _axis.MinimumScale : 0;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MinimumScale = value;
+            }
+        }
     }
 
     /// <summary>
@@ -135,8 +157,14 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public double MaximumScale
     {
-        get => (double)_axis.MaximumScale;
-        set => _axis.MaximumScale = value;
+        get => _axis != null ? _axis.MaximumScale : 0;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MaximumScale = value;
+            }
+        }
     }
 
     /// <summary>
@@ -144,8 +172,14 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public double MajorUnit
     {
-        get => (double)_axis.MajorUnit;
-        set => _axis.MajorUnit = value;
+        get => _axis != null ? _axis.MajorUnit : 0;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MajorUnit = value;
+            }
+        }
     }
 
     /// <summary>
@@ -153,8 +187,14 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public double MinorUnit
     {
-        get => (double)_axis.MinorUnit;
-        set => _axis.MinorUnit = value;
+        get => _axis != null ? _axis.MinorUnit : 0;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MinorUnit = value;
+            }
+        }
     }
 
     /// <summary>
@@ -162,8 +202,14 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public XlTickMark MajorTickMark
     {
-        get => (XlTickMark)_axis.MajorTickMark;
-        set => _axis.MajorTickMark = (MsExcel.XlTickMark)value;
+        get => _axis != null ? _axis.MajorTickMark.EnumConvert(XlTickMark.xlTickMarkNone) : XlTickMark.xlTickMarkNone;
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MajorTickMark = value.EnumConvert(MsExcel.XlTickMark.xlTickMarkNone);
+            }
+        }
     }
 
     /// <summary>
@@ -171,8 +217,21 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public XlTickMark MinorTickMark
     {
-        get => (XlTickMark)_axis.MinorTickMark;
-        set => _axis.MinorTickMark = (MsExcel.XlTickMark)value;
+        get
+        {
+            if (_axis != null)
+            {
+                return _axis.MinorTickMark.EnumConvert(XlTickMark.xlTickMarkNone);
+            }
+            return XlTickMark.xlTickMarkNone;
+        }
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MinorTickMark = value.EnumConvert(MsExcel.XlTickMark.xlTickMarkNone);
+            }
+        }
     }
 
     /// <summary>
@@ -180,66 +239,67 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public XlTickLabelPosition TickLabelPosition
     {
-        get => (XlTickLabelPosition)_axis.TickLabelPosition;
-        set => _axis.TickLabelPosition = (MsExcel.XlTickLabelPosition)value;
-    }
-
-    /// <summary>
-    /// 获取或设置坐标轴标签的方向（角度）
-    /// </summary>
-    public XlTickLabelOrientation TickLabelOrientation
-    {
-        get => (XlTickLabelOrientation)_axis.TickLabels.Orientation;
-        set => _axis.TickLabels.Orientation = (MsExcel.XlTickLabelOrientation)value;
-
-    }
-
-    /// <summary>
-    /// 获取或设置坐标轴标签的数字格式
-    /// </summary>
-    public string TickLabelNumberFormat
-    {
         get
         {
-            try
+            if (_axis != null)
             {
-                return _axis.TickLabels?.NumberFormat ?? "";
+                return _axis.TickLabelPosition.EnumConvert(XlTickLabelPosition.xlTickLabelPositionHigh);
             }
-            catch { return ""; }
+            return XlTickLabelPosition.xlTickLabelPositionHigh;
         }
         set
         {
-            try
+            if (_axis != null)
             {
-                var tickLabels = _axis.TickLabels;
-                if (tickLabels != null)
-                {
-                    tickLabels.NumberFormat = value;
-                }
-            }
-            catch
-            {
-
+                _axis.TickLabelPosition = value.EnumConvert(MsExcel.XlTickLabelPosition.xlTickLabelPositionHigh);
             }
         }
     }
+
 
     /// <summary>
     /// 获取或设置坐标轴是否反转刻度值
     /// </summary>
     public bool ReversePlotOrder
     {
-        get => _axis.ReversePlotOrder;
-        set => _axis.ReversePlotOrder = value;
+        get
+        {
+            if (_axis != null)
+            {
+                return _axis.ReversePlotOrder;
+            }
+            return false;
+        }
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.ReversePlotOrder = value;
+            }
+        }
     }
+
 
     /// <summary>
     /// 获取或设置坐标轴的对数刻度底数
     /// </summary>
     public double LogBase
     {
-        get => _axis.LogBase;
-        set => _axis.LogBase = value;
+        get
+        {
+            if (_axis != null)
+            {
+                return _axis.LogBase;
+            }
+            return 0;
+        }
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.LogBase = value;
+            }
+        }
     }
 
     /// <summary>
@@ -247,8 +307,21 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public bool MajorUnitIsAuto
     {
-        get => _axis.MajorUnitIsAuto;
-        set => _axis.MajorUnitIsAuto = value;
+        get
+        {
+            if (_axis != null)
+            {
+                return _axis.MajorUnitIsAuto;
+            }
+            return false;
+        }
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MajorUnitIsAuto = value;
+            }
+        }
     }
 
     /// <summary>
@@ -256,8 +329,21 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public bool MinorUnitIsAuto
     {
-        get => _axis.MinorUnitIsAuto;
-        set => _axis.MinorUnitIsAuto = value;
+        get
+        {
+            if (_axis != null)
+            {
+                return _axis.MinorUnitIsAuto;
+            }
+            return false;
+        }
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MinorUnitIsAuto = value;
+            }
+        }
     }
 
     /// <summary>
@@ -265,8 +351,21 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public bool MinimumScaleIsAuto
     {
-        get => _axis.MinimumScaleIsAuto;
-        set => _axis.MinimumScaleIsAuto = value;
+        get
+        {
+            if (_axis != null)
+            {
+                return _axis.MinimumScaleIsAuto;
+            }
+            return false;
+        }
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MinimumScaleIsAuto = value;
+            }
+        }
     }
 
     /// <summary>
@@ -274,39 +373,57 @@ internal class ExcelAxis : IExcelAxis
     /// </summary>
     public bool MaximumScaleIsAuto
     {
-        get => _axis.MaximumScaleIsAuto;
-        set => _axis.MaximumScaleIsAuto = value;
+        get
+        {
+            if (_axis != null)
+            {
+                return _axis.MaximumScaleIsAuto;
+            }
+            return false;
+        }
+        set
+        {
+            if (_axis != null)
+            {
+                _axis.MaximumScaleIsAuto = value;
+            }
+        }
     }
     #endregion
 
     #region 格式设置 (IExcelAxis)
-
-    /// <summary>
-    /// 获取坐标轴标题的字体对象
-    /// </summary>
-    public IExcelFont? TitleFont
+    public IExcelAxisTitle? AxisTitle
     {
         get
         {
-            if (_axis.HasTitle)
+            if (_axis != null)
             {
-                return new ExcelFont(_axis.AxisTitle.Font);
+                return new ExcelAxisTitle(_axis.AxisTitle);
             }
             return null;
         }
     }
 
-    /// <summary>
-    /// 获取坐标轴刻度线标签的字体对象
-    /// </summary>
-    public IExcelFont? TickLabelFont
+
+    public IExcelChartFormat? Format
     {
         get
         {
-            var tickLabels = _axis.TickLabels;
-            if (tickLabels != null)
+            if (_axis != null)
             {
-                return new ExcelFont(tickLabels.Font);
+                return new ExcelChartFormat(_axis.Format);
+            }
+            return null;
+        }
+    }
+
+    public IExcelBorder? Border
+    {
+        get
+        {
+            if (_axis != null)
+            {
+                return new ExcelBorder(_axis.Border);
             }
             return null;
         }
@@ -315,19 +432,29 @@ internal class ExcelAxis : IExcelAxis
     /// <summary>
     /// 获取坐标轴刻度线标签对象
     /// </summary>
-    public IExcelTickLabels TickLabels => new ExcelTickLabels(_axis.TickLabels); // 假设 ExcelTickLabels 存在
+    public IExcelTickLabels? TickLabels
+    {
+        get
+        {
+            if (_axis != null)
+            {
+                return new ExcelTickLabels(_axis.TickLabels);
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取坐标轴的主要网格线对象
     /// </summary>
-    public IExcelGridlines MajorGridlines
+    public IExcelGridlines? MajorGridlines
     {
         get
         {
-            var gridlines = _axis.MajorGridlines;
-            if (gridlines != null)
+            if (_axis != null)
             {
-                return new ExcelGridlines(gridlines); // 假设 ExcelGridlines 存在
+                var gridlines = _axis.MajorGridlines;
+                return new ExcelGridlines(gridlines);
             }
             return null;
         }
@@ -340,26 +467,25 @@ internal class ExcelAxis : IExcelAxis
     {
         get
         {
-            var gridlines = _axis.MinorGridlines;
-            if (gridlines != null)
+            if (_axis != null)
             {
-                return new ExcelGridlines(gridlines); // 假设 ExcelGridlines 存在
+                var gridlines = _axis.MinorGridlines;
+                return new ExcelGridlines(gridlines);
             }
             return null;
         }
     }
     #endregion
 
-    #region 操作方法 (IExcelAxis)    
-
+    #region 操作方法 (IExcelAxis)
     /// <summary>
-    /// 删除坐标轴（通常不直接删除）
+    /// 删除坐标轴
     /// </summary>
     public void Delete()
     {
         try
         {
-            _axis.Delete();
+            _axis?.Delete();
         }
         catch
         {
@@ -379,16 +505,9 @@ internal class ExcelAxis : IExcelAxis
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_axis != null)
-                    Marshal.ReleaseComObject(_axis);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_axis != null)
+                Marshal.ReleaseComObject(_axis);
             _axis = null;
         }
         _disposedValue = true;

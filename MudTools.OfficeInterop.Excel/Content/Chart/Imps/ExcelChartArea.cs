@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelChartArea : IExcelChartArea
 {
-    private MsExcel.ChartArea _chartArea;
+    private MsExcel.ChartArea? _chartArea;
     private bool _disposedValue = false;
 
     internal ExcelChartArea(MsExcel.ChartArea chartArea)
@@ -23,57 +23,135 @@ internal class ExcelChartArea : IExcelChartArea
     #region 基础属性
     public string Name
     {
-        get => _chartArea.Name;
+        get => _chartArea != null ? _chartArea.Name : string.Empty;
     }
 
 
-    public object Parent => _chartArea.Parent;
+    public object? Parent => _chartArea != null ? _chartArea.Parent : null;
 
-    public IExcelApplication Application => new ExcelApplication(_chartArea.Application);
+    public IExcelApplication? Application => _chartArea != null ? new ExcelApplication(_chartArea.Application) : null;
     #endregion
 
     #region 位置和大小
     public double Left
     {
-        get => (double)_chartArea.Left;
-        set => _chartArea.Left = value;
+        get => _chartArea != null ? _chartArea.Left : 0;
+        set
+        {
+            if (_chartArea != null)
+                _chartArea.Left = value;
+        }
     }
 
     public double Top
     {
-        get => (double)_chartArea.Top;
-        set => _chartArea.Top = value;
+        get => _chartArea != null ? _chartArea.Top : 0;
+        set
+        {
+            if (_chartArea != null)
+                _chartArea.Top = value;
+        }
     }
 
     public double Width
     {
-        get => (double)_chartArea.Width;
-        set => _chartArea.Width = value;
+        get => _chartArea != null ? _chartArea.Width : 0;
+        set
+        {
+            if (_chartArea != null)
+                _chartArea.Width = value;
+        }
     }
 
     public double Height
     {
-        get => (double)_chartArea.Height;
-        set => _chartArea.Height = value;
+        get => _chartArea != null ? _chartArea.Height : 0;
+        set
+        {
+            if (_chartArea != null)
+                _chartArea.Height = value;
+        }
     }
     #endregion
 
     #region 格式设置
-    public IExcelFont Font => new ExcelFont(_chartArea.Font);
+    public IExcelFont? Font
+    {
+        get
+        {
+            if (_chartArea == null)
+                return null;
+            return new ExcelFont(_chartArea.Font);
+        }
+    }
 
     public bool AutoScaleFont
     {
-        get => Convert.ToBoolean(_chartArea.AutoScaleFont);
-        set => _chartArea.AutoScaleFont = value;
+        get => _chartArea != null ? _chartArea.AutoScaleFont.ConvertToBool() : false;
+        set
+        {
+            if (_chartArea != null)
+                _chartArea.AutoScaleFont = value;
+        }
     }
 
-    public IExcelFillFormat Fill => new ExcelFillFormat(_chartArea.Format.Fill);
-    public IExcelBorder Border => new ExcelBorder(_chartArea.Border);
+    public IExcelChartFormat Format
+    {
+        get
+        {
+            if (_chartArea == null)
+                return null;
+            return new ExcelChartFormat(_chartArea.Format);
+        }
+    }
+
+    public IExcelChartFillFormat? Fill
+    {
+        get
+        {
+            if (_chartArea == null)
+                return null;
+            return new ExcelChartFillFormat(_chartArea.Fill);
+        }
+    }
+    public IExcelBorder? Border
+    {
+        get
+        {
+            if (_chartArea == null)
+                return null;
+            return new ExcelBorder(_chartArea.Border);
+        }
+    }
+
+    public IExcelInterior? Interior
+    {
+        get
+        {
+            if (_chartArea == null)
+                return null;
+            return new ExcelInterior(_chartArea.Interior);
+        }
+    }
+
+    public bool RoundedCorners
+    {
+        get => _chartArea != null ? _chartArea.RoundedCorners : false;
+        set
+        {
+            if (_chartArea != null)
+                _chartArea.RoundedCorners = value;
+        }
+    }
 
     public bool Shadow
     {
-        get => _chartArea.Shadow;
-        set => _chartArea.Shadow = value;
+        get => _chartArea != null ? _chartArea.Shadow : false;
+        set
+        {
+            if (_chartArea != null)
+                _chartArea.Shadow = value;
+        }
     }
     #endregion
 
@@ -81,23 +159,23 @@ internal class ExcelChartArea : IExcelChartArea
 
     public void Clear()
     {
-        _chartArea.Clear();
+        _chartArea?.Clear();
     }
 
     public void ClearFormats()
     {
-        _chartArea.ClearFormats();
+        _chartArea?.ClearFormats();
     }
 
     public void ClearAll()
     {
-        _chartArea.Clear();
-        _chartArea.ClearFormats();
+        _chartArea?.Clear();
+        _chartArea?.ClearFormats();
     }
 
     public void Copy()
     {
-        _chartArea.Copy();
+        _chartArea?.Copy();
     }
     #endregion
 
@@ -108,19 +186,12 @@ internal class ExcelChartArea : IExcelChartArea
         {
             if (disposing)
             {
-                // 释放托管状态(托管对象)
-            }
-
-            if (_chartArea != null)
-            {
-                try
+                if (_chartArea != null)
                 {
-                    while (Marshal.ReleaseComObject(_chartArea) > 0) { }
+                    Marshal.ReleaseComObject(_chartArea);
+                    _chartArea = null;
                 }
-                catch { }
-                _chartArea = null;
             }
-
             _disposedValue = true;
         }
     }

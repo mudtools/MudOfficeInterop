@@ -29,29 +29,33 @@ public interface IExcelAxis : IDisposable
     #endregion
 
     #region 坐标轴属性
+    bool HasTitle { get; set; }
+
+    IExcelChartFormat? Format { get; }
+
     /// <summary>
     /// 获取或设置坐标轴的类型
     /// 对应 Axis.Type 属性 (使用 XlAxisType 枚举对应的 int 值)
     /// </summary>
-    int AxisType { get; } // 通常只读
+    XlAxisType Type { get; set; }
 
     /// <summary>
     /// 获取或设置坐标轴的分组
     /// 对应 Axis.AxisGroup 属性 (使用 XlAxisGroup 枚举对应的 int 值)
     /// </summary>
-    int AxisGroup { get; } // 通常只读
+    XlAxisGroup AxisGroup { get; }
 
     /// <summary>
     /// 获取或设置坐标轴标题
-    /// 对应 Axis.HasTitle 和 Axis.AxisTitle.Text 属性
+    /// 对应 Axis.HasTitle 和 Axis.AxisTitle 属性
     /// </summary>
-    string AxisTitle { get; set; }
+    IExcelAxisTitle AxisTitle { get; }
 
     /// <summary>
     /// 获取或设置坐标轴的位置类型（自动、最大值、最小值等）
     /// 对应 Axis.Crosses 属性 (使用 XlAxisCrosses 枚举对应的 int 值)
     /// </summary>
-    int Crosses { get; set; }
+    XlAxisCrosses Crosses { get; set; }
 
     /// <summary>
     /// 获取或设置坐标轴在指定数值处穿过另一轴
@@ -107,18 +111,6 @@ public interface IExcelAxis : IDisposable
     XlTickLabelPosition TickLabelPosition { get; set; }
 
     /// <summary>
-    /// 获取或设置坐标轴标签的方向（角度）
-    /// 对应 Axis.TickLabels.Orientation 属性
-    /// </summary>
-    XlTickLabelOrientation TickLabelOrientation { get; set; }
-
-    /// <summary>
-    /// 获取或设置坐标轴标签的数字格式
-    /// 对应 Axis.TickLabels.NumberFormat 属性
-    /// </summary>
-    string TickLabelNumberFormat { get; set; }
-
-    /// <summary>
     /// 获取或设置坐标轴是否反转刻度值
     /// 对应 Axis.ReversePlotOrder 属性
     /// </summary>
@@ -157,35 +149,25 @@ public interface IExcelAxis : IDisposable
     #endregion
 
     #region 格式设置
-    /// <summary>
-    /// 获取坐标轴标题的字体对象
-    /// 对应 Axis.AxisTitle.Font 属性
-    /// </summary>
-    IExcelFont? TitleFont { get; } // 假设 IExcelFont 已定义
-
-    /// <summary>
-    /// 获取坐标轴刻度线标签的字体对象
-    /// 对应 Axis.TickLabels.Font 属性
-    /// </summary>
-    IExcelFont? TickLabelFont { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取坐标轴刻度线标签对象
     /// 对应 Axis.TickLabels 属性
     /// </summary>
-    IExcelTickLabels TickLabels { get; }
+    IExcelTickLabels? TickLabels { get; }
 
     /// <summary>
     /// 获取坐标轴的主要网格线对象
     /// 对应 Axis.MajorGridlines 属性
     /// </summary>
-    IExcelGridlines MajorGridlines { get; }
+    IExcelGridlines? MajorGridlines { get; }
 
     /// <summary>
     /// 获取坐标轴的次要网格线对象
     /// 对应 Axis.MinorGridlines 属性
     /// </summary>
-    IExcelGridlines MinorGridlines { get; }
+    IExcelGridlines? MinorGridlines { get; }
 
     #endregion
 
