@@ -14,6 +14,7 @@ internal class WordBorders : IWordBorders
 {
     internal MsWord.Borders _borders;
     private bool _disposedValue;
+    private DisposableList _disposables = [];
 
     /// <summary>
     /// 初始化 <see cref="WordBorders"/> 类的新实例。
@@ -28,7 +29,7 @@ internal class WordBorders : IWordBorders
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _borders != null ? new WordApplication(_borders.Application) : null;
+    public IWordApplication? Application => _borders != null ? new WordApplication(_borders.Application) : null;
 
     /// <inheritdoc/>
     public object Parent => _borders?.Parent;
@@ -37,7 +38,7 @@ internal class WordBorders : IWordBorders
     public int Count => _borders?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordBorder this[WdBorderType index]
+    public IWordBorder? this[WdBorderType index]
     {
         get
         {
@@ -45,7 +46,10 @@ internal class WordBorders : IWordBorders
             try
             {
                 var comBorder = _borders[(MsWord.WdBorderType)(int)index];
-                return comBorder != null ? new WordBorder(comBorder) : null;
+                var border = comBorder != null ? new WordBorder(comBorder) : null;
+                if (border != null)
+                    _disposables.Add(border);
+                return border;
             }
             catch (COMException)
             {
@@ -71,80 +75,80 @@ internal class WordBorders : IWordBorders
     /// <inheritdoc/>
     public WdColor InsideColor
     {
-        get => _borders?.InsideColor != null ? (WdColor)(int)_borders?.InsideColor : WdColor.wdColorAutomatic;
+        get => _borders?.InsideColor != null ? _borders.InsideColor.EnumConvert(WdColor.wdColorAutomatic) : WdColor.wdColorAutomatic;
         set
         {
-            if (_borders != null) _borders.InsideColor = (MsWord.WdColor)(int)value;
+            if (_borders != null) _borders.InsideColor = value.EnumConvert(MsWord.WdColor.wdColorAutomatic);
         }
     }
 
     /// <inheritdoc/>
     public WdColorIndex InsideColorIndex
     {
-        get => _borders?.InsideColorIndex != null ? (WdColorIndex)(int)_borders?.InsideColorIndex : WdColorIndex.wdAuto;
+        get => _borders?.InsideColorIndex != null ? _borders.InsideColorIndex.EnumConvert(WdColorIndex.wdAuto) : WdColorIndex.wdAuto;
         set
         {
-            if (_borders != null) _borders.InsideColorIndex = (MsWord.WdColorIndex)(int)value;
+            if (_borders != null) _borders.InsideColorIndex = value.EnumConvert(MsWord.WdColorIndex.wdAuto);
         }
     }
 
     /// <inheritdoc/>
     public WdLineStyle InsideLineStyle
     {
-        get => _borders?.InsideLineStyle != null ? (WdLineStyle)(int)_borders?.InsideLineStyle : WdLineStyle.wdLineStyleDot;
+        get => _borders?.InsideLineStyle != null ? _borders.InsideLineStyle.EnumConvert(WdLineStyle.wdLineStyleSingle) : WdLineStyle.wdLineStyleSingle;
         set
         {
-            if (_borders != null) _borders.InsideLineStyle = (MsWord.WdLineStyle)(int)value;
+            if (_borders != null) _borders.InsideLineStyle = value.EnumConvert(MsWord.WdLineStyle.wdLineStyleSingle);
         }
     }
 
     /// <inheritdoc/>
     public WdLineWidth InsideLineWidth
     {
-        get => _borders?.InsideLineWidth != null ? (WdLineWidth)(int)_borders?.InsideLineWidth : WdLineWidth.wdLineWidth050pt;
+        get => _borders?.OutsideLineWidth != null ? _borders.OutsideLineWidth.EnumConvert(WdLineWidth.wdLineWidth100pt) : WdLineWidth.wdLineWidth100pt;
         set
         {
-            if (_borders != null) _borders.InsideLineWidth = (MsWord.WdLineWidth)(int)value;
+            if (_borders != null) _borders.OutsideLineWidth = value.EnumConvert(MsWord.WdLineWidth.wdLineWidth100pt);
         }
     }
 
     /// <inheritdoc/>
     public WdColor OutsideColor
     {
-        get => _borders?.OutsideColor != null ? (WdColor)(int)_borders?.OutsideColor : WdColor.wdColorAutomatic;
+        get => _borders?.OutsideColor != null ? _borders.OutsideColor.EnumConvert(WdColor.wdColorAutomatic) : WdColor.wdColorAutomatic;
         set
         {
-            if (_borders != null) _borders.OutsideColor = (MsWord.WdColor)(int)value;
+            if (_borders != null) _borders.OutsideColor = value.EnumConvert(MsWord.WdColor.wdColorAutomatic);
         }
     }
 
     /// <inheritdoc/>
     public WdColorIndex OutsideColorIndex
     {
-        get => _borders?.OutsideColorIndex != null ? (WdColorIndex)(int)_borders?.OutsideColorIndex : WdColorIndex.wdAuto;
+        get => _borders?.OutsideColorIndex != null ? _borders.OutsideColorIndex.EnumConvert(WdColorIndex.wdAuto) : WdColorIndex.wdAuto;
         set
         {
-            if (_borders != null) _borders.OutsideColorIndex = (MsWord.WdColorIndex)(int)value;
+            if (_borders != null) _borders.OutsideColorIndex = value.EnumConvert(MsWord.WdColorIndex.wdAuto);
         }
     }
 
     /// <inheritdoc/>
     public WdLineStyle OutsideLineStyle
     {
-        get => _borders?.OutsideLineStyle != null ? (WdLineStyle)(int)_borders?.OutsideLineStyle : WdLineStyle.wdLineStyleDot;
+        get => _borders?.OutsideLineStyle != null ? _borders.OutsideLineStyle.EnumConvert(WdLineStyle.wdLineStyleSingle) : WdLineStyle.wdLineStyleSingle;
         set
         {
-            if (_borders != null) _borders.OutsideLineStyle = (MsWord.WdLineStyle)(int)value;
+            if (_borders != null) _borders.OutsideLineStyle = value.EnumConvert(MsWord.WdLineStyle.wdLineStyleSingle);
         }
     }
 
     /// <inheritdoc/>
     public WdLineWidth OutsideLineWidth
     {
-        get => _borders?.OutsideLineWidth != null ? (WdLineWidth)(int)_borders?.OutsideLineWidth : WdLineWidth.wdLineWidth050pt;
+        get => _borders?.OutsideLineWidth != null ? _borders.OutsideLineWidth.EnumConvert(WdLineWidth.wdLineWidth100pt) : WdLineWidth.wdLineWidth100pt;
         set
         {
-            if (_borders != null) _borders.OutsideLineWidth = (MsWord.WdLineWidth)(int)value;
+            if (_borders != null) _borders.OutsideLineWidth = value.EnumConvert(MsWord.WdLineWidth.wdLineWidth100pt);
         }
     }
 
@@ -164,10 +168,10 @@ internal class WordBorders : IWordBorders
     /// <inheritdoc/>
     public WdBorderDistanceFrom DistanceFrom
     {
-        get => _borders?.DistanceFrom != null ? (WdBorderDistanceFrom)(int)_borders?.DistanceFrom : WdBorderDistanceFrom.wdBorderDistanceFromText;
+        get => _borders?.DistanceFrom != null ? _borders.DistanceFrom.EnumConvert(WdBorderDistanceFrom.wdBorderDistanceFromText) : WdBorderDistanceFrom.wdBorderDistanceFromText;
         set
         {
-            if (_borders != null) _borders.DistanceFrom = (MsWord.WdBorderDistanceFrom)(int)value;
+            if (_borders != null) _borders.DistanceFrom = value.EnumConvert(MsWord.WdBorderDistanceFrom.wdBorderDistanceFromText);
         }
     }
 
@@ -251,6 +255,7 @@ internal class WordBorders : IWordBorders
 
         if (disposing && _borders != null)
         {
+            _disposables.Dispose();
             Marshal.ReleaseComObject(_borders);
             _borders = null;
         }

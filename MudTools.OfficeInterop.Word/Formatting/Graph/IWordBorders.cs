@@ -16,7 +16,7 @@ public interface IWordBorders : IEnumerable<IWordBorder>, IDisposable
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
@@ -33,7 +33,7 @@ public interface IWordBorders : IEnumerable<IWordBorder>, IDisposable
     /// </summary>
     /// <param name="index">标识边框的 <see cref="MsWord.WdBorderType"/> 常量。</param>
     /// <returns>指定的边框对象。</returns>
-    IWordBorder this[WdBorderType index] { get; }
+    IWordBorder? this[WdBorderType index] { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否启用所有边框的格式。
