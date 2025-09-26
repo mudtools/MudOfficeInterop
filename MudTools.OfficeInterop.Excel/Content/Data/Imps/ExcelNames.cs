@@ -187,10 +187,10 @@ internal class ExcelNames : IExcelNames
     /// <param name="refersToR1C1">R1C1引用</param>
     /// <param name="refersToR1C1Local">本地R1C1引用</param>
     /// <returns>新创建的名称对象</returns>
-    public IExcelName? Add(string name, object? refersTo = null, bool visible = true,
-                         int macroType = 0, string shortcutKey = "", object? category = null,
-                         string nameLocal = "", object? refersToLocal = null, object? categoryLocal = null,
-                         string refersToR1C1 = "", string refersToR1C1Local = "")
+    public IExcelName? Add(string name, string? refersTo = null, bool visible = true,
+                         int macroType = 0, string shortcutKey = "", string? category = null,
+                         string? nameLocal = "", string? refersToLocal = null, string? categoryLocal = null,
+                         string? refersToR1C1 = "", string refersToR1C1Local = "")
     {
         if (_names == null || string.IsNullOrEmpty(name))
             return null;
@@ -198,9 +198,10 @@ internal class ExcelNames : IExcelNames
         try
         {
             var excelName = _names.Add(
-                name, refersTo, visible, macroType, shortcutKey, category,
-                nameLocal, refersToLocal, categoryLocal, refersToR1C1, refersToR1C1Local
-            ) as MsExcel.Name;
+                name, refersTo.ComArgsVal(), visible, macroType, shortcutKey, category.ComArgsVal(),
+                nameLocal.ComArgsVal(), refersToLocal.ComArgsVal(), categoryLocal.ComArgsVal(),
+                 refersToR1C1.ComArgsVal(), refersToR1C1Local.ComArgsVal()
+            );
 
             return excelName != null ? new ExcelName(excelName) : null;
         }

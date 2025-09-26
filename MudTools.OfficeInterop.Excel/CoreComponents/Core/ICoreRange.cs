@@ -31,7 +31,15 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// </summary>
     object[,] ArrayValue { get; set; }
 
+    /// <summary>
+    /// 获取或设置页面分隔符设置
+    /// </summary>
     int PageBreak { get; set; }
+
+    /// <summary>
+    /// 获取单元格或区域的数据验证规则
+    /// </summary>
+    IExcelValidation? Validation { get; }
 
     /// <summary>
     /// 获取或设置单元格的数字或空值。

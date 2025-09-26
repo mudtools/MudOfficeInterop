@@ -18,25 +18,25 @@ public interface IExcelValidation : IDisposable
     /// 获取数据验证规则的父对象 (通常是 Range)
     /// 对应 Validation.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据验证规则所在的Application对象
     /// 对应 Validation.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置验证类型
     /// 对应 Validation.Type 属性
     /// </summary>
-    int Type { get; set; } // 使用 int 代表 XlDVType
+    XlDVType Type { get; set; } // 使用 int 代表 XlDVType
 
     /// <summary>
     /// 获取或设置错误警告样式
     /// 对应 Validation.AlertStyle 属性
     /// </summary>
-    int AlertStyle { get; set; } // 使用 int 代表 XlDVAlertStyle
+    XlDVAlertStyle AlertStyle { get; set; } // 使用 int 代表 XlDVAlertStyle
 
     /// <summary>
     /// 获取或设置公式1
@@ -101,16 +101,21 @@ public interface IExcelValidation : IDisposable
 
     #region 操作方法
     /// <summary>
-    /// 选择应用此验证规则的区域 (通过选择父 Range)
-    /// </summary>
-    /// <param name="replace">是否替换当前选择</param>
-    void Select(bool replace = true);
-
-    /// <summary>
     /// 删除此数据验证规则
     /// 对应 Validation.Delete 方法
     /// </summary>
     void Delete();
+
+    /// <summary>
+    /// 添加数据验证规则
+    /// 对应 Validation.Add 方法
+    /// </summary>
+    /// <param name="type">验证类型</param>
+    /// <param name="alertStyle">警告样式</param>
+    /// <param name="formula1">公式1</param>
+    /// <param name="formula2">公式2</param>
+    /// <param name="value">是否为值</param>
+    void Add(XlDVType type, XlDVAlertStyle alertStyle, string formula1 = "", string formula2 = "", bool value = true);
 
     /// <summary>
     /// 修改此数据验证规则
@@ -121,6 +126,6 @@ public interface IExcelValidation : IDisposable
     /// <param name="formula1">公式1</param>
     /// <param name="formula2">公式2</param>
     /// <param name="value">是否为值</param>
-    void Modify(int type, int alertStyle, string formula1 = "", string formula2 = "", bool value = true);
+    void Modify(XlDVType type, XlDVAlertStyle alertStyle, string formula1 = "", string formula2 = "", bool value = true);
     #endregion
 }

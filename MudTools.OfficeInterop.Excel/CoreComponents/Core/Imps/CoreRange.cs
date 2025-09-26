@@ -50,6 +50,20 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     #endregion
 
     #region 属性
+    private IExcelValidation? _validation;
+
+    public IExcelValidation? Validation
+    {
+        get
+        {
+            if (_range == null)
+                return null;
+            if (_validation != null)
+                return _validation;
+            _validation = new ExcelValidation(_range.Validation);
+            return _validation;
+        }
+    }
 
     /// <summary>
     /// 获取底层的Excel Range对象
@@ -795,18 +809,6 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// 若单元格不属于合并区域，则返回单元格自身
     /// </remarks>
     public TR MergeArea => GetProperty(InternalRange.MergeArea, ref _mergeArea);
-
-    /// <summary>
-    /// 获取或设置数据验证规则对象
-    /// </summary>
-    public IExcelValidation Validation
-    {
-        get
-        {
-            try { return new ExcelValidation(InternalRange.Validation, _range); }
-            catch { throw new InvalidOperationException("数据验证功能不可用"); }
-        }
-    }
 
     /// <summary>
     /// 获取或设置分级显示展开状态
@@ -1687,7 +1689,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         _currentRegion, _entireRow, _entireColumn,
         _usedRange, _parentRange,_parentSheet,_errors,
         _hyperlinks, _smartTags, _comment, _pageSetup,
-        _columns,_cells,_excelFormatConditions
+        _columns,_cells,_excelFormatConditions,_validation
         };
 
         foreach (var field in fields)
@@ -1714,6 +1716,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         _comment = null;
         _errors = null;
         _pageSetup = null;
+        _validation = null;
         _excelFormatConditions = null;
     }
 

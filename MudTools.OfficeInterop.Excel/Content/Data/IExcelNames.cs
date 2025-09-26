@@ -67,9 +67,9 @@ public interface IExcelNames : IEnumerable<IExcelName>, IDisposable
     /// <param name="refersToR1C1">R1C1引用</param>
     /// <param name="refersToR1C1Local">本地R1C1引用</param>
     /// <returns>新创建的名称对象</returns>
-    IExcelName? Add(string name, object? refersTo = null, bool visible = true,
-                         int macroType = 0, string shortcutKey = "", object? category = null,
-                         string nameLocal = "", object? refersToLocal = null, object? categoryLocal = null,
+    IExcelName? Add(string name, string? refersTo = null, bool visible = true,
+                         int macroType = 0, string shortcutKey = "", string? category = null,
+                         string nameLocal = "", string? refersToLocal = null, string? categoryLocal = null,
                          string refersToR1C1 = "", string refersToR1C1Local = "");
 
 
