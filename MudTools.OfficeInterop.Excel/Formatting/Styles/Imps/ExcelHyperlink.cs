@@ -15,7 +15,7 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// <summary>
     /// 底层的 COM Hyperlink 对象
     /// </summary>
-    private MsExcel.Hyperlink _hyperlink;
+    private MsExcel.Hyperlink? _hyperlink;
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -72,14 +72,14 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// <summary>
     /// 获取超链接的名称
     /// </summary>
-    public string Name => _hyperlink?.Name;
+    public string Name => _hyperlink != null ? _hyperlink.Name : string.Empty;
 
     /// <summary>
     /// 获取或设置超链接的目标地址
     /// </summary>
     public string Address
     {
-        get => _hyperlink?.Address;
+        get => _hyperlink != null ? _hyperlink.Address : string.Empty;
         set
         {
             if (_hyperlink != null && value != null)
@@ -92,7 +92,7 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// </summary>
     public string SubAddress
     {
-        get => _hyperlink?.SubAddress;
+        get => _hyperlink != null ? _hyperlink.SubAddress : string.Empty;
         set
         {
             if (_hyperlink != null && value != null)
@@ -105,7 +105,7 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// </summary>
     public string ScreenTip
     {
-        get => _hyperlink?.ScreenTip;
+        get => _hyperlink != null ? _hyperlink.ScreenTip : string.Empty;
         set
         {
             if (_hyperlink != null && value != null)
@@ -118,7 +118,7 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// </summary>
     public string TextToDisplay
     {
-        get => _hyperlink?.TextToDisplay;
+        get => _hyperlink != null ? _hyperlink.TextToDisplay : string.Empty;
         set
         {
             if (_hyperlink != null && value != null)
@@ -128,7 +128,7 @@ internal class ExcelHyperlink : IExcelHyperlink
 
     public string EmailSubject
     {
-        get => _hyperlink?.EmailSubject;
+        get => _hyperlink != null ? _hyperlink.EmailSubject : string.Empty;
         set
         {
             if (_hyperlink != null && value != null)
@@ -144,11 +144,26 @@ internal class ExcelHyperlink : IExcelHyperlink
     /// <summary>
     /// 获取超链接所在的区域对象
     /// </summary>
-    public IExcelRange Range => _range ??= new ExcelRange(_hyperlink?.Range);
-
+    public IExcelRange Range
+    {
+        get
+        {
+            if (_range == null)
+                _range = new ExcelRange(_hyperlink?.Range);
+            return _range;
+        }
+    }
     private IExcelShape? _shape;
 
-    public IExcelShape Shape => _shape ??= new ExcelShape(_hyperlink?.Shape);
+    public IExcelShape Shape
+    {
+        get
+        {
+            if (_shape == null)
+                _shape = new ExcelShape(_hyperlink?.Shape);
+            return _shape;
+        }
+    }
 
 
     /// <summary>

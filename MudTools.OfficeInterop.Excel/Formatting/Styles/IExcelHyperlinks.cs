@@ -26,7 +26,7 @@ public interface IExcelHyperlinks : IEnumerable<IExcelHyperlink>, IDisposable
     /// </summary>
     /// <param name="index">超链接索引（从1开始）</param>
     /// <returns>超链接对象</returns>
-    IExcelHyperlink this[int index] { get; }
+    IExcelHyperlink? this[int index] { get; }
 
     /// <summary>
     /// 向集合中添加新的超链接
@@ -37,7 +37,7 @@ public interface IExcelHyperlinks : IEnumerable<IExcelHyperlink>, IDisposable
     /// <param name="screenTip">鼠标悬停时显示的提示文本</param>
     /// <param name="textToDisplay">要显示的文本</param>
     /// <returns>新创建的超链接对象</returns>
-    IExcelHyperlink Add(IExcelRange anchor, string address, string? subAddress = null, string? screenTip = null, string? textToDisplay = null);
+    IExcelHyperlink? Add(IExcelRange anchor, string address, string? subAddress = null, string? screenTip = null, string? textToDisplay = null);
 
     /// <summary>
     /// 删除集合中的所有超链接

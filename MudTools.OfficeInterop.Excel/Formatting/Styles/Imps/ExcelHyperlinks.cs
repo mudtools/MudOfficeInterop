@@ -17,7 +17,9 @@ internal class ExcelHyperlinks : IExcelHyperlinks
     /// <summary>
     /// 底层的 COM Hyperlinks 集合对象
     /// </summary>
-    private MsExcel.Hyperlinks _hyperlinks;
+    private MsExcel.Hyperlinks? _hyperlinks;
+
+    private DisposableList _disposables = [];
 
     /// <summary>
     /// 标记对象是否已被释放
@@ -44,23 +46,11 @@ internal class ExcelHyperlinks : IExcelHyperlinks
 
         if (disposing)
         {
-            try
-            {
-                // 释放所有子超链接对象
-                for (int i = 1; i <= Count; i++)
-                {
-                    var hyperlink = this[i] as ExcelHyperlink;
-                    hyperlink?.Dispose();
-                }
+            _disposables.Dispose();
 
-                // 释放底层COM对象
-                if (_hyperlinks != null)
-                    Marshal.ReleaseComObject(_hyperlinks);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            // 释放底层COM对象
+            if (_hyperlinks != null)
+                Marshal.ReleaseComObject(_hyperlinks);
             _hyperlinks = null;
         }
 
@@ -82,15 +72,19 @@ internal class ExcelHyperlinks : IExcelHyperlinks
     /// </summary>
     /// <param name="index">超链接索引（从1开始）</param>
     /// <returns>超链接对象</returns>
-    public IExcelHyperlink this[int index]
+    public IExcelHyperlink? this[int index]
     {
         get
         {
             if (_hyperlinks == null || index < 1 || index > Count)
                 return null;
 
-            var hyperlink = _hyperlinks[index] as MsExcel.Hyperlink;
-            return hyperlink != null ? new ExcelHyperlink(hyperlink) : null;
+            var hyperlink = _hyperlinks[index];
+            var link = hyperlink != null ? new ExcelHyperlink(hyperlink) : null;
+            if (link != null)
+                _disposables.Add(link);
+
+            return link;
         }
     }
 
@@ -103,7 +97,7 @@ internal class ExcelHyperlinks : IExcelHyperlinks
     /// <param name="screenTip">鼠标悬停时显示的提示文本</param>
     /// <param name="textToDisplay">要显示的文本</param>
     /// <returns>新创建的超链接对象</returns>
-    public IExcelHyperlink Add(IExcelRange anchor, string address, string? subAddress = null, string? screenTip = null, string? textToDisplay = null)
+    public IExcelHyperlink? Add(IExcelRange anchor, string address, string? subAddress = null, string? screenTip = null, string? textToDisplay = null)
     {
         if (_hyperlinks == null || anchor == null)
             return null;
@@ -148,6 +142,8 @@ internal class ExcelHyperlinks : IExcelHyperlinks
 
     public IEnumerator<IExcelHyperlink> GetEnumerator()
     {
+        if (_hyperlinks == null)
+            yield break;
         for (int i = 0; i < _hyperlinks.Count; i++)
         {
             yield return new ExcelHyperlink(_hyperlinks[i]);

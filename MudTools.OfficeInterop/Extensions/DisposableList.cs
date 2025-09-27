@@ -91,7 +91,6 @@ internal class DisposableList : List<IDisposable>, IDisposable
             List<IDisposable> itemsToDispose;
             lock (_lockObject)
             {
-                // 创建副本以避免在遍历时修改集合
                 itemsToDispose = this.ToList();
                 base.Clear();
             }
@@ -134,47 +133,6 @@ internal class DisposableList : List<IDisposable>, IDisposable
         catch (Exception ex)
         {
             _log.Error($"An error occurred while disposing an item of type {item?.GetType().Name}", ex);
-        }
-    }
-
-    /// <summary>
-    /// 释放所有对象但不清空列表（用于特殊情况）
-    /// </summary>
-    public void DisposeAll()
-    {
-        if (_disposed) return;
-
-        List<IDisposable> itemsToDispose;
-        lock (_lockObject)
-        {
-            // 创建副本以避免在遍历时修改集合
-            itemsToDispose = this.ToList();
-        }
-
-        foreach (var item in itemsToDispose)
-        {
-            SafeDispose(item);
-        }
-    }
-
-    /// <summary>
-    /// 清空列表并释放所有对象
-    /// </summary>
-    public new void Clear()
-    {
-        if (_disposed) return;
-
-        lock (_lockObject)
-        {
-            // 先释放所有对象
-            var itemsToDispose = this.ToList();
-            foreach (var item in itemsToDispose)
-            {
-                SafeDispose(item);
-            }
-
-            // 然后清空列表
-            base.Clear();
         }
     }
 
