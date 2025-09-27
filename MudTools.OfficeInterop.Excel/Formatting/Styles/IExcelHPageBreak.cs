@@ -20,7 +20,7 @@ public interface IExcelHPageBreak : IDisposable
     /// <summary>
     /// 获取或设置水平分页符的位置范围
     /// </summary>
-    IExcelRange Location { get; set; }
+    IExcelRange? Location { get; set; }
 
     /// <summary>
     /// 获取水平分页符的起始行号
@@ -45,12 +45,12 @@ public interface IExcelHPageBreak : IDisposable
     /// <summary>
     /// 获取父级水平分页符集合
     /// </summary>
-    IExcelHPageBreaks Parent { get; }
+    IExcelHPageBreaks? Parent { get; }
 
     /// <summary>
     /// 获取关联的工作表
     /// </summary>
-    IExcelWorksheet Worksheet { get; }
+    IExcelWorksheet? Worksheet { get; }
 
     /// <summary>
     /// 移除水平分页符
@@ -67,11 +67,11 @@ public interface IExcelHPageBreak : IDisposable
     /// 获取分页符前一页的范围
     /// </summary>
     /// <returns>范围对象</returns>
-    IExcelRange GetPreviousPageRange();
+    IExcelRange? GetPreviousPageRange();
 
     /// <summary>
     /// 获取分页符后一页的范围
     /// </summary>
     /// <returns>范围对象</returns>
-    IExcelRange GetNextPageRange();
+    IExcelRange? GetNextPageRange();
 }

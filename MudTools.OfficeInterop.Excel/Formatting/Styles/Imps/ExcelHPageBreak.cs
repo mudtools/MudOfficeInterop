@@ -9,39 +9,45 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelHPageBreak : IExcelHPageBreak
 {
-    private MsExcel.HPageBreak _hPageBreak;
+    private MsExcel.HPageBreak? _hPageBreak;
     private bool _disposedValue;
 
     public XlPageBreak Type
     {
-        get => _hPageBreak.Type.EnumConvert(XlPageBreak.xlPageBreakNone);
-        set => _hPageBreak.Type = value.EnumConvert(MsExcel.XlPageBreak.xlPageBreakNone);
-    }
-
-    public IExcelRange Location
-    {
-        get => new ExcelRange(_hPageBreak.Location);
+        get => _hPageBreak != null ? _hPageBreak.Type.EnumConvert(XlPageBreak.xlPageBreakNone) : XlPageBreak.xlPageBreakNone;
         set
         {
-            if (value is ExcelRange excelRange)
+            if (_hPageBreak != null)
+            {
+                _hPageBreak.Type = value.EnumConvert(MsExcel.XlPageBreak.xlPageBreakNone);
+            }
+        }
+    }
+
+    public IExcelRange? Location
+    {
+        get => _hPageBreak != null ? new ExcelRange(_hPageBreak.Location) : null;
+        set
+        {
+            if (_hPageBreak != null && value is ExcelRange excelRange)
             {
                 _hPageBreak.Location = excelRange.InternalRange;
             }
         }
     }
 
-    public int StartRow => _hPageBreak.Location.Row;
+    public int StartRow => _hPageBreak != null ? _hPageBreak.Location.Row : 0;
 
-    public int EndRow => _hPageBreak.Location.Row + _hPageBreak.Location.Rows.Count - 1;
+    public int EndRow => _hPageBreak != null ? _hPageBreak.Location.Row + _hPageBreak.Location.Rows.Count - 1 : 0;
 
 
-    public bool IsManual => _hPageBreak.Type == MsExcel.XlPageBreak.xlPageBreakManual;
+    public bool IsManual => _hPageBreak != null ? _hPageBreak.Type == MsExcel.XlPageBreak.xlPageBreakManual : false;
 
-    public bool IsAutomatic => _hPageBreak.Type == MsExcel.XlPageBreak.xlPageBreakAutomatic;
+    public bool IsAutomatic => _hPageBreak != null ? _hPageBreak.Type == MsExcel.XlPageBreak.xlPageBreakAutomatic : false;
 
-    public IExcelHPageBreaks Parent => new ExcelHPageBreaks(_hPageBreak.Parent.HPageBreaks);
+    public IExcelHPageBreaks? Parent => _hPageBreak != null ? new ExcelHPageBreaks(_hPageBreak.Parent.HPageBreaks) : null;
 
-    public IExcelWorksheet Worksheet => new ExcelWorksheet(_hPageBreak.Parent);
+    public IExcelWorksheet? Worksheet => _hPageBreak != null ? new ExcelWorksheet(_hPageBreak.Parent) : null;
 
     internal ExcelHPageBreak(MsExcel.HPageBreak hPageBreak)
     {
@@ -53,9 +59,13 @@ internal class ExcelHPageBreak : IExcelHPageBreak
     {
         try
         {
-            _hPageBreak.Delete();
+            _hPageBreak?.Delete();
         }
         catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法删除水平分页符。", ex);
+        }
+        catch (Exception ex)
         {
             throw new InvalidOperationException("无法删除水平分页符。", ex);
         }
@@ -65,7 +75,8 @@ internal class ExcelHPageBreak : IExcelHPageBreak
     {
         if (row < 1)
             throw new ArgumentOutOfRangeException(nameof(row));
-
+        if (_hPageBreak == null)
+            return;
         try
         {
             // 移动分页符到指定行（需要重新创建）
@@ -77,11 +88,17 @@ internal class ExcelHPageBreak : IExcelHPageBreak
         {
             throw new InvalidOperationException($"无法将分页符移动到第 {row} 行。", ex);
         }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"无法将分页符移动到第 {row} 行。", ex);
+        }
     }
 
 
-    public IExcelRange GetPreviousPageRange()
+    public IExcelRange? GetPreviousPageRange()
     {
+        if (_hPageBreak == null)
+            return null;
         try
         {
             // 获取前一页的范围
@@ -98,10 +115,16 @@ internal class ExcelHPageBreak : IExcelHPageBreak
         {
             throw new InvalidOperationException("无法获取前一页的范围。", ex);
         }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("无法获取前一页的范围。", ex);
+        }
     }
 
-    public IExcelRange GetNextPageRange()
+    public IExcelRange? GetNextPageRange()
     {
+        if (_hPageBreak == null)
+            return null;
         try
         {
             // 获取后一页的范围
@@ -118,8 +141,11 @@ internal class ExcelHPageBreak : IExcelHPageBreak
         {
             throw new InvalidOperationException("无法获取后一页的范围。", ex);
         }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("无法获取后一页的范围。", ex);
+        }
     }
-
 
     protected virtual void Dispose(bool disposing)
     {
