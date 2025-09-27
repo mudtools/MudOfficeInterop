@@ -13,18 +13,19 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelColorScaleCriteria : IExcelColorScaleCriteria
 {
-    private MsExcel.ColorScaleCriteria _colorScaleCriteria;
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelBorders));
+    private MsExcel.ColorScaleCriteria? _colorScaleCriteria;
     private bool _disposedValue = false;
-
+    private DisposableList _disposables = [];
     internal ExcelColorScaleCriteria(MsExcel.ColorScaleCriteria colorScaleCriteria)
     {
         _colorScaleCriteria = colorScaleCriteria ?? throw new ArgumentNullException(nameof(colorScaleCriteria));
     }
 
     #region 基础属性
-    public int Count => _colorScaleCriteria.Count;
+    public int Count => _colorScaleCriteria != null ? _colorScaleCriteria.Count : 0;
 
-    public IExcelColorScaleCriterion this[int index]
+    public IExcelColorScaleCriterion? this[int index]
     {
         get
         {
@@ -34,10 +35,19 @@ internal class ExcelColorScaleCriteria : IExcelColorScaleCriteria
             try
             {
                 var action = _colorScaleCriteria[index];
-                return action != null ? new ExcelColorScaleCriterion(this, action) : null;
+                var a = action != null ? new ExcelColorScaleCriterion(action) : null;
+                if (a != null)
+                    _disposables.Add(a);
+                return a;
             }
-            catch
+            catch (COMException ex)
             {
+                log.Error("获取指定索引的颜色刻度条件对象失败：" + ex.Message, ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Error("获取指定索引的颜色刻度条件对象失败：" + ex.Message, ex);
                 return null;
             }
         }
@@ -47,9 +57,12 @@ internal class ExcelColorScaleCriteria : IExcelColorScaleCriteria
     #region IEnumerable<IExcelColorScaleCriterion> Support
     public IEnumerator<IExcelColorScaleCriterion> GetEnumerator()
     {
+        if (_colorScaleCriteria == null)
+            yield break;
+
         for (int i = 1; i <= _colorScaleCriteria.Count; i++)
         {
-            yield return new ExcelColorScaleCriterion(this, _colorScaleCriteria[i]);
+            yield return new ExcelColorScaleCriterion(_colorScaleCriteria[i]);
         }
     }
 
@@ -66,6 +79,7 @@ internal class ExcelColorScaleCriteria : IExcelColorScaleCriteria
 
         if (disposing)
         {
+            _disposables?.Dispose();
             // 释放形状对象
             if (_colorScaleCriteria != null)
                 Marshal.ReleaseComObject(_colorScaleCriteria);

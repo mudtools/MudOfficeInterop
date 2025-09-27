@@ -14,12 +14,10 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 internal class ExcelColorScaleCriterion : IExcelColorScaleCriterion
 {
     private MsExcel.ColorScaleCriterion _colorScaleCriterion;
-    private readonly ExcelColorScaleCriteria _parentCriteria;
     private bool _disposedValue = false;
 
-    internal ExcelColorScaleCriterion(ExcelColorScaleCriteria parentCriteria, MsExcel.ColorScaleCriterion colorScaleCriterion)
+    internal ExcelColorScaleCriterion(MsExcel.ColorScaleCriterion colorScaleCriterion)
     {
-        _parentCriteria = parentCriteria ?? throw new ArgumentNullException(nameof(parentCriteria));
         _colorScaleCriterion = colorScaleCriterion ?? throw new ArgumentNullException(nameof(colorScaleCriterion));
     }
 
@@ -55,7 +53,6 @@ internal class ExcelColorScaleCriterion : IExcelColorScaleCriterion
         }
     }
     #endregion
-
 
 
     #region IDisposable Support

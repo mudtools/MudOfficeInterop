@@ -26,6 +26,6 @@ public interface IExcelColorScaleCriteria : IEnumerable<IExcelColorScaleCriterio
     /// </summary>
     /// <param name="index">条件索引（从1开始）</param>
     /// <returns>颜色刻度条件对象</returns>
-    IExcelColorScaleCriterion this[int index] { get; }
+    IExcelColorScaleCriterion? this[int index] { get; }
     #endregion
 }
