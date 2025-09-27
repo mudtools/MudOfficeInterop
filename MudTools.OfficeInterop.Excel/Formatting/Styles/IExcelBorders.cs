@@ -45,13 +45,13 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// 获取边框集合所在的父对象
     /// 对应 Borders.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取边框集合所在的Application对象
     /// 对应 Borders.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置边框线条样式
@@ -97,7 +97,7 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// </summary>
     /// <param name="weight">边框粗细</param>
     /// <returns>匹配的边框数组</returns>
-    IExcelBorder[] FindByWeight(int weight);
+    IExcelBorder[] FindByWeight(XlBorderWeight weight);
     #endregion
 
     #region 格式设置
@@ -107,7 +107,7 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// </summary>
     /// <param name="lineStyle">线条样式</param>
     /// <param name="weight">边框粗细</param>
-    void SetLineStyle(XlLineStyle lineStyle, int weight = 1);
+    void SetLineStyle(XlLineStyle lineStyle, XlBorderWeight weight = XlBorderWeight.xlHairline);
 
     /// <summary>
     /// 设置所有边框的颜色
@@ -119,7 +119,7 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// 设置所有边框的粗细
     /// </summary>
     /// <param name="weight">边框粗细</param>
-    void SetWeight(int weight);
+    void SetWeight(XlBorderWeight weight);
 
     /// <summary>
     /// 统一所有边框的格式

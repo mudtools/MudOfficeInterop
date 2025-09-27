@@ -16,6 +16,7 @@ internal class ExcelConditionValue : IExcelConditionValue
     private MsExcel.ConditionValue _conditionValue;
     private bool _disposedValue = false;
 
+
     internal ExcelConditionValue(MsExcel.ConditionValue conditionValue)
     {
         _conditionValue = conditionValue ?? throw new ArgumentNullException(nameof(conditionValue));

@@ -21,6 +21,7 @@ internal class ExcelBorders : IExcelBorders
     /// </summary>
     private MsExcel.Borders _borders;
 
+    private DisposableList _disposables = [];
     /// <summary>
     /// 标记对象是否已被释放
     /// </summary>
@@ -48,6 +49,7 @@ internal class ExcelBorders : IExcelBorders
 
         if (disposing)
         {
+            _disposables?.Dispose();
             if (_borders != null)
                 Marshal.ReleaseComObject(_borders);
             _borders = null;
@@ -92,7 +94,15 @@ internal class ExcelBorders : IExcelBorders
             {
                 var bt = (MsExcel.XlBordersIndex)borderType;
                 var border = _borders[bt];
-                return border != null ? new ExcelBorder(border) : null;
+                var b = border != null ? new ExcelBorder(border) : null;
+                if (b != null)
+                    _disposables.Add(b);
+                return b;
+            }
+            catch (COMException e)
+            {
+                log.Error("获取指定类型的边框对象失败：" + e.Message, e);
+                return null;
             }
             catch (Exception e)
             {
@@ -105,16 +115,16 @@ internal class ExcelBorders : IExcelBorders
     /// <summary>
     /// 获取边框集合所在的父对象
     /// </summary>
-    public object Parent => _borders?.Parent;
+    public object? Parent => _borders?.Parent;
 
     /// <summary>
     /// 获取边框集合所在的Application对象
     /// </summary>
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
-            var application = _borders?.Application as MsExcel.Application;
+            var application = _borders?.Application;
             return application != null ? new ExcelApplication(application) : null;
         }
     }
@@ -190,23 +200,31 @@ internal class ExcelBorders : IExcelBorders
 
         List<IExcelBorder> result = [];
 
-        foreach (object? item in _borders)
+        try
         {
-            if (item is MsExcel.Border border && (int)border.LineStyle == lineStyle)
+            foreach (object? item in _borders)
             {
-                try
+                if (item is MsExcel.Border border && (int)border.LineStyle == lineStyle)
                 {
                     IExcelBorder excelBorder = new ExcelBorder(border);
                     result.Add(excelBorder);
-                }
-                catch (Exception x)
-                {
-                    log.Error($"根据线条样式查找边框时，访问索引的边框发生异常", x);
+                    _disposables.Add(excelBorder);
                 }
             }
+            return result.ToArray();
         }
-        return result.ToArray();
+        catch (COMException x)
+        {
+            log.Error($"根据线条样式查找边框时，访问索引的边框发生异常:" + x.Message, x);
+            return [];
+        }
+        catch (Exception x)
+        {
+            log.Error($"根据线条样式查找边框时，访问索引的边框发生异常:" + x.Message, x);
+            return [];
+        }
     }
+
 
     /// <summary>
     /// 根据颜色查找边框
@@ -219,23 +237,29 @@ internal class ExcelBorders : IExcelBorders
             return [];
 
         List<IExcelBorder> result = [];
-
-        foreach (object? item in _borders)
+        try
         {
-            if (item is MsExcel.Border border && (int)border.Color == color)
+            foreach (object? item in _borders)
             {
-                try
+                if (item is MsExcel.Border border && (int)border.Color == color)
                 {
                     IExcelBorder excelBorder = new ExcelBorder(border);
                     result.Add(excelBorder);
-                }
-                catch (Exception x)
-                {
-                    log.Error($"根据颜色查找边框时，访问索引的边框发生异常", x);
+                    _disposables.Add(excelBorder);
                 }
             }
+            return result.ToArray();
         }
-        return result.ToArray();
+        catch (COMException x)
+        {
+            log.Error($"根据颜色查找边框时，访问索引的边框发生异常:" + x.Message, x);
+            return [];
+        }
+        catch (Exception x)
+        {
+            log.Error($"根据颜色查找边框时，访问索引的边框发生异常:" + x.Message, x);
+            return [];
+        }
     }
 
     /// <summary>
@@ -243,22 +267,37 @@ internal class ExcelBorders : IExcelBorders
     /// </summary>
     /// <param name="weight">边框粗细</param>
     /// <returns>匹配的边框数组</returns>
-    public IExcelBorder[] FindByWeight(int weight)
+    public IExcelBorder[] FindByWeight(XlBorderWeight weight)
     {
         if (_borders == null || Count == 0)
             return [];
 
         List<IExcelBorder> result = [];
 
-        foreach (object? item in _borders)
+        try
         {
-            if (item is MsExcel.Border border && (int)border.Weight == weight)
+            foreach (object? item in _borders)
             {
-                IExcelBorder excelBorder = new ExcelBorder(border);
-                result.Add(excelBorder);
+                if (item is MsExcel.Border border && border.Weight.ConvertToInt() == (int)weight)
+                {
+                    IExcelBorder excelBorder = new ExcelBorder(border);
+                    result.Add(excelBorder);
+                    _disposables.Add(excelBorder);
+                }
             }
+            return result.ToArray();
         }
-        return result.ToArray();
+        catch (COMException x)
+        {
+            log.Error($"根据粗细查找边框时，访问索引的边框发生异常:" + x.Message, x);
+            return [];
+        }
+        catch (Exception x)
+        {
+            log.Error($"根据粗细查找边框时，访问索引的边框发生异常:" + x.Message, x);
+            return [];
+        }
+
     }
 
     #endregion
@@ -269,7 +308,8 @@ internal class ExcelBorders : IExcelBorders
     /// 设置所有边框的线条样式
     /// </summary>
     /// <param name="lineStyle">线条样式</param>
-    public void SetLineStyle(XlLineStyle lineStyle, int weight = 1)
+    /// <param name="weight">边框粗细</param>
+    public void SetLineStyle(XlLineStyle lineStyle, XlBorderWeight weight = XlBorderWeight.xlHairline)
     {
         if (_borders == null || Count == 0)
             return;
@@ -277,15 +317,19 @@ internal class ExcelBorders : IExcelBorders
         try
         {
             _borders.LineStyle = (MsExcel.XlLineStyle)lineStyle;
-            _borders.Weight = weight;
+            _borders.Weight = weight.EnumConvert(MsExcel.XlBorderWeight.xlHairline);
             _borders[MsExcel.XlBordersIndex.xlEdgeLeft].LineStyle = (MsExcel.XlLineStyle)lineStyle;
             _borders[MsExcel.XlBordersIndex.xlEdgeRight].LineStyle = (MsExcel.XlLineStyle)lineStyle;
             _borders[MsExcel.XlBordersIndex.xlEdgeTop].LineStyle = (MsExcel.XlLineStyle)lineStyle;
             _borders[MsExcel.XlBordersIndex.xlEdgeBottom].LineStyle = (MsExcel.XlLineStyle)lineStyle;
         }
+        catch (COMException x)
+        {
+            log.Error($"设置所有边框的线条样式时，访问索引的边框发生异常:" + x.Message, x);
+        }
         catch (Exception x)
         {
-            log.Error($"设置所有边框的线条样式时，访问索引的边框发生异常", x);
+            log.Error($"设置所有边框的线条样式时，访问索引的边框发生异常:" + x.Message, x);
         }
     }
 
@@ -308,9 +352,13 @@ internal class ExcelBorders : IExcelBorders
                 }
             }
         }
+        catch (COMException x)
+        {
+            log.Error($"设置所有边框的颜色时，访问索引的边框发生异常:" + x.Message, x);
+        }
         catch (Exception x)
         {
-            log.Error($"设置所有边框的颜色时，访问索引的边框发生异常", x);
+            log.Error($"设置所有边框的颜色时，访问索引的边框发生异常:" + x.Message, x);
         }
     }
 
@@ -318,7 +366,7 @@ internal class ExcelBorders : IExcelBorders
     /// 设置所有边框的粗细
     /// </summary>
     /// <param name="weight">边框粗细</param>
-    public void SetWeight(int weight)
+    public void SetWeight(XlBorderWeight weight)
     {
         if (_borders == null || Count == 0)
             return;
@@ -329,13 +377,17 @@ internal class ExcelBorders : IExcelBorders
             {
                 if (item is MsExcel.Border border)
                 {
-                    border.Weight = weight;
+                    border.Weight = weight.EnumConvert(MsExcel.XlBorderWeight.xlHairline);
                 }
             }
         }
+        catch (COMException x)
+        {
+            log.Error($"设置所有边框的粗细时，访问索引的边框发生异常:" + x.Message, x);
+        }
         catch (Exception x)
         {
-            log.Error($"设置所有边框的粗细时，访问索引的边框发生异常", x);
+            log.Error($"设置所有边框的粗细时，访问索引的边框发生异常:" + x.Message, x);
         }
     }
 
@@ -345,7 +397,9 @@ internal class ExcelBorders : IExcelBorders
     /// <param name="lineStyle">线条样式</param>
     /// <param name="color">边框颜色</param>
     /// <param name="weight">边框粗细</param>
-    public void UniformFormat(Color color, XlLineStyle lineStyle = XlLineStyle.xlLineStyleNone, XlBorderWeight weight = XlBorderWeight.xlThin)
+    public void UniformFormat(Color color,
+                            XlLineStyle lineStyle = XlLineStyle.xlLineStyleNone,
+                            XlBorderWeight weight = XlBorderWeight.xlThin)
     {
         if (_borders == null || Count == 0)
             return;
@@ -356,15 +410,19 @@ internal class ExcelBorders : IExcelBorders
             {
                 if (item is MsExcel.Border border)
                 {
-                    border.LineStyle = lineStyle;
-                    border.Color = color;
-                    border.Weight = weight;
+                    border.LineStyle = lineStyle.EnumConvert(MsExcel.XlLineStyle.xlLineStyleNone);
+                    border.Color = (int)((color.B << 16) | (color.G << 8) | color.R);
+                    border.Weight = weight.EnumConvert(MsExcel.XlBorderWeight.xlHairline);
                 }
             }
         }
+        catch (COMException x)
+        {
+            log.Error($"统一所有边框的格式时，访问索引的边框发生异常:" + x.Message, x);
+        }
         catch (Exception x)
         {
-            log.Error($"统一所有边框的格式时，访问索引的边框发生异常", x);
+            log.Error($"统一所有边框的格式时，访问索引的边框发生异常:" + x.Message, x);
         }
     }
 
@@ -406,6 +464,10 @@ internal class ExcelBorders : IExcelBorders
                 }
             }
         }
+        catch (COMException x)
+        {
+            log.Error($"复制边框格式时，访问索引的边框发生异常", x);
+        }
         catch (Exception x)
         {
             log.Error($"复制边框格式时，访问索引的边框发生异常", x);
@@ -446,9 +508,13 @@ internal class ExcelBorders : IExcelBorders
                     break;
             }
         }
+        catch (COMException x)
+        {
+            log.Error($"应用预设边框样式时，访问索引的边框发生异常:" + x.Message, x);
+        }
         catch (Exception x)
         {
-            log.Error($"应用预设边框样式时，访问索引的边框发生异常", x);
+            log.Error($"应用预设边框样式时，访问索引的边框发生异常:" + x.Message, x);
         }
     }
 
