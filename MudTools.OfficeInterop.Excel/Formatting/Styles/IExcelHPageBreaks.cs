@@ -23,7 +23,7 @@ public interface IExcelHPageBreaks : IDisposable, IEnumerable<IExcelHPageBreak>
     /// </summary>
     /// <param name="index">分页符索引</param>
     /// <returns>水平分页符对象</returns>
-    IExcelHPageBreak this[int index] { get; }
+    IExcelHPageBreak? this[int index] { get; }
 
     /// <summary>
     /// 添加新的水平分页符
@@ -37,7 +37,7 @@ public interface IExcelHPageBreaks : IDisposable, IEnumerable<IExcelHPageBreak>
     /// </summary>
     /// <param name="row">行号</param>
     /// <returns>水平分页符对象</returns>
-    IExcelHPageBreak FindByRow(int row);
+    IExcelHPageBreak? FindByRow(int row);
 
     /// <summary>
     /// 移除指定索引的水平分页符
@@ -59,12 +59,12 @@ public interface IExcelHPageBreaks : IDisposable, IEnumerable<IExcelHPageBreak>
     /// <summary>
     /// 获取父级工作表
     /// </summary>
-    IExcelWorksheet Parent { get; }
+    IExcelWorksheet? Parent { get; }
 
     /// <summary>
     /// 获取分页符应用的范围
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 获取指定类型的水平分页符

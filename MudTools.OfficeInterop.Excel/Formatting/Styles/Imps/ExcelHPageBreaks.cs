@@ -9,12 +9,30 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelHPageBreaks : IExcelHPageBreaks
 {
-    private MsExcel.HPageBreaks _hPageBreaks;
+    private MsExcel.HPageBreaks? _hPageBreaks;
     private bool _disposedValue;
+    private DisposableList _disposables = [];
+    public int Count => _hPageBreaks != null ? _hPageBreaks.Count : 0;
 
-    public int Count => _hPageBreaks.Count;
+    public IExcelHPageBreak? this[int index]
+    {
+        get
+        {
+            if (_hPageBreaks == null)
+                throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
 
-    public IExcelHPageBreak this[int index] => new ExcelHPageBreak(_hPageBreaks[index]);
+            if (index < 1 || index > Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            var hPageBreak = _hPageBreaks[index];
+            var hPage = hPageBreak != null ? new ExcelHPageBreak(hPageBreak) : null;
+            if (hPage != null)
+            {
+                _disposables.Add(hPage);
+            }
+            return hPage;
+        }
+    }
 
     internal ExcelHPageBreaks(MsExcel.HPageBreaks hPageBreaks)
     {
@@ -25,18 +43,25 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
 
     public IExcelHPageBreak? Add(IExcelRange before)
     {
+        if (_hPageBreaks == null)
+            throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
         if (before == null)
             throw new ArgumentNullException(nameof(before));
 
         try
         {
-            MsExcel.Range comRange = null;
+            MsExcel.Range? comRange = null;
             if (before is ExcelRange excelRange)
             {
                 comRange = excelRange.InternalRange;
             }
             var hPageBreak = _hPageBreaks.Add(comRange);
-            return hPageBreak != null ? new ExcelHPageBreak(hPageBreak) : null;
+            var hPage = hPageBreak != null ? new ExcelHPageBreak(hPageBreak) : null;
+            if (hPage != null)
+            {
+                _disposables.Add(hPage);
+            }
+            return hPage;
         }
         catch (COMException ex)
         {
@@ -44,8 +69,10 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
         }
     }
 
-    public IExcelHPageBreak FindByRow(int row)
+    public IExcelHPageBreak? FindByRow(int row)
     {
+        if (_hPageBreaks == null)
+            throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
         if (row < 1)
             throw new ArgumentOutOfRangeException(nameof(row));
 
@@ -54,21 +81,23 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
             for (int i = 1; i <= Count; i++)
             {
                 var pageBreak = this[i];
-                if (pageBreak.StartRow <= row && pageBreak.EndRow >= row)
+                if (pageBreak != null && pageBreak.StartRow <= row && pageBreak.EndRow >= row)
                 {
                     return pageBreak;
                 }
             }
             return null;
         }
-        catch (COMException)
+        catch (COMException ex)
         {
-            return null;
+            throw new InvalidOperationException($"无法找到第 {row} 行的水平分页符。", ex);
         }
     }
 
     public void RemoveAt(int index)
     {
+        if (_hPageBreaks == null)
+            throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
         if (index < 1 || index > Count)
             throw new ArgumentOutOfRangeException(nameof(index));
 
@@ -84,6 +113,8 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
 
     public void RemoveByRow(int row)
     {
+        if (_hPageBreaks == null)
+            throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
         if (row < 1)
             throw new ArgumentOutOfRangeException(nameof(row));
 
@@ -100,19 +131,13 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
 
     public void Clear()
     {
+        if (_hPageBreaks == null)
+            throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
         try
         {
-            // 从后往前删除，避免索引变化问题
             for (int i = Count; i >= 1; i--)
             {
-                try
-                {
-                    this[i].Delete();
-                }
-                catch (COMException)
-                {
-                    // 继续删除其他分页符
-                }
+                this[i].Delete();
             }
         }
         catch (COMException ex)
@@ -121,33 +146,37 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
         }
     }
 
-    public IExcelWorksheet Parent => new ExcelWorksheet(_hPageBreaks.Parent as MsExcel.Worksheet);
+    public IExcelWorksheet? Parent => _hPageBreaks != null ? new ExcelWorksheet(_hPageBreaks.Parent as MsExcel.Worksheet) : null;
 
-    public IExcelRange Range => Parent?.UsedRange;
+    public IExcelRange? Range => Parent?.UsedRange;
 
     public IEnumerable<IExcelHPageBreak> GetPageBreaksByType(XlPageBreak type)
     {
+        if (_hPageBreaks == null)
+            throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
         var result = new List<IExcelHPageBreak>();
         try
         {
             for (int i = 1; i <= Count; i++)
             {
                 var pageBreak = this[i];
-                if (pageBreak.Type == type)
+                if (pageBreak != null && pageBreak.Type == type)
                 {
                     result.Add(pageBreak);
                 }
             }
         }
-        catch (COMException)
+        catch (COMException ex)
         {
-            // 忽略异常，返回已找到的结果
+            throw new InvalidOperationException("无法获取指定类型的水平分页符。", ex);
         }
         return result;
     }
 
     public IEnumerable<IExcelHPageBreak> GetPageBreaksInRange(int startRow, int endRow)
     {
+        if (_hPageBreaks == null)
+            throw new ObjectDisposedException(nameof(ExcelHPageBreaks));
         if (startRow < 1 || endRow < startRow)
             throw new ArgumentException("行号范围无效。");
 
@@ -157,15 +186,15 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
             for (int i = 1; i <= Count; i++)
             {
                 var pageBreak = this[i];
-                if (pageBreak.StartRow >= startRow && pageBreak.StartRow <= endRow)
+                if (pageBreak != null && pageBreak.StartRow >= startRow && pageBreak.StartRow <= endRow)
                 {
                     result.Add(pageBreak);
                 }
             }
         }
-        catch (COMException)
+        catch (COMException ex)
         {
-            // 忽略异常，返回已找到的结果
+            throw new InvalidOperationException("无法获取指定范围内的水平分页符。", ex);
         }
         return result;
     }
@@ -182,17 +211,14 @@ internal class ExcelHPageBreaks : IExcelHPageBreaks
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    protected virtual void Dispose(bool disposing)
+    protected void Dispose(bool disposing)
     {
         if (_disposedValue) return;
 
         if (disposing && _hPageBreaks != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_hPageBreaks) > 0) { }
-            }
-            catch { }
+            _disposables.Dispose();
+            Marshal.ReleaseComObject(_hPageBreaks);
             _hPageBreaks = null;
         }
 
