@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -18,25 +18,25 @@ public interface IExcelFormatCondition : IDisposable
     /// 获取条件格式规则的父对象 (通常是 FormatConditions 集合)
     /// 对应 FormatCondition.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取条件格式规则所在的Application对象
     /// 对应 FormatCondition.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取条件格式规则的类型
     /// 对应 FormatCondition.Type 属性
     /// </summary>
-    int Type { get; } // 使用 int 代表 XlFormatConditionType
+    XlFormatConditionType Type { get; }
 
     /// <summary>
     /// 获取或设置比较操作符 (对于 xlCellValue 类型)
     /// 对应 FormatCondition.Operator 属性
     /// </summary>
-    int Operator { get; set; } // 使用 int 代表 XlFormatConditionOperator
+    XlFormatConditionOperator Operator { get; set; }
 
     /// <summary>
     /// 获取或设置公式1
@@ -60,69 +60,89 @@ public interface IExcelFormatCondition : IDisposable
     /// 获取或设置文本比较器 (对于 xlTextString 类型)
     /// 对应 FormatCondition.TextOperator 属性
     /// </summary>
-    int TextOperator { get; set; } // 使用 int 代表 XlContainsOperator
+    XlContainsOperator TextOperator { get; set; }
     #endregion
 
-    #region 格式设置 (特定于 FormatCondition)
+    #region 格式设置 
     /// <summary>
     /// 获取条件格式规则的字体对象
     /// 对应 FormatCondition.Font 属性
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取条件格式规则的背景对象
     /// 对应 FormatCondition.Interior 属性
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取条件格式规则的边框对象
     /// 对应 FormatCondition.Borders 属性
     /// </summary>
-    IExcelBorders Borders { get; }
+    IExcelBorders? Borders { get; }
+
+    /// <summary>
+    /// 获取或设置条件格式应用的单元格区域
+    /// 对应 FormatCondition.AppliesTo 属性
+    /// </summary>
+    IExcelRange? AppliesTo { get; }
+
+    /// <summary>
+    /// 获取或设置条件格式规则的优先级
+    /// 对应 FormatCondition.Priority 属性
+    /// </summary>
+    int Priority { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据透视表条件格式的作用范围类型
+    /// 对应 FormatCondition.ScopeType 属性
+    /// </summary>
+    XlPivotConditionScope ScopeType { get; set; }
+
+    /// <summary>
+    /// 获取或设置日期条件格式的时间段操作符
+    /// 对应 FormatCondition.DateOperator 属性
+    /// </summary>
+    XlTimePeriods DateOperator { get; set; }
+
+    /// <summary>
+    /// 获取一个值，指示条件格式是否与数据透视表相关
+    /// 对应 FormatCondition.PTCondition 属性
+    /// </summary>
+    bool PTCondition { get; }
+
+    /// <summary>
+    /// 获取或设置当条件为真时是否停止评估其他条件格式规则
+    /// 对应 FormatCondition.StopIfTrue 属性
+    /// </summary>
+    bool StopIfTrue { get; set; }
 
     /// <summary>
     /// 获取或设置条件格式规则的编号格式
     /// 对应 FormatCondition.NumberFormat 属性
     /// </summary>
-    object NumberFormat { get; set; } // Can be string or other types
-    #endregion
-
-    #region 高级属性 (特定类型)
-
-    /// <summary>
-    /// 获取或设置颜色刻度对象 (如果此条件是 ColorScale)
-    /// </summary>
-    IExcelColorScaleCriteria ColorScaleCriteria { get; }
-
-    /// <summary>
-    /// 获取或设置数据条对象 (如果此条件是 Databar)
-    /// </summary>
-    IExcelDataBar DataBar { get; }
-
-    /// <summary>
-    /// 获取或设置图标集对象 
-    /// </summary>
-    IExcelIconSet IconSet { get; }
-
-    /// <summary>
-    /// 获取或设置是否显示图标集的过滤器
-    /// </summary>
-    bool ShowIconOnly { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否反向图标集
-    /// </summary>
-    bool ReverseOrder { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否允许 PT 时间 (对于某些高级条件)
-    /// </summary>
-    bool PTCondition { get; }
+    string? NumberFormat { get; set; }
     #endregion
 
     #region 操作方法
+
+    /// <summary>
+    /// 修改应用条件格式的单元格区域
+    /// </summary>
+    /// <param name="Range">要应用条件格式的新区域</param>
+    void ModifyAppliesToRange(IExcelRange Range);
+
+    /// <summary>
+    /// 将条件格式规则设置为最高优先级
+    /// </summary>
+    void SetFirstPriority();
+
+    /// <summary>
+    /// 将条件格式规则设置为最低优先级
+    /// </summary>
+    void SetLastPriority();
+
     /// <summary>
     /// 删除此条件格式规则
     /// 对应 FormatCondition.Delete 方法
@@ -137,7 +157,7 @@ public interface IExcelFormatCondition : IDisposable
     /// <param name="operator">比较操作符</param>
     /// <param name="formula1">公式1</param>
     /// <param name="formula2">公式2</param>
-    void Modify(int type, int @operator, string formula1, string formula2);
+    void Modify(XlFormatConditionType type, XlFormatConditionOperator @operator, string formula1, string formula2);
 
     /// <summary>
     /// 修改此条件格式规则为表达式类型

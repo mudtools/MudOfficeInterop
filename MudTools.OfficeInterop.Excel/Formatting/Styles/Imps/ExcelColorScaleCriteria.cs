@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelColorScaleCriteria : IExcelColorScaleCriteria
 {
-    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelBorders));
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelColorScaleCriteria));
     private MsExcel.ColorScaleCriteria? _colorScaleCriteria;
     private bool _disposedValue = false;
     private DisposableList _disposables = [];

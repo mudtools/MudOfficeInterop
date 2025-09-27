@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelFormatCondition : IExcelFormatCondition
 {
-    internal MsExcel.FormatCondition _formatCondition;
+    internal MsExcel.FormatCondition? _formatCondition;
     private bool _disposedValue = false;
 
     internal ExcelFormatCondition(MsExcel.FormatCondition formatCondition)
@@ -22,159 +22,164 @@ internal class ExcelFormatCondition : IExcelFormatCondition
     }
 
     #region 基础属性
-    public object Parent => _formatCondition.Parent;
+    public object? Parent => _formatCondition?.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_formatCondition.Application);
+    public IExcelApplication? Application => _formatCondition != null ? new ExcelApplication(_formatCondition.Application) : null;
 
-    public int Type => (int)_formatCondition.Type;
+    public XlFormatConditionType Type => _formatCondition != null ? _formatCondition.Type.ObjectConvertEnum(XlFormatConditionType.xlNoBlanksCondition) : XlFormatConditionType.xlNoBlanksCondition;
 
-    public int Operator
+    public XlFormatConditionOperator Operator
     {
-        get => (int)_formatCondition.Operator;
+        get => _formatCondition != null ? _formatCondition.Operator.ObjectConvertEnum(XlFormatConditionOperator.xlBetween) : XlFormatConditionOperator.xlBetween;
         set => Modify(Type, value, Formula1, Formula2);
     }
 
     public string Formula1
     {
-        get => _formatCondition.Formula1;
+        get => _formatCondition != null ? _formatCondition.Formula1 : "";
         set => Modify(Type, Operator, value, Formula2);
     }
 
     public string Formula2
     {
-        get => _formatCondition.Formula2;
+        get => _formatCondition != null ? _formatCondition.Formula2 : "";
         set => Modify(Type, Operator, Formula1, value);
     }
 
     public string Text
     {
-        get => _formatCondition.Text;
-        set => _formatCondition.Text = value;
-    }
-
-    public int TextOperator
-    {
-        get => (int)_formatCondition.TextOperator;
-        set => _formatCondition.TextOperator = (MsExcel.XlContainsOperator)value;
-    }
-    #endregion
-
-    #region 格式设置
-    public IExcelFont Font => new ExcelFont(_formatCondition.Font);
-
-    public IExcelInterior Interior => new ExcelInterior(_formatCondition.Interior);
-
-    public IExcelBorders Borders => new ExcelBorders(_formatCondition.Borders);
-
-    public object NumberFormat
-    {
-        get => _formatCondition.NumberFormat;
-        set => _formatCondition.NumberFormat = value;
-    }
-    #endregion
-
-    #region 高级属性 (需要类型检查)
-    public IExcelColorScaleCriteria ColorScaleCriteria
-    {
-        get
-        {
-            if (_formatCondition is MsExcel.ColorScale colorScale)
-            {
-                return new ExcelColorScaleCriteria(colorScale.ColorScaleCriteria);
-            }
-            return null;
-        }
-    }
-
-    public IExcelDataBar DataBar
-    {
-        get
-        {
-            if (_formatCondition is MsExcel.Databar databar)
-            {
-                return new ExcelDataBar(databar);
-            }
-            return null;
-        }
-    }
-
-    public IExcelIconSet IconSet
-    {
-        get
-        {
-            if (_formatCondition is MsExcel.IconSetCondition iconSetCond)
-            {
-                return new ExcelIconSet(iconSetCond.IconSet as MsExcel.IconSetCondition);
-            }
-            return null;
-        }
-    }
-
-    public bool ShowIconOnly
-    {
-        get
-        {
-            if (_formatCondition is MsExcel.IconSetCondition iconSetCond)
-            {
-                return iconSetCond.ShowIconOnly;
-            }
-            return false;
-        }
+        get => _formatCondition != null ? _formatCondition.Text : "";
         set
         {
-            if (_formatCondition is MsExcel.IconSetCondition iconSetCond)
+            if (_formatCondition != null)
             {
-                iconSetCond.ShowIconOnly = value;
+                _formatCondition.Text = value;
             }
         }
     }
 
-    public bool ReverseOrder
+    public XlContainsOperator TextOperator
     {
-        get
-        {
-            if (_formatCondition is MsExcel.IconSetCondition iconSetCond)
-            {
-                return iconSetCond.ReverseOrder;
-            }
-            return false;
-        }
+        get => _formatCondition != null ? _formatCondition.TextOperator.EnumConvert(XlContainsOperator.xlContains) : XlContainsOperator.xlContains;
         set
         {
-            if (_formatCondition is MsExcel.IconSetCondition iconSetCond)
+            if (_formatCondition != null)
             {
-                iconSetCond.ReverseOrder = value;
+                _formatCondition.TextOperator = value.EnumConvert(MsExcel.XlContainsOperator.xlContains);
+            }
+        }
+    }
+
+    public XlPivotConditionScope ScopeType
+    {
+        get => _formatCondition != null ? _formatCondition.ScopeType.ObjectConvertEnum(XlPivotConditionScope.xlSelectionScope) : XlPivotConditionScope.xlSelectionScope;
+        set
+        {
+            if (_formatCondition != null)
+            {
+                _formatCondition.ScopeType = value.EnumConvert(MsExcel.XlPivotConditionScope.xlSelectionScope);
+            }
+        }
+    }
+
+    public XlTimePeriods DateOperator
+    {
+        get => _formatCondition != null ? _formatCondition.DateOperator.ObjectConvertEnum(XlTimePeriods.xlYesterday) : XlTimePeriods.xlYesterday;
+        set
+        {
+            if (_formatCondition != null)
+            {
+                _formatCondition.DateOperator = value.EnumConvert(MsExcel.XlTimePeriods.xlYesterday);
             }
         }
     }
 
     public bool PTCondition
     {
-        get
+        get => _formatCondition != null && _formatCondition.PTCondition;
+    }
+
+    public bool StopIfTrue
+    {
+        get => _formatCondition != null && _formatCondition.StopIfTrue;
+        set
         {
-            if (_formatCondition is MsExcel.IconSetCondition iconSetCond)
+            if (_formatCondition != null)
             {
-                return iconSetCond.PTCondition;
+                _formatCondition.StopIfTrue = value;
             }
-            return false;
+        }
+    }
+
+    public int Priority
+    {
+        get => _formatCondition != null ? _formatCondition.Priority : 0;
+        set
+        {
+            if (_formatCondition != null)
+            {
+                _formatCondition.Priority = value;
+            }
+        }
+    }
+    #endregion
+
+    #region 格式设置
+    public IExcelFont? Font => _formatCondition != null ? new ExcelFont(_formatCondition.Font) : null;
+
+    public IExcelInterior? Interior => _formatCondition != null ? new ExcelInterior(_formatCondition.Interior) : null;
+
+    public IExcelBorders? Borders => _formatCondition != null ? new ExcelBorders(_formatCondition.Borders) : null;
+
+    public IExcelRange? AppliesTo => _formatCondition != null ? new ExcelRange(_formatCondition.AppliesTo) : null;
+
+    public string? NumberFormat
+    {
+        get => _formatCondition != null ? _formatCondition.NumberFormat.ToString() : "";
+        set
+        {
+            if (_formatCondition != null)
+            {
+                _formatCondition.NumberFormat = value;
+            }
         }
     }
     #endregion
 
     #region 操作方法 
-    public void Delete()
+    public void ModifyAppliesToRange(IExcelRange Range)
     {
-        _formatCondition.Delete();
+        if (Range == null) throw new ArgumentNullException(nameof(Range));
+        if (_formatCondition == null) throw new InvalidOperationException("无法修改格式条件。");
+
+        _formatCondition?.ModifyAppliesToRange(((ExcelRange)Range).InternalRange);
     }
 
-    public void Modify(int type, int @operator, string formula1, string formula2)
+    public void SetFirstPriority()
     {
-        _formatCondition.Modify((MsExcel.XlFormatConditionType)type, (MsExcel.XlFormatConditionOperator)@operator, formula1, formula2);
+        _formatCondition?.SetFirstPriority();
+    }
+
+    public void SetLastPriority()
+    {
+        _formatCondition?.SetLastPriority();
+    }
+
+    public void Delete()
+    {
+        _formatCondition?.Delete();
+    }
+
+    public void Modify(XlFormatConditionType type, XlFormatConditionOperator @operator, string formula1, string formula2)
+    {
+        _formatCondition?.Modify(type.EnumConvert(MsExcel.XlFormatConditionType.xlNoBlanksCondition),
+         @operator.EnumConvert(MsExcel.XlFormatConditionOperator.xlBetween),
+          formula1, formula2);
     }
 
     public void ModifyExpression(string formula)
     {
-        Modify((int)MsExcel.XlFormatConditionType.xlExpression, (int)MsExcel.XlFormatConditionOperator.xlBetween, formula, "");
+        Modify(XlFormatConditionType.xlExpression, XlFormatConditionOperator.xlBetween, formula, "");
     }
     #endregion
 
@@ -185,16 +190,8 @@ internal class ExcelFormatCondition : IExcelFormatCondition
 
         if (disposing)
         {
-            try
-            {
-                // 释放形状对象
-                if (_formatCondition != null)
-                    Marshal.ReleaseComObject(_formatCondition);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            if (_formatCondition != null)
+                Marshal.ReleaseComObject(_formatCondition);
             _formatCondition = null;
         }
 

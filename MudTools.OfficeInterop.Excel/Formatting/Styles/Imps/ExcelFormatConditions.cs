@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -13,8 +13,10 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelFormatConditions : IExcelFormatConditions
 {
-    private MsExcel.FormatConditions _formatConditions;
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelFormatConditions));
+    private MsExcel.FormatConditions? _formatConditions;
     private bool _disposedValue = false;
+    private DisposableList _disposables = [];
 
     internal ExcelFormatConditions(MsExcel.FormatConditions formatConditions)
     {
@@ -22,9 +24,9 @@ internal class ExcelFormatConditions : IExcelFormatConditions
     }
 
     #region 基础属性
-    public int Count => _formatConditions.Count;
+    public int Count => _formatConditions != null ? _formatConditions.Count : 0;
 
-    public IExcelFormatCondition this[int index]
+    public IExcelFormatCondition? this[int index]
     {
         get
         {
@@ -33,28 +35,40 @@ internal class ExcelFormatConditions : IExcelFormatConditions
 
             try
             {
-                var name = _formatConditions.Item(index) as MsExcel.FormatCondition;
-                return name != null ? new ExcelFormatCondition(name) : null;
+                var n = _formatConditions.Item(index) is MsExcel.FormatCondition name ? new ExcelFormatCondition(name) : null;
+                if (n != null)
+                {
+                    _disposables.Add(n);
+                }
+                return n;
             }
-            catch
+            catch (COMException ex)
             {
+                log.Error("获取指定索引的条件格式规则对象失败：" + ex.Message, ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Error("获取指定索引的条件格式规则对象失败：" + ex.Message, ex);
                 return null;
             }
         }
     }
 
-    public object Parent => _formatConditions.Parent;
+    public object? Parent => _formatConditions?.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_formatConditions.Application);
+    public IExcelApplication? Application => _formatConditions != null ? new ExcelApplication(_formatConditions.Application) : null;
     #endregion
 
     #region 创建和添加
-    public IExcelFormatCondition Add(
+    public IExcelFormatCondition? Add(
         XlFormatConditionType type,
         XlFormatConditionOperator? @operator,
         string formula1 = "",
         string formula2 = "")
     {
+        if (_formatConditions == null)
+            return null;
         object oper = Type.Missing;
         if (@operator != null)
             oper = @operator;
@@ -76,8 +90,10 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelFormatCondition AddExpression(string formula)
+    public IExcelFormatCondition? AddExpression(string formula)
     {
+        if (_formatConditions == null)
+            return null;
         MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             MsExcel.XlFormatConditionType.xlExpression,
             Type.Missing,
@@ -87,8 +103,10 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelFormatCondition AddColorScale(int colorScaleType)
+    public IExcelFormatCondition? AddColorScale(int colorScaleType)
     {
+        if (_formatConditions == null)
+            return null;
         MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             MsExcel.XlFormatConditionType.xlColorScale,
             Type.Missing,
@@ -98,8 +116,10 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelFormatCondition AddDatabar()
+    public IExcelFormatCondition? AddDatabar()
     {
+        if (_formatConditions == null)
+            return null;
         MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             MsExcel.XlFormatConditionType.xlDatabar,
             Type.Missing,
@@ -109,19 +129,23 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelFormatCondition AddIconSetCondition(int iconSet)
+    public IExcelFormatCondition? AddIconSetCondition(XlIconSet iconSet)
     {
+        if (_formatConditions == null)
+            return null;
         MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             MsExcel.XlFormatConditionType.xlIconSets,
             Type.Missing,
-            (MsExcel.XlIconSet)iconSet,
+            iconSet.EnumConvert(MsExcel.XlIconSet.xlCustomSet),
             Type.Missing
         );
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelFormatCondition AddUniqueValues(bool showUnique)
+    public IExcelFormatCondition? AddUniqueValues(bool showUnique)
     {
+        if (_formatConditions == null)
+            return null;
         MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             MsExcel.XlFormatConditionType.xlUniqueValues,
             showUnique ? MsExcel.XlFormatConditionOperator.xlEqual : MsExcel.XlFormatConditionOperator.xlNotEqual,
@@ -131,8 +155,10 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelFormatCondition AddTop10(int rank, bool aboveAverage = true, bool percent = false)
+    public IExcelFormatCondition? AddTop10(int rank, bool aboveAverage = true, bool percent = false)
     {
+        if (_formatConditions == null)
+            return null;
         MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             MsExcel.XlFormatConditionType.xlTop10,
             aboveAverage ? MsExcel.XlFormatConditionOperator.xlGreater : MsExcel.XlFormatConditionOperator.xlLess,
@@ -144,51 +170,18 @@ internal class ExcelFormatConditions : IExcelFormatConditions
     #endregion
 
     #region 查找和筛选
-    public IExcelFormatCondition[] FindByType(int type)
+    public IExcelFormatCondition[] FindByType(XlFormatConditionType type)
     {
+        if (_formatConditions == null)
+            return [];
         var results = new List<IExcelFormatCondition>();
         for (int i = 1; i <= Count; i++)
         {
             var condition = this[i];
-            if (condition.Type == type)
+            if (condition != null && condition.Type == type)
             {
                 results.Add(condition);
             }
-        }
-        return results.ToArray();
-    }
-
-    public IExcelFormatCondition[] FindByRange(IExcelRange range)
-    {
-        var results = new List<IExcelFormatCondition>();
-        for (int i = 1; i <= Count; i++)
-        {
-            results.Add(this[i]);
-        }
-        return results.ToArray();
-    }
-
-
-    public IExcelFormatCondition[] GetConditionsWithInterior()
-    {
-        var results = new List<IExcelFormatCondition>();
-        for (int i = 1; i <= Count; i++)
-        {
-            // : assume some have it.
-            if (i % 3 == 0) // Dummy condition
-                results.Add(this[i]);
-        }
-        return results.ToArray();
-    }
-
-    public IExcelFormatCondition[] GetConditionsWithBorders()
-    {
-        var results = new List<IExcelFormatCondition>();
-        for (int i = 1; i <= Count; i++)
-        {
-            // : assume some have it.
-            if (i % 4 == 0) // Dummy condition
-                results.Add(this[i]);
         }
         return results.ToArray();
     }
@@ -201,12 +194,18 @@ internal class ExcelFormatConditions : IExcelFormatConditions
     /// </summary>
     public void Delete()
     {
-        _formatConditions.Delete();
+        _formatConditions?.Delete();
     }
 
     public void Delete(int index)
     {
-        ((MsExcel.FormatCondition)_formatConditions.Item(index)).Delete();
+        if (_formatConditions == null)
+            return;
+        var item = _formatConditions.Item(index);
+        if (item != null)
+        {
+            ((MsExcel.FormatCondition)item).Delete();
+        }
     }
 
     public void Delete(IExcelFormatCondition condition)
@@ -228,13 +227,15 @@ internal class ExcelFormatConditions : IExcelFormatConditions
     #region IEnumerable<IExcelFormatCondition> Support
     public IEnumerator<IExcelFormatCondition> GetEnumerator()
     {
+        if (_formatConditions == null)
+            yield break;
         for (int i = 1; i <= _formatConditions.Count; i++)
         {
             yield return new ExcelFormatCondition((MsExcel.FormatCondition)_formatConditions.Item(i));
         }
     }
 
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
     }
@@ -249,6 +250,7 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         {
             try
             {
+                _disposables.Dispose();
                 // 释放形状对象
                 if (_formatConditions != null)
                     Marshal.ReleaseComObject(_formatConditions);

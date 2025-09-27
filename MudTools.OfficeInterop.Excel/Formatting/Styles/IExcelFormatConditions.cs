@@ -26,19 +26,19 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// </summary>
     /// <param name="index">规则索引（从1开始）</param>
     /// <returns>条件格式规则对象</returns>
-    IExcelFormatCondition this[int index] { get; }
+    IExcelFormatCondition? this[int index] { get; }
 
     /// <summary>
     /// 获取条件格式集合所在的父对象（通常是 Range）
     /// 对应 FormatConditions.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取条件格式集合所在的Application对象
     /// 对应 FormatConditions.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 创建和添加
@@ -51,7 +51,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// <param name="formula1">公式1</param>
     /// <param name="formula2">公式2</param>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition Add(
+    IExcelFormatCondition? Add(
         XlFormatConditionType type,
         XlFormatConditionOperator? @operator,
         string formula1 = "",
@@ -63,7 +63,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// </summary>
     /// <param name="formula">条件公式</param>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition AddExpression(string formula);
+    IExcelFormatCondition? AddExpression(string formula);
 
     /// <summary>
     /// 向集合中添加新的颜色刻度条件格式规则
@@ -71,14 +71,14 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// </summary>
     /// <param name="colorScaleType">颜色刻度类型 (例如 3 for ThreeColorScale)</param>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition AddColorScale(int colorScaleType);
+    IExcelFormatCondition? AddColorScale(int colorScaleType);
 
     /// <summary>
     /// 向集合中添加新的数据条条件格式规则
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlDatabar)
     /// </summary>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition AddDatabar();
+    IExcelFormatCondition? AddDatabar();
 
     /// <summary>
     /// 向集合中添加新的图标集条件格式规则
@@ -86,7 +86,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// </summary>
     /// <param name="iconSet">图标集类型</param>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition AddIconSetCondition(int iconSet); // 使用 int 代表 XlIconSet
+    IExcelFormatCondition? AddIconSetCondition(XlIconSet iconSet);
 
     /// <summary>
     /// 向集合中添加新的唯一值/重复值条件格式规则
@@ -94,7 +94,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// </summary>
     /// <param name="showUnique">true为唯一值，false为重复值</param>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition AddUniqueValues(bool showUnique);
+    IExcelFormatCondition? AddUniqueValues(bool showUnique);
 
     /// <summary>
     /// 向集合中添加新的TOP N条件格式规则
@@ -104,7 +104,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// <param name="aboveAverage">true为高于平均值，false为低于平均值</param>
     /// <param name="percent">是否按百分比计算</param>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition AddTop10(int rank, bool aboveAverage = true, bool percent = false);
+    IExcelFormatCondition? AddTop10(int rank, bool aboveAverage = true, bool percent = false);
     #endregion
 
     #region 查找和筛选
@@ -113,26 +113,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// </summary>
     /// <param name="type">条件类型</param>
     /// <returns>匹配的规则数组</returns>
-    IExcelFormatCondition[] FindByType(int type); // 使用 int 代表 XlFormatConditionType
-
-    /// <summary>
-    /// 根据应用区域查找规则 (通常 FormatConditions 属于特定 Range)
-    /// </summary>
-    /// <param name="range">目标区域 (用于验证是否属于同一父级)</param>
-    /// <returns>匹配的规则数组</returns>
-    IExcelFormatCondition[] FindByRange(IExcelRange range);
-
-    /// <summary>
-    /// 获取所有包含背景色格式的规则
-    /// </summary>
-    /// <returns>匹配的规则数组</returns>
-    IExcelFormatCondition[] GetConditionsWithInterior();
-
-    /// <summary>
-    /// 获取所有包含边框格式的规则
-    /// </summary>
-    /// <returns>匹配的规则数组</returns>
-    IExcelFormatCondition[] GetConditionsWithBorders();
+    IExcelFormatCondition[] FindByType(XlFormatConditionType type);
     #endregion
 
     #region 操作方法
