@@ -24,6 +24,11 @@ internal class ExcelHPageBreak : IExcelHPageBreak
         }
     }
 
+    public XlPageBreakExtent Extent
+    {
+        get => _hPageBreak != null ? _hPageBreak.Extent.EnumConvert(XlPageBreakExtent.xlPageBreakFull) : XlPageBreakExtent.xlPageBreakFull;
+    }
+
     public IExcelRange? Location
     {
         get => _hPageBreak != null ? new ExcelRange(_hPageBreak.Location) : null;
@@ -55,6 +60,21 @@ internal class ExcelHPageBreak : IExcelHPageBreak
         _disposedValue = false;
     }
 
+    public void DragOff(XlDirection direction, int regionIndex)
+    {
+        try
+        {
+            _hPageBreak?.DragOff(direction.EnumConvert(MsExcel.XlDirection.xlDown), regionIndex);
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法拖动分页符。", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("无法拖动分页符。", ex);
+        }
+    }
     public void Delete()
     {
         try

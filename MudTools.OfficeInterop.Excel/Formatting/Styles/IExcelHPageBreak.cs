@@ -53,6 +53,18 @@ public interface IExcelHPageBreak : IDisposable
     IExcelWorksheet? Worksheet { get; }
 
     /// <summary>
+    /// 获取水平分页符的应用范围类型
+    /// </summary>
+    XlPageBreakExtent Extent { get; }
+
+    /// <summary>
+    /// 将分页符从指定方向和区域索引拖离
+    /// </summary>
+    /// <param name="direction">拖离的方向</param>
+    /// <param name="regionIndex">区域索引</param>
+    void DragOff(XlDirection direction, int regionIndex);
+
+    /// <summary>
     /// 移除水平分页符
     /// </summary>
     void Delete();
