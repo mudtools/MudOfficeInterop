@@ -337,7 +337,7 @@ internal class WordFrame : IWordFrame
                 Font.Size = 11f;
                 Font.Bold = false;
                 Font.Italic = false;
-                Font.Underline = false;
+                Font.Underline = WdUnderline.wdUnderlineNone;
                 Font.Color = 0; // 黑色
             }
 

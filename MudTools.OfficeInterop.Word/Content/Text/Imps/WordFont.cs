@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordFont : IWordFont
 {
-    private MsWord.Font _font;
+    private MsWord.Font? _font;
     private bool _disposedValue;
 
     /// <summary>
@@ -31,7 +31,7 @@ internal class WordFont : IWordFont
     public IWordApplication? Application => _font != null ? new WordApplication(_font.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _font?.Parent;
+    public object? Parent => _font?.Parent;
 
     /// <inheritdoc/>
     public string Name
@@ -77,27 +77,35 @@ internal class WordFont : IWordFont
         }
     }
 
-    /// <inheritdoc/>
-    public bool Underline
+    public bool Hidden
     {
-        get => _font?.Underline != MsWord.WdUnderline.wdUnderlineNone;
+        get => _font?.Hidden == 1;
         set
         {
             if (_font != null)
-                _font.Underline = value
-                    ? MsWord.WdUnderline.wdUnderlineSingle
-                    : MsWord.WdUnderline.wdUnderlineNone;
+                _font.Hidden = value ? 1 : 0;
+        }
+    }
+
+    /// <inheritdoc/>
+    public WdUnderline Underline
+    {
+        get => _font != null ? _font.Underline.EnumConvert(WdUnderline.wdUnderlineNone) : WdUnderline.wdUnderlineNone;
+        set
+        {
+            if (_font != null)
+                _font.Underline = value.EnumConvert(MsWord.WdUnderline.wdUnderlineNone);
         }
     }
 
     /// <inheritdoc/>
     public WdColor Color
     {
-        get => (WdColor)(int)_font?.Color;
+        get => _font != null ? _font.Color.EnumConvert(WdColor.wdColorAutomatic) : WdColor.wdColorAutomatic;
         set
         {
             if (_font != null)
-                _font.Color = (MsWord.WdColor)(int)value;
+                _font.Color = value.EnumConvert(MsWord.WdColor.wdColorAutomatic);
         }
     }
 
@@ -156,7 +164,211 @@ internal class WordFont : IWordFont
         }
     }
 
+    public string NameFarEast
+    {
+        get => _font?.NameFarEast ?? string.Empty;
+        set
+        {
+            if (_font != null)
+                _font.NameFarEast = value;
+        }
+    }
+
+    public bool Outline
+    {
+        get => _font?.Outline == 1;
+        set
+        {
+            if (_font != null)
+                _font.Outline = value ? 1 : 0;
+        }
+    }
+
+    public bool Shadow
+    {
+        get => _font?.Shadow == 1;
+        set
+        {
+            if (_font != null)
+                _font.Shadow = value ? 1 : 0;
+        }
+    }
+
+    public bool DisableCharacterSpaceGrid
+    {
+        get => _font != null ? _font.DisableCharacterSpaceGrid : false;
+        set
+        {
+            if (_font != null)
+                _font.DisableCharacterSpaceGrid = value;
+        }
+    }
+
+    public WdColorIndex ColorIndex
+    {
+        get => _font != null ? _font.ColorIndex.EnumConvert(WdColorIndex.wdAuto) : WdColorIndex.wdAuto;
+        set
+        {
+            if (_font != null)
+                _font.ColorIndex = value.EnumConvert(MsWord.WdColorIndex.wdAuto);
+        }
+    }
+
+    public WdColor UnderlineColor
+    {
+        get => _font != null ? _font.UnderlineColor.EnumConvert(WdColor.wdColorAutomatic) : WdColor.wdColorAutomatic;
+        set
+        {
+            if (_font != null)
+                _font.UnderlineColor = value.EnumConvert(MsWord.WdColor.wdColorAutomatic);
+        }
+    }
+
+    public WdNumberSpacing NumberSpacing
+    {
+        get => _font != null ? _font.NumberSpacing.EnumConvert(WdNumberSpacing.wdNumberSpacingDefault) : WdNumberSpacing.wdNumberSpacingDefault;
+        set
+        {
+            if (_font != null)
+                _font.NumberSpacing = value.EnumConvert(MsWord.WdNumberSpacing.wdNumberSpacingDefault);
+        }
+    }
+
+    public WdStylisticSet StylisticSet
+    {
+        get => _font != null ? _font.StylisticSet.EnumConvert(WdStylisticSet.wdStylisticSetDefault) : WdStylisticSet.wdStylisticSetDefault;
+        set
+        {
+            if (_font != null)
+                _font.StylisticSet = value.EnumConvert(MsWord.WdStylisticSet.wdStylisticSetDefault);
+        }
+    }
+
+    public IWordFont? Duplicate
+    {
+        get
+        {
+            if (_font != null)
+                return new WordFont(_font.Duplicate);
+            return null;
+        }
+    }
+
+    public IWordBorders? Borders
+    {
+        get
+        {
+            if (_font != null)
+                return new WordBorders(_font.Borders);
+            return null;
+        }
+    }
+
+    public IWordFillFormat? Fill
+    {
+        get
+        {
+            if (_font != null)
+                return new WordFillFormat(_font.Fill);
+            return null;
+        }
+    }
+
+    public IWordGlowFormat? Glow
+    {
+        get
+        {
+            if (_font != null)
+                return new WordGlowFormat(_font.Glow);
+            return null;
+        }
+    }
+
+    public IWordLineFormat? Line
+    {
+        get
+        {
+            if (_font != null)
+                return new WordLineFormat(_font.Line);
+            return null;
+        }
+    }
+
+    public IWordReflectionFormat? Reflection
+    {
+        get
+        {
+            if (_font != null)
+                return new WordReflectionFormat(_font.Reflection);
+            return null;
+        }
+    }
+
+    public IWordShading? Shading
+    {
+        get
+        {
+            if (_font != null)
+                return new WordShading(_font.Shading);
+            return null;
+        }
+    }
+
+    public IWordColorFormat? TextColor
+    {
+        get
+        {
+            if (_font != null)
+                return new WordColorFormat(_font.TextColor);
+            return null;
+        }
+    }
+
+    public IWordShadowFormat? TextShadow
+    {
+        get
+        {
+            if (_font != null)
+                return new WordShadowFormat(_font.TextShadow);
+            return null;
+        }
+    }
+
+    public IWordThreeDFormat? ThreeD
+    {
+        get
+        {
+            if (_font != null)
+                return new WordThreeDFormat(_font.ThreeD);
+            return null;
+        }
+    }
+
     #endregion
+
+    public void Grow()
+    {
+        if (_font != null)
+            _font.Grow();
+    }
+
+    public void Reset()
+    {
+        if (_font != null)
+            _font.Reset();
+    }
+
+    public void SetAsTemplateDefault()
+    {
+        if (_font != null)
+            _font.SetAsTemplateDefault();
+    }
+
+    public void Shrink()
+    {
+        if (_font != null)
+            _font.Shrink();
+    }
 
     #region IDisposable 实现
 

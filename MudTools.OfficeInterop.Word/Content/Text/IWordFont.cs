@@ -20,7 +20,7 @@ public interface IWordFont : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置字体名称（如 "Arial", "Times New Roman" 等）。
@@ -45,7 +45,7 @@ public interface IWordFont : IDisposable
     /// <summary>
     /// 获取或设置是否带下划线。
     /// </summary>
-    bool Underline { get; set; }
+    WdUnderline Underline { get; set; }
 
     /// <summary>
     /// 获取或设置字体颜色（RGB 值）。
@@ -76,4 +76,119 @@ public interface IWordFont : IDisposable
     /// 获取或设置字符位置偏移（正值为上移，负值为下移）。
     /// </summary>
     int Position { get; set; }
+
+    /// <summary>
+    /// 获取或设置数字间距类型。
+    /// </summary>
+    WdNumberSpacing NumberSpacing { get; set; }
+
+    /// <summary>
+    /// 获取或设置下划线颜色（RGB 值）。
+    /// </summary>
+    WdColor UnderlineColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置东亚语言字体名称。
+    /// </summary>
+    string NameFarEast { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否为轮廓字体。
+    /// </summary>
+    bool Outline { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否具有阴影效果。
+    /// </summary>
+    bool Shadow { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否禁用字符间距网格。
+    /// </summary>
+    bool DisableCharacterSpaceGrid { get; set; }
+
+    /// <summary>
+    /// 获取或设置字体是否隐藏。
+    /// </summary>
+    bool Hidden { get; set; }
+
+    /// <summary>
+    /// 获取或设置字体颜色索引。
+    /// </summary>
+    WdColorIndex ColorIndex { get; set; }
+
+    /// <summary>
+    /// 获取或设置样式集。
+    /// </summary>
+    WdStylisticSet StylisticSet { get; set; }
+
+    /// <summary>
+    /// 获取字体的副本。
+    /// </summary>
+    IWordFont? Duplicate { get; }
+
+    /// <summary>
+    /// 获取字体边框格式。
+    /// </summary>
+    IWordBorders? Borders { get; }
+
+    /// <summary>
+    /// 获取字体填充格式。
+    /// </summary>
+    IWordFillFormat? Fill { get; }
+
+    /// <summary>
+    /// 获取字体发光效果格式。
+    /// </summary>
+    IWordGlowFormat? Glow { get; }
+
+    /// <summary>
+    /// 获取字体线条格式。
+    /// </summary>
+    IWordLineFormat? Line { get; }
+
+    /// <summary>
+    /// 获取字体倒影效果格式。
+    /// </summary>
+    IWordReflectionFormat? Reflection { get; }
+
+    /// <summary>
+    /// 获取字体底纹格式。
+    /// </summary>
+    IWordShading? Shading { get; }
+
+    /// <summary>
+    /// 获取字体颜色格式。
+    /// </summary>
+    IWordColorFormat? TextColor { get; }
+
+    /// <summary>
+    /// 获取字体阴影格式。
+    /// </summary>
+    IWordShadowFormat? TextShadow { get; }
+
+    /// <summary>
+    /// 获取字体三维格式。
+    /// </summary>
+    IWordThreeDFormat? ThreeD { get; }
+
+    /// <summary>
+    /// 增大字体大小。
+    /// </summary>
+    void Grow();
+
+    /// <summary>
+    /// 减小字体大小。
+    /// </summary>
+    void Shrink();
+
+    /// <summary>
+    /// 将当前字体设置为模板默认字体。
+    /// </summary>
+    void SetAsTemplateDefault();
+
+    /// <summary>
+    /// 重置字体格式为默认设置。
+    /// </summary>
+    void Reset();
 }
