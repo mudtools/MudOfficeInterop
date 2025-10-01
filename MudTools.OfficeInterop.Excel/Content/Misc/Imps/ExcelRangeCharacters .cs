@@ -21,11 +21,6 @@ internal class ExcelRangeCharacters : ExcelCharacters, IExcelRangeCharacters
         }
     }
 
-    public new IExcelCharacters? Insert(string text)
-    {
-        return base.Insert(text);
-    }
-
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);

@@ -129,7 +129,7 @@ internal class ExcelPhonetics : IExcelPhonetics
 
     #region 构造函数与私有字段
 
-    private MsExcel.Phonetics _phonetics;
+    private MsExcel.Phonetics? _phonetics;
     private bool _disposedValue;
 
     /// <summary>
@@ -205,14 +205,7 @@ internal class ExcelPhonetics : IExcelPhonetics
 
         if (disposing && _phonetics != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_phonetics) > 0) { }
-            }
-            catch
-            {
-                // 忽略释放 COM 对象时的异常
-            }
+            Marshal.ReleaseComObject(_phonetics);
             _phonetics = null;
         }
 

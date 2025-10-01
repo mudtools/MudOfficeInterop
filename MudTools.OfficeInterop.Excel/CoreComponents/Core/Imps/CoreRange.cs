@@ -733,7 +733,6 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     }
 
 
-
     /// <summary>
     /// 获取或设置是否打印网格线
     /// </summary>
@@ -791,7 +790,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         return rObj;
     }
 
-    protected TR? CreateRangeObject(MsExcel.Range rang)
+    protected TR? CreateRangeObject(MsExcel.Range? rang)
     {
         if (rang == null) return default;
 
