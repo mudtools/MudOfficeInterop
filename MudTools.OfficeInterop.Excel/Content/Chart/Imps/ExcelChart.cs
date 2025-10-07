@@ -293,6 +293,8 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public IExcelChartArea? ChartArea => _chart != null ? new ExcelChartArea(_chart.ChartArea) : null;
 
+    public IExcelChartGroup? Line3DGroup => _chart != null ? new ExcelChartGroup(_chart.Line3DGroup) : null;
+
 
     public IExcelAxes? Axes(XlAxisType? axisType = null, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary)
     {
@@ -303,6 +305,43 @@ internal partial class ExcelChart : IExcelChart
         if (charAxesObj != null && charAxesObj is MsExcel.Axes charAxes)
             return new ExcelAxes(charAxes);
         return null;
+    }
+
+    public object? BarGroups(object? Index = null)
+    {
+        if (_chart == null)
+            return null;
+        var barGroupsObj = _chart.BarGroups(Index != null ? Index : System.Type.Missing);
+        if (barGroupsObj != null && barGroupsObj is MsExcel.ChartGroup barGroup)
+            return new ExcelChartGroup(barGroup);
+        if (barGroupsObj != null && barGroupsObj is MsExcel.ChartGroups barGroups)
+            return new ExcelChartGroups(barGroups);
+        return null;
+    }
+
+    public object? ChartGroups(object? Index = null)
+    {
+        if (_chart == null)
+            return null;
+        var chartGroupsObj = _chart.ChartGroups(Index != null ? Index : System.Type.Missing);
+        if (chartGroupsObj != null && chartGroupsObj is MsExcel.ChartGroup group)
+            return new ExcelChartGroup(group);
+        if (chartGroupsObj != null && chartGroupsObj is MsExcel.ChartGroups groups)
+            return new ExcelChartGroups(groups);
+        return null;
+    }
+
+    public object? LineGroups(object? Index = null)
+    {
+        if (_chart == null)
+            return null;
+        var chartGroupsObj = _chart.LineGroups(Index != null ? Index : System.Type.Missing);
+        if (chartGroupsObj != null && chartGroupsObj is MsExcel.ChartGroup group)
+            return new ExcelChartGroup(group);
+        if (chartGroupsObj != null && chartGroupsObj is MsExcel.ChartGroups groups)
+            return new ExcelChartGroups(groups);
+        return null;
+
     }
 
     /// <summary>

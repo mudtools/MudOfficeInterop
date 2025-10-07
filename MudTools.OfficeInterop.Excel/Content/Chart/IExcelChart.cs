@@ -84,11 +84,20 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// </summary>
     IExcelChartArea? ChartArea { get; }
 
+    IExcelChartGroup? Line3DGroup { get; }
+
+    object? ChartGroups(object? Index = null);
+
+    object? BarGroups(object? Index = null);
+
+    object? LineGroups(object? Index = null);
+
     /// <summary>
     /// 获取图表的坐标轴集合
     /// 对应 Chart.Axes 函数
     /// </summary>
     IExcelAxes? Axes(XlAxisType? axisType = null, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary);
+
 
     /// <summary>
     /// 获取图表的图表标题对象
