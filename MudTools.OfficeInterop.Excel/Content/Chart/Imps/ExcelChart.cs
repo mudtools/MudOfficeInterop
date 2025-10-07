@@ -51,16 +51,20 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public string Name
     {
-        get => _chart.Name;
-        set => _chart.Name = value;
+        get => _chart != null ? _chart.Name : string.Empty;
+        set
+        {
+            if (_chart != null)
+                _chart.Name = value;
+        }
     }
 
-    public XlSheetType Type => (XlSheetType)_chart.Type;
+    public XlSheetType Type => _chart != null ? _chart.Type.ObjectConvertEnum<XlSheetType>(XlSheetType.xlChart) : XlSheetType.xlChart;
 
     /// <summary>
     /// 获取图表在集合中的索引位置 (从1开始)
     /// </summary>
-    public int Index => _chart.Index;
+    public int Index => _chart != null ? _chart.Index : 0;
 
     /// <summary>
     /// 获取或设置图表的类型 (使用 XlChartType 枚举对应的 int 值)
@@ -178,7 +182,7 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 获取图表所在的 Excel Application 对象
     /// </summary>
-    public IExcelApplication Application => new ExcelApplication(_chart.Application);
+    public IExcelApplication? Application => _chart != null ? new ExcelApplication(_chart.Application) : null;
 
     /// <summary>
     /// 获取图表的代码名称 (只读)
@@ -276,6 +280,7 @@ internal partial class ExcelChart : IExcelChart
     #endregion
 
     #region 图表元素 (IExcelChart)
+
     public IExcelShapes? Shapes => _chart != null ? new ExcelShapes(_chart.Shapes) : null;
 
     /// <summary>
@@ -288,10 +293,17 @@ internal partial class ExcelChart : IExcelChart
     /// </summary>
     public IExcelChartArea? ChartArea => _chart != null ? new ExcelChartArea(_chart.ChartArea) : null;
 
-    /// <summary>
-    /// 获取图表的坐标轴集合
-    /// </summary>
-    public IExcelAxes? Axes => _chart != null ? new ExcelAxes((MsExcel.Axes)_chart.Axes()) : null;
+
+    public IExcelAxes? Axes(XlAxisType? axisType = null, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary)
+    {
+        if (_chart == null)
+            return null;
+        var charAxesObj = _chart.Axes(axisType.ComArgsConvert(x => x.EnumConvert(MsExcel.XlAxisType.xlValue)),
+                          axisGroup.EnumConvert(MsExcel.XlAxisGroup.xlPrimary));
+        if (charAxesObj != null && charAxesObj is MsExcel.Axes charAxes)
+            return new ExcelAxes(charAxes);
+        return null;
+    }
 
     /// <summary>
     /// 获取图表的图表标题对象
@@ -470,6 +482,11 @@ internal partial class ExcelChart : IExcelChart
 
     #region 图表操作 (IExcelChart)
 
+    public void SetBackgroundPicture(string filename)
+    {
+        _chart?.SetBackgroundPicture(filename);
+    }
+
     /// <summary>
     /// 设置图表的数据源
     /// </summary>
@@ -589,7 +606,8 @@ internal partial class ExcelChart : IExcelChart
     {
         if (show && _chart != null)
         {
-            MsExcel.SeriesCollection? seriesColl = _chart.SeriesCollection() as MsExcel.SeriesCollection;
+            if (_chart.SeriesCollection() is not MsExcel.SeriesCollection seriesColl)
+                return;
             for (int i = 1; i <= seriesColl.Count; i++)
             {
                 MsExcel.Series series = seriesColl.Item(i);
