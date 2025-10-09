@@ -9,12 +9,12 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelCharacters : IExcelCharacters
 {
-    private MsExcel.Characters _characters;
+    private MsExcel.Characters? _characters;
     private bool _disposedValue;
 
-    public object Parent => _characters.Parent;
+    public object? Parent => _characters != null ? _characters.Parent : null;
 
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
@@ -23,7 +23,7 @@ internal class ExcelCharacters : IExcelCharacters
         }
     }
 
-    public int Count => _characters.Count;
+    public int Count => _characters != null ? _characters.Count : 0;
 
     public string Text
     {
@@ -68,6 +68,8 @@ internal class ExcelCharacters : IExcelCharacters
 
     public void Delete()
     {
+        if (_characters == null)
+            return;
         try
         {
             _characters.Delete();
@@ -80,13 +82,14 @@ internal class ExcelCharacters : IExcelCharacters
 
     public IExcelCharacters? Insert(string text)
     {
+        if (_characters == null)
+            return null;
         if (string.IsNullOrEmpty(text))
             throw new ArgumentException("文本不能为空。", nameof(text));
 
         try
         {
-            var result = _characters.Insert(text) as MsExcel.Characters;
-            return result != null ? new ExcelCharacters(result) : null;
+            return _characters.Insert(text) is MsExcel.Characters result ? new ExcelCharacters(result) : null;
         }
         catch (COMException ex)
         {

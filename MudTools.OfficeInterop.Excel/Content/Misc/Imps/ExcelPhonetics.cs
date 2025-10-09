@@ -24,7 +24,30 @@ internal class ExcelPhonetics : IExcelPhonetics
     /// </summary>
     /// <param name="index">注音符号索引（从1开始）</param>
     /// <returns>注音符号对象</returns>
-    public IExcelPhonetic this[int index] => new ExcelPhonetic(_phonetics[index] as MsExcel.Phonetic);
+    public IExcelPhonetic? this[int index]
+    {
+        get
+        {
+            try
+            {
+                if (_phonetics == null)
+                    throw new ObjectDisposedException(nameof(ExcelPhonetics));
+                if (index < 1 || index > Count)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "索引超出范围");
+                }
+                if (_phonetics[index] is not MsExcel.Phonetic phonetic)
+                    return null;
+
+                return new ExcelPhonetic(phonetic);
+            }
+            catch (COMException ex)
+            {
+                throw new InvalidOperationException("无法获取指定索引的注音符号对象", ex);
+            }
+        }
+
+    }
 
 
     public IExcelFont? Font => _phonetics != null ? new ExcelFont(_phonetics.Font) : null;
@@ -106,7 +129,7 @@ internal class ExcelPhonetics : IExcelPhonetics
 
     #region 构造函数与私有字段
 
-    private MsExcel.Phonetics _phonetics;
+    private MsExcel.Phonetics? _phonetics;
     private bool _disposedValue;
 
     /// <summary>
@@ -182,14 +205,7 @@ internal class ExcelPhonetics : IExcelPhonetics
 
         if (disposing && _phonetics != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_phonetics) > 0) { }
-            }
-            catch
-            {
-                // 忽略释放 COM 对象时的异常
-            }
+            Marshal.ReleaseComObject(_phonetics);
             _phonetics = null;
         }
 

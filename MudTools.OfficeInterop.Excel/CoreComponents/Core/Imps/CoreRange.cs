@@ -177,15 +177,15 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         }
     }
 
-    private IExcelCharacters? _characters;
+    private IExcelRangeCharacters? _characters;
 
-    public IExcelCharacters? Characters
+    public IExcelRangeCharacters? Characters
     {
         get
         {
             if (_characters != null)
                 return _characters;
-            _characters = _range != null ? new ExcelCharacters(_range.Characters) : null;
+            _characters = _range != null ? new ExcelRangeCharacters(_range, _range.Characters) : null;
             return _characters;
         }
     }
@@ -733,7 +733,6 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     }
 
 
-
     /// <summary>
     /// 获取或设置是否打印网格线
     /// </summary>
@@ -791,7 +790,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         return rObj;
     }
 
-    protected TR? CreateRangeObject(MsExcel.Range rang)
+    protected TR? CreateRangeObject(MsExcel.Range? rang)
     {
         if (rang == null) return default;
 

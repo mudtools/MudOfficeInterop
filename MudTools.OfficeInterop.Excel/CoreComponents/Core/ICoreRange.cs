@@ -73,7 +73,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// <summary>
     /// 获取单元格区域中字符的集合，用于对单元格中文本的字符级操作
     /// </summary>
-    IExcelCharacters? Characters { get; }
+    IExcelRangeCharacters? Characters { get; }
 
     /// <summary>
     /// 获取一个值，该值指示此区域是否是单元格的公式。

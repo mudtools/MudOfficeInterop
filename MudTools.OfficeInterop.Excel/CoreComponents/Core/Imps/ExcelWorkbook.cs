@@ -936,15 +936,15 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 获取工作簿的样式集合
     /// </summary>
-    public IExcelStyles Styles => _styles ??= new ExcelStyles(_workbook?.Styles);
+    public IExcelStyles Styles => _styles ??= new ExcelStyles(_workbook.Styles);
 
     private IExcelSlicerCaches _slicerCaches;
 
-    public IExcelSlicerCaches SlicerCaches => _slicerCaches ??= new ExcelSlicerCaches(_workbook?.SlicerCaches);
+    public IExcelSlicerCaches SlicerCaches => _slicerCaches ??= new ExcelSlicerCaches(_workbook.SlicerCaches);
 
     private IExcelSlicer _activeSlicer;
 
-    public IExcelSlicer ActiveSlicer => _activeSlicer ??= new ExcelSlicer(_workbook?.ActiveSlicer);
+    public IExcelSlicer ActiveSlicer => _activeSlicer ??= new ExcelSlicer(_workbook.ActiveSlicer);
 
     /// <summary>
     /// 图表集合缓存
@@ -954,7 +954,7 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 获取工作簿的图表集合
     /// </summary>
-    public IExcelSheets Charts => _charts ??= new ExcelSheets(_workbook?.Charts);
+    public IExcelSheets Charts => _charts ??= new ExcelSheets(_workbook.Charts);
 
     /// <summary>
     /// 获取工作簿的透视表缓存集合

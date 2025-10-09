@@ -22,7 +22,7 @@ public interface IExcelPhonetics : IDisposable
     /// </summary>
     /// <param name="index">注音符号索引（从1开始）</param>
     /// <returns>注音符号对象</returns>
-    IExcelPhonetic this[int index] { get; }
+    IExcelPhonetic? this[int index] { get; }
 
     IExcelFont? Font { get; }
 

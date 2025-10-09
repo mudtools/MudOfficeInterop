@@ -15,12 +15,12 @@ public interface IExcelCharacters : IDisposable
     /// <summary>
     /// 获取条件值对象所在的Application对象
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取字符对象的父级对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取字符数量
@@ -45,7 +45,7 @@ public interface IExcelCharacters : IDisposable
     /// <summary>
     /// 获取字符的字体属性
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 删除字符
@@ -57,7 +57,7 @@ public interface IExcelCharacters : IDisposable
     /// </summary>
     /// <param name="text">要插入的文本</param>
     /// <returns>插入后的字符对象</returns>
-    IExcelCharacters Insert(string text);
+    IExcelCharacters? Insert(string text);
 
     /// <summary>
     /// 查找文本在字符中的位置

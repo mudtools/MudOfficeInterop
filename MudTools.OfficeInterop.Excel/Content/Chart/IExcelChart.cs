@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -84,11 +84,20 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// </summary>
     IExcelChartArea? ChartArea { get; }
 
+    IExcelChartGroup? Line3DGroup { get; }
+
+    object? ChartGroups(object? Index = null);
+
+    object? BarGroups(object? Index = null);
+
+    object? LineGroups(object? Index = null);
+
     /// <summary>
     /// 获取图表的坐标轴集合
-    /// 对应 Chart.Axes 属性
+    /// 对应 Chart.Axes 函数
     /// </summary>
-    IExcelAxes? Axes { get; }
+    IExcelAxes? Axes(XlAxisType? axisType = null, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary);
+
 
     /// <summary>
     /// 获取图表的图表标题对象
@@ -134,6 +143,12 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     #endregion
 
     #region 图表操作
+
+    /// <summary>
+    /// 设置图表的背景图片
+    /// </summary>
+    /// <param name="filename">图片文件的路径和文件名</param>
+    void SetBackgroundPicture(string filename);
 
     /// <summary>
     /// 设置图表数据源

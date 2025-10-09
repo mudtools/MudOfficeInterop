@@ -35,7 +35,7 @@ internal class ExcelSlicerCaches : IExcelSlicerCaches
             if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelSlicerCaches));
             try
             {
-                return new ExcelSlicerCache((MsExcel.SlicerCache)_slicerCaches[indexOrName]);
+                return new ExcelSlicerCache(_slicerCaches[indexOrName]);
             }
             catch (Exception ex)
             {
