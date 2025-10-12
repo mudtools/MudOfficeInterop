@@ -478,7 +478,7 @@ public interface IWordSelection : IDisposable
     /// <param name="unit">移动单位</param>
     /// <param name="count">移动数量</param>
     /// <returns>实际移动的单位数</returns>
-    int MoveLeft(int unit = 1, int count = 1);
+    int MoveLeft(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove);
 
     /// <summary>
     /// 向后移动选择区域
@@ -486,7 +486,7 @@ public interface IWordSelection : IDisposable
     /// <param name="unit">移动单位</param>
     /// <param name="count">移动数量</param>
     /// <returns>实际移动的单位数</returns>
-    int MoveRight(int unit = 1, int count = 1);
+    int MoveRight(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove);
 
     /// <summary>
     /// 向上移动选择区域
@@ -494,7 +494,7 @@ public interface IWordSelection : IDisposable
     /// <param name="unit">移动单位</param>
     /// <param name="count">移动数量</param>
     /// <returns>实际移动的单位数</returns>
-    int MoveUp(int unit = 1, int count = 1);
+    int MoveUp(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove);
 
     /// <summary>
     /// 向下移动选择区域
@@ -502,7 +502,11 @@ public interface IWordSelection : IDisposable
     /// <param name="unit">移动单位</param>
     /// <param name="count">移动数量</param>
     /// <returns>实际移动的单位数</returns>
-    int MoveDown(int unit = 1, int count = 1);
+    int MoveDown(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove);
+
+    int HomeKey(WdUnits units = WdUnits.wdWord, WdMovementType extend = WdMovementType.wdMove);
+
+    int EndKey(WdUnits units = WdUnits.wdWord, WdMovementType extend = WdMovementType.wdMove);
 
     /// <summary>
     /// 确定当前选择区域是否在指定的范围区域内
@@ -595,6 +599,10 @@ public interface IWordSelection : IDisposable
     /// 取消选择
     /// </summary>
     void Collapse();
+
+    void Collapse(WdCollapseDirection collapseDirection);
+
+    void WholeStory();
 
     /// <summary>
     /// 扩展选择区域

@@ -72,6 +72,24 @@ internal class WordShapes : IWordShapes
     #endregion
 
     #region 方法实现
+    public IWordShape AddShape(MsoAutoShapeType Type, float Left, float Top, float Width, float Height, IWordRange? Anchor = null)
+    {
+        if (_shapes == null)
+        {
+            throw new ObjectDisposedException(nameof(WordShapes));
+        }
+        try
+        {
+            var anchorObj = (Anchor as WordRange)?._range;
+
+            var shape = _shapes.AddShape((int)Type, Left, Top, Width, Height, anchorObj != null ? anchorObj : System.Type.Missing);
+            return new WordShape(shape);
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法添加形状。", ex);
+        }
+    }
 
     /// <inheritdoc/>
     public IWordShape? AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height)

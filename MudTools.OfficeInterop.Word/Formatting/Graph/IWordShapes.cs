@@ -37,6 +37,9 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// </summary>
     IWordShape this[string name] { get; }
 
+    IWordShape AddShape(MsoAutoShapeType Type, float Left, float Top, float Width, float Height, IWordRange? Anchor = null);
+
+
     /// <summary>
     /// 添加文本框形状。
     /// </summary>

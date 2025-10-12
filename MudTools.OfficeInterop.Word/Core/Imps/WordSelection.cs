@@ -615,11 +615,11 @@ internal class WordSelection : IWordSelection
         }
     }
 
-    public int MoveLeft(int unit = 1, int count = 1)
+    public int MoveLeft(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove)
     {
         try
         {
-            return _selection?.MoveLeft((MsWord.WdUnits)unit, count) ?? 0;
+            return _selection?.MoveLeft(unit.EnumConvert(MsWord.WdUnits.wdWord), count, extend.EnumConvert(MsWord.WdMovementType.wdMove)) ?? 0;
         }
         catch (Exception ex)
         {
@@ -628,11 +628,11 @@ internal class WordSelection : IWordSelection
         }
     }
 
-    public int MoveRight(int unit = 1, int count = 1)
+    public int MoveRight(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove)
     {
         try
         {
-            return _selection?.MoveRight((MsWord.WdUnits)unit, count) ?? 0;
+            return _selection?.MoveRight(unit.EnumConvert(MsWord.WdUnits.wdWord), count, extend.EnumConvert(MsWord.WdMovementType.wdMove)) ?? 0;
         }
         catch (Exception ex)
         {
@@ -641,11 +641,11 @@ internal class WordSelection : IWordSelection
         }
     }
 
-    public int MoveUp(int unit = 1, int count = 1)
+    public int MoveUp(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove)
     {
         try
         {
-            return _selection?.MoveUp((MsWord.WdUnits)unit, count) ?? 0;
+            return _selection?.MoveUp(unit.EnumConvert(MsWord.WdUnits.wdWord), count, extend.EnumConvert(MsWord.WdMovementType.wdMove)) ?? 0;
         }
         catch (Exception ex)
         {
@@ -654,16 +654,42 @@ internal class WordSelection : IWordSelection
         }
     }
 
-    public int MoveDown(int unit = 1, int count = 1)
+    public int MoveDown(WdUnits unit = WdUnits.wdWord, int count = 1, WdMovementType extend = WdMovementType.wdMove)
     {
         try
         {
-            return _selection?.MoveDown((MsWord.WdUnits)unit, count) ?? 0;
+            return _selection?.MoveDown(unit.EnumConvert(MsWord.WdUnits.wdWord), count, extend.EnumConvert(MsWord.WdMovementType.wdMove)) ?? 0;
         }
         catch (Exception ex)
         {
             log.Warn($"Failed to move selection down: {ex.Message}");
             throw new InvalidOperationException("Failed to move selection down.", ex);
+        }
+    }
+
+    public int EndKey(WdUnits units = WdUnits.wdWord, WdMovementType extend = WdMovementType.wdMove)
+    {
+        try
+        {
+            return _selection?.EndKey(units.EnumConvert(MsWord.WdUnits.wdStory), extend.EnumConvert(MsWord.WdMovementType.wdMove)) ?? 0;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+    public int HomeKey(WdUnits units = WdUnits.wdWord, WdMovementType extend = WdMovementType.wdMove)
+    {
+        try
+        {
+            return _selection?.HomeKey(units.EnumConvert(MsWord.WdUnits.wdStory), extend.EnumConvert(MsWord.WdMovementType.wdMove)) ?? 0;
+        }
+        catch (Exception ex)
+        {
+            log.Warn($"Failed to move to home key: {ex.Message}");
+            throw new InvalidOperationException("Failed to move to home key.", ex);
         }
     }
 
@@ -880,11 +906,37 @@ internal class WordSelection : IWordSelection
         }
     }
 
+    public void WholeStory()
+    {
+        try
+        {
+            _selection?.WholeStory();
+        }
+        catch (Exception ex)
+        {
+            log.Warn($"Failed to select whole story: {ex.Message}");
+            throw new InvalidOperationException("Failed to select whole story.", ex);
+        }
+    }
+
     public void Collapse()
     {
         try
         {
             _selection?.Collapse();
+        }
+        catch (Exception ex)
+        {
+            log.Warn($"Failed to collapse selection: {ex.Message}");
+            throw new InvalidOperationException("Failed to collapse selection.", ex);
+        }
+    }
+
+    public void Collapse(WdCollapseDirection collapseDirection)
+    {
+        try
+        {
+            _selection?.Collapse(collapseDirection.EnumConvert(WdCollapseDirection.wdCollapseEnd));
         }
         catch (Exception ex)
         {

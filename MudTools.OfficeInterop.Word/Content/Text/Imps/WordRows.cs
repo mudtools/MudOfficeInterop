@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using Microsoft.Office.Interop.Word;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -33,10 +35,160 @@ internal class WordRows : IWordRows
     public int Count => _rows?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordRow First => _rows?.Count > 0 ? new WordRow(_rows[1]) : null;
+    public IWordRow? First => _rows != null && _rows.Count > 0 ? new WordRow(_rows.First) : null;
 
     /// <inheritdoc/>
-    public IWordRow Last => _rows?.Count > 0 ? new WordRow(_rows[_rows.Count]) : null;
+    public IWordRow? Last => _rows != null && _rows.Count > 0 ? new WordRow(_rows.Last) : null;
+
+    public IWordBorders? Borders => _rows != null ? new WordBorders(_rows.Borders) : null;
+
+    public IWordShading? Shading => _rows != null ? new WordShading(_rows.Shading) : null;
+
+    public WdRowAlignment Alignment
+    {
+        get
+        {
+            if (_rows == null) return WdRowAlignment.wdAlignRowLeft;
+            return _rows.Alignment.EnumConvert(WdRowAlignment.wdAlignRowLeft);
+        }
+        set
+        {
+            if (_rows != null)
+            {
+                _rows.Alignment = value.EnumConvert(MsWord.WdRowAlignment.wdAlignRowLeft);
+            }
+        }
+    }
+
+    public WdRowHeightRule HeightRule
+    {
+        get
+        {
+            if (_rows == null) return WdRowHeightRule.wdRowHeightAuto;
+            return _rows.HeightRule.EnumConvert(WdRowHeightRule.wdRowHeightAuto);
+        }
+        set
+        {
+            if (_rows != null)
+            {
+                _rows.HeightRule = value.EnumConvert(MsWord.WdRowHeightRule.wdRowHeightAuto);
+            }
+        }
+    }
+
+    public WdRelativeHorizontalPosition RelativeHorizontalPosition
+    {
+        get
+        {
+            if (_rows == null) return WdRelativeHorizontalPosition.wdRelativeHorizontalPositionMargin;
+            return _rows.RelativeHorizontalPosition.EnumConvert(WdRelativeHorizontalPosition.wdRelativeHorizontalPositionMargin);
+        }
+        set
+        {
+            if (_rows != null)
+            {
+                _rows.RelativeHorizontalPosition = value.EnumConvert(MsWord.WdRelativeHorizontalPosition.wdRelativeHorizontalPositionMargin);
+            }
+        }
+    }
+
+    public WdRelativeVerticalPosition RelativeVerticalPosition
+    {
+        get
+        {
+            if (_rows == null) return WdRelativeVerticalPosition.wdRelativeVerticalPositionMargin;
+            return _rows.RelativeVerticalPosition.EnumConvert(WdRelativeVerticalPosition.wdRelativeVerticalPositionMargin);
+        }
+        set
+        {
+            if (_rows != null)
+                _rows.RelativeVerticalPosition = value.EnumConvert(MsWord.WdRelativeVerticalPosition.wdRelativeVerticalPositionMargin);
+        }
+    }
+
+    public WdTableDirection TableDirection
+    {
+        get
+        {
+            if (_rows == null) return WdTableDirection.wdTableDirectionLtr;
+            return _rows.TableDirection.EnumConvert(WdTableDirection.wdTableDirectionLtr);
+        }
+        set
+        {
+            if (_rows != null)
+                _rows.TableDirection = value.EnumConvert(MsWord.WdTableDirection.wdTableDirectionLtr);
+        }
+    }
+
+    public float Height
+    {
+        get
+        {
+            if (_rows == null) return 0f;
+            return _rows.Height;
+        }
+        set
+        {
+            if (_rows != null)
+                _rows.Height = value;
+        }
+    }
+
+    public float SpaceBetweenColumns
+    {
+        get
+        {
+            if (_rows == null) return 0f;
+            return _rows.SpaceBetweenColumns;
+        }
+        set
+        {
+            if (_rows != null)
+                _rows.SpaceBetweenColumns = value;
+        }
+    }
+
+    public int HeadingFormat
+    {
+        get
+        {
+            if (_rows == null) return 0;
+            return _rows.HeadingFormat;
+        }
+        set
+        {
+            if (_rows != null)
+                _rows.HeadingFormat = value;
+        }
+    }
+
+    public int AllowBreakAcrossPages
+    {
+        get
+        {
+            if (_rows == null) return 0;
+            return _rows.AllowBreakAcrossPages;
+        }
+        set
+        {
+            if (_rows != null)
+                _rows.AllowBreakAcrossPages = value;
+        }
+    }
+
+    public float LeftIndent
+    {
+        get
+        {
+            if (_rows == null) return 0F;
+            return _rows.LeftIndent;
+        }
+        set
+        {
+            if (_rows != null)
+                _rows.LeftIndent = value;
+        }
+    }
 
     #endregion
 
@@ -64,6 +216,20 @@ internal class WordRows : IWordRows
     #endregion
 
     #region 方法实现
+
+    public void SetLeftIndent(float leftIndent, WdRulerStyle rulerStyle)
+    {
+        if (_rows == null) return;
+
+        try
+        {
+            _rows.SetLeftIndent(leftIndent, rulerStyle.EnumConvert(MsWord.WdRulerStyle.wdAdjustNone));
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法添加行。", ex);
+        }
+    }
 
     /// <inheritdoc/>
     public IWordRow Add(object beforeRow = null)

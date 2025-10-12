@@ -2,6 +2,8 @@
 	<PropertyGroup>
 		<TargetFrameworks>net462;netstandard2.0;net6.0-windows;net8-windows</TargetFrameworks>
 		<Version>1.2.0</Version>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -25,6 +27,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="3.2.0" />
+   		<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.9" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<PackageReference Include="System.Drawing.Common" Version="4.7.3" />

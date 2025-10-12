@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using Microsoft.Office.Interop.Word;
+
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
@@ -35,12 +37,38 @@ public interface IWordRows : IEnumerable<IWordRow>, IDisposable
     /// <summary>
     /// 获取第一行。
     /// </summary>
-    IWordRow First { get; }
+    IWordRow? First { get; }
 
     /// <summary>
     /// 获取最后一行。
     /// </summary>
-    IWordRow Last { get; }
+    IWordRow? Last { get; }
+
+    IWordBorders? Borders { get; }
+
+    IWordShading? Shading { get; }
+
+    WdRowAlignment Alignment { get; set; }
+
+    WdRowHeightRule HeightRule { get; set; }
+
+    WdTableDirection TableDirection { get; set; }
+
+    WdRelativeVerticalPosition RelativeVerticalPosition { get; set; }
+
+    WdRelativeHorizontalPosition RelativeHorizontalPosition { get; set; }
+
+    float Height { get; set; }
+
+    float SpaceBetweenColumns { get; set; }
+
+    int HeadingFormat { get; set; }
+
+    int AllowBreakAcrossPages { get; set; }
+
+    float LeftIndent { get; set; }
+
+    void SetLeftIndent(float leftIndent, WdRulerStyle rulerStyle);
 
     /// <summary>
     /// 添加新的行。
