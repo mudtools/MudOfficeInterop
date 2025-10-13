@@ -26,7 +26,7 @@ public interface IWordFind : IDisposable
     /// <summary>
     /// 获取或设置查找文本
     /// </summary>
-    string FindText { get; set; }
+    string Text { get; set; }
 
     /// <summary>
     /// 获取或设置替换文本
@@ -117,6 +117,8 @@ public interface IWordFind : IDisposable
     /// 获取是否找到匹配项
     /// </summary>
     bool Found { get; }
+
+    bool MatchKashida { get; set; }
 
     /// <summary>
     /// 获取框架对象

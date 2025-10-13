@@ -7,12 +7,7 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DocumentAutomationProcessingSample
 {
@@ -109,7 +104,7 @@ namespace DocumentAutomationProcessingSample
             var outputFilePath = Path.Combine(outputDirectory, $"{fileName}_processed.docx");
 
             // 保存处理后的文档
-            document.SaveAs2(outputFilePath);
+            document.SaveAs(outputFilePath);
         }
 
         /// <summary>

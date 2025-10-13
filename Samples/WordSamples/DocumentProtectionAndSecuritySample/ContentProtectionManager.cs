@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DocumentProtectionAndSecuritySample
 {
@@ -36,10 +38,10 @@ namespace DocumentProtectionAndSecuritySample
             {
                 // 添加书签
                 var bookmark = _document.Bookmarks.Add(bookmarkName, range);
-                
+
                 // 为书签内容添加编辑权限
                 bookmark.Range.Editors.Add(editorType);
-                
+
                 Console.WriteLine($"书签保护已添加: {bookmarkName}");
                 return true;
             }
@@ -60,10 +62,10 @@ namespace DocumentProtectionAndSecuritySample
         /// <param name="isReadOnly">是否只读</param>
         /// <returns>表单字段对象</returns>
         public IWordFormField AddFormFieldProtection(
-            IWordRange range, 
-            string fieldName, 
-            WdFieldType fieldType, 
-            string defaultValue = "", 
+            IWordRange range,
+            string fieldName,
+            WdFieldType fieldType,
+            string defaultValue = "",
             bool isReadOnly = false)
         {
             try
@@ -71,7 +73,7 @@ namespace DocumentProtectionAndSecuritySample
                 // 添加表单字段
                 var formField = range.FormFields.Add(range, fieldType);
                 formField.Name = fieldName;
-                
+
                 switch (fieldType)
                 {
                     case WdFieldType.wdFieldFormTextInput:
@@ -81,16 +83,16 @@ namespace DocumentProtectionAndSecuritySample
                             formField.TextInput.EditType(WdTextInputType.wdRegularText, defaultValue, true);
                         }
                         break;
-                        
+
                     case WdFieldType.wdFieldFormCheckBox:
                         formField.CheckBox.Default = !string.IsNullOrEmpty(defaultValue) && defaultValue.ToLower() == "true";
                         break;
-                        
+
                     case WdFieldType.wdFieldFormDropDown:
                         // 下拉字段需要额外设置选项
                         break;
                 }
-                
+
                 Console.WriteLine($"表单字段保护已添加: {fieldName}");
                 return formField;
             }
@@ -113,11 +115,11 @@ namespace DocumentProtectionAndSecuritySample
             {
                 // 添加内容控件
                 var contentControl = range.ContentControls.Add(protectionType);
-                
+
                 // 设置保护属性
                 contentControl.LockContentControl = true;
                 contentControl.LockContents = true;
-                
+
                 Console.WriteLine($"范围保护已添加: {protectionType}");
                 return true;
             }
@@ -140,7 +142,7 @@ namespace DocumentProtectionAndSecuritySample
             {
                 // 清空文档内容
                 _document.Range().Text = "";
-                
+
                 // 添加标题
                 var titleRange = _document.Range();
                 titleRange.Text = $"{title}\n";
@@ -149,35 +151,35 @@ namespace DocumentProtectionAndSecuritySample
                 titleRange.Font.Bold = 1;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
-                
+
                 // 添加表单字段
                 var contentRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
-                
+
                 foreach (var field in formFields)
                 {
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     // 添加字段标签
                     contentRange.Text = $"{field.Label}：";
                     contentRange.Font.Bold = 1;
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     // 添加字段占位符
                     switch (field.FieldType)
                     {
                         case WdFieldType.wdFieldFormTextInput:
                             contentRange.Text = "________________________\n";
                             break;
-                            
+
                         case WdFieldType.wdFieldFormCheckBox:
                             contentRange.Text = "[  ] 是    [  ] 否\n";
                             break;
                     }
-                    
+
                     contentRange.Font.Bold = 0;
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 }
-                
+
                 Console.WriteLine("受保护的表单文档已创建");
                 return true;
             }
@@ -199,31 +201,31 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
-                
+
                 // 添加机密内容标记
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = "\n【机密内容开始】\n";
                 range.Font.Bold = 1;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
-                
+
                 // 添加机密内容
                 range.Text = $"{content}\n";
                 range.Font.Bold = 0;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
-                
+
                 // 添加结束标记
                 range.Text = "【机密内容结束】\n";
                 range.Font.Bold = 1;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
-                
+
                 // 为机密内容添加书签保护
                 var confidentialRange = _document.Range(
                     range.Start - content.Length - 20, // 包含标记和内容
                     range.Start - 10 // 不包含结束标记
                 );
-                
+
                 var bookmark = _document.Bookmarks.Add("ConfidentialSection", confidentialRange);
-                
+
                 // 设置编辑权限
                 if (allowedEditors != null && allowedEditors.Any())
                 {
@@ -237,7 +239,7 @@ namespace DocumentProtectionAndSecuritySample
                     // 默认只允许所有者编辑
                     bookmark.Range.Editors.Add(WdEditorType.wdEditorOwners);
                 }
-                
+
                 Console.WriteLine("机密内容区域已创建");
                 return true;
             }
@@ -260,15 +262,15 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
-                
+
                 // 添加内容
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = $"{content}\n";
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
-                
+
                 // 添加可编辑区域
                 var editableRange = _document.EditableRanges.Add(range);
-                
+
                 if (editorType == WdEditorType.wdEditorEveryone)
                 {
                     editableRange.Editors.Add(WdEditorType.wdEditorEveryone);
@@ -277,7 +279,7 @@ namespace DocumentProtectionAndSecuritySample
                 {
                     editableRange.Editors.Add(editorName);
                 }
-                
+
                 Console.WriteLine("可编辑区域已创建");
                 return true;
             }

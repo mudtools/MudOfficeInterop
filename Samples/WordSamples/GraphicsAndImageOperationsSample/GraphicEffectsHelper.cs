@@ -131,10 +131,10 @@ namespace GraphicsAndImageOperationsSample
                         shape.Shadow.Style = MsoShadowStyle.msoShadowStyleInnerShadow;
                         break;
                     case ShadowEffectType.PerspectiveOuterShadow:
-                        shape.Shadow.Style = MsoShadowStyle.msoShadowStylePerspectiveOuterShadow;
+                        shape.Shadow.Style = MsoShadowStyle.msoShadowStyleOuterShadow;
                         break;
                     case ShadowEffectType.PerspectiveInnerShadow:
-                        shape.Shadow.Style = MsoShadowStyle.msoShadowStylePerspectiveInnerShadow;
+                        shape.Shadow.Style = MsoShadowStyle.msoShadowStyleInnerShadow;
                         break;
                 }
 
@@ -209,7 +209,7 @@ namespace GraphicsAndImageOperationsSample
             {
                 if (radius <= 0)
                 {
-                    shape.SoftEdge.Type = MsoSoftEdgeType.msoSoftEdgeTypeOff;
+                    shape.SoftEdge.Type = MsoSoftEdgeType.msoSoftEdgeTypeNone;
                 }
                 else if (radius <= 2)
                 {
@@ -286,15 +286,15 @@ namespace GraphicsAndImageOperationsSample
 
             try
             {
-                shape.ThreeD.Visible = MsoTriState.msoTrue;
+                shape.ThreeD.Visible = true;
                 shape.ThreeD.RotationX = rotationX;
                 shape.ThreeD.RotationY = rotationY;
                 shape.ThreeD.RotationZ = rotationZ;
 
                 if (perspective > 0)
                 {
-                    shape.ThreeD.Perspective = MsoTriState.msoTrue;
-                    shape.ThreeD.Perspective = MsoTriState.msoTrue;
+                    shape.ThreeD.Perspective = true;
+                    shape.ThreeD.Perspective = true;
                 }
             }
             catch (Exception ex)
@@ -324,7 +324,7 @@ namespace GraphicsAndImageOperationsSample
 
             try
             {
-                shape.ThreeD.Visible = MsoTriState.msoTrue;
+                shape.ThreeD.Visible = true;
                 shape.ThreeD.Depth = depth;
 
                 // 设置挤出颜色
@@ -429,7 +429,7 @@ namespace GraphicsAndImageOperationsSample
                 // 移除阴影效果
                 if (shape?.Shadow != null)
                 {
-                    shape.Shadow.Visible = MsoTriState.msoFalse;
+                    shape.Shadow.Visible = false;
                 }
 
                 // 移除发光效果
@@ -441,7 +441,7 @@ namespace GraphicsAndImageOperationsSample
                 // 移除柔化边缘效果
                 if (shape?.SoftEdge != null)
                 {
-                    shape.SoftEdge.Type = MsoSoftEdgeType.msoSoftEdgeTypeOff;
+                    shape.SoftEdge.Type = MsoSoftEdgeType.msoSoftEdgeTypeNone;
                 }
 
                 // 移除反射效果
@@ -453,7 +453,7 @@ namespace GraphicsAndImageOperationsSample
                 // 移除三维效果
                 if (shape?.ThreeD != null)
                 {
-                    shape.ThreeD.Visible = MsoTriState.msoFalse;
+                    shape.ThreeD.Visible = false;
                 }
             }
             catch (Exception ex)

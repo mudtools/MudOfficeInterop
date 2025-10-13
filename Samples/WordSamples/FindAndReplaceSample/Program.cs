@@ -1,5 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace FindAndReplaceSample
 {
@@ -116,18 +123,18 @@ namespace FindAndReplaceSample
 
                 // 执行替换（只替换第一个匹配项）
                 find.Execute(
-                    FindText: "原文本",
-                    ReplaceWith: "新文本",
-                    Replace: WdReplace.wdReplaceOne
+                    findText: "原文本",
+                    replaceWith: "新文本",
+                    replace: WdReplace.wdReplaceOne
                 );
 
                 Console.WriteLine("执行单次替换");
 
                 // 执行全部替换
                 find.Execute(
-                    FindText: "原文本",
-                    ReplaceWith: "新文本",
-                    Replace: WdReplace.wdReplaceAll
+                    findText: "原文本",
+                    replaceWith: "新文本",
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 Console.WriteLine("执行全部替换");
@@ -156,16 +163,16 @@ namespace FindAndReplaceSample
 
                 // 设置粗体文本
                 var boldRange = document.Range(6, 10); // "粗体文本"
-                boldRange.Font.Bold = 1;
+                boldRange.Font.Bold = true;
 
                 // 设置斜体文本
                 var italicRange = document.Range(11, 15); // "斜体文本"
-                italicRange.Font.Italic = 1;
+                italicRange.Font.Italic = true;
 
                 // 查找粗体文本
                 var find = document.Range().Find;
                 find.ClearFormatting();
-                find.Font.Bold = 1; // 查找粗体文本
+                find.Font.Bold = true; // 查找粗体文本
                 find.Text = ""; // 文本可以为空，只基于格式查找
 
                 // 执行查找
@@ -177,14 +184,14 @@ namespace FindAndReplaceSample
 
                 // 替换粗体格式为下划线格式
                 find.ClearFormatting();
-                find.Font.Bold = 1;
+                find.Font.Bold = true;
                 find.Replacement.ClearFormatting();
                 find.Replacement.Font.Underline = WdUnderline.wdUnderlineSingle;
 
                 find.Execute(
-                    FindText: "",
-                    ReplaceWith: "",
-                    Replace: WdReplace.wdReplaceAll
+                    findText: "",
+                    replaceWith: "",
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 Console.WriteLine("将粗体格式替换为下划线格式");
@@ -318,30 +325,30 @@ namespace FindAndReplaceSample
 
                 // 替换 "Mr." 为 "先生"
                 find.Execute(
-                    FindText: "Mr.",
-                    ReplaceWith: "先生",
-                    Replace: WdReplace.wdReplaceAll
+                    findText: "Mr.",
+                    replaceWith: "先生",
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 // 替换 "Mrs." 为 "夫人"
                 find.Execute(
-                    FindText: "Mrs.",
-                    ReplaceWith: "夫人",
-                    Replace: WdReplace.wdReplaceAll
+                    findText: "Mrs.",
+                    replaceWith: "夫人",
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 // 替换 "Dr." 为 "博士"
                 find.Execute(
-                    FindText: "Dr.",
-                    ReplaceWith: "博士",
-                    Replace: WdReplace.wdReplaceAll
+                    findText: "Dr.",
+                    replaceWith: "博士",
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 // 替换 "Ms." 为 "女士"
                 find.Execute(
-                    FindText: "Ms.",
-                    ReplaceWith: "女士",
-                    Replace: WdReplace.wdReplaceAll
+                    findText: "Ms.",
+                    replaceWith: "女士",
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 Console.WriteLine("称谓替换完成");
@@ -390,7 +397,7 @@ namespace FindAndReplaceSample
 
                 // 保存清理后的文档
                 string filePath = Path.Combine(Path.GetTempPath(), "CleanedDocument.docx");
-                document.SaveAs2(filePath);
+                document.SaveAs(filePath);
 
                 Console.WriteLine($"文档清理完成: {filePath}");
             }
@@ -410,16 +417,16 @@ namespace FindAndReplaceSample
 
             // 替换多个空格为单个空格
             find.Execute(
-                FindText: "  ", // 两个空格
-                ReplaceWith: " ", // 一个空格
-                Replace: WdReplace.wdReplaceAll
+                findText: "  ", // 两个空格
+                replaceWith: " ", // 一个空格
+                replace: WdReplace.wdReplaceAll
             );
 
             // 清理行首空格
             find.Execute(
-                FindText: "^p ", // 段落标记后跟空格
-                ReplaceWith: "^p", // 仅段落标记
-                Replace: WdReplace.wdReplaceAll
+                findText: "^p ", // 段落标记后跟空格
+                replaceWith: "^p", // 仅段落标记
+                replace: WdReplace.wdReplaceAll
             );
 
             Console.WriteLine("多余空格清理完成");
@@ -444,9 +451,9 @@ namespace FindAndReplaceSample
             foreach (var pair in companyReplacements)
             {
                 find.Execute(
-                    FindText: pair.Key,
-                    ReplaceWith: pair.Value,
-                    Replace: WdReplace.wdReplaceAll
+                    findText: pair.Key,
+                    replaceWith: pair.Value,
+                    replace: WdReplace.wdReplaceAll
                 );
             }
 
@@ -463,16 +470,16 @@ namespace FindAndReplaceSample
 
             // 删除连续的空行（保留一个）
             find.Execute(
-                FindText: "^p^p^p", // 三个连续段落标记
-                ReplaceWith: "^p^p", // 两个段落标记
-                Replace: WdReplace.wdReplaceAll
+                findText: "^p^p^p", // 三个连续段落标记
+                replaceWith: "^p^p", // 两个段落标记
+                replace: WdReplace.wdReplaceAll
             );
 
             // 再次执行以处理更多连续空行
             find.Execute(
-                FindText: "^p^p^p",
-                ReplaceWith: "^p^p",
-                Replace: WdReplace.wdReplaceAll
+                findText: "^p^p^p",
+                replaceWith: "^p^p",
+                replace: WdReplace.wdReplaceAll
             );
 
             Console.WriteLine("空白行清理完成");
@@ -491,16 +498,16 @@ namespace FindAndReplaceSample
 
             // 查找 YYYY/MM/DD 格式并替换为 YYYY-MM-DD
             find.Execute(
-                FindText: "([0-9]{4})/([0-9]{2})/([0-9]{2})",
-                ReplaceWith: "\\1-\\2-\\3",
-                Replace: WdReplace.wdReplaceAll
+                findText: "([0-9]{4})/([0-9]{2})/([0-9]{2})",
+                replaceWith: "\\1-\\2-\\3",
+                replace: WdReplace.wdReplaceAll
             );
 
             // 查找 YYYY.MM.DD 格式并替换为 YYYY-MM-DD
             find.Execute(
-                FindText: "([0-9]{4})\\.([0-9]{2})\\.([0-9]{2})",
-                ReplaceWith: "\\1-\\2-\\3",
-                Replace: WdReplace.wdReplaceAll
+                findText: "([0-9]{4})\\.([0-9]{2})\\.([0-9]{2})",
+                replaceWith: "\\1-\\2-\\3",
+                replace: WdReplace.wdReplaceAll
             );
 
             find.MatchWildcards = false;
@@ -581,7 +588,7 @@ namespace FindAndReplaceSample
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "CompleteExampleWithHelpers.docx");
-                document.SaveAs2(filePath);
+                document.SaveAs(filePath);
 
                 Console.WriteLine($"使用辅助类创建的完整示例文档已保存: {filePath}");
             }

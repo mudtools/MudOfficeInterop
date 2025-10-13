@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DocumentProtectionAndSecuritySample
 {
@@ -95,9 +97,9 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 _document.Protect(
-                    Type: protectionType,
-                    NoReset: noReset,
-                    Password: password
+                    protectionType: protectionType,
+                    noReset: noReset,
+                    password: password
                 );
 
                 Console.WriteLine($"文档保护已应用: {protectionType}");
@@ -119,7 +121,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                _document.Unprotect(Password: password);
+                _document.Unprotect(password: password);
                 Console.WriteLine("文档保护已移除");
                 return true;
             }
@@ -142,8 +144,8 @@ namespace DocumentProtectionAndSecuritySample
             {
                 status.IsProtected = _document.ProtectionType != WdProtectionType.wdNoProtection;
                 status.ProtectionType = _document.ProtectionType;
-                status.HasOpenPassword = !string.IsNullOrEmpty(_document.Password);
-                status.HasModifyPassword = !string.IsNullOrEmpty(_document.WritePassword);
+                status.HasOpenPassword = _document.HasPassword;
+                status.HasModifyPassword = _document.HasPassword;
                 status.EditableRangesCount = _document.EditableRanges.Count;
                 status.BookmarksCount = _document.Bookmarks.Count;
                 status.SignaturesCount = _document.Signatures.Count;
@@ -169,7 +171,7 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 var editableRange = _document.EditableRanges.Add(range);
-                
+
                 if (editorType == WdEditorType.wdEditorEveryone)
                 {
                     editableRange.Editors.Add(WdEditorType.wdEditorEveryone);
@@ -411,8 +413,8 @@ namespace DocumentProtectionAndSecuritySample
         /// <returns>强度报告</returns>
         public string GenerateReport()
         {
-            var recommendations = Recommendations.Any() ? 
-                string.Join("\n  - ", Recommendations) : 
+            var recommendations = Recommendations.Any() ?
+                string.Join("\n  - ", Recommendations) :
                 "密码强度良好";
 
             return $"密码强度评估报告:\n" +

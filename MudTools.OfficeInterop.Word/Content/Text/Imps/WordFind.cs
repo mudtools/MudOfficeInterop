@@ -21,7 +21,7 @@ internal class WordFind : IWordFind
     /// <inheritdoc/>
     public object? Parent => _find?.Parent;
 
-    public string FindText
+    public string Text
     {
         get => _find != null ? _find.Text : "";
         set
@@ -168,6 +168,16 @@ internal class WordFind : IWordFind
         {
             if (_find != null)
                 _find.MatchFuzzy = value;
+        }
+    }
+
+    public bool MatchKashida
+    {
+        get => _find != null ? _find.MatchKashida : false;
+        set
+        {
+            if (_find != null)
+                _find.MatchKashida = value;
         }
     }
 

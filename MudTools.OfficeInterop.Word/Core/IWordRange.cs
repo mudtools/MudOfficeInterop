@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -238,6 +238,34 @@ public interface IWordRange : IDisposable
     /// <param name="start">起始位置。</param>
     /// <param name="end">结束位置。</param>
     void SetRange(int start, int end);
+
+    /// <summary>
+    /// 在当前范围之后插入指定文本。
+    /// </summary>
+    /// <param name="text">要插入的文本内容。</param>
+    void InsertAfter(string text);
+
+    /// <summary>
+    /// 在当前范围之前插入指定文本。
+    /// </summary>
+    /// <param name="text">要插入的文本内容。</param>
+    void InsertBefore(string text);
+
+    /// <summary>
+    /// 将范围折叠到指定方向。
+    /// </summary>
+    /// <param name="Direction">折叠方向，wdCollapseStart表示折叠到范围开始位置，wdCollapseEnd表示折叠到范围结束位置。</param>
+    void Collapse(WdCollapseDirection Direction);
+
+    /// <summary>
+    /// 将范围折叠到默认方向（开始位置）。
+    /// </summary>
+    void Collapse();
+
+    /// <summary>
+    /// 将当前范围的内容剪切到剪贴板。
+    /// </summary>
+    void Cut();
 
     /// <summary>
     /// 将指定范围的内容复制到剪贴板。

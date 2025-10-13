@@ -52,6 +52,19 @@ internal class WordDocument : IWordDocument
 
     public string FullName => _document.FullName;
 
+    public string EncryptionProvider
+    {
+        get
+        {
+            return _document?.EncryptionProvider ?? string.Empty;
+        }
+        set
+        {
+            if (_document != null)
+                _document.EncryptionProvider = value;
+        }
+    }
+
     public string Title
     {
         get
@@ -304,6 +317,7 @@ internal class WordDocument : IWordDocument
                 _document.HyphenationZone = value != null ? value.Value : 0;
         }
     }
+
 
     public int? SummaryLength
     {
@@ -630,6 +644,11 @@ internal class WordDocument : IWordDocument
         set => _document.Password = value;
     }
 
+    public bool HasPassword
+    {
+        get => _document.HasPassword;
+    }
+
     public string WritePassword
     {
         set => _document.WritePassword = value;
@@ -770,18 +789,14 @@ internal class WordDocument : IWordDocument
             throw new InvalidOperationException("Failed to print document.", ex);
         }
     }
-    public void Protect(WdProtectionType protectionType, string password = null)
+    public void Protect(WdProtectionType protectionType, string? password = null, bool? noReset = null)
     {
         try
         {
-            MsWord.WdProtectionType protectionTypeObj = (MsWord.WdProtectionType)protectionType;
-            object noResetObj = missing;
-            object passwordObj = string.IsNullOrEmpty(password) ? missing : (object)password;
-
             _document.Protect(
-                protectionTypeObj,
-                ref noResetObj,
-                ref passwordObj);
+                protectionType.EnumConvert(MsWord.WdProtectionType.wdNoProtection),
+                noReset.ComArgsVal(),
+                password.ComArgsVal());
         }
         catch (Exception ex)
         {

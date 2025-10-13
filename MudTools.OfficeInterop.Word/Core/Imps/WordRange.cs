@@ -516,6 +516,12 @@ internal class WordRange : IWordRange
     }
 
     /// <inheritdoc/>
+    public void Cut()
+    {
+        _range?.Cut();
+    }
+
+    /// <inheritdoc/>
     public void Copy()
     {
         _range?.Copy();
@@ -531,6 +537,27 @@ internal class WordRange : IWordRange
     public void Delete()
     {
         _range?.Delete();
+    }
+
+    public void Collapse(WdCollapseDirection Direction)
+    {
+        _range?.Collapse(Direction.EnumConvert(WdCollapseDirection.wdCollapseStart);
+    }
+
+    public void Collapse()
+    {
+        _range?.Collapse();
+    }
+
+
+    public void InsertAfter(string text)
+    {
+        _range?.InsertAfter(text ?? string.Empty);
+    }
+
+    public void InsertBefore(string text)
+    {
+        _range?.InsertBefore(text ?? string.Empty);
     }
 
     /// <inheritdoc/>

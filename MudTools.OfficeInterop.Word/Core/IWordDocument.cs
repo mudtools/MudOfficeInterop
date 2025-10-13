@@ -30,6 +30,8 @@ public interface IWordDocument : IDisposable
     /// </summary>
     string FullName { get; }
 
+    string EncryptionProvider { get; set; }
+
     /// <summary>
     /// 获取或设置文档标题
     /// </summary>
@@ -365,6 +367,8 @@ public interface IWordDocument : IDisposable
     /// </summary>
     string Password { set; }
 
+    bool HasPassword { get; }
+
     /// <summary>
     /// 获取或设置文档写保护密码
     /// </summary>
@@ -408,7 +412,8 @@ public interface IWordDocument : IDisposable
     /// </summary>
     /// <param name="protectionType">保护类型</param>
     /// <param name="password">密码（可选）</param>
-    void Protect(WdProtectionType protectionType, string password = null);
+    /// <param name="noReset">是否不重置现有保护</param>
+    void Protect(WdProtectionType protectionType, string? password = null, bool? noReset = null);
 
     /// <summary>
     /// 取消文档保护

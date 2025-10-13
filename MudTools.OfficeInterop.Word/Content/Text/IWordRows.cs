@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -44,30 +44,71 @@ public interface IWordRows : IEnumerable<IWordRow>, IDisposable
     /// </summary>
     IWordRow? Last { get; }
 
+    /// <summary>
+    /// 获取或设置行的边框集合。
+    /// </summary>
     IWordBorders? Borders { get; }
 
+    /// <summary>
+    /// 获取或设置行的底纹格式。
+    /// </summary>
     IWordShading? Shading { get; }
 
+    /// <summary>
+    /// 获取或设置行的对齐方式。
+    /// </summary>
     WdRowAlignment Alignment { get; set; }
 
+    /// <summary>
+    /// 获取或设置行高规则，确定行高是固定值、最小值还是自动调整。
+    /// </summary>
     WdRowHeightRule HeightRule { get; set; }
 
+    /// <summary>
+    /// 获取或设置表格的方向（从左到右或从右到左）。
+    /// </summary>
     WdTableDirection TableDirection { get; set; }
 
+    /// <summary>
+    /// 获取或设置行相对于垂直位置的锚定点。
+    /// </summary>
     WdRelativeVerticalPosition RelativeVerticalPosition { get; set; }
 
+    /// <summary>
+    /// 获取或设置行相对于水平位置的锚定点。
+    /// </summary>
     WdRelativeHorizontalPosition RelativeHorizontalPosition { get; set; }
 
+    /// <summary>
+    /// 获取或设置行的高度。
+    /// </summary>
     float Height { get; set; }
 
+    /// <summary>
+    /// 获取或设置列之间的间距。
+    /// </summary>
     float SpaceBetweenColumns { get; set; }
 
+    /// <summary>
+    /// 获取或设置标题格式。如果为 1，则该行将成为表格的标题行，会在跨页时重复显示；如果为 0，则不是标题行。
+    /// </summary>
     int HeadingFormat { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否允许行跨页断开显示。如果为 1，则允许行跨页断开；如果为 0，则不允许行跨页断开。
+    /// </summary>
     int AllowBreakAcrossPages { get; set; }
 
+    /// <summary>
+    /// 获取或设置行的左缩进距离。
+    /// </summary>
     float LeftIndent { get; set; }
 
+    /// <summary>
+    /// 设置行的左缩进距离和标尺样式。
+    /// </summary>
+    /// <param name="leftIndent">左缩进的距离值。</param>
+    /// <param name="rulerStyle">应用于缩进的标尺样式。</param>
     void SetLeftIndent(float leftIndent, WdRulerStyle rulerStyle);
 
     /// <summary>

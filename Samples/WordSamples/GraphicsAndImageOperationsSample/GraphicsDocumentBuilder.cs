@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphicsAndImageOperationsSample
 {
@@ -45,7 +47,7 @@ namespace GraphicsAndImageOperationsSample
                 titleRange.Text = title + "\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 24;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
             }
@@ -67,7 +69,7 @@ namespace GraphicsAndImageOperationsSample
                 var sectionRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 sectionRange.Text = $"\n{title}\n";
                 sectionRange.Font.Name = "微软雅黑";
-                sectionRange.Font.Bold = 1;
+                sectionRange.Font.Bold = true;
                 sectionRange.Font.Size = level == 1 ? 18 : 14;
                 sectionRange.ParagraphFormat.SpaceAfter = 12;
             }
@@ -148,11 +150,11 @@ namespace GraphicsAndImageOperationsSample
                 _graphicsHelper.SetShapeBorder(triangle, WdColor.wdColorOrange, 1);
 
                 var arrow = _shapeManager.CreateArrow(100, 250, 200, 50, "箭头");
-                _graphicsHelper.SetShapeFillColor(arrow, WdColor.wdColorLightRed);
+                _graphicsHelper.SetShapeFillColor(arrow, WdColor.wdColorDarkRed);
                 _graphicsHelper.SetShapeBorder(arrow, WdColor.wdColorRed, 1);
 
                 var star = _shapeManager.CreateStar(350, 250, 100, 100, "星形");
-                _graphicsHelper.SetShapeFillColor(star, WdColor.wdColorLightPurple);
+                _graphicsHelper.SetShapeFillColor(star, WdColor.wdColorPink);
                 _graphicsHelper.SetShapeBorder(star, WdColor.wdColorViolet, 1);
 
                 var cloud = _shapeManager.CreateCloud(200, 350, 150, 100, "云朵");
@@ -225,7 +227,7 @@ namespace GraphicsAndImageOperationsSample
 
                 // 添加三维效果
                 var threeDShape = _shapeManager.CreateRectangle(300, 250, 150, 75, "三维效果");
-                _graphicsHelper.SetShapeFillColor(threeDShape, WdColor.wdColorLightRed);
+                _graphicsHelper.SetShapeFillColor(threeDShape, WdColor.wdColorDarkRed);
                 _effectsHelper.Apply3DFormatEffect(threeDShape, GraphicEffectsHelper.ThreeDEffectType.Simple);
 
                 AddParagraph("\n以上形状展示了不同的图形效果应用。", "宋体", 10, WdParagraphAlignment.wdAlignParagraphCenter);
@@ -276,7 +278,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                _document.SaveAs2(filePath);
+                _document.SaveAs(filePath);
                 Console.WriteLine($"文档已保存到: {filePath}");
             }
             catch (Exception ex)

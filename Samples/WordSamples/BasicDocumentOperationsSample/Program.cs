@@ -1,6 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using Word = Microsoft.Office.Interop.Word;
-using System.IO;
 
 namespace BasicDocumentOperationsSample
 {
@@ -46,7 +52,7 @@ namespace BasicDocumentOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                
+
                 // 设置应用程序窗口标题
                 app.Caption = "我的文档编辑器 - 基础属性示例";
                 Console.WriteLine($"设置窗口标题为: {app.Caption}");
@@ -88,7 +94,7 @@ namespace BasicDocumentOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                
+
                 // 获取文档集合
                 var documents = app.Documents;
                 Console.WriteLine($"初始文档数量: {documents.Count}");
@@ -107,13 +113,13 @@ namespace BasicDocumentOperationsSample
                 Console.WriteLine("所有文档列表:");
                 for (int i = 1; i <= documents.Count; i++)
                 {
-                    var doc = documents.Item(i);
+                    var doc = documents[i];
                     Console.WriteLine($"  文档 {i}: {doc.Name}");
                 }
 
                 // 保存第一个文档
                 string firstDocPath = Path.Combine(Path.GetTempPath(), "FirstDocument.docx");
-                newDoc.SaveAs2(firstDocPath);
+                newDoc.SaveAs(firstDocPath);
                 Console.WriteLine($"第一个文档已保存到: {firstDocPath}");
 
                 Console.WriteLine("文档集合管理操作完成");
@@ -132,7 +138,7 @@ namespace BasicDocumentOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                
+
                 // 创建多个文档
                 var doc1 = app.Documents.Add();
                 doc1.Range().Text = "文档1内容";
@@ -170,7 +176,7 @@ namespace BasicDocumentOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                
+
                 // 设置显示警告级别
                 app.DisplayAlerts = WdAlertLevel.wdAlertsNone;
                 Console.WriteLine("已禁用所有警告对话框");
@@ -229,20 +235,20 @@ namespace BasicDocumentOperationsSample
 
                 // 保存文档到不同格式
                 string docxPath = Path.Combine(tempDirectory, "SaveExample.docx");
-                document.SaveAs2(docxPath);
+                document.SaveAs(docxPath);
                 Console.WriteLine($"文档已保存为DOCX格式: {docxPath}");
 
                 string docPath = Path.Combine(tempDirectory, "SaveExample.doc");
-                document.SaveAs2(docPath, WdSaveFormat.wdFormatDocument);
+                document.SaveAs(docPath, WdSaveFormat.wdFormatDocument);
                 Console.WriteLine($"文档已保存为DOC格式: {docPath}");
 
                 string pdfPath = Path.Combine(tempDirectory, "SaveExample.pdf");
-                document.SaveAs2(pdfPath, WdSaveFormat.wdFormatPDF);
+                document.SaveAs(pdfPath, WdSaveFormat.wdFormatPDF);
                 Console.WriteLine($"文档已保存为PDF格式: {pdfPath}");
 
                 // 保存副本
                 string copyPath = Path.Combine(tempDirectory, "SaveCopyExample.docx");
-                document.SaveAs2(copyPath);
+                document.SaveAs(copyPath);
                 Console.WriteLine($"文档副本已保存: {copyPath}");
 
                 Console.WriteLine("文档保存和关闭操作完成");
@@ -312,7 +318,7 @@ namespace BasicDocumentOperationsSample
             // 保存文档
             string fileName = $"Document_{Guid.NewGuid()}.docx";
             string filePath = Path.Combine(Path.GetTempPath(), fileName);
-            document.SaveAs2(filePath);
+            document.SaveAs(filePath);
 
             return filePath;
         }
@@ -334,7 +340,7 @@ namespace BasicDocumentOperationsSample
             // 保存文档
             string fileName = $"DocumentFromTemplate_{Guid.NewGuid()}.docx";
             string filePath = Path.Combine(Path.GetTempPath(), fileName);
-            document.SaveAs2(filePath);
+            document.SaveAs(filePath);
 
             return filePath;
         }
@@ -379,7 +385,7 @@ namespace BasicDocumentOperationsSample
                 // 保存文档
                 string fileName = $"BatchDocument_{i}_{Guid.NewGuid()}.docx";
                 string filePath = Path.Combine(Path.GetTempPath(), fileName);
-                document.SaveAs2(filePath);
+                document.SaveAs(filePath);
 
                 documentPaths.Add(filePath);
             }

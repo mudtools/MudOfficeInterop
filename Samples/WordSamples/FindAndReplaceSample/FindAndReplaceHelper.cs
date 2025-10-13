@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindAndReplaceSample
 {
@@ -102,9 +104,9 @@ namespace FindAndReplaceSample
                 find.Replacement.Text = replaceWith;
 
                 bool replaced = find.Execute(
-                    FindText: findText,
-                    ReplaceWith: replaceWith,
-                    Replace: WdReplace.wdReplaceOne
+                    findText: findText,
+                    replaceWith: replaceWith,
+                    replace: WdReplace.wdReplaceOne
                 );
 
                 return replaced;
@@ -136,9 +138,9 @@ namespace FindAndReplaceSample
 
                 // 执行全部替换
                 find.Execute(
-                    FindText: findText,
-                    ReplaceWith: replaceWith,
-                    Replace: WdReplace.wdReplaceAll
+                    findText: findText,
+                    replaceWith: replaceWith,
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 // 估算替换次数（Word不直接返回替换次数）
@@ -167,10 +169,10 @@ namespace FindAndReplaceSample
                 find.ClearFormatting();
 
                 if (bold.HasValue)
-                    find.Font.Bold = bold.Value ? 1 : 0;
+                    find.Font.Bold = bold.Value;
 
                 if (italic.HasValue)
-                    find.Font.Italic = italic.Value ? 1 : 0;
+                    find.Font.Italic = italic.Value;
 
                 if (underline.HasValue)
                     find.Font.Underline = underline.Value;
@@ -204,28 +206,28 @@ namespace FindAndReplaceSample
 
                 // 设置查找格式
                 if (oldBold.HasValue)
-                    find.Font.Bold = oldBold.Value ? 1 : 0;
+                    find.Font.Bold = oldBold.Value;
 
                 if (oldItalic.HasValue)
-                    find.Font.Italic = oldItalic.Value ? 1 : 0;
+                    find.Font.Italic = oldItalic.Value;
 
                 // 设置替换格式
                 find.Replacement.ClearFormatting();
 
                 if (newBold.HasValue)
-                    find.Replacement.Font.Bold = newBold.Value ? 1 : 0;
+                    find.Replacement.Font.Bold = newBold.Value;
 
                 if (newItalic.HasValue)
-                    find.Replacement.Font.Italic = newItalic.Value ? 1 : 0;
+                    find.Replacement.Font.Italic = newItalic.Value;
 
                 find.Text = "";
                 find.Replacement.Text = "";
 
                 // 执行全部替换
                 find.Execute(
-                    FindText: "",
-                    ReplaceWith: "",
-                    Replace: WdReplace.wdReplaceAll
+                    findText: "",
+                    replaceWith: "",
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 return true;
@@ -280,9 +282,9 @@ namespace FindAndReplaceSample
 
                 // 执行全部替换
                 find.Execute(
-                    FindText: pattern,
-                    ReplaceWith: replaceWith,
-                    Replace: WdReplace.wdReplaceAll
+                    findText: pattern,
+                    replaceWith: replaceWith,
+                    replace: WdReplace.wdReplaceAll
                 );
 
                 return true;
