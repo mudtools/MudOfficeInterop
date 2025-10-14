@@ -1,9 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IntegrationWithWebApplicationsSample
 {
@@ -70,7 +73,7 @@ namespace IntegrationWithWebApplicationsSample
                     { "Department", "技术部" }
                 };
                 string templatePath = Path.Combine(tempDirectory, "Template.docx");
-                
+
                 // 创建一个简单的模板文档
                 using (var app = WordFactory.BlankWorkbook())
                 {
@@ -79,7 +82,7 @@ namespace IntegrationWithWebApplicationsSample
                                           "姓名: {Name}\n" +
                                           "职位: {Position}\n" +
                                           "部门: {Department}\n";
-                    document.SaveAs2(templatePath);
+                    document.SaveAs(templatePath);
                 }
 
                 string templateDocumentPath = documentService.CreateDocumentFromTemplateAsync(templatePath, templateData).Result;
@@ -139,7 +142,7 @@ namespace IntegrationWithWebApplicationsSample
                     document.Range().Text = "线程安全文档模板\n\n" +
                                           "内容: {Content}\n" +
                                           "创建时间: {CreateTime}\n";
-                    document.SaveAs2(templatePath);
+                    document.SaveAs(templatePath);
                 }
 
                 var templateData = new Dictionary<string, string>
@@ -229,7 +232,7 @@ namespace IntegrationWithWebApplicationsSample
                         document.Range().Text = "资源管理模板\n\n" +
                                               "姓名: {Name}\n" +
                                               "职位: {Position}\n";
-                        document.SaveAs2(templatePath);
+                        document.SaveAs(templatePath);
                     }
 
                     var templateData = new Dictionary<string, string>
@@ -247,7 +250,7 @@ namespace IntegrationWithWebApplicationsSample
                     {
                         document.Range().Text = "通过资源管理服务执行的操作\n\n" +
                                               "这是在操作中添加的内容。";
-                        document.Paragraphs[1].Range.Font.Bold = 1;
+                        document.Paragraphs[1].Range.Font.Bold = true;
                         document.Paragraphs[1].Range.Font.Size = 16;
                     });
                     Console.WriteLine("文档操作已执行");
@@ -339,7 +342,7 @@ namespace IntegrationWithWebApplicationsSample
                                           "日期: {{Date}}\n\n" +
                                           "{{Content}}\n\n" +
                                           "报告结束";
-                    document.SaveAs2(templatePath);
+                    document.SaveAs(templatePath);
                 }
 
                 var templateRequest = new DocumentRequest
@@ -439,7 +442,7 @@ namespace IntegrationWithWebApplicationsSample
                 // 2. 线程安全服务
                 Console.WriteLine("2. 线程安全服务");
                 var threadSafeService = new ThreadSafeWordService();
-                
+
                 // 创建模板
                 string templatePath = Path.Combine(tempDirectory, "CompleteExampleTemplate.docx");
                 using (var app = WordFactory.BlankWorkbook())
@@ -448,7 +451,7 @@ namespace IntegrationWithWebApplicationsSample
                     document.Range().Text = "完整示例模板\n\n" +
                                           "内容: {Content}\n" +
                                           "时间: {Time}\n";
-                    document.SaveAs2(templatePath);
+                    document.SaveAs(templatePath);
                 }
 
                 var templateData = new Dictionary<string, string>

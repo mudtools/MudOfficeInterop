@@ -367,6 +367,9 @@ public interface IWordDocument : IDisposable
     /// </summary>
     string Password { set; }
 
+    /// <summary>
+    /// 获取文档是否设置了密码保护
+    /// </summary>
     bool HasPassword { get; }
 
     /// <summary>
@@ -399,6 +402,12 @@ public interface IWordDocument : IDisposable
     /// </summary>
     /// <param name="saveChanges">是否保存更改</param>
     void Close(bool saveChanges = true);
+
+    /// <summary>
+    /// 关闭当前文档
+    /// </summary>
+    /// <param name="saveOptions">指定关闭文档时的保存选项</param>
+    void Close(WdSaveOptions saveOptions);
 
     /// <summary>
     /// 打印文档

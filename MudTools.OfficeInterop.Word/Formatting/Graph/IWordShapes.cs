@@ -37,6 +37,28 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     /// </summary>
     IWordShape this[string name] { get; }
 
+    /// <summary>
+    /// 添加 SmartArt 图形。
+    /// </summary>
+    /// <param name="Layout">SmartArt 布局类型。</param>
+    /// <param name="Left">形状左边距。</param>
+    /// <param name="Top">形状上边距。</param>
+    /// <param name="Width">形状宽度。</param>
+    /// <param name="Height">形状高度。</param>
+    /// <param name="Anchor">锚点范围，决定形状在文档中的位置。</param>
+    /// <returns>新添加的形状。</returns>
+    IWordShape AddSmartArt(IOfficeSmartArtLayout Layout, float Left, float Top, float Width, float Height, IWordRange? Anchor = null);
+
+    /// <summary>
+    /// 添加自定义形状。
+    /// </summary>
+    /// <param name="Type">自定义形状的类型。</param>
+    /// <param name="Left">形状左边距。</param>
+    /// <param name="Top">形状上边距。</param>
+    /// <param name="Width">形状宽度。</param>
+    /// <param name="Height">形状高度。</param>
+    /// <param name="Anchor">锚点范围，决定形状在文档中的位置。</param>
+    /// <returns>新添加的形状。</returns>
     IWordShape AddShape(MsoAutoShapeType Type, float Left, float Top, float Width, float Height, IWordRange? Anchor = null);
 
 

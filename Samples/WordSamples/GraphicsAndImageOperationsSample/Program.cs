@@ -1,5 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace GraphicsAndImageOperationsSample
 {
@@ -152,7 +159,7 @@ namespace GraphicsAndImageOperationsSample
 
                 // 添加箭头形状
                 var shape3 = document.Shapes.AddShape(
-                    MsoAutoShapeType.msoShapeRightArrow,
+                    MsoAutoShapeType.msoShapeCurvedRightArrow,
                     100, 450, 200, 50);
 
                 shape3.TextFrame.TextRange.Text = "箭头";
@@ -183,7 +190,7 @@ namespace GraphicsAndImageOperationsSample
                 // 添加SmartArt图形
                 var range = document.Range(document.Content.End - 1, document.Content.End - 1);
                 var smartArtShape = document.Shapes.AddSmartArt(
-                    MsoSmartArtDefaultConstants.msoSmartArtDefaultCycle,
+                    null,
                     100, 100, 300, 300);
 
                 // 获取SmartArt对象
@@ -247,7 +254,7 @@ namespace GraphicsAndImageOperationsSample
                 shape.TextFrame.TextRange.Text = "带效果的形状";
 
                 // 设置阴影效果
-                shape.Shadow.Visible = MsoTriState.msoTrue;
+                shape.Shadow.Visible = true;
                 shape.Shadow.Style = MsoShadowStyle.msoShadowStyleOuterShadow;
                 shape.Shadow.Blur = 5;
                 shape.Shadow.OffsetX = 3;
@@ -263,7 +270,7 @@ namespace GraphicsAndImageOperationsSample
                 shape.SoftEdge.Radius = 5;
 
                 // 设置三维格式
-                shape.ThreeD.Visible = MsoTriState.msoTrue;
+                shape.ThreeD.Visible = true;
                 shape.ThreeD.BevelTopType = MsoBevelType.msoBevelCircle;
                 shape.ThreeD.BevelTopInset = 3;
                 shape.ThreeD.BevelTopDepth = 2;

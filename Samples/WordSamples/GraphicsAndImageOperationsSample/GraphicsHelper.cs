@@ -104,29 +104,6 @@ namespace GraphicsAndImageOperationsSample
             }
         }
 
-        /// <summary>
-        /// 创建SmartArt图形
-        /// </summary>
-        /// <param name="smartArtType">SmartArt类型</param>
-        /// <param name="left">左侧位置</param>
-        /// <param name="top">顶部位置</param>
-        /// <param name="width">宽度</param>
-        /// <param name="height">高度</param>
-        /// <returns>创建的SmartArt图形对象</returns>
-        public IWordShape CreateSmartArt(MsoSmartArtDefaultConstants smartArtType, float left, float top, float width, float height)
-        {
-            try
-            {
-                var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
-                var smartArtShape = _document.Shapes.AddSmartArt(smartArtType, left, top, width, height);
-                return smartArtShape;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"创建SmartArt时出错: {ex.Message}");
-                return null;
-            }
-        }
 
         /// <summary>
         /// 为图形添加阴影效果
@@ -140,7 +117,7 @@ namespace GraphicsAndImageOperationsSample
         {
             if (shape != null)
             {
-                shape.Shadow.Visible = MsoTriState.msoTrue;
+                shape.Shadow.Visible = true;
                 shape.Shadow.Style = MsoShadowStyle.msoShadowStyleOuterShadow;
                 shape.Shadow.Blur = blur;
                 shape.Shadow.OffsetX = offsetX;
@@ -189,7 +166,7 @@ namespace GraphicsAndImageOperationsSample
         {
             if (shape != null)
             {
-                shape.ThreeD.Visible = MsoTriState.msoTrue;
+                shape.ThreeD.Visible = true;
                 shape.ThreeD.BevelTopType = bevelType;
                 shape.ThreeD.BevelTopInset = inset;
                 shape.ThreeD.BevelTopDepth = depth;

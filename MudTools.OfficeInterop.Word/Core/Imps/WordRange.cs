@@ -541,7 +541,7 @@ internal class WordRange : IWordRange
 
     public void Collapse(WdCollapseDirection Direction)
     {
-        _range?.Collapse(Direction.EnumConvert(WdCollapseDirection.wdCollapseStart);
+        _range?.Collapse(Direction.EnumConvert(WdCollapseDirection.wdCollapseStart));
     }
 
     public void Collapse()

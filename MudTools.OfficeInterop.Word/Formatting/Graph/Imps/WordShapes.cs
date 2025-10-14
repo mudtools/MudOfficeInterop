@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using MudTools.OfficeInterop.Imps;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -72,6 +74,31 @@ internal class WordShapes : IWordShapes
     #endregion
 
     #region 方法实现
+    public IWordShape AddSmartArt(IOfficeSmartArtLayout Layout, float Left, float Top, float Width, float Height, IWordRange? Anchor = null)
+    {
+        if (_shapes == null)
+        {
+            throw new ObjectDisposedException(nameof(WordShapes));
+        }
+        if (Layout == null)
+        {
+            throw new ArgumentNullException(nameof(Layout));
+        }
+        try
+        {
+            var anchorObj = (Anchor as WordRange)?._range;
+            var layoutObj = (Layout as OfficeSmartArtLayout)?._smartArtLayout;
+            var shape = _shapes.AddSmartArt(layoutObj, Left, Top, Width, Height, anchorObj ?? System.Type.Missing);
+            return new WordShape(shape);
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法添加智能艺术形状。", ex);
+        }
+    }
+
+
+
     public IWordShape AddShape(MsoAutoShapeType Type, float Left, float Top, float Width, float Height, IWordRange? Anchor = null)
     {
         if (_shapes == null)
@@ -82,7 +109,7 @@ internal class WordShapes : IWordShapes
         {
             var anchorObj = (Anchor as WordRange)?._range;
 
-            var shape = _shapes.AddShape((int)Type, Left, Top, Width, Height, anchorObj != null ? anchorObj : System.Type.Missing);
+            var shape = _shapes.AddShape((int)Type, Left, Top, Width, Height, anchorObj ?? System.Type.Missing);
             return new WordShape(shape);
         }
         catch (COMException ex)

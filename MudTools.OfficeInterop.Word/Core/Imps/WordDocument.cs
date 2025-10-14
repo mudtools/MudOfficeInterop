@@ -732,6 +732,18 @@ internal class WordDocument : IWordDocument
         }
     }
 
+    public void Close(WdSaveOptions saveOptions)
+    {
+        try
+        {
+            _document.Close(saveOptions.EnumConvert(MsWord.WdSaveOptions.wdPromptToSaveChanges));
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to close document.", ex);
+        }
+    }
+
     public void Close(bool saveChanges = true)
     {
         try

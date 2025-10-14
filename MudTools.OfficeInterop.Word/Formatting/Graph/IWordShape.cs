@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 using System;
 
 /// <summary>
@@ -21,7 +22,7 @@ public interface IWordShape : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取形状的名称。
@@ -112,6 +113,11 @@ public interface IWordShape : IDisposable
     /// 获取或设置图片的反射格式。
     /// </summary>
     IWordGlowFormat? Glow { get; }
+
+    /// <summary>
+    /// 获取形状的文本环绕格式。
+    /// </summary>
+    IWordWrapFormat? WrapFormat { get; }
 
     /// <summary>
     /// 获取或设置形状是否锁定纵横比。
@@ -210,7 +216,7 @@ public interface IWordShape : IDisposable
     /// <summary>
     /// 获取形状的SmartArt对象（如果形状是SmartArt）。
     /// </summary>
-    MsCore.SmartArt SmartArt { get; }
+    IOfficeSmartArt? SmartArt { get; }
 
 
 }

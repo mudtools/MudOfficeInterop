@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using MudTools.OfficeInterop.Imps;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -31,7 +33,7 @@ internal class WordShape : IWordShape
     public IWordApplication? Application => _shape != null ? new WordApplication(_shape.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _shape?.Parent;
+    public object? Parent => _shape?.Parent;
 
     /// <inheritdoc/>
     public string Name
@@ -95,22 +97,22 @@ internal class WordShape : IWordShape
     /// <inheritdoc/>
     public WdRelativeHorizontalPosition RelativeHorizontalPosition
     {
-        get => (WdRelativeHorizontalPosition)(int)_shape?.RelativeHorizontalPosition;
+        get => _shape?.RelativeHorizontalPosition.EnumConvert(WdRelativeHorizontalPosition.wdRelativeHorizontalPositionPage) ?? WdRelativeHorizontalPosition.wdRelativeHorizontalPositionPage;
         set
         {
             if (_shape != null)
-                _shape.RelativeHorizontalPosition = (MsWord.WdRelativeHorizontalPosition)(int)value;
+                _shape.RelativeHorizontalPosition = value.EnumConvert(MsWord.WdRelativeHorizontalPosition.wdRelativeHorizontalPositionPage);
         }
     }
 
     /// <inheritdoc/>
     public WdRelativeVerticalPosition RelativeVerticalPosition
     {
-        get => (WdRelativeVerticalPosition)(int)_shape?.RelativeVerticalPosition;
+        get => _shape?.RelativeVerticalPosition.EnumConvert(WdRelativeVerticalPosition.wdRelativeVerticalPositionPage) ?? WdRelativeVerticalPosition.wdRelativeVerticalPositionPage;
         set
         {
             if (_shape != null)
-                _shape.RelativeVerticalPosition = (MsWord.WdRelativeVerticalPosition)(int)value;
+                _shape.RelativeVerticalPosition = value.EnumConvert(MsWord.WdRelativeVerticalPosition.wdRelativeVerticalPositionPage);
         }
     }
 
@@ -153,6 +155,10 @@ internal class WordShape : IWordShape
     /// <inheritdoc/>
     public IWordReflectionFormat? Reflection =>
         _shape.Reflection != null ? new WordReflectionFormat(_shape.Reflection) : null;
+
+    /// <inheritdoc/>
+    public IWordWrapFormat? WrapFormat =>
+        _shape?.WrapFormat != null ? new WordWrapFormat(_shape.WrapFormat) : null;
 
     /// <inheritdoc/>
     public bool LockAspectRatio
@@ -203,7 +209,7 @@ internal class WordShape : IWordShape
     public IWordChart? Chart => _shape?.Chart != null ? new WordChart(_shape.Chart) : null;
 
     /// <inheritdoc/>
-    public MsCore.SmartArt SmartArt => _shape?.SmartArt;
+    public IOfficeSmartArt? SmartArt => _shape?.SmartArt != null ? new OfficeSmartArt(_shape.SmartArt) : null;
     #endregion
 
     #region 方法实现

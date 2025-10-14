@@ -1,10 +1,13 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegrationWithWebApplicationsSample
 {
@@ -74,14 +77,14 @@ namespace IntegrationWithWebApplicationsSample
                 {
                     var titleRange = document.Range(0, request.Title.Length);
                     titleRange.Font.Size = 18;
-                    titleRange.Font.Bold = 1;
+                    titleRange.Font.Bold = true;
                     titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 }
 
                 // 保存文档
                 var fileName = $"Document_{Guid.NewGuid()}.docx";
                 var filePath = Path.Combine(Path.GetTempPath(), fileName);
-                document.SaveAs2(filePath);
+                document.SaveAs(filePath);
 
                 _logger?.LogInformation("文档生成完成: {Title}", request.Title);
 
@@ -127,7 +130,7 @@ namespace IntegrationWithWebApplicationsSample
                 // 保存文档
                 var fileName = $"Document_{Guid.NewGuid()}.docx";
                 var filePath = Path.Combine(Path.GetTempPath(), fileName);
-                document.SaveAs2(filePath);
+                document.SaveAs(filePath);
 
                 _logger?.LogInformation("从模板生成文档完成: {Title}", request.Title);
 
@@ -210,7 +213,7 @@ namespace IntegrationWithWebApplicationsSample
             find.MatchWildcards = false;
             find.MatchSoundsLike = false;
             find.MatchAllWordForms = false;
-            find.Execute(Replace: WdReplace.wdReplaceAll);
+            find.Execute(replace: WdReplace.wdReplaceAll);
         }
 
         /// <summary>
@@ -265,7 +268,7 @@ namespace IntegrationWithWebApplicationsSample
                 var outputFilePath = Path.Combine(Path.GetTempPath(), $"{fileName}{extension}");
 
                 // 保存为指定格式
-                document.SaveAs2(outputFilePath, outputFormat);
+                document.SaveAs(outputFilePath, outputFormat);
 
                 _logger?.LogInformation("文档格式转换完成: {OutputPath}", outputFilePath);
 
@@ -299,11 +302,10 @@ namespace IntegrationWithWebApplicationsSample
             return format switch
             {
                 WdSaveFormat.wdFormatDocument => ".doc",
-                WdSaveFormat.wdFormatXMLDocument => ".xml",
+                WdSaveFormat.wdFormatXML => ".xml",
                 WdSaveFormat.wdFormatPDF => ".pdf",
                 WdSaveFormat.wdFormatRTF => ".rtf",
                 WdSaveFormat.wdFormatFilteredHTML => ".htm",
-                WdSaveFormat.wdFormatHTML => ".html",
                 _ => ".docx"
             };
         }

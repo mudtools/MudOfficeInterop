@@ -99,7 +99,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateArrow(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeRightArrow, left, top, width, height);
+            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeCurvedRightArrow, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -119,7 +119,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateStar(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeStar24, left, top, width, height);
+            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeStar32Point, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -139,7 +139,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateCloud(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeCloud, left, top, width, height);
+            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeCloudCallout, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
