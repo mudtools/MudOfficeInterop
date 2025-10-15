@@ -82,7 +82,6 @@ public void OnRibbonButtonClicked(IRibbonControl control)
 本项目采用双重许可证模式：
 
 - [MIT 许可证](../../LICENSE-MIT)
-- [Apache 许可证 2.0](../../LICENSE-APACHE)
 
 ## 免责声明
 
