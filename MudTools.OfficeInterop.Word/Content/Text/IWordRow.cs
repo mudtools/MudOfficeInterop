@@ -45,7 +45,7 @@ public interface IWordRow : IDisposable
     /// <summary>
     /// 获取或设置行最小高度。
     /// </summary>
-    float HeightRule { get; set; }
+    WdRowHeightRule HeightRule { get; set; }
 
     /// <summary>
     /// 获取或设置行是否允许跨页断行。

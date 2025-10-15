@@ -41,6 +41,16 @@ public interface IWordBorders : IEnumerable<IWordBorder>, IDisposable
     bool Enable { get; set; }
 
     /// <summary>
+    /// 获取或设置边框线条的样式。
+    /// </summary>
+    WdLineStyle LineStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置边框线条的宽度。
+    /// </summary>
+    WdLineWidth LineWidth { get; set; }
+
+    /// <summary>
     /// 获取或设置一个值，该值指示是否删除段落和表格边缘的垂直边框，以便水平边框可以连接到页面边框。
     /// </summary>
     bool JoinBorders { get; set; }

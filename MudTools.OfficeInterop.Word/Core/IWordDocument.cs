@@ -30,6 +30,9 @@ public interface IWordDocument : IDisposable
     /// </summary>
     string FullName { get; }
 
+    /// <summary>
+    /// 获取或设置文档的加密提供程序
+    /// </summary>
     string EncryptionProvider { get; set; }
 
     /// <summary>
@@ -87,6 +90,9 @@ public interface IWordDocument : IDisposable
     /// </summary>
     bool? SaveSubsetFonts { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否仅打印窗体数据到预打印的表单上
+    /// </summary>
     bool? PrintFormsData { get; set; }
 
     /// <summary>

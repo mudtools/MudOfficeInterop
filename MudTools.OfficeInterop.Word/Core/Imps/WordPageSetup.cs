@@ -103,6 +103,12 @@ internal class WordPageSetup : IWordPageSetup
 
     #region 页面方向和布局设置
 
+    public WdPaperSize PageSize
+    {
+        get => _pageSetup.PaperSize.EnumConvert(WdPaperSize.wdPaperA4);
+        set => _pageSetup.PaperSize = value.EnumConvert(MsWord.WdPaperSize.wdPaperA4);
+    }
+
     public WdOrientation Orientation
     {
         get => _pageSetup.Orientation.EnumConvert(WdOrientation.wdOrientPortrait);

@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportGenerationSystemSample
 {
@@ -66,35 +68,35 @@ namespace ReportGenerationSystemSample
 
                 if (find.Execute())
                 {
-                    find.Parent.Font.Name = "微软雅黑";
-                    find.Parent.Font.Size = 20;
-                    find.Parent.Font.Bold = 1;
-                    find.Parent.Font.Color = WdColor.wdColorDarkBlue;
-                    find.Parent.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                    find.Parent.ParagraphFormat.SpaceAfter = 24;
+                    find.ParentRange.Font.Name = "微软雅黑";
+                    find.ParentRange.Font.Size = 20;
+                    find.ParentRange.Font.Bold = true;
+                    find.ParentRange.Font.Color = WdColor.wdColorDarkBlue;
+                    find.ParentRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                    find.ParentRange.ParagraphFormat.SpaceAfter = 24;
                 }
 
                 // 查找并格式化其他可能的标题
                 find.Text = "XYZ公司月度财务报表";
                 if (find.Execute())
                 {
-                    find.Parent.Font.Name = "微软雅黑";
-                    find.Parent.Font.Size = 20;
-                    find.Parent.Font.Bold = 1;
-                    find.Parent.Font.Color = WdColor.wdColorDarkBlue;
-                    find.Parent.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                    find.Parent.ParagraphFormat.SpaceAfter = 24;
+                    find.ParentRange.Font.Name = "微软雅黑";
+                    find.ParentRange.Font.Size = 20;
+                    find.ParentRange.Font.Bold = true;
+                    find.ParentRange.Font.Color = WdColor.wdColorDarkBlue;
+                    find.ParentRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                    find.ParentRange.ParagraphFormat.SpaceAfter = 24;
                 }
 
                 find.Text = "XYZ公司项目进度报表";
                 if (find.Execute())
                 {
-                    find.Parent.Font.Name = "微软雅黑";
-                    find.Parent.Font.Size = 20;
-                    find.Parent.Font.Bold = 1;
-                    find.Parent.Font.Color = WdColor.wdColorDarkBlue;
-                    find.Parent.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                    find.Parent.ParagraphFormat.SpaceAfter = 24;
+                    find.ParentRange.Font.Name = "微软雅黑";
+                    find.ParentRange.Font.Size = 20;
+                    find.ParentRange.Font.Bold = true;
+                    find.ParentRange.Font.Color = WdColor.wdColorDarkBlue;
+                    find.ParentRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                    find.ParentRange.ParagraphFormat.SpaceAfter = 24;
                 }
             }
             catch (Exception ex)
@@ -117,7 +119,7 @@ namespace ReportGenerationSystemSample
                     var table = document.Tables[i];
 
                     // 设置表格边框
-                    table.Borders.Enable = 1;
+                    table.Borders.Enable = true;
                     table.Borders[WdBorderType.wdBorderTop].LineStyle = WdLineStyle.wdLineStyleSingle;
                     table.Borders[WdBorderType.wdBorderLeft].LineStyle = WdLineStyle.wdLineStyleSingle;
                     table.Borders[WdBorderType.wdBorderBottom].LineStyle = WdLineStyle.wdLineStyleSingle;
@@ -177,7 +179,7 @@ namespace ReportGenerationSystemSample
                 headerRange.Text = $"{companyName}报表";
                 headerRange.Font.Name = "微软雅黑";
                 headerRange.Font.Size = 14;
-                headerRange.Font.Bold = 1;
+                headerRange.Font.Bold = true;
                 headerRange.Font.Color = primaryColor;
                 headerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
@@ -185,7 +187,7 @@ namespace ReportGenerationSystemSample
                 var titleRange = document.Range(0, 50); // 假设标题在前50个字符内
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 20;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.Font.Color = primaryColor;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
@@ -258,12 +260,12 @@ namespace ReportGenerationSystemSample
 
                 while (find.Execute())
                 {
-                    find.Parent.Font.Name = "Segoe UI";
-                    find.Parent.Font.Size = 24;
-                    find.Parent.Font.Bold = 1;
-                    find.Parent.Font.Color = WdColor.wdColorDarkBlue;
-                    find.Parent.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                    find.Parent.ParagraphFormat.SpaceAfter = 20;
+                    find.ParentRange.Font.Name = "Segoe UI";
+                    find.ParentRange.Font.Size = 24;
+                    find.ParentRange.Font.Bold = true;
+                    find.ParentRange.Font.Color = WdColor.wdColorDarkBlue;
+                    find.ParentRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                    find.ParentRange.ParagraphFormat.SpaceAfter = 20;
                 }
             }
             catch (Exception ex)
@@ -285,13 +287,13 @@ namespace ReportGenerationSystemSample
                     var table = document.Tables[i];
 
                     // 设置无边框样式
-                    table.Borders.Enable = 0;
+                    table.Borders.Enable = false;
 
                     // 设置表头样式
                     if (table.Rows.Count > 0)
                     {
                         var headerRow = table.Rows[1];
-                        headerRow.Range.Font.Bold = 1;
+                        headerRow.Range.Font.Bold = true;
                         headerRow.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                         headerRow.Shading.BackgroundPatternColor = WdColor.wdColorLightBlue;
 
@@ -400,11 +402,11 @@ namespace ReportGenerationSystemSample
 
                 while (find.Execute())
                 {
-                    find.Parent.Font.Name = "Calibri";
-                    find.Parent.Font.Size = 18;
-                    find.Parent.Font.Bold = 1;
-                    find.Parent.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
-                    find.Parent.ParagraphFormat.SpaceAfter = 16;
+                    find.ParentRange.Font.Name = "Calibri";
+                    find.ParentRange.Font.Size = 18;
+                    find.ParentRange.Font.Bold = true;
+                    find.ParentRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+                    find.ParentRange.ParagraphFormat.SpaceAfter = 16;
                 }
             }
             catch (Exception ex)
@@ -426,7 +428,7 @@ namespace ReportGenerationSystemSample
                     var table = document.Tables[i];
 
                     // 设置简单边框
-                    table.Borders.Enable = 1;
+                    table.Borders.Enable = true;
                     table.Borders.LineStyle = WdLineStyle.wdLineStyleSingle;
                     table.Borders.LineWidth = WdLineWidth.wdLineWidth050pt;
 
@@ -434,7 +436,7 @@ namespace ReportGenerationSystemSample
                     if (table.Rows.Count > 0)
                     {
                         var headerRow = table.Rows[1];
-                        headerRow.Range.Font.Bold = 1;
+                        headerRow.Range.Font.Bold = true;
                         headerRow.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
                         headerRow.Shading.BackgroundPatternColor = WdColor.wdColorGray10;
                     }

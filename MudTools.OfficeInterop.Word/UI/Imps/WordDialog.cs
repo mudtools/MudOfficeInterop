@@ -67,13 +67,13 @@ internal class WordDialog : IWordDialog
     #region 对话框方法实现 (Dialog Methods Implementation)
 
     /// <inheritdoc/>
-    public bool Display(object timeout)
+    public bool Display(float? timeout = null)
     {
         if (_dialog == null) return false;
         try
         {
             // 注意：Display 方法返回 -1 (True) 或 0 (False)，需要转换
-            var result = _dialog.Display(ref timeout);
+            var result = _dialog.Display(timeout.ComArgsVal());
             return result != 0; // Word 返回 -1 表示 True
         }
         catch (COMException ex)
@@ -90,13 +90,13 @@ internal class WordDialog : IWordDialog
     }
 
     /// <inheritdoc/>
-    public bool Show(object timeout)
+    public bool Show(float? timeout = null)
     {
         if (_dialog == null) return false;
         try
         {
             // 注意：Show 方法返回 -1 (True) 或 0 (False)，需要转换
-            var result = _dialog.Show(ref timeout);
+            var result = _dialog.Show(timeout.ComArgsVal());
             return result != 0; // Word 返回 -1 表示 True
         }
         catch (COMException ex)

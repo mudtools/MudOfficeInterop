@@ -139,7 +139,7 @@ namespace WordFactorySample
             range.InsertAfter("模板创建时间: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
             // 保存为模板
-            document.SaveAs2(templatePath, Word.WdSaveFormat.wdFormatXMLTemplate);
+            document.SaveAs(templatePath, WdSaveFormat.wdFormatTemplate);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace WordFactorySample
             range.InsertAfter("文档创建时间: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
             // 保存文档
-            document.SaveAs2(docPath);
+            document.SaveAs(docPath);
         }
     }
 }

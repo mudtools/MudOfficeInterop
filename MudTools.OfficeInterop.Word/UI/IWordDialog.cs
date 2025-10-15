@@ -63,7 +63,7 @@ public interface IWordDialog : IDisposable
     /// </summary>
     /// <param name="timeout">指定对话框显示的秒数。达到超时值后，对话框自动关闭。</param>
     /// <returns>如果用户单击“确定”则返回 true，如果用户单击“取消”则返回 false。</returns>
-    bool Display(object timeout);
+    bool Display(float? timeout = null);
 
     /// <summary>
     /// 应用 Microsoft Word 对话框的当前设置。
@@ -75,7 +75,7 @@ public interface IWordDialog : IDisposable
     /// </summary>
     /// <param name="timeout">指定对话框显示的秒数。达到超时值后，对话框自动关闭。</param>
     /// <returns>如果用户单击“确定”则返回 true，如果用户单击“取消”则返回 false。</returns>
-    bool Show(object timeout);
+    bool Show(float? timeout = null);
 
     /// <summary>
     /// 更新内置 Microsoft Word 对话框中显示的值。

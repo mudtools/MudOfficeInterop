@@ -1,9 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportGenerationSystemSample
 {
@@ -36,16 +39,13 @@ namespace ReportGenerationSystemSample
 
                 // 设置文档属性
                 document.Title = "销售报表模板";
-                document.Subject = "月度销售数据报表";
-                document.Author = "报表系统";
-                document.Keywords = "销售,报表,月度";
 
                 // 添加页眉
                 var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 headerRange.Text = "公司月度销售报表";
                 headerRange.Font.Name = "微软雅黑";
                 headerRange.Font.Size = 14;
-                headerRange.Font.Bold = 1;
+                headerRange.Font.Bold = true;
                 headerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 添加页脚（包含页码）
@@ -62,7 +62,7 @@ namespace ReportGenerationSystemSample
                 titleRange.Text = "XYZ公司月度销售报表\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 20;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.Font.Color = WdColor.wdColorDarkBlue;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
@@ -83,7 +83,7 @@ namespace ReportGenerationSystemSample
                 tableTitleRange.Text = "销售数据详情\n";
                 tableTitleRange.Font.Name = "微软雅黑";
                 tableTitleRange.Font.Size = 16;
-                tableTitleRange.Font.Bold = 1;
+                tableTitleRange.Font.Bold = true;
                 tableTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 tableTitleRange.ParagraphFormat.SpaceAfter = 12;
 
@@ -99,7 +99,7 @@ namespace ReportGenerationSystemSample
                 var summaryTitleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 summaryTitleRange.Text = "\n\n销售总结\n";
                 summaryTitleRange.Font.Size = 16;
-                summaryTitleRange.Font.Bold = 1;
+                summaryTitleRange.Font.Bold = true;
                 summaryTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 var summaryRange = document.Range(document.Content.End - 1, document.Content.End - 1);
@@ -110,7 +110,7 @@ namespace ReportGenerationSystemSample
                 summaryRange.Text = "环比增长：{MONTH_OVER_MONTH_GROWTH}\n";
 
                 // 保存模板
-                document.SaveAs2(templatePath);
+                document.SaveAs(templatePath);
 
                 Console.WriteLine($"销售报表模板已创建: {templatePath}");
                 return true;
@@ -135,16 +135,13 @@ namespace ReportGenerationSystemSample
 
                 // 设置文档属性
                 document.Title = "财务报表模板";
-                document.Subject = "月度财务数据报表";
-                document.Author = "财务系统";
-                document.Keywords = "财务,报表,月度";
 
                 // 添加页眉
                 var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 headerRange.Text = "公司月度财务报表";
                 headerRange.Font.Name = "微软雅黑";
                 headerRange.Font.Size = 14;
-                headerRange.Font.Bold = 1;
+                headerRange.Font.Bold = true;
                 headerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 添加页脚
@@ -161,7 +158,7 @@ namespace ReportGenerationSystemSample
                 titleRange.Text = "XYZ公司月度财务报表\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 20;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.Font.Color = WdColor.wdColorDarkBlue;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
@@ -182,7 +179,7 @@ namespace ReportGenerationSystemSample
                 incomeTitleRange.Text = "收入明细\n";
                 incomeTitleRange.Font.Name = "微软雅黑";
                 incomeTitleRange.Font.Size = 16;
-                incomeTitleRange.Font.Bold = 1;
+                incomeTitleRange.Font.Bold = true;
                 incomeTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 incomeTitleRange.ParagraphFormat.SpaceAfter = 12;
 
@@ -194,7 +191,7 @@ namespace ReportGenerationSystemSample
                 expenseTitleRange.Text = "\n\n支出明细\n";
                 expenseTitleRange.Font.Name = "微软雅黑";
                 expenseTitleRange.Font.Size = 16;
-                expenseTitleRange.Font.Bold = 1;
+                expenseTitleRange.Font.Bold = true;
                 expenseTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 expenseTitleRange.ParagraphFormat.SpaceAfter = 12;
 
@@ -205,7 +202,7 @@ namespace ReportGenerationSystemSample
                 var summaryTitleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 summaryTitleRange.Text = "\n\n财务总结\n";
                 summaryTitleRange.Font.Size = 16;
-                summaryTitleRange.Font.Bold = 1;
+                summaryTitleRange.Font.Bold = true;
                 summaryTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 var summaryRange = document.Range(document.Content.End - 1, document.Content.End - 1);
@@ -218,7 +215,7 @@ namespace ReportGenerationSystemSample
                 summaryRange.Text = "利润率：{PROFIT_MARGIN}\n";
 
                 // 保存模板
-                document.SaveAs2(templatePath);
+                document.SaveAs(templatePath);
 
                 Console.WriteLine($"财务报表模板已创建: {templatePath}");
                 return true;
@@ -243,16 +240,13 @@ namespace ReportGenerationSystemSample
 
                 // 设置文档属性
                 document.Title = "项目进度报表模板";
-                document.Subject = "项目进度数据报表";
-                document.Author = "项目管理系统";
-                document.Keywords = "项目,进度,报表";
 
                 // 添加页眉
                 var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 headerRange.Text = "项目进度报表";
                 headerRange.Font.Name = "微软雅黑";
                 headerRange.Font.Size = 14;
-                headerRange.Font.Bold = 1;
+                headerRange.Font.Bold = true;
                 headerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 添加页脚
@@ -269,7 +263,7 @@ namespace ReportGenerationSystemSample
                 titleRange.Text = "XYZ公司项目进度报表\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 20;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.Font.Color = WdColor.wdColorDarkBlue;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
@@ -290,7 +284,7 @@ namespace ReportGenerationSystemSample
                 overviewTitleRange.Text = "项目概述\n";
                 overviewTitleRange.Font.Name = "微软雅黑";
                 overviewTitleRange.Font.Size = 16;
-                overviewTitleRange.Font.Bold = 1;
+                overviewTitleRange.Font.Bold = true;
                 overviewTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 overviewTitleRange.ParagraphFormat.SpaceAfter = 12;
 
@@ -302,7 +296,7 @@ namespace ReportGenerationSystemSample
                 progressTitleRange.Text = "\n\n进度详情\n";
                 progressTitleRange.Font.Name = "微软雅黑";
                 progressTitleRange.Font.Size = 16;
-                progressTitleRange.Font.Bold = 1;
+                progressTitleRange.Font.Bold = true;
                 progressTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 progressTitleRange.ParagraphFormat.SpaceAfter = 12;
 
@@ -314,7 +308,7 @@ namespace ReportGenerationSystemSample
                 milestoneTitleRange.Text = "\n\n里程碑\n";
                 milestoneTitleRange.Font.Name = "微软雅黑";
                 milestoneTitleRange.Font.Size = 16;
-                milestoneTitleRange.Font.Bold = 1;
+                milestoneTitleRange.Font.Bold = true;
                 milestoneTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 milestoneTitleRange.ParagraphFormat.SpaceAfter = 12;
 
@@ -326,7 +320,7 @@ namespace ReportGenerationSystemSample
                 riskTitleRange.Text = "\n\n风险和问题\n";
                 riskTitleRange.Font.Name = "微软雅黑";
                 riskTitleRange.Font.Size = 16;
-                riskTitleRange.Font.Bold = 1;
+                riskTitleRange.Font.Bold = true;
                 riskTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 riskTitleRange.ParagraphFormat.SpaceAfter = 12;
 
@@ -337,7 +331,7 @@ namespace ReportGenerationSystemSample
                 var summaryTitleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 summaryTitleRange.Text = "\n\n总结\n";
                 summaryTitleRange.Font.Size = 16;
-                summaryTitleRange.Font.Bold = 1;
+                summaryTitleRange.Font.Bold = true;
                 summaryTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 var summaryRange = document.Range(document.Content.End - 1, document.Content.End - 1);
@@ -348,7 +342,7 @@ namespace ReportGenerationSystemSample
                 summaryRange.Text = "预算使用率：{BUDGET_USAGE}\n";
 
                 // 保存模板
-                document.SaveAs2(templatePath);
+                document.SaveAs(templatePath);
 
                 Console.WriteLine($"项目进度报表模板已创建: {templatePath}");
                 return true;
@@ -396,9 +390,6 @@ namespace ReportGenerationSystemSample
                 var document = app.ActiveDocument;
 
                 templateInfo.Title = document.Title;
-                templateInfo.Subject = document.Subject;
-                templateInfo.Author = document.Author;
-                templateInfo.Keywords = document.Keywords;
                 templateInfo.PageCount = document.Range().Paragraphs.Count;
                 templateInfo.Placeholders = ExtractPlaceholders(document);
 

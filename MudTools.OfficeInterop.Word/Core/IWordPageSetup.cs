@@ -50,6 +50,11 @@ public interface IWordPageSetup : IDisposable
     #region 页面方向和布局设置
 
     /// <summary>
+    /// 获取或设置页面纸张大小
+    /// </summary>
+    WdPaperSize PageSize { get; set; }
+
+    /// <summary>
     /// 获取或设置页面方向（0=纵向，1=横向）
     /// </summary>
     WdOrientation Orientation { get; set; }

@@ -24,6 +24,16 @@ public interface IWordFind : IDisposable
     object? Parent { get; }
 
     /// <summary>
+    /// 获取父范围对象
+    /// </summary>
+    IWordRange? ParentRange { get; }
+
+    /// <summary>
+    /// 获取父选择对象
+    /// </summary>
+    IWordSelection? ParentSelection { get; }
+
+    /// <summary>
     /// 获取或设置查找文本
     /// </summary>
     string Text { get; set; }

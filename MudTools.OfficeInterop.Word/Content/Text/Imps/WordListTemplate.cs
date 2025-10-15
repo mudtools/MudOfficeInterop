@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordListTemplate : IWordListTemplate
 {
-    private MsWord.ListTemplate _listTemplate;
+    internal MsWord.ListTemplate _listTemplate;
     private bool _disposedValue;
 
     internal WordListTemplate(MsWord.ListTemplate listTemplate)

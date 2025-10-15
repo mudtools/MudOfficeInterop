@@ -7,8 +7,6 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using Word = Microsoft.Office.Interop.Word;
-using System.IO;
 
 namespace SelectionOperationsSample
 {
@@ -309,9 +307,9 @@ namespace SelectionOperationsSample
                     selection.WholeStory();
 
                     // 应用格式化
-                    selection.Font.Bold = 1;
-                    selection.Font.Italic = 1;
-                    selection.Font.Underline = (int)WdUnderline.wdUnderlineSingle;
+                    selection.Font.Bold = true;
+                    selection.Font.Italic = true;
+                    selection.Font.Underline = WdUnderline.wdUnderlineSingle;
                     selection.Font.Size = 14;
                     selection.Font.Name = "微软雅黑";
 
@@ -468,8 +466,8 @@ namespace SelectionOperationsSample
                 selection.WholeStory();
 
                 // 应用格式化
-                selection.Font.Bold = 1;
-                selection.Font.Italic = 1;
+                selection.Font.Bold = true;
+                selection.Font.Italic = true;
                 selection.Font.Name = "楷体";
             }
 

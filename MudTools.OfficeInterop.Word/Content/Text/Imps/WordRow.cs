@@ -49,13 +49,13 @@ internal class WordRow : IWordRow
     }
 
     /// <inheritdoc/>
-    public float HeightRule
+    public WdRowHeightRule HeightRule
     {
-        get => (float)(_row?.HeightRule ?? MsWord.WdRowHeightRule.wdRowHeightAuto);
+        get => _row?.HeightRule.EnumConvert(WdRowHeightRule.wdRowHeightAuto) ?? WdRowHeightRule.wdRowHeightAuto;
         set
         {
             if (_row != null)
-                _row.HeightRule = (MsWord.WdRowHeightRule)value;
+                _row.HeightRule = value.EnumConvert(MsWord.WdRowHeightRule.wdRowHeightAuto);
         }
     }
 

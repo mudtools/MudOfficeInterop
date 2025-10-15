@@ -65,6 +65,24 @@ internal class WordBorders : IWordBorders
         set { if (_borders != null) _borders.Enable = value ? 1 : 0; }
     }
 
+    public WdLineStyle LineStyle
+    {
+        get => _borders?.OutsideLineStyle != null ? _borders.OutsideLineStyle.EnumConvert(WdLineStyle.wdLineStyleSingle) : WdLineStyle.wdLineStyleSingle;
+        set
+        {
+            if (_borders != null) _borders.OutsideLineStyle = value.EnumConvert(MsWord.WdLineStyle.wdLineStyleSingle);
+        }
+    }
+
+    public WdLineWidth LineWidth
+    {
+        get => _borders?.OutsideLineWidth != null ? _borders.OutsideLineWidth.EnumConvert(WdLineWidth.wdLineWidth100pt) : WdLineWidth.wdLineWidth100pt;
+        set
+        {
+            if (_borders != null) _borders.OutsideLineWidth = value.EnumConvert(MsWord.WdLineWidth.wdLineWidth100pt);
+        }
+    }
+
     /// <inheritdoc/>
     public bool JoinBorders
     {

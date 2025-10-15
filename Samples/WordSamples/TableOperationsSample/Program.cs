@@ -7,7 +7,6 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using System.IO;
 
 namespace TableOperationsSample
 {
@@ -196,7 +195,7 @@ namespace TableOperationsSample
                 cellRange.Text = "单元格内容";
 
                 // 设置单元格格式
-                cellRange.Font.Bold = 1;
+                cellRange.Font.Bold = true;
                 cellRange.Font.Size = 12;
                 cellRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
@@ -249,7 +248,7 @@ namespace TableOperationsSample
                 for (int i = 1; i <= 3; i++)
                 {
                     var headerCell = table.Cell(1, i);
-                    headerCell.Range.Font.Bold = 1;
+                    headerCell.Range.Font.Bold = true;
                     headerCell.Range.Font.Color = WdColor.wdColorWhite;
                     headerCell.Shading.BackgroundPatternColor = WdColor.wdColorDarkBlue;
                     headerCell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -308,7 +307,7 @@ namespace TableOperationsSample
                 for (int i = 1; i <= 3; i++)
                 {
                     var cell = table.Cell(1, i);
-                    cell.Range.Font.Bold = 1;
+                    cell.Range.Font.Bold = true;
                     cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
                 }
 
@@ -345,7 +344,7 @@ namespace TableOperationsSample
                 title.Text = "销售数据报表\n";
                 title.Font.Name = "微软雅黑";
                 title.Font.Size = 18;
-                title.Font.Bold = 1;
+                title.Font.Bold = true;
                 title.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 title.ParagraphFormat.SpaceAfter = 24;
 
@@ -389,7 +388,7 @@ namespace TableOperationsSample
 
                 // 格式化表格
                 // 表格边框
-                table.Borders.Enable = 1;
+                table.Borders.Enable = true;
                 table.Borders[WdBorderType.wdBorderTop].LineStyle = WdLineStyle.wdLineStyleSingle;
                 table.Borders[WdBorderType.wdBorderLeft].LineStyle = WdLineStyle.wdLineStyleSingle;
                 table.Borders[WdBorderType.wdBorderBottom].LineStyle = WdLineStyle.wdLineStyleSingle;
@@ -399,7 +398,7 @@ namespace TableOperationsSample
                 for (int i = 1; i <= 5; i++)
                 {
                     var cell = table.Cell(1, i);
-                    cell.Range.Font.Bold = 1;
+                    cell.Range.Font.Bold = true;
                     cell.Range.Font.Color = WdColor.wdColorWhite;
                     cell.Shading.BackgroundPatternColor = WdColor.wdColorDarkBlue;
                     cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -434,7 +433,7 @@ namespace TableOperationsSample
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "TableReportDemo.docx");
-                document.SaveAs2(filePath);
+                document.SaveAs(filePath);
 
                 Console.WriteLine($"表格报表已创建: {filePath}");
             }
@@ -669,12 +668,12 @@ namespace TableOperationsSample
 
             // 保存文档
             string filePath = Path.Combine(Path.GetTempPath(), $"FormattedTable_{Guid.NewGuid()}.docx");
-            document.SaveAs2(filePath);
+            document.SaveAs(filePath);
 
             return new FormattedTableResult
             {
                 DocumentPath = filePath,
-                IsStyled = !string.IsNullOrEmpty(table.Style)
+                IsStyled = !string.IsNullOrEmpty(table.Style?.ToString())
             };
         }
     }

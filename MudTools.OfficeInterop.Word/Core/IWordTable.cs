@@ -27,6 +27,9 @@ public interface IWordTable : IDisposable
     /// </summary>
     IWordRange? Range { get; }
 
+    /// <summary>
+    /// 获取一个值，该值指示表格的所有行是否具有相同的列数。
+    /// </summary>
     bool Uniform { get; }
 
     /// <summary>
@@ -53,6 +56,11 @@ public interface IWordTable : IDisposable
     /// 获取表格的底纹设置。
     /// </summary>
     IWordShading? Shading { get; }
+
+    /// <summary>
+    /// 获取或设置表格的样式。
+    /// </summary>
+    object? Style { get; set; }
 
     /// <summary>
     /// 获取或设置表格是否允许跨页断行。
@@ -204,4 +212,10 @@ public interface IWordTable : IDisposable
     /// </summary>
     /// <param name="styleName">样式名称。</param>
     void ApplyStyleDirectFormatting(string styleName);
+
+    /// <summary>
+    /// 设置表格的自动调整行为。
+    /// </summary>
+    /// <param name="behavior">指定表格如何自动调整大小，包括固定列宽、根据内容调整列宽或根据窗口调整列宽。</param>
+    void AutoFitBehavior(WdAutoFitBehavior behavior);
 }

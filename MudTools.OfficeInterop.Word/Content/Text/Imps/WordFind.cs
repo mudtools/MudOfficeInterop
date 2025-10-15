@@ -19,7 +19,39 @@ internal class WordFind : IWordFind
     public IWordApplication? Application => _find != null ? new WordApplication(_find.Application) : null;
 
     /// <inheritdoc/>
-    public object? Parent => _find?.Parent;
+    public object? Parent
+    {
+        get
+        {
+            if (_find == null)
+                return null;
+            if (_find != null && _find.Parent is MsWord.Range range)
+                return new WordRange(range);
+            if (_find != null && _find.Parent is MsWord.Selection selection)
+                return new WordSelection(selection);
+            return _find?.Parent;
+        }
+    }
+
+    public IWordRange? ParentRange
+    {
+        get
+        {
+            if (_find != null && _find.Parent is MsWord.Range range)
+                return new WordRange(range);
+            return null;
+        }
+    }
+
+    public IWordSelection? ParentSelection
+    {
+        get
+        {
+            if (_find != null && _find.Parent is MsWord.Selection selection)
+                return new WordSelection(selection);
+            return null;
+        }
+    }
 
     public string Text
     {

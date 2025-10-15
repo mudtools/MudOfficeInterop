@@ -41,7 +41,7 @@ internal class WordListFormat : IWordListFormat
     }
 
     /// <inheritdoc/>
-    public IWordListTemplate ListTemplate
+    public IWordListTemplate? ListTemplate
     {
         get => _listFormat?.ListTemplate != null ? new WordListTemplate(_listFormat.ListTemplate) : null;
     }
@@ -70,31 +70,51 @@ internal class WordListFormat : IWordListFormat
 
     #region 方法实现
 
+    public void ApplyBulletDefault(WdDefaultListBehavior? DefaultListBehavior = null)
+    {
+        _listFormat?.ApplyBulletDefault(
+            DefaultListBehavior.ComArgsConvert(d => d.EnumConvert(MsWord.WdDefaultListBehavior.wdWord10ListBehavior)));
+    }
+
+    /// <inheritdoc/>
+    public void ApplyNumberDefault(WdDefaultListBehavior? DefaultListBehavior = null)
+    {
+        _listFormat?.ApplyNumberDefault(
+            DefaultListBehavior.ComArgsConvert(d => d.EnumConvert(MsWord.WdDefaultListBehavior.wdWord10ListBehavior)));
+    }
+
+    /// <inheritdoc/>
+    public void ApplyOutlineNumberDefault(WdDefaultListBehavior? DefaultListBehavior = null)
+    {
+        _listFormat?.ApplyOutlineNumberDefault(
+                    DefaultListBehavior.ComArgsConvert(d => d.EnumConvert(MsWord.WdDefaultListBehavior.wdWord10ListBehavior)));
+    }
+
     /// <inheritdoc/>
     public void ApplyListTemplateWithLevel(
-        MsWord.ListTemplate listTemplate,
+        IWordListTemplate listTemplate,
         bool continuePreviousList,
         WdListApplyTo applyTo,
         WdDefaultListBehavior defaultListBehavior)
     {
         _listFormat?.ApplyListTemplateWithLevel(
-            listTemplate,
+            listTemplate is WordListTemplate template ? template._listTemplate : null,
             continuePreviousList,
-            (MsWord.WdListApplyTo)(int)applyTo,
-            (MsWord.WdDefaultListBehavior)(int)defaultListBehavior);
+            applyTo.EnumConvert(MsWord.WdListApplyTo.wdListApplyToSelection),
+            defaultListBehavior.EnumConvert(MsWord.WdDefaultListBehavior.wdWord10ListBehavior));
     }
 
     public void ApplyListTemplate(
-        MsWord.ListTemplate listTemplate,
+        IWordListTemplate listTemplate,
         bool continuePreviousList,
         WdListApplyTo applyTo,
         WdDefaultListBehavior defaultListBehavior)
     {
         _listFormat?.ApplyListTemplate(
-             listTemplate,
+             listTemplate is WordListTemplate template ? template._listTemplate : null,
              continuePreviousList,
-             (MsWord.WdListApplyTo)(int)applyTo,
-             (MsWord.WdDefaultListBehavior)(int)defaultListBehavior);
+             applyTo.EnumConvert(MsWord.WdListApplyTo.wdListApplyToSelection),
+             defaultListBehavior.EnumConvert(MsWord.WdDefaultListBehavior.wdWord10ListBehavior));
     }
 
     /// <inheritdoc/>
@@ -104,9 +124,12 @@ internal class WordListFormat : IWordListFormat
     }
 
     /// <inheritdoc/>
-    public WdContinue CanContinuePreviousList(MsWord.ListTemplate listTemplate)
+    public WdContinue CanContinuePreviousList(IWordListTemplate listTemplate)
     {
-        return (WdContinue)(int)_listFormat?.CanContinuePreviousList(listTemplate);
+        if (_listFormat == null)
+            return WdContinue.wdContinueDisabled;
+        var r = _listFormat?.CanContinuePreviousList(listTemplate is WordListTemplate template ? template._listTemplate : null);
+        return r != null ? r.EnumConvert(WdContinue.wdContinueDisabled) : WdContinue.wdContinueDisabled;
     }
 
     /// <inheritdoc/>

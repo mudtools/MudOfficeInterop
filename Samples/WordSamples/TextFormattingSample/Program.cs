@@ -7,7 +7,6 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using System.IO;
 
 namespace TextFormattingSample
 {

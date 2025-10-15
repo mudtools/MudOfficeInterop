@@ -49,6 +49,16 @@ internal class WordTable : IWordTable
     /// <inheritdoc/>
     public IWordBorders? Borders => _table?.Borders != null ? new WordBorders(_table.Borders) : null;
 
+    public object? Style
+    {
+        get => _table?.get_Style();
+        set
+        {
+            if (_table != null)
+                _table.set_Style(value);
+        }
+    }
+
     /// <inheritdoc/>
     public bool AllowPageBreaks
     {
@@ -333,6 +343,12 @@ internal class WordTable : IWordTable
     {
         if (_table == null || string.IsNullOrWhiteSpace(styleName)) return;
         _table.ApplyStyleDirectFormatting(styleName);
+    }
+
+    public void AutoFitBehavior(WdAutoFitBehavior behavior)
+    {
+        if (_table == null) return;
+        _table.AutoFitBehavior(behavior.EnumConvert(MsWord.WdAutoFitBehavior.wdAutoFitContent));
     }
 
     #endregion
