@@ -65,6 +65,25 @@ internal class WordDocument : IWordDocument
         }
     }
 
+    private IOfficeDocumentProperties? _officeDocumentProperties;
+
+    public IOfficeDocumentProperties? BuiltInDocumentProperties
+    {
+        get
+        {
+            if (_document == null)
+                return null;
+            if (_officeDocumentProperties != null)
+                return _officeDocumentProperties;
+            MsCore.DocumentProperties? properties = _document.BuiltInDocumentProperties as MsCore.DocumentProperties;
+            if (properties != null)
+            {
+                _officeDocumentProperties = new OfficeDocumentProperties(properties);
+            }
+            return _officeDocumentProperties;
+        }
+    }
+
     public string Title
     {
         get
@@ -77,21 +96,66 @@ internal class WordDocument : IWordDocument
         }
     }
 
+    public string Author
+    {
+        get
+        {
+            return GetBuiltInDocumentProperty("Author");
+        }
+        set
+        {
+            SetBuiltInDocumentProperty("Author", value);
+        }
+    }
+
+    public string Subject
+    {
+        get
+        {
+            return GetBuiltInDocumentProperty("Subject");
+        }
+        set
+        {
+            SetBuiltInDocumentProperty("Subject", value);
+        }
+    }
+
+    public string Description
+    {
+        get
+        {
+            return GetBuiltInDocumentProperty("Comments");
+        }
+        set
+        {
+            SetBuiltInDocumentProperty("Comments", value);
+        }
+    }
+
+    public string Company
+    {
+        get
+        {
+            return GetBuiltInDocumentProperty("Company");
+        }
+        set
+        {
+            SetBuiltInDocumentProperty("Company", value);
+        }
+    }
+
+
     private string GetBuiltInDocumentProperty(string propertyName)
     {
         try
         {
-            // 使用反射获取内置文档属性
-            var properties = _document.BuiltInDocumentProperties;
-            var type = properties.GetType();
-            var property = type.InvokeMember("Item", System.Reflection.BindingFlags.InvokeMethod, null, properties, new object[] { propertyName });
+            if (_document == null)
+                return string.Empty;
+            if (BuiltInDocumentProperties == null)
+                return string.Empty;
 
-            if (property != null)
-            {
-                var value = property.GetType().InvokeMember("Value", System.Reflection.BindingFlags.GetProperty, null, property, null);
-                return value?.ToString() ?? string.Empty;
-            }
-            return string.Empty;
+            var value = BuiltInDocumentProperties[propertyName]?.Value;
+            return value?.ToString() ?? string.Empty;
         }
         catch
         {
@@ -103,12 +167,13 @@ internal class WordDocument : IWordDocument
     {
         try
         {
-            // 使用反射设置内置文档属性
-            var properties = _document.BuiltInDocumentProperties;
-            var type = properties.GetType();
-            var property = type.InvokeMember("Item", System.Reflection.BindingFlags.InvokeMethod, null, properties, new object[] { propertyName });
-
-            property?.GetType().InvokeMember("Value", System.Reflection.BindingFlags.SetProperty, null, property, new object[] { value ?? string.Empty });
+            if (_document == null)
+                return;
+            if (BuiltInDocumentProperties == null)
+                return;
+            var property = BuiltInDocumentProperties[propertyName];
+            if (property != null)
+                property.Value = value;
         }
         catch (Exception ex)
         {
@@ -1285,6 +1350,7 @@ internal class WordDocument : IWordDocument
             _footnotes?.Dispose();
             _comments?.Dispose();
             _officeCommandBars?.Dispose();
+            _officeDocumentProperties?.Dispose();
         }
         _background = null;
         _officeCommandBars = null;
@@ -1312,7 +1378,7 @@ internal class WordDocument : IWordDocument
         _words = null;
         _inlineShapes = null;
         _shapes = null;
-
+        _officeDocumentProperties = null;
         _disposedValue = true;
     }
 

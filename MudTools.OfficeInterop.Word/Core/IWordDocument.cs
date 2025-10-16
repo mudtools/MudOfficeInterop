@@ -36,6 +36,31 @@ public interface IWordDocument : IDisposable
     string EncryptionProvider { get; set; }
 
     /// <summary>
+    /// 获取或设置文档内置属性集合
+    /// </summary>
+    IOfficeDocumentProperties? BuiltInDocumentProperties { get; }
+
+    /// <summary>
+    /// 获取或设置文档作者
+    /// </summary>
+    string Author { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档主题
+    /// </summary>
+    string Subject { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档描述
+    /// </summary>
+    string Description { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档公司信息
+    /// </summary>
+    string Company { get; set; }
+
+    /// <summary>
     /// 获取或设置文档标题
     /// </summary>
     string Title { get; set; }
