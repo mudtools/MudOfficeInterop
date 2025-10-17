@@ -8,10 +8,17 @@
 		<PackageTags>Office;VBE;Interop;COM;VisualBasic;Editor</PackageTags>
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.Vbe library.</PackageReleaseNotes>
 	</PropertyGroup>
-
+	
 	<ItemGroup>
-		<PackageReference Include="WonderCircuits.Microsoft.Vbe.Interop" Version="15.0.0" />
+		<Reference Include="office">
+			<HintPath>..\DLL\Microsoft.Vbe.Interop.dll</HintPath>
+		</Reference>
+		<Reference Include="office">
+			<HintPath>..\DLL\Office.dll</HintPath>
+		</Reference>
 	</ItemGroup>
+
+
 	<ItemGroup>
 		<ProjectReference Include="..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
 	</ItemGroup>

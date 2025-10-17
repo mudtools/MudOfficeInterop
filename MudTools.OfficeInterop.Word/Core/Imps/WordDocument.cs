@@ -75,8 +75,7 @@ internal class WordDocument : IWordDocument
                 return null;
             if (_officeDocumentProperties != null)
                 return _officeDocumentProperties;
-            MsCore.DocumentProperties? properties = _document.BuiltInDocumentProperties as MsCore.DocumentProperties;
-            if (properties != null)
+            if (_document.BuiltInDocumentProperties is MsCore.DocumentProperties properties)
             {
                 _officeDocumentProperties = new OfficeDocumentProperties(properties);
             }

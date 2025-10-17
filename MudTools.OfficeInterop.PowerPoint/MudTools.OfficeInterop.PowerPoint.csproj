@@ -7,14 +7,18 @@
 		<PackageTags>Office;PowerPoint;Interop;COM;Presentation</PackageTags>
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop.PowerPoint library.</PackageReleaseNotes>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Office.Interop.PowerPoint" Version="15.0.4420.1018" />
-	</ItemGroup>
+	
 	<ItemGroup>
 		<ProjectReference Include="..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<Reference Include="office">
+			<HintPath>..\DLL\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
+		</Reference>
+		<Reference Include="office">
+			<HintPath>..\DLL\Office.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\icon.png" Pack="true" PackagePath="\" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
