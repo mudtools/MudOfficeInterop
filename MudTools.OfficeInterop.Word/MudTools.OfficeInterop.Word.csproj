@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Reference Include="office">
+		<Reference Include="Microsoft.Office.Interop.Word">
 			<HintPath>..\DLL\Microsoft.Office.Interop.Word.dll</HintPath>
 		</Reference>
 		<Reference Include="office">
@@ -25,6 +25,14 @@
 	<ItemGroup>
 		<None Include="..\icon.png" Pack="true" PackagePath="\" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\DLL\Microsoft.Office.Interop.Word.dll" Pack="true" PackagePath="lib\net462" />
+		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\net462" />
+		<None Include="..\DLL\Microsoft.Office.Interop.Word.dll" Pack="true" PackagePath="lib\netstandard2.0" />
+		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\netstandard2.0" />
+		<None Include="..\DLL\Microsoft.Office.Interop.Word.dll" Pack="true" PackagePath="lib\net6.0-windows" />
+		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\net6.0-windows" />
+		<None Include="..\DLL\Microsoft.Office.Interop.Word.dll" Pack="true" PackagePath="lib\net8-windows" />
+		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\net8-windows" />
 	</ItemGroup>
 
 </Project>

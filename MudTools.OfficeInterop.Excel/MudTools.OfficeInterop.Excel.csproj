@@ -14,13 +14,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="office">
+		<Reference Include="Microsoft.Office.Interop.Excel">
 			<HintPath>..\DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
 		</Reference>
 		<Reference Include="office">
 			<HintPath>..\DLL\Office.dll</HintPath>
 		</Reference>
-		<Reference Include="office">
+		<Reference Include="Microsoft.Vbe.Interop">
 			<HintPath>..\DLL\Microsoft.Vbe.Interop.dll</HintPath>
 		</Reference>
 	</ItemGroup>
@@ -28,5 +28,11 @@
 	<ItemGroup>
 		<None Include="..\icon.png" Pack="true" PackagePath="\" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\DLL\Microsoft.Office.Interop.Excel.dll" Pack="true" PackagePath="lib\net462" />
+		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\net462" />
+		<None Include="..\DLL\Microsoft.Vbe.Interop.dll" Pack="true" PackagePath="lib\net462" />
+		<None Include="..\DLL\Microsoft.Office.Interop.Excel.dll" Pack="true" PackagePath="lib\netstandard2.0" />
+		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\netstandard2.0" />
+		<None Include="..\DLL\Microsoft.Vbe.Interop.dll" Pack="true" PackagePath="lib\netstandard2.0" />
 	</ItemGroup>
 </Project>
