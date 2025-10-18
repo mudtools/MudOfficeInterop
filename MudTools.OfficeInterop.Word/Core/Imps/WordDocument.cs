@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -75,10 +75,27 @@ internal class WordDocument : IWordDocument
                 return null;
             if (_officeDocumentProperties != null)
                 return _officeDocumentProperties;
-            if (_document.BuiltInDocumentProperties is MsCore.DocumentProperties properties)
+
+            // 修复拆箱失败问题，使用反射方式获取DocumentProperties对象
+
+            var propertiesObj = _document.BuiltInDocumentProperties;
+            try
             {
-                _officeDocumentProperties = new OfficeDocumentProperties(properties);
+                if (propertiesObj != null)
+                {
+                    _officeDocumentProperties = new OfficeDocumentProperties(propertiesObj);
+                }
             }
+            catch (InvalidCastException)
+            {
+                _officeDocumentProperties = null;
+            }
+            catch
+            {
+                // 如果出现其他异常，也返回null
+                _officeDocumentProperties = null;
+            }
+
             return _officeDocumentProperties;
         }
     }
@@ -761,7 +778,7 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public void Save(string fileName = null, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault)
+    public void Save(string? fileName = null, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault)
     {
         try
         {
@@ -771,7 +788,9 @@ internal class WordDocument : IWordDocument
             }
             else
             {
-                _document.SaveAs2(fileName, (MsWord.WdSaveFormat)fileFormat);
+                _document.SaveAs2(
+                    FileName: fileName,
+                    FileFormat: fileFormat.EnumConvert(MsWord.WdSaveFormat.wdFormatDocumentDefault));
             }
         }
         catch (Exception ex)
@@ -788,7 +807,10 @@ internal class WordDocument : IWordDocument
         try
         {
             var readOnly = readOnlyRecommended ? (object)true : missing;
-            _document.SaveAs2(fileName, (MsWord.WdSaveFormat)fileFormat, ref readOnly);
+            _document.SaveAs2(
+                FileName: fileName,
+                FileFormat: fileFormat.EnumConvert(MsWord.WdSaveFormat.wdFormatDocumentDefault),
+                LockComments: readOnly);
         }
         catch (Exception ex)
         {

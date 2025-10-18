@@ -16,7 +16,8 @@ namespace MudTools.OfficeInterop.Imps;
 internal class OfficeDocumentProperties : IOfficeDocumentProperties
 {
     private static readonly ILog log = LogManager.GetLogger(typeof(OfficeDocumentProperties));
-    internal MsCore.DocumentProperties? _properties;
+
+    private dynamic _dynamicProperties;
     private bool _disposedValue;
 
     /// <summary>
@@ -24,26 +25,26 @@ internal class OfficeDocumentProperties : IOfficeDocumentProperties
     /// </summary>
     /// <param name="properties">要封装的 DocumentProperties COM 对象。</param>
     /// <exception cref="ArgumentNullException">当 <paramref name="properties"/> 为 null 时抛出。</exception>
-    internal OfficeDocumentProperties(MsCore.DocumentProperties properties)
+    internal OfficeDocumentProperties(object properties)
     {
-        _properties = properties ?? throw new ArgumentNullException(nameof(properties));
+        _dynamicProperties = properties ?? throw new ArgumentNullException(nameof(properties));
         _disposedValue = false;
     }
 
     #region IOfficeDocumentProperties 属性实现
 
-    public int Count => _properties?.Count ?? 0;
+    public int Count => _dynamicProperties?.Count ?? 0;
 
     public IOfficeDocumentProperty? this[int index]
     {
         get
         {
-            if (_properties == null || index < 1 || index > _properties.Count)
+            if (_dynamicProperties == null || index < 1 || index > _dynamicProperties.Count)
                 return null;
 
             try
             {
-                var comProperty = _properties[index];
+                var comProperty = _dynamicProperties[index];
                 return comProperty != null ? new OfficeDocumentProperty(comProperty) : null;
             }
             catch (Exception ex)
@@ -58,12 +59,12 @@ internal class OfficeDocumentProperties : IOfficeDocumentProperties
     {
         get
         {
-            if (_properties == null)
+            if (_dynamicProperties == null)
                 return null;
 
             try
             {
-                var comProperty = _properties[name];
+                var comProperty = _dynamicProperties[name];
                 return comProperty != null ? new OfficeDocumentProperty(comProperty) : null;
             }
             catch (Exception ex)
@@ -80,7 +81,7 @@ internal class OfficeDocumentProperties : IOfficeDocumentProperties
 
     public IOfficeDocumentProperty? Add(string name, bool linkToContent, MsoDocProperties type, object value, object? linkSource = null)
     {
-        if (_properties == null)
+        if (_dynamicProperties == null)
             return null;
 
         try
@@ -90,11 +91,11 @@ internal class OfficeDocumentProperties : IOfficeDocumentProperties
             if (linkToContent)
             {
                 // 当链接到内容时，value 参数通常代表链接源
-                comProperty = _properties.Add(name, linkToContent, type, value, linkSource);
+                comProperty = _dynamicProperties.Add(name, linkToContent, type, value, linkSource);
             }
             else
             {
-                comProperty = _properties.Add(name, linkToContent, type, value);
+                comProperty = _dynamicProperties.Add(name, linkToContent, type, value);
             }
 
             return comProperty != null ? new OfficeDocumentProperty(comProperty) : null;
@@ -112,10 +113,10 @@ internal class OfficeDocumentProperties : IOfficeDocumentProperties
 
     public IEnumerator<IOfficeDocumentProperty> GetEnumerator()
     {
-        if (_properties == null)
+        if (_dynamicProperties == null)
             yield break;
 
-        for (int i = 1; i <= _properties.Count; i++)
+        for (int i = 1; i <= _dynamicProperties.Count; i++)
         {
             var property = this[i];
             if (property != null)
@@ -136,10 +137,10 @@ internal class OfficeDocumentProperties : IOfficeDocumentProperties
     {
         if (_disposedValue) return;
 
-        if (disposing && _properties != null)
+        if (disposing && _dynamicProperties != null)
         {
-            Marshal.ReleaseComObject(_properties);
-            _properties = null;
+            Marshal.ReleaseComObject(_dynamicProperties);
+            _dynamicProperties = null;
         }
 
         _disposedValue = true;

@@ -418,7 +418,7 @@ public interface IWordDocument : IDisposable
     /// </summary>
     /// <param name="fileName">文件名（可选）</param>
     /// <param name="fileFormat">文件格式（可选）</param>
-    void Save(string fileName = null, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault);
+    void Save(string? fileName = null, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault);
 
     /// <summary>
     /// 另存为文档

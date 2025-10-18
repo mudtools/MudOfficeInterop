@@ -5,10 +5,10 @@
 		<Description>Office COM组件核心功能二次封装</Description>
 		<AssemblyName>MudTools.OfficeInterop</AssemblyName>
 		<PackageId>MudTools.OfficeInterop</PackageId>
-		<PackageTags>Office;Interop;COM;Core;Ribbon</PackageTags>		
+		<PackageTags>Office;Interop;COM;Core;Ribbon</PackageTags>
 		<PackageReleaseNotes>Initial release of MudTools.OfficeInterop core library.</PackageReleaseNotes>
-	</PropertyGroup>	
-	
+	</PropertyGroup>
+
 	<ItemGroup>
 		<None Include="..\icon.png" Pack="true" PackagePath="\" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
@@ -16,11 +16,14 @@
 		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\netstandard2.0" />
 		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\net6.0-windows" />
 		<None Include="..\DLL\Office.dll" Pack="true" PackagePath="lib\net8-windows" />
-	</ItemGroup>	
-	
+	</ItemGroup>
+
 	<ItemGroup>
-	  <Reference Include="office">
-	    <HintPath>..\DLL\Office.dll</HintPath>
-	  </Reference>
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<Reference Include="Office">
+			<HintPath>..\DLL\Office.dll</HintPath>
+			<Private>false</Private>
+			<EmbedInteropTypes>false</EmbedInteropTypes>
+		</Reference>
 	</ItemGroup>
 </Project>
