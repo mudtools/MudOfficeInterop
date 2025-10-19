@@ -140,7 +140,7 @@ namespace DocumentAutomationProcessingSample
             WorkflowConfiguration config)
         {
             using var app = WordFactory.Open(inputFilePath);
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 执行配置的处理步骤
             if (config.StandardizeFormat)
@@ -193,17 +193,19 @@ namespace DocumentAutomationProcessingSample
             try
             {
                 // 标准化字体
-                var range = document.Range();
+                using var range = document.Range();
                 range.Font.Name = "宋体";
                 range.Font.Size = 12;
 
                 // 标准化段落格式
                 foreach (var paragraph in document.Paragraphs)
                 {
-                    paragraph.Format.LineSpacing = 1.5f; // 1.5倍行距
-                    paragraph.Format.SpaceAfter = 12;    // 段后间距
+                    using (paragraph)
+                    {
+                        paragraph.Format.LineSpacing = 1.5f; // 1.5倍行距
+                        paragraph.Format.SpaceAfter = 12;    // 段后间距
+                    }
                 }
-
                 Console.WriteLine("  - 文档格式已标准化");
             }
             catch (Exception ex)
@@ -239,12 +241,12 @@ namespace DocumentAutomationProcessingSample
             try
             {
                 // 添加页眉
-                var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                using var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 headerRange.Text = "公司文档";
                 headerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 添加页脚（包含页码）
-                var footerRange = document.Sections[1].Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                using var footerRange = document.Sections[1].Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 footerRange.Fields.Add(footerRange, WdFieldType.wdFieldPage);
                 footerRange.Text = " 第 页";
                 footerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -266,7 +268,7 @@ namespace DocumentAutomationProcessingSample
             try
             {
                 // 查找目录插入位置（通常在文档开头）
-                var range = document.Range(0, 0);
+                using var range = document.Range(0, 0);
                 range.Text = "目录\n";
                 range.Font.Size = 16;
                 range.Font.Bold = 1;
@@ -296,9 +298,9 @@ namespace DocumentAutomationProcessingSample
                 // 在每个节中添加水印
                 for (int i = 1; i <= document.Sections.Count; i++)
                 {
-                    var section = document.Sections[i];
-                    var header = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
-                    var shape = header.Range.ShapeRange.AddTextEffect(
+                    using var section = document.Sections[i];
+                    using var header = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+                    using var shape = header.Range.ShapeRange.AddTextEffect(
                         MsoPresetTextEffect.msoTextEffect1,
                         watermarkText,
                         "Arial",

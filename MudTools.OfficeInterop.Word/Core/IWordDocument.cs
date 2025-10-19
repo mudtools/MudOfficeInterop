@@ -411,6 +411,14 @@ public interface IWordDocument : IDisposable
     string WritePassword { set; }
 
     /// <summary>
+    /// 获取文档的统计信息，如页数、字数、字符数等
+    /// </summary>
+    /// <param name="Statistic">指定要计算的统计信息类型</param>
+    /// <param name="IncludeFootnotesAndEndnotes">是否包含脚注和尾注，默认为 null</param>
+    /// <returns>指定统计信息的数值</returns>
+    int ComputeStatistics(WdStatistic Statistic, bool? IncludeFootnotesAndEndnotes = null);
+
+    /// <summary>
     /// 激活文档
     /// </summary>
     void Activate();

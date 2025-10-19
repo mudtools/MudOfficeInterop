@@ -323,7 +323,7 @@ namespace DocumentAutomationProcessingSample
 
                 // 打开文档进行内容处理
                 using var app = WordFactory.Open(sampleFilePath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 定义内容操作
                 var operations = new List<ContentOperation>
@@ -570,7 +570,7 @@ namespace DocumentAutomationProcessingSample
                 if (File.Exists(sampleFilePath))
                 {
                     using var app = WordFactory.Open(sampleFilePath);
-                    var document = app.ActiveDocument;
+                    using var document = app.ActiveDocument;
 
                     var operations = new List<ContentOperation>
                     {

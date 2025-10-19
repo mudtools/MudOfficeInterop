@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -12,7 +14,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordContentControls : IWordContentControls
 {
-    private MsWord.ContentControls _contentControls;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordContentControls));
+    private MsWord.ContentControls? _contentControls;
     private bool _disposedValue;
 
     /// <summary>
@@ -28,16 +31,16 @@ internal class WordContentControls : IWordContentControls
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _contentControls != null ? new WordApplication(_contentControls.Application) : null;
+    public IWordApplication? Application => _contentControls != null ? new WordApplication(_contentControls.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _contentControls?.Parent;
+    public object? Parent => _contentControls?.Parent;
 
     /// <inheritdoc/>
     public int Count => _contentControls?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordContentControl this[object index]
+    public IWordContentControl? this[object index]
     {
         get
         {
@@ -49,7 +52,7 @@ internal class WordContentControls : IWordContentControls
             }
             catch (COMException)
             {
-                // 如果索引无效，则返回 null。
+                log.Error($"Failed to get content control at index: {index}");
                 return null;
             }
         }
@@ -60,18 +63,18 @@ internal class WordContentControls : IWordContentControls
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordContentControl Add(MsWord.WdContentControlType type, object range)
+    public IWordContentControl? Add(WdContentControlType type, object? range = null)
     {
         if (_contentControls == null) return null;
         try
         {
-            var newContentControl = _contentControls.Add(type, ref range);
+            var newContentControl = _contentControls.Add(type.EnumConvert(MsWord.WdContentControlType.wdContentControlText), range ?? Type.Missing);
             return newContentControl != null ? new WordContentControl(newContentControl) : null;
         }
         catch (COMException ex)
         {
             // 可能由于类型不支持、范围无效等原因导致添加失败
-            System.Diagnostics.Debug.WriteLine($"Failed to add content control: {ex.Message}");
+            log.Error($"Failed to add content control: {ex.Message}");
             return null;
         }
     }

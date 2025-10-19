@@ -40,24 +40,6 @@ namespace FAQSample
             }
         }
 
-        /// <summary>
-        /// 安全地释放COM对象
-        /// </summary>
-        /// <param name="comObject">COM对象</param>
-        public static void SafeReleaseComObject(object comObject)
-        {
-            if (comObject != null)
-            {
-                try
-                {
-                    Marshal.ReleaseComObject(comObject);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"释放COM对象时出错: {ex.Message}");
-                }
-            }
-        }
 
         /// <summary>
         /// 验证文档有效性

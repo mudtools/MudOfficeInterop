@@ -54,6 +54,67 @@ internal class WordFormField : IWordFormField
     /// <inheritdoc/>
     public WdFieldType Type => _formField?.Type != null ? (WdFieldType)(int)_formField?.Type : WdFieldType.wdFieldAutoText;
 
+
+    public IWordTextInput? TextInput
+    {
+        get
+        {
+            if (_formField?.TextInput != null)
+                return new WordTextInput(_formField.TextInput);
+            return null;
+        }
+    }
+
+    public IWordCheckBox? CheckBox
+    {
+        get
+        {
+            if (_formField?.CheckBox != null)
+                return new WordCheckBox(_formField.CheckBox);
+            return null;
+        }
+    }
+
+    public IWordDropDown? DropDown
+    {
+        get
+        {
+            if (_formField?.DropDown != null)
+                return new WordDropDown(_formField.DropDown);
+            return null;
+        }
+    }
+
+    public IWordFormField? Next
+    {
+        get
+        {
+            if (_formField?.Next != null)
+                return new WordFormField(_formField.Next);
+            return null;
+        }
+    }
+
+    public IWordFormField? Previous
+    {
+        get
+        {
+            if (_formField?.Previous != null)
+                return new WordFormField(_formField.Previous);
+            return null;
+        }
+    }
+
+    public IWordRange? Range
+    {
+        get
+        {
+            if (_formField?.Range != null)
+                return new WordRange(_formField.Range);
+            return null;
+        }
+    }
+
     /// <inheritdoc/>
     public bool CheckBox_Checked
     {
@@ -107,6 +168,16 @@ internal class WordFormField : IWordFormField
     #endregion
 
     #region 方法实现
+
+    public void Copy()
+    {
+        _formField?.Copy();
+    }
+
+    public void Cut()
+    {
+        _formField?.Cut();
+    }
 
     /// <inheritdoc/>
     public void Delete()

@@ -75,6 +75,7 @@ internal partial class WordApplication : IWordApplication
     /// <inheritdoc/>
     public string PathSeparator => _application?.PathSeparator ?? string.Empty;
 
+
     /// <summary>
     /// 获取或设置应用程序窗口的水平位置
     /// </summary>

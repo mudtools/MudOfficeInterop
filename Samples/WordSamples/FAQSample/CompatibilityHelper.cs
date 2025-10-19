@@ -160,7 +160,7 @@ namespace FAQSample
             {
                 return culture.TwoLetterISOLanguageName.ToLower() switch
                 {
-                    "zh" => WdLanguageID.wdChinesePRC,
+                    "zh" => WdLanguageID.wdSimplifiedChinese,
                     "en" => WdLanguageID.wdEnglishUS,
                     "ja" => WdLanguageID.wdJapanese,
                     "ko" => WdLanguageID.wdKorean,
@@ -178,9 +178,9 @@ namespace FAQSample
             public void ApplyFormattingProgrammatically(IWordSelection selection)
             {
                 // 正确：使用枚举常量
-                selection.Font.Bold = 1;
-                selection.Font.Italic = 1;
-                selection.Font.Underline = (int)WdUnderline.wdUnderlineSingle;
+                selection.Font.Bold = true;
+                selection.Font.Italic = true;
+                selection.Font.Underline = WdUnderline.wdUnderlineSingle;
             }
 
             /// <summary>
@@ -208,7 +208,7 @@ namespace FAQSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 测试基本功能
                 result.BasicFeatures = TestBasicFeatures(document);
@@ -263,7 +263,7 @@ namespace FAQSample
             try
             {
                 // 测试字体操作
-                document.Range().Font.Bold = 1;
+                document.Range().Font.Bold = true;
                 features["字体操作"] = true;
             }
             catch
@@ -286,7 +286,7 @@ namespace FAQSample
             try
             {
                 // 测试表格操作
-                var table = document.Tables.Add(document.Range(), 2, 2);
+                using var table = document.Tables.Add(document.Range(), 2, 2);
                 features["表格操作"] = table != null;
             }
             catch

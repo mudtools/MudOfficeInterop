@@ -63,12 +63,12 @@ internal class WordEditors : IWordEditors
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordEditor Add(object editorID)
+    public IWordEditor? Add(WdEditorType? editorID = null)
     {
-        if (_editors == null || editorID == null) return null;
+        if (_editors == null) return null;
         try
         {
-            var newEditor = _editors.Add(editorID);
+            var newEditor = _editors.Add(editorID.ComArgsConvert(e => e.EnumConvert(WdEditorType.wdEditorCurrent)));
             return newEditor != null ? new WordEditor(newEditor) : null;
         }
         catch (COMException ex)

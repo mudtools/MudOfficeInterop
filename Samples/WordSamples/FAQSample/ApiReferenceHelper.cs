@@ -92,7 +92,7 @@ namespace FAQSample
             try
             {
                 using var app = WordFactory.Open(documentPath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 方法1：使用for循环
                 for (int i = 1; i <= document.Paragraphs.Count; i++)
@@ -121,7 +121,7 @@ namespace FAQSample
             try
             {
                 using var app = WordFactory.Open(documentPath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 方法2：使用foreach（如果支持）
                 int index = 1;
@@ -149,7 +149,7 @@ namespace FAQSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
                 document.Range().Text = "这是第一段文本。\n\n" +
@@ -157,12 +157,12 @@ namespace FAQSample
                                       "这是第三段文本，也是最后一段。";
 
                 // 格式化第一段
-                var firstParagraph = document.Paragraphs[1];
-                firstParagraph.Range.Font.Bold = 1;
+                using var firstParagraph = document.Paragraphs[1];
+                firstParagraph.Range.Font.Bold = true;
                 firstParagraph.Range.Font.Size = 14;
 
                 // 保存文档
-                document.SaveAs2(filePath);
+                document.Save(filePath);
                 return true;
             }
             catch (Exception ex)
@@ -209,7 +209,7 @@ namespace FAQSample
                 // 创建测试文件
                 using (var app = WordFactory.BlankWorkbook())
                 {
-                    app.ActiveDocument.SaveAs2(tempPath);
+                    app.ActiveDocument.Save(tempPath);
                 }
 
                 var openTimes = new List<TimeSpan>();

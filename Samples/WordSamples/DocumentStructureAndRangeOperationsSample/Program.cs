@@ -64,10 +64,10 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 设置文档内容
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "文档标题\n\n这是文档正文内容。\n\n结束";
 
                 // 获取文档基本信息
@@ -108,10 +108,10 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "示例文档内容\n\n创建时间: " + DateTime.Now.ToString();
 
                 // 文档基本信息
@@ -150,15 +150,15 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 编辑文档内容
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "文档生命周期管理示例\n\n内容创建时间: " + DateTime.Now.ToString();
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "LifecycleDemo.docx");
-                document.SaveAs2(filePath);
+                document.Save(filePath);
                 Console.WriteLine($"文档已保存到: {filePath}");
                 Console.WriteLine($"保存状态: {document.Saved}");
 
@@ -178,10 +178,10 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 获取整个文档的范围
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "第一段文本。\n第二段文本。\n第三段文本。";
 
                 // 创建指定位置的范围
@@ -208,10 +208,10 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 获取整个文档范围并填充示例文本
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "这是第一段文本。\n这是第二段文本。\n这是第三段文本。";
 
                 // 重新定义范围
@@ -240,7 +240,7 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
                 var range = document.Range();
 
                 // 设置文本
@@ -278,28 +278,28 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加内容
-                var range1 = document.Range();
+                using var range1 = document.Range();
                 range1.Text = "原始内容\n";
 
-                var range2 = document.Range();
+                using var range2 = document.Range();
                 range2.InsertAfter("另一部分内容\n");
 
                 Console.WriteLine($"复制前文档内容:\n{document.Range().Text}");
 
                 // 复制内容
-                var sourceRange = document.Range(0, 4);
-                var targetRange = document.Range(document.StoryLength, document.StoryLength);
+                using var sourceRange = document.Range(0, 4);
+                using var targetRange = document.Range(document.StoryLength, document.StoryLength);
                 sourceRange.Copy();
                 targetRange.Paste();
 
                 Console.WriteLine($"复制后文档内容:\n{document.Range().Text}");
 
                 // 移动内容
-                var moveSource = document.Range(5, 9);
-                var moveTarget = document.Range(document.StoryLength, document.StoryLength);
+                using var moveSource = document.Range(5, 9);
+                using var moveTarget = document.Range(document.StoryLength, document.StoryLength);
                 moveSource.Cut();
                 moveTarget.Paste();
 
@@ -321,15 +321,15 @@ namespace DocumentStructureAndRangeOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建复杂文档结构
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "第一段文本内容。\n\n第二段文本内容，包含更多信息。\n\n第三段文本内容，这是最后一段。";
 
                 // 查找和替换操作
-                var findRange = document.Range();
-                var find = findRange.Find;
+                using var findRange = document.Range();
+                using var find = findRange.Find;
                 find.ClearFormatting();
                 find.Text = "文本";
                 find.Replacement.Text = "内容";
@@ -341,7 +341,7 @@ namespace DocumentStructureAndRangeOperationsSample
                 find.MatchWildcards = false;
                 find.MatchSoundsLike = false;
                 find.MatchAllWordForms = false;
-                find.Execute(Replace: WdReplace.wdReplaceAll);
+                find.Execute(replace: WdReplace.wdReplaceAll);
 
                 Console.WriteLine($"查找替换后文档内容:\n{document.Range().Text}");
 
@@ -478,10 +478,10 @@ namespace DocumentStructureAndRangeOperationsSample
         public DocumentAnalysisResult CreateAndAnalyzeDocument()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加示例内容
-            var range = document.Range();
+            using var range = document.Range();
             range.Text = "这是第一段文本内容，用于分析。\n\n" +
                         "这是第二段文本内容，包含更多信息用于详细分析。\n\n" +
                         "这是第三段文本内容，作为最后一个段落用于完整分析。";
@@ -503,10 +503,10 @@ namespace DocumentStructureAndRangeOperationsSample
         public RangeOperationsResult PerformRangeOperations()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加初始内容
-            var range = document.Range();
+            using var range = document.Range();
             range.Text = "初始文本内容用于范围操作演示。";
 
             string originalText = range.Text;
@@ -514,7 +514,7 @@ namespace DocumentStructureAndRangeOperationsSample
             // 执行范围操作
             range.InsertBefore("前缀: ");
             range.InsertAfter(" 后缀");
-            range.Font.Bold = 1;
+            range.Font.Bold = true;
 
             return new RangeOperationsResult
             {
@@ -530,18 +530,18 @@ namespace DocumentStructureAndRangeOperationsSample
         public FindReplaceResult PerformFindReplaceOperations()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加初始内容
-            var range = document.Range();
+            using var range = document.Range();
             range.Text = "查找替换操作演示。查找文本并替换文本。多次出现文本需要替换。";
 
             string beforeText = range.Text;
             int replacementCount = 0;
 
             // 执行查找替换操作
-            var findRange = document.Range();
-            var find = findRange.Find;
+            using var findRange = document.Range();
+            using var find = findRange.Find;
             find.ClearFormatting();
             find.Text = "文本";
             find.Replacement.Text = "内容";
@@ -553,7 +553,7 @@ namespace DocumentStructureAndRangeOperationsSample
             find.MatchWildcards = false;
             find.MatchSoundsLike = false;
             find.MatchAllWordForms = false;
-            replacementCount = find.Execute(Replace: WdReplace.wdReplaceAll) ? 1 : 0; // 简化处理
+            replacementCount = find.Execute(replace: WdReplace.wdReplaceAll) ? 1 : 0; // 简化处理
 
             return new FindReplaceResult
             {

@@ -96,16 +96,16 @@ namespace BasicDocumentOperationsSample
                 using var app = WordFactory.BlankWorkbook();
 
                 // 获取文档集合
-                var documents = app.Documents;
+                using var documents = app.Documents;
                 Console.WriteLine($"初始文档数量: {documents.Count}");
 
                 // 创建新文档
-                var newDoc = documents.Add();
+                using var newDoc = documents.Add();
                 newDoc.Range().Text = "这是第一个文档\n创建时间: " + DateTime.Now.ToString();
                 Console.WriteLine($"创建新文档后文档数量: {documents.Count}");
 
                 // 再创建一个新文档
-                var newDoc2 = documents.Add();
+                using var newDoc2 = documents.Add();
                 newDoc2.Range().Text = "这是第二个文档\n创建时间: " + DateTime.Now.ToString();
                 Console.WriteLine($"再次创建新文档后文档数量: {documents.Count}");
 
@@ -113,7 +113,7 @@ namespace BasicDocumentOperationsSample
                 Console.WriteLine("所有文档列表:");
                 for (int i = 1; i <= documents.Count; i++)
                 {
-                    var doc = documents[i];
+                    using var doc = documents[i];
                     Console.WriteLine($"  文档 {i}: {doc.Name}");
                 }
 
@@ -140,21 +140,21 @@ namespace BasicDocumentOperationsSample
                 using var app = WordFactory.BlankWorkbook();
 
                 // 创建多个文档
-                var doc1 = app.Documents.Add();
+                using var doc1 = app.Documents.Add();
                 doc1.Range().Text = "文档1内容";
 
-                var doc2 = app.Documents.Add();
+                using var doc2 = app.Documents.Add();
                 doc2.Range().Text = "文档2内容";
 
                 // 获取活动文档
-                var activeDoc = app.ActiveDocument;
+                using var activeDoc = app.ActiveDocument;
                 if (activeDoc != null)
                 {
                     Console.WriteLine($"当前活动文档: {activeDoc.Name}");
                 }
 
                 // 获取活动窗口
-                var activeWindow = app.ActiveWindow;
+                using var activeWindow = app.ActiveWindow;
                 if (activeWindow != null)
                 {
                     Console.WriteLine($"当前活动窗口标题: {activeWindow.Caption}");
@@ -221,7 +221,7 @@ namespace BasicDocumentOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加文档内容
                 document.Range().Text = "文档保存和关闭示例\n\n创建时间: " + DateTime.Now.ToString();
@@ -310,7 +310,7 @@ namespace BasicDocumentOperationsSample
         public string CreateNewDocument(string content)
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加内容
             document.Range().Text = content;
@@ -354,7 +354,7 @@ namespace BasicDocumentOperationsSample
         public string OpenAndModifyDocument(string documentPath, string additionalContent)
         {
             using var app = WordFactory.Open(documentPath);
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加附加内容
             document.Range().Text += additionalContent;
@@ -377,7 +377,7 @@ namespace BasicDocumentOperationsSample
             for (int i = 1; i <= count; i++)
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加内容
                 document.Range().Text = $"批量创建的文档 {i}\n\n创建时间: {DateTime.Now}";

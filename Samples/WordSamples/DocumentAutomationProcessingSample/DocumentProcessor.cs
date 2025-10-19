@@ -28,7 +28,7 @@ namespace DocumentAutomationProcessingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 设置文档标题
                 document.Title = title;
@@ -36,22 +36,22 @@ namespace DocumentAutomationProcessingSample
                 document.Subject = "示例文档";
 
                 // 添加标题
-                var titleRange = document.Range();
+                using var titleRange = document.Range();
                 titleRange.Text = $"{title}\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 18;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
 
                 // 添加内容
-                var contentRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var contentRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 contentRange.Text = content;
                 contentRange.Font.Name = "宋体";
                 contentRange.Font.Size = 12;
 
                 // 保存文档
-                document.SaveAs2(filePath);
+                document.Save(filePath);
 
                 Console.WriteLine($"示例文档已创建: {filePath}");
                 return true;
@@ -206,7 +206,7 @@ namespace DocumentAutomationProcessingSample
         {
             if (parameters.ContainsKey("FindText") && parameters.ContainsKey("ReplaceText"))
             {
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 find.ClearFormatting();
                 find.Text = parameters["FindText"];
                 find.Replacement.Text = parameters["ReplaceText"];
@@ -268,7 +268,7 @@ namespace DocumentAutomationProcessingSample
                 int start = int.Parse(parameters["Start"]);
                 int end = int.Parse(parameters["End"]);
 
-                var range = document.Range(start, end);
+                using var range = document.Range(start, end);
 
                 // 应用格式设置
                 if (parameters.ContainsKey("FontName"))
@@ -385,20 +385,15 @@ namespace DocumentAutomationProcessingSample
             try
             {
                 // 禁用屏幕更新以提高性能
-                var application = document.Application;
+                using var application = document.Application;
                 bool oldScreenUpdating = application.ScreenUpdating;
                 application.ScreenUpdating = false;
-
-                // 禁用事件处理
-                bool oldEvents = application.Events;
-                application.Events = false;
 
                 // 执行优化操作
                 // 例如：压缩图片、删除未使用的格式等
 
                 // 恢复设置
                 application.ScreenUpdating = oldScreenUpdating;
-                application.Events = oldEvents;
 
                 Console.WriteLine("文档性能优化完成");
                 return true;

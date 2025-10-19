@@ -67,7 +67,7 @@ namespace FAQSample
                 {
                     try
                     {
-                        var document = _application.Documents.Open(path);
+                        using var document = _application.Documents.Open(path);
                         try
                         {
                             processAction(document);

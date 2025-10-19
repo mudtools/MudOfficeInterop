@@ -40,5 +40,5 @@ public interface IWordEditors : IEnumerable<IWordEditor>, IDisposable
     /// </summary>
     /// <param name="editorID">要添加的编辑者的ID（可以是用户电子邮件地址或用户组名称）。</param>
     /// <returns>新创建的编辑者对象。</returns>
-    IWordEditor Add(object editorID);
+    IWordEditor? Add(WdEditorType? editorID = null);
 }

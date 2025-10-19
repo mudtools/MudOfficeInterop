@@ -777,6 +777,21 @@ internal class WordDocument : IWordDocument
         _disposedValue = false;
     }
 
+    public int ComputeStatistics(WdStatistic Statistic, bool? IncludeFootnotesAndEndnotes = null)
+    {
+        try
+        {
+            return _document.ComputeStatistics(
+                Statistic.EnumConvert(MsWord.WdStatistic.wdStatisticWords),
+                IncludeFootnotesAndEndnotes.ComArgsVal());
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to compute statistics.", ex);
+        }
+    }
+
+
     public void Activate()
     {
         try

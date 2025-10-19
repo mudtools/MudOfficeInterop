@@ -40,7 +40,7 @@ namespace DocumentProtectionAndSecuritySample
                 var bookmark = _document.Bookmarks.Add(bookmarkName, range);
 
                 // 为书签内容添加编辑权限
-                bookmark.Range.Editors.Add(editorType);
+                bookmark.Range.Editors?.Add(editorType);
 
                 Console.WriteLine($"书签保护已添加: {bookmarkName}");
                 return true;
@@ -80,7 +80,7 @@ namespace DocumentProtectionAndSecuritySample
                         formField.TextInput.Default = defaultValue;
                         if (isReadOnly)
                         {
-                            formField.TextInput.EditType(WdTextInputType.wdRegularText, defaultValue, true);
+                            formField.TextInput.EditType(type: WdTextFormFieldType.wdRegularText, @default: defaultValue, enabled: true);
                         }
                         break;
 
@@ -114,7 +114,7 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 // 添加内容控件
-                var contentControl = range.ContentControls.Add(protectionType);
+                var contentControl = range.ContentControls?.Add(protectionType);
 
                 // 设置保护属性
                 contentControl.LockContentControl = true;
@@ -148,7 +148,7 @@ namespace DocumentProtectionAndSecuritySample
                 titleRange.Text = $"{title}\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 16;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
 
@@ -161,7 +161,7 @@ namespace DocumentProtectionAndSecuritySample
 
                     // 添加字段标签
                     contentRange.Text = $"{field.Label}：";
-                    contentRange.Font.Bold = 1;
+                    contentRange.Font.Bold = true;
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
 
                     // 添加字段占位符
@@ -176,7 +176,7 @@ namespace DocumentProtectionAndSecuritySample
                             break;
                     }
 
-                    contentRange.Font.Bold = 0;
+                    contentRange.Font.Bold = false;
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 }
 
@@ -196,7 +196,7 @@ namespace DocumentProtectionAndSecuritySample
         /// <param name="content">机密内容</param>
         /// <param name="allowedEditors">允许的编辑者列表</param>
         /// <returns>是否创建成功</returns>
-        public bool CreateConfidentialSection(string content, List<string> allowedEditors)
+        public bool CreateConfidentialSection(string content, List<WdEditorType> allowedEditors)
         {
             try
             {
@@ -205,17 +205,17 @@ namespace DocumentProtectionAndSecuritySample
                 // 添加机密内容标记
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = "\n【机密内容开始】\n";
-                range.Font.Bold = 1;
+                range.Font.Bold = true;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
 
                 // 添加机密内容
                 range.Text = $"{content}\n";
-                range.Font.Bold = 0;
+                range.Font.Bold = false;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
 
                 // 添加结束标记
                 range.Text = "【机密内容结束】\n";
-                range.Font.Bold = 1;
+                range.Font.Bold = true;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
 
                 // 为机密内容添加书签保护
@@ -303,7 +303,7 @@ namespace DocumentProtectionAndSecuritySample
                 // 获取书签保护信息
                 for (int i = 1; i <= _document.Bookmarks.Count; i++)
                 {
-                    var bookmark = _document.Bookmarks.Item(i);
+                    var bookmark = _document.Bookmarks[i];
                     var info = new ProtectedContentInfo
                     {
                         ContentType = "书签",
@@ -318,7 +318,7 @@ namespace DocumentProtectionAndSecuritySample
                 // 获取表单字段保护信息
                 for (int i = 1; i <= _document.FormFields.Count; i++)
                 {
-                    var formField = _document.FormFields.Item(i);
+                    var formField = _document.FormFields[i];
                     var info = new ProtectedContentInfo
                     {
                         ContentType = "表单字段",

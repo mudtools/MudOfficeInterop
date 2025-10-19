@@ -8,19 +8,19 @@
 namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示文档中内容控件的集合。
-/// <para>注：使用 <see cref="Add(MsWord.WdContentControlType, object)"/> 方法可向文档中添加新的内容控件。</para>
+/// <para>注：使用 <see cref="Add(WdContentControlType, object)"/> 方法可向文档中添加新的内容控件。</para>
 /// </summary>
 public interface IWordContentControls : IEnumerable<IWordContentControl>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的内容控件数量。
@@ -32,7 +32,7 @@ public interface IWordContentControls : IEnumerable<IWordContentControl>, IDispo
     /// </summary>
     /// <param name="index">索引（从 1 开始）。</param>
     /// <returns>指定的内容控件对象。</returns>
-    IWordContentControl this[object index] { get; }
+    IWordContentControl? this[object index] { get; }
 
     /// <summary>
     /// 向文档中添加一个新的内容控件。
@@ -40,5 +40,5 @@ public interface IWordContentControls : IEnumerable<IWordContentControl>, IDispo
     /// <param name="type">内容控件的类型。</param>
     /// <param name="range">要在其中插入控件的范围。如果省略，则在当前选择位置插入。</param>
     /// <returns>新创建的内容控件对象。</returns>
-    IWordContentControl Add(MsWord.WdContentControlType type, object range);
+    IWordContentControl? Add(WdContentControlType type, object? range = null);
 }

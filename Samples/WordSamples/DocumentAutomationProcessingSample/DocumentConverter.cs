@@ -97,7 +97,7 @@ namespace DocumentAutomationProcessingSample
             WdSaveFormat targetFormat)
         {
             using var app = WordFactory.Open(inputFilePath);
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 生成输出文件路径
             var fileName = Path.GetFileNameWithoutExtension(inputFilePath);
@@ -105,7 +105,7 @@ namespace DocumentAutomationProcessingSample
             var outputFilePath = Path.Combine(outputDirectory, $"{fileName}{extension}");
 
             // 保存为指定格式
-            document.SaveAs2(outputFilePath, targetFormat);
+            document.Save(outputFilePath, targetFormat);
 
             Console.WriteLine($"  - 已转换为: {extension}");
         }
@@ -120,11 +120,10 @@ namespace DocumentAutomationProcessingSample
             return format switch
             {
                 WdSaveFormat.wdFormatDocument => ".doc",
-                WdSaveFormat.wdFormatXMLDocument => ".xml",
+                WdSaveFormat.wdFormatStrictOpenXMLDocument => ".xml",
                 WdSaveFormat.wdFormatPDF => ".pdf",
                 WdSaveFormat.wdFormatRTF => ".rtf",
                 WdSaveFormat.wdFormatFilteredHTML => ".htm",
-                WdSaveFormat.wdFormatHTML => ".html",
                 _ => ".docx"
             };
         }
@@ -250,7 +249,7 @@ namespace DocumentAutomationProcessingSample
                 WdSaveFormat.wdFormatPDF => "PDF",
                 WdSaveFormat.wdFormatRTF => "RTF",
                 WdSaveFormat.wdFormatFilteredHTML => "HTML",
-                WdSaveFormat.wdFormatXMLDocument => "XML",
+                WdSaveFormat.wdFormatStrictOpenXMLDocument => "XML",
                 WdSaveFormat.wdFormatFlatXML => "FlatXML",
                 _ => format.ToString()
             };
