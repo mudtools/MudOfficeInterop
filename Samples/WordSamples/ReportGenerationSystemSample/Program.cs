@@ -52,7 +52,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 创建临时目录
-                string tempDirectory = Path.Combine(Path.GetTempPath(), "ReportGenerationSystem");
+                string tempDirectory = Path.Combine(AppContext.BaseDirectory, "ReportGenerationSystem");
                 if (!Directory.Exists(tempDirectory))
                 {
                     Directory.CreateDirectory(tempDirectory);
@@ -96,7 +96,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 创建临时目录
-                string tempDirectory = Path.Combine(Path.GetTempPath(), "ReportGenerationSystem");
+                string tempDirectory = Path.Combine(AppContext.BaseDirectory, "ReportGenerationSystem");
                 if (!Directory.Exists(tempDirectory))
                 {
                     Directory.CreateDirectory(tempDirectory);
@@ -160,7 +160,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 创建临时目录
-                string tempDirectory = Path.Combine(Path.GetTempPath(), "ReportGenerationSystem");
+                string tempDirectory = Path.Combine(AppContext.BaseDirectory, "ReportGenerationSystem");
                 if (!Directory.Exists(tempDirectory))
                 {
                     Directory.CreateDirectory(tempDirectory);
@@ -223,7 +223,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 创建临时目录
-                string tempDirectory = Path.Combine(Path.GetTempPath(), "ReportGenerationSystem");
+                string tempDirectory = Path.Combine(AppContext.BaseDirectory, "ReportGenerationSystem");
                 if (!Directory.Exists(tempDirectory))
                 {
                     Directory.CreateDirectory(tempDirectory);
@@ -306,7 +306,7 @@ namespace ReportGenerationSystemSample
                 Console.WriteLine();
 
                 // 创建临时目录
-                string tempDirectory = Path.Combine(Path.GetTempPath(), "ReportGenerationSystem");
+                string tempDirectory = Path.Combine(AppContext.BaseDirectory, "ReportGenerationSystem");
                 if (!Directory.Exists(tempDirectory))
                 {
                     Directory.CreateDirectory(tempDirectory);
@@ -360,7 +360,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 创建临时目录
-                string tempDirectory = Path.Combine(Path.GetTempPath(), "ReportGenerationSystem");
+                string tempDirectory = Path.Combine(AppContext.BaseDirectory, "ReportGenerationSystem");
                 if (!Directory.Exists(tempDirectory))
                 {
                     Directory.CreateDirectory(tempDirectory);

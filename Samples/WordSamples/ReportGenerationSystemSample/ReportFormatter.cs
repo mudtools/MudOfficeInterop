@@ -24,7 +24,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 设置页面布局
-                var pageSetup = document.Sections[1].PageSetup;
+                using var pageSetup = document.Sections[1].PageSetup;
                 pageSetup.PageSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
                 pageSetup.TopMargin = 1440;    // 2厘米
@@ -60,7 +60,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 查找并格式化标题
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 find.ClearFormatting();
                 find.Text = "XYZ公司月度销售报表";
                 find.Forward = true;
@@ -116,7 +116,7 @@ namespace ReportGenerationSystemSample
                 // 格式化所有表格
                 for (int i = 1; i <= document.Tables.Count; i++)
                 {
-                    var table = document.Tables[i];
+                    using var table = document.Tables[i];
 
                     // 设置表格边框
                     table.Borders.Enable = true;
@@ -149,7 +149,7 @@ namespace ReportGenerationSystemSample
                 // 格式化正文段落
                 foreach (var paragraph in document.Paragraphs)
                 {
-                    var range = paragraph.Range;
+                    using var range = paragraph.Range;
                     if (range.Font.Size == 12 && range.Font.Name == "宋体")
                     {
                         range.ParagraphFormat.LineSpacing = 1.5f; // 1.5倍行距
@@ -175,7 +175,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 设置页眉中的公司名称
-                var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                using var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 headerRange.Text = $"{companyName}报表";
                 headerRange.Font.Name = "微软雅黑";
                 headerRange.Font.Size = 14;
@@ -184,7 +184,7 @@ namespace ReportGenerationSystemSample
                 headerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 设置标题格式
-                var titleRange = document.Range(0, 50); // 假设标题在前50个字符内
+                using var titleRange = document.Range(0, 50); // 假设标题在前50个字符内
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 20;
                 titleRange.Font.Bold = true;
@@ -209,10 +209,10 @@ namespace ReportGenerationSystemSample
         /// <returns>是否格式化成功</returns>
         public bool ApplyModernFormatting(IWordDocument document)
         {
+            // 设置页面布局
+            var pageSetup = document.Sections[1].PageSetup;
             try
             {
-                // 设置页面布局
-                var pageSetup = document.Sections[1].PageSetup;
                 pageSetup.PageSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
                 pageSetup.TopMargin = 1134;    // 1.5厘米
@@ -241,6 +241,10 @@ namespace ReportGenerationSystemSample
                 Console.WriteLine($"现代风格格式化时出错: {ex.Message}");
                 return false;
             }
+            finally
+            {
+                pageSetup?.Dispose();
+            }
         }
 
         /// <summary>
@@ -251,7 +255,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 find.ClearFormatting();
                 find.Text = "XYZ公司*";
                 find.Forward = true;
@@ -284,7 +288,7 @@ namespace ReportGenerationSystemSample
             {
                 for (int i = 1; i <= document.Tables.Count; i++)
                 {
-                    var table = document.Tables[i];
+                    using var table = document.Tables[i];
 
                     // 设置无边框样式
                     table.Borders.Enable = false;
@@ -351,10 +355,10 @@ namespace ReportGenerationSystemSample
         /// <returns>是否格式化成功</returns>
         public bool ApplyMinimalistFormatting(IWordDocument document)
         {
+            var pageSetup = document.Sections[1].PageSetup;
             try
             {
                 // 设置页面布局
-                var pageSetup = document.Sections[1].PageSetup;
                 pageSetup.PageSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
                 pageSetup.TopMargin = 1417;    // 2厘米
@@ -383,6 +387,10 @@ namespace ReportGenerationSystemSample
                 Console.WriteLine($"简洁风格格式化时出错: {ex.Message}");
                 return false;
             }
+            finally
+            {
+                pageSetup?.Dispose();
+            }
         }
 
         /// <summary>
@@ -393,7 +401,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 find.ClearFormatting();
                 find.Text = "XYZ公司*";
                 find.Forward = true;
@@ -425,7 +433,7 @@ namespace ReportGenerationSystemSample
             {
                 for (int i = 1; i <= document.Tables.Count; i++)
                 {
-                    var table = document.Tables[i];
+                    using var table = document.Tables[i];
 
                     // 设置简单边框
                     table.Borders.Enable = true;
@@ -435,7 +443,7 @@ namespace ReportGenerationSystemSample
                     // 设置表头样式
                     if (table.Rows.Count > 0)
                     {
-                        var headerRow = table.Rows[1];
+                        using var headerRow = table.Rows[1];
                         headerRow.Range.Font.Bold = true;
                         headerRow.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
                         headerRow.Shading.BackgroundPatternColor = WdColor.wdColorGray10;
@@ -444,7 +452,7 @@ namespace ReportGenerationSystemSample
                     // 设置数据行样式
                     for (int j = 2; j <= table.Rows.Count; j++)
                     {
-                        var row = table.Rows[j];
+                        using var row = table.Rows[j];
                         row.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
                     }
 
@@ -468,7 +476,7 @@ namespace ReportGenerationSystemSample
             {
                 foreach (var paragraph in document.Paragraphs)
                 {
-                    var range = paragraph.Range;
+                    using var range = paragraph.Range;
                     range.ParagraphFormat.LineSpacing = 1.15f;
                     range.ParagraphFormat.SpaceAfter = 8;
                 }

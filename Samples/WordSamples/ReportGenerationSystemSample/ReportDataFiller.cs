@@ -130,7 +130,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 using var app = WordFactory.CreateFrom(templatePath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 填充报表信息
                 FillReportInfo(document, reportPeriod, "月度销售报表");
@@ -167,7 +167,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 using var app = WordFactory.CreateFrom(templatePath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 填充报表信息
                 FillReportInfo(document, reportPeriod, "月度财务报表");
@@ -205,7 +205,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 using var app = WordFactory.CreateFrom(templatePath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 填充报表信息
                 FillProjectReportInfo(document, projectName, reportPeriod);
@@ -246,7 +246,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 // 替换占位符
@@ -272,7 +272,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 // 替换占位符
@@ -313,7 +313,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 // 查找表格占位符位置
@@ -321,8 +321,8 @@ namespace ReportGenerationSystemSample
                 if (tablePosition >= 0)
                 {
                     // 创建表格
-                    var tableRange = document.Range(tablePosition, tablePosition + 18); // 18是"{SALES_DATA_TABLE}"的长度
-                    var table = document.Tables.Add(tableRange, salesData.Count + 1, 5); // 表头+数据行
+                    using var tableRange = document.Range(tablePosition, tablePosition + 18); // 18是"{SALES_DATA_TABLE}"的长度
+                    using var table = document.Tables.Add(tableRange, salesData.Count + 1, 5); // 表头+数据行
 
                     // 设置表头
                     table.Cell(1, 1).Range.Text = "产品名称";
@@ -378,7 +378,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 // 计算总结数据
@@ -444,14 +444,14 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 int tablePosition = text.IndexOf("{INCOME_TABLE}");
                 if (tablePosition >= 0)
                 {
-                    var tableRange = document.Range(tablePosition, tablePosition + 14);
-                    var table = document.Tables.Add(tableRange, financialData.Count + 1, 2);
+                    using var tableRange = document.Range(tablePosition, tablePosition + 14);
+                    using var table = document.Tables.Add(tableRange, financialData.Count + 1, 2);
 
                     // 设置表头
                     table.Cell(1, 1).Range.Text = "收入项目";
@@ -510,14 +510,14 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 int tablePosition = text.IndexOf("{EXPENSE_TABLE}");
                 if (tablePosition >= 0)
                 {
-                    var tableRange = document.Range(tablePosition, tablePosition + 15);
-                    var table = document.Tables.Add(tableRange, financialData.Count + 1, 2);
+                    using var tableRange = document.Range(tablePosition, tablePosition + 15);
+                    using var table = document.Tables.Add(tableRange, financialData.Count + 1, 2);
 
                     // 设置表头
                     table.Cell(1, 1).Range.Text = "支出项目";
@@ -526,7 +526,7 @@ namespace ReportGenerationSystemSample
                     // 格式化表头
                     for (int i = 1; i <= 2; i++)
                     {
-                        var cell = table.Cell(1, i);
+                        using var cell = table.Cell(1, i);
                         cell.Range.Font.Bold = true;
                         cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                         cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
@@ -547,7 +547,7 @@ namespace ReportGenerationSystemSample
                     }
 
                     // 添加总计行
-                    var totalRow = table.Rows.Add();
+                    using var totalRow = table.Rows.Add();
                     totalRow.Cells[1].Range.Text = "总支出";
                     totalRow.Cells[2].Range.Text = totalExpense.ToString("F2");
                     totalRow.Cells[1].Range.Font.Bold = true;
@@ -576,7 +576,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 // 计算总结数据
@@ -650,14 +650,14 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 int tablePosition = text.IndexOf("{PROGRESS_DETAILS}");
                 if (tablePosition >= 0)
                 {
-                    var tableRange = document.Range(tablePosition, tablePosition + 18);
-                    var table = document.Tables.Add(tableRange, projectData.Count + 1, 7);
+                    using var tableRange = document.Range(tablePosition, tablePosition + 18);
+                    using var table = document.Tables.Add(tableRange, projectData.Count + 1, 7);
 
                     // 设置表头
                     table.Cell(1, 1).Range.Text = "任务名称";
@@ -671,7 +671,7 @@ namespace ReportGenerationSystemSample
                     // 格式化表头
                     for (int i = 1; i <= 7; i++)
                     {
-                        var cell = table.Cell(1, i);
+                        using var cell = table.Cell(1, i);
                         cell.Range.Font.Bold = true;
                         cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                         cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
@@ -730,7 +730,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 int milestonePosition = text.IndexOf("{MILESTONES}");
@@ -740,7 +740,7 @@ namespace ReportGenerationSystemSample
                     milestoneRange.Text = "";
 
                     // 添加里程碑列表
-                    var listRange = document.Range(milestonePosition, milestonePosition);
+                    using var listRange = document.Range(milestonePosition, milestonePosition);
                     listRange.Text = "• 项目启动 - 已完成\n";
                     listRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     listRange.Text = "• 需求分析完成 - 已完成\n";
@@ -770,17 +770,17 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 int risksPosition = text.IndexOf("{RISKS_AND_ISSUES}");
                 if (risksPosition >= 0)
                 {
-                    var risksRange = document.Range(risksPosition, risksPosition + 18);
+                    using var risksRange = document.Range(risksPosition, risksPosition + 18);
                     risksRange.Text = "";
 
                     // 添加风险和问题列表
-                    var listRange = document.Range(risksPosition, risksPosition);
+                    using var listRange = document.Range(risksPosition, risksPosition);
                     listRange.Text = "• 人员变动风险 - 中等风险，已制定应对措施\n";
                     listRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     listRange.Text = "• 技术难点 - 低风险，正在解决中\n";
@@ -805,7 +805,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 // 计算总结数据

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordPageSetup : IWordPageSetup
 {
-    internal readonly MsWord.PageSetup _pageSetup;
+    internal MsWord.PageSetup? _pageSetup;
     private bool _disposedValue;
 
     #region 页面尺寸和边距设置
@@ -22,8 +22,11 @@ internal class WordPageSetup : IWordPageSetup
     /// </summary>
     public float TopMargin
     {
-        get => _pageSetup.TopMargin;
-        set => _pageSetup.TopMargin = value;
+        get => _pageSetup?.TopMargin ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.TopMargin = value;
+        }
     }
 
     /// <summary>
@@ -31,8 +34,11 @@ internal class WordPageSetup : IWordPageSetup
     /// </summary>
     public float BottomMargin
     {
-        get => _pageSetup.BottomMargin;
-        set => _pageSetup.BottomMargin = value;
+        get => _pageSetup?.BottomMargin ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.BottomMargin = value;
+        }
     }
 
     /// <summary>
@@ -40,8 +46,11 @@ internal class WordPageSetup : IWordPageSetup
     /// </summary>
     public float LeftMargin
     {
-        get => _pageSetup.LeftMargin;
-        set => _pageSetup.LeftMargin = value;
+        get => _pageSetup?.LeftMargin ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.LeftMargin = value;
+        }
     }
 
     /// <summary>
@@ -49,8 +58,11 @@ internal class WordPageSetup : IWordPageSetup
     /// </summary>
     public float RightMargin
     {
-        get => _pageSetup.RightMargin;
-        set => _pageSetup.RightMargin = value;
+        get => _pageSetup?.RightMargin ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.RightMargin = value;
+        }
     }
 
     /// <summary>
@@ -58,8 +70,11 @@ internal class WordPageSetup : IWordPageSetup
     /// </summary>
     public float PageWidth
     {
-        get => _pageSetup.PageWidth;
-        set => _pageSetup.PageWidth = value;
+        get => _pageSetup?.PageWidth ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.PageWidth = value;
+        }
     }
 
     /// <summary>
@@ -67,8 +82,11 @@ internal class WordPageSetup : IWordPageSetup
     /// </summary>
     public float PageHeight
     {
-        get => _pageSetup.PageHeight;
-        set => _pageSetup.PageHeight = value;
+        get => _pageSetup?.PageHeight ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.PageHeight = value;
+        }
     }
 
     #endregion
@@ -77,54 +95,77 @@ internal class WordPageSetup : IWordPageSetup
 
     public float HeaderDistance
     {
-        get => _pageSetup.HeaderDistance;
-        set => _pageSetup.HeaderDistance = value;
+        get => _pageSetup?.HeaderDistance ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.HeaderDistance = value;
+        }
     }
 
     public float FooterDistance
     {
-        get => _pageSetup.FooterDistance;
-        set => _pageSetup.FooterDistance = value;
+        get => _pageSetup?.FooterDistance ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.FooterDistance = value;
+        }
     }
 
     public int OddAndEvenPagesHeaderFooter
     {
-        get => _pageSetup.OddAndEvenPagesHeaderFooter;
-        set => _pageSetup.OddAndEvenPagesHeaderFooter = value;
+        get => _pageSetup?.OddAndEvenPagesHeaderFooter ?? 0;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.OddAndEvenPagesHeaderFooter = value;
+        }
     }
 
     public int DifferentFirstPageHeaderFooter
     {
-        get => _pageSetup.DifferentFirstPageHeaderFooter;
-        set => _pageSetup.DifferentFirstPageHeaderFooter = value;
+        get => _pageSetup?.DifferentFirstPageHeaderFooter ?? 0;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.DifferentFirstPageHeaderFooter = value;
+        }
     }
-
     #endregion
 
     #region 页面方向和布局设置
 
     public WdPaperSize PageSize
     {
-        get => _pageSetup.PaperSize.EnumConvert(WdPaperSize.wdPaperA4);
-        set => _pageSetup.PaperSize = value.EnumConvert(MsWord.WdPaperSize.wdPaperA4);
+        get => _pageSetup?.PaperSize.EnumConvert(WdPaperSize.wdPaperA4) ?? WdPaperSize.wdPaperA4;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.PaperSize = value.EnumConvert(MsWord.WdPaperSize.wdPaperA4);
+        }
     }
 
     public WdOrientation Orientation
     {
-        get => _pageSetup.Orientation.EnumConvert(WdOrientation.wdOrientPortrait);
-        set => _pageSetup.Orientation = value.EnumConvert(MsWord.WdOrientation.wdOrientPortrait);
+        get => _pageSetup?.Orientation.EnumConvert(WdOrientation.wdOrientPortrait) ?? WdOrientation.wdOrientPortrait;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.Orientation = value.EnumConvert(MsWord.WdOrientation.wdOrientPortrait);
+        }
     }
 
     public WdVerticalAlignment VerticalAlignment
     {
-        get => _pageSetup.VerticalAlignment.EnumConvert(WdVerticalAlignment.wdAlignVerticalTop);
-        set => _pageSetup.VerticalAlignment = value.EnumConvert(MsWord.WdVerticalAlignment.wdAlignVerticalTop);
+        get => _pageSetup?.VerticalAlignment.EnumConvert(WdVerticalAlignment.wdAlignVerticalTop) ?? WdVerticalAlignment.wdAlignVerticalTop;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.VerticalAlignment = value.EnumConvert(MsWord.WdVerticalAlignment.wdAlignVerticalTop);
+        }
     }
 
     public WdLayoutMode LayoutMode
     {
-        get => _pageSetup.LayoutMode.EnumConvert(WdLayoutMode.wdLayoutModeDefault);
-        set => _pageSetup.LayoutMode = value.EnumConvert(MsWord.WdLayoutMode.wdLayoutModeDefault);
+        get => _pageSetup?.LayoutMode.EnumConvert(WdLayoutMode.wdLayoutModeDefault) ?? WdLayoutMode.wdLayoutModeDefault;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.LayoutMode = value.EnumConvert(MsWord.WdLayoutMode.wdLayoutModeDefault);
+        }
     }
 
     #endregion
@@ -133,54 +174,78 @@ internal class WordPageSetup : IWordPageSetup
 
     public float Gutter
     {
-        get => _pageSetup.Gutter;
-        set => _pageSetup.Gutter = value;
+        get => _pageSetup?.Gutter ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.Gutter = value;
+        }
     }
 
     public bool GutterOnTop
     {
-        get => _pageSetup.GutterOnTop;
-        set => _pageSetup.GutterOnTop = value;
+        get => _pageSetup?.GutterOnTop ?? false;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.GutterOnTop = value;
+        }
     }
 
     public WdGutterStyle GutterPos
     {
-        get => _pageSetup.GutterPos.EnumConvert(WdGutterStyle.wdGutterPosLeft);
-        set => _pageSetup.GutterPos = value.EnumConvert(MsWord.WdGutterStyle.wdGutterPosLeft);
+        get => _pageSetup?.GutterPos.EnumConvert(WdGutterStyle.wdGutterPosLeft) ?? WdGutterStyle.wdGutterPosLeft;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.GutterPos = value.EnumConvert(MsWord.WdGutterStyle.wdGutterPosLeft);
+        }
     }
 
     public WdGutterStyleOld GutterStyle
     {
-        get => _pageSetup.GutterStyle.EnumConvert(WdGutterStyleOld.wdGutterStyleBidi);
-        set => _pageSetup.GutterStyle = value.EnumConvert(MsWord.WdGutterStyleOld.wdGutterStyleBidi);
+        get => _pageSetup?.GutterStyle.EnumConvert(WdGutterStyleOld.wdGutterStyleBidi) ?? WdGutterStyleOld.wdGutterStyleBidi;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.GutterStyle = value.EnumConvert(MsWord.WdGutterStyleOld.wdGutterStyleBidi);
+        }
     }
 
     #endregion
 
     #region 文本列和行号设置
 
-    public IWordLineNumbering LineNumbering
+    public IWordLineNumbering? LineNumbering
     {
-        get => new WordLineNumbering(_pageSetup.LineNumbering);
-        set => _pageSetup.LineNumbering = ((WordLineNumbering)value)._lineNumbering;
+        get => _pageSetup != null ? new WordLineNumbering(_pageSetup.LineNumbering) : null;
+        set
+        {
+            if (_pageSetup != null && value != null) _pageSetup.LineNumbering = ((WordLineNumbering)value)._lineNumbering;
+        }
     }
 
-    public IWordTextColumns TextColumns
+    public IWordTextColumns? TextColumns
     {
-        get => new WordTextColumns(_pageSetup.TextColumns);
-        set => _pageSetup.TextColumns = ((WordTextColumns)value)._textColumns;
+        get => _pageSetup != null ? new WordTextColumns(_pageSetup.TextColumns) : null;
+        set
+        {
+            if (_pageSetup != null && value != null) _pageSetup.TextColumns = ((WordTextColumns)value)._textColumns;
+        }
     }
 
     public float CharsLine
     {
-        get => _pageSetup.CharsLine;
-        set => _pageSetup.CharsLine = value;
+        get => _pageSetup?.CharsLine ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.CharsLine = value;
+        }
     }
 
     public float LinesPage
     {
-        get => _pageSetup.LinesPage;
-        set => _pageSetup.LinesPage = value;
+        get => _pageSetup?.LinesPage ?? 0f;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.LinesPage = value;
+        }
     }
 
     #endregion
@@ -189,14 +254,20 @@ internal class WordPageSetup : IWordPageSetup
 
     public WdSectionDirection SectionDirection
     {
-        get => _pageSetup.SectionDirection.EnumConvert(WdSectionDirection.wdSectionDirectionLtr);
-        set => _pageSetup.SectionDirection = value.EnumConvert(MsWord.WdSectionDirection.wdSectionDirectionLtr);
+        get => _pageSetup?.SectionDirection.EnumConvert(WdSectionDirection.wdSectionDirectionLtr) ?? WdSectionDirection.wdSectionDirectionLtr;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.SectionDirection = value.EnumConvert(MsWord.WdSectionDirection.wdSectionDirectionLtr);
+        }
     }
 
     public WdSectionStart SectionStart
     {
-        get => _pageSetup.SectionStart.EnumConvert(WdSectionStart.wdSectionContinuous);
-        set => _pageSetup.SectionStart = value.EnumConvert(MsWord.WdSectionStart.wdSectionContinuous);
+        get => _pageSetup?.SectionStart.EnumConvert(WdSectionStart.wdSectionContinuous) ?? WdSectionStart.wdSectionContinuous;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.SectionStart = value.EnumConvert(MsWord.WdSectionStart.wdSectionContinuous);
+        }
     }
 
     #endregion
@@ -205,20 +276,29 @@ internal class WordPageSetup : IWordPageSetup
 
     public bool BookFoldPrinting
     {
-        get => _pageSetup.BookFoldPrinting;
-        set => _pageSetup.BookFoldPrinting = value;
+        get => _pageSetup?.BookFoldPrinting ?? false;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.BookFoldPrinting = value;
+        }
     }
 
     public int BookFoldPrintingSheets
     {
-        get => _pageSetup.BookFoldPrintingSheets;
-        set => _pageSetup.BookFoldPrintingSheets = value;
+        get => _pageSetup?.BookFoldPrintingSheets ?? 0;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.BookFoldPrintingSheets = value;
+        }
     }
 
     public bool BookFoldRevPrinting
     {
-        get => _pageSetup.BookFoldRevPrinting;
-        set => _pageSetup.BookFoldRevPrinting = value;
+        get => _pageSetup?.BookFoldRevPrinting ?? false;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.BookFoldRevPrinting = value;
+        }
     }
 
     #endregion
@@ -227,27 +307,38 @@ internal class WordPageSetup : IWordPageSetup
 
     public WdPaperTray FirstPageTray
     {
-        get => _pageSetup.FirstPageTray.EnumConvert(WdPaperTray.wdPrinterDefaultBin);
-        set => _pageSetup.FirstPageTray = value.EnumConvert(MsWord.WdPaperTray.wdPrinterDefaultBin);
-
+        get => _pageSetup?.FirstPageTray.EnumConvert(WdPaperTray.wdPrinterDefaultBin) ?? WdPaperTray.wdPrinterDefaultBin;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.FirstPageTray = value.EnumConvert(MsWord.WdPaperTray.wdPrinterDefaultBin);
+        }
     }
 
     public WdPaperTray OtherPagesTray
     {
-        get => _pageSetup.OtherPagesTray.EnumConvert(WdPaperTray.wdPrinterDefaultBin);
-        set => _pageSetup.OtherPagesTray = value.EnumConvert(MsWord.WdPaperTray.wdPrinterDefaultBin);
+        get => _pageSetup?.OtherPagesTray.EnumConvert(WdPaperTray.wdPrinterDefaultBin) ?? WdPaperTray.wdPrinterDefaultBin;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.OtherPagesTray = value.EnumConvert(MsWord.WdPaperTray.wdPrinterDefaultBin);
+        }
     }
 
     public WdPaperSize PaperSize
     {
-        get => _pageSetup.PaperSize.EnumConvert(WdPaperSize.wdPaperCustom);
-        set => _pageSetup.PaperSize = value.EnumConvert(MsWord.WdPaperSize.wdPaperCustom);
+        get => _pageSetup?.PaperSize.EnumConvert(WdPaperSize.wdPaper10x14) ?? WdPaperSize.wdPaper10x14;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.PaperSize = value.EnumConvert(MsWord.WdPaperSize.wdPaper10x14);
+        }
     }
 
     public bool TwoPagesOnOne
     {
-        get => _pageSetup.TwoPagesOnOne;
-        set => _pageSetup.TwoPagesOnOne = value;
+        get => _pageSetup?.TwoPagesOnOne ?? false;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.TwoPagesOnOne = value;
+        }
     }
 
     #endregion
@@ -256,14 +347,20 @@ internal class WordPageSetup : IWordPageSetup
 
     public int SuppressEndnotes
     {
-        get => _pageSetup.SuppressEndnotes;
-        set => _pageSetup.SuppressEndnotes = value;
+        get => _pageSetup?.SuppressEndnotes ?? 0;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.SuppressEndnotes = value;
+        }
     }
 
     public bool ShowGrid
     {
-        get => _pageSetup.ShowGrid;
-        set => _pageSetup.ShowGrid = value;
+        get => _pageSetup?.ShowGrid ?? false;
+        set
+        {
+            if (_pageSetup != null) _pageSetup.ShowGrid = value;
+        }
     }
 
     #endregion
@@ -288,6 +385,7 @@ internal class WordPageSetup : IWordPageSetup
         if (disposing && _pageSetup != null)
         {
             Marshal.ReleaseComObject(_pageSetup);
+            _pageSetup = null;
         }
         _disposedValue = true;
     }

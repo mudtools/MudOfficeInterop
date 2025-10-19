@@ -117,7 +117,7 @@ namespace ReportGenerationSystemSample
                     Console.WriteLine($"  正在生成 {department.Name} 销售报表...");
 
                     using var app = WordFactory.CreateFrom(templatePath);
-                    var document = app.ActiveDocument;
+                    using var document = app.ActiveDocument;
 
                     // 自定义每个部门的报表内容
                     CustomizeDepartmentSalesReport(document, department.Name, department.Code, reportPeriod);
@@ -153,7 +153,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 替换部门特定内容
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 text = text.Replace("{DEPARTMENT_NAME}", departmentName);
@@ -196,7 +196,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
                 range.Text = "\n\n销售业绩分析:\n" +
                             "• 本月销售额达到预期目标\n" +
                             "• 新客户开发数量同比增长15%\n" +
@@ -217,7 +217,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
                 range.Text = "\n\n市场活动分析:\n" +
                             "• 本月成功举办3场市场推广活动\n" +
                             "• 品牌知名度提升10%\n" +
@@ -238,7 +238,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
                 range.Text = "\n\n技术研发分析:\n" +
                             "• 本月完成2个重要功能开发\n" +
                             "• 系统稳定性提升，故障率下降20%\n" +
@@ -259,7 +259,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
                 range.Text = "\n\n人力资源分析:\n" +
                             "• 本月新招聘员工8人\n" +
                             "• 员工满意度调查得分92分\n" +
@@ -280,7 +280,7 @@ namespace ReportGenerationSystemSample
         {
             try
             {
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
                 range.Text = "\n\n财务状况分析:\n" +
                             "• 现金流状况良好\n" +
                             "• 成本控制效果显著\n" +
@@ -368,7 +368,7 @@ namespace ReportGenerationSystemSample
                     Console.WriteLine($"  正在生成 {reportPeriod.Year}年第{quarter}季度 财务报表...");
 
                     using var app = WordFactory.CreateFrom(templatePath);
-                    var document = app.ActiveDocument;
+                    using var document = app.ActiveDocument;
 
                     // 自定义每个季度的报表内容
                     CustomizeQuarterlyFinancialReport(document, quarter, reportPeriod);
@@ -403,7 +403,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 替换季度特定内容
-                var range = document.Range();
+                using var range = document.Range();
                 var text = range.Text;
 
                 text = text.Replace("{QUARTER}", quarter);
