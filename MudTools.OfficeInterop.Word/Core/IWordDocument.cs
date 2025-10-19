@@ -56,6 +56,11 @@ public interface IWordDocument : IDisposable
     string Description { get; set; }
 
     /// <summary>
+    /// 获取或设置文档关键字
+    /// </summary>
+    string Keywords { get; set; }
+
+    /// <summary>
     /// 获取或设置文档公司信息
     /// </summary>
     string Company { get; set; }
@@ -215,7 +220,6 @@ public interface IWordDocument : IDisposable
     /// </summary>
     WdDocumentType Type { get; }
 
-
     /// <summary>
     /// 获取文档的命令栏集合
     /// </summary>
@@ -276,6 +280,9 @@ public interface IWordDocument : IDisposable
     /// </summary>
     IWordWindows Windows { get; }
 
+    /// <summary>
+    /// 获取文档的信封对象，用于操作文档中的信封相关内容
+    /// </summary>
     IWordEnvelope Envelope { get; }
 
     /// <summary>
@@ -496,7 +503,7 @@ public interface IWordDocument : IDisposable
     /// 取消文档保护
     /// </summary>
     /// <param name="password">密码（可选）</param>
-    void Unprotect(string password = null);
+    void Unprotect(string? password = null);
 
     /// <summary>
     /// 检查文档保护状态

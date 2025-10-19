@@ -6,11 +6,6 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindAndReplaceSample
 {
@@ -199,13 +194,13 @@ namespace FindAndReplaceSample
                 bool success = true;
 
                 // 处理多个连续的句号
-                success &= _findReplaceHelper.ReplaceAll("。。。", "……");
+                success &= _findReplaceHelper.ReplaceAll("。。。", "……") >= 0;
 
                 // 处理多个连续的感叹号
-                success &= _findReplaceHelper.ReplaceAll("！！！", "！");
+                success &= _findReplaceHelper.ReplaceAll("！！！", "！") >= 0;
 
                 // 处理多个连续的问号
-                success &= _findReplaceHelper.ReplaceAll("？？？", "？");
+                success &= _findReplaceHelper.ReplaceAll("？？？", "？") >= 0;
 
                 Console.WriteLine("标点符号标准化完成");
                 return success;
@@ -243,7 +238,8 @@ namespace FindAndReplaceSample
 
                 foreach (var pair in capitalizations)
                 {
-                    success &= _findReplaceHelper.ReplaceAll(pair.Key, pair.Value);
+                    // 使用_findReplaceHelper替换所有匹配项，将小写形式替换为标准大写形式
+                    success &= _findReplaceHelper.ReplaceAll(pair.Key, pair.Value) >= 0;
                 }
 
                 Console.WriteLine("英文单词大小写标准化完成");

@@ -36,7 +36,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = text;
                 find.Forward = forward;
@@ -97,7 +97,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = findText;
                 find.Replacement.ClearFormatting();
@@ -130,7 +130,7 @@ namespace FindAndReplaceSample
 
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = findText;
                 find.Replacement.ClearFormatting();
@@ -165,7 +165,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
 
                 if (bold.HasValue)
@@ -201,7 +201,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
 
                 // 设置查找格式
@@ -248,7 +248,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = pattern;
                 find.MatchWildcards = true;
@@ -273,7 +273,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = pattern;
                 find.Replacement.ClearFormatting();
@@ -308,7 +308,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = text;
                 find.MatchCase = matchCase;
@@ -332,7 +332,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Replacement.ClearFormatting();
             }

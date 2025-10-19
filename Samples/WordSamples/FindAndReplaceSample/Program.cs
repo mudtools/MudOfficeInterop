@@ -60,13 +60,13 @@ namespace FindAndReplaceSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
                 document.Range().Text = "这是示例文本。\n查找和替换功能演示。\n示例文本包含多个实例。";
 
                 // 获取查找对象
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
 
                 // 基本文本查找
                 find.ClearFormatting();
@@ -106,13 +106,13 @@ namespace FindAndReplaceSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
                 document.Range().Text = "原文本1\n原文本2\n原文本3\n";
 
                 // 获取查找和替换对象
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 var replace = find; // 替换对象与查找对象是同一个
 
                 // 设置查找和替换参数
@@ -155,22 +155,22 @@ namespace FindAndReplaceSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "普通文本\n粗体文本\n斜体文本\n";
 
                 // 设置粗体文本
-                var boldRange = document.Range(6, 10); // "粗体文本"
+                using var boldRange = document.Range(6, 10); // "粗体文本"
                 boldRange.Font.Bold = true;
 
                 // 设置斜体文本
-                var italicRange = document.Range(11, 15); // "斜体文本"
+                using var italicRange = document.Range(11, 15); // "斜体文本"
                 italicRange.Font.Italic = true;
 
                 // 查找粗体文本
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 find.ClearFormatting();
                 find.Font.Bold = true; // 查找粗体文本
                 find.Text = ""; // 文本可以为空，只基于格式查找
@@ -212,13 +212,13 @@ namespace FindAndReplaceSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
                 document.Range().Text = "电话: 138-1234-5678\n邮箱: example@test.com\n日期: 2025-10-06\n";
 
                 // 使用通配符查找电话号码
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 find.ClearFormatting();
                 find.Text = "[0-9]{3}-[0-9]{4}-[0-9]{4}"; // 电话号码模式
                 find.MatchWildcards = true;
@@ -265,12 +265,12 @@ namespace FindAndReplaceSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
                 document.Range().Text = "Word word WORD\nText text TEXT\n";
 
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
                 find.ClearFormatting();
 
                 // 大小写敏感查找
@@ -315,13 +315,13 @@ namespace FindAndReplaceSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
                 document.Range().Text = "Mr. Zhang\nMrs. Li\nDr. Wang\nMr. Liu\nMs. Chen\n";
 
                 // 批量替换称谓
-                var find = document.Range().Find;
+                using var find = document.Range().Find;
 
                 // 替换 "Mr." 为 "先生"
                 find.Execute(
@@ -371,7 +371,7 @@ namespace FindAndReplaceSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 Console.WriteLine("开始文档清理...");
 
@@ -413,7 +413,7 @@ namespace FindAndReplaceSample
         /// <param name="document">文档对象</param>
         private static void CleanupExtraSpaces(IWordDocument document)
         {
-            var find = document.Range().Find;
+            using var find = document.Range().Find;
 
             // 替换多个空格为单个空格
             find.Execute(
@@ -438,7 +438,7 @@ namespace FindAndReplaceSample
         /// <param name="document">文档对象</param>
         private static void StandardizeTitles(IWordDocument document)
         {
-            var find = document.Range().Find;
+            using var find = document.Range().Find;
 
             // 标准化公司名称
             var companyReplacements = new Dictionary<string, string>
@@ -466,7 +466,7 @@ namespace FindAndReplaceSample
         /// <param name="document">文档对象</param>
         private static void RemoveExtraBlankLines(IWordDocument document)
         {
-            var find = document.Range().Find;
+            using var find = document.Range().Find;
 
             // 删除连续的空行（保留一个）
             find.Execute(
@@ -491,7 +491,7 @@ namespace FindAndReplaceSample
         /// <param name="document">文档对象</param>
         private static void StandardizeDateFormats(IWordDocument document)
         {
-            var find = document.Range().Find;
+            using var find = document.Range().Find;
 
             // 使用通配符查找并标准化日期格式
             find.MatchWildcards = true;
@@ -539,7 +539,7 @@ namespace FindAndReplaceSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 隐藏Word窗口
 
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加示例内容
                 document.Range().Text = "这是示例文本。\n查找和替换功能演示。\n示例文本包含多个实例。\n" +

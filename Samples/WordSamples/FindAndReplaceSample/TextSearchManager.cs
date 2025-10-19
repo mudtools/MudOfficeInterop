@@ -128,7 +128,7 @@ namespace FindAndReplaceSample
                 result.OccurrencesFound = result.MatchesFound.Count;
 
                 // 执行替换
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = findText;
                 find.Replacement.ClearFormatting();
@@ -375,7 +375,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                var find = _document.Range().Find;
+                using var find = _document.Range().Find;
                 find.ClearFormatting();
                 find.Text = text;
                 find.MatchCase = options.MatchCase;

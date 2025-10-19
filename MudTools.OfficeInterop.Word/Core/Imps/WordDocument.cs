@@ -150,6 +150,18 @@ internal class WordDocument : IWordDocument
         }
     }
 
+    public string Keywords
+    {
+        get
+        {
+            return GetBuiltInDocumentProperty("Keywords");
+        }
+        set
+        {
+            SetBuiltInDocumentProperty("Keywords", value);
+        }
+    }
+
     public string Company
     {
         get
@@ -974,7 +986,7 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public void Unprotect(string password = null)
+    public void Unprotect(string? password = null)
     {
         try
         {
