@@ -37,7 +37,7 @@ namespace TaskPanesAndDialogsSample
         {
             try
             {
-                var fontDialog = _application.Dialogs[WdWordDialog.wdDialogFormatFont];
+                using var fontDialog = _application.Dialogs[WdWordDialog.wdDialogFormatFont];
                 var result = fontDialog.Show();
 
                 if (result) // 用户点击了确定
@@ -66,7 +66,7 @@ namespace TaskPanesAndDialogsSample
         {
             try
             {
-                var paragraphDialog = _application.Dialogs[WdWordDialog.wdDialogFormatParagraph];
+                using var paragraphDialog = _application.Dialogs[WdWordDialog.wdDialogFormatParagraph];
                 var result = paragraphDialog.Show();
 
                 if (result) // 用户点击了确定
@@ -95,7 +95,7 @@ namespace TaskPanesAndDialogsSample
         {
             try
             {
-                var pageSetupDialog = _application.Dialogs[WdWordDialog.wdDialogFilePageSetup];
+                using var pageSetupDialog = _application.Dialogs[WdWordDialog.wdDialogFilePageSetup];
                 var result = pageSetupDialog.Show();
 
                 if (result) // 用户点击了确定
@@ -124,7 +124,7 @@ namespace TaskPanesAndDialogsSample
         {
             try
             {
-                var findDialog = _application.Dialogs[WdWordDialog.wdDialogEditFind];
+                using var findDialog = _application.Dialogs[WdWordDialog.wdDialogEditFind];
                 var result = findDialog.Show();
 
                 if (result) // 用户点击了确定
@@ -155,7 +155,7 @@ namespace TaskPanesAndDialogsSample
 
             try
             {
-                var fontDialog = _application.Dialogs[WdWordDialog.wdDialogFormatFont];
+                using var fontDialog = _application.Dialogs[WdWordDialog.wdDialogFormatFont];
                 fontDialog.DefaultTab = WdWordDialogTab.wdDialogFormatFontTabFont;
 
                 // 显示对话框并获取结果
@@ -178,8 +178,8 @@ namespace TaskPanesAndDialogsSample
                     {
                         selection.Font.Name = fontSettings.FontName;
                         selection.Font.Size = fontSettings.FontSize;
-                        selection.Font.Bold = fontSettings.IsBold ? 1 : 0;
-                        selection.Font.Italic = fontSettings.IsItalic ? 1 : 0;
+                        selection.Font.Bold = fontSettings.IsBold;
+                        selection.Font.Italic = fontSettings.IsItalic;
                     }
 
                     fontSettings.IsApplied = true;
@@ -208,12 +208,12 @@ namespace TaskPanesAndDialogsSample
 
             try
             {
-                var pageSetupDialog = _application.Dialogs[WdWordDialog.wdDialogFilePageSetup];
+                using var pageSetupDialog = _application.Dialogs[WdWordDialog.wdDialogFilePageSetup];
 
                 // 显示对话框
-                int result = pageSetupDialog.Show();
+                var result = pageSetupDialog.Show();
 
-                if (result == 1) // 用户点击了确定
+                if (result) // 用户点击了确定
                 {
                     // 应用页面设置到当前节
                     var section = _document.Sections[1];
@@ -258,7 +258,7 @@ namespace TaskPanesAndDialogsSample
 
             try
             {
-                var dialogs = _application.Dialogs;
+                using var dialogs = _application.Dialogs;
                 int dialogCount = dialogs.Count;
 
                 Console.WriteLine($"当前可用对话框数量: {dialogCount}");

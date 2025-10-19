@@ -35,7 +35,7 @@ namespace IntegrationWithWebApplicationsSample
             {
                 // 设置线程为STA模式（如果在新线程中运行）
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加内容
                 document.Range().Text = content;
@@ -93,7 +93,7 @@ namespace IntegrationWithWebApplicationsSample
             try
             {
                 using var app = WordFactory.CreateFrom(templatePath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 处理文档（填充数据、格式化等）
                 FillTemplateData(document, data);
@@ -120,7 +120,7 @@ namespace IntegrationWithWebApplicationsSample
         {
             // 实现模板数据填充逻辑
             // 这里简化处理
-            var range = document.Range();
+            using var range = document.Range();
             var text = range.Text;
 
             // 替换占位符（示例）
@@ -142,7 +142,7 @@ namespace IntegrationWithWebApplicationsSample
         private void ApplyFormatting(IWordDocument document)
         {
             // 应用标准格式化
-            var range = document.Range();
+            using var range = document.Range();
             range.Font.Name = "宋体";
             range.Font.Size = 12;
         }
@@ -159,7 +159,7 @@ namespace IntegrationWithWebApplicationsSample
             try
             {
                 using var app = WordFactory.Open(inputPath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 生成输出文件路径
                 var fileName = Path.GetFileNameWithoutExtension(inputPath);

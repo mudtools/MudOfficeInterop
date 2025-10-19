@@ -43,7 +43,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                var titleRange = _document.Range();
+                using var titleRange = _document.Range();
                 titleRange.Text = title + "\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 24;
@@ -66,7 +66,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                var sectionRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var sectionRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 sectionRange.Text = $"\n{title}\n";
                 sectionRange.Font.Name = "微软雅黑";
                 sectionRange.Font.Bold = true;
@@ -94,7 +94,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                var paragraphRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var paragraphRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 paragraphRange.Text = text + "\n";
                 paragraphRange.Font.Name = fontName;
                 paragraphRange.Font.Size = fontSize;
@@ -137,27 +137,27 @@ namespace GraphicsAndImageOperationsSample
                 AddParagraph("以下展示了如何在Word文档中创建和操作各种形状。");
 
                 // 创建各种形状
-                var rectangle = _shapeManager.CreateRectangle(100, 100, 150, 75, "矩形");
+                using var rectangle = _shapeManager.CreateRectangle(100, 100, 150, 75, "矩形");
                 _graphicsHelper.SetShapeFillColor(rectangle, WdColor.wdColorLightBlue);
                 _graphicsHelper.SetShapeBorder(rectangle, WdColor.wdColorBlue, 1);
 
-                var circle = _shapeManager.CreateCircle(300, 100, 100, 100, "圆形");
+                using var circle = _shapeManager.CreateCircle(300, 100, 100, 100, "圆形");
                 _graphicsHelper.SetShapeFillColor(circle, WdColor.wdColorLightGreen);
                 _graphicsHelper.SetShapeBorder(circle, WdColor.wdColorGreen, 1);
 
-                var triangle = _shapeManager.CreateTriangle(450, 100, 100, 100, "三角形");
+                using var triangle = _shapeManager.CreateTriangle(450, 100, 100, 100, "三角形");
                 _graphicsHelper.SetShapeFillColor(triangle, WdColor.wdColorLightYellow);
                 _graphicsHelper.SetShapeBorder(triangle, WdColor.wdColorOrange, 1);
 
-                var arrow = _shapeManager.CreateArrow(100, 250, 200, 50, "箭头");
+                using var arrow = _shapeManager.CreateArrow(100, 250, 200, 50, "箭头");
                 _graphicsHelper.SetShapeFillColor(arrow, WdColor.wdColorDarkRed);
                 _graphicsHelper.SetShapeBorder(arrow, WdColor.wdColorRed, 1);
 
-                var star = _shapeManager.CreateStar(350, 250, 100, 100, "星形");
+                using var star = _shapeManager.CreateStar(350, 250, 100, 100, "星形");
                 _graphicsHelper.SetShapeFillColor(star, WdColor.wdColorPink);
                 _graphicsHelper.SetShapeBorder(star, WdColor.wdColorViolet, 1);
 
-                var cloud = _shapeManager.CreateCloud(200, 350, 150, 100, "云朵");
+                using var cloud = _shapeManager.CreateCloud(200, 350, 150, 100, "云朵");
                 _graphicsHelper.SetShapeFillColor(cloud, WdColor.wdColorLightTurquoise);
                 _graphicsHelper.SetShapeBorder(cloud, WdColor.wdColorTeal, 1);
 
@@ -180,7 +180,7 @@ namespace GraphicsAndImageOperationsSample
                 AddParagraph("以下展示了如何在Word文档中创建和操作SmartArt图形。");
 
                 // 创建列表类型的SmartArt
-                var listSmartArt = _smartArtHelper.CreateListSmartArt(100, 100, 400, 300);
+                using var listSmartArt = _smartArtHelper.CreateListSmartArt(100, 100, 400, 300);
                 var listItems = new List<string>
                 {
                     "项目1: 需求分析",
@@ -212,21 +212,21 @@ namespace GraphicsAndImageOperationsSample
                 AddParagraph("以下展示了如何为图形添加各种视觉效果。");
 
                 // 创建基础形状
-                var baseShape = _shapeManager.CreateRectangle(100, 100, 150, 75, "基础形状");
+                using var baseShape = _shapeManager.CreateRectangle(100, 100, 150, 75, "基础形状");
                 _graphicsHelper.SetShapeFillColor(baseShape, WdColor.wdColorLightBlue);
 
                 // 添加阴影效果
-                var shadowShape = _shapeManager.CreateRectangle(300, 100, 150, 75, "阴影效果");
+                using var shadowShape = _shapeManager.CreateRectangle(300, 100, 150, 75, "阴影效果");
                 _graphicsHelper.SetShapeFillColor(shadowShape, WdColor.wdColorLightGreen);
                 _effectsHelper.ApplyShadowEffect(shadowShape, GraphicEffectsHelper.ShadowEffectType.OuterShadow, WdColor.wdColorGray50);
 
                 // 添加发光效果
-                var glowShape = _shapeManager.CreateRectangle(100, 250, 150, 75, "发光效果");
+                using var glowShape = _shapeManager.CreateRectangle(100, 250, 150, 75, "发光效果");
                 _graphicsHelper.SetShapeFillColor(glowShape, WdColor.wdColorLightYellow);
                 _effectsHelper.ApplyGlowEffect(glowShape, GraphicEffectsHelper.GlowEffectType.Medium, WdColor.wdColorBlue);
 
                 // 添加三维效果
-                var threeDShape = _shapeManager.CreateRectangle(300, 250, 150, 75, "三维效果");
+                using var threeDShape = _shapeManager.CreateRectangle(300, 250, 150, 75, "三维效果");
                 _graphicsHelper.SetShapeFillColor(threeDShape, WdColor.wdColorDarkRed);
                 _effectsHelper.Apply3DFormatEffect(threeDShape, GraphicEffectsHelper.ThreeDEffectType.Simple);
 

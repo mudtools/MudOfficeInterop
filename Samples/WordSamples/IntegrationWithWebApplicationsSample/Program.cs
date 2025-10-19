@@ -77,7 +77,7 @@ namespace IntegrationWithWebApplicationsSample
                 // 创建一个简单的模板文档
                 using (var app = WordFactory.BlankWorkbook())
                 {
-                    var document = app.ActiveDocument;
+                    using var document = app.ActiveDocument;
                     document.Range().Text = "员工信息\n\n" +
                                           "姓名: {Name}\n" +
                                           "职位: {Position}\n" +
@@ -138,7 +138,7 @@ namespace IntegrationWithWebApplicationsSample
                 string templatePath = Path.Combine(tempDirectory, "ThreadSafeTemplate.docx");
                 using (var app = WordFactory.BlankWorkbook())
                 {
-                    var document = app.ActiveDocument;
+                    using var document = app.ActiveDocument;
                     document.Range().Text = "线程安全文档模板\n\n" +
                                           "内容: {Content}\n" +
                                           "创建时间: {CreateTime}\n";
@@ -228,7 +228,7 @@ namespace IntegrationWithWebApplicationsSample
                     string templatePath = Path.Combine(tempDirectory, "ResourceTemplate.docx");
                     using (var app = WordFactory.BlankWorkbook())
                     {
-                        var document = app.ActiveDocument;
+                        using var document = app.ActiveDocument;
                         document.Range().Text = "资源管理模板\n\n" +
                                               "姓名: {Name}\n" +
                                               "职位: {Position}\n";

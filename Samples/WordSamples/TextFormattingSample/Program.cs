@@ -80,10 +80,10 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 获取文档范围
-                var range = document.Range();
+                using var range = document.Range();
 
                 // 添加标题文本
                 range.Text = "文档标题\n";
@@ -94,7 +94,7 @@ namespace TextFormattingSample
                 range.Font.Color = WdColor.wdColorBlue;
 
                 // 添加正文内容
-                var contentRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var contentRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 contentRange.Text = "这是文档的正文内容，使用标准字体格式。\n";
                 contentRange.Font.Name = "宋体";
                 contentRange.Font.Size = 12;
@@ -117,26 +117,26 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加标题
-                var titleRange = document.Range();
+                using var titleRange = document.Range();
                 titleRange.Text = "居中标题\n";
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 12;
 
                 // 添加左对齐段落
-                var leftPara = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var leftPara = document.Range(document.Content.End - 1, document.Content.End - 1);
                 leftPara.Text = "这是左对齐的段落文本。\n";
                 leftPara.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
                 // 添加右对齐段落
-                var rightPara = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var rightPara = document.Range(document.Content.End - 1, document.Content.End - 1);
                 rightPara.Text = "这是右对齐的段落文本。\n";
                 rightPara.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
 
                 // 添加两端对齐段落
-                var justifyPara = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var justifyPara = document.Range(document.Content.End - 1, document.Content.End - 1);
                 justifyPara.Text = "这是两端对齐的段落文本，文本会自动调整以填满整行。\n";
                 justifyPara.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
 
@@ -156,29 +156,29 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 应用内置样式
-                var heading1 = document.Range();
+                using var heading1 = document.Range();
                 heading1.Text = "标题 1\n";
                 heading1.Style = "标题 1";
 
-                var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 heading2.Text = "标题 2\n";
                 heading2.Style = "标题 2";
 
-                var normalText = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var normalText = document.Range(document.Content.End - 1, document.Content.End - 1);
                 normalText.Text = "正文文本\n";
                 normalText.Style = "正文";
 
                 // 创建自定义样式
-                var customStyle = document.Styles.Add("我的自定义样式");
+                using var customStyle = document.Styles.Add("我的自定义样式");
                 customStyle.Font.Name = "楷体";
                 customStyle.Font.Size = 14;
                 customStyle.Font.Color = WdColor.wdColorRed;
                 customStyle.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
-                var customRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var customRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 customRange.Text = "使用自定义样式的文本\n";
                 customRange.Style = "我的自定义样式";
 
@@ -198,20 +198,20 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建项目符号列表
-                var bulletList = document.Range();
+                using var bulletList = document.Range();
                 bulletList.Text = "项目 1\n项目 2\n项目 3\n";
                 // 注意：由于库的限制，这里可能需要使用不同的方法来应用列表格式
 
                 // 创建编号列表
-                var numberedList = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var numberedList = document.Range(document.Content.End - 1, document.Content.End - 1);
                 numberedList.Text = "第一项\n第二项\n第三项\n";
                 // 注意：由于库的限制，这里可能需要使用不同的方法来应用列表格式
 
                 // 创建多级列表
-                var multiLevelList = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var multiLevelList = document.Range(document.Content.End - 1, document.Content.End - 1);
                 multiLevelList.Text = "主要项目\n子项目 1\n子项目 2\n另一个主要项目\n其子项目\n";
                 // 注意：由于库的限制，这里可能需要使用不同的方法来应用列表格式
 
@@ -231,10 +231,10 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加文本
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "带边框和底纹的文本\n";
 
                 // 设置边框
@@ -263,10 +263,10 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 设置制表符
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "姓名\t年龄\t职业\n张三\t25\t工程师\n李四\t30\t设计师\n";
 
                 // 在特定位置添加制表符
@@ -290,10 +290,10 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加文本
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "字符和段落间距设置示例文本。\n这是第二段文本用于演示段落间距。\n这是第三段文本。";
 
                 // 设置段落间距
@@ -318,21 +318,21 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加文本
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "文本高亮和下划线示例。\n";
 
                 // 设置文本高亮
-                var highlightRange = document.Range(0, 5);
+                using var highlightRange = document.Range(0, 5);
                 highlightRange.HighlightColorIndex = WdColorIndex.wdYellow;
 
                 // 设置不同类型的下划线
-                var underlineRange = document.Range(6, 10);
+                using var underlineRange = document.Range(6, 10);
                 underlineRange.Font.Underline = WdUnderline.wdUnderlineSingle;
 
-                var doubleUnderlineRange = document.Range(11, 15);
+                using var doubleUnderlineRange = document.Range(11, 15);
                 doubleUnderlineRange.Font.Underline = WdUnderline.wdUnderlineDouble;
 
                 Console.WriteLine("文本高亮和下划线设置完成");
@@ -351,18 +351,18 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加文本
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "字符缩放和间距示例文本。\n";
 
                 // 设置字符间距
-                var spacingRange = document.Range(5, 9);
+                using var spacingRange = document.Range(5, 9);
                 spacingRange.Font.Spacing = 2.0f; // 字符间距2磅
 
                 // 设置字符位置
-                var positionRange = document.Range(10, 14);
+                using var positionRange = document.Range(10, 14);
                 positionRange.Font.Position = -6; // 下标位置
 
                 Console.WriteLine("字符缩放和间距设置完成");
@@ -381,14 +381,14 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加文本
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "文本效果示例：普通文本、阴影文本、阳文文本、阴文文本。\n";
 
                 // 设置阴影效果
-                var shadowRange = document.Range(7, 11);
+                using var shadowRange = document.Range(7, 11);
                 shadowRange.Font.Shadow = true;
 
 
@@ -408,39 +408,39 @@ namespace TextFormattingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加多级标题
-                var heading1 = document.Range();
+                using var heading1 = document.Range();
                 heading1.Text = "第一章 标题\n";
                 heading1.Style = "标题 1";
 
-                var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 heading2.Text = "1.1 节标题\n";
                 heading2.Style = "标题 2";
 
-                var heading3 = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var heading3 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 heading3.Text = "1.1.1 小节标题\n";
                 heading3.Style = "标题 3";
 
                 // 添加正文内容
-                var content = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var content = document.Range(document.Content.End - 1, document.Content.End - 1);
                 content.Text = "这是正文内容。\n\n";
 
                 // 插入目录
-                var tocRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var tocRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 tocRange.Text = "目录\n";
                 tocRange.Font.Bold = true;
                 tocRange.Font.Size = 16;
 
                 // 添加目录项（模拟）
-                var tocItem1 = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var tocItem1 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 tocItem1.Text = "第一章 标题\t1\n";
 
-                var tocItem2 = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var tocItem2 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 tocItem2.Text = "1.1 节标题\t1\n";
 
-                var tocItem3 = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var tocItem3 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 tocItem3.Text = "1.1.1 小节标题\t1\n";
 
                 Console.WriteLine("多级标题和目录设置完成");
@@ -461,13 +461,13 @@ namespace TextFormattingSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 设置文档属性
                 document.Title = "格式化文档示例";
 
                 // 添加标题
-                var title = document.Range();
+                using var title = document.Range();
                 title.Text = "公司年度报告\n";
                 title.Font.Name = "微软雅黑";
                 title.Font.Size = 24;
@@ -477,7 +477,7 @@ namespace TextFormattingSample
                 title.ParagraphFormat.SpaceAfter = 24;
 
                 // 添加副标题
-                var subtitle = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var subtitle = document.Range(document.Content.End - 1, document.Content.End - 1);
                 subtitle.Text = "2025财年总结\n\n";
                 subtitle.Font.Name = "微软雅黑";
                 subtitle.Font.Size = 16;
@@ -487,7 +487,7 @@ namespace TextFormattingSample
                 subtitle.ParagraphFormat.SpaceAfter = 18;
 
                 // 添加章节标题
-                var sectionTitle = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var sectionTitle = document.Range(document.Content.End - 1, document.Content.End - 1);
                 sectionTitle.Text = "财务概览\n";
                 sectionTitle.Font.Name = "微软雅黑";
                 sectionTitle.Font.Size = 14;
@@ -495,7 +495,7 @@ namespace TextFormattingSample
                 sectionTitle.ParagraphFormat.SpaceAfter = 12;
 
                 // 添加正文内容
-                var content = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var content = document.Range(document.Content.End - 1, document.Content.End - 1);
                 content.Text = "本年度公司实现了显著的财务增长，总收入达到1.2亿元，同比增长15%。净利润为3000万元，同比增长20%。\n\n";
                 content.Font.Name = "宋体";
                 content.Font.Size = 12;
@@ -503,21 +503,21 @@ namespace TextFormattingSample
                 content.ParagraphFormat.FirstLineIndent = 21; // 首行缩进
 
                 // 添加要点列表
-                var points = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var points = document.Range(document.Content.End - 1, document.Content.End - 1);
                 points.Text = "收入增长主要来源：\n• 产品线扩展\n• 市场份额提升\n• 新客户获取\n";
                 points.Font.Name = "宋体";
                 points.Font.Size = 12;
 
                 // 添加表格数据
-                var tableSection = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var tableSection = document.Range(document.Content.End - 1, document.Content.End - 1);
                 tableSection.Text = "\n关键财务指标：\n";
                 tableSection.Font.Name = "微软雅黑";
                 tableSection.Font.Size = 13;
                 tableSection.Font.Bold = true;
 
                 // 创建表格
-                var tableRange = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(tableRange, 4, 3);
+                using var tableRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(tableRange, 4, 3);
                 table.Cell(1, 1).Range.Text = "指标";
                 table.Cell(1, 2).Range.Text = "2024年";
                 table.Cell(1, 3).Range.Text = "2025年";
@@ -714,17 +714,17 @@ namespace TextFormattingSample
         public DocumentResult CreateFormattedDocument()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加标题
-            var title = document.Range();
+            using var title = document.Range();
             title.Text = "格式化文档示例\n";
             title.Font.Name = "微软雅黑";
             title.Font.Size = 18;
             title.Font.Bold = true;
 
             // 添加内容
-            var content = document.Range(document.Content.End - 1, document.Content.End - 1);
+            using var content = document.Range(document.Content.End - 1, document.Content.End - 1);
             content.Text = "这是格式化文档的内容。\n\n包含多个段落用于演示格式化效果。\n\n这是最后一个段落。";
 
             // 保存文档
@@ -746,10 +746,10 @@ namespace TextFormattingSample
         public FontFormattingResult ApplyFontFormatting()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加文本
-            var range = document.Range();
+            using var range = document.Range();
             range.Text = "字体格式化示例文本";
             string originalText = range.Text;
 
@@ -775,10 +775,10 @@ namespace TextFormattingSample
         public ParagraphFormattingResult ApplyParagraphFormatting()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加文本
-            var range = document.Range();
+            using var range = document.Range();
             range.Text = "段落格式化示例文本。\n这是第二段文本。\n这是第三段文本。";
 
             // 应用段落格式
@@ -801,24 +801,24 @@ namespace TextFormattingSample
         public AdvancedFormattingResult ApplyAdvancedFormatting()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加文本
-            var range = document.Range();
+            using var range = document.Range();
             range.Text = "高级格式化示例：高亮文本、下划线文本、缩放文本。";
 
             // 应用高亮
-            var highlightRange = document.Range(8, 12);
+            using var highlightRange = document.Range(8, 12);
             highlightRange.HighlightColorIndex = WdColorIndex.wdYellow;
             string highlightedText = highlightRange.Text;
 
             // 应用下划线
-            var underlineRange = document.Range(13, 17);
+            using var underlineRange = document.Range(13, 17);
             underlineRange.Font.Underline = WdUnderline.wdUnderlineDouble;
             string underlinedText = underlineRange.Text;
 
             // 应用字符缩放
-            var scaleRange = document.Range(18, 22);
+            using var scaleRange = document.Range(18, 22);
             // 注意：由于库的限制，这里可能需要使用不同的方法来设置字符缩放
             string scaledText = scaleRange.Text;
 
@@ -837,26 +837,26 @@ namespace TextFormattingSample
         public StructuredDocumentResult CreateStructuredDocument()
         {
             using var app = WordFactory.BlankWorkbook();
-            var document = app.ActiveDocument;
+            using var document = app.ActiveDocument;
 
             // 添加多级标题
-            var heading1 = document.Range();
+            using var heading1 = document.Range();
             heading1.Text = "第一章 简介\n";
             heading1.Style = "标题 1";
 
-            var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
+            using var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
             heading2.Text = "1.1 背景\n";
             heading2.Style = "标题 2";
 
             // 添加正文内容
-            var content1 = document.Range(document.Content.End - 1, document.Content.End - 1);
+            using var content1 = document.Range(document.Content.End - 1, document.Content.End - 1);
             content1.Text = "这是第一章的正文内容。\n\n";
 
-            var heading3 = document.Range(document.Content.End - 1, document.Content.End - 1);
+            using var heading3 = document.Range(document.Content.End - 1, document.Content.End - 1);
             heading3.Text = "1.2 目标\n";
             heading3.Style = "标题 2";
 
-            var content2 = document.Range(document.Content.End - 1, document.Content.End - 1);
+            using var content2 = document.Range(document.Content.End - 1, document.Content.End - 1);
             content2.Text = "这是第一章的另一个小节内容。\n";
 
             // 保存文档

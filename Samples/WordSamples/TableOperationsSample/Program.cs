@@ -64,18 +64,18 @@ namespace TableOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 获取表格集合
-                var tables = document.Tables;
+                using var tables = document.Tables;
 
                 // 获取表格数量
                 int tableCount = tables.Count;
                 Console.WriteLine($"初始表格数量: {tableCount}");
 
                 // 创建一个表格用于演示
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(range, 2, 2);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(range, 2, 2);
 
                 // 再次获取表格数量
                 tableCount = tables.Count;
@@ -84,7 +84,7 @@ namespace TableOperationsSample
                 // 访问特定表格（索引从1开始）
                 if (tableCount > 0)
                 {
-                    var firstTable = tables[1];
+                    using var firstTable = tables[1];
                     Console.WriteLine("成功访问第一个表格");
                 }
 
@@ -104,16 +104,16 @@ namespace TableOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 方法1：在文档末尾添加表格
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table1 = document.Tables.Add(range, 3, 4); // 3行4列
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table1 = document.Tables.Add(range, 3, 4); // 3行4列
                 Console.WriteLine("在文档末尾创建了3行4列的表格");
 
                 // 方法2：在指定位置添加表格
-                var range2 = document.Range(0, 0);
-                var table2 = document.Tables.Add(range2, 2, 3); // 2行3列
+                using var range2 = document.Range(0, 0);
+                using var table2 = document.Tables.Add(range2, 2, 3); // 2行3列
                 Console.WriteLine("在文档开头创建了2行3列的表格");
 
                 // 设置表格标题
@@ -137,11 +137,11 @@ namespace TableOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建表格
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(range, 4, 3);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(range, 4, 3);
 
                 // 设置表格边框
                 table.Borders.Enable = true;
@@ -181,15 +181,15 @@ namespace TableOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建表格
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(range, 3, 3);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(range, 3, 3);
 
                 // 访问单元格
-                var cell = table.Cell(1, 1); // 第一行第一列（索引从1开始）
-                var cellRange = cell.Range;
+                using var cell = table.Cell(1, 1); // 第一行第一列（索引从1开始）
+                using var cellRange = cell.Range;
 
                 // 设置单元格文本
                 cellRange.Text = "单元格内容";
@@ -218,11 +218,11 @@ namespace TableOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建表格
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(range, 4, 3);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(range, 4, 3);
 
                 // 填充表头
                 table.Cell(1, 1).Range.Text = "姓名";
@@ -247,7 +247,7 @@ namespace TableOperationsSample
                 // 格式化表头
                 for (int i = 1; i <= 3; i++)
                 {
-                    var headerCell = table.Cell(1, i);
+                    using var headerCell = table.Cell(1, i);
                     headerCell.Range.Font.Bold = true;
                     headerCell.Range.Font.Color = WdColor.wdColorWhite;
                     headerCell.Shading.BackgroundPatternColor = WdColor.wdColorDarkBlue;
@@ -259,7 +259,7 @@ namespace TableOperationsSample
                 {
                     for (int col = 1; col <= 3; col++)
                     {
-                        var cell = table.Cell(row, col);
+                        using var cell = table.Cell(row, col);
                         cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                     }
                 }
@@ -280,11 +280,11 @@ namespace TableOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建带数据的表格
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(range, 5, 3);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(range, 5, 3);
 
                 // 填充数据
                 table.Cell(1, 1).Range.Text = "产品";
@@ -306,7 +306,7 @@ namespace TableOperationsSample
                 // 格式化表头
                 for (int i = 1; i <= 3; i++)
                 {
-                    var cell = table.Cell(1, i);
+                    using var cell = table.Cell(1, i);
                     cell.Range.Font.Bold = true;
                     cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
                 }
@@ -337,10 +337,10 @@ namespace TableOperationsSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加标题
-                var title = document.Range();
+                using var title = document.Range();
                 title.Text = "销售数据报表\n";
                 title.Font.Name = "微软雅黑";
                 title.Font.Size = 18;
@@ -349,15 +349,15 @@ namespace TableOperationsSample
                 title.ParagraphFormat.SpaceAfter = 24;
 
                 // 添加报表说明
-                var description = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var description = document.Range(document.Content.End - 1, document.Content.End - 1);
                 description.Text = "本报表展示了2025年各季度销售数据\n\n";
                 description.Font.Name = "宋体";
                 description.Font.Size = 12;
                 description.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 创建销售数据表格
-                var tableRange = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(tableRange, 6, 5);
+                using var tableRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(tableRange, 6, 5);
 
                 // 设置表格标题
                 table.Title = "季度销售数据";
@@ -397,7 +397,7 @@ namespace TableOperationsSample
                 // 表头格式
                 for (int i = 1; i <= 5; i++)
                 {
-                    var cell = table.Cell(1, i);
+                    using var cell = table.Cell(1, i);
                     cell.Range.Font.Bold = true;
                     cell.Range.Font.Color = WdColor.wdColorWhite;
                     cell.Shading.BackgroundPatternColor = WdColor.wdColorDarkBlue;
@@ -409,7 +409,7 @@ namespace TableOperationsSample
                 {
                     for (int col = 1; col <= 5; col++)
                     {
-                        var cell = table.Cell(row, col);
+                        using var cell = table.Cell(row, col);
                         cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                         // 交替行颜色
@@ -451,11 +451,11 @@ namespace TableOperationsSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建表格
-                var range = document.Range(document.Content.End - 1, document.Content.End - 1);
-                var table = document.Tables.Add(range, 4, 3);
+                using var range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var table = document.Tables.Add(range, 4, 3);
 
                 // 填充数据
                 table.Cell(1, 1).Range.Text = "项目";

@@ -67,7 +67,7 @@ namespace IntegrationWithWebApplicationsSample
 
                 // 使用WordFactory创建文档
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加内容到文档
                 document.Range().Text = contentBuilder.ToString();
@@ -122,7 +122,7 @@ namespace IntegrationWithWebApplicationsSample
 
                 // 使用WordFactory从模板创建文档
                 using var app = WordFactory.CreateFrom(templatePath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 替换模板中的占位符
                 ReplacePlaceholders(document, request);
@@ -200,8 +200,8 @@ namespace IntegrationWithWebApplicationsSample
         /// <param name="replaceText">替换文本</param>
         private void ReplaceText(IWordDocument document, string findText, string replaceText)
         {
-            var range = document.Range();
-            var find = range.Find;
+            using var range = document.Range();
+            using var find = range.Find;
             find.ClearFormatting();
             find.Text = findText;
             find.Replacement.Text = replaceText;
@@ -260,7 +260,7 @@ namespace IntegrationWithWebApplicationsSample
 
                 // 打开文档
                 using var app = WordFactory.Open(inputPath);
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 生成输出文件路径
                 var fileName = Path.GetFileNameWithoutExtension(inputPath);
