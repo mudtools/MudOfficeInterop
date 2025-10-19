@@ -1,5 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace PageLayoutAndPrintingSample
 {
@@ -45,10 +52,10 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 获取页面设置对象
-                var pageSetup = document.Sections[1].PageSetup;
+                using var pageSetup = document.Sections[1].PageSetup;
 
                 // 设置纸张大小
                 pageSetup.PageWidth = 12240; // A4纸宽度 (单位: 磅/72英寸)
@@ -61,12 +68,12 @@ namespace PageLayoutAndPrintingSample
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait; // 纵向
 
                 // 设置页边距
-                pageSetup.TopMargin = 1440;    // 1英寸 = 72磅
-                pageSetup.BottomMargin = 1440;
-                pageSetup.LeftMargin = 1800;   // 1.25英寸
-                pageSetup.RightMargin = 1800;
-                pageSetup.HeaderDistance = 720; // 页眉距离
-                pageSetup.FooterDistance = 720; // 页脚距离
+                pageSetup.TopMargin = 1440 / 72;    // 1英寸 = 72磅
+                pageSetup.BottomMargin = 1440 / 72;
+                pageSetup.LeftMargin = 1800 / 72;   // 1.25英寸
+                pageSetup.RightMargin = 1800 / 72;
+                pageSetup.HeaderDistance = 720 / 72; // 页眉距离
+                pageSetup.FooterDistance = 720 / 72; // 页脚距离
 
                 // 设置页面垂直对齐方式
                 pageSetup.VerticalAlignment = WdVerticalAlignment.wdAlignVerticalTop;
@@ -96,11 +103,11 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 获取页眉和页脚范围
-                var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
-                var footerRange = document.Sections[1].Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                using var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                using var footerRange = document.Sections[1].Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
 
                 // 设置页眉内容
                 headerRange.Text = "文档标题";
@@ -139,10 +146,10 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 添加内容
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "第一部分内容\n";
 
                 // 插入分页符
@@ -162,13 +169,13 @@ namespace PageLayoutAndPrintingSample
                 range.Text = "第三部分内容\n";
 
                 // 为不同节设置不同的页面布局
-                var section1 = document.Sections[1]; // 第一节
+                using var section1 = document.Sections[1]; // 第一节
                 section1.PageSetup.Orientation = WdOrientation.wdOrientPortrait;
 
-                var section2 = document.Sections[2]; // 第二节
+                using var section2 = document.Sections[2]; // 第二节
                 section2.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
 
-                var section3 = document.Sections[3]; // 第三节
+                using var section3 = document.Sections[3]; // 第三节
                 section3.PageSetup.Orientation = WdOrientation.wdOrientPortrait;
 
                 Console.WriteLine("分节符和分页符设置完成");
@@ -188,10 +195,10 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 打印预览
-                app.ActiveWindow.View.Type = WdViewType.wdPrintPreviewView;
+                app.ActiveWindow.View.Type = WdViewType.wdPrintView;
                 Console.WriteLine("已切换到打印预览视图");
 
                 // 模拟设置打印选项（不实际打印）
@@ -225,15 +232,15 @@ namespace PageLayoutAndPrintingSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 设置文档属性
                 document.Title = "专业文档示例";
                 document.Author = "MudTools.OfficeInterop.Word 用户";
 
                 // 设置第一页的页面布局
-                var section1 = document.Sections[1];
-                var pageSetup = section1.PageSetup;
+                using var section1 = document.Sections[1];
+                using var pageSetup = section1.PageSetup;
 
                 // 设置A4纸张
                 pageSetup.PageSize = WdPaperSize.wdPaperA4;
@@ -251,22 +258,22 @@ namespace PageLayoutAndPrintingSample
                 pageSetup.DifferentFirstPageHeaderFooter = 1;
 
                 // 添加封面内容
-                var coverRange = document.Range();
+                using var coverRange = document.Range();
                 coverRange.Text = "\n\n\n";
                 coverRange.Collapse(WdCollapseDirection.wdCollapseEnd);
 
                 // 添加标题
-                var titleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var titleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 titleRange.Text = "公司年度报告\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 28;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.Font.Color = WdColor.wdColorDarkBlue;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
 
                 // 添加副标题
-                var subtitleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var subtitleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 subtitleRange.Text = "2025财年总结\n\n\n";
                 subtitleRange.Font.Name = "微软雅黑";
                 subtitleRange.Font.Size = 18;
@@ -274,30 +281,30 @@ namespace PageLayoutAndPrintingSample
                 subtitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 添加公司信息
-                var companyRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var companyRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 companyRange.Text = "某某公司\n";
                 companyRange.Font.Name = "宋体";
                 companyRange.Font.Size = 14;
                 companyRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
-                var dateRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var dateRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 dateRange.Text = DateTime.Now.ToString("yyyy年MM月dd日") + "\n";
                 dateRange.Font.Name = "宋体";
                 dateRange.Font.Size = 12;
                 dateRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 插入分页符
-                var breakRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var breakRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 breakRange.InsertBreak(WdBreakType.wdPageBreak);
 
                 // 设置目录页的页眉页脚
-                var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                using var headerRange = document.Sections[1].Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 headerRange.Text = "公司年度报告";
                 headerRange.Font.Name = "宋体";
                 headerRange.Font.Size = 10;
                 headerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
-                var footerRange = document.Sections[1].Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                using var footerRange = document.Sections[1].Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 footerRange.Text = "第 ";
                 footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 footerRange.Fields.Add(footerRange, WdFieldType.wdFieldPage);
@@ -306,64 +313,64 @@ namespace PageLayoutAndPrintingSample
                 footerRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 添加目录标题
-                var tocTitleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var tocTitleRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 tocTitleRange.Text = "目录\n";
                 tocTitleRange.Font.Name = "微软雅黑";
                 tocTitleRange.Font.Size = 16;
-                tocTitleRange.Font.Bold = 1;
+                tocTitleRange.Font.Bold = true;
                 tocTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 tocTitleRange.ParagraphFormat.SpaceAfter = 24;
 
                 // 插入分页符
-                var breakRange2 = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var breakRange2 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 breakRange2.InsertBreak(WdBreakType.wdPageBreak);
 
                 // 添加正文内容
-                var contentTitle = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var contentTitle = document.Range(document.Content.End - 1, document.Content.End - 1);
                 contentTitle.Text = "第一章：公司概况\n";
                 contentTitle.Font.Name = "微软雅黑";
                 contentTitle.Font.Size = 14;
-                contentTitle.Font.Bold = 1;
+                contentTitle.Font.Bold = true;
                 contentTitle.ParagraphFormat.SpaceAfter = 12;
 
-                var contentRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var contentRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 contentRange.Text = "这里是公司概况的内容...\n\n";
                 contentRange.Font.Name = "宋体";
                 contentRange.Font.Size = 12;
 
                 // 添加第二章
-                var chapter2Title = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var chapter2Title = document.Range(document.Content.End - 1, document.Content.End - 1);
                 chapter2Title.Text = "第二章：财务分析\n";
                 chapter2Title.Font.Name = "微软雅黑";
                 chapter2Title.Font.Size = 14;
-                chapter2Title.Font.Bold = 1;
+                chapter2Title.Font.Bold = true;
                 chapter2Title.ParagraphFormat.SpaceAfter = 12;
 
-                var chapter2Range = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var chapter2Range = document.Range(document.Content.End - 1, document.Content.End - 1);
                 chapter2Range.Text = "这里是财务分析的内容...\n\n";
                 chapter2Range.Font.Name = "宋体";
                 chapter2Range.Font.Size = 12;
 
                 // 插入分节符（下一页）
-                var sectionBreakRange = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var sectionBreakRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 sectionBreakRange.InsertBreak(WdBreakType.wdSectionBreakNextPage);
 
                 // 为新节设置横向页面
-                var section2 = document.Sections[2];
+                using var section2 = document.Sections[2];
                 section2.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
 
                 // 添加横向页面内容
-                var landscapeTitle = document.Range(document.Content.End - 1, document.Content.End - 1);
+                using var landscapeTitle = document.Range(document.Content.End - 1, document.Content.End - 1);
                 landscapeTitle.Text = "财务数据图表\n";
                 landscapeTitle.Font.Name = "微软雅黑";
                 landscapeTitle.Font.Size = 14;
-                landscapeTitle.Font.Bold = 1;
+                landscapeTitle.Font.Bold = true;
                 landscapeTitle.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 landscapeTitle.ParagraphFormat.SpaceAfter = 12;
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "PageLayoutDemo.docx");
-                document.SaveAs2(filePath);
+                document.Save(filePath);
 
                 Console.WriteLine($"专业文档已创建: {filePath}");
             }
@@ -383,7 +390,7 @@ namespace PageLayoutAndPrintingSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 隐藏Word窗口
 
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建文档布局构建器
                 var layoutBuilder = new DocumentLayoutBuilder(document);
@@ -439,7 +446,7 @@ namespace PageLayoutAndPrintingSample
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "CompleteDocumentWithHelpers.docx");
-                document.SaveAs2(filePath);
+                document.Save(filePath);
 
                 Console.WriteLine($"使用辅助类创建的完整文档已保存: {filePath}");
             }

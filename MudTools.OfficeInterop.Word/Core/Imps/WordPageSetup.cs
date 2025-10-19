@@ -146,7 +146,8 @@ internal class WordPageSetup : IWordPageSetup
         get => _pageSetup?.Orientation.EnumConvert(WdOrientation.wdOrientPortrait) ?? WdOrientation.wdOrientPortrait;
         set
         {
-            if (_pageSetup != null) _pageSetup.Orientation = value.EnumConvert(MsWord.WdOrientation.wdOrientPortrait);
+            if (_pageSetup != null)
+                _pageSetup.Orientation = value.EnumConvert(MsWord.WdOrientation.wdOrientPortrait);
         }
     }
 

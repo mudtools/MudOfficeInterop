@@ -276,6 +276,8 @@ public interface IWordDocument : IDisposable
     /// </summary>
     IWordWindows Windows { get; }
 
+    IWordEnvelope Envelope { get; }
+
     /// <summary>
     /// 获取或设置文档的背景形状
     /// </summary>
@@ -443,9 +445,36 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 打印文档
     /// </summary>
+    /// <param name="background">如果为 true，则将文档打印到后台打印机队列</param>
+    /// <param name="append">如果为 true，则将指定的文档追加到活动打印机的当前打印作业中</param>
+    /// <param name="range">要打印的文档部分</param>
+    /// <param name="outputFileName">要将输出发送到的文件的路径和名称</param>
+    /// <param name="item">要打印的项目</param>
+    /// <param name="copies">要打印的份数</param>
+    /// <param name="pages">要打印的页码范围</param>
+    /// <param name="pageType">要打印的页面类型（所有页面、奇数页或偶数页）</param>
+    /// <param name="printToFile">如果为 true，则将打印输出发送到文件</param>
+    /// <param name="collate">如果为 true，则对多份打印进行校对</param>
+    /// <param name="manualDuplexPrint">如果为 true，则在手动双面打印机上打印文档</param>
+    /// <param name="printZoomColumn">水平打印的页数</param>
+    /// <param name="printZoomRow">垂直打印的页数</param>
+    /// <param name="printZoomPaperWidth">缩放页的宽度（百分比）</param>
+    /// <param name="printZoomPaperHeight">缩放页的高度（百分比）</param>
+    void PrintOut(bool? background = null,
+        bool? append = null, WdPrintOutRange? range = null,
+        string? outputFileName = null,
+        WdPrintOutItem? item = null, int? copies = null, string? pages = null,
+        WdPrintOutPages? pageType = null, bool? printToFile = null,
+        bool? collate = null, bool? manualDuplexPrint = null,
+        int? printZoomColumn = null, int? printZoomRow = null,
+        int? printZoomPaperWidth = null, int? printZoomPaperHeight = null);
+
+    /// <summary>
+    /// 打印文档
+    /// </summary>
     /// <param name="copies">打印份数</param>
     /// <param name="pages">打印页码范围</param>
-    void PrintOut(int copies = 1, string pages = "");
+    void PrintOut(int copies, string pages = "");
 
     /// <summary>
     /// 保护文档

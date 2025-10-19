@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PageLayoutAndPrintingSample
 {
@@ -43,8 +45,8 @@ namespace PageLayoutAndPrintingSample
                 _document.Author = author;
 
                 // 设置第一页的页面布局
-                var section1 = _document.Sections[1];
-                var pageSetup = section1.PageSetup;
+                using var section1 = _document.Sections[1];
+                using var pageSetup = section1.PageSetup;
 
                 // 设置A4纸张
                 pageSetup.PageSize = WdPaperSize.wdPaperA4;
@@ -81,22 +83,22 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 // 添加封面内容
-                var coverRange = _document.Range();
+                using var coverRange = _document.Range();
                 coverRange.Text = "\n\n\n";
                 coverRange.Collapse(WdCollapseDirection.wdCollapseEnd);
 
                 // 添加标题
-                var titleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var titleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 titleRange.Text = title + "\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 28;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.Font.Color = WdColor.wdColorDarkBlue;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
 
                 // 添加副标题
-                var subtitleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var subtitleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 subtitleRange.Text = subtitle + "\n\n\n";
                 subtitleRange.Font.Name = "微软雅黑";
                 subtitleRange.Font.Size = 18;
@@ -104,13 +106,13 @@ namespace PageLayoutAndPrintingSample
                 subtitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 添加公司信息
-                var companyRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var companyRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 companyRange.Text = company + "\n";
                 companyRange.Font.Name = "宋体";
                 companyRange.Font.Size = 14;
                 companyRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
-                var dateRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var dateRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 dateRange.Text = (date ?? DateTime.Now).ToString("yyyy年MM月dd日") + "\n";
                 dateRange.Font.Name = "宋体";
                 dateRange.Font.Size = 12;
@@ -133,7 +135,7 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 // 插入分页符
-                var breakRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var breakRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 _sectionManager.InsertPageBreak(breakRange);
 
                 // 设置目录页的页眉页脚
@@ -146,22 +148,21 @@ namespace PageLayoutAndPrintingSample
                     WdParagraphAlignment.wdAlignParagraphCenter
                 );
 
-                _headerFooterHelper.AddPageNumber(
+                _headerFooterHelper.AddPageNumberWithTotal(
                     1,
                     WdHeaderFooterIndex.wdHeaderFooterPrimary,
-                    "第 ",
-                    " 页",
+                    "/",
                     "宋体",
                     10,
                     WdParagraphAlignment.wdAlignParagraphCenter
                 );
 
                 // 添加目录标题
-                var tocTitleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var tocTitleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 tocTitleRange.Text = title + "\n";
                 tocTitleRange.Font.Name = "微软雅黑";
                 tocTitleRange.Font.Size = 16;
-                tocTitleRange.Font.Bold = 1;
+                tocTitleRange.Font.Bold = true;
                 tocTitleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 tocTitleRange.ParagraphFormat.SpaceAfter = 24;
 
@@ -184,19 +185,19 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 // 插入分页符
-                var breakRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var breakRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 _sectionManager.InsertPageBreak(breakRange);
 
                 // 添加章节标题
-                var chapterTitleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var chapterTitleRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 chapterTitleRange.Text = $"第{chapterNumber}章：{chapterTitle}\n";
                 chapterTitleRange.Font.Name = "微软雅黑";
                 chapterTitleRange.Font.Size = 14;
-                chapterTitleRange.Font.Bold = 1;
+                chapterTitleRange.Font.Bold = true;
                 chapterTitleRange.ParagraphFormat.SpaceAfter = 12;
 
                 // 添加章节内容
-                var contentRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var contentRange = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 contentRange.Text = content + "\n\n";
                 contentRange.Font.Name = "宋体";
                 contentRange.Font.Size = 12;
@@ -226,15 +227,15 @@ namespace PageLayoutAndPrintingSample
                 _pageSetupHelper.SetPageOrientation(sectionCount, WdOrientation.wdOrientLandscape);
 
                 // 添加横向页面内容
-                var landscapeTitle = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var landscapeTitle = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 landscapeTitle.Text = title + "\n";
                 landscapeTitle.Font.Name = "微软雅黑";
                 landscapeTitle.Font.Size = 14;
-                landscapeTitle.Font.Bold = 1;
+                landscapeTitle.Font.Bold = true;
                 landscapeTitle.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 landscapeTitle.ParagraphFormat.SpaceAfter = 12;
 
-                var landscapeContent = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var landscapeContent = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 landscapeContent.Text = content + "\n";
                 landscapeContent.Font.Name = "宋体";
                 landscapeContent.Font.Size = 12;
@@ -269,7 +270,7 @@ namespace PageLayoutAndPrintingSample
                     otherPagesHeaderText,
                     otherPagesFooterText
                 );
-                
+
                 Console.WriteLine("首页不同的页眉页脚已设置");
             }
             catch (Exception ex)
@@ -300,7 +301,7 @@ namespace PageLayoutAndPrintingSample
                     evenHeaderText,
                     evenFooterText
                 );
-                
+
                 Console.WriteLine("奇偶页不同的页眉页脚已设置");
             }
             catch (Exception ex)

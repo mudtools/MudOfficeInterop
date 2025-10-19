@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PageLayoutAndPrintingSample
 {
@@ -46,7 +48,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 InsertPageBreak(range);
             }
             catch (Exception ex)
@@ -78,7 +80,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                using var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                 InsertSectionBreakNextPage(range);
             }
             catch (Exception ex)
@@ -163,9 +165,9 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var range = section.Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var range = section.Range;
+
                     return $"第 {sectionIndex} 节范围: 起始位置 {range.Start}, 结束位置 {range.End}";
                 }
             }
@@ -173,7 +175,7 @@ namespace PageLayoutAndPrintingSample
             {
                 Console.WriteLine($"获取节范围信息时出错: {ex.Message}");
             }
-            
+
             return $"无法获取第 {sectionIndex} 节的范围信息";
         }
 
@@ -190,12 +192,12 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var range = section.Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var range = section.Range;
+
                     // 将光标移到节的末尾
                     range.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     // 添加内容
                     range.Text = content;
                     range.Font.Name = fontName;
@@ -225,20 +227,20 @@ namespace PageLayoutAndPrintingSample
                     {
                         InsertSectionBreakNextPageAtEnd();
                     }
-                    
+
                     // 获取源节内容
-                    var sourceSection = _document.Sections[sourceSectionIndex];
-                    var sourceRange = sourceSection.Range;
+                    using var sourceSection = _document.Sections[sourceSectionIndex];
+                    using var sourceRange = sourceSection.Range;
                     string content = sourceRange.Text;
-                    
+
                     // 获取新节（刚刚创建的）
                     int newSectionIndex = _document.Sections.Count;
                     var newSection = _document.Sections[newSectionIndex];
                     var newRange = newSection.Range;
-                    
+
                     // 清空新节内容并添加复制的内容
                     newRange.Text = content;
-                    
+
                     return newSectionIndex;
                 }
             }
@@ -246,7 +248,7 @@ namespace PageLayoutAndPrintingSample
             {
                 Console.WriteLine($"复制节内容时出错: {ex.Message}");
             }
-            
+
             return -1;
         }
 
@@ -261,12 +263,12 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 1 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var range = section.Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var range = section.Range;
+
                     // 删除节的内容和分节符
                     range.Delete();
-                    
+
                     return true;
                 }
             }
@@ -274,7 +276,7 @@ namespace PageLayoutAndPrintingSample
             {
                 Console.WriteLine($"删除节时出错: {ex.Message}");
             }
-            
+
             return false;
         }
 
@@ -292,19 +294,19 @@ namespace PageLayoutAndPrintingSample
                     secondSectionIndex > 0 && secondSectionIndex <= _document.Sections.Count &&
                     firstSectionIndex != secondSectionIndex)
                 {
-                    var firstSection = _document.Sections[firstSectionIndex];
-                    var secondSection = _document.Sections[secondSectionIndex];
-                    
-                    var firstRange = firstSection.Range;
-                    var secondRange = secondSection.Range;
-                    
+                    using var firstSection = _document.Sections[firstSectionIndex];
+                    using var secondSection = _document.Sections[secondSectionIndex];
+
+                    using var firstRange = firstSection.Range;
+                    using var secondRange = secondSection.Range;
+
                     string firstContent = firstRange.Text;
                     string secondContent = secondRange.Text;
-                    
+
                     // 交换内容
                     firstRange.Text = secondContent;
                     secondRange.Text = firstContent;
-                    
+
                     return true;
                 }
             }
@@ -312,7 +314,7 @@ namespace PageLayoutAndPrintingSample
             {
                 Console.WriteLine($"交换节内容时出错: {ex.Message}");
             }
-            
+
             return false;
         }
 
@@ -323,12 +325,12 @@ namespace PageLayoutAndPrintingSample
         public List<string> GetAllSectionsInfo()
         {
             var sectionsInfo = new List<string>();
-            
+
             try
             {
                 int sectionCount = _document.Sections.Count;
                 sectionsInfo.Add($"文档共有 {sectionCount} 个节");
-                
+
                 for (int i = 1; i <= sectionCount; i++)
                 {
                     var sectionInfo = GetSectionRangeInfo(i);
@@ -340,7 +342,7 @@ namespace PageLayoutAndPrintingSample
                 Console.WriteLine($"获取所有节信息时出错: {ex.Message}");
                 sectionsInfo.Add("获取节信息失败");
             }
-            
+
             return sectionsInfo;
         }
     }

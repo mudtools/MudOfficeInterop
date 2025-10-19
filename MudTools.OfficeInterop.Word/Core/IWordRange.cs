@@ -263,6 +263,13 @@ public interface IWordRange : IDisposable
     void Collapse();
 
     /// <summary>
+    /// 在当前区域位置插入分隔符。
+    /// <para>如果未指定分隔符类型，则默认插入分页符。</para>
+    /// </summary>
+    /// <param name="type">要插入的分隔符类型，参考 <see cref="WdBreakType"/> 枚举。</param>
+    void InsertBreak(WdBreakType? type = null);
+
+    /// <summary>
     /// 将当前范围的内容剪切到剪贴板。
     /// </summary>
     void Cut();

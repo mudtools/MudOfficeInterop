@@ -1,9 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PageLayoutAndPrintingSample
 {
@@ -33,7 +36,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                _application.ActiveWindow.View.Type = WdViewType.wdPrintPreviewView;
+                _application.ActiveWindow.View.Type = WdViewType.wdPrintView;
                 Console.WriteLine("已切换到打印预览视图");
             }
             catch (Exception ex)
@@ -69,14 +72,14 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 _document.PrintOut(
-                    Background: background,
-                    Copies: copies,
-                    PageType: WdPrintOutPages.wdPrintAllPages,
-                    Range: WdPrintOutRange.wdPrintAllDocument,
-                    Item: WdPrintOutItem.wdPrintDocumentContent,
-                    Collate: collate
+                    background: background,
+                    copies: copies,
+                    pageType: WdPrintOutPages.wdPrintAllPages,
+                    range: WdPrintOutRange.wdPrintAllDocument,
+                    item: WdPrintOutItem.wdPrintDocumentContent,
+                    collate: collate
                 );
-                
+
                 Console.WriteLine($"文档打印任务已启动，打印 {copies} 份");
             }
             catch (Exception ex)
@@ -96,14 +99,14 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 _document.PrintOut(
-                    Background: background,
-                    Copies: copies,
-                    PageType: WdPrintOutPages.wdPrintAllPages,
-                    Range: WdPrintOutRange.wdPrintCurrentPage,
-                    Item: WdPrintOutItem.wdPrintDocumentContent,
-                    Collate: collate
+                    background: background,
+                    copies: copies,
+                    pageType: WdPrintOutPages.wdPrintAllPages,
+                    range: WdPrintOutRange.wdPrintCurrentPage,
+                    item: WdPrintOutItem.wdPrintDocumentContent,
+                    collate: collate
                 );
-                
+
                 Console.WriteLine($"当前页面打印任务已启动，打印 {copies} 份");
             }
             catch (Exception ex)
@@ -125,17 +128,17 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 string pageRange = $"{fromPage}-{toPage}";
-                
+
                 _document.PrintOut(
-                    Background: background,
-                    Copies: copies,
-                    PageType: WdPrintOutPages.wdPrintAllPages,
-                    Range: WdPrintOutRange.wdPrintRangeOfPages,
-                    Item: WdPrintOutItem.wdPrintDocumentContent,
-                    Collate: collate,
-                    Pages: pageRange
+                    background: background,
+                    copies: copies,
+                    pageType: WdPrintOutPages.wdPrintAllPages,
+                    range: WdPrintOutRange.wdPrintRangeOfPages,
+                    item: WdPrintOutItem.wdPrintDocumentContent,
+                    collate: collate,
+                    pages: pageRange
                 );
-                
+
                 Console.WriteLine($"页面范围 {pageRange} 打印任务已启动，打印 {copies} 份");
             }
             catch (Exception ex)
@@ -155,14 +158,14 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 _document.PrintOut(
-                    Background: background,
-                    Copies: copies,
-                    PageType: WdPrintOutPages.wdPrintAllPages,
-                    Range: WdPrintOutRange.wdPrintSelection,
-                    Item: WdPrintOutItem.wdPrintDocumentContent,
-                    Collate: collate
+                    background: background,
+                    copies: copies,
+                    pageType: WdPrintOutPages.wdPrintAllPages,
+                    range: WdPrintOutRange.wdPrintSelection,
+                    item: WdPrintOutItem.wdPrintDocumentContent,
+                    collate: collate
                 );
-                
+
                 Console.WriteLine($"选定内容打印任务已启动，打印 {copies} 份");
             }
             catch (Exception ex)
@@ -184,17 +187,17 @@ namespace PageLayoutAndPrintingSample
             {
                 // 设置双面打印选项
                 // 注意：实际的双面打印设置可能需要通过打印机驱动程序设置
-                
+
                 _document.PrintOut(
-                    Background: background,
-                    Copies: copies,
-                    PageType: WdPrintOutPages.wdPrintAllPages,
-                    Range: WdPrintOutRange.wdPrintAllDocument,
-                    Item: WdPrintOutItem.wdPrintDocumentContent,
-                    Collate: collate,
-                    ManualDuplexPrint: manualDuplex
+                    background: background,
+                    copies: copies,
+                    pageType: WdPrintOutPages.wdPrintAllPages,
+                    range: WdPrintOutRange.wdPrintAllDocument,
+                    item: WdPrintOutItem.wdPrintDocumentContent,
+                    collate: collate,
+                    manualDuplexPrint: manualDuplex
                 );
-                
+
                 string duplexType = manualDuplex ? "手动双面" : "自动双面";
                 Console.WriteLine($"{duplexType}打印任务已启动，打印 {copies} 份");
             }
@@ -215,16 +218,16 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 _document.PrintOut(
-                    Background: false,
-                    Copies: copies,
-                    PageType: WdPrintOutPages.wdPrintAllPages,
-                    Range: WdPrintOutRange.wdPrintAllDocument,
-                    Item: WdPrintOutItem.wdPrintDocumentContent,
-                    Collate: collate,
-                    OutputFileName: outputFileName,
-                    PrintToFile: true
+                    background: false,
+                    copies: copies,
+                    pageType: WdPrintOutPages.wdPrintAllPages,
+                    range: WdPrintOutRange.wdPrintAllDocument,
+                    item: WdPrintOutItem.wdPrintDocumentContent,
+                    collate: collate,
+                    outputFileName: outputFileName,
+                    printToFile: true
                 );
-                
+
                 Console.WriteLine($"文档已打印到文件: {outputFileName}");
             }
             catch (Exception ex)
@@ -245,7 +248,7 @@ namespace PageLayoutAndPrintingSample
                 int paragraphCount = _document.Range().Paragraphs.Count;
                 // 假设每页大约50段落（这是一个非常粗略的估算）
                 int estimatedPages = Math.Max(1, paragraphCount / 50);
-                
+
                 Console.WriteLine($"文档大约有 {estimatedPages} 页 (基于 {paragraphCount} 个段落估算)");
                 return estimatedPages;
             }
@@ -266,15 +269,15 @@ namespace PageLayoutAndPrintingSample
             {
                 StringBuilder info = new StringBuilder();
                 info.AppendLine("打印信息:");
-                
+
                 // 获取文档页数估算
                 int pageCount = GetEstimatedPageCount();
                 info.AppendLine($"  估算页数: {pageCount}");
-                
+
                 // 获取当前视图类型
                 var viewType = _application.ActiveWindow.View.Type;
                 info.AppendLine($"  当前视图: {viewType}");
-                
+
                 // 获取打印机信息（如果可用）
                 try
                 {
@@ -285,7 +288,7 @@ namespace PageLayoutAndPrintingSample
                 {
                     info.AppendLine("  当前打印机: 无法获取");
                 }
-                
+
                 return info.ToString();
             }
             catch (Exception ex)
@@ -329,22 +332,22 @@ namespace PageLayoutAndPrintingSample
             try
             {
                 // 添加信封
-                var envelope = _document.Envelope;
-                envelope.Insert(true, address, returnAddress);
-                
+                using var envelope = _document.Envelope;
+                envelope.Insert(address, returnAddress);
+
                 // 设置信封尺寸
-                envelope.Size = envelopeSize;
-                
+                envelope.DefaultOrientation = envelopeSize;
+
                 // 如果指定了打印机，则设置打印机
                 if (!string.IsNullOrEmpty(printerName))
                 {
                     // 注意：设置打印机可能需要更复杂的操作
                     Console.WriteLine($"将使用打印机: {printerName}");
                 }
-                
+
                 // 打印信封
                 envelope.PrintOut();
-                
+
                 Console.WriteLine("信封已打印");
             }
             catch (Exception ex)

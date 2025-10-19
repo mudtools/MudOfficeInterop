@@ -27,10 +27,10 @@ namespace ReportGenerationSystemSample
                 using var pageSetup = document.Sections[1].PageSetup;
                 pageSetup.PageSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
-                pageSetup.TopMargin = 1440;    // 2厘米
-                pageSetup.BottomMargin = 1440;
-                pageSetup.LeftMargin = 1800;   // 2.5厘米
-                pageSetup.RightMargin = 1800;
+                pageSetup.TopMargin = 1440 / 72;    // 2厘米
+                pageSetup.BottomMargin = 1440 / 72;
+                pageSetup.LeftMargin = 1800 / 72;   // 2.5厘米
+                pageSetup.RightMargin = 1800 / 72;
 
                 // 格式化标题
                 FormatTitle(document);
@@ -215,10 +215,10 @@ namespace ReportGenerationSystemSample
             {
                 pageSetup.PageSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
-                pageSetup.TopMargin = 1134;    // 1.5厘米
-                pageSetup.BottomMargin = 1134;
-                pageSetup.LeftMargin = 1701;   // 2.3厘米
-                pageSetup.RightMargin = 1701;
+                pageSetup.TopMargin = 1134 / 72;    // 1.5厘米
+                pageSetup.BottomMargin = 1134 / 72;
+                pageSetup.LeftMargin = 1701 / 72;   // 2.3厘米
+                pageSetup.RightMargin = 1701 / 72;
 
                 // 设置字体
                 document.Range().Font.Name = "Segoe UI";

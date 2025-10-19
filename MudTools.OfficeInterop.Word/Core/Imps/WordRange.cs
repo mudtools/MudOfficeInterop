@@ -549,6 +549,10 @@ internal class WordRange : IWordRange
         _range?.Collapse();
     }
 
+    public void InsertBreak(WdBreakType? type = null)
+    {
+        _range?.InsertBreak(type.ComArgsConvert(e => e.EnumConvert(MsWord.WdBreakType.wdPageBreak)));
+    }
 
     public void InsertAfter(string text)
     {

@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PageLayoutAndPrintingSample
 {
@@ -42,36 +44,36 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    
+                    using var section = _document.Sections[sectionIndex];
+
                     // 启用首页不同的页眉页脚
                     section.PageSetup.DifferentFirstPageHeaderFooter = 1;
 
                     // 设置首页页眉
                     if (!string.IsNullOrEmpty(firstPageHeaderText))
                     {
-                        var firstHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Range;
+                        using var firstHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Range;
                         firstHeaderRange.Text = firstPageHeaderText;
                     }
 
                     // 设置首页页脚
                     if (!string.IsNullOrEmpty(firstPageFooterText))
                     {
-                        var firstFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Range;
+                        using var firstFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Range;
                         firstFooterRange.Text = firstPageFooterText;
                     }
 
                     // 设置其他页面页眉
                     if (!string.IsNullOrEmpty(otherPagesHeaderText))
                     {
-                        var otherHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                        using var otherHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                         otherHeaderRange.Text = otherPagesHeaderText;
                     }
 
                     // 设置其他页面页脚
                     if (!string.IsNullOrEmpty(otherPagesFooterText))
                     {
-                        var otherFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                        using var otherFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                         otherFooterRange.Text = otherPagesFooterText;
                     }
                 }
@@ -101,36 +103,36 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    
+                    using var section = _document.Sections[sectionIndex];
+
                     // 启用奇偶页不同的页眉页脚
                     section.PageSetup.OddAndEvenPagesHeaderFooter = 1;
 
                     // 设置奇数页页眉
                     if (!string.IsNullOrEmpty(oddHeaderText))
                     {
-                        var oddHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                        using var oddHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                         oddHeaderRange.Text = oddHeaderText;
                     }
 
                     // 设置奇数页页脚
                     if (!string.IsNullOrEmpty(oddFooterText))
                     {
-                        var oddFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+                        using var oddFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                         oddFooterRange.Text = oddFooterText;
                     }
 
                     // 设置偶数页页眉
                     if (!string.IsNullOrEmpty(evenHeaderText))
                     {
-                        var evenHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Range;
+                        using var evenHeaderRange = section.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Range;
                         evenHeaderRange.Text = evenHeaderText;
                     }
 
                     // 设置偶数页页脚
                     if (!string.IsNullOrEmpty(evenFooterText))
                     {
-                        var evenFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Range;
+                        using var evenFooterRange = section.Footers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Range;
                         evenFooterRange.Text = evenFooterText;
                     }
                 }
@@ -162,9 +164,9 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var headerRange = section.Headers[headerType].Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var headerRange = section.Headers[headerType].Range;
+
                     headerRange.Text = text;
                     headerRange.Font.Name = fontName;
                     headerRange.Font.Size = fontSize;
@@ -198,9 +200,9 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var footerRange = section.Footers[footerType].Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var footerRange = section.Footers[footerType].Range;
+
                     footerRange.Text = text;
                     footerRange.Font.Name = fontName;
                     footerRange.Font.Size = fontSize;
@@ -236,29 +238,29 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var footerRange = section.Footers[footerType].Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var footerRange = section.Footers[footerType].Range;
+
                     // 清空原有内容
                     footerRange.Text = "";
-                    
+
                     // 添加前缀
                     if (!string.IsNullOrEmpty(prefix))
                     {
                         footerRange.Text = prefix;
                         footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     }
-                    
+
                     // 插入页码字段
                     footerRange.Fields.Add(footerRange, WdFieldType.wdFieldPage);
                     footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     // 添加后缀
                     if (!string.IsNullOrEmpty(suffix))
                     {
                         footerRange.Text = suffix;
                     }
-                    
+
                     // 设置格式
                     footerRange.Font.Name = fontName;
                     footerRange.Font.Size = fontSize;
@@ -294,29 +296,29 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var footerRange = section.Footers[footerType].Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var footerRange = section.Footers[footerType].Range;
+
                     // 移动到末尾
                     footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     // 添加前缀
                     if (!string.IsNullOrEmpty(prefix))
                     {
                         footerRange.Text = prefix;
                         footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     }
-                    
+
                     // 插入总页数字段
-                    footerRange.Fields.Add(footerRange, WdFieldType.wdFieldNumPages);
+                    using var field = footerRange.Fields.Add(footerRange, WdFieldType.wdFieldNumPages);
                     footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     // 添加后缀
                     if (!string.IsNullOrEmpty(suffix))
                     {
                         footerRange.Text = suffix;
                     }
-                    
+
                     // 设置格式
                     footerRange.Font.Name = fontName;
                     footerRange.Font.Size = fontSize;
@@ -350,26 +352,26 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var footerRange = section.Footers[footerType].Range;
-                    
+                    using var section = _document.Sections[sectionIndex];
+                    using var footerRange = section.Footers[footerType].Range;
+
                     // 清空原有内容
                     footerRange.Text = "";
-                    
+
                     // 插入当前页码
-                    footerRange.Fields.Add(footerRange, WdFieldType.wdFieldPage);
+                    using var field = footerRange.Fields.Add(footerRange, WdFieldType.wdFieldPage);
                     footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     // 添加分隔符
                     if (!string.IsNullOrEmpty(separator))
                     {
                         footerRange.Text = separator;
                         footerRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     }
-                    
+
                     // 插入总页数
                     footerRange.Fields.Add(footerRange, WdFieldType.wdFieldNumPages);
-                    
+
                     // 设置格式
                     footerRange.Font.Name = fontName;
                     footerRange.Font.Size = fontSize;
@@ -405,14 +407,14 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var range = isHeader 
-                        ? section.Headers[headerFooterType].Range 
+                    using var section = _document.Sections[sectionIndex];
+                    using var range = isHeader
+                        ? section.Headers[headerFooterType].Range
                         : section.Footers[headerFooterType].Range;
-                    
+
                     // 添加当前日期
                     range.Text = DateTime.Now.ToString(dateFormat);
-                    
+
                     // 设置格式
                     range.Font.Name = fontName;
                     range.Font.Size = fontSize;
@@ -436,8 +438,8 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var headerRange = section.Headers[headerType].Range;
+                    using var section = _document.Sections[sectionIndex];
+                    using var headerRange = section.Headers[headerType].Range;
                     headerRange.Text = "";
                 }
             }
@@ -458,8 +460,8 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var footerRange = section.Footers[footerType].Range;
+                    using var section = _document.Sections[sectionIndex];
+                    using var footerRange = section.Footers[footerType].Range;
                     footerRange.Text = "";
                 }
             }
@@ -481,8 +483,8 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var headerRange = section.Headers[headerType].Range;
+                    using var section = _document.Sections[sectionIndex];
+                    using var headerRange = section.Headers[headerType].Range;
                     return headerRange.Text;
                 }
             }
@@ -490,7 +492,7 @@ namespace PageLayoutAndPrintingSample
             {
                 Console.WriteLine($"获取页眉内容时出错: {ex.Message}");
             }
-            
+
             return "";
         }
 
@@ -506,8 +508,8 @@ namespace PageLayoutAndPrintingSample
             {
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
-                    var section = _document.Sections[sectionIndex];
-                    var footerRange = section.Footers[footerType].Range;
+                    using var section = _document.Sections[sectionIndex];
+                    using var footerRange = section.Footers[footerType].Range;
                     return footerRange.Text;
                 }
             }
@@ -515,7 +517,7 @@ namespace PageLayoutAndPrintingSample
             {
                 Console.WriteLine($"获取页脚内容时出错: {ex.Message}");
             }
-            
+
             return "";
         }
     }

@@ -44,6 +44,8 @@ internal class WordDocument : IWordDocument
     private IWordComments? _comments;
     private IOfficeCommandBars? _officeCommandBars;
 
+    private IWordEnvelope? _envelope;
+
     /// <inheritdoc/>
     public IWordApplication Application => _document != null ? new WordApplication(_document.Application) : null;
 
@@ -458,6 +460,15 @@ internal class WordDocument : IWordDocument
 
     public object Parent => _document.Parent;
 
+    public IWordEnvelope Envelope
+    {
+        get
+        {
+            _envelope ??= new WordEnvelope(_document.Envelope);
+            return _envelope;
+        }
+    }
+
 
     public IWordWindows Windows
     {
@@ -820,6 +831,8 @@ internal class WordDocument : IWordDocument
 
     public void Close(WdSaveOptions saveOptions)
     {
+        if (_document == null)
+            throw new InvalidOperationException("Document is not available for printing.");
         try
         {
             _document.Close(saveOptions.EnumConvert(MsWord.WdSaveOptions.wdPromptToSaveChanges));
@@ -843,8 +856,52 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public void PrintOut(int copies = 1, string pages = "")
+    public void PrintOut(bool? background = null,
+         bool? append = null, WdPrintOutRange? range = null,
+         string? outputFileName = null,
+         WdPrintOutItem? item = null, int? copies = null, string? pages = null,
+         WdPrintOutPages? pageType = null, bool? printToFile = null,
+         bool? collate = null, bool? manualDuplexPrint = null,
+         int? printZoomColumn = null, int? printZoomRow = null,
+         int? printZoomPaperWidth = null, int? printZoomPaperHeight = null)
     {
+        if (_document == null)
+            throw new InvalidOperationException("Document is not available for printing.");
+
+        try
+        {
+            _document.PrintOut(
+                            background.ComArgsVal(),
+                            append.ComArgsVal(),
+                            range.ComArgsConvert(e => e.EnumConvert(MsWord.WdPrintOutRange.wdPrintAllDocument)),
+                            outputFileName.ComArgsVal(),
+                            missing,
+                            missing,
+                            item.ComArgsConvert(e => e.EnumConvert(MsWord.WdPrintOutItem.wdPrintDocumentContent)),
+                            copies.ComArgsVal(),
+                            pages.ComArgsVal(),
+                            pageType.ComArgsConvert(e => e.EnumConvert(MsWord.WdPrintOutPages.wdPrintAllPages)),
+                            printToFile.ComArgsVal(),
+                            collate.ComArgsVal(),
+                            missing,
+                            manualDuplexPrint.ComArgsVal(),
+                            printZoomColumn.ComArgsVal(),
+                            printZoomRow.ComArgsVal(),
+                            printZoomPaperWidth.ComArgsVal(),
+                            printZoomPaperHeight.ComArgsVal());
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+
+    public void PrintOut(int copies, string pages = "")
+    {
+        if (_document == null)
+            throw new InvalidOperationException("Document is not available for printing.");
         try
         {
             object background = missing;
@@ -1366,6 +1423,7 @@ internal class WordDocument : IWordDocument
             _pageSetup?.Dispose();
             _fields?.Dispose();
             _windows?.Dispose();
+            _envelope?.Dispose();
             _characters?.Dispose();
             _endnotes?.Dispose();
             _footnotes?.Dispose();
@@ -1376,6 +1434,7 @@ internal class WordDocument : IWordDocument
         _background = null;
         _officeCommandBars = null;
         _comments = null;
+        _envelope = null;
         _footnotes = null;
         _endnotes = null;
         _characters = null;
