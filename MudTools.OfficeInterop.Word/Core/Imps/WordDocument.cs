@@ -15,11 +15,12 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordDocument : IWordDocument
 {
-    private readonly MsWord.Document _document;
+    private MsWord.Document? _document;
     private bool _disposedValue;
+    private DisposableList _disposables = [];
     private IWordWindow? _activeWindow;
     private IWordSelection? _selection;
-    private IWordRange _content;
+    private IWordRange? _content;
     private IWordStoryRanges? _storyRanges;
     private IWordBookmarks? _bookmarks;
     private IWordTables? _tables;
@@ -212,7 +213,7 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public string Path => _document.Path;
+    public string Path => _document?.Path ?? string.Empty;
 
     public bool? Saved
     {
@@ -451,144 +452,158 @@ internal class WordDocument : IWordDocument
         get => _document?.Kind != null ? _document.Kind.EnumConvert(WdDocumentKind.wdDocumentNotSpecified) : WdDocumentKind.wdDocumentNotSpecified;
         set
         {
-            if (_document != null) _document.Kind = value.EnumConvert(MsWord.WdDocumentKind.wdDocumentNotSpecified);
+            if (_document != null)
+                _document.Kind = value.EnumConvert(MsWord.WdDocumentKind.wdDocumentNotSpecified);
         }
     }
 
-    public bool ReadOnly => _document.ReadOnly;
+    public bool ReadOnly => _document?.ReadOnly ?? true;
 
-    public WdProtectionType ProtectionType => _document.ProtectionType.EnumConvert(WdProtectionType.wdNoProtection);
+    public WdProtectionType ProtectionType => _document?.ProtectionType.EnumConvert(WdProtectionType.wdNoProtection) ?? WdProtectionType.wdNoProtection;
 
-    public WdDocumentType Type => _document.Type.EnumConvert(WdDocumentType.wdTypeDocument);
+    public WdDocumentType Type => _document?.Type.EnumConvert(WdDocumentType.wdTypeDocument) ?? WdDocumentType.wdTypeDocument;
 
     public int PageCount => (int)_document.Range().Information[MsWord.WdInformation.wdNumberOfPagesInDocument];
 
-    public int WordCount => _document.Words.Count;
+    public int WordCount => Words?.Count ?? 0;
 
-    public int ParagraphCount => _document.Paragraphs.Count;
+    public int ParagraphCount => Paragraphs?.Count ?? 0;
 
-    public int TableCount => _document.Tables.Count;
+    public int TableCount => Tables?.Count ?? 0;
 
-    public int BookmarkCount => _document.Bookmarks.Count;
+    public int BookmarkCount => Bookmarks?.Count ?? 0;
 
-    public object Parent => _document.Parent;
+    public object? Parent => _document?.Parent;
 
-    public IWordEnvelope Envelope
+    public IWordEnvelope? Envelope
     {
         get
         {
+            if (_document == null) return null;
             _envelope ??= new WordEnvelope(_document.Envelope);
             return _envelope;
         }
     }
 
 
-    public IWordWindows Windows
+    public IWordWindows? Windows
     {
         get
         {
+            if (_document == null) return null;
             _windows ??= new WordWindows(_document.Windows);
             return _windows;
         }
     }
 
-    public IWordPageSetup PageSetup
+    public IWordPageSetup? PageSetup
     {
         get
         {
+            if (_document == null) return null;
             _pageSetup ??= new WordPageSetup(_document.PageSetup);
             return _pageSetup;
         }
     }
 
-    public IWordFrames Frames
+    public IWordFrames? Frames
     {
         get
         {
+            if (_document == null) return null;
             _frames ??= new WordFrames(_document.Frames);
             return _frames;
         }
     }
 
-    public IWordFormFields FormFields
+    public IWordFormFields? FormFields
     {
         get
         {
+            if (_document == null) return null;
             _formFields ??= new WordFormFields(_document.FormFields);
             return _formFields;
         }
     }
 
-    public IWordTablesOfContents TablesOfContents
+    public IWordTablesOfContents? TablesOfContents
     {
         get
         {
+            if (_document == null) return null;
             _tableOfContents ??= new WordTablesOfContents(_document.TablesOfContents);
             return _tableOfContents;
         }
     }
 
-    public IWordTablesOfAuthorities TablesOfAuthorities
+    public IWordTablesOfAuthorities? TablesOfAuthorities
     {
         get
         {
+            if (_document == null) return null;
             _tableOfAuthorities ??= new WordTablesOfAuthorities(_document.TablesOfAuthorities);
             return _tableOfAuthorities;
         }
     }
 
-    public IWordFootnotes Footnotes
+    public IWordFootnotes? Footnotes
     {
         get
         {
+            if (_document == null) return null;
             _footnotes ??= new WordFootnotes(_document.Footnotes);
             return _footnotes;
         }
     }
 
 
-    public IWordEndnotes Endnotes
+    public IWordEndnotes? Endnotes
     {
         get
         {
+            if (_document == null) return null;
             _endnotes ??= new WordEndnotes(_document.Endnotes);
             return _endnotes;
         }
     }
 
-    public IWordComments Comments
+    public IWordComments? Comments
     {
         get
         {
+            if (_document == null) return null;
             _comments ??= new WordComments(_document.Comments);
             return _comments;
         }
     }
 
 
-    public IWordFields Fields
+    public IWordFields? Fields
     {
         get
         {
+            if (_document == null) return null;
             _fields ??= new WordFields(_document.Fields);
             return _fields;
         }
     }
 
 
-    public IOfficeCommandBars CommandBars
+    public IOfficeCommandBars? CommandBars
     {
         get
         {
+            if (_document == null) return null;
             _officeCommandBars ??= new OfficeCommandBars(_document.CommandBars);
             return _officeCommandBars;
         }
     }
 
-    public IWordCharacters Characters
+    public IWordCharacters? Characters
     {
         get
         {
+            if (_document == null) return null;
             _characters ??= new WordCharacters(_document.Characters);
             return _characters;
         }
@@ -598,6 +613,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
+            if (_document == null) return null;
             _words ??= new WordWords(_document.Words);
             return _words;
         }
@@ -607,6 +623,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
+            if (_document == null) return null;
             _inlineShapes ??= new WordInlineShapes(_document.InlineShapes);
             return _inlineShapes;
         }
@@ -615,6 +632,7 @@ internal class WordDocument : IWordDocument
     {
         get
         {
+            if (_document == null) return null;
             _shapes ??= new WordShapes(_document.Shapes);
             return _shapes;
         }
@@ -624,118 +642,128 @@ internal class WordDocument : IWordDocument
     {
         get
         {
+            if (_document == null) return null;
             _background ??= new WordShape(_document.Background);
             return _background;
         }
     }
 
-    public IWordWindow ActiveWindow
+    public IWordWindow? ActiveWindow
     {
         get
         {
+            if (_document == null) return null;
             _activeWindow ??= new WordWindow(_document.ActiveWindow);
             return _activeWindow;
         }
     }
 
-    public IWordSelection Selection
+    public IWordSelection? Selection
     {
         get
         {
+            if (_document == null) return null;
             _selection ??= new WordSelection(_document.Application.Selection);
             return _selection;
         }
     }
 
-    public IWordRange Content
+    public IWordRange? Content
     {
         get
         {
+            if (_document == null) return null;
             _content ??= new WordRange(_document.Content);
             return _content;
         }
     }
 
 
-    public IWordStoryRanges StoryRanges
+    public IWordStoryRanges? StoryRanges
     {
         get
         {
+            if (_document == null) return null;
             _storyRanges ??= new WordStoryRanges(_document.StoryRanges);
             return _storyRanges;
         }
     }
 
-    public IWordBookmarks Bookmarks
+    public IWordBookmarks? Bookmarks
     {
         get
         {
-            if (_bookmarks == null)
-            {
-                _bookmarks = new WordBookmarks(_document.Bookmarks);
-            }
+            if (_document == null) return null;
+            _bookmarks ??= new WordBookmarks(_document.Bookmarks);
             return _bookmarks;
         }
     }
 
-    public IWordTables Tables
+    public IWordTables? Tables
     {
         get
         {
+            if (_document == null) return null;
             _tables ??= new WordTables(_document.Tables);
             return _tables;
         }
     }
 
-    public IWordParagraphs Paragraphs
+    public IWordParagraphs? Paragraphs
     {
         get
         {
+            if (_document == null) return null;
             _paragraphs ??= new WordParagraphs(_document.Paragraphs);
             return _paragraphs;
         }
     }
 
-    public IWordSections Sections
+    public IWordSections? Sections
     {
         get
         {
+            if (_document == null) return null;
             _sections ??= new WordSections(_document.Sections);
             return _sections;
         }
     }
 
-    public IWordStyles Styles
+    public IWordStyles? Styles
     {
         get
         {
+            if (_document == null) return null;
             _styles ??= new WordStyles(_document.Styles);
             return _styles;
         }
     }
 
-    public IWordListTemplates ListTemplates
+    public IWordListTemplates? ListTemplates
     {
         get
         {
+            if (_document == null) return null;
             _listTemplates ??= new WordListTemplates(_document.ListTemplates);
             return _listTemplates;
         }
     }
 
-    public IWordVariables Variables
+    public IWordVariables? Variables
     {
         get
         {
+            if (_document == null) return null;
             _variables ??= new WordVariables(_document.Variables);
             return _variables;
         }
     }
 
-    public IWordCustomProperties CustomProperties
+    public IWordCustomProperties? CustomProperties
     {
         get
         {
+            if (_document == null) return null;
             _customProperties ??= new WordCustomProperties(_document.CustomDocumentProperties, this);
             return _customProperties;
         }
@@ -743,36 +771,61 @@ internal class WordDocument : IWordDocument
 
     public WdViewType ViewType
     {
-        get => _document.ActiveWindow.View.Type.EnumConvert<MsWord.WdViewType, WdViewType>();
-        set => _document.ActiveWindow.View.Type = value.EnumConvert<WdViewType, MsWord.WdViewType>();
+        get => ActiveWindow?.View?.Type ?? WdViewType.wdNormalView;
+        set
+        {
+            if (_document != null && ActiveWindow != null && ActiveWindow.View != null)
+                ActiveWindow.View.Type = value;
+        }
 
     }
 
     public bool ShowParagraphs
     {
-        get => _document.ActiveWindow.View.ShowParagraphs;
-        set => _document.ActiveWindow.View.ShowParagraphs = value;
+        get => ActiveWindow?.View?.ShowParagraphs ?? false;
+        set
+        {
+            if (_document != null && ActiveWindow != null && ActiveWindow.View != null)
+                ActiveWindow.View.ShowParagraphs = value;
+        }
     }
 
     public bool ShowHiddenText
     {
-        get => _document.ActiveWindow.View.ShowHiddenText;
-        set => _document.ActiveWindow.View.ShowHiddenText = value;
+        get => ActiveWindow?.View?.ShowHiddenText ?? false;
+        set
+        {
+            if (_document != null && ActiveWindow != null && ActiveWindow.View != null)
+                ActiveWindow.View.ShowHiddenText = value;
+        }
     }
 
     public string Password
     {
-        set => _document.Password = value;
+        set
+        {
+            if (_document != null)
+                _document.Password = value;
+        }
     }
 
     public bool HasPassword
     {
-        get => _document.HasPassword;
+        get
+        {
+            if (_document != null)
+                return _document.HasPassword;
+            return false;
+        }
     }
 
     public string WritePassword
     {
-        set => _document.WritePassword = value;
+        set
+        {
+            if (_document != null)
+                _document.WritePassword = value;
+        }
     }
 
     public IWordRange? Range(int? start = null, int? end = null)
@@ -784,7 +837,10 @@ internal class WordDocument : IWordDocument
             range = _document.Range();
         else
             range = _document.Range(start.ComArgsVal(), end.ComArgsVal());
-        return new WordRange(range);
+
+        var result = new WordRange(range);
+        _disposables.Add(result);
+        return result;
     }
 
     public IWordRange? this[int start, int end]
@@ -794,11 +850,13 @@ internal class WordDocument : IWordDocument
             if (_document == null)
                 return null;
             var range = _document.Range(start, end);
-            return new WordRange(range);
+            var result = new WordRange(range);
+            _disposables.Add(result);
+            return result;
         }
     }
 
-    public IWordRange this[string bookmarkName] => GetBookmark(bookmarkName)?.Range;
+    public IWordRange? this[string bookmarkName] => GetBookmark(bookmarkName)?.Range;
 
     internal WordDocument(MsWord.Document document)
     {
@@ -808,6 +866,7 @@ internal class WordDocument : IWordDocument
 
     public int ComputeStatistics(WdStatistic Statistic, bool? IncludeFootnotesAndEndnotes = null)
     {
+        CheckComObj();
         try
         {
             return _document.ComputeStatistics(
@@ -823,9 +882,10 @@ internal class WordDocument : IWordDocument
 
     public void Activate()
     {
+        CheckComObj();
         try
         {
-            _document.Activate();
+            _document?.Activate();
         }
         catch (Exception ex)
         {
@@ -835,15 +895,16 @@ internal class WordDocument : IWordDocument
 
     public void Save(string? fileName = null, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault)
     {
+        CheckComObj();
         try
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                _document.Save();
+                _document?.Save();
             }
             else
             {
-                _document.SaveAs2(
+                _document?.SaveAs2(
                     FileName: fileName,
                     FileFormat: fileFormat.EnumConvert(MsWord.WdSaveFormat.wdFormatDocumentDefault));
             }
@@ -854,15 +915,23 @@ internal class WordDocument : IWordDocument
         }
     }
 
+    private void CheckComObj()
+    {
+        if (_document == null)
+            throw new InvalidOperationException("无法操作已释放的COM对象。");
+    }
+
     public void SaveAs(string fileName, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault, bool readOnlyRecommended = false)
     {
         if (string.IsNullOrEmpty(fileName))
             throw new ArgumentException("File name cannot be null or empty.", nameof(fileName));
 
+        CheckComObj();
+
         try
         {
             var readOnly = readOnlyRecommended ? (object)true : missing;
-            _document.SaveAs2(
+            _document?.SaveAs2(
                 FileName: fileName,
                 FileFormat: fileFormat.EnumConvert(MsWord.WdSaveFormat.wdFormatDocumentDefault),
                 LockComments: readOnly);
@@ -875,11 +944,11 @@ internal class WordDocument : IWordDocument
 
     public void Close(WdSaveOptions saveOptions)
     {
-        if (_document == null)
-            throw new InvalidOperationException("Document is not available for printing.");
+        CheckComObj();
+
         try
         {
-            _document.Close(saveOptions.EnumConvert(MsWord.WdSaveOptions.wdPromptToSaveChanges));
+            _document?.Close(saveOptions.EnumConvert(MsWord.WdSaveOptions.wdPromptToSaveChanges));
         }
         catch (Exception ex)
         {
@@ -889,10 +958,11 @@ internal class WordDocument : IWordDocument
 
     public void Close(bool saveChanges = true)
     {
+        CheckComObj();
         try
         {
             var saveOption = saveChanges ? MsWord.WdSaveOptions.wdSaveChanges : MsWord.WdSaveOptions.wdDoNotSaveChanges;
-            _document.Close(saveOption);
+            _document?.Close(saveOption);
         }
         catch (Exception ex)
         {
@@ -909,12 +979,10 @@ internal class WordDocument : IWordDocument
          int? printZoomColumn = null, int? printZoomRow = null,
          int? printZoomPaperWidth = null, int? printZoomPaperHeight = null)
     {
-        if (_document == null)
-            throw new InvalidOperationException("Document is not available for printing.");
-
+        CheckComObj();
         try
         {
-            _document.PrintOut(
+            _document?.PrintOut(
                             background.ComArgsVal(),
                             append.ComArgsVal(),
                             range.ComArgsConvert(e => e.EnumConvert(MsWord.WdPrintOutRange.wdPrintAllDocument)),
@@ -944,8 +1012,7 @@ internal class WordDocument : IWordDocument
 
     public void PrintOut(int copies, string pages = "")
     {
-        if (_document == null)
-            throw new InvalidOperationException("Document is not available for printing.");
+        CheckComObj();
         try
         {
             object background = missing;
@@ -965,7 +1032,7 @@ internal class WordDocument : IWordDocument
             object summaryLen = missing;
             object wordDialog = missing;
 
-            _document.PrintOut(
+            _document?.PrintOut(
                 ref background,
                 ref append,
                 ref range,
@@ -990,9 +1057,10 @@ internal class WordDocument : IWordDocument
     }
     public void Protect(WdProtectionType protectionType, string? password = null, bool? noReset = null)
     {
+        CheckComObj();
         try
         {
-            _document.Protect(
+            _document?.Protect(
                 protectionType.EnumConvert(MsWord.WdProtectionType.wdNoProtection),
                 noReset.ComArgsVal(),
                 password.ComArgsVal());
@@ -1005,10 +1073,11 @@ internal class WordDocument : IWordDocument
 
     public void Unprotect(string? password = null)
     {
+        CheckComObj();
         try
         {
-            var passwordObj = string.IsNullOrEmpty(password) ? missing : (object)password;
-            _document.Unprotect(ref passwordObj);
+            var passwordObj = string.IsNullOrEmpty(password) ? missing : password;
+            _document?.Unprotect(ref passwordObj);
         }
         catch (Exception ex)
         {
@@ -1018,9 +1087,10 @@ internal class WordDocument : IWordDocument
 
     public bool IsProtected()
     {
+        CheckComObj();
         try
         {
-            return _document.ProtectionType != MsWord.WdProtectionType.wdNoProtection;
+            return _document?.ProtectionType != MsWord.WdProtectionType.wdNoProtection;
         }
         catch (Exception ex)
         {
@@ -1032,11 +1102,11 @@ internal class WordDocument : IWordDocument
     {
         if (start < 0 || end < start)
             throw new ArgumentOutOfRangeException("Invalid range parameters.");
-
+        CheckComObj();
         try
         {
-            var range = _document.Range(start, end);
-            return range.Text;
+            var range = _document?.Range(start, end);
+            return range?.Text;
         }
         catch (Exception ex)
         {
@@ -1048,10 +1118,10 @@ internal class WordDocument : IWordDocument
     {
         if (start < 0 || end < start)
             throw new ArgumentOutOfRangeException("Invalid range parameters.");
-
+        CheckComObj();
         try
         {
-            var range = _document.Range(start, end);
+            var range = _document?.Range(start, end);
             range.Text = text ?? string.Empty;
         }
         catch (Exception ex)
@@ -1064,10 +1134,10 @@ internal class WordDocument : IWordDocument
     {
         if (string.IsNullOrEmpty(text))
             return;
-
+        CheckComObj();
         try
         {
-            var range = position >= 0 ? _document.Range(position, position) : _document.Range();
+            var range = position >= 0 ? _document?.Range(position, position) : _document?.Range();
             range.Text = text;
         }
         catch (Exception ex)
@@ -1080,10 +1150,10 @@ internal class WordDocument : IWordDocument
     {
         if (!File.Exists(fileName))
             throw new FileNotFoundException("File not found.", fileName);
-
+        CheckComObj();
         try
         {
-            var range = position >= 0 ? _document.Range(position, position) : _document.Range();
+            var range = position >= 0 ? _document?.Range(position, position) : _document?.Range();
             range.InsertFile(fileName);
         }
         catch (Exception ex)
@@ -1096,10 +1166,10 @@ internal class WordDocument : IWordDocument
     {
         if (string.IsNullOrEmpty(findText))
             return 0;
-
+        CheckComObj();
         try
         {
-            var find = _document.Content.Find;
+            var find = _document?.Content.Find;
             find.ClearFormatting();
             find.Text = findText;
             find.Replacement.ClearFormatting();
@@ -1113,7 +1183,6 @@ internal class WordDocument : IWordDocument
             find.MatchSoundsLike = false;
             find.MatchAllWordForms = false;
 
-            var count = 0;
             object replaceAll = MsWord.WdReplace.wdReplaceAll;
 
             object findTextObj = missing;
@@ -1146,16 +1215,20 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordBookmark AddBookmark(string name, int start, int end)
+    public IWordBookmark? AddBookmark(string name, int start, int end)
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Bookmark name cannot be null or empty.", nameof(name));
 
+        CheckComObj();
+
         try
         {
-            var range = _document.Range(start, end);
-            var bookmark = _document.Bookmarks.Add(name, range);
-            return new WordBookmark(bookmark);
+            var range = _document?.Range(start, end);
+            var bookmark = _document?.Bookmarks.Add(name, range);
+            var result = new WordBookmark(bookmark);
+            _disposables.Add(result);
+            return result;
         }
         catch (Exception ex)
         {
@@ -1163,15 +1236,18 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordBookmark GetBookmark(string name)
+    public IWordBookmark? GetBookmark(string name)
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Bookmark name cannot be null or empty.", nameof(name));
-
+        CheckComObj();
         try
         {
-            var bookmark = _document.Bookmarks[name];
-            return bookmark != null ? new WordBookmark(bookmark) : null;
+            var bookmark = _document?.Bookmarks[name];
+            var result = bookmark != null ? new WordBookmark(bookmark) : null;
+            if (result != null)
+                _disposables.Add(result);
+            return result;
         }
         catch
         {
@@ -1183,7 +1259,7 @@ internal class WordDocument : IWordDocument
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Bookmark name cannot be null or empty.", nameof(name));
-
+        CheckComObj();
         try
         {
             if (_document.Bookmarks.Exists(name))
@@ -1197,16 +1273,18 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordTable AddTable(int rows, int columns, int position = -1)
+    public IWordTable? AddTable(int rows, int columns, int position = -1)
     {
         if (rows <= 0 || columns <= 0)
             throw new ArgumentException("Rows and columns must be greater than zero.");
-
+        CheckComObj();
         try
         {
             var range = position >= 0 ? _document.Range(position, position) : _document.Range();
             var table = _document.Tables.Add(range, rows, columns);
-            return new WordTable(table);
+            var result = new WordTable(table);
+            _disposables?.Add(result);
+            return result;
         }
         catch (Exception ex)
         {
@@ -1214,8 +1292,10 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordParagraph AddParagraph(int position, string text = "")
+    public IWordParagraph? AddParagraph(int position, string text = "")
     {
+        CheckComObj();
+
         try
         {
             var range = position >= 0 ? _document.Range(position, position) : _document.Range();
@@ -1224,7 +1304,9 @@ internal class WordDocument : IWordDocument
             {
                 paragraph.Range.Text = text;
             }
-            return new WordParagraph(paragraph);
+            var result = new WordParagraph(paragraph);
+            _disposables?.Add(result);
+            return result;
         }
         catch (Exception ex)
         {
@@ -1234,6 +1316,7 @@ internal class WordDocument : IWordDocument
 
     public void AddSectionBreak(int position, int type = 2)
     {
+        CheckComObj();
         try
         {
             var range = position >= 0 ? _document.Range(position, position) : _document.Range();
@@ -1247,6 +1330,7 @@ internal class WordDocument : IWordDocument
 
     public void AddPageBreak(int position)
     {
+        CheckComObj();
         try
         {
             var range = position >= 0 ? _document.Range(position, position) : _document.Range();
@@ -1260,6 +1344,7 @@ internal class WordDocument : IWordDocument
 
     public void AddHeader(string text, bool primary = true)
     {
+        CheckComObj();
         try
         {
             var section = _document.Sections[1];
@@ -1274,6 +1359,7 @@ internal class WordDocument : IWordDocument
 
     public void AddFooter(string text, bool primary = true)
     {
+        CheckComObj();
         try
         {
             var section = _document.Sections[1];
@@ -1288,6 +1374,7 @@ internal class WordDocument : IWordDocument
 
     public void SetMargins(float top, float bottom, float left, float right)
     {
+        CheckComObj();
         try
         {
             _document.PageSetup.TopMargin = top;
@@ -1303,6 +1390,7 @@ internal class WordDocument : IWordDocument
 
     public void SetPageOrientation(bool landscape = false)
     {
+        CheckComObj();
         try
         {
             _document.PageSetup.Orientation = landscape ? MsWord.WdOrientation.wdOrientLandscape : MsWord.WdOrientation.wdOrientPortrait;
@@ -1315,6 +1403,7 @@ internal class WordDocument : IWordDocument
 
     public void SetPageSize(float width, float height)
     {
+        CheckComObj();
         try
         {
             _document.PageSetup.PageWidth = width;
@@ -1326,15 +1415,17 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordVariable AddVariable(string name, string value)
+    public IWordVariable? AddVariable(string name, string value)
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Variable name cannot be null or empty.", nameof(name));
-
+        CheckComObj();
         try
         {
             var variable = _document.Variables.Add(name, value ?? string.Empty);
-            return new WordVariable(variable);
+            var result = new WordVariable(variable);
+            _disposables.Add(result);
+            return result;
         }
         catch (Exception ex)
         {
@@ -1342,11 +1433,11 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public string GetVariable(string name)
+    public string? GetVariable(string name)
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Variable name cannot be null or empty.", nameof(name));
-
+        CheckComObj();
         try
         {
             return _document.Variables[name]?.Value;
@@ -1361,7 +1452,7 @@ internal class WordDocument : IWordDocument
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Variable name cannot be null or empty.", nameof(name));
-
+        CheckComObj();
         try
         {
             _document.Variables[name]?.Delete();
@@ -1374,6 +1465,7 @@ internal class WordDocument : IWordDocument
 
     public void UpdateAllFields()
     {
+        CheckComObj();
         try
         {
             _document.Fields.Update();
@@ -1386,6 +1478,7 @@ internal class WordDocument : IWordDocument
 
     public void AcceptAllRevisions()
     {
+        CheckComObj();
         try
         {
             _document.AcceptAllRevisions();
@@ -1398,6 +1491,7 @@ internal class WordDocument : IWordDocument
 
     public void RejectAllRevisions()
     {
+        CheckComObj();
         try
         {
             _document.RejectAllRevisions();
@@ -1413,7 +1507,7 @@ internal class WordDocument : IWordDocument
     {
         if (string.IsNullOrEmpty(fileName))
             throw new ArgumentException("File name cannot be null or empty.", nameof(fileName));
-
+        CheckComObj();
         try
         {
             _document.ExportAsFixedFormat(fileName, MsWord.WdExportFormat.wdExportFormatPDF);
@@ -1427,9 +1521,10 @@ internal class WordDocument : IWordDocument
 
     public void Refresh()
     {
+        CheckComObj();
         try
         {
-            _document.Repaginate();
+            _document?.Repaginate();
         }
         catch (Exception ex)
         {
@@ -1444,7 +1539,7 @@ internal class WordDocument : IWordDocument
     {
         if (_disposedValue) return;
 
-        if (disposing)
+        if (disposing && _document != null)
         {
             _activeWindow?.Dispose();
             _selection?.Dispose();
@@ -1476,7 +1571,9 @@ internal class WordDocument : IWordDocument
             _comments?.Dispose();
             _officeCommandBars?.Dispose();
             _officeDocumentProperties?.Dispose();
+            _disposables.Dispose();
         }
+        _document = null;
         _background = null;
         _officeCommandBars = null;
         _comments = null;

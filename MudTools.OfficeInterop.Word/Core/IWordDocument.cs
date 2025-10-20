@@ -223,22 +223,22 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 获取文档的命令栏集合
     /// </summary>
-    IOfficeCommandBars CommandBars { get; }
+    IOfficeCommandBars? CommandBars { get; }
 
     /// <summary>
     /// 获取文档的批注集合
     /// </summary>
-    IWordComments Comments { get; }
+    IWordComments? Comments { get; }
 
     /// <summary>
     /// 获取文档的尾注集合
     /// </summary>
-    IWordEndnotes Endnotes { get; }
+    IWordEndnotes? Endnotes { get; }
 
     /// <summary>
     /// 获取文档的脚注集合
     /// </summary>
-    IWordFootnotes Footnotes { get; }
+    IWordFootnotes? Footnotes { get; }
 
     /// <summary>
     /// 获取文档的单词集合
@@ -248,52 +248,52 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 获取文档的主要内容范围
     /// </summary>
-    IWordRange Content { get; }
+    IWordRange? Content { get; }
 
     /// <summary>
     /// 获取文档的字符集合
     /// </summary>
-    IWordCharacters Characters { get; }
+    IWordCharacters? Characters { get; }
 
     /// <summary>
     /// 获取文档的域集合
     /// </summary>
-    IWordFields Fields { get; }
+    IWordFields? Fields { get; }
 
     /// <summary>
     /// 获取文档的窗体域集合
     /// </summary>
-    IWordFormFields FormFields { get; }
+    IWordFormFields? FormFields { get; }
 
     /// <summary>
     /// 获取文档的目录集合
     /// </summary>
-    IWordTablesOfContents TablesOfContents { get; }
+    IWordTablesOfContents? TablesOfContents { get; }
 
     /// <summary>
     /// 获取文档的引文目录集合
     /// </summary>
-    IWordTablesOfAuthorities TablesOfAuthorities { get; }
+    IWordTablesOfAuthorities? TablesOfAuthorities { get; }
 
     /// <summary>
     /// 获取文档的框架集合
     /// </summary>
-    IWordFrames Frames { get; }
+    IWordFrames? Frames { get; }
 
     /// <summary>
     /// 获取或设置文档的页面设置
     /// </summary>
-    IWordPageSetup PageSetup { get; }
+    IWordPageSetup? PageSetup { get; }
 
     /// <summary>
     /// 获取文档的窗口集合
     /// </summary>
-    IWordWindows Windows { get; }
+    IWordWindows? Windows { get; }
 
     /// <summary>
     /// 获取文档的信封对象，用于操作文档中的信封相关内容
     /// </summary>
-    IWordEnvelope Envelope { get; }
+    IWordEnvelope? Envelope { get; }
 
     /// <summary>
     /// 获取或设置文档的背景形状
@@ -328,7 +328,7 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 获取父对象（通常是 Application）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取文档中的内嵌形状集合。
@@ -345,57 +345,57 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 获取活动窗口
     /// </summary>
-    IWordWindow ActiveWindow { get; }
+    IWordWindow? ActiveWindow { get; }
 
     /// <summary>
     /// 获取文档的活动选择区域
     /// </summary>
-    IWordSelection Selection { get; }
+    IWordSelection? Selection { get; }
 
     /// <summary>
     /// 获取文档范围集合
     /// </summary>
-    IWordStoryRanges StoryRanges { get; }
+    IWordStoryRanges? StoryRanges { get; }
 
     /// <summary>
     /// 获取文档书签集合
     /// </summary>
-    IWordBookmarks Bookmarks { get; }
+    IWordBookmarks? Bookmarks { get; }
 
     /// <summary>
     /// 获取文档表格集合
     /// </summary>
-    IWordTables Tables { get; }
+    IWordTables? Tables { get; }
 
     /// <summary>
     /// 获取文档段落集合
     /// </summary>
-    IWordParagraphs Paragraphs { get; }
+    IWordParagraphs? Paragraphs { get; }
 
     /// <summary>
     /// 获取文档节集合
     /// </summary>
-    IWordSections Sections { get; }
+    IWordSections? Sections { get; }
 
     /// <summary>
     /// 获取文档样式集合
     /// </summary>
-    IWordStyles Styles { get; }
+    IWordStyles? Styles { get; }
 
     /// <summary>
     /// 获取文档列表模板集合
     /// </summary>
-    IWordListTemplates ListTemplates { get; }
+    IWordListTemplates? ListTemplates { get; }
 
     /// <summary>
     /// 获取文档变量集合
     /// </summary>
-    IWordVariables Variables { get; }
+    IWordVariables? Variables { get; }
 
     /// <summary>
     /// 获取文档自定义属性集合
     /// </summary>
-    IWordCustomProperties CustomProperties { get; }
+    IWordCustomProperties? CustomProperties { get; }
 
     /// <summary>
     /// 获取或设置文档视图类型
@@ -568,14 +568,14 @@ public interface IWordDocument : IDisposable
     /// <param name="start">起始位置</param>
     /// <param name="end">结束位置</param>
     /// <returns>书签对象</returns>
-    IWordBookmark AddBookmark(string name, int start, int end);
+    IWordBookmark? AddBookmark(string name, int start, int end);
 
     /// <summary>
     /// 获取书签
     /// </summary>
     /// <param name="name">书签名称</param>
     /// <returns>书签对象</returns>
-    IWordBookmark GetBookmark(string name);
+    IWordBookmark? GetBookmark(string name);
 
     /// <summary>
     /// 删除书签
@@ -590,7 +590,7 @@ public interface IWordDocument : IDisposable
     /// <param name="columns">列数</param>
     /// <param name="position">插入位置</param>
     /// <returns>表格对象</returns>
-    IWordTable AddTable(int rows, int columns, int position = -1);
+    IWordTable? AddTable(int rows, int columns, int position = -1);
 
     /// <summary>
     /// 添加段落
@@ -598,7 +598,7 @@ public interface IWordDocument : IDisposable
     /// <param name="position">插入位置</param>
     /// <param name="text">段落文本</param>
     /// <returns>段落对象</returns>
-    IWordParagraph AddParagraph(int position, string text = "");
+    IWordParagraph? AddParagraph(int position, string text = "");
 
     /// <summary>
     /// 添加分节符
@@ -655,14 +655,14 @@ public interface IWordDocument : IDisposable
     /// <param name="name">变量名称</param>
     /// <param name="value">变量值</param>
     /// <returns>变量对象</returns>
-    IWordVariable AddVariable(string name, string value);
+    IWordVariable? AddVariable(string name, string value);
 
     /// <summary>
     /// 获取变量
     /// </summary>
     /// <param name="name">变量名称</param>
     /// <returns>变量值</returns>
-    string GetVariable(string name);
+    string? GetVariable(string name);
 
     /// <summary>
     /// 删除变量
@@ -718,5 +718,5 @@ public interface IWordDocument : IDisposable
     /// </summary>
     /// <param name="bookmarkName">书签名称</param>
     /// <returns>范围对象</returns>
-    IWordRange this[string bookmarkName] { get; }
+    IWordRange? this[string bookmarkName] { get; }
 }
