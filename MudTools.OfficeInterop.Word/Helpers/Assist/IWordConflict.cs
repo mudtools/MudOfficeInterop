@@ -16,20 +16,20 @@ public interface IWordConflict : IDisposable
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取冲突的范围。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
-    /// 获取冲突的类型，由 <see cref="MsWord.WdRevisionType"/> 常量之一标识。
+    /// 获取冲突的类型，由 <see cref="WdRevisionType"/> 常量之一标识。
     /// </summary>
     WdRevisionType Type { get; }
 

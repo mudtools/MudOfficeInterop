@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordStyle : IWordStyle
 {
-    private MsWord.Style _style;
+    internal MsWord.Style _style;
     private bool _disposedValue;
 
     /// <summary>

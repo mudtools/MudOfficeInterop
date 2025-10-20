@@ -265,6 +265,8 @@ public interface IWordDocument : IDisposable
     /// </summary>
     IWordFormFields FormFields { get; }
 
+    IWordTablesOfContents TableOfContents { get; }
+
     /// <summary>
     /// 获取文档的框架集合
     /// </summary>

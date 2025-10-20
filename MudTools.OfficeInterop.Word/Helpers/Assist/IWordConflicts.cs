@@ -15,12 +15,12 @@ public interface IWordConflicts : IEnumerable<IWordConflict>, IDisposable
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的冲突数量。
@@ -32,7 +32,7 @@ public interface IWordConflicts : IEnumerable<IWordConflict>, IDisposable
     /// </summary>
     /// <param name="index">索引（从 1 开始）。</param>
     /// <returns>指定的冲突对象。</returns>
-    IWordConflict this[int index] { get; }
+    IWordConflict? this[int index] { get; }
 
     /// <summary>
     /// 接受所有冲突更改，删除冲突，并将更改合并到文档的服务器副本中。

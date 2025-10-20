@@ -14,8 +14,9 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordConflicts : IWordConflicts
 {
     private static readonly ILog log = LogManager.GetLogger(typeof(WordConflicts));
+    private static readonly DisposableList DisposableList = [];
 
-    private MsWord.Conflicts _conflicts;
+    private MsWord.Conflicts? _conflicts;
     private bool _disposedValue;
 
     /// <summary>
@@ -31,16 +32,16 @@ internal class WordConflicts : IWordConflicts
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _conflicts != null ? new WordApplication(_conflicts.Application) : null;
+    public IWordApplication? Application => _conflicts != null ? new WordApplication(_conflicts.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _conflicts?.Parent;
+    public object? Parent => _conflicts?.Parent;
 
     /// <inheritdoc/>
     public int Count => _conflicts?.Count ?? 0;
 
     /// <inheritdoc/>
-    public IWordConflict this[int index]
+    public IWordConflict? this[int index]
     {
         get
         {
@@ -48,11 +49,14 @@ internal class WordConflicts : IWordConflicts
             try
             {
                 var comConflict = _conflicts[index];
-                return comConflict != null ? new WordConflict(comConflict) : null;
+                var result = comConflict != null ? new WordConflict(comConflict) : null;
+                if (result != null)
+                    DisposableList.Add(result);
+                return result;
             }
             catch (COMException ce)
             {
-                log.Error($"Failed to retrieve object based on index: {ce.Message}", ce);
+                log.Error($"根据索引检索对象失败: {ce.Message}", ce);
                 return null;
             }
         }
@@ -65,13 +69,29 @@ internal class WordConflicts : IWordConflicts
     /// <inheritdoc/>
     public void AcceptAll()
     {
-        _conflicts?.AcceptAll();
+        try
+        {
+            _conflicts?.AcceptAll();
+        }
+        catch (COMException ce)
+        {
+            log.Error($"接受所有冲突更改失败: {ce.Message}", ce);
+            throw new InvalidOperationException("接受所有冲突更改失败。", ce);
+        }
     }
 
     /// <inheritdoc/>
     public void RejectAll()
     {
-        _conflicts?.RejectAll();
+        try
+        {
+            _conflicts?.RejectAll();
+        }
+        catch (COMException ce)
+        {
+            log.Error($"拒绝所有冲突更改失败: {ce.Message}", ce);
+            throw new InvalidOperationException("拒绝所有冲突更改失败。", ce);
+        }
     }
 
     #endregion
@@ -89,9 +109,9 @@ internal class WordConflicts : IWordConflicts
         if (disposing && _conflicts != null)
         {
             Marshal.ReleaseComObject(_conflicts);
+            DisposableList.Dispose();
             _conflicts = null;
         }
-
         _disposedValue = true;
     }
 

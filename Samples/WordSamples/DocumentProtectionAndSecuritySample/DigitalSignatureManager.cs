@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DocumentProtectionAndSecuritySample
 {
@@ -214,7 +216,7 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 // 保存文档以准备签名
-                _document.SaveAs2(filePath);
+                _document.Save(filePath);
                 Console.WriteLine($"待签名文档已保存: {filePath}");
                 return true;
             }
@@ -255,34 +257,34 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
-                
+
                 // 添加签名页标题
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = "\n\n签署页\n";
                 range.Font.Name = "微软雅黑";
                 range.Font.Size = 14;
-                range.Font.Bold = 1;
+                range.Font.Bold = true;
                 range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
-                
+
                 // 为每个签约方添加签名行
                 foreach (var party in parties)
                 {
                     range.Collapse(WdCollapseDirection.wdCollapseEnd);
                     range.Text = $"\n{party.PartyName}:\n";
-                    range.Font.Bold = 1;
+                    range.Font.Bold = true;
                     range.Collapse(WdCollapseDirection.wdCollapseEnd);
-                    
+
                     range.Text = $"签名：____________________    日期：____年____月____日\n";
-                    range.Font.Bold = 0;
+                    range.Font.Bold = false;
                     range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 }
-                
+
                 // 添加无正文标记
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = "\n\n【以下无正文】\n";
                 range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                
+
                 Console.WriteLine("合同签名页已创建");
                 return true;
             }

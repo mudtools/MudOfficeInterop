@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using log4net;
+
 namespace MudTools.OfficeInterop.Word.Imps;
 
 /// <summary>
@@ -12,7 +14,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// </summary>
 internal class WordConflict : IWordConflict
 {
-    private MsWord.Conflict _conflict;
+    private static readonly ILog log = LogManager.GetLogger(typeof(WordConflict));
+    private MsWord.Conflict? _conflict;
     private bool _disposedValue;
 
     /// <summary>
@@ -28,16 +31,16 @@ internal class WordConflict : IWordConflict
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _conflict != null ? new WordApplication(_conflict.Application) : null;
+    public IWordApplication? Application => _conflict != null ? new WordApplication(_conflict.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _conflict?.Parent;
+    public object? Parent => _conflict?.Parent;
 
     /// <inheritdoc/>
-    public IWordRange Range => _conflict?.Range != null ? new WordRange(_conflict.Range) : null;
+    public IWordRange? Range => _conflict?.Range != null ? new WordRange(_conflict.Range) : null;
 
     /// <inheritdoc/>
-    public WdRevisionType Type => _conflict?.Type != null ? (WdRevisionType)(int)_conflict?.Type : WdRevisionType.wdNoRevision;
+    public WdRevisionType Type => _conflict != null ? _conflict.Type.EnumConvert(WdRevisionType.wdNoRevision) : WdRevisionType.wdNoRevision;
 
     #endregion
 
@@ -46,13 +49,29 @@ internal class WordConflict : IWordConflict
     /// <inheritdoc/>
     public void Accept()
     {
-        _conflict?.Accept();
+        try
+        {
+            _conflict?.Accept();
+        }
+        catch (Exception ex)
+        {
+            log.Error("接受此冲突更改失败。", ex);
+            throw new InvalidOperationException("接受此冲突更改失败。", ex);
+        }
     }
 
     /// <inheritdoc/>
     public void Reject()
     {
-        _conflict?.Reject();
+        try
+        {
+            _conflict?.Reject();
+        }
+        catch (Exception ex)
+        {
+            log.Error("拒绝此冲突更改失败。", ex);
+            throw new InvalidOperationException("拒绝此冲突更改失败。", ex);
+        }
     }
 
     #endregion

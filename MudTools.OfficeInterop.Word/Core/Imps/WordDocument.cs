@@ -43,7 +43,8 @@ internal class WordDocument : IWordDocument
     private IWordFootnotes? _footnotes;
     private IWordComments? _comments;
     private IOfficeCommandBars? _officeCommandBars;
-
+    private IWordTablesOfContents? _tableOfContents;
+    private IWordTablesOfAuthorities? _tableOfAuthorities;
     private IWordEnvelope? _envelope;
 
     /// <inheritdoc/>
@@ -518,7 +519,23 @@ internal class WordDocument : IWordDocument
         }
     }
 
+    public IWordTablesOfContents TableOfContents
+    {
+        get
+        {
+            _tableOfContents ??= new WordTablesOfContents(_document.TablesOfContents);
+            return _tableOfContents;
+        }
+    }
 
+    public IWordTablesOfAuthorities TableOfAuthorities
+    {
+        get
+        {
+            _tableOfAuthorities ??= new WordTablesOfAuthorities(_document.TablesOfAuthorities);
+            return _tableOfAuthorities;
+        }
+    }
 
     public IWordFootnotes Footnotes
     {
@@ -1446,6 +1463,8 @@ internal class WordDocument : IWordDocument
             _shapes?.Dispose();
             _background?.Dispose();
             _formFields?.Dispose();
+            _tableOfAuthorities?.Dispose();
+            _tableOfContents?.Dispose();
             _frames?.Dispose();
             _pageSetup?.Dispose();
             _fields?.Dispose();
@@ -1470,6 +1489,8 @@ internal class WordDocument : IWordDocument
         _pageSetup = null;
         _frames = null;
         _formFields = null;
+        _tableOfAuthorities = null;
+        _tableOfContents = null;
         _activeWindow = null;
         _selection = null;
         _content = null;
