@@ -267,11 +267,11 @@ namespace DocumentAutomationProcessingSample
         {
             try
             {
-                // 查找目录插入位置（通常在文档开头）
+                // 查找目录插入位置（通常在文档开头）s
                 using var range = document.Range(0, 0);
                 range.Text = "目录\n";
                 range.Font.Size = 16;
-                range.Font.Bold = 1;
+                range.Font.Bold = true;
                 range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 插入目录
