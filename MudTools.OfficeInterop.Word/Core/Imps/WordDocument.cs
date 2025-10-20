@@ -519,7 +519,7 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordTablesOfContents TableOfContents
+    public IWordTablesOfContents TablesOfContents
     {
         get
         {
@@ -528,7 +528,7 @@ internal class WordDocument : IWordDocument
         }
     }
 
-    public IWordTablesOfAuthorities TableOfAuthorities
+    public IWordTablesOfAuthorities TablesOfAuthorities
     {
         get
         {
