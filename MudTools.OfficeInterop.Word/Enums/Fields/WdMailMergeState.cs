@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -7,18 +7,39 @@
 
 namespace MudTools.OfficeInterop.Word;
 
+/// <summary>
+/// 指定邮件合并操作的当前状态
+/// </summary>
 public enum WdMailMergeState
 {
 
+    /// <summary>
+    /// 普通文档（非邮件合并文档）
+    /// </summary>
     wdNormalDocument,
 
+    /// <summary>
+    /// 仅主文档（邮件合并主文档但未附加数据源）
+    /// </summary>
     wdMainDocumentOnly,
 
+    /// <summary>
+    /// 主文档和数据源（已附加数据源）
+    /// </summary>
     wdMainAndDataSource,
 
+    /// <summary>
+    /// 主文档和页眉（主文档和页眉信息）
+    /// </summary>
     wdMainAndHeader,
 
+    /// <summary>
+    /// 主文档、数据源和页眉（完整邮件合并文档）
+    /// </summary>
     wdMainAndSourceAndHeader,
 
+    /// <summary>
+    /// 仅数据源
+    /// </summary>
     wdDataSource
 }
