@@ -151,7 +151,7 @@ namespace MailMergeSample
                 Console.WriteLine($"合并字段数量: {_mailMerge.Fields.Count}");
                 for (int i = 1; i <= _mailMerge.Fields.Count; i++)
                 {
-                    string fieldCode = _mailMerge.Fields[i].Code;
+                    string fieldCode = _mailMerge.Fields[i].Code.Text;
                     fields.Add(fieldCode);
                     Console.WriteLine($"字段 {i}: {fieldCode}");
                 }

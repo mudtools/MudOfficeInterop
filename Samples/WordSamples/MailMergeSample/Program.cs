@@ -56,10 +56,10 @@ namespace MailMergeSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 设置文档为邮件合并主文档
-                var mailMerge = document.MailMerge;
+                using var mailMerge = document.MailMerge;
 
                 // 检查文档是否为邮件合并主文档
                 bool isMailMergeDoc = mailMerge.MainDocumentType != WdMailMergeMainDocType.wdNotAMergeDocument;
@@ -85,8 +85,8 @@ namespace MailMergeSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
-                var mailMerge = document.MailMerge;
+                using var document = app.ActiveDocument;
+                using var mailMerge = document.MailMerge;
 
                 // 连接Excel数据源示例（注释掉实际执行以避免文件依赖）
                 /*
@@ -142,11 +142,11 @@ namespace MailMergeSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
-                var mailMerge = document.MailMerge;
+                using var document = app.ActiveDocument;
+                using var mailMerge = document.MailMerge;
 
                 // 添加合并字段到文档
-                var range = document.Range();
+                using var range = document.Range();
 
                 // 添加标题
                 range.Text = "客户信息\n\n";
@@ -193,7 +193,7 @@ namespace MailMergeSample
                 Console.WriteLine($"合并字段数量: {mailMerge.Fields.Count}");
                 for (int i = 1; i <= mailMerge.Fields.Count; i++)
                 {
-                    Console.WriteLine($"字段 {i}: {mailMerge.Fields.Item(i).Code}");
+                    Console.WriteLine($"字段 {i}: {mailMerge.Fields[i].Code.Text}");
                 }
 
                 Console.WriteLine("合并字段操作演示完成");
@@ -260,11 +260,11 @@ namespace MailMergeSample
             try
             {
                 using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
-                var mailMerge = document.MailMerge;
+                using var document = app.ActiveDocument;
+                using var mailMerge = document.MailMerge;
 
                 // 添加条件合并字段
-                var range = document.Range();
+                using var range = document.Range();
                 range.Text = "亲爱的客户：\n\n";
 
                 // 添加条件文本（根据性别）
@@ -304,8 +304,8 @@ namespace MailMergeSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
-                var document = app.ActiveDocument;
-                var mailMerge = document.MailMerge;
+                using var document = app.ActiveDocument;
+                using var mailMerge = document.MailMerge;
 
                 Console.WriteLine("开始创建邮件合并系统...");
 
@@ -336,7 +336,7 @@ namespace MailMergeSample
         {
             try
             {
-                var mailMerge = document.MailMerge;
+                using var mailMerge = document.MailMerge;
 
                 Console.WriteLine("创建邮件合并模板...");
 
@@ -344,7 +344,7 @@ namespace MailMergeSample
                 mailMerge.MainDocumentType = WdMailMergeMainDocType.wdFormLetters;
 
                 // 添加模板内容
-                var range = document.Range();
+                using var range = document.Range();
 
                 // 页眉
                 range.Text = "ABC有限公司\n地址：某某市某某区某某路123号\n电话：010-12345678\n\n";
@@ -410,7 +410,7 @@ namespace MailMergeSample
                 using var app = WordFactory.BlankWorkbook();
                 app.Visible = false; // 隐藏Word窗口
 
-                var document = app.ActiveDocument;
+                using var document = app.ActiveDocument;
 
                 // 创建邮件合并助手
                 var mailMergeHelper = new MailMergeHelper(document);
