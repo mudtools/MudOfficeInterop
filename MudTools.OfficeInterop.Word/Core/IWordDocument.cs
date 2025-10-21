@@ -296,6 +296,11 @@ public interface IWordDocument : IDisposable
     IWordEnvelope? Envelope { get; }
 
     /// <summary>
+    /// 获取Word 文档的邮件合并功能的二次封装接口。
+    /// </summary>
+    IWordMailMerge? MailMerge { get; }
+
+    /// <summary>
     /// 获取或设置文档的背景形状
     /// </summary>
     IWordShape? Background { get; }

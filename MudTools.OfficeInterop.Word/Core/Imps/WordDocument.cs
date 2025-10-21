@@ -47,6 +47,7 @@ internal class WordDocument : IWordDocument
     private IWordTablesOfContents? _tableOfContents;
     private IWordTablesOfAuthorities? _tableOfAuthorities;
     private IWordEnvelope? _envelope;
+    private IWordMailMerge? _mailMerge;
 
     /// <inheritdoc/>
     public IWordApplication Application => _document != null ? new WordApplication(_document.Application) : null;
@@ -482,6 +483,16 @@ internal class WordDocument : IWordDocument
             if (_document == null) return null;
             _envelope ??= new WordEnvelope(_document.Envelope);
             return _envelope;
+        }
+    }
+
+    public IWordMailMerge? MailMerge
+    {
+        get
+        {
+            if (_document == null) return null;
+            _mailMerge ??= new WordMailMerge(_document.MailMerge);
+            return _mailMerge;
         }
     }
 
@@ -1565,6 +1576,7 @@ internal class WordDocument : IWordDocument
             _fields?.Dispose();
             _windows?.Dispose();
             _envelope?.Dispose();
+            _mailMerge?.Dispose();
             _characters?.Dispose();
             _endnotes?.Dispose();
             _footnotes?.Dispose();
@@ -1578,6 +1590,7 @@ internal class WordDocument : IWordDocument
         _officeCommandBars = null;
         _comments = null;
         _envelope = null;
+        _mailMerge = null;
         _footnotes = null;
         _endnotes = null;
         _characters = null;
