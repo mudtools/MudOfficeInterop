@@ -27,12 +27,12 @@ public interface IWordMailMergeDataSource : IDisposable
     /// <summary>
     /// 获取数据源中第一个记录的索引号。
     /// </summary>
-    int FirstRecord { get; }
+    int FirstRecord { get; set; }
 
     /// <summary>
     /// 获取数据源中最后一个记录的索引号。
     /// </summary>
-    int LastRecord { get; }
+    int LastRecord { get; set; }
 
     /// <summary>
     /// 获取数据源中的记录总数。

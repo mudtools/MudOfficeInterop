@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MailMergeSample
 {
@@ -46,22 +48,22 @@ namespace MailMergeSample
             {
                 // 设置合并目标
                 _mailMerge.Destination = WdMailMergeDestination.wdSendToNewDocument;
-                
+
                 // 执行合并
-                _mailMerge.Execute(Pause: pause);
-                
+                _mailMerge.Execute(pause: pause);
+
                 result.EndTime = DateTime.Now;
                 result.Success = true;
-                
+
                 // 保存结果文档
                 if (!string.IsNullOrEmpty(outputPath))
                 {
                     var resultDoc = _application.ActiveDocument;
-                    resultDoc.SaveAs2(outputPath);
+                    resultDoc.Save(outputPath);
                     result.OutputPath = outputPath;
                     Console.WriteLine($"邮件合并结果已保存: {outputPath}");
                 }
-                
+
                 Console.WriteLine("邮件合并执行完成，结果发送到新文档");
             }
             catch (Exception ex)
@@ -92,13 +94,13 @@ namespace MailMergeSample
             {
                 // 设置合并目标
                 _mailMerge.Destination = WdMailMergeDestination.wdSendToPrinter;
-                
+
                 // 执行合并
-                _mailMerge.Execute(Pause: pause);
-                
+                _mailMerge.Execute(pause: pause);
+
                 result.EndTime = DateTime.Now;
                 result.Success = true;
-                
+
                 Console.WriteLine("邮件合并执行完成，结果发送到打印机");
             }
             catch (Exception ex)
@@ -129,13 +131,13 @@ namespace MailMergeSample
             {
                 // 设置合并目标
                 _mailMerge.Destination = WdMailMergeDestination.wdSendToEmail;
-                
+
                 // 执行合并
-                _mailMerge.Execute(Pause: pause);
-                
+                _mailMerge.Execute(pause: pause);
+
                 result.EndTime = DateTime.Now;
                 result.Success = true;
-                
+
                 Console.WriteLine("邮件合并执行完成，结果发送到电子邮件");
             }
             catch (Exception ex)
@@ -166,13 +168,13 @@ namespace MailMergeSample
             {
                 // 设置合并目标
                 _mailMerge.Destination = WdMailMergeDestination.wdSendToFax;
-                
+
                 // 执行合并
-                _mailMerge.Execute(Pause: pause);
-                
+                _mailMerge.Execute(pause: pause);
+
                 result.EndTime = DateTime.Now;
                 result.Success = true;
-                
+
                 Console.WriteLine("邮件合并执行完成，结果发送到传真");
             }
             catch (Exception ex)
@@ -196,7 +198,7 @@ namespace MailMergeSample
             {
                 _mailMerge.DataSource.FirstRecord = 1;
                 _mailMerge.DataSource.LastRecord = 1;
-                _mailMerge.Execute(Pause: false);
+                _mailMerge.Execute(pause: false);
 
                 Console.WriteLine("第一条记录邮件合并执行完成");
                 return true;
@@ -220,7 +222,7 @@ namespace MailMergeSample
             {
                 _mailMerge.DataSource.FirstRecord = firstRecord;
                 _mailMerge.DataSource.LastRecord = lastRecord;
-                _mailMerge.Execute(Pause: false);
+                _mailMerge.Execute(pause: false);
 
                 Console.WriteLine($"记录范围({firstRecord}-{lastRecord})邮件合并执行完成");
                 return true;
@@ -261,22 +263,22 @@ namespace MailMergeSample
 
                 // 设置合并目标
                 _mailMerge.Destination = WdMailMergeDestination.wdSendToNewDocument;
-                
+
                 // 执行合并
-                _mailMerge.Execute(Pause: false);
-                
+                _mailMerge.Execute(pause: false);
+
                 result.EndTime = DateTime.Now;
                 result.Success = true;
-                
+
                 // 保存结果文档
                 if (!string.IsNullOrEmpty(outputPath))
                 {
                     var resultDoc = _application.ActiveDocument;
-                    resultDoc.SaveAs2(outputPath);
+                    resultDoc.Save(outputPath);
                     result.OutputPath = outputPath;
                     Console.WriteLine($"邮件合并结果已保存: {outputPath}");
                 }
-                
+
                 Console.WriteLine("使用示例数据的邮件合并执行完成");
             }
             catch (Exception ex)
@@ -319,19 +321,18 @@ namespace MailMergeSample
         /// <summary>
         /// 预览邮件合并结果
         /// </summary>
-        /// <param name="recordNumber">记录号</param>
         /// <returns>是否预览成功</returns>
-        public bool PreviewMergeResult(int recordNumber = 1)
+        public bool PreviewMergeResult()
         {
             try
             {
                 // 设置要预览的记录
-                _mailMerge.DataSource.ActiveRecord = recordNumber;
-                
+                _mailMerge.DataSource.ActiveRecord = WdMailMergeActiveRecord.wdFirstRecord;
+
                 // 更新文档中的合并字段
                 _document.Range().Fields.Update();
-                
-                Console.WriteLine($"已预览第 {recordNumber} 条记录的合并结果");
+
+                Console.WriteLine($"已预览第 1 条记录的合并结果");
                 return true;
             }
             catch (Exception ex)
@@ -353,24 +354,24 @@ namespace MailMergeSample
             {
                 // 检查是否为邮件合并文档
                 checkResult.IsMailMergeDocument = _mailMerge.MainDocumentType != WdMailMergeMainDocType.wdNotAMergeDocument;
-                
+
                 // 检查是否有合并字段
                 checkResult.HasMergeFields = _mailMerge.Fields.Count > 0;
-                
+
                 // 检查是否有数据源
                 checkResult.HasDataSource = !string.IsNullOrEmpty(_mailMerge.DataSource.Name);
-                
+
                 // 检查数据源记录数
                 if (checkResult.HasDataSource)
                 {
                     checkResult.RecordCount = _mailMerge.DataSource.RecordCount;
                 }
-                
-                checkResult.IsValid = checkResult.IsMailMergeDocument && 
-                                     checkResult.HasMergeFields && 
-                                     checkResult.HasDataSource && 
+
+                checkResult.IsValid = checkResult.IsMailMergeDocument &&
+                                     checkResult.HasMergeFields &&
+                                     checkResult.HasDataSource &&
                                      checkResult.RecordCount > 0;
-                
+
                 Console.WriteLine("邮件合并设置检查完成");
             }
             catch (Exception ex)

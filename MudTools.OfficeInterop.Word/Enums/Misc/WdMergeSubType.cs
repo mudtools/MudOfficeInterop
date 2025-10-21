@@ -8,52 +8,52 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定在邮件合并操作中哪个记录处于活动状态的常量
+/// 指定邮件合并操作的数据源子类型
 /// </summary>
-public enum WdMailMergeActiveRecord
+public enum WdMergeSubType
 {
     /// <summary>
-    /// 无活动记录
+    /// 其他或未知数据源类型
     /// </summary>
-    wdNoActiveRecord = -1,
+    wdMergeSubTypeOther,
 
     /// <summary>
-    /// 结果集中的下一条记录
+    /// Microsoft Access 数据库
     /// </summary>
-    wdNextRecord = -2,
+    wdMergeSubTypeAccess,
 
     /// <summary>
-    /// 结果集中的上一条记录
+    /// Office Address List (OAL)
     /// </summary>
-    wdPreviousRecord = -3,
+    wdMergeSubTypeOAL,
 
     /// <summary>
-    /// 结果集中的第一条记录
+    /// OLE DB Word 数据源
     /// </summary>
-    wdFirstRecord = -4,
+    wdMergeSubTypeOLEDBWord,
 
     /// <summary>
-    /// 结果集中的最后一条记录
+    /// Microsoft Works 数据源
     /// </summary>
-    wdLastRecord = -5,
+    wdMergeSubTypeWorks,
 
     /// <summary>
-    /// 数据源中的第一条记录
+    /// OLE DB 文本数据源
     /// </summary>
-    wdFirstDataSourceRecord = -6,
+    wdMergeSubTypeOLEDBText,
 
     /// <summary>
-    /// 数据源中的最后一条记录
+    /// Microsoft Outlook 联系人列表
     /// </summary>
-    wdLastDataSourceRecord = -7,
+    wdMergeSubTypeOutlook,
 
     /// <summary>
-    /// 数据源中的下一条记录
+    /// Microsoft Word 文档作为数据源
     /// </summary>
-    wdNextDataSourceRecord = -8,
+    wdMergeSubTypeWord,
 
     /// <summary>
-    /// 数据源中的上一条记录
+    /// Microsoft Word 2000 文档作为数据源
     /// </summary>
-    wdPreviousDataSourceRecord = -9
+    wdMergeSubTypeWord2000
 }

@@ -27,7 +27,16 @@ internal class WordMailMerge : IWordMailMerge
 
     public object? Parent => _mailMerge?.Parent;
 
-    public bool MainDocumentType => _mailMerge?.MainDocumentType != MsWord.WdMailMergeMainDocType.wdNotAMergeDocument;
+
+    public WdMailMergeMainDocType MainDocumentType
+    {
+        get => _mailMerge?.MainDocumentType.EnumConvert(WdMailMergeMainDocType.wdNotAMergeDocument) ?? WdMailMergeMainDocType.wdNotAMergeDocument;
+        set
+        {
+            if (_mailMerge != null)
+                _mailMerge.MainDocumentType = value.EnumConvert(MsWord.WdMailMergeMainDocType.wdNotAMergeDocument);
+        }
+    }
 
     public WdMailMergeDestination Destination
     {
@@ -114,6 +123,7 @@ internal class WordMailMerge : IWordMailMerge
         }
     }
 
+
     public IWordMailMergeDataSource? DataSource => _mailMerge?.DataSource != null ? new WordMailMergeDataSource(_mailMerge.DataSource) : null;
 
     public IWordMailMergeFields? Fields => _mailMerge?.Fields != null ? new WordMailMergeFields(_mailMerge.Fields) : null;
@@ -138,6 +148,47 @@ internal class WordMailMerge : IWordMailMerge
             throw new InvalidOperationException("执行邮件合并操作失败。", ex);
         }
     }
+
+    public void OpenDataSource(string name, WdOpenFormat? format = null, bool? confirmConversions = null,
+        bool? readOnly = null, bool? linkToSource = null, bool? addToRecentFiles = null, string? passwordDocument = null,
+        string? passwordTemplate = null, bool? revert = null, string? writePasswordDocument = null,
+        string? writePasswordTemplate = null, string? connection = null, string? sqlStatement = null,
+        string? sqlStatement1 = null, bool? openExclusive = null, WdMergeSubType? subType = null)
+    {
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentNullException(nameof(name));
+
+        if (_mailMerge == null)
+            throw new InvalidOperationException("邮件合并对象不可用。");
+
+        try
+        {
+            _mailMerge.OpenDataSource(
+                Name: name,
+                Format: format.ComArgsConvert(e => e.EnumConvert(MsWord.WdOpenFormat.wdOpenFormatAuto)),
+                ConfirmConversions: confirmConversions.ComArgsVal(),
+                ReadOnly: readOnly.ComArgsVal(),
+                LinkToSource: linkToSource.ComArgsVal(),
+                AddToRecentFiles: addToRecentFiles.ComArgsVal(),
+                PasswordDocument: passwordDocument.ComArgsVal(),
+                PasswordTemplate: passwordTemplate.ComArgsVal(),
+                Revert: revert.ComArgsVal(),
+                WritePasswordDocument: writePasswordDocument.ComArgsVal(),
+                WritePasswordTemplate: writePasswordTemplate.ComArgsVal(),
+                Connection: connection.ComArgsVal(),
+                SQLStatement: sqlStatement.ComArgsVal(),
+                SQLStatement1: sqlStatement1.ComArgsVal(),
+                OpenExclusive: openExclusive.ComArgsVal(),
+                SubType: subType.ComArgsConvert(e => e.EnumConvert(MsWord.WdMergeSubType.wdMergeSubTypeOther))
+            );
+        }
+        catch (Exception ex)
+        {
+            log.Error("打开数据源失败。", ex);
+            throw new InvalidOperationException("打开数据源失败。", ex);
+        }
+    }
+
 
     public void OpenDataSource(
         string dataSourcePath,

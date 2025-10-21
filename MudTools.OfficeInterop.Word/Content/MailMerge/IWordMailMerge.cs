@@ -26,7 +26,7 @@ public interface IWordMailMerge : IDisposable
     /// <summary>
     /// 获取一个值，该值指示文档是否为邮件合并主文档。
     /// </summary>
-    bool MainDocumentType { get; }
+    WdMailMergeMainDocType MainDocumentType { get; set; }
 
     /// <summary>
     /// 获取或设置邮件合并操作的目标。
@@ -119,6 +119,31 @@ public interface IWordMailMerge : IDisposable
     /// </summary>
     /// <param name="pause">如果为 true，Word 在遇到错误时会暂停并显示疑难解答对话框；如果为 false，错误将记录在一个新文档中 [[32]]。</param>
     void Execute(bool pause = false);
+
+    /// <summary>
+    /// 打开外部数据源以用于邮件合并操作。此方法允许详细配置数据源连接参数，支持各种数据格式和连接选项[[12]]。
+    /// </summary>
+    /// <param name="name">数据源的文件名或路径。</param>
+    /// <param name="format">指定打开文档时使用的格式。有关枚举值列表，请参阅 WdOpenFormat。</param>
+    /// <param name="confirmConversions">如果为 true，则在打开文件时显示“转换文件”对话框。</param>
+    /// <param name="readOnly">如果为 true，则以只读模式打开文档。</param>
+    /// <param name="linkToSource">如果为 true，则保留到原始数据源的链接；如果为 false，则断开到原始数据源的链接。</param>
+    /// <param name="addToRecentFiles">如果为 true，则将文件添加到“文件”菜单底部最近使用的文件列表中。</param>
+    /// <param name="passwordDocument">打开文档所需的密码（如果文档受密码保护）。</param>
+    /// <param name="passwordTemplate">打开模板所需的密码（如果模板受密码保护）。</param>
+    /// <param name="revert">控制当 name 是指向已打开文档的文件路径时要采取的操作。如果为 true，则放弃对文档所做的所有更改，并将该文档恢复为保存在 name 指定的文件中的原始版本。</param>
+    /// <param name="writePasswordDocument">为文档分配写密码。</param>
+    /// <param name="writePasswordTemplate">为模板分配写密码。</param>
+    /// <param name="connection">包含数据库连接信息的连接字符串。</param>
+    /// <param name="sqlStatement">用于选择数据的 SQL 查询语句。</param>
+    /// <param name="sqlStatement1">第二个 SQL 查询语句，通常用于访问其他表中的相关数据。</param>
+    /// <param name="openExclusive">如果为 true，则独占方式打开数据源。</param>
+    /// <param name="subType">邮件合并操作的子类型。</param>
+    void OpenDataSource(string name, WdOpenFormat? format = null, bool? confirmConversions = null,
+       bool? readOnly = null, bool? linkToSource = null, bool? addToRecentFiles = null, string? passwordDocument = null,
+       string? passwordTemplate = null, bool? revert = null, string? writePasswordDocument = null,
+       string? writePasswordTemplate = null, string? connection = null, string? sqlStatement = null,
+       string? sqlStatement1 = null, bool? openExclusive = null, WdMergeSubType? subType = null);
 
     /// <summary>
     /// 将外部数据源附加到邮件合并主文档。

@@ -27,9 +27,35 @@ internal class WordMailMergeDataSource : IWordMailMergeDataSource
 
     public object? Parent => _dataSource?.Parent;
 
-    public int FirstRecord => _dataSource?.FirstRecord ?? -1;
+    public int FirstRecord
+    {
+        get
+        {
+            if (_dataSource == null)
+                throw new InvalidOperationException("数据源不可用。");
+            return _dataSource.FirstRecord;
+        }
+        set
+        {
+            if (_dataSource != null)
+                _dataSource.FirstRecord = value;
+        }
+    }
 
-    public int LastRecord => _dataSource?.LastRecord ?? -1;
+    public int LastRecord
+    {
+        get
+        {
+            if (_dataSource == null)
+                throw new InvalidOperationException("数据源不可用。");
+            return _dataSource.LastRecord;
+        }
+        set
+        {
+            if (_dataSource != null)
+                _dataSource.LastRecord = value;
+        }
+    }
 
     public string TableName => _dataSource?.TableName ?? string.Empty;
 

@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MailMergeSample
 {
@@ -44,7 +46,7 @@ namespace MailMergeSample
 
                 // 页眉
                 range.Text = $"{companyName}\n地址：{companyAddress}\n电话：{companyPhone}\n\n";
-                range.Font.Bold = 1;
+                range.Font.Bold = true;
                 range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 
                 // 日期
@@ -52,7 +54,7 @@ namespace MailMergeSample
                 _mailMergeHelper.AddDateField(range);
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = "\n\n";
-                range.Font.Bold = 0;
+                range.Font.Bold = false;
                 range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
                 // 收件人地址
@@ -179,12 +181,12 @@ namespace MailMergeSample
 
                 // 添加产品信息
                 range.Text = "产品目录\n\n";
-                range.Font.Bold = 1;
+                range.Font.Bold = true;
                 range.Font.Size = 16;
                 range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = "\n";
-                range.Font.Bold = 0;
+                range.Font.Bold = false;
                 range.Font.Size = 12;
                 range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 

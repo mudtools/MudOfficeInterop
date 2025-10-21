@@ -6,7 +6,6 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using MudTools.OfficeInterop.Word;
-using System.Data;
 using System.Text;
 
 namespace MailMergeSample
@@ -104,9 +103,9 @@ namespace MailMergeSample
                 string sqlStatement = $"SELECT * FROM [{worksheetName}$]";
 
                 _mailMerge.OpenDataSource(
-                    Name: dataSourcePath,
-                    Connection: connectionString,
-                    SQLStatement: sqlStatement
+                    name: dataSourcePath,
+                    connection: connectionString,
+                    sqlStatement: sqlStatement
                 );
 
                 Console.WriteLine("Excel数据源连接成功");
@@ -135,9 +134,9 @@ namespace MailMergeSample
                 string sqlStatement = $"SELECT * FROM [{fileName}]";
 
                 _mailMerge.OpenDataSource(
-                    Name: dataSourcePath,
-                    Connection: connectionString,
-                    SQLStatement: sqlStatement
+                    name: dataSourcePath,
+                    connection: connectionString,
+                    sqlStatement: sqlStatement
                 );
 
                 Console.WriteLine("CSV数据源连接成功");
@@ -164,9 +163,9 @@ namespace MailMergeSample
                 string sqlStatement = $"SELECT * FROM [{tableName}]";
 
                 _mailMerge.OpenDataSource(
-                    Name: dataSourcePath,
-                    Connection: connectionString,
-                    SQLStatement: sqlStatement
+                    name: dataSourcePath,
+                    connection: connectionString,
+                    sqlStatement: sqlStatement
                 );
 
                 Console.WriteLine("Access数据库数据源连接成功");
@@ -190,9 +189,9 @@ namespace MailMergeSample
             try
             {
                 _mailMerge.OpenDataSource(
-                    Name: "SQL Server",
-                    Connection: connectionString,
-                    SQLStatement: sqlStatement
+                    name: "SQL Server",
+                    connection: connectionString,
+                    sqlStatement: sqlStatement
                 );
 
                 Console.WriteLine("SQL Server数据源连接成功");
@@ -216,14 +215,14 @@ namespace MailMergeSample
             try
             {
                 info.Name = _mailMerge.DataSource.Name;
-                info.HeaderSource = _mailMerge.DataSource.HeaderSource;
+                info.HeaderSource = _mailMerge.DataSource.HeaderSourceName;
                 info.RecordCount = _mailMerge.DataSource.RecordCount;
                 info.FieldNames = new List<string>();
 
                 // 获取字段名称
                 for (int i = 1; i <= _mailMerge.DataSource.FieldNames.Count; i++)
                 {
-                    info.FieldNames.Add(_mailMerge.DataSource.FieldNames.Item(i));
+                    info.FieldNames.Add(_mailMerge.DataSource.FieldNames[i].Name);
                 }
             }
             catch (Exception ex)
