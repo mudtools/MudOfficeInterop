@@ -67,11 +67,11 @@ namespace AdvancedDataOperationsSample
                 worksheet.Name = "数据排序";
 
                 // 创建销售数据
-                worksheet.Range["A1"].Value = "产品类别";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售地区";
-                worksheet.Range["D1"].Value = "销售数量";
-                worksheet.Range["E1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "产品类别";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售地区";
+                worksheet.Range("D1").Value = "销售数量";
+                worksheet.Range("E1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"电子产品", "笔记本电脑", "北京", 10, 50000},
@@ -86,7 +86,7 @@ namespace AdvancedDataOperationsSample
                     {"电子产品", "台式电脑", "上海", 8, 32000}
                 };
 
-                var dataRange = worksheet.Range["A2:E11"];
+                var dataRange = worksheet.Range("A2:E11");
                 dataRange.Value = salesData;
 
                 // 单列排序 - 按销售金额降序排序
@@ -95,15 +95,15 @@ namespace AdvancedDataOperationsSample
                 sort.Header = XlYesNoGuess.xlYes;
                 sort.Orientation = XlSortOrientation.xlSortColumns;
                 sort.SortFields.Clear();
-                sort.SortFields.Add(worksheet.Range["E2:E11"], XlSortOn.xlSortOnValues, XlSortOrder.xlDescending);
+                sort.SortFields.Add(worksheet.Range("E2:E11"), XlSortOn.xlSortOnValues, XlSortOrder.xlDescending);
                 sort.Apply();
 
-                worksheet.Range["G1"].Value = "单列排序结果（按销售金额降序）";
-                worksheet.Range["G1"].Font.Bold = true;
-                worksheet.Range["G1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("G1").Value = "单列排序结果（按销售金额降序）";
+                worksheet.Range("G1").Font.Bold = true;
+                worksheet.Range("G1").Interior.Color = Color.LightBlue;
 
                 // 复制排序后的数据到G列
-                worksheet.Range["A1:E11"].Copy(worksheet.Range["G1"]);
+                worksheet.Range("A1:E11").Copy(worksheet.Range("G1"));
 
                 // 多列排序 - 先按产品类别升序，再按销售金额降序
                 // 重新填充原始数据
@@ -113,24 +113,24 @@ namespace AdvancedDataOperationsSample
                 sort.Header = XlYesNoGuess.xlYes;
                 sort.Orientation = XlSortOrientation.xlSortColumns;
                 sort.SortFields.Clear();
-                sort.SortFields.Add(worksheet.Range["A2:A11"], XlSortOn.xlSortOnValues, XlSortOrder.xlAscending);
-                sort.SortFields.Add(worksheet.Range["E2:E11"], XlSortOn.xlSortOnValues, XlSortOrder.xlDescending);
+                sort.SortFields.Add(worksheet.Range("A2:A11"), XlSortOn.xlSortOnValues, XlSortOrder.xlAscending);
+                sort.SortFields.Add(worksheet.Range("E2:E11"), XlSortOn.xlSortOnValues, XlSortOrder.xlDescending);
                 sort.Apply();
 
-                worksheet.Range["L1"].Value = "多列排序结果（产品类别升序，销售金额降序）";
-                worksheet.Range["L1"].Font.Bold = true;
-                worksheet.Range["L1"].Interior.Color = Color.LightGreen;
+                worksheet.Range("L1").Value = "多列排序结果（产品类别升序，销售金额降序）";
+                worksheet.Range("L1").Font.Bold = true;
+                worksheet.Range("L1").Interior.Color = Color.LightGreen;
 
                 // 复制排序后的数据到L列
-                worksheet.Range["A1:E11"].Copy(worksheet.Range["L1"]);
+                worksheet.Range("A1:E11").Copy(worksheet.Range("L1"));
 
                 // 设置数字格式
-                worksheet.Range["D2:D11"].NumberFormat = "0";
-                worksheet.Range["E2:E11"].NumberFormat = "¥#,##0";
-                worksheet.Range["K2:K11"].NumberFormat = "0";
-                worksheet.Range["L2:L11"].NumberFormat = "¥#,##0";
-                worksheet.Range["P2:P11"].NumberFormat = "0";
-                worksheet.Range["Q2:Q11"].NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D11").NumberFormat = "0";
+                worksheet.Range("E2:E11").NumberFormat = "¥#,##0";
+                worksheet.Range("K2:K11").NumberFormat = "0";
+                worksheet.Range("L2:L11").NumberFormat = "¥#,##0";
+                worksheet.Range("P2:P11").NumberFormat = "0";
+                worksheet.Range("Q2:Q11").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -168,11 +168,11 @@ namespace AdvancedDataOperationsSample
                 worksheet.Name = "数据筛选";
 
                 // 创建销售数据
-                worksheet.Range["A1"].Value = "产品类别";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售地区";
-                worksheet.Range["D1"].Value = "销售数量";
-                worksheet.Range["E1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "产品类别";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售地区";
+                worksheet.Range("D1").Value = "销售数量";
+                worksheet.Range("E1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"电子产品", "笔记本电脑", "北京", 10, 50000},
@@ -187,26 +187,26 @@ namespace AdvancedDataOperationsSample
                     {"电子产品", "台式电脑", "上海", 8, 32000}
                 };
 
-                var dataRange = worksheet.Range["A2:E11"];
+                var dataRange = worksheet.Range("A2:E11");
                 dataRange.Value = salesData;
 
                 // 添加自动筛选
                 dataRange.AutoFilter();
 
                 // 筛选电子产品
-                worksheet.Range["A1"].AutoFilter(1, "电子产品");
+                worksheet.Range("A1").AutoFilter(1, "电子产品");
 
                 // 复制筛选结果到另一位置
-                worksheet.Range["G1"].Value = "电子产品筛选结果";
-                worksheet.Range["G1"].Font.Bold = true;
-                worksheet.Range["G1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("G1").Value = "电子产品筛选结果";
+                worksheet.Range("G1").Font.Bold = true;
+                worksheet.Range("G1").Interior.Color = Color.LightBlue;
 
                 // 由于筛选是动态的，我们创建一个新工作表来展示筛选结果
-                var filteredSheet = workbook.Worksheets.Add();
+                var filteredSheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 filteredSheet.Name = "筛选结果";
 
                 // 复制标题行
-                worksheet.Range["A1:E1"].Copy(filteredSheet.Range["A1"]);
+                worksheet.Range("A1:E1").Copy(filteredSheet.Range("A1"));
 
                 // 手动复制符合条件的数据（模拟筛选结果）
                 object[,] electronicData = {
@@ -216,13 +216,13 @@ namespace AdvancedDataOperationsSample
                     {"电子产品", "台式电脑", "上海", 8, 32000}
                 };
 
-                filteredSheet.Range["A2:E5"].Value = electronicData;
+                filteredSheet.Range("A2:E5").Value = electronicData;
 
                 // 设置数字格式
-                worksheet.Range["D2:D11"].NumberFormat = "0";
-                worksheet.Range["E2:E11"].NumberFormat = "¥#,##0";
-                filteredSheet.Range["D2:D5"].NumberFormat = "0";
-                filteredSheet.Range["E2:E5"].NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D11").NumberFormat = "0";
+                worksheet.Range("E2:E11").NumberFormat = "¥#,##0";
+                filteredSheet.Range("D2:D5").NumberFormat = "0";
+                filteredSheet.Range("E2:E5").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -261,11 +261,11 @@ namespace AdvancedDataOperationsSample
                 worksheet.Name = "数据分组";
 
                 // 创建详细销售数据
-                worksheet.Range["A1"].Value = "日期";
-                worksheet.Range["B1"].Value = "产品类别";
-                worksheet.Range["C1"].Value = "产品名称";
-                worksheet.Range["D1"].Value = "销售数量";
-                worksheet.Range["E1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "日期";
+                worksheet.Range("B1").Value = "产品类别";
+                worksheet.Range("C1").Value = "产品名称";
+                worksheet.Range("D1").Value = "销售数量";
+                worksheet.Range("E1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"2023-01-01", "电子产品", "笔记本电脑", 2, 10000},
@@ -280,7 +280,7 @@ namespace AdvancedDataOperationsSample
                     {"2023-01-05", "服装", "外套", 2, 400}
                 };
 
-                var dataRange = worksheet.Range["A2:E11"];
+                var dataRange = worksheet.Range("A2:E11");
                 dataRange.Value = salesData;
 
                 // 按日期分组
@@ -298,8 +298,8 @@ namespace AdvancedDataOperationsSample
                 worksheet.Outline.ShowLevels(1, 1);
 
                 // 设置数字格式
-                worksheet.Range["D2:D11"].NumberFormat = "0";
-                worksheet.Range["E2:E11"].NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D11").NumberFormat = "0";
+                worksheet.Range("E2:E11").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -337,10 +337,10 @@ namespace AdvancedDataOperationsSample
                 worksheet.Name = "分类汇总";
 
                 // 创建销售数据（已按产品类别排序）
-                worksheet.Range["A1"].Value = "产品类别";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售数量";
-                worksheet.Range["D1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "产品类别";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售数量";
+                worksheet.Range("D1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"电子产品", "笔记本电脑", 10, 50000},
@@ -355,7 +355,7 @@ namespace AdvancedDataOperationsSample
                     {"服装", "外套", 20, 4000}
                 };
 
-                var dataRange = worksheet.Range["A2:D11"];
+                var dataRange = worksheet.Range("A2:D11");
                 dataRange.Value = salesData;
 
                 // 添加分类汇总
@@ -365,15 +365,15 @@ namespace AdvancedDataOperationsSample
                 sort.Header = XlYesNoGuess.xlYes;
                 sort.Orientation = XlSortOrientation.xlSortColumns;
                 sort.SortFields.Clear();
-                sort.SortFields.Add(worksheet.Range["A2:A11"], XlSortOn.xlSortOnValues, XlSortOrder.xlAscending);
+                sort.SortFields.Add(worksheet.Range("A2:A11"), XlSortOn.xlSortOnValues, XlSortOrder.xlAscending);
                 sort.Apply();
 
                 // 应用分类汇总
                 dataRange.Subtotal(1, XlConsolidationFunction.xlSum, new int[] { 3, 4 }, true, false, XlSummaryRow.xlSummaryBelow);
 
                 // 设置数字格式
-                worksheet.Range["C2:D15"].NumberFormat = "0";
-                worksheet.Range["D2:D15"].NumberFormat = "¥#,##0";
+                worksheet.Range("C2:D15").NumberFormat = "0";
+                worksheet.Range("D2:D15").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -411,10 +411,10 @@ namespace AdvancedDataOperationsSample
                 worksheet.Name = "高级筛选";
 
                 // 创建销售数据
-                worksheet.Range["A1"].Value = "产品类别";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售地区";
-                worksheet.Range["D1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "产品类别";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售地区";
+                worksheet.Range("D1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"电子产品", "笔记本电脑", "北京", 50000},
@@ -429,28 +429,28 @@ namespace AdvancedDataOperationsSample
                     {"电子产品", "台式电脑", "上海", 32000}
                 };
 
-                var dataRange = worksheet.Range["A2:D11"];
+                var dataRange = worksheet.Range("A2:D11");
                 dataRange.Value = salesData;
 
                 // 设置筛选条件区域
-                worksheet.Range["F1"].Value = "产品类别";
-                worksheet.Range["F2"].Value = "电子产品";
-                worksheet.Range["F3"].Value = "家居用品";
+                worksheet.Range("F1").Value = "产品类别";
+                worksheet.Range("F2").Value = "电子产品";
+                worksheet.Range("F3").Value = "家居用品";
 
-                worksheet.Range["G1"].Value = "销售金额";
-                worksheet.Range["G2"].Value = ">30000";
+                worksheet.Range("G1").Value = "销售金额";
+                worksheet.Range("G2").Value = ">30000";
 
                 // 执行高级筛选 - 筛选结果复制到新位置
-                var criteriaRange = worksheet.Range["F1:G3"];
-                dataRange.AdvancedFilter(XlFilterAction.xlFilterCopy, criteriaRange, worksheet.Range["I1"]);
+                var criteriaRange = worksheet.Range("F1:G3");
+                dataRange.AdvancedFilter(XlFilterAction.xlFilterCopy, criteriaRange, worksheet.Range("I1"));
 
-                worksheet.Range["I1"].Value = "高级筛选结果";
-                worksheet.Range["I1"].Font.Bold = true;
-                worksheet.Range["I1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("I1").Value = "高级筛选结果";
+                worksheet.Range("I1").Font.Bold = true;
+                worksheet.Range("I1").Interior.Color = Color.LightBlue;
 
                 // 设置数字格式
-                worksheet.Range["D2:D11"].NumberFormat = "¥#,##0";
-                worksheet.Range["I2:I11"].NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D11").NumberFormat = "¥#,##0";
+                worksheet.Range("I2:I11").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -488,10 +488,10 @@ namespace AdvancedDataOperationsSample
                 worksheet.Name = "数据去重";
 
                 // 创建包含重复数据的销售数据
-                worksheet.Range["A1"].Value = "产品类别";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售地区";
-                worksheet.Range["D1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "产品类别";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售地区";
+                worksheet.Range("D1").Value = "销售金额";
 
                 object[,] salesDataWithDuplicates = {
                     {"电子产品", "笔记本电脑", "北京", 50000},
@@ -506,25 +506,25 @@ namespace AdvancedDataOperationsSample
                     {"电子产品", "台式电脑", "上海", 32000}
                 };
 
-                var dataRange = worksheet.Range["A2:D11"];
+                var dataRange = worksheet.Range("A2:D11");
                 dataRange.Value = salesDataWithDuplicates;
 
                 // 复制原始数据用于对比
-                worksheet.Range["A1:D11"].Copy(worksheet.Range["F1"]);
-                worksheet.Range["F1"].Value = "原始数据（含重复）";
-                worksheet.Range["F1"].Font.Bold = true;
-                worksheet.Range["F1"].Interior.Color = Color.LightYellow;
+                worksheet.Range("A1:D11").Copy(worksheet.Range("F1"));
+                worksheet.Range("F1").Value = "原始数据（含重复）";
+                worksheet.Range("F1").Font.Bold = true;
+                worksheet.Range("F1").Interior.Color = Color.LightYellow;
 
                 // 去除重复数据（基于所有列）
                 dataRange.RemoveDuplicates(new int[] { 1, 2, 3, 4 }, true);
 
-                worksheet.Range["A1"].Value = "去重后数据";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Interior.Color = Color.LightGreen;
+                worksheet.Range("A1").Value = "去重后数据";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Interior.Color = Color.LightGreen;
 
                 // 设置数字格式
-                worksheet.Range["D2:D11"].NumberFormat = "¥#,##0";
-                worksheet.Range["H2:H11"].NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D11").NumberFormat = "¥#,##0";
+                worksheet.Range("H2:H11").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

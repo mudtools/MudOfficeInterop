@@ -65,7 +65,7 @@ namespace CellRangeOperationsSample
                 worksheet.Name = "单元格操作";
 
                 // 方法1：使用Range方法引用单元格
-                var cellA1 = worksheet.Range["A1"];
+                var cellA1 = worksheet.Range("A1");
                 cellA1.Value = "使用Range方法引用";
                 cellA1.Font.Bold = true;
                 cellA1.Interior.Color = Color.LightBlue;
@@ -128,7 +128,7 @@ namespace CellRangeOperationsSample
                 worksheet.Name = "区域操作";
 
                 // 方法1：使用Range方法引用区域
-                var rangeA1C3 = worksheet.Range["A1:C3"];
+                var rangeA1C3 = worksheet.Range("A1:C3");
                 rangeA1C3.Value = "区域A1:C3";
                 rangeA1C3.Font.Bold = true;
                 rangeA1C3.Interior.Color = Color.LightBlue;
@@ -146,7 +146,7 @@ namespace CellRangeOperationsSample
                 rangeA5C7.Interior.Color = Color.LightYellow;
 
                 // 使用Range方法定义区域范围
-                var rangeFromTo = worksheet.Range[worksheet["A9"], worksheet["C11"]];
+                var rangeFromTo = worksheet.Range(worksheet["A9"], worksheet["C11"]);
                 rangeFromTo.Value = "从A9到C11的区域";
                 rangeFromTo.Font.Color = Color.Red;
                 rangeFromTo.Interior.Color = Color.LightPink;
@@ -241,7 +241,7 @@ namespace CellRangeOperationsSample
                     {"王五", "市场部", 7000}
                 };
 
-                var dataRange = worksheet.Range["A1:C4"];
+                var dataRange = worksheet.Range("A1:C4");
                 dataRange.Value = data;
                 dataRange.Font.Bold = true;
                 dataRange.Interior.Color = Color.LightBlue;
@@ -259,8 +259,8 @@ namespace CellRangeOperationsSample
                 }
 
                 // 使用区域公式
-                worksheet.Range["D1"].Value = "奖金";
-                worksheet.Range["D2:D4"].Formula = "=C2*0.1";
+                worksheet.Range("D1").Value = "奖金";
+                worksheet.Range("D2:D4").Formula = "=C2*0.1";
 
                 // 保存工作簿
                 string fileName = $"RangeDataOperations_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -305,17 +305,17 @@ namespace CellRangeOperationsSample
                     {"6月", 65000, 18000}
                 };
 
-                var dataRange = worksheet.Range["A1:C7"];
+                var dataRange = worksheet.Range("A1:C7");
                 dataRange.Value = salesData;
 
                 // 设置标题格式
-                var headerRange = worksheet.Range["A1:C1"];
+                var headerRange = worksheet.Range("A1:C1");
                 headerRange.Font.Bold = true;
                 headerRange.Interior.Color = Color.LightGray;
                 headerRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 设置数据格式
-                var numberRange = worksheet.Range["B2:C7"];
+                var numberRange = worksheet.Range("B2:C7");
                 numberRange.NumberFormat = "#,##0";
 
                 // 使用特殊区域引用

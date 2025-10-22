@@ -67,26 +67,26 @@ namespace MacroAutomationScriptsSample
                 worksheet.Name = "Excel4宏";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "数值1";
-                worksheet.Range["B1"].Value = "数值2";
-                worksheet.Range["C1"].Value = "求和结果";
+                worksheet.Range("A1").Value = "数值1";
+                worksheet.Range("B1").Value = "数值2";
+                worksheet.Range("C1").Value = "求和结果";
 
-                worksheet.Range["A2"].Value = 10;
-                worksheet.Range["B2"].Value = 20;
+                worksheet.Range("A2").Value = 10;
+                worksheet.Range("B2").Value = 20;
 
                 // 执行Excel 4.0宏函数计算求和
                 // 使用SUM函数计算A2和B2的和
                 string macroCode = "SUM(A2:B2)";
                 object result = excelApp.ExecuteExcel4Macro(macroCode);
 
-                worksheet.Range["C2"].Value = result;
+                worksheet.Range("C2").Value = result;
 
-                worksheet.Range["A4"].Value = "Excel 4.0宏执行结果";
-                worksheet.Range["A4"].Font.Bold = true;
-                worksheet.Range["A4"].Interior.Color = Color.LightBlue;
+                worksheet.Range("A4").Value = "Excel 4.0宏执行结果";
+                worksheet.Range("A4").Font.Bold = true;
+                worksheet.Range("A4").Interior.Color = Color.LightBlue;
 
                 // 设置数字格式
-                worksheet.Range["A2:C2"].NumberFormat = "0";
+                worksheet.Range("A2:C2").NumberFormat = "0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -164,20 +164,20 @@ End Sub
                     worksheet.Name = "VBA宏";
 
                     // 在工作表中显示结果
-                    worksheet.Range["A1"].Value = "长度";
-                    worksheet.Range["B1"].Value = "宽度";
-                    worksheet.Range["C1"].Value = "面积";
+                    worksheet.Range("A1").Value = "长度";
+                    worksheet.Range("B1").Value = "宽度";
+                    worksheet.Range("C1").Value = "面积";
 
-                    worksheet.Range["A2"].Value = 10.5;
-                    worksheet.Range["B2"].Value = 20.3;
-                    worksheet.Range["C2"].Value = areaResult;
+                    worksheet.Range("A2").Value = 10.5;
+                    worksheet.Range("B2").Value = 20.3;
+                    worksheet.Range("C2").Value = areaResult;
 
-                    worksheet.Range["A4"].Value = "VBA宏执行结果";
-                    worksheet.Range["A4"].Font.Bold = true;
-                    worksheet.Range["A4"].Interior.Color = Color.LightGreen;
+                    worksheet.Range("A4").Value = "VBA宏执行结果";
+                    worksheet.Range("A4").Font.Bold = true;
+                    worksheet.Range("A4").Interior.Color = Color.LightGreen;
 
                     // 设置数字格式
-                    worksheet.Range["A2:C2"].NumberFormat = "0.00";
+                    worksheet.Range("A2:C2").NumberFormat = "0.00";
 
                     // 自动调整列宽
                     worksheet.Columns.AutoFit();
@@ -223,22 +223,22 @@ End Sub
                 worksheet.Name = "宏安全";
 
                 // 显示当前宏安全设置信息
-                worksheet.Range["A1"].Value = "宏安全设置信息";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("A1").Value = "宏安全设置信息";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Interior.Color = Color.LightBlue;
 
-                worksheet.Range["A3"].Value = "注意：";
-                worksheet.Range["A4"].Value = "1. 宏安全设置通常在Excel选项中配置";
-                worksheet.Range["A5"].Value = "2. 不同的安全级别影响宏的执行";
-                worksheet.Range["A6"].Value = "3. 企业环境中通常禁用所有宏";
-                worksheet.Range["A7"].Value = "4. 可以通过数字签名提高宏可信度";
+                worksheet.Range("A3").Value = "注意：";
+                worksheet.Range("A4").Value = "1. 宏安全设置通常在Excel选项中配置";
+                worksheet.Range("A5").Value = "2. 不同的安全级别影响宏的执行";
+                worksheet.Range("A6").Value = "3. 企业环境中通常禁用所有宏";
+                worksheet.Range("A7").Value = "4. 可以通过数字签名提高宏可信度";
 
                 // 模拟宏安全级别检查
-                worksheet.Range["C3"].Value = "宏安全级别";
-                worksheet.Range["C4"].Value = "中等"; // 模拟值
+                worksheet.Range("C3").Value = "宏安全级别";
+                worksheet.Range("C4").Value = "中等"; // 模拟值
 
-                worksheet.Range["C6"].Value = "建议操作";
-                worksheet.Range["C7"].Value = "启用宏前请确认来源可信";
+                worksheet.Range("C6").Value = "建议操作";
+                worksheet.Range("C7").Value = "启用宏前请确认来源可信";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -400,33 +400,33 @@ End Sub
                 worksheet.Name = "宏模块";
 
                 // 显示宏模块管理信息
-                worksheet.Range["A1"].Value = "宏模块管理";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Interior.Color = Color.LightYellow;
+                worksheet.Range("A1").Value = "宏模块管理";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Interior.Color = Color.LightYellow;
 
-                worksheet.Range["A3"].Value = "VBA项目名称:";
-                worksheet.Range["B3"].Value = workbook.VBProject.Name;
+                worksheet.Range("A3").Value = "VBA项目名称:";
+                worksheet.Range("B3").Value = workbook.VBProject.Name;
 
-                worksheet.Range["A4"].Value = "模块数量:";
-                worksheet.Range["B4"].Value = workbook.VBProject.VBComponents.Count;
+                worksheet.Range("A4").Value = "模块数量:";
+                worksheet.Range("B4").Value = workbook.VBProject.VBComponents.Count;
 
                 // 列出模块信息
-                worksheet.Range["A6"].Value = "模块列表:";
-                worksheet.Range["A6"].Font.Bold = true;
+                worksheet.Range("A6").Value = "模块列表:";
+                worksheet.Range("A6").Font.Bold = true;
 
                 for (int i = 1; i <= workbook.VBProject.VBComponents.Count; i++)
                 {
                     var component = workbook.VBProject.VBComponents.Item(i);
-                    worksheet.Range[$"A{6 + i}"].Value = $"模块 {i}:";
-                    worksheet.Range[$"B{6 + i}"].Value = component.Name;
-                    worksheet.Range[$"C{6 + i}"].Value = component.Type.ToString();
+                    worksheet.Range($"A{6 + i}").Value = $"模块 {i}:";
+                    worksheet.Range($"B{6 + i}").Value = component.Name;
+                    worksheet.Range($"C{6 + i}").Value = component.Type.ToString();
                 }
 
-                worksheet.Range["A10"].Value = "操作说明:";
-                worksheet.Range["A11"].Value = "1. 可以添加、删除和修改VBA模块";
-                worksheet.Range["A12"].Value = "2. 每个模块可以包含多个过程和函数";
-                worksheet.Range["A13"].Value = "3. 模块名称应具有描述性";
-                worksheet.Range["A14"].Value = "4. 建议按功能对模块进行分组";
+                worksheet.Range("A10").Value = "操作说明:";
+                worksheet.Range("A11").Value = "1. 可以添加、删除和修改VBA模块";
+                worksheet.Range("A12").Value = "2. 每个模块可以包含多个过程和函数";
+                worksheet.Range("A13").Value = "3. 模块名称应具有描述性";
+                worksheet.Range("A14").Value = "4. 建议按功能对模块进行分组";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -466,29 +466,29 @@ End Sub
                 worksheet.Name = "错误处理";
 
                 // 创建错误处理示例数据
-                worksheet.Range["A1"].Value = "宏错误处理示例";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Interior.Color = Color.LightCoral;
+                worksheet.Range("A1").Value = "宏错误处理示例";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Interior.Color = Color.LightCoral;
 
-                worksheet.Range["A3"].Value = "常见错误类型:";
-                worksheet.Range["A4"].Value = "1. 宏名称不存在";
-                worksheet.Range["A5"].Value = "2. 参数类型不匹配";
-                worksheet.Range["A6"].Value = "3. 宏执行过程中出错";
-                worksheet.Range["A7"].Value = "4. 安全设置阻止宏执行";
+                worksheet.Range("A3").Value = "常见错误类型:";
+                worksheet.Range("A4").Value = "1. 宏名称不存在";
+                worksheet.Range("A5").Value = "2. 参数类型不匹配";
+                worksheet.Range("A6").Value = "3. 宏执行过程中出错";
+                worksheet.Range("A7").Value = "4. 安全设置阻止宏执行";
 
-                worksheet.Range["A9"].Value = "错误处理策略:";
-                worksheet.Range["A10"].Value = "1. 使用Try-Catch捕获异常";
-                worksheet.Range["A11"].Value = "2. 验证宏名称和参数";
-                worksheet.Range["A12"].Value = "3. 检查宏安全设置";
-                worksheet.Range["A13"].Value = "4. 提供友好的错误信息";
-                worksheet.Range["A14"].Value = "5. 记录错误日志便于调试";
+                worksheet.Range("A9").Value = "错误处理策略:";
+                worksheet.Range("A10").Value = "1. 使用Try-Catch捕获异常";
+                worksheet.Range("A11").Value = "2. 验证宏名称和参数";
+                worksheet.Range("A12").Value = "3. 检查宏安全设置";
+                worksheet.Range("A13").Value = "4. 提供友好的错误信息";
+                worksheet.Range("A14").Value = "5. 记录错误日志便于调试";
 
-                worksheet.Range["A16"].Value = "最佳实践:";
-                worksheet.Range["A17"].Value = "1. 在执行前验证宏存在";
-                worksheet.Range["A18"].Value = "2. 使用有意义的宏名称";
-                worksheet.Range["A19"].Value = "3. 提供详细的错误描述";
-                worksheet.Range["A20"].Value = "4. 实现重试机制";
-                worksheet.Range["A21"].Value = "5. 优雅地处理异常情况";
+                worksheet.Range("A16").Value = "最佳实践:";
+                worksheet.Range("A17").Value = "1. 在执行前验证宏存在";
+                worksheet.Range("A18").Value = "2. 使用有意义的宏名称";
+                worksheet.Range("A19").Value = "3. 提供详细的错误描述";
+                worksheet.Range("A20").Value = "4. 实现重试机制";
+                worksheet.Range("A21").Value = "5. 优雅地处理异常情况";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

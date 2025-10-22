@@ -70,8 +70,8 @@ namespace ChartCreationConfigurationSample
                 worksheet.Name = "柱形图";
 
                 // 创建销售数据
-                worksheet.Range["A1"].Value = "产品";
-                worksheet.Range["B1"].Value = "销量";
+                worksheet.Range("A1").Value = "产品";
+                worksheet.Range("B1").Value = "销量";
 
                 object[,] salesData = {
                     {"产品A", 100},
@@ -81,7 +81,7 @@ namespace ChartCreationConfigurationSample
                     {"产品E", 90}
                 };
 
-                var dataRange = worksheet.Range["A2:B6"];
+                var dataRange = worksheet.Range("A2:B6");
                 dataRange.Value = salesData;
 
                 // 创建图表对象
@@ -145,10 +145,10 @@ namespace ChartCreationConfigurationSample
                 worksheet.Name = "折线图";
 
                 // 创建月度销售数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "产品A";
-                worksheet.Range["C1"].Value = "产品B";
-                worksheet.Range["D1"].Value = "产品C";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "产品A";
+                worksheet.Range("C1").Value = "产品B";
+                worksheet.Range("D1").Value = "产品C";
 
                 object[,] monthlyData = {
                     {"1月", 100, 80, 120},
@@ -159,7 +159,7 @@ namespace ChartCreationConfigurationSample
                     {"6月", 160, 130, 160}
                 };
 
-                var dataRange = worksheet.Range["A2:D7"];
+                var dataRange = worksheet.Range("A2:D7");
                 dataRange.Value = monthlyData;
 
                 // 创建图表对象
@@ -232,8 +232,8 @@ namespace ChartCreationConfigurationSample
                 worksheet.Name = "饼图";
 
                 // 创建市场份额数据
-                worksheet.Range["A1"].Value = "产品";
-                worksheet.Range["B1"].Value = "市场份额";
+                worksheet.Range("A1").Value = "产品";
+                worksheet.Range("B1").Value = "市场份额";
 
                 object[,] marketData = {
                     {"产品A", 30},
@@ -243,7 +243,7 @@ namespace ChartCreationConfigurationSample
                     {"产品E", 10}
                 };
 
-                var dataRange = worksheet.Range["A2:B6"];
+                var dataRange = worksheet.Range("A2:B6");
                 dataRange.Value = marketData;
 
                 // 创建图表对象
@@ -308,8 +308,8 @@ namespace ChartCreationConfigurationSample
                 worksheet.Name = "条形图";
 
                 // 创建地区销售数据
-                worksheet.Range["A1"].Value = "地区";
-                worksheet.Range["B1"].Value = "销售额";
+                worksheet.Range("A1").Value = "地区";
+                worksheet.Range("B1").Value = "销售额";
 
                 object[,] regionData = {
                     {"华东", 1200000},
@@ -320,7 +320,7 @@ namespace ChartCreationConfigurationSample
                     {"东北", 600000}
                 };
 
-                var dataRange = worksheet.Range["A2:B7"];
+                var dataRange = worksheet.Range("A2:B7");
                 dataRange.Value = regionData;
 
                 // 创建图表对象
@@ -389,10 +389,10 @@ namespace ChartCreationConfigurationSample
                 worksheet.Name = "面积图";
 
                 // 创建季度数据
-                worksheet.Range["A1"].Value = "季度";
-                worksheet.Range["B1"].Value = "产品A";
-                worksheet.Range["C1"].Value = "产品B";
-                worksheet.Range["D1"].Value = "产品C";
+                worksheet.Range("A1").Value = "季度";
+                worksheet.Range("B1").Value = "产品A";
+                worksheet.Range("C1").Value = "产品B";
+                worksheet.Range("D1").Value = "产品C";
 
                 object[,] quarterlyData = {
                     {"Q1", 100, 80, 120},
@@ -401,7 +401,7 @@ namespace ChartCreationConfigurationSample
                     {"Q4", 130, 110, 140}
                 };
 
-                var dataRange = worksheet.Range["A2:D5"];
+                var dataRange = worksheet.Range("A2:D5");
                 dataRange.Value = quarterlyData;
 
                 // 创建图表对象
@@ -465,8 +465,8 @@ namespace ChartCreationConfigurationSample
                 worksheet.Name = "散点图";
 
                 // 创建身高体重数据
-                worksheet.Range["A1"].Value = "身高(cm)";
-                worksheet.Range["B1"].Value = "体重(kg)";
+                worksheet.Range("A1").Value = "身高(cm)";
+                worksheet.Range("B1").Value = "体重(kg)";
 
                 object[,] bodyData = {
                     {160, 50},
@@ -482,7 +482,7 @@ namespace ChartCreationConfigurationSample
                     {183, 73}
                 };
 
-                var dataRange = worksheet.Range["A2:B12"];
+                var dataRange = worksheet.Range("A2:B12");
                 dataRange.Value = bodyData;
 
                 // 创建图表对象
@@ -549,10 +549,10 @@ namespace ChartCreationConfigurationSample
                 worksheet.Name = "组合图表";
 
                 // 创建销售和利润数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "销售额";
-                worksheet.Range["C1"].Value = "利润";
-                worksheet.Range["D1"].Value = "利润率";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "销售额";
+                worksheet.Range("C1").Value = "利润";
+                worksheet.Range("D1").Value = "利润率";
 
                 object[,] salesProfitData = {
                     {"1月", 100000, 20000, 0.2},
@@ -563,7 +563,7 @@ namespace ChartCreationConfigurationSample
                     {"6月", 160000, 32000, 0.2}
                 };
 
-                var dataRange = worksheet.Range["A2:D7"];
+                var dataRange = worksheet.Range("A2:D7");
                 dataRange.Value = salesProfitData;
 
                 // 创建图表对象
@@ -614,8 +614,8 @@ namespace ChartCreationConfigurationSample
                 }
 
                 // 设置数字格式
-                worksheet.Range["B2:C7"].NumberFormat = "¥#,##0";
-                worksheet.Range["D2:D7"].NumberFormat = "0.00%";
+                worksheet.Range("B2:C7").NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D7").NumberFormat = "0.00%";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

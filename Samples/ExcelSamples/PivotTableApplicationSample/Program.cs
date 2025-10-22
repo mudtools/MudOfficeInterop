@@ -67,11 +67,11 @@ namespace PivotTableApplicationSample
                 sourceWorksheet.Name = "源数据";
 
                 // 创建销售数据
-                sourceWorksheet.Range["A1"].Value = "产品类别";
-                sourceWorksheet.Range["B1"].Value = "产品名称";
-                sourceWorksheet.Range["C1"].Value = "销售地区";
-                sourceWorksheet.Range["D1"].Value = "销售数量";
-                sourceWorksheet.Range["E1"].Value = "销售金额";
+                sourceWorksheet.Range("A1").Value = "产品类别";
+                sourceWorksheet.Range("B1").Value = "产品名称";
+                sourceWorksheet.Range("C1").Value = "销售地区";
+                sourceWorksheet.Range("D1").Value = "销售数量";
+                sourceWorksheet.Range("E1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"电子产品", "笔记本电脑", "北京", 10, 50000},
@@ -88,7 +88,7 @@ namespace PivotTableApplicationSample
                     {"服装", "连衣裙", "深圳", 35, 7000}
                 };
 
-                var dataRange = sourceWorksheet.Range["A2:E13"];
+                var dataRange = sourceWorksheet.Range("A2:E13");
                 dataRange.Value = salesData;
 
                 // 创建数据透视表工作表
@@ -96,10 +96,10 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "基础透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range["A1:E13"]);
+                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:E13"));
 
                 // 创建数据透视表
-                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range["A1"], "BasicPivotTable");
+                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "BasicPivotTable");
 
                 // 配置字段
                 // 添加行字段 - 产品类别
@@ -153,14 +153,14 @@ namespace PivotTableApplicationSample
                 sourceWorksheet.Name = "销售数据";
 
                 // 创建详细销售数据
-                sourceWorksheet.Range["A1"].Value = "日期";
-                sourceWorksheet.Range["B1"].Value = "产品类别";
-                sourceWorksheet.Range["C1"].Value = "产品名称";
-                sourceWorksheet.Range["D1"].Value = "销售地区";
-                sourceWorksheet.Range["E1"].Value = "销售人员";
-                sourceWorksheet.Range["F1"].Value = "销售数量";
-                sourceWorksheet.Range["G1"].Value = "单价";
-                sourceWorksheet.Range["H1"].Value = "销售金额";
+                sourceWorksheet.Range("A1").Value = "日期";
+                sourceWorksheet.Range("B1").Value = "产品类别";
+                sourceWorksheet.Range("C1").Value = "产品名称";
+                sourceWorksheet.Range("D1").Value = "销售地区";
+                sourceWorksheet.Range("E1").Value = "销售人员";
+                sourceWorksheet.Range("F1").Value = "销售数量";
+                sourceWorksheet.Range("G1").Value = "单价";
+                sourceWorksheet.Range("H1").Value = "销售金额";
 
                 object[,] detailedSalesData = {
                     {"2023-01-01", "电子产品", "笔记本电脑", "北京", "张三", 2, 5000, 10000},
@@ -180,7 +180,7 @@ namespace PivotTableApplicationSample
                     {"2023-02-05", "电子产品", "台式电脑", "广州", "王五", 2, 4000, 8000}
                 };
 
-                var dataRange = sourceWorksheet.Range["A2:H16"];
+                var dataRange = sourceWorksheet.Range("A2:H16");
                 dataRange.Value = detailedSalesData;
 
                 // 创建数据透视表工作表
@@ -188,10 +188,10 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "销售透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range["A1:H16"]);
+                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:H16"));
 
                 // 创建数据透视表
-                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range["A1"], "SalesPivotTable");
+                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "SalesPivotTable");
 
                 // 配置字段
                 // 添加页字段 - 日期（作为筛选器）
@@ -263,12 +263,12 @@ namespace PivotTableApplicationSample
                 sourceWorksheet.Name = "多维数据";
 
                 // 创建季度销售数据
-                sourceWorksheet.Range["A1"].Value = "年份";
-                sourceWorksheet.Range["B1"].Value = "季度";
-                sourceWorksheet.Range["C1"].Value = "产品类别";
-                sourceWorksheet.Range["D1"].Value = "产品名称";
-                sourceWorksheet.Range["E1"].Value = "销售地区";
-                sourceWorksheet.Range["F1"].Value = "销售金额";
+                sourceWorksheet.Range("A1").Value = "年份";
+                sourceWorksheet.Range("B1").Value = "季度";
+                sourceWorksheet.Range("C1").Value = "产品类别";
+                sourceWorksheet.Range("D1").Value = "产品名称";
+                sourceWorksheet.Range("E1").Value = "销售地区";
+                sourceWorksheet.Range("F1").Value = "销售金额";
 
                 object[,] quarterlyData = {
                     {"2022", "Q1", "电子产品", "笔记本电脑", "北京", 50000},
@@ -288,7 +288,7 @@ namespace PivotTableApplicationSample
                     {"2023", "Q1", "家居用品", "沙发", "北京", 30000}
                 };
 
-                var dataRange = sourceWorksheet.Range["A2:F16"];
+                var dataRange = sourceWorksheet.Range("A2:F16");
                 dataRange.Value = quarterlyData;
 
                 // 创建数据透视表工作表
@@ -296,10 +296,10 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "多维透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range["A1:F16"]);
+                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:F16"));
 
                 // 创建数据透视表
-                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range["A1"], "MultiDimensionalPivotTable");
+                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "MultiDimensionalPivotTable");
 
                 // 配置字段
                 // 添加页字段 - 年份
@@ -365,10 +365,10 @@ namespace PivotTableApplicationSample
                 sourceWorksheet.Name = "计算字段数据";
 
                 // 创建产品成本数据
-                sourceWorksheet.Range["A1"].Value = "产品类别";
-                sourceWrapper.Range["B1"].Value = "产品名称";
-                sourceWrapper.Range["C1"].Value = "销售金额";
-                sourceWrapper.Range["D1"].Value = "成本金额";
+                sourceWorksheet.Range("A1").Value = "产品类别";
+                sourceWorksheet.Range("B1").Value = "产品名称";
+                sourceWorksheet.Range("C1").Value = "销售金额";
+                sourceWorksheet.Range("D1").Value = "成本金额";
 
                 object[,] productData = {
                     {"电子产品", "笔记本电脑", 50000, 40000},
@@ -382,7 +382,7 @@ namespace PivotTableApplicationSample
                     {"服装", "外套", 12000, 4800}
                 };
 
-                var dataRange = sourceWorksheet.Range["A2:D10"];
+                var dataRange = sourceWorksheet.Range("A2:D10");
                 dataRange.Value = productData;
 
                 // 创建数据透视表工作表
@@ -390,10 +390,10 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "计算字段透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range["A1:D10"]);
+                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:D10"));
 
                 // 创建数据透视表
-                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range["A1"], "CalculatedFieldPivotTable");
+                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "CalculatedFieldPivotTable");
 
                 // 配置字段
                 // 添加行字段 - 产品类别
@@ -465,10 +465,10 @@ namespace PivotTableApplicationSample
                 sourceWorksheet.Name = "格式数据";
 
                 // 创建销售数据
-                sourceWorksheet.Range["A1"].Value = "产品类别";
-                sourceWorksheet.Range["B1"].Value = "产品名称";
-                sourceWorksheet.Range["C1"].Value = "销售地区";
-                sourceWorksheet.Range["D1"].Value = "销售金额";
+                sourceWorksheet.Range("A1").Value = "产品类别";
+                sourceWorksheet.Range("B1").Value = "产品名称";
+                sourceWorksheet.Range("C1").Value = "销售地区";
+                sourceWorksheet.Range("D1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"电子产品", "笔记本电脑", "北京", 50000},
@@ -482,7 +482,7 @@ namespace PivotTableApplicationSample
                     {"服装", "外套", "北京", 12000}
                 };
 
-                var dataRange = sourceWorksheet.Range["A2:D10"];
+                var dataRange = sourceWorksheet.Range("A2:D10");
                 dataRange.Value = salesData;
 
                 // 创建数据透视表工作表
@@ -490,10 +490,10 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "格式透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range["A1:D10"]);
+                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:D10"));
 
                 // 创建数据透视表
-                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range["A1"], "FormattingPivotTable");
+                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "FormattingPivotTable");
 
                 // 配置字段
                 // 添加行字段 - 产品类别
@@ -560,12 +560,12 @@ namespace PivotTableApplicationSample
                 sourceWorksheet.Name = "筛选数据";
 
                 // 创建详细销售数据
-                sourceWorksheet.Range["A1"].Value = "日期";
-                sourceWorksheet.Range["B1"].Value = "产品类别";
-                sourceWorksheet.Range["C1"].Value = "产品名称";
-                sourceWorksheet.Range["D1"].Value = "销售地区";
-                sourceWorksheet.Range["E1"].Value = "销售人员";
-                sourceWorksheet.Range["F1"].Value = "销售金额";
+                sourceWorksheet.Range("A1").Value = "日期";
+                sourceWorksheet.Range("B1").Value = "产品类别";
+                sourceWorksheet.Range("C1").Value = "产品名称";
+                sourceWorksheet.Range("D1").Value = "销售地区";
+                sourceWorksheet.Range("E1").Value = "销售人员";
+                sourceWorksheet.Range("F1").Value = "销售金额";
 
                 object[,] detailedSalesData = {
                     {"2023-01-01", "电子产品", "笔记本电脑", "北京", "张三", 10000},
@@ -582,7 +582,7 @@ namespace PivotTableApplicationSample
                     {"2023-03-03", "服装", "外套", "北京", "张三", 1200}
                 };
 
-                var dataRange = sourceWorksheet.Range["A2:F13"];
+                var dataRange = sourceWorksheet.Range("A2:F13");
                 dataRange.Value = detailedSalesData;
 
                 // 创建数据透视表工作表
@@ -590,10 +590,10 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "筛选透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range["A1:F13"]);
+                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:F13"));
 
                 // 创建数据透视表
-                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range["A1"], "FilterPivotTable");
+                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "FilterPivotTable");
 
                 // 配置字段
                 // 添加页字段 - 销售人员（作为筛选器）

@@ -1,5 +1,5 @@
 //
-// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求.
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -71,7 +71,7 @@ namespace CellFormattingSample
                 worksheet.Name = "基础字体格式";
 
                 // 设置标题字体格式
-                var titleRange = worksheet.Range["A1"];
+                var titleRange = worksheet.Range("A1");
                 titleRange.Value = "基础字体格式示例";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 16;
@@ -80,28 +80,28 @@ namespace CellFormattingSample
                 titleRange.Interior.Color = Color.LightGray;
 
                 // 设置普通文本字体格式
-                var normalTextRange = worksheet.Range["A3"];
+                var normalTextRange = worksheet.Range("A3");
                 normalTextRange.Value = "普通文本";
                 normalTextRange.Font.Name = "宋体";
                 normalTextRange.Font.Size = 10;
 
                 // 设置粗体文本
-                var boldTextRange = worksheet.Range["A4"];
+                var boldTextRange = worksheet.Range("A4");
                 boldTextRange.Value = "粗体文本";
                 boldTextRange.Font.Bold = true;
 
                 // 设置斜体文本
-                var italicTextRange = worksheet.Range["A5"];
+                var italicTextRange = worksheet.Range("A5");
                 italicTextRange.Value = "斜体文本";
                 italicTextRange.Font.Italic = true;
 
                 // 设置下划线文本
-                var underlineTextRange = worksheet.Range["A6"];
+                var underlineTextRange = worksheet.Range("A6");
                 underlineTextRange.Value = "下划线文本";
                 underlineTextRange.Font.Underline = XlUnderlineStyle.xlUnderlineStyleSingle;
 
                 // 设置字体颜色
-                var coloredTextRange = worksheet.Range["A7"];
+                var coloredTextRange = worksheet.Range("A7");
                 coloredTextRange.Value = "彩色文本";
                 coloredTextRange.Font.Color = Color.Red;
 
@@ -138,27 +138,27 @@ namespace CellFormattingSample
                 worksheet.Name = "高级字体格式";
 
                 // 设置带删除线的文本
-                var strikethroughRange = worksheet.Range["A1"];
+                var strikethroughRange = worksheet.Range("A1");
                 strikethroughRange.Value = "带删除线的文本";
                 strikethroughRange.Font.Strikethrough = true;
 
                 // 设置上标文本
-                var superscriptRange = worksheet.Range["A2"];
+                var superscriptRange = worksheet.Range("A2");
                 superscriptRange.Value = "上标文本";
                 superscriptRange.Font.Superscript = true;
 
                 // 设置下标文本
-                var subscriptRange = worksheet.Range["A3"];
+                var subscriptRange = worksheet.Range("A3");
                 subscriptRange.Value = "下标文本";
                 subscriptRange.Font.Subscript = true;
 
                 // 设置字体颜色索引
-                var colorIndexRange = worksheet.Range["A4"];
+                var colorIndexRange = worksheet.Range("A4");
                 colorIndexRange.Value = "颜色索引文本";
                 colorIndexRange.Font.ColorIndex = 3; // 红色
 
                 // 组合字体样式
-                var combinedStyleRange = worksheet.Range["A5"];
+                var combinedStyleRange = worksheet.Range("A5");
                 combinedStyleRange.Value = "组合样式文本";
                 combinedStyleRange.Font.Name = "楷体";
                 combinedStyleRange.Font.Size = 14;
@@ -200,23 +200,23 @@ namespace CellFormattingSample
                 worksheet.Name = "背景和填充格式";
 
                 // 设置纯色背景
-                var solidColorRange = worksheet.Range["A1"];
+                var solidColorRange = worksheet.Range("A1");
                 solidColorRange.Value = "纯色背景";
                 solidColorRange.Interior.Color = Color.LightBlue;
 
                 // 设置颜色索引背景
-                var colorIndexRange = worksheet.Range["A2"];
+                var colorIndexRange = worksheet.Range("A2");
                 colorIndexRange.Value = "颜色索引背景";
                 colorIndexRange.Interior.ColorIndex = 6; // 黄色
 
                 // 设置图案填充
-                var patternRange = worksheet.Range["A3"];
+                var patternRange = worksheet.Range("A3");
                 patternRange.Value = "图案填充";
                 patternRange.Interior.Pattern = XlPattern.xlPatternGray75;
                 patternRange.Interior.PatternColor = Color.Gray;
 
                 // 设置渐变填充（如果支持）
-                var gradientRange = worksheet.Range["A4"];
+                var gradientRange = worksheet.Range("A4");
                 gradientRange.Value = "渐变填充";
                 gradientRange.Interior.Color = Color.LightGreen;
 
@@ -253,29 +253,29 @@ namespace CellFormattingSample
                 worksheet.Name = "边框格式";
 
                 // 设置细线边框
-                var thinBorderRange = worksheet.Range["A1"];
+                var thinBorderRange = worksheet.Range("A1");
                 thinBorderRange.Value = "细线边框";
                 thinBorderRange.Borders.LineStyle = XlLineStyle.xlContinuous;
                 thinBorderRange.Borders.Weight = XlBorderWeight.xlThin;
 
                 // 设置粗线边框
-                var thickBorderRange = worksheet.Range["A2"];
+                var thickBorderRange = worksheet.Range("A2");
                 thickBorderRange.Value = "粗线边框";
                 thickBorderRange.Borders.LineStyle = XlLineStyle.xlContinuous;
                 thickBorderRange.Borders.Weight = XlBorderWeight.xlThick;
 
                 // 设置虚线边框
-                var dashBorderRange = worksheet.Range["A3"];
+                var dashBorderRange = worksheet.Range("A3");
                 dashBorderRange.Value = "虚线边框";
                 dashBorderRange.Borders.LineStyle = XlLineStyle.xlDash;
 
                 // 设置点线边框
-                var dotBorderRange = worksheet.Range["A4"];
+                var dotBorderRange = worksheet.Range("A4");
                 dotBorderRange.Value = "点线边框";
                 dotBorderRange.Borders.LineStyle = XlLineStyle.xlDot;
 
                 // 设置特定边框
-                var specificBorderRange = worksheet.Range["A5"];
+                var specificBorderRange = worksheet.Range("A5");
                 specificBorderRange.Value = "特定边框";
                 specificBorderRange.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
                 specificBorderRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
@@ -315,37 +315,37 @@ namespace CellFormattingSample
                 worksheet.Name = "数字格式";
 
                 // 设置整数格式
-                var integerRange = worksheet.Range["A1"];
+                var integerRange = worksheet.Range("A1");
                 integerRange.Value = 1234;
                 integerRange.NumberFormat = "0";
 
                 // 设置小数格式
-                var decimalRange = worksheet.Range["A2"];
+                var decimalRange = worksheet.Range("A2");
                 decimalRange.Value = 1234.567;
                 decimalRange.NumberFormat = "0.00";
 
                 // 设置百分比格式
-                var percentageRange = worksheet.Range["A3"];
+                var percentageRange = worksheet.Range("A3");
                 percentageRange.Value = 0.1234;
                 percentageRange.NumberFormat = "0.00%";
 
                 // 设置货币格式
-                var currencyRange = worksheet.Range["A4"];
+                var currencyRange = worksheet.Range("A4");
                 currencyRange.Value = 1234.56;
                 currencyRange.NumberFormat = "¥#,##0.00";
 
                 // 设置日期格式
-                var dateRange = worksheet.Range["A5"];
+                var dateRange = worksheet.Range("A5");
                 dateRange.Value = DateTime.Now;
                 dateRange.NumberFormat = "yyyy-mm-dd";
 
                 // 设置时间格式
-                var timeRange = worksheet.Range["A6"];
+                var timeRange = worksheet.Range("A6");
                 timeRange.Value = DateTime.Now;
                 timeRange.NumberFormat = "hh:mm:ss";
 
                 // 设置科学计数法格式
-                var scientificRange = worksheet.Range["A7"];
+                var scientificRange = worksheet.Range("A7");
                 scientificRange.Value = 123456789;
                 scientificRange.NumberFormat = "0.00E+00";
 
@@ -382,38 +382,38 @@ namespace CellFormattingSample
                 worksheet.Name = "对齐格式";
 
                 // 设置水平居中对齐
-                var centerRange = worksheet.Range["A1"];
+                var centerRange = worksheet.Range("A1");
                 centerRange.Value = "水平居中";
                 centerRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 centerRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
                 centerRange.Interior.Color = Color.LightBlue;
 
                 // 设置左对齐
-                var leftRange = worksheet.Range["A2"];
+                var leftRange = worksheet.Range("A2");
                 leftRange.Value = "左对齐";
                 leftRange.HorizontalAlignment = XlHAlign.xlHAlignLeft;
                 leftRange.Interior.Color = Color.LightGreen;
 
                 // 设置右对齐
-                var rightRange = worksheet.Range["A3"];
+                var rightRange = worksheet.Range("A3");
                 rightRange.Value = "右对齐";
                 rightRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
                 rightRange.Interior.Color = Color.LightYellow;
 
                 // 设置垂直居中对齐
-                var verticalCenterRange = worksheet.Range["B1:B3"];
+                var verticalCenterRange = worksheet.Range("B1:B3");
                 verticalCenterRange.Value = "垂直居中";
                 verticalCenterRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
 
                 // 设置文本自动换行
-                var wrapTextRange = worksheet.Range["C1"];
+                var wrapTextRange = worksheet.Range("C1");
                 wrapTextRange.Value = "这是一个很长的文本，用于演示自动换行功能";
                 wrapTextRange.WrapText = true;
                 wrapTextRange.ColumnWidth = 15;
                 wrapTextRange.Interior.Color = Color.LightPink;
 
                 // 设置文本方向
-                var orientationRange = worksheet.Range["C2"];
+                var orientationRange = worksheet.Range("C2");
                 orientationRange.Value = "文本方向";
                 orientationRange.Orientation = 45; // 45度角
                 orientationRange.Interior.Color = Color.LightGray;
@@ -451,7 +451,7 @@ namespace CellFormattingSample
                 worksheet.Name = "综合格式示例";
 
                 // 创建销售报表标题
-                var titleRange = worksheet.Range["A1:E1"];
+                var titleRange = worksheet.Range("A1:E1");
                 titleRange.Value = "2023年销售业绩报表";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 18;
@@ -463,7 +463,7 @@ namespace CellFormattingSample
                 titleRange.Merge(); // 合并单元格
 
                 // 创建表头
-                var headerRange = worksheet.Range["A2:E2"];
+                var headerRange = worksheet.Range("A2:E2");
                 string[] headers = { "部门", "销售额", "成本", "利润", "利润率" };
                 headerRange.Value = headers;
                 headerRange.Font.Bold = true;
@@ -480,22 +480,22 @@ namespace CellFormattingSample
                     { "财务部", "150000", "100000", "50000", "0.333" }
                 };
 
-                var dataRange = worksheet.Range["A3:E7"];
+                var dataRange = worksheet.Range("A3:E7");
                 dataRange.Value = data;
                 dataRange.Borders.LineStyle = XlLineStyle.xlContinuous;
 
                 // 设置数字格式
-                worksheet.Range["B3:B7"].NumberFormat = "¥#,##0"; // 销售额
-                worksheet.Range["C3:C7"].NumberFormat = "¥#,##0"; // 成本
-                worksheet.Range["D3:D7"].NumberFormat = "¥#,##0"; // 利润
-                worksheet.Range["E3:E7"].NumberFormat = "0.00%";  // 利润率
+                worksheet.Range("B3:B7").NumberFormat = "¥#,##0"; // 销售额
+                worksheet.Range("C3:C7").NumberFormat = "¥#,##0"; // 成本
+                worksheet.Range("D3:D7").NumberFormat = "¥#,##0"; // 利润
+                worksheet.Range("E3:E7").NumberFormat = "0.00%";  // 利润率
 
                 // 设置数据对齐
-                worksheet.Range["A3:A7"].HorizontalAlignment = XlHAlign.xlHAlignLeft;    // 部门左对齐
-                worksheet.Range["B3:E7"].HorizontalAlignment = XlHAlign.xlHAlignRight;   // 数值右对齐
+                worksheet.Range("A3:A7").HorizontalAlignment = XlHAlign.xlHAlignLeft;    // 部门左对齐
+                worksheet.Range("B3:E7").HorizontalAlignment = XlHAlign.xlHAlignRight;   // 数值右对齐
 
                 // 设置总计行
-                var totalRow = worksheet.Range["A8:E8"];
+                var totalRow = worksheet.Range("A8:E8");
                 totalRow.Value = new object[,] { { "总计", "=SUM(B3:B7)", "=SUM(C3:C7)", "=SUM(D3:D7)", "=D8/B8" } };
                 totalRow.Font.Bold = true;
                 totalRow.Interior.Color = Color.LightBlue;

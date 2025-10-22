@@ -77,12 +77,12 @@ namespace WorkbookWorksheetOperationsSample
                 // 添加一些数据
                 var worksheet = workbook.ActiveSheetWrap;
                 worksheet.Name = "基本信息";
-                worksheet.Range["A1"].Value = "工作簿操作示例";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 16;
+                worksheet.Range("A1").Value = "工作簿操作示例";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 16;
 
-                worksheet.Range["A3"].Value = "这是工作簿基本操作的示例数据";
-                worksheet.Range["A4"].Value = $"创建时间: {DateTime.Now}";
+                worksheet.Range("A3").Value = "这是工作簿基本操作的示例数据";
+                worksheet.Range("A4").Value = $"创建时间: {DateTime.Now}";
 
                 // 保存工作簿
                 string fileName = $"WorkbookBasicOperations_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -125,7 +125,7 @@ namespace WorkbookWorksheetOperationsSample
                 firstWorksheet.Name = "首页";
 
                 // 添加新工作表
-                var newWorksheet = worksheets.Add();
+                var newWorksheet = worksheets.Add() as IExcelWorksheet;
                 newWorksheet.Name = "数据表";
 
                 // 再添加一个工作表
@@ -136,20 +136,20 @@ namespace WorkbookWorksheetOperationsSample
                 Console.WriteLine($"添加后工作表数量: {worksheets.Count}");
 
                 // 在工作表中添加数据
-                firstWorksheet.Range["A1"].Value = "首页";
-                firstWorksheet.Range["A1"].Font.Bold = true;
+                firstWorksheet.Range("A1").Value = "首页";
+                firstWorksheet.Range("A1").Font.Bold = true;
 
-                newWorksheet.Range["A1"].Value = "员工姓名";
-                newWorksheet.Range["B1"].Value = "部门";
-                newWorksheet.Range["C1"].Value = "薪资";
+                newWorksheet.Range("A1").Value = "员工姓名";
+                newWorksheet.Range("B1").Value = "部门";
+                newWorksheet.Range("C1").Value = "薪资";
 
-                newWorksheet.Range["A2"].Value = "张三";
-                newWorksheet.Range["B2"].Value = "技术部";
-                newWorksheet.Range["C2"].Value = 8000;
+                newWorksheet.Range("A2").Value = "张三";
+                newWorksheet.Range("B2").Value = "技术部";
+                newWorksheet.Range("C2").Value = 8000;
 
-                newWorksheet.Range["A3"].Value = "李四";
-                newWorksheet.Range["B3"].Value = "销售部";
-                newWorksheet.Range["C3"].Value = 7500;
+                newWorksheet.Range("A3").Value = "李四";
+                newWorksheet.Range("B3").Value = "销售部";
+                newWorksheet.Range("C3").Value = 7500;
 
                 // 保存工作簿
                 string fileName = $"WorksheetBasicOperations_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -235,20 +235,20 @@ namespace WorkbookWorksheetOperationsSample
                 worksheet.Name = "受保护的工作表";
 
                 // 添加一些数据
-                worksheet.Range["A1"].Value = "受保护的工作表示例";
-                worksheet.Range["A1"].Font.Bold = true;
+                worksheet.Range("A1").Value = "受保护的工作表示例";
+                worksheet.Range("A1").Font.Bold = true;
 
-                worksheet.Range["A3"].Value = "姓名";
-                worksheet.Range["B3"].Value = "部门";
-                worksheet.Range["C3"].Value = "薪资";
+                worksheet.Range("A3").Value = "姓名";
+                worksheet.Range("B3").Value = "部门";
+                worksheet.Range("C3").Value = "薪资";
 
-                worksheet.Range["A4"].Value = "张三";
-                worksheet.Range["B4"].Value = "技术部";
-                worksheet.Range["C4"].Value = 8000;
+                worksheet.Range("A4").Value = "张三";
+                worksheet.Range("B4").Value = "技术部";
+                worksheet.Range("C4").Value = 8000;
 
-                worksheet.Range["A5"].Value = "李四";
-                worksheet.Range["B5"].Value = "销售部";
-                worksheet.Range["C5"].Value = 7500;
+                worksheet.Range("A5").Value = "李四";
+                worksheet.Range("B5").Value = "销售部";
+                worksheet.Range("C5").Value = 7500;
 
                 // 保护工作表
                 string password = "SheetPassword123";
@@ -307,18 +307,18 @@ namespace WorkbookWorksheetOperationsSample
                 sheet3.Name = "图表展示";
 
                 // 在源数据工作表中添加数据
-                sheet1.Range["A1"].Value = "月份";
-                sheet1.Range["B1"].Value = "销售额";
-                sheet1.Range["C1"].Value = "利润";
+                sheet1.Range("A1").Value = "月份";
+                sheet1.Range("B1").Value = "销售额";
+                sheet1.Range("C1").Value = "利润";
 
                 string[] months = { "1月", "2月", "3月", "4月", "5月", "6月" };
                 Random random = new Random();
 
                 for (int i = 0; i < months.Length; i++)
                 {
-                    sheet1.Range[$"A{i + 2}"].Value = months[i];
-                    sheet1.Range[$"B{i + 2}"].Value = random.Next(50000, 100000);
-                    sheet1.Range[$"C{i + 2}"].Value = random.Next(5000, 20000);
+                    sheet1.Range($"A{i + 2}").Value = months[i];
+                    sheet1.Range($"B{i + 2}").Value = random.Next(50000, 100000);
+                    sheet1.Range($"C{i + 2}").Value = random.Next(5000, 20000);
                 }
 
                 // 复制工作表

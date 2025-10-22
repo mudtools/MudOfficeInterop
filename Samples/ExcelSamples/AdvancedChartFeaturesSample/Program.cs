@@ -67,9 +67,9 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Name = "组合图表";
 
                 // 创建销售和利润数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "销售额";
-                worksheet.Range["C1"].Value = "利润率";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "销售额";
+                worksheet.Range("C1").Value = "利润率";
 
                 object[,] salesProfitData = {
                     {"1月", 100000, 0.2},
@@ -80,7 +80,7 @@ namespace AdvancedChartFeaturesSample
                     {"6月", 160000, 0.28}
                 };
 
-                var dataRange = worksheet.Range["A2:C7"];
+                var dataRange = worksheet.Range("A2:C7");
                 dataRange.Value = salesProfitData;
 
                 // 创建图表对象
@@ -119,8 +119,8 @@ namespace AdvancedChartFeaturesSample
                 chart.Axes(XlAxisType.xlValue, XlAxisGroup.xlSecondary).AxisTitle.Text = "利润率";
 
                 // 设置数字格式
-                worksheet.Range["B2:B7"].NumberFormat = "¥#,##0";
-                worksheet.Range["C2:C7"].NumberFormat = "0.00%";
+                worksheet.Range("B2:B7").NumberFormat = "¥#,##0";
+                worksheet.Range("C2:C7").NumberFormat = "0.00%";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -158,11 +158,11 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Name = "动态图表";
 
                 // 创建季度销售数据
-                worksheet.Range["A1"].Value = "产品";
-                worksheet.Range["B1"].Value = "Q1";
-                worksheet.Range["C1"].Value = "Q2";
-                worksheet.Range["D1"].Value = "Q3";
-                worksheet.Range["E1"].Value = "Q4";
+                worksheet.Range("A1").Value = "产品";
+                worksheet.Range("B1").Value = "Q1";
+                worksheet.Range("C1").Value = "Q2";
+                worksheet.Range("D1").Value = "Q3";
+                worksheet.Range("E1").Value = "Q4";
 
                 object[,] quarterlyData = {
                     {"产品A", 100, 120, 140, 130},
@@ -170,7 +170,7 @@ namespace AdvancedChartFeaturesSample
                     {"产品C", 120, 130, 110, 140}
                 };
 
-                var dataRange = worksheet.Range["A2:E4"];
+                var dataRange = worksheet.Range("A2:E4");
                 dataRange.Value = quarterlyData;
 
                 // 创建图表对象
@@ -246,10 +246,10 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Name = "3D图表";
 
                 // 创建地区销售数据
-                worksheet.Range["A1"].Value = "地区";
-                worksheet.Range["B1"].Value = "产品A";
-                worksheet.Range["C1"].Value = "产品B";
-                worksheet.Range["D1"].Value = "产品C";
+                worksheet.Range("A1").Value = "地区";
+                worksheet.Range("B1").Value = "产品A";
+                worksheet.Range("C1").Value = "产品B";
+                worksheet.Range("D1").Value = "产品C";
 
                 object[,] regionData = {
                     {"华东", 100, 80, 120},
@@ -258,7 +258,7 @@ namespace AdvancedChartFeaturesSample
                     {"华中", 130, 110, 140}
                 };
 
-                var dataRange = worksheet.Range["A2:D5"];
+                var dataRange = worksheet.Range("A2:D5");
                 dataRange.Value = regionData;
 
                 // 创建图表对象
@@ -328,9 +328,9 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Name = "交互图表";
 
                 // 创建详细销售数据
-                worksheet.Range["A1"].Value = "日期";
-                worksheet.Range["B1"].Value = "产品类别";
-                worksheet.Range["C1"].Value = "销售额";
+                worksheet.Range("A1").Value = "日期";
+                worksheet.Range("B1").Value = "产品类别";
+                worksheet.Range("C1").Value = "销售额";
 
                 object[,] salesData = {
                     {"2023-01-01", "电子产品", 10000},
@@ -344,12 +344,12 @@ namespace AdvancedChartFeaturesSample
                     {"2023-01-09", "服装", 7000}
                 };
 
-                var dataRange = worksheet.Range["A2:C10"];
+                var dataRange = worksheet.Range("A2:C10");
                 dataRange.Value = salesData;
 
                 // 创建数据透视表
                 var pivotCache = worksheet.PivotCaches().Create(dataRange);
-                var pivotTable = worksheet.PivotTables().Add(pivotCache, worksheet.Range["E1"], "SalesPivotTable");
+                var pivotTable = worksheet.PivotTables().Add(pivotCache, worksheet.Range("E1"), "SalesPivotTable");
 
                 // 配置数据透视表字段
                 pivotTable.PivotFields("产品类别").Orientation = XlPivotFieldOrientation.xlRowField;
@@ -417,8 +417,8 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Name = "高级样式";
 
                 // 创建市场份额数据
-                worksheet.Range["A1"].Value = "产品";
-                worksheet.Range["B1"].Value = "市场份额";
+                worksheet.Range("A1").Value = "产品";
+                worksheet.Range("B1").Value = "市场份额";
 
                 object[,] marketData = {
                     {"产品A", 35},
@@ -428,7 +428,7 @@ namespace AdvancedChartFeaturesSample
                     {"产品E", 8}
                 };
 
-                var dataRange = worksheet.Range["A2:B6"];
+                var dataRange = worksheet.Range("A2:B6");
                 dataRange.Value = marketData;
 
                 // 创建图表对象
@@ -505,9 +505,9 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Name = "模板应用";
 
                 // 创建销售数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "销售额";
-                worksheet.Range["C1"].Value = "目标";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "销售额";
+                worksheet.Range("C1").Value = "目标";
 
                 object[,] salesData = {
                     {"1月", 100000, 120000},
@@ -518,7 +518,7 @@ namespace AdvancedChartFeaturesSample
                     {"6月", 160000, 145000}
                 };
 
-                var dataRange = worksheet.Range["A2:C7"];
+                var dataRange = worksheet.Range("A2:C7");
                 dataRange.Value = salesData;
 
                 // 创建图表对象
@@ -553,7 +553,7 @@ namespace AdvancedChartFeaturesSample
                 chart.Axes(XlAxisType.xlValue).AxisTitle.Text = "金额";
 
                 // 设置数字格式
-                worksheet.Range["B2:C7"].NumberFormat = "¥#,##0";
+                worksheet.Range("B2:C7").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

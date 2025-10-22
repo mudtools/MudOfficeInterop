@@ -68,15 +68,15 @@ namespace ExcelApplicationManagementSample
                 worksheet.Name = "空白工作簿示例";
 
                 // 添加标题
-                worksheet.Range["A1"].Value = "Excel应用程序管理 - 空白工作簿示例";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 16;
-                worksheet.Range["A1"].Interior.Color = System.Drawing.Color.LightBlue;
+                worksheet.Range("A1").Value = "Excel应用程序管理 - 空白工作簿示例";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 16;
+                worksheet.Range("A1").Interior.Color = System.Drawing.Color.LightBlue;
 
                 // 添加示例数据
-                worksheet.Range["A3"].Value = "这是使用ExcelFactory.BlankWorkbook()方法创建的空白工作簿";
-                worksheet.Range["A4"].Value = "该方法会启动Excel应用程序并创建一个包含一个工作表的空白工作簿";
-                worksheet.Range["A5"].Value = "创建时间: " + DateTime.Now.ToString();
+                worksheet.Range("A3").Value = "这是使用ExcelFactory.BlankWorkbook()方法创建的空白工作簿";
+                worksheet.Range("A4").Value = "该方法会启动Excel应用程序并创建一个包含一个工作表的空白工作簿";
+                worksheet.Range("A5").Value = "创建时间: " + DateTime.Now.ToString();
 
                 // 保存工作簿
                 string fileName = $"BlankWorkbookExample_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -119,16 +119,16 @@ namespace ExcelApplicationManagementSample
                 worksheet.Name = "特定版本示例";
 
                 // 添加标题
-                worksheet.Range["A1"].Value = "Excel应用程序管理 - 特定版本实例示例";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 16;
-                worksheet.Range["A1"].Interior.Color = System.Drawing.Color.LightGreen;
+                worksheet.Range("A1").Value = "Excel应用程序管理 - 特定版本实例示例";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 16;
+                worksheet.Range("A1").Interior.Color = System.Drawing.Color.LightGreen;
 
                 // 添加示例数据
-                worksheet.Range["A3"].Value = "这是使用ExcelFactory.CreateInstance()方法创建的特定版本Excel实例";
-                worksheet.Range["A4"].Value = "通过指定ProgID可以创建特定版本的Excel应用程序";
-                worksheet.Range["A5"].Value = "Excel版本: " + excelApp.Version;
-                worksheet.Range["A6"].Value = "创建时间: " + DateTime.Now.ToString();
+                worksheet.Range("A3").Value = "这是使用ExcelFactory.CreateInstance()方法创建的特定版本Excel实例";
+                worksheet.Range("A4").Value = "通过指定ProgID可以创建特定版本的Excel应用程序";
+                worksheet.Range("A5").Value = "Excel版本: " + excelApp.Version;
+                worksheet.Range("A6").Value = "创建时间: " + DateTime.Now.ToString();
 
                 // 保存工作簿
                 string fileName = $"CreateInstanceExample_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -167,10 +167,10 @@ namespace ExcelApplicationManagementSample
                 var worksheet = workbook.ActiveSheetWrap;
 
                 // 填充模板中的数据
-                worksheet.Range["B2"].Value = "张三";
-                worksheet.Range["B3"].Value = "Excel自动化工程师";
-                worksheet.Range["B4"].Value = DateTime.Now.ToString("yyyy-MM-dd");
-                worksheet.Range["B5"].Value = "北京市朝阳区";
+                worksheet.Range("B2").Value = "张三";
+                worksheet.Range("B3").Value = "Excel自动化工程师";
+                worksheet.Range("B4").Value = DateTime.Now.ToString("yyyy-MM-dd");
+                worksheet.Range("B5").Value = "北京市朝阳区";
 
                 // 保存工作簿
                 string fileName = $"CreateFromTemplateExample_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -209,12 +209,12 @@ namespace ExcelApplicationManagementSample
                 var worksheet = workbook.ActiveSheetWrap;
 
                 // 读取现有数据
-                var existingValue = worksheet.Range["A1"].Value;
+                var existingValue = worksheet.Range("A1").Value;
                 Console.WriteLine($"原始数据: {existingValue}");
 
                 // 修改数据
-                worksheet.Range["A3"].Value = "这是通过ExcelFactory.Open()方法打开并修改的数据";
-                worksheet.Range["A4"].Value = "修改时间: " + DateTime.Now.ToString();
+                worksheet.Range("A3").Value = "这是通过ExcelFactory.Open()方法打开并修改的数据";
+                worksheet.Range("A4").Value = "修改时间: " + DateTime.Now.ToString();
 
                 // 保存工作簿
                 string fileName = $"OpenExistingWorkbookExample_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -260,8 +260,8 @@ namespace ExcelApplicationManagementSample
                     var worksheet = workbook.ActiveSheetWrap;
 
                     // 添加连接信息
-                    worksheet.Range["A7"].Value = "这是通过ExcelFactory.Connection()方法连接到现有实例后添加的数据";
-                    worksheet.Range["A8"].Value = "连接时间: " + DateTime.Now.ToString();
+                    worksheet.Range("A7").Value = "这是通过ExcelFactory.Connection()方法连接到现有实例后添加的数据";
+                    worksheet.Range("A8").Value = "连接时间: " + DateTime.Now.ToString();
 
                     Console.WriteLine("✓ 成功连接到现有Excel实例");
                 }
@@ -294,18 +294,18 @@ namespace ExcelApplicationManagementSample
                 var worksheet = workbook.ActiveSheetWrap;
 
                 // 设置模板内容
-                worksheet.Range["A1"].Value = "员工信息表";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 16;
-                worksheet.Range["A1"].Interior.Color = System.Drawing.Color.LightYellow;
+                worksheet.Range("A1").Value = "员工信息表";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 16;
+                worksheet.Range("A1").Interior.Color = System.Drawing.Color.LightYellow;
 
-                worksheet.Range["A2"].Value = "姓名:";
-                worksheet.Range["A3"].Value = "职位:";
-                worksheet.Range["A4"].Value = "入职日期:";
-                worksheet.Range["A5"].Value = "地址:";
+                worksheet.Range("A2").Value = "姓名:";
+                worksheet.Range("A3").Value = "职位:";
+                worksheet.Range("A4").Value = "入职日期:";
+                worksheet.Range("A5").Value = "地址:";
 
                 // 添加边框
-                worksheet.Range["A1:B6"].Borders.LineStyle = XlLineStyle.xlContinuous;
+                worksheet.Range("A1:B6").Borders.LineStyle = XlLineStyle.xlContinuous;
 
                 // 保存为模板文件
                 workbook.SaveAs("Template.xlsx");
@@ -332,11 +332,11 @@ namespace ExcelApplicationManagementSample
                 var worksheet = workbook.ActiveSheetWrap;
 
                 // 设置文件内容
-                worksheet.Range["A1"].Value = "这是要被打开的Excel文件";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Interior.Color = System.Drawing.Color.LightCoral;
+                worksheet.Range("A1").Value = "这是要被打开的Excel文件";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Interior.Color = System.Drawing.Color.LightCoral;
 
-                worksheet.Range["A2"].Value = "该文件将通过ExcelFactory.Open()方法打开";
+                worksheet.Range("A2").Value = "该文件将通过ExcelFactory.Open()方法打开";
 
                 // 保存文件
                 workbook.SaveAs("ExistingFile.xlsx");

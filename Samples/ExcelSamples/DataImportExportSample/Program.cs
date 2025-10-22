@@ -7,6 +7,7 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Excel;
+using System.Drawing;
 
 namespace DataImportExportSample
 {
@@ -60,7 +61,7 @@ namespace DataImportExportSample
 
                 // 获取活动工作簿和工作表
                 var workbook = excelApp.ActiveWorkbook;
-                var worksheet = workbook.ActiveSheetWrapWrap;
+                var worksheet = workbook.ActiveSheetWrap;
                 worksheet.Name = "数组导入数据";
 
                 // 创建示例数据（二维数组）
@@ -74,20 +75,20 @@ namespace DataImportExportSample
                 };
 
                 // 将数据导入到工作表
-                var dataRange = worksheet.Range["A1:F6"];
+                var dataRange = worksheet.Range("A1:F6");
                 dataRange.Value = employeeData;
 
                 // 设置标题格式
-                var headerRange = worksheet.Range["A1:F1"];
+                var headerRange = worksheet.Range("A1:F1");
                 headerRange.Font.Bold = true;
                 headerRange.Interior.Color = Color.LightBlue;
                 headerRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 设置数据格式
-                var dateRange = worksheet.Range["E2:E6"];
+                var dateRange = worksheet.Range("E2:E6");
                 dateRange.NumberFormat = "yyyy-mm-dd";
 
-                var salaryRange = worksheet.Range["F2:F6"];
+                var salaryRange = worksheet.Range("F2:F6");
                 salaryRange.NumberFormat = "¥#,##0.00";
 
                 // 自动调整列宽
@@ -128,7 +129,7 @@ namespace DataImportExportSample
                 var worksheet = workbook.ActiveSheetWrap;
 
                 // 导出数据到数组
-                var dataRange = worksheet.Range["A1:F6"];
+                var dataRange = worksheet.Range("A1:F6");
                 object[,] exportedData = (object[,])dataRange.Value;
 
                 // 显示导出的数据
@@ -184,11 +185,11 @@ namespace DataImportExportSample
 
                 // 复制CSV数据到当前工作表
                 var csvRange = csvWorksheet.UsedRange;
-                var targetRange = worksheet.Range["A1"];
+                var targetRange = worksheet.Range("A1");
                 csvRange.Copy(targetRange);
 
                 // 设置标题格式
-                var headerRange = worksheet.Range["A1:F1"];
+                var headerRange = worksheet.Range("A1:F1");
                 headerRange.Font.Bold = true;
                 headerRange.Interior.Color = Color.LightGreen;
                 headerRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -263,45 +264,45 @@ namespace DataImportExportSample
                 worksheet.Name = "数据格式转换";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "原始数据";
-                worksheet.Range["A1"].Font.Bold = true;
+                worksheet.Range("A1").Value = "原始数据";
+                worksheet.Range("A1").Font.Bold = true;
 
-                worksheet.Range["A2"].Value = "数字文本";
-                worksheet.Range["B2"].Value = "12345";
+                worksheet.Range("A2").Value = "数字文本";
+                worksheet.Range("B2").Value = "12345";
 
-                worksheet.Range["A3"].Value = "日期文本";
-                worksheet.Range["B3"].Value = "2023-01-01";
+                worksheet.Range("A3").Value = "日期文本";
+                worksheet.Range("B3").Value = "2023-01-01";
 
-                worksheet.Range["A4"].Value = "货币文本";
-                worksheet.Range["B4"].Value = "1234.56";
+                worksheet.Range("A4").Value = "货币文本";
+                worksheet.Range("B4").Value = "1234.56";
 
-                worksheet.Range["A5"].Value = "百分比文本";
-                worksheet.Range["B5"].Value = "0.1234";
+                worksheet.Range("A5").Value = "百分比文本";
+                worksheet.Range("B5").Value = "0.1234";
 
                 // 转换数字文本为数字
-                worksheet.Range["C2"].Formula = "=VALUE(B2)";
-                worksheet.Range["D2"].Value = "转换为数字";
+                worksheet.Range("C2").Formula = "=VALUE(B2)";
+                worksheet.Range("D2").Value = "转换为数字";
 
                 // 转换文本为日期
-                worksheet.Range["C3"].Formula = "=DATEVALUE(B3)";
-                worksheet.Range["C3"].NumberFormat = "yyyy-mm-dd";
-                worksheet.Range["D3"].Value = "转换为日期";
+                worksheet.Range("C3").Formula = "=DATEVALUE(B3)";
+                worksheet.Range("C3").NumberFormat = "yyyy-mm-dd";
+                worksheet.Range("D3").Value = "转换为日期";
 
                 // 转换为货币格式
-                worksheet.Range["C4"].Formula = "=VALUE(B4)";
-                worksheet.Range["C4"].NumberFormat = "¥#,##0.00";
-                worksheet.Range["D4"].Value = "转换为货币";
+                worksheet.Range("C4").Formula = "=VALUE(B4)";
+                worksheet.Range("C4").NumberFormat = "¥#,##0.00";
+                worksheet.Range("D4").Value = "转换为货币";
 
                 // 转换为百分比格式
-                worksheet.Range["C5"].Formula = "=VALUE(B5)";
-                worksheet.Range["C5"].NumberFormat = "0.00%";
-                worksheet.Range["D5"].Value = "转换为百分比";
+                worksheet.Range("C5").Formula = "=VALUE(B5)";
+                worksheet.Range("C5").NumberFormat = "0.00%";
+                worksheet.Range("D5").Value = "转换为百分比";
 
                 // 设置格式
-                var headerRange = worksheet.Range["A1:D1"];
+                var headerRange = worksheet.Range("A1:D1");
                 headerRange.Interior.Color = Color.LightBlue;
 
-                var labelRange = worksheet.Range["A2:A5"];
+                var labelRange = worksheet.Range("A2:A5");
                 labelRange.Font.Bold = true;
 
                 // 自动调整列宽
@@ -348,7 +349,7 @@ namespace DataImportExportSample
                 };
 
                 // 将数据导入到工作表
-                var dataRange = worksheet.Range["A1:F6"];
+                var dataRange = worksheet.Range("A1:F6");
                 dataRange.Value = employeeData;
 
                 // 保存工作簿

@@ -1,5 +1,5 @@
 //
-// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求.
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -68,9 +68,9 @@ namespace AdvancedFormattingSample
                 worksheet.Name = "数据验证";
 
                 // 设置整数验证规则
-                var integerRange = worksheet.Range["A1"];
+                var integerRange = worksheet.Range("A1");
                 integerRange.Value = "整数验证 (1-100)";
-                var integerValidationRange = worksheet.Range["A2"];
+                var integerValidationRange = worksheet.Range("A2");
                 var integerValidation = integerValidationRange.Validation;
                 integerValidation.Add(XlDVType.xlValidateWholeNumber, XlDVAlertStyle.xlValidAlertStop, "1", "100");
                 integerValidation.InputTitle = "整数输入";
@@ -81,9 +81,9 @@ namespace AdvancedFormattingSample
                 integerValidation.ShowError = true;
 
                 // 设置小数验证规则
-                var decimalRange = worksheet.Range["B1"];
+                var decimalRange = worksheet.Range("B1");
                 decimalRange.Value = "小数验证 (0.0-10.0)";
-                var decimalValidationRange = worksheet.Range["B2"];
+                var decimalValidationRange = worksheet.Range("B2");
                 var decimalValidation = decimalValidationRange.Validation;
                 decimalValidation.Add(XlDVType.xlValidateDecimal, XlDVAlertStyle.xlValidAlertStop, "0.0", "10.0");
                 decimalValidation.InputTitle = "小数输入";
@@ -94,9 +94,9 @@ namespace AdvancedFormattingSample
                 decimalValidation.ShowError = true;
 
                 // 设置列表验证规则
-                var listRange = worksheet.Range["C1"];
+                var listRange = worksheet.Range("C1");
                 listRange.Value = "列表验证";
-                var listValidationRange = worksheet.Range["C2"];
+                var listValidationRange = worksheet.Range("C2");
                 var listValidation = listValidationRange.Validation;
                 listValidation.Add(XlDVType.xlValidateList, XlDVAlertStyle.xlValidAlertStop, "选项1,选项2,选项3,选项4", "");
                 listValidation.InputTitle = "列表选择";
@@ -107,9 +107,9 @@ namespace AdvancedFormattingSample
                 listValidation.ShowError = true;
 
                 // 设置日期验证规则
-                var dateRange = worksheet.Range["D1"];
+                var dateRange = worksheet.Range("D1");
                 dateRange.Value = "日期验证";
-                var dateValidationRange = worksheet.Range["D2"];
+                var dateValidationRange = worksheet.Range("D2");
                 var dateValidation = dateValidationRange.Validation;
                 dateValidation.Add(XlDVType.xlValidateDate, XlDVAlertStyle.xlValidAlertStop, "2020/1/1", "2030/12/31");
                 dateValidation.InputTitle = "日期输入";
@@ -120,9 +120,9 @@ namespace AdvancedFormattingSample
                 dateValidation.ShowError = true;
 
                 // 设置文本长度验证规则
-                var textRange = worksheet.Range["E1"];
+                var textRange = worksheet.Range("E1");
                 textRange.Value = "文本长度验证 (最多10字符)";
-                var textValidationRange = worksheet.Range["E2"];
+                var textValidationRange = worksheet.Range("E2");
                 var textValidation = textValidationRange.Validation;
                 textValidation.Add(XlDVType.xlValidateTextLength, XlDVAlertStyle.xlValidAlertStop, "", "10");
                 textValidation.InputTitle = "文本输入";
@@ -165,13 +165,13 @@ namespace AdvancedFormattingSample
                 worksheet.Name = "条件格式";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "销售数据";
-                worksheet.Range["A1"].Font.Bold = true;
+                worksheet.Range("A1").Value = "销售数据";
+                worksheet.Range("A1").Font.Bold = true;
 
-                worksheet.Range["A2"].Value = "员工";
-                worksheet.Range["B2"].Value = "销售额";
-                worksheet.Range["C2"].Value = "目标";
-                worksheet.Range["D2"].Value = "完成率";
+                worksheet.Range("A2").Value = "员工";
+                worksheet.Range("B2").Value = "销售额";
+                worksheet.Range("C2").Value = "目标";
+                worksheet.Range("D2").Value = "完成率";
 
                 string[,] employeeData = {
                     {"张三", "80000", "100000", "=B3/C3"},
@@ -181,16 +181,16 @@ namespace AdvancedFormattingSample
                     {"钱七", "95000", "100000", "=B7/C7"}
                 };
 
-                var dataRange = worksheet.Range["A3:D7"];
+                var dataRange = worksheet.Range("A3:D7");
                 dataRange.Value = employeeData;
 
                 // 设置表头格式
-                var headerRange = worksheet.Range["A2:D2"];
+                var headerRange = worksheet.Range("A2:D2");
                 headerRange.Font.Bold = true;
                 headerRange.Interior.Color = Color.LightGray;
 
                 // 添加条件格式 - 高于目标的销售额显示为绿色
-                var aboveTargetRange = worksheet.Range["D3:D7"];
+                var aboveTargetRange = worksheet.Range("D3:D7");
                 var aboveTargetFormat = aboveTargetRange.FormatConditions.Add(
                     XlFormatConditionType.xlCellValue,
                     XlFormatConditionOperator.xlGreater,
@@ -205,9 +205,9 @@ namespace AdvancedFormattingSample
                 belowTargetFormat.Interior.Color = Color.LightCoral;
 
                 // 设置数字格式
-                worksheet.Range["B3:B7"].NumberFormat = "¥#,##0";
-                worksheet.Range["C3:C7"].NumberFormat = "¥#,##0";
-                worksheet.Range["D3:D7"].NumberFormat = "0.00%";
+                worksheet.Range("B3:B7").NumberFormat = "¥#,##0";
+                worksheet.Range("C3:C7").NumberFormat = "¥#,##0";
+                worksheet.Range("D3:D7").NumberFormat = "0.00%";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -245,27 +245,27 @@ namespace AdvancedFormattingSample
                 worksheet.Name = "超链接";
 
                 // 添加标题
-                worksheet.Range["A1"].Value = "超链接示例";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 16;
+                worksheet.Range("A1").Value = "超链接示例";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 16;
 
                 // 添加网页链接
-                worksheet.Range["A3"].Value = "访问百度";
-                worksheet.Hyperlinks.Add(worksheet.Range["A3"], "https://www.baidu.com");
+                worksheet.Range("A3").Value = "访问百度";
+                worksheet.Hyperlinks.Add(worksheet.Range("A3"), "https://www.baidu.com");
 
                 // 添加邮箱链接
-                worksheet.Range["A4"].Value = "发送邮件";
-                worksheet.Hyperlinks.Add(worksheet.Range["A4"], "mailto:someone@example.com");
+                worksheet.Range("A4").Value = "发送邮件";
+                worksheet.Hyperlinks.Add(worksheet.Range("A4"), "mailto:someone@example.com");
 
                 // 添加文件链接
-                worksheet.Range["A5"].Value = "打开文件";
-                worksheet.Hyperlinks.Add(worksheet.Range["A5"], "Sample.xlsx");
+                worksheet.Range("A5").Value = "打开文件";
+                worksheet.Hyperlinks.Add(worksheet.Range("A5"), "Sample.xlsx");
 
                 // 添加工作表内链接
-                worksheet.Range["A6"].Value = "跳转到A10";
-                worksheet.Hyperlinks.Add(worksheet.Range["A6"], "", "A10", "", "跳转到单元格A10");
-                worksheet.Range["A10"].Value = "这里是A10单元格";
-                worksheet.Range["A10"].Interior.Color = Color.Yellow;
+                worksheet.Range("A6").Value = "跳转到A10";
+                worksheet.Hyperlinks.Add(worksheet.Range("A6"), "", "A10", "", "跳转到单元格A10");
+                worksheet.Range("A10").Value = "这里是A10单元格";
+                worksheet.Range("A10").Interior.Color = Color.Yellow;
 
                 // 保存工作簿
                 string fileName = $"Hyperlink_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
@@ -300,18 +300,18 @@ namespace AdvancedFormattingSample
                 worksheet.Name = "注释";
 
                 // 添加标题
-                worksheet.Range["A1"].Value = "注释示例";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 16;
+                worksheet.Range("A1").Value = "注释示例";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 16;
 
                 // 添加带注释的单元格
-                var cellA3 = worksheet.Range["A3"];
+                var cellA3 = worksheet.Range("A3");
                 cellA3.Value = "带注释的单元格";
                 cellA3.AddComment("这是一个单元格注释\n可以包含多行文本\n用于提供额外信息");
                 cellA3.Comment.Visible = true;
 
                 // 添加另一个带注释的单元格
-                var cellB5 = worksheet.Range["B5"];
+                var cellB5 = worksheet.Range("B5");
                 cellB5.Value = "另一个注释";
                 cellB5.AddComment("这是另一个注释\n可以用于解释数据来源或计算方法");
 
@@ -348,12 +348,12 @@ namespace AdvancedFormattingSample
                 worksheet.Name = "合并单元格";
 
                 // 添加标题
-                worksheet.Range["A1"].Value = "合并单元格示例";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 16;
+                worksheet.Range("A1").Value = "合并单元格示例";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 16;
 
                 // 水平合并单元格
-                var horizontalMergeRange = worksheet.Range["A3:E3"];
+                var horizontalMergeRange = worksheet.Range("A3:E3");
                 horizontalMergeRange.Value = "水平合并的单元格";
                 horizontalMergeRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 horizontalMergeRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -361,7 +361,7 @@ namespace AdvancedFormattingSample
                 horizontalMergeRange.Interior.Color = Color.LightBlue;
 
                 // 垂直合并单元格
-                var verticalMergeRange = worksheet.Range["A5:A10"];
+                var verticalMergeRange = worksheet.Range("A5:A10");
                 verticalMergeRange.Value = "垂直合并的单元格";
                 verticalMergeRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 verticalMergeRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -370,7 +370,7 @@ namespace AdvancedFormattingSample
                 verticalMergeRange.Orientation = 90; // 垂直文本
 
                 // 合并后居中
-                var centerMergeRange = worksheet.Range["C5:E10"];
+                var centerMergeRange = worksheet.Range("C5:E10");
                 centerMergeRange.Value = "合并后居中";
                 centerMergeRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 centerMergeRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -378,7 +378,7 @@ namespace AdvancedFormattingSample
                 centerMergeRange.Interior.Color = Color.LightYellow;
 
                 // 取消合并示例
-                var unmergeRange = worksheet.Range["A12:E12"];
+                var unmergeRange = worksheet.Range("A12:E12");
                 unmergeRange.Value = "这是将要被取消合并的区域";
                 unmergeRange.Merge();
                 // 取消合并将在下面操作中完成
@@ -416,30 +416,30 @@ namespace AdvancedFormattingSample
                 worksheet.Name = "综合高级格式化";
 
                 // 创建员工信息表
-                worksheet.Range["A1"].Value = "员工信息录入表";
-                worksheet.Range["A1"].Font.Bold = true;
-                worksheet.Range["A1"].Font.Size = 18;
-                worksheet.Range["A1"].Font.Color = Color.White;
-                worksheet.Range["A1"].Interior.Color = Color.DarkBlue;
-                var titleRange = worksheet.Range["A1:E1"];
+                worksheet.Range("A1").Value = "员工信息录入表";
+                worksheet.Range("A1").Font.Bold = true;
+                worksheet.Range("A1").Font.Size = 18;
+                worksheet.Range("A1").Font.Color = Color.White;
+                worksheet.Range("A1").Interior.Color = Color.DarkBlue;
+                var titleRange = worksheet.Range("A1:E1");
                 titleRange.Merge();
                 titleRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 创建表头
-                worksheet.Range["A2"].Value = "姓名";
-                worksheet.Range["B2"].Value = "部门";
-                worksheet.Range["C2"].Value = "年龄";
-                worksheet.Range["D2"].Value = "工资";
-                worksheet.Range["E2"].Value = "入职日期";
+                worksheet.Range("A2").Value = "姓名";
+                worksheet.Range("B2").Value = "部门";
+                worksheet.Range("C2").Value = "年龄";
+                worksheet.Range("D2").Value = "工资";
+                worksheet.Range("E2").Value = "入职日期";
 
-                var headerRange = worksheet.Range["A2:E2"];
+                var headerRange = worksheet.Range("A2:E2");
                 headerRange.Font.Bold = true;
                 headerRange.Interior.Color = Color.LightGray;
                 headerRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 设置数据验证
                 // 姓名列 - 文本长度限制
-                var nameValidation = worksheet.Range["A3:A20"].Validation;
+                var nameValidation = worksheet.Range("A3:A20").Validation;
                 nameValidation.Add(XlDVType.xlValidateTextLength, XlDVAlertStyle.xlValidAlertStop, "", "20");
                 nameValidation.InputTitle = "姓名输入";
                 nameValidation.InputMessage = "请输入员工姓名（最多20个字符）";
@@ -449,7 +449,7 @@ namespace AdvancedFormattingSample
                 nameValidation.ShowError = true;
 
                 // 部门列 - 列表选择
-                var departmentValidation = worksheet.Range["B3:B20"].Validation;
+                var departmentValidation = worksheet.Range("B3:B20").Validation;
                 departmentValidation.Add(XlDVType.xlValidateList, XlDVAlertStyle.xlValidAlertStop, "技术部,销售部,市场部,人事部,财务部", "");
                 departmentValidation.InputTitle = "部门选择";
                 departmentValidation.InputMessage = "请选择员工所属部门";
@@ -459,7 +459,7 @@ namespace AdvancedFormattingSample
                 departmentValidation.ShowError = true;
 
                 // 年龄列 - 整数范围
-                var ageValidation = worksheet.Range["C3:C20"].Validation;
+                var ageValidation = worksheet.Range("C3:C20").Validation;
                 ageValidation.Add(XlDVType.xlValidateWholeNumber, XlDVAlertStyle.xlValidAlertStop, "18", "65");
                 ageValidation.InputTitle = "年龄输入";
                 ageValidation.InputMessage = "请输入员工年龄（18-65岁）";
@@ -469,7 +469,7 @@ namespace AdvancedFormattingSample
                 ageValidation.ShowError = true;
 
                 // 工资列 - 小数范围
-                var salaryValidation = worksheet.Range["D3:D20"].Validation;
+                var salaryValidation = worksheet.Range("D3:D20").Validation;
                 salaryValidation.Add(XlDVType.xlValidateDecimal, XlDVAlertStyle.xlValidAlertStop, "3000", "100000");
                 salaryValidation.InputTitle = "工资输入";
                 salaryValidation.InputMessage = "请输入员工工资（3000-100000）";
@@ -479,7 +479,7 @@ namespace AdvancedFormattingSample
                 salaryValidation.ShowError = true;
 
                 // 入职日期列 - 日期范围
-                var dateValidation = worksheet.Range["E3:E20"].Validation;
+                var dateValidation = worksheet.Range("E3:E20").Validation;
                 dateValidation.Add(XlDVType.xlValidateDate, XlDVAlertStyle.xlValidAlertStop, "2020/1/1", "2030/12/31");
                 dateValidation.InputTitle = "日期输入";
                 dateValidation.InputMessage = "请输入入职日期（2020-2030年）";
@@ -489,30 +489,30 @@ namespace AdvancedFormattingSample
                 dateValidation.ShowError = true;
 
                 // 添加示例数据
-                worksheet.Range["A3"].Value = "张三";
-                worksheet.Range["B3"].Value = "技术部";
-                worksheet.Range["C3"].Value = 28;
-                worksheet.Range["D3"].Value = 12000;
-                worksheet.Range["E3"].Value = DateTime.Now.AddYears(-2);
+                worksheet.Range("A3").Value = "张三";
+                worksheet.Range("B3").Value = "技术部";
+                worksheet.Range("C3").Value = 28;
+                worksheet.Range("D3").Value = 12000;
+                worksheet.Range("E3").Value = DateTime.Now.AddYears(-2);
 
-                worksheet.Range["A4"].Value = "李四";
-                worksheet.Range["B4"].Value = "销售部";
-                worksheet.Range["C4"].Value = 32;
-                worksheet.Range["D4"].Value = 15000;
-                worksheet.Range["E4"].Value = DateTime.Now.AddYears(-1);
+                worksheet.Range("A4").Value = "李四";
+                worksheet.Range("B4").Value = "销售部";
+                worksheet.Range("C4").Value = 32;
+                worksheet.Range("D4").Value = 15000;
+                worksheet.Range("E4").Value = DateTime.Now.AddYears(-1);
 
                 // 设置数字格式
-                worksheet.Range["C3:C20"].NumberFormat = "0"; // 年龄
-                worksheet.Range["D3:D20"].NumberFormat = "¥#,##0.00"; // 工资
-                worksheet.Range["E3:E20"].NumberFormat = "yyyy-mm-dd"; // 日期
+                worksheet.Range("C3:C20").NumberFormat = "0"; // 年龄
+                worksheet.Range("D3:D20").NumberFormat = "¥#,##0.00"; // 工资
+                worksheet.Range("E3:E20").NumberFormat = "yyyy-mm-dd"; // 日期
 
                 // 添加超链接到说明文档
-                worksheet.Range["A20"].Value = "填写说明";
-                worksheet.Hyperlinks.Add(worksheet.Range["A20"], "https://www.example.com/guide", "", "", "点击查看填写说明");
+                worksheet.Range("A20").Value = "填写说明";
+                worksheet.Hyperlinks.Add(worksheet.Range("A20"), "https://www.example.com/guide", "", "", "点击查看填写说明");
 
                 // 添加注释
-                worksheet.Range["C2"].AddComment("年龄必须在18-65岁之间");
-                worksheet.Range["D2"].AddComment("工资单位为人民币元");
+                worksheet.Range("C2").AddComment("年龄必须在18-65岁之间");
+                worksheet.Range("D2").AddComment("工资单位为人民币元");
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

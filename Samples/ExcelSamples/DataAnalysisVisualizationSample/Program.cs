@@ -68,10 +68,10 @@ namespace DataAnalysisVisualizationSample
                 worksheet.Name = "描述性统计";
 
                 // 创建销售数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "销售额";
-                worksheet.Range["C1"].Value = "成本";
-                worksheet.Range["D1"].Value = "利润";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "销售额";
+                worksheet.Range("C1").Value = "成本";
+                worksheet.Range("D1").Value = "利润";
 
                 object[,] salesData = {
                     {"1月", 100000, 70000, 30000},
@@ -88,93 +88,93 @@ namespace DataAnalysisVisualizationSample
                     {"12月", 220000, 130000, 90000}
                 };
 
-                var dataRange = worksheet.Range["A2:D13"];
+                var dataRange = worksheet.Range("A2:D13");
                 dataRange.Value = salesData;
 
                 // 计算描述性统计
                 // 销售额统计
-                worksheet.Range["F1"].Value = "销售额统计";
-                worksheet.Range["F1"].Font.Bold = true;
-                worksheet.Range["F1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("F1").Value = "销售额统计";
+                worksheet.Range("F1").Font.Bold = true;
+                worksheet.Range("F1").Interior.Color = Color.LightBlue;
 
-                worksheet.Range["F2"].Value = "总和";
-                worksheet.Range["G2"].Formula = "=SUM(B2:B13)";
+                worksheet.Range("F2").Value = "总和";
+                worksheet.Range("G2").Formula = "=SUM(B2:B13)";
 
-                worksheet.Range["F3"].Value = "平均值";
-                worksheet.Range["G3"].Formula = "=AVERAGE(B2:B13)";
+                worksheet.Range("F3").Value = "平均值";
+                worksheet.Range("G3").Formula = "=AVERAGE(B2:B13)";
 
-                worksheet.Range["F4"].Value = "中位数";
-                worksheet.Range["G4"].Formula = "=MEDIAN(B2:B13)";
+                worksheet.Range("F4").Value = "中位数";
+                worksheet.Range("G4").Formula = "=MEDIAN(B2:B13)";
 
-                worksheet.Range["F5"].Value = "最大值";
-                worksheet.Range["G5"].Formula = "=MAX(B2:B13)";
+                worksheet.Range("F5").Value = "最大值";
+                worksheet.Range("G5").Formula = "=MAX(B2:B13)";
 
-                worksheet.Range["F6"].Value = "最小值";
-                worksheet.Range["G6"].Formula = "=MIN(B2:B13)";
+                worksheet.Range("F6").Value = "最小值";
+                worksheet.Range("G6").Formula = "=MIN(B2:B13)";
 
-                worksheet.Range["F7"].Value = "标准差";
-                worksheet.Range["G7"].Formula = "=STDEV(B2:B13)";
+                worksheet.Range("F7").Value = "标准差";
+                worksheet.Range("G7").Formula = "=STDEV(B2:B13)";
 
-                worksheet.Range["F8"].Value = "方差";
-                worksheet.Range["G8"].Formula = "=VAR(B2:B13)";
+                worksheet.Range("F8").Value = "方差";
+                worksheet.Range("G8").Formula = "=VAR(B2:B13)";
 
                 // 成本统计
-                worksheet.Range["I1"].Value = "成本统计";
-                worksheet.Range["I1"].Font.Bold = true;
-                worksheet.Range["I1"].Interior.Color = Color.LightGreen;
+                worksheet.Range("I1").Value = "成本统计";
+                worksheet.Range("I1").Font.Bold = true;
+                worksheet.Range("I1").Interior.Color = Color.LightGreen;
 
-                worksheet.Range["I2"].Value = "总和";
-                worksheet.Range["J2"].Formula = "=SUM(C2:C13)";
+                worksheet.Range("I2").Value = "总和";
+                worksheet.Range("J2").Formula = "=SUM(C2:C13)";
 
-                worksheet.Range["I3"].Value = "平均值";
-                worksheet.Range["J3"].Formula = "=AVERAGE(C2:C13)";
+                worksheet.Range("I3").Value = "平均值";
+                worksheet.Range("J3").Formula = "=AVERAGE(C2:C13)";
 
-                worksheet.Range["I4"].Value = "中位数";
-                worksheet.Range["J4"].Formula = "=MEDIAN(C2:C13)";
+                worksheet.Range("I4").Value = "中位数";
+                worksheet.Range("J4").Formula = "=MEDIAN(C2:C13)";
 
-                worksheet.Range["I5"].Value = "最大值";
-                worksheet.Range["J5"].Formula = "=MAX(C2:C13)";
+                worksheet.Range("I5").Value = "最大值";
+                worksheet.Range("J5").Formula = "=MAX(C2:C13)";
 
-                worksheet.Range["I6"].Value = "最小值";
-                worksheet.Range["J6"].Formula = "=MIN(C2:C13)";
+                worksheet.Range("I6").Value = "最小值";
+                worksheet.Range("J6").Formula = "=MIN(C2:C13)";
 
-                worksheet.Range["I7"].Value = "标准差";
-                worksheet.Range["J7"].Formula = "=STDEV(C2:C13)";
+                worksheet.Range("I7").Value = "标准差";
+                worksheet.Range("J7").Formula = "=STDEV(C2:C13)";
 
-                worksheet.Range["I8"].Value = "方差";
-                worksheet.Range["J8"].Formula = "=VAR(C2:C13)";
+                worksheet.Range("I8").Value = "方差";
+                worksheet.Range("J8").Formula = "=VAR(C2:C13)";
 
                 // 利润统计
-                worksheet.Range["L1"].Value = "利润统计";
-                worksheet.Range["L1"].Font.Bold = true;
-                worksheet.Range["L1"].Interior.Color = Color.LightYellow;
+                worksheet.Range("L1").Value = "利润统计";
+                worksheet.Range("L1").Font.Bold = true;
+                worksheet.Range("L1").Interior.Color = Color.LightYellow;
 
-                worksheet.Range["L2"].Value = "总和";
-                worksheet.Range["M2"].Formula = "=SUM(D2:D13)";
+                worksheet.Range("L2").Value = "总和";
+                worksheet.Range("M2").Formula = "=SUM(D2:D13)";
 
-                worksheet.Range["L3"].Value = "平均值";
-                worksheet.Range["M3"].Formula = "=AVERAGE(D2:D13)";
+                worksheet.Range("L3").Value = "平均值";
+                worksheet.Range("M3").Formula = "=AVERAGE(D2:D13)";
 
-                worksheet.Range["L4"].Value = "中位数";
-                worksheet.Range["M4"].Formula = "=MEDIAN(D2:D13)";
+                worksheet.Range("L4").Value = "中位数";
+                worksheet.Range("M4").Formula = "=MEDIAN(D2:D13)";
 
-                worksheet.Range["L5"].Value = "最大值";
-                worksheet.Range["M5"].Formula = "=MAX(D2:D13)";
+                worksheet.Range("L5").Value = "最大值";
+                worksheet.Range("M5").Formula = "=MAX(D2:D13)";
 
-                worksheet.Range["L6"].Value = "最小值";
-                worksheet.Range["M6"].Formula = "=MIN(D2:D13)";
+                worksheet.Range("L6").Value = "最小值";
+                worksheet.Range("M6").Formula = "=MIN(D2:D13)";
 
-                worksheet.Range["L7"].Value = "标准差";
-                worksheet.Range["M7"].Formula = "=STDEV(D2:D13)";
+                worksheet.Range("L7").Value = "标准差";
+                worksheet.Range("M7").Formula = "=STDEV(D2:D13)";
 
-                worksheet.Range["L8"].Value = "方差";
-                worksheet.Range["M8"].Formula = "=VAR(D2:D13)";
+                worksheet.Range("L8").Value = "方差";
+                worksheet.Range("M8").Formula = "=VAR(D2:D13)";
 
                 // 设置数字格式
-                worksheet.Range["B2:D13"].NumberFormat = "¥#,##0";
-                worksheet.Range["G2:G8"].NumberFormat = "¥#,##0";
-                worksheet.Range["J2:J8"].NumberFormat = "¥#,##0";
-                worksheet.Range["M2:M8"].NumberFormat = "¥#,##0";
+                worksheet.Range("B2:D13").NumberFormat = "¥#,##0";
+                worksheet.Range("G2:G8").NumberFormat = "¥#,##0";
+                worksheet.Range("J2:J8").NumberFormat = "¥#,##0";
+                worksheet.Range("M2:M8").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -212,9 +212,9 @@ namespace DataAnalysisVisualizationSample
                 worksheet.Name = "趋势分析";
 
                 // 创建月度销售数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "销售额";
-                worksheet.Range["C1"].Value = "移动平均";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "销售额";
+                worksheet.Range("C1").Value = "移动平均";
 
                 object[,] monthlyData = {
                     {"1月", 100000},
@@ -231,13 +231,13 @@ namespace DataAnalysisVisualizationSample
                     {"12月", 220000}
                 };
 
-                var dataRange = worksheet.Range["A2:B13"];
+                var dataRange = worksheet.Range("A2:B13");
                 dataRange.Value = monthlyData;
 
                 // 计算3个月移动平均
                 for (int i = 4; i <= 13; i++)
                 {
-                    worksheet.Range[$"C{i}"].Formula = $"=AVERAGE(B{i - 2}:B{i})";
+                    worksheet.Range($"C{i}").Formula = $"=AVERAGE(B{i - 2}:B{i})";
                 }
 
                 // 添加趋势线分析
@@ -249,7 +249,7 @@ namespace DataAnalysisVisualizationSample
                 chart.ChartType = MsoChartType.xlLine;
 
                 // 设置数据源
-                chart.SetSourceData(worksheet.Range["A1:C13"]);
+                chart.SetSourceData(worksheet.Range("A1:C13"));
 
                 // 设置标题
                 chart.HasTitle = true;
@@ -260,7 +260,7 @@ namespace DataAnalysisVisualizationSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 添加趋势线
-                var series = chart.SeriesCollection().Item(1);
+                var series = chart.SeriesCollection()[1];
                 var trendline = series.Trendlines().Add(XlTrendlineType.xlLinear);
                 trendline.DisplayEquation = true;
                 trendline.DisplayRSquared = true;
@@ -273,8 +273,8 @@ namespace DataAnalysisVisualizationSample
                 chart.Axes(XlAxisType.xlValue).AxisTitle.Text = "销售额";
 
                 // 设置数字格式
-                worksheet.Range["B2:B13"].NumberFormat = "¥#,##0";
-                worksheet.Range["C4:C13"].NumberFormat = "¥#,##0";
+                worksheet.Range("B2:B13").NumberFormat = "¥#,##0";
+                worksheet.Range("C4:C13").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -312,10 +312,10 @@ namespace DataAnalysisVisualizationSample
                 worksheet.Name = "相关性分析";
 
                 // 创建广告投入与销售额数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "广告投入";
-                worksheet.Range["C1"].Value = "销售额";
-                worksheet.Range["D1"].Value = "网站访问量";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "广告投入";
+                worksheet.Range("C1").Value = "销售额";
+                worksheet.Range("D1").Value = "网站访问量";
 
                 object[,] advertisingData = {
                     {"1月", 5000, 100000, 10000},
@@ -332,35 +332,35 @@ namespace DataAnalysisVisualizationSample
                     {"12月", 11000, 220000, 22000}
                 };
 
-                var dataRange = worksheet.Range["A2:D13"];
+                var dataRange = worksheet.Range("A2:D13");
                 dataRange.Value = advertisingData;
 
                 // 计算相关系数
-                worksheet.Range["F1"].Value = "相关性分析";
-                worksheet.Range["F1"].Font.Bold = true;
-                worksheet.Range["F1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("F1").Value = "相关性分析";
+                worksheet.Range("F1").Font.Bold = true;
+                worksheet.Range("F1").Interior.Color = Color.LightBlue;
 
-                worksheet.Range["F2"].Value = "变量";
-                worksheet.Range["G2"].Value = "广告投入";
-                worksheet.Range["H2"].Value = "销售额";
-                worksheet.Range["I2"].Value = "网站访问量";
+                worksheet.Range("F2").Value = "变量";
+                worksheet.Range("G2").Value = "广告投入";
+                worksheet.Range("H2").Value = "销售额";
+                worksheet.Range("I2").Value = "网站访问量";
 
-                worksheet.Range["F3"].Value = "广告投入";
-                worksheet.Range["F4"].Value = "销售额";
-                worksheet.Range["F5"].Value = "网站访问量";
+                worksheet.Range("F3").Value = "广告投入";
+                worksheet.Range("F4").Value = "销售额";
+                worksheet.Range("F5").Value = "网站访问量";
 
                 // 计算相关系数矩阵
-                worksheet.Range["G3"].Formula = "=CORREL(B2:B13,B2:B13)"; // 广告投入与广告投入
-                worksheet.Range["H3"].Formula = "=CORREL(B2:B13,C2:C13)"; // 广告投入与销售额
-                worksheet.Range["I3"].Formula = "=CORREL(B2:B13,D2:D13)"; // 广告投入与网站访问量
+                worksheet.Range("G3").Formula = "=CORREL(B2:B13,B2:B13)"; // 广告投入与广告投入
+                worksheet.Range("H3").Formula = "=CORREL(B2:B13,C2:C13)"; // 广告投入与销售额
+                worksheet.Range("I3").Formula = "=CORREL(B2:B13,D2:D13)"; // 广告投入与网站访问量
 
-                worksheet.Range["G4"].Formula = "=CORREL(C2:C13,B2:B13)"; // 销售额与广告投入
-                worksheet.Range["H4"].Formula = "=CORREL(C2:C13,C2:C13)"; // 销售额与销售额
-                worksheet.Range["I4"].Formula = "=CORREL(C2:C13,D2:D13)"; // 销售额与网站访问量
+                worksheet.Range("G4").Formula = "=CORREL(C2:C13,B2:B13)"; // 销售额与广告投入
+                worksheet.Range("H4").Formula = "=CORREL(C2:C13,C2:C13)"; // 销售额与销售额
+                worksheet.Range("I4").Formula = "=CORREL(C2:C13,D2:D13)"; // 销售额与网站访问量
 
-                worksheet.Range["G5"].Formula = "=CORREL(D2:D13,B2:B13)"; // 网站访问量与广告投入
-                worksheet.Range["H5"].Formula = "=CORREL(D2:D13,C2:C13)"; // 网站访问量与销售额
-                worksheet.Range["I5"].Formula = "=CORREL(D2:D13,D2:D13)"; // 网站访问量与网站访问量
+                worksheet.Range("G5").Formula = "=CORREL(D2:D13,B2:B13)"; // 网站访问量与广告投入
+                worksheet.Range("H5").Formula = "=CORREL(D2:D13,C2:C13)"; // 网站访问量与销售额
+                worksheet.Range("I5").Formula = "=CORREL(D2:D13,D2:D13)"; // 网站访问量与网站访问量
 
                 // 创建散点图分析广告投入与销售额的关系
                 var scatterChartObject = worksheet.ChartObjects().Add(300, 50, 500, 350);
@@ -370,7 +370,7 @@ namespace DataAnalysisVisualizationSample
                 scatterChart.ChartType = MsoChartType.xlXYScatter;
 
                 // 设置数据源（广告投入和销售额）
-                scatterChart.SetSourceData(worksheet.Range["B1:C13"]);
+                scatterChart.SetSourceData(worksheet.Range("B1:C13"));
 
                 // 设置标题
                 scatterChart.HasTitle = true;
@@ -380,7 +380,7 @@ namespace DataAnalysisVisualizationSample
                 scatterChart.HasLegend = false;
 
                 // 添加趋势线
-                var scatterSeries = scatterChart.SeriesCollection().Item(1);
+                var scatterSeries = scatterChart.SeriesCollection()[1];
                 var scatterTrendline = scatterSeries.Trendlines().Add(XlTrendlineType.xlLinear);
                 scatterTrendline.DisplayEquation = true;
                 scatterTrendline.DisplayRSquared = true;
@@ -393,10 +393,10 @@ namespace DataAnalysisVisualizationSample
                 scatterChart.Axes(XlAxisType.xlValue).AxisTitle.Text = "销售额";
 
                 // 设置数字格式
-                worksheet.Range["B2:B13"].NumberFormat = "¥#,##0";
-                worksheet.Range["C2:C13"].NumberFormat = "¥#,##0";
-                worksheet.Range["D2:D13"].NumberFormat = "0";
-                worksheet.Range["G3:I5"].NumberFormat = "0.000";
+                worksheet.Range("B2:B13").NumberFormat = "¥#,##0";
+                worksheet.Range("C2:C13").NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D13").NumberFormat = "0";
+                worksheet.Range("G3:I5").NumberFormat = "0.000";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -434,8 +434,8 @@ namespace DataAnalysisVisualizationSample
                 worksheet.Name = "频率分布";
 
                 // 创建销售数据
-                worksheet.Range["A1"].Value = "销售员";
-                worksheet.Range["B1"].Value = "销售额";
+                worksheet.Range("A1").Value = "销售员";
+                worksheet.Range("B1").Value = "销售额";
 
                 object[,] salesData = {
                     {"张三", 120000},
@@ -460,15 +460,15 @@ namespace DataAnalysisVisualizationSample
                     {"王二", 175000}
                 };
 
-                var dataRange = worksheet.Range["A2:B21"];
+                var dataRange = worksheet.Range("A2:B21");
                 dataRange.Value = salesData;
 
                 // 创建频率分布区间
-                worksheet.Range["D1"].Value = "区间下限";
-                worksheet.Range["E1"].Value = "区间上限";
-                worksheet.Range["F1"].Value = "区间标签";
-                worksheet.Range["G1"].Value = "频数";
-                worksheet.Range["H1"].Value = "频率";
+                worksheet.Range("D1").Value = "区间下限";
+                worksheet.Range("E1").Value = "区间上限";
+                worksheet.Range("F1").Value = "区间标签";
+                worksheet.Range("G1").Value = "频数";
+                worksheet.Range("H1").Value = "频率";
 
                 // 定义区间
                 int[] lowerBounds = { 80000, 100000, 120000, 140000, 160000, 180000, 200000 };
@@ -477,23 +477,23 @@ namespace DataAnalysisVisualizationSample
 
                 for (int i = 0; i < lowerBounds.Length; i++)
                 {
-                    worksheet.Range[$"D{i + 2}"].Value = lowerBounds[i];
-                    worksheet.Range[$"E{i + 2}"].Value = upperBounds[i];
-                    worksheet.Range[$"F{i + 2}"].Value = labels[i];
+                    worksheet.Range($"D{i + 2}").Value = lowerBounds[i];
+                    worksheet.Range($"E{i + 2}").Value = upperBounds[i];
+                    worksheet.Range($"F{i + 2}").Value = labels[i];
                 }
 
                 // 计算频数
                 for (int i = 0; i < lowerBounds.Length; i++)
                 {
-                    worksheet.Range[$"G{i + 2}"].Formula =
+                    worksheet.Range($"G{i + 2}").Formula =
                         $"=COUNTIFS(B2:B21,\">={lowerBounds[i]}\",B2:B21,\"<={upperBounds[i]}\")";
                 }
 
                 // 计算频率
-                worksheet.Range["H2"].Formula = $"=G2/COUNT(B2:B21)";
+                worksheet.Range("H2").Formula = $"=G2/COUNT(B2:B21)";
                 for (int i = 1; i < lowerBounds.Length; i++)
                 {
-                    worksheet.Range[$"H{i + 2}"].Formula = $"=G{i + 2}/COUNT(B2:B21)";
+                    worksheet.Range($"H{i + 2}").Formula = $"=G{i + 2}/COUNT(B2:B21)";
                 }
 
                 // 创建频率分布直方图
@@ -504,7 +504,7 @@ namespace DataAnalysisVisualizationSample
                 histogramChart.ChartType = MsoChartType.xlColumnClustered;
 
                 // 设置数据源
-                histogramChart.SetSourceData(worksheet.Range["F1:G8"]);
+                histogramChart.SetSourceData(worksheet.Range("F1:G8"));
 
                 // 设置标题
                 histogramChart.HasTitle = true;
@@ -521,8 +521,8 @@ namespace DataAnalysisVisualizationSample
                 histogramChart.Axes(XlAxisType.xlValue).AxisTitle.Text = "频数";
 
                 // 设置数字格式
-                worksheet.Range["B2:B21"].NumberFormat = "¥#,##0";
-                worksheet.Range["H2:H8"].NumberFormat = "0.00%";
+                worksheet.Range("B2:B21").NumberFormat = "¥#,##0";
+                worksheet.Range("H2:H8").NumberFormat = "0.00%";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -560,10 +560,10 @@ namespace DataAnalysisVisualizationSample
                 worksheet.Name = "数据可视化";
 
                 // 创建产品销售数据
-                worksheet.Range["A1"].Value = "产品类别";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售额";
-                worksheet.Range["D1"].Value = "市场份额";
+                worksheet.Range("A1").Value = "产品类别";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售额";
+                worksheet.Range("D1").Value = "市场份额";
 
                 object[,] productData = {
                     {"电子产品", "笔记本电脑", 500000, 0.3},
@@ -576,7 +576,7 @@ namespace DataAnalysisVisualizationSample
                     {"服装", "牛仔裤", 70000, 0.03}
                 };
 
-                var dataRange = worksheet.Range["A2:D9"];
+                var dataRange = worksheet.Range("A2:D9");
                 dataRange.Value = productData;
 
                 // 创建柱形图
@@ -587,7 +587,7 @@ namespace DataAnalysisVisualizationSample
                 columnChart.ChartType = MsoChartType.xlColumnClustered;
 
                 // 设置数据源
-                columnChart.SetSourceData(worksheet.Range["A1:C9"]);
+                columnChart.SetSourceData(worksheet.Range("A1:C9"));
 
                 // 设置标题
                 columnChart.HasTitle = true;
@@ -612,7 +612,7 @@ namespace DataAnalysisVisualizationSample
                 pieChart.ChartType = MsoChartType.xlPie;
 
                 // 设置数据源
-                pieChart.SetSourceData(worksheet.Range["A1:A9,C1:C9"]);
+                pieChart.SetSourceData(worksheet.Range("A1:A9,C1:C9"));
 
                 // 设置标题
                 pieChart.HasTitle = true;
@@ -629,13 +629,13 @@ namespace DataAnalysisVisualizationSample
                 pieSeries.DataLabels().ShowPercentage = true;
 
                 // 创建组合图表（柱形图+折线图）
-                var comboWorksheet = workbook.Worksheets.Add();
+                var comboWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 comboWorksheet.Name = "组合图表";
 
                 // 复制数据到新工作表
-                comboWorksheet.Range["A1"].Value = "月份";
-                comboWorksheet.Range["B1"].Value = "销售额";
-                comboWorksheet.Range["C1"].Value = "增长率";
+                comboWorksheet.Range("A1").Value = "月份";
+                comboWorksheet.Range("B1").Value = "销售额";
+                comboWorksheet.Range("C1").Value = "增长率";
 
                 object[,] monthlyData = {
                     {"1月", 100000, 0.05},
@@ -652,7 +652,7 @@ namespace DataAnalysisVisualizationSample
                     {"12月", 220000, 0.0476}
                 };
 
-                var comboDataRange = comboWorksheet.Range["A2:C13"];
+                var comboDataRange = comboWorksheet.Range("A2:C13");
                 comboDataRange.Value = monthlyData;
 
                 // 创建组合图表对象
@@ -663,7 +663,7 @@ namespace DataAnalysisVisualizationSample
                 comboChart.ChartType = MsoChartType.xlColumnClustered;
 
                 // 设置数据源
-                comboChart.SetSourceData(comboWorksheet.Range["A1:C13"]);
+                comboChart.SetSourceData(comboWorksheet.Range("A1:C13"));
 
                 // 设置标题
                 comboChart.HasTitle = true;
@@ -691,11 +691,11 @@ namespace DataAnalysisVisualizationSample
                 comboChart.Axes(XlAxisType.xlValue, XlAxisGroup.xlSecondary).AxisTitle.Text = "增长率";
 
                 // 设置数字格式
-                worksheet.Range["C2:C9"].NumberFormat = "¥#,##0";
-                worksheet.Range["D2:D9"].NumberFormat = "0.00%";
+                worksheet.Range("C2:C9").NumberFormat = "¥#,##0";
+                worksheet.Range("D2:D9").NumberFormat = "0.00%";
 
-                comboWorksheet.Range["B2:B13"].NumberFormat = "¥#,##0";
-                comboWorksheet.Range["C2:C13"].NumberFormat = "0.00%";
+                comboWorksheet.Range("B2:B13").NumberFormat = "¥#,##0";
+                comboWorksheet.Range("C2:C13").NumberFormat = "0.00%";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -732,18 +732,18 @@ namespace DataAnalysisVisualizationSample
                 var workbook = excelApp.ActiveWorkbook;
 
                 // 创建数据源工作表
-                var dataWorksheet = workbook.Worksheets.Add();
+                var dataWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 dataWorksheet.Name = "原始数据";
 
                 // 创建销售数据
-                dataWorksheet.Range["A1"].Value = "日期";
-                dataWorksheet.Range["B1"].Value = "产品类别";
-                dataWorksheet.Range["C1"].Value = "产品名称";
-                dataWorksheet.Range["D1"].Value = "销售地区";
-                dataWorksheet.Range["E1"].Value = "销售人员";
-                dataWorksheet.Range["F1"].Value = "销售数量";
-                dataWorksheet.Range["G1"].Value = "单价";
-                dataWorksheet.Range["H1"].Value = "销售额";
+                dataWorksheet.Range("A1").Value = "日期";
+                dataWorksheet.Range("B1").Value = "产品类别";
+                dataWorksheet.Range("C1").Value = "产品名称";
+                dataWorksheet.Range("D1").Value = "销售地区";
+                dataWorksheet.Range("E1").Value = "销售人员";
+                dataWorksheet.Range("F1").Value = "销售数量";
+                dataWorksheet.Range("G1").Value = "单价";
+                dataWorksheet.Range("H1").Value = "销售额";
 
                 object[,] salesData = {
                     {"2023-01-01", "电子产品", "笔记本电脑", "北京", "张三", 2, 50000, 100000},
@@ -763,84 +763,84 @@ namespace DataAnalysisVisualizationSample
                     {"2023-02-05", "电子产品", "台式电脑", "广州", "王五", 2, 80000, 160000}
                 };
 
-                var dataRange = dataWorksheet.Range["A2:H16"];
+                var dataRange = dataWorksheet.Range("A2:H16");
                 dataRange.Value = salesData;
 
                 // 创建汇总分析工作表
-                var summaryWorksheet = workbook.Worksheets.Add();
+                var summaryWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 summaryWorksheet.Name = "汇总分析";
 
                 // 汇总统计
-                summaryWorksheet.Range["A1"].Value = "销售数据分析报告";
-                summaryWorksheet.Range["A1"].Font.Bold = true;
-                summaryWorksheet.Range["A1"].Font.Size = 16;
-                summaryWorksheet.Range["A1"].Interior.Color = Color.DarkBlue;
-                summaryWorksheet.Range["A1"].Font.Color = Color.White;
-                var titleRange = summaryWorksheet.Range["A1:E1"];
+                summaryWorksheet.Range("A1").Value = "销售数据分析报告";
+                summaryWorksheet.Range("A1").Font.Bold = true;
+                summaryWorksheet.Range("A1").Font.Size = 16;
+                summaryWorksheet.Range("A1").Interior.Color = Color.DarkBlue;
+                summaryWorksheet.Range("A1").Font.Color = Color.White;
+                var titleRange = summaryWorksheet.Range("A1:E1");
                 titleRange.Merge();
                 titleRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
-                summaryWorksheet.Range["A3"].Value = "总体统计";
-                summaryWorksheet.Range["A3"].Font.Bold = true;
-                summaryWorksheet.Range["A3"].Interior.Color = Color.LightBlue;
+                summaryWorksheet.Range("A3").Value = "总体统计";
+                summaryWorksheet.Range("A3").Font.Bold = true;
+                summaryWorksheet.Range("A3").Interior.Color = Color.LightBlue;
 
-                summaryWorksheet.Range["A4"].Value = "总销售额";
-                summaryWorksheet.Range["B4"].Formula = "=SUM(原始数据!H2:H16)";
+                summaryWorksheet.Range("A4").Value = "总销售额";
+                summaryWorksheet.Range("B4").Formula = "=SUM(原始数据!H2:H16)";
 
-                summaryWorksheet.Range["A5"].Value = "总销售数量";
-                summaryWorksheet.Range["B5"].Formula = "=SUM(原始数据!F2:F16)";
+                summaryWorksheet.Range("A5").Value = "总销售数量";
+                summaryWorksheet.Range("B5").Formula = "=SUM(原始数据!F2:F16)";
 
-                summaryWorksheet.Range["A6"].Value = "平均单价";
-                summaryWorksheet.Range["B6"].Formula = "=AVERAGE(原始数据!G2:G16)";
+                summaryWorksheet.Range("A6").Value = "平均单价";
+                summaryWorksheet.Range("B6").Formula = "=AVERAGE(原始数据!G2:G16)";
 
-                summaryWorksheet.Range["A7"].Value = "销售记录数";
-                summaryWorksheet.Range["B7"].Formula = "=COUNT(原始数据!A2:A16)";
+                summaryWorksheet.Range("A7").Value = "销售记录数";
+                summaryWorksheet.Range("B7").Formula = "=COUNT(原始数据!A2:A16)";
 
                 // 按产品类别汇总
-                summaryWorksheet.Range["A9"].Value = "按产品类别汇总";
-                summaryWorksheet.Range["A9"].Font.Bold = true;
-                summaryWorksheet.Range["A9"].Interior.Color = Color.LightGreen;
+                summaryWorksheet.Range("A9").Value = "按产品类别汇总";
+                summaryWorksheet.Range("A9").Font.Bold = true;
+                summaryWorksheet.Range("A9").Interior.Color = Color.LightGreen;
 
-                summaryWorksheet.Range["A10"].Value = "产品类别";
-                summaryWorksheet.Range["B10"].Value = "销售额";
-                summaryWorksheet.Range["C10"].Value = "占比";
+                summaryWorksheet.Range("A10").Value = "产品类别";
+                summaryWorksheet.Range("B10").Value = "销售额";
+                summaryWorksheet.Range("C10").Value = "占比";
 
-                summaryWorksheet.Range["A11"].Value = "电子产品";
-                summaryWorksheet.Range["B11"].Formula = "=SUMIF(原始数据!B2:B16,\"电子产品\",原始数据!H2:H16)";
-                summaryWorksheet.Range["C11"].Formula = "=B11/B4";
+                summaryWorksheet.Range("A11").Value = "电子产品";
+                summaryWorksheet.Range("B11").Formula = "=SUMIF(原始数据!B2:B16,\"电子产品\",原始数据!H2:H16)";
+                summaryWorksheet.Range("C11").Formula = "=B11/B4";
 
-                summaryWorksheet.Range["A12"].Value = "家居用品";
-                summaryWorksheet.Range["B12"].Formula = "=SUMIF(原始数据!B2:B16,\"家居用品\",原始数据!H2:H16)";
-                summaryWorksheet.Range["C12"].Formula = "=B12/B4";
+                summaryWorksheet.Range("A12").Value = "家居用品";
+                summaryWorksheet.Range("B12").Formula = "=SUMIF(原始数据!B2:B16,\"家居用品\",原始数据!H2:H16)";
+                summaryWorksheet.Range("C12").Formula = "=B12/B4";
 
-                summaryWorksheet.Range["A13"].Value = "服装";
-                summaryWorksheet.Range["B13"].Formula = "=SUMIF(原始数据!B2:B16,\"服装\",原始数据!H2:H16)";
-                summaryWorksheet.Range["C13"].Formula = "=B13/B4";
+                summaryWorksheet.Range("A13").Value = "服装";
+                summaryWorksheet.Range("B13").Formula = "=SUMIF(原始数据!B2:B16,\"服装\",原始数据!H2:H16)";
+                summaryWorksheet.Range("C13").Formula = "=B13/B4";
 
                 // 按销售地区汇总
-                summaryWorksheet.Range["A15"].Value = "按销售地区汇总";
-                summaryWorksheet.Range["A15"].Font.Bold = true;
-                summaryWorksheet.Range["A15"].Interior.Color = Color.LightYellow;
+                summaryWorksheet.Range("A15").Value = "按销售地区汇总";
+                summaryWorksheet.Range("A15").Font.Bold = true;
+                summaryWorksheet.Range("A15").Interior.Color = Color.LightYellow;
 
-                summaryWorksheet.Range["A16"].Value = "销售地区";
-                summaryWorksheet.Range["B16"].Value = "销售额";
-                summaryWorksheet.Range["C16"].Value = "占比";
+                summaryWorksheet.Range("A16").Value = "销售地区";
+                summaryWorksheet.Range("B16").Value = "销售额";
+                summaryWorksheet.Range("C16").Value = "占比";
 
-                summaryWorksheet.Range["A17"].Value = "北京";
-                summaryWorksheet.Range["B17"].Formula = "=SUMIF(原始数据!D2:D16,\"北京\",原始数据!H2:H16)";
-                summaryWorksheet.Range["C17"].Formula = "=B17/B4";
+                summaryWorksheet.Range("A17").Value = "北京";
+                summaryWorksheet.Range("B17").Formula = "=SUMIF(原始数据!D2:D16,\"北京\",原始数据!H2:H16)";
+                summaryWorksheet.Range("C17").Formula = "=B17/B4";
 
-                summaryWorksheet.Range["A18"].Value = "上海";
-                summaryWorksheet.Range["B18"].Formula = "=SUMIF(原始数据!D2:D16,\"上海\",原始数据!H2:H16)";
-                summaryWorksheet.Range["C18"].Formula = "=B18/B4";
+                summaryWorksheet.Range("A18").Value = "上海";
+                summaryWorksheet.Range("B18").Formula = "=SUMIF(原始数据!D2:D16,\"上海\",原始数据!H2:H16)";
+                summaryWorksheet.Range("C18").Formula = "=B18/B4";
 
-                summaryWorksheet.Range["A19"].Value = "广州";
-                summaryWorksheet.Range["B19"].Formula = "=SUMIF(原始数据!D2:D16,\"广州\",原始数据!H2:H16)";
-                summaryWorksheet.Range["C19"].Formula = "=B19/B4";
+                summaryWorksheet.Range("A19").Value = "广州";
+                summaryWorksheet.Range("B19").Formula = "=SUMIF(原始数据!D2:D16,\"广州\",原始数据!H2:H16)";
+                summaryWorksheet.Range("C19").Formula = "=B19/B4";
 
-                summaryWorksheet.Range["A20"].Value = "深圳";
-                summaryWorksheet.Range["B20"].Formula = "=SUMIF(原始数据!D2:D16,\"深圳\",原始数据!H2:H16)";
-                summaryWorksheet.Range["C20"].Formula = "=B20/B4";
+                summaryWorksheet.Range("A20").Value = "深圳";
+                summaryWorksheet.Range("B20").Formula = "=SUMIF(原始数据!D2:D16,\"深圳\",原始数据!H2:H16)";
+                summaryWorksheet.Range("C20").Formula = "=B20/B4";
 
                 // 创建图表
                 // 产品类别销售额饼图
@@ -848,7 +848,7 @@ namespace DataAnalysisVisualizationSample
                 var categoryChart = categoryChartObject.Chart;
 
                 categoryChart.ChartType = MsoChartType.xlPie;
-                categoryChart.SetSourceData(summaryWorksheet.Range["A11:B13"]);
+                categoryChart.SetSourceData(summaryWorksheet.Range("A11:B13"));
                 categoryChart.HasTitle = true;
                 categoryChart.ChartTitle.Text = "按产品类别销售额分布";
                 categoryChart.HasLegend = true;
@@ -863,7 +863,7 @@ namespace DataAnalysisVisualizationSample
                 var regionChart = regionChartObject.Chart;
 
                 regionChart.ChartType = MsoChartType.xlColumnClustered;
-                regionChart.SetSourceData(summaryWorksheet.Range["A17:B20"]);
+                regionChart.SetSourceData(summaryWorksheet.Range("A17:B20"));
                 regionChart.HasTitle = true;
                 regionChart.ChartTitle.Text = "按销售地区销售额对比";
                 regionChart.HasLegend = false;
@@ -875,12 +875,12 @@ namespace DataAnalysisVisualizationSample
                 regionChart.Axes(XlAxisType.xlValue).AxisTitle.Text = "销售额";
 
                 // 设置数字格式
-                dataWorksheet.Range["F2:F16"].NumberFormat = "0";
-                dataWorksheet.Range["G2:H16"].NumberFormat = "¥#,##0";
+                dataWorksheet.Range("F2:F16").NumberFormat = "0";
+                dataWorksheet.Range("G2:H16").NumberFormat = "¥#,##0";
 
-                summaryWorksheet.Range["B4:B7"].NumberFormat = "¥#,##0";
-                summaryWorksheet.Range["B11:B20"].NumberFormat = "¥#,##0";
-                summaryWorksheet.Range["C11:C20"].NumberFormat = "0.00%";
+                summaryWorksheet.Range("B4:B7").NumberFormat = "¥#,##0";
+                summaryWorksheet.Range("B11:B20").NumberFormat = "¥#,##0";
+                summaryWorksheet.Range("C11:C20").NumberFormat = "0.00%";
 
                 // 自动调整列宽
                 dataWorksheet.Columns.AutoFit();

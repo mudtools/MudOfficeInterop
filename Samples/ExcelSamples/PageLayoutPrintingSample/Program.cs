@@ -68,10 +68,10 @@ namespace PageLayoutPrintingSample
                 worksheet.Name = "页面设置";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "产品名称";
-                worksheet.Range["B1"].Value = "销售数量";
-                worksheet.Range["C1"].Value = "单价";
-                worksheet.Range["D1"].Value = "总金额";
+                worksheet.Range("A1").Value = "产品名称";
+                worksheet.Range("B1").Value = "销售数量";
+                worksheet.Range("C1").Value = "单价";
+                worksheet.Range("D1").Value = "总金额";
 
                 object[,] salesData = {
                     {"笔记本电脑", 10, 5000, 50000},
@@ -86,7 +86,7 @@ namespace PageLayoutPrintingSample
                     {"路由器", 15, 300, 4500}
                 };
 
-                var dataRange = worksheet.Range["A2:D11"];
+                var dataRange = worksheet.Range("A2:D11");
                 dataRange.Value = salesData;
 
                 // 获取页面设置对象
@@ -97,41 +97,41 @@ namespace PageLayoutPrintingSample
                 pageSetup.PaperSize = XlPaperSize.xlPaperA4;
                 pageSetup.Zoom = 100;
 
-                worksheet.Range["F1"].Value = "A4纵向布局";
-                worksheet.Range["F1"].Font.Bold = true;
-                worksheet.Range["F1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("F1").Value = "A4纵向布局";
+                worksheet.Range("F1").Font.Bold = true;
+                worksheet.Range("F1").Interior.Color = Color.LightBlue;
 
                 // 复制数据到F列以展示不同布局
-                worksheet.Range["A1:D11"].Copy(worksheet.Range["F2"]);
+                worksheet.Range("A1:D11").Copy(worksheet.Range("F2"));
 
                 // 设置A4横向布局
                 pageSetup.Orientation = XlPageOrientation.xlLandscape;
                 pageSetup.PaperSize = XlPaperSize.xlPaperA4;
                 pageSetup.Zoom = 100;
 
-                worksheet.Range["K1"].Value = "A4横向布局";
-                worksheet.Range["K1"].Font.Bold = true;
-                worksheet.Range["K1"].Interior.Color = Color.LightGreen;
+                worksheet.Range("K1").Value = "A4横向布局";
+                worksheet.Range("K1").Font.Bold = true;
+                worksheet.Range("K1").Interior.Color = Color.LightGreen;
 
                 // 复制数据到K列以展示不同布局
-                worksheet.Range["A1:D11"].Copy(worksheet.Range["K2"]);
+                worksheet.Range("A1:D11").Copy(worksheet.Range("K2"));
 
                 // 设置自定义纸张大小
                 pageSetup.PaperSize = XlPaperSize.xlPaperLetter;
                 pageSetup.Orientation = XlPageOrientation.xlPortrait;
 
-                worksheet.Range["P1"].Value = "Letter纸张";
-                worksheet.Range["P1"].Font.Bold = true;
-                worksheet.Range["P1"].Interior.Color = Color.LightYellow;
+                worksheet.Range("P1").Value = "Letter纸张";
+                worksheet.Range("P1").Font.Bold = true;
+                worksheet.Range("P1").Interior.Color = Color.LightYellow;
 
                 // 复制数据到P列以展示不同布局
-                worksheet.Range["A1:D11"].Copy(worksheet.Range["P2"]);
+                worksheet.Range("A1:D11").Copy(worksheet.Range("P2"));
 
                 // 设置数字格式
-                worksheet.Range["B2:D11"].NumberFormat = "0";
-                worksheet.Range["G2:I11"].NumberFormat = "0";
-                worksheet.Range["L2:N11"].NumberFormat = "0";
-                worksheet.Range["Q2:S11"].NumberFormat = "0";
+                worksheet.Range("B2:D11").NumberFormat = "0";
+                worksheet.Range("G2:I11").NumberFormat = "0";
+                worksheet.Range("L2:N11").NumberFormat = "0";
+                worksheet.Range("Q2:S11").NumberFormat = "0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -169,10 +169,10 @@ namespace PageLayoutPrintingSample
                 worksheet.Name = "页边距";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "月份";
-                worksheet.Range["B1"].Value = "销售额";
-                worksheet.Range["C1"].Value = "成本";
-                worksheet.Range["D1"].Value = "利润";
+                worksheet.Range("A1").Value = "月份";
+                worksheet.Range("B1").Value = "销售额";
+                worksheet.Range("C1").Value = "成本";
+                worksheet.Range("D1").Value = "利润";
 
                 object[,] financialData = {
                     {"1月", 100000, 70000, 30000},
@@ -183,7 +183,7 @@ namespace PageLayoutPrintingSample
                     {"6月", 160000, 100000, 60000}
                 };
 
-                var dataRange = worksheet.Range["A2:D7"];
+                var dataRange = worksheet.Range("A2:D7");
                 dataRange.Value = financialData;
 
                 // 获取页面设置对象
@@ -197,12 +197,12 @@ namespace PageLayoutPrintingSample
                 pageSetup.HeaderMargin = 0.5;
                 pageSetup.FooterMargin = 0.5;
 
-                worksheet.Range["F1"].Value = "标准边距设置";
-                worksheet.Range["F1"].Font.Bold = true;
-                worksheet.Range["F1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("F1").Value = "标准边距设置";
+                worksheet.Range("F1").Font.Bold = true;
+                worksheet.Range("F1").Interior.Color = Color.LightBlue;
 
                 // 复制数据到F列以展示不同边距
-                worksheet.Range["A1:D7"].Copy(worksheet.Range["F2"]);
+                worksheet.Range("A1:D7").Copy(worksheet.Range("F2"));
 
                 // 设置窄边距
                 pageSetup.LeftMargin = 0.25;
@@ -210,12 +210,12 @@ namespace PageLayoutPrintingSample
                 pageSetup.TopMargin = 0.75;
                 pageSetup.BottomMargin = 0.75;
 
-                worksheet.Range["K1"].Value = "窄边距设置";
-                worksheet.Range["K1"].Font.Bold = true;
-                worksheet.Range["K1"].Interior.Color = Color.LightGreen;
+                worksheet.Range("K1").Value = "窄边距设置";
+                worksheet.Range("K1").Font.Bold = true;
+                worksheet.Range("K1").Interior.Color = Color.LightGreen;
 
                 // 复制数据到K列以展示不同边距
-                worksheet.Range["A1:D7"].Copy(worksheet.Range["K2"]);
+                worksheet.Range("A1:D7").Copy(worksheet.Range("K2"));
 
                 // 设置宽边距
                 pageSetup.LeftMargin = 1.5;
@@ -223,18 +223,18 @@ namespace PageLayoutPrintingSample
                 pageSetup.TopMargin = 2.0;
                 pageSetup.BottomMargin = 2.0;
 
-                worksheet.Range["P1"].Value = "宽边距设置";
-                worksheet.Range["P1"].Font.Bold = true;
-                worksheet.Range["P1"].Interior.Color = Color.LightYellow;
+                worksheet.Range("P1").Value = "宽边距设置";
+                worksheet.Range("P1").Font.Bold = true;
+                worksheet.Range("P1").Interior.Color = Color.LightYellow;
 
                 // 复制数据到P列以展示不同边距
-                worksheet.Range["A1:D7"].Copy(worksheet.Range["P2"]);
+                worksheet.Range("A1:D7").Copy(worksheet.Range("P2"));
 
                 // 设置数字格式
-                worksheet.Range["B2:D7"].NumberFormat = "¥#,##0";
-                worksheet.Range["G2:I7"].NumberFormat = "¥#,##0";
-                worksheet.Range["L2:N7"].NumberFormat = "¥#,##0";
-                worksheet.Range["Q2:S7"].NumberFormat = "¥#,##0";
+                worksheet.Range("B2:D7").NumberFormat = "¥#,##0";
+                worksheet.Range("G2:I7").NumberFormat = "¥#,##0";
+                worksheet.Range("L2:N7").NumberFormat = "¥#,##0";
+                worksheet.Range("Q2:S7").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -272,10 +272,10 @@ namespace PageLayoutPrintingSample
                 worksheet.Name = "页眉页脚";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "产品类别";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售数量";
-                worksheet.Range["D1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "产品类别";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售数量";
+                worksheet.Range("D1").Value = "销售金额";
 
                 object[,] salesData = {
                     {"电子产品", "笔记本电脑", 10, 50000},
@@ -286,7 +286,7 @@ namespace PageLayoutPrintingSample
                     {"服装", "牛仔裤", 30, 3000}
                 };
 
-                var dataRange = worksheet.Range["A2:D7"];
+                var dataRange = worksheet.Range("A2:D7");
                 dataRange.Value = salesData;
 
                 // 获取页面设置对象
@@ -301,12 +301,12 @@ namespace PageLayoutPrintingSample
                 pageSetup.CenterFooter = "机密文件";
                 pageSetup.RightFooter = "页码: &P/&N";
 
-                worksheet.Range["F1"].Value = "带页眉页脚的报表";
-                worksheet.Range["F1"].Font.Bold = true;
-                worksheet.Range["F1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("F1").Value = "带页眉页脚的报表";
+                worksheet.Range("F1").Font.Bold = true;
+                worksheet.Range("F1").Interior.Color = Color.LightBlue;
 
                 // 复制数据到F列以展示页眉页脚
-                worksheet.Range["A1:D7"].Copy(worksheet.Range["F2"]);
+                worksheet.Range("A1:D7").Copy(worksheet.Range("F2"));
 
                 // 设置复杂页眉页脚
                 pageSetup.LeftHeader = "&\"微软雅黑,Bold\"&14销售分析报表";
@@ -317,17 +317,17 @@ namespace PageLayoutPrintingSample
                 pageSetup.CenterFooter = "&\"宋体\"&10第 &P 页 / 共 &N 页";
                 pageSetup.RightFooter = "&D";
 
-                worksheet.Range["K1"].Value = "复杂页眉页脚";
-                worksheet.Range["K1"].Font.Bold = true;
-                worksheet.Range["K1"].Interior.Color = Color.LightGreen;
+                worksheet.Range("K1").Value = "复杂页眉页脚";
+                worksheet.Range("K1").Font.Bold = true;
+                worksheet.Range("K1").Interior.Color = Color.LightGreen;
 
                 // 复制数据到K列以展示页眉页脚
-                worksheet.Range["A1:D7"].Copy(worksheet.Range["K2"]);
+                worksheet.Range("A1:D7").Copy(worksheet.Range("K2"));
 
                 // 设置数字格式
-                worksheet.Range["C2:D7"].NumberFormat = "0";
-                worksheet.Range["H2:I7"].NumberFormat = "0";
-                worksheet.Range["M2:N7"].NumberFormat = "0";
+                worksheet.Range("C2:D7").NumberFormat = "0";
+                worksheet.Range("H2:I7").NumberFormat = "0";
+                worksheet.Range("M2:N7").NumberFormat = "0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -365,13 +365,13 @@ namespace PageLayoutPrintingSample
                 worksheet.Name = "打印区域";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "产品名称";
-                worksheet.Range["B1"].Value = "1月";
-                worksheet.Range["C1"].Value = "2月";
-                worksheet.Range["D1"].Value = "3月";
-                worksheet.Range["E1"].Value = "4月";
-                worksheet.Range["F1"].Value = "5月";
-                worksheet.Range["G1"].Value = "6月";
+                worksheet.Range("A1").Value = "产品名称";
+                worksheet.Range("B1").Value = "1月";
+                worksheet.Range("C1").Value = "2月";
+                worksheet.Range("D1").Value = "3月";
+                worksheet.Range("E1").Value = "4月";
+                worksheet.Range("F1").Value = "5月";
+                worksheet.Range("G1").Value = "6月";
 
                 object[,] salesData = {
                     {"笔记本电脑", 10000, 12000, 14000, 13000, 15000, 16000},
@@ -381,29 +381,29 @@ namespace PageLayoutPrintingSample
                     {"耳机", 5000, 6000, 7000, 6500, 8000, 9000}
                 };
 
-                var dataRange = worksheet.Range["A2:G6"];
+                var dataRange = worksheet.Range("A2:G6");
                 dataRange.Value = salesData;
 
                 // 设置打印区域
                 worksheet.PageSetup.PrintArea = "$A$1:$D$6";
 
-                worksheet.Range["I1"].Value = "设置打印区域为A1:D6";
-                worksheet.Range["I1"].Font.Bold = true;
-                worksheet.Range["I1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("I1").Value = "设置打印区域为A1:D6";
+                worksheet.Range("I1").Font.Bold = true;
+                worksheet.Range("I1").Interior.Color = Color.LightBlue;
 
                 // 复制数据到I列以展示打印区域
-                worksheet.Range["A1:G6"].Copy(worksheet.Range["I2"]);
+                worksheet.Range("A1:G6").Copy(worksheet.Range("I2"));
 
                 // 更改打印区域
                 worksheet.PageSetup.PrintArea = "$A$1:$G$6";
 
-                worksheet.Range["A8"].Value = "完整数据表格";
-                worksheet.Range["A8"].Font.Bold = true;
-                worksheet.Range["A8"].Interior.Color = Color.LightGreen;
+                worksheet.Range("A8").Value = "完整数据表格";
+                worksheet.Range("A8").Font.Bold = true;
+                worksheet.Range("A8").Interior.Color = Color.LightGreen;
 
                 // 设置数字格式
-                worksheet.Range["B2:G6"].NumberFormat = "0";
-                worksheet.Range["J2:O6"].NumberFormat = "0";
+                worksheet.Range("B2:G6").NumberFormat = "0";
+                worksheet.Range("J2:O6").NumberFormat = "0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -441,37 +441,37 @@ namespace PageLayoutPrintingSample
                 worksheet.Name = "分页符";
 
                 // 创建大量示例数据
-                worksheet.Range["A1"].Value = "序号";
-                worksheet.Range["B1"].Value = "产品名称";
-                worksheet.Range["C1"].Value = "销售数量";
-                worksheet.Range["D1"].Value = "销售金额";
+                worksheet.Range("A1").Value = "序号";
+                worksheet.Range("B1").Value = "产品名称";
+                worksheet.Range("C1").Value = "销售数量";
+                worksheet.Range("D1").Value = "销售金额";
 
                 // 生成50行数据
                 for (int i = 1; i <= 50; i++)
                 {
-                    worksheet.Range[$"A{i + 1}"].Value = i;
-                    worksheet.Range[$"B{i + 1}"].Value = $"产品{i}";
-                    worksheet.Range[$"C{i + 1}"].Value = i * 10;
-                    worksheet.Range[$"D{i + 1}"].Value = i * 1000;
+                    worksheet.Range($"A{i + 1}").Value = i;
+                    worksheet.Range($"B{i + 1}").Value = $"产品{i}";
+                    worksheet.Range($"C{i + 1}").Value = i * 10;
+                    worksheet.Range($"D{i + 1}").Value = i * 1000;
                 }
 
                 // 设置水平分页符
-                worksheet.HPageBreaks.Add(worksheet.Range["A11"]); // 第10行后分页
-                worksheet.HPageBreaks.Add(worksheet.Range["A21"]); // 第20行后分页
-                worksheet.HPageBreaks.Add(worksheet.Range["A31"]); // 第30行后分页
-                worksheet.HPageBreaks.Add(worksheet.Range["A41"]); // 第40行后分页
+                worksheet.HPageBreaks.Add(worksheet.Range("A11")); // 第10行后分页
+                worksheet.HPageBreaks.Add(worksheet.Range("A21")); // 第20行后分页
+                worksheet.HPageBreaks.Add(worksheet.Range("A31")); // 第30行后分页
+                worksheet.HPageBreaks.Add(worksheet.Range("A41")); // 第40行后分页
 
                 // 设置垂直分页符
-                worksheet.VPageBreaks.Add(worksheet.Range["C1"]); // C列前分页
+                worksheet.VPageBreaks.Add(worksheet.Range("C1")); // C列前分页
 
-                worksheet.Range["F1"].Value = "分页符设置示例";
-                worksheet.Range["F1"].Font.Bold = true;
-                worksheet.Range["F1"].Interior.Color = Color.LightBlue;
+                worksheet.Range("F1").Value = "分页符设置示例";
+                worksheet.Range("F1").Font.Bold = true;
+                worksheet.Range("F1").Interior.Color = Color.LightBlue;
 
                 // 设置数字格式
-                worksheet.Range["A2:A51"].NumberFormat = "0";
-                worksheet.Range["C2:C51"].NumberFormat = "0";
-                worksheet.Range["D2:D51"].NumberFormat = "¥#,##0";
+                worksheet.Range("A2:A51").NumberFormat = "0";
+                worksheet.Range("C2:C51").NumberFormat = "0";
+                worksheet.Range("D2:D51").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
@@ -509,11 +509,11 @@ namespace PageLayoutPrintingSample
                 worksheet.Name = "打印预览";
 
                 // 创建示例数据
-                worksheet.Range["A1"].Value = "部门";
-                worksheet.Range["B1"].Value = "员工姓名";
-                worksheet.Range["C1"].Value = "基本工资";
-                worksheet.Range["D1"].Value = "绩效奖金";
-                worksheet.Range["E1"].Value = "总工资";
+                worksheet.Range("A1").Value = "部门";
+                worksheet.Range("B1").Value = "员工姓名";
+                worksheet.Range("C1").Value = "基本工资";
+                worksheet.Range("D1").Value = "绩效奖金";
+                worksheet.Range("E1").Value = "总工资";
 
                 object[,] employeeData = {
                     {"销售部", "张三", 8000, 2000, 10000},
@@ -524,7 +524,7 @@ namespace PageLayoutPrintingSample
                     {"财务部", "孙八", 9000, 1200, 10200}
                 };
 
-                var dataRange = worksheet.Range["A2:E7"];
+                var dataRange = worksheet.Range("A2:E7");
                 dataRange.Value = employeeData;
 
                 // 设置页面布局
@@ -542,12 +542,12 @@ namespace PageLayoutPrintingSample
                 // 显示打印预览（注意：在实际应用中，这会打开Excel的打印预览窗口）
                 // worksheet.PrintPreview();
 
-                worksheet.Range["A9"].Value = "打印预览设置已完成";
-                worksheet.Range["A9"].Font.Bold = true;
-                worksheet.Range["A9"].Interior.Color = Color.LightGreen;
+                worksheet.Range("A9").Value = "打印预览设置已完成";
+                worksheet.Range("A9").Font.Bold = true;
+                worksheet.Range("A9").Interior.Color = Color.LightGreen;
 
                 // 设置数字格式
-                worksheet.Range["C2:E7"].NumberFormat = "¥#,##0";
+                worksheet.Range("C2:E7").NumberFormat = "¥#,##0";
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();
