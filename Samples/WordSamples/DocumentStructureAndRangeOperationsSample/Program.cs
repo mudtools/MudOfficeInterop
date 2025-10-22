@@ -291,16 +291,18 @@ namespace DocumentStructureAndRangeOperationsSample
 
                 // 复制内容
                 using var sourceRange = document.Range(0, 4);
-                using var targetRange = document.Range(document.StoryLength, document.StoryLength);
+                using var targetRange = document.Range(document.Content.End, document.Content.End);
                 sourceRange.Copy();
+                targetRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 targetRange.Paste();
 
                 Console.WriteLine($"复制后文档内容:\n{document.Range().Text}");
 
                 // 移动内容
                 using var moveSource = document.Range(5, 9);
-                using var moveTarget = document.Range(document.StoryLength, document.StoryLength);
+                using var moveTarget = document.Range(document.Content.End, document.Content.End);
                 moveSource.Cut();
+                moveTarget.Collapse(WdCollapseDirection.wdCollapseEnd);
                 moveTarget.Paste();
 
                 Console.WriteLine($"移动后文档内容:\n{document.Range().Text}");

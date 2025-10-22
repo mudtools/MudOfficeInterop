@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeScopeFolder : IOfficeScopeFolder
 {
-    internal MsCore.ScopeFolder _scopeFolder;
+    internal MsCore.ScopeFolder? _scopeFolder;
     private bool _disposedValue;
 
     /// <summary>
@@ -34,21 +34,12 @@ internal class OfficeScopeFolder : IOfficeScopeFolder
     public string Path => _scopeFolder?.Path ?? string.Empty;
 
     /// <inheritdoc/>
-    public IOfficeScopeFolders ScopeFolders
+    public IOfficeScopeFolders? ScopeFolders
     {
         get
         {
             if (_scopeFolder?.ScopeFolders != null)
-            {
-                try
-                {
-                    return new OfficeScopeFolders(_scopeFolder.ScopeFolders);
-                }
-                catch
-                {
-                    return null;
-                }
-            }
+                return new OfficeScopeFolders(_scopeFolder.ScopeFolders);
             return null;
         }
     }
@@ -80,14 +71,7 @@ internal class OfficeScopeFolder : IOfficeScopeFolder
 
         if (disposing && _scopeFolder != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_scopeFolder);
-            }
-            catch
-            {
-                // 忽略释放异常
-            }
+            Marshal.ReleaseComObject(_scopeFolder);
             _scopeFolder = null;
         }
 

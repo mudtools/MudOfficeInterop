@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficePickerField : IOfficePickerField
 {
-    private MsCore.PickerField _pickerField;
+    private MsCore.PickerField? _pickerField;
     private bool _disposedValue;
 
     /// <summary>
@@ -36,7 +36,7 @@ internal class OfficePickerField : IOfficePickerField
     /// <inheritdoc/>
     public MsoPickerField Type
     {
-        get => _pickerField?.Type != null ? (MsoPickerField)(int)_pickerField?.Type : MsoPickerField.msoPickerFieldUnknown;
+        get => _pickerField?.Type != null ? _pickerField.Type.EnumConvert(MsoPickerField.msoPickerFieldUnknown) : MsoPickerField.msoPickerFieldUnknown;
     }
 
 
@@ -60,14 +60,7 @@ internal class OfficePickerField : IOfficePickerField
 
         if (disposing && _pickerField != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_pickerField);
-            }
-            catch
-            {
-                // 忽略释放异常
-            }
+            Marshal.ReleaseComObject(_pickerField);
             _pickerField = null;
         }
 
@@ -80,6 +73,5 @@ internal class OfficePickerField : IOfficePickerField
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
     #endregion
 }

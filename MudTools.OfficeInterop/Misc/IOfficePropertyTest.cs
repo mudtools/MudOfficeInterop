@@ -25,10 +25,10 @@ public interface IOfficePropertyTest : IDisposable
     /// <summary>
     /// 获取或设置属性测试的值。
     /// </summary>
-    object Value { get; }
+    object? Value { get; }
 
     /// <summary>
     /// 获取或设置属性测试的第二个值（用于范围比较）。
     /// </summary>
-    object SecondValue { get; }
+    object? SecondValue { get; }
 }

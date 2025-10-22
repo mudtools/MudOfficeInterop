@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeFillFormat : IOfficeFillFormat
 {
-    private MsCore.FillFormat _fillFormat;
+    private MsCore.FillFormat? _fillFormat;
     private bool _disposedValue;
 
     /// <summary>
@@ -36,7 +36,7 @@ internal class OfficeFillFormat : IOfficeFillFormat
                 return null;
 
             var foreColor = _fillFormat.ForeColor;
-            return foreColor != null ? new OfficeColorFormat(foreColor) : null;
+            return foreColor != null ? new OfficeColorFormat(_fillFormat.ForeColor) : null;
         }
     }
 
@@ -65,7 +65,7 @@ internal class OfficeFillFormat : IOfficeFillFormat
     }
 
     /// <inheritdoc/>
-    public MsoFillType Type => _fillFormat?.Type != null ? (MsoFillType)(int)_fillFormat?.Type : MsoFillType.msoFillMixed;
+    public MsoFillType Type => _fillFormat?.Type != null ? _fillFormat.Type.EnumConvert(MsoFillType.msoFillMixed) : MsoFillType.msoFillMixed;
 
     /// <inheritdoc/>
     public float GradientAngle
@@ -82,7 +82,7 @@ internal class OfficeFillFormat : IOfficeFillFormat
     public string TextureName => _fillFormat?.TextureName ?? string.Empty;
 
     /// <inheritdoc/>
-    public MsoTextureType TextureType => _fillFormat?.TextureType != null ? (MsoTextureType)(int)_fillFormat?.TextureType : MsoTextureType.msoTextureTypeMixed;
+    public MsoTextureType TextureType => _fillFormat?.TextureType != null ? _fillFormat.TextureType.EnumConvert(MsoTextureType.msoTextureTypeMixed) : MsoTextureType.msoTextureTypeMixed;
 
     #endregion
 
@@ -91,49 +91,109 @@ internal class OfficeFillFormat : IOfficeFillFormat
     /// <inheritdoc/>
     public void OneColorGradient(MsoGradientStyle style, int variant, float degree)
     {
-        _fillFormat?.OneColorGradient((MsCore.MsoGradientStyle)(int)style, variant, degree);
+        try
+        {
+            if (_fillFormat != null)
+                _fillFormat.OneColorGradient(style.EnumConvert(MsCore.MsoGradientStyle.msoGradientMixed), variant, degree);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("OneColorGradient方法调用失败！", ex);
+        }
     }
 
     /// <inheritdoc/>
     public void TwoColorGradient(MsoGradientStyle style, int variant)
     {
-        _fillFormat?.TwoColorGradient((MsCore.MsoGradientStyle)(int)style, variant);
+        try
+        {
+            if (_fillFormat != null)
+                _fillFormat.TwoColorGradient(style.EnumConvert(MsCore.MsoGradientStyle.msoGradientMixed), variant);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("TwoColorGradient方法调用失败！", ex);
+        }
     }
 
     /// <inheritdoc/>
     public void Patterned(MsoPatternType pattern)
     {
-        _fillFormat?.Patterned((MsCore.MsoPatternType)(int)pattern);
+        try
+        {
+            if (_fillFormat != null)
+                _fillFormat.Patterned(pattern.EnumConvert(MsCore.MsoPatternType.msoPatternMixed));
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Patterned方法调用失败！", ex);
+        }
     }
 
     /// <inheritdoc/>
     public void UserPicture(string imagePath)
     {
-        if (_fillFormat != null && !string.IsNullOrWhiteSpace(imagePath))
+        if (string.IsNullOrEmpty(imagePath))
+            throw new ArgumentException("图片路径不能为空！", nameof(imagePath));
+        if (!File.Exists(imagePath))
+            throw new FileNotFoundException("图片文件不存在！", imagePath);
+        try
         {
-            _fillFormat.UserPicture(imagePath);
+            if (_fillFormat != null && !string.IsNullOrWhiteSpace(imagePath))
+            {
+                _fillFormat.UserPicture(imagePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("UserPicture方法调用失败！", ex);
         }
     }
 
     /// <inheritdoc/>
     public void Solid()
     {
-        _fillFormat?.Solid();
+        try
+        {
+            _fillFormat?.Solid();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Solid方法调用失败！", ex);
+        }
     }
 
     /// <inheritdoc/>
     public void UserTextured(string textureFile)
     {
-        if (_fillFormat != null && !string.IsNullOrWhiteSpace(textureFile))
+        if (string.IsNullOrEmpty(textureFile))
+            throw new ArgumentException("纹理文件路径不能为空！", nameof(textureFile));
+        if (!File.Exists(textureFile))
+            throw new FileNotFoundException("纹理文件不存在！", textureFile);
+        try
         {
-            _fillFormat?.UserTextured(textureFile);
+            if (_fillFormat != null && !string.IsNullOrWhiteSpace(textureFile))
+            {
+                _fillFormat.UserTextured(textureFile);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("UserTextured方法调用失败！", ex);
         }
     }
 
     /// <inheritdoc/>
     public void Background()
     {
-        _fillFormat?.Background();
+        try
+        {
+            _fillFormat?.Background();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Background方法调用失败！", ex);
+        }
     }
 
     #endregion

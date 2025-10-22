@@ -22,5 +22,5 @@ public interface IOfficeSearchScope : IDisposable
     /// <summary>
     /// 获取搜索范围的文件夹对象。
     /// </summary>
-    IOfficeScopeFolder ScopeFolder { get; }
+    IOfficeScopeFolder? ScopeFolder { get; }
 }

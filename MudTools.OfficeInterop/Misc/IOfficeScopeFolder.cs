@@ -25,7 +25,7 @@ public interface IOfficeScopeFolder : IDisposable
     /// <summary>
     /// 获取搜索范围文件夹的子文件夹集合。
     /// </summary>
-    IOfficeScopeFolders ScopeFolders { get; }
+    IOfficeScopeFolders? ScopeFolders { get; }
 
     /// <summary>
     /// 添加子搜索范围文件夹。

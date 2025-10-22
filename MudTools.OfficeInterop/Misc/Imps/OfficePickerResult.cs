@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficePickerResult : IOfficePickerResult
 {
-    private MsCore.PickerResult _pickerResult;
+    private MsCore.PickerResult? _pickerResult;
     private bool _disposedValue;
 
     /// <summary>
@@ -119,14 +119,7 @@ internal class OfficePickerResult : IOfficePickerResult
 
         if (disposing && _pickerResult != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_pickerResult);
-            }
-            catch
-            {
-                // 忽略释放异常
-            }
+            Marshal.ReleaseComObject(_pickerResult);
             _pickerResult = null;
         }
 

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficePropertyTest : IOfficePropertyTest
 {
-    private MsCore.PropertyTest _propertyTest;
+    private MsCore.PropertyTest? _propertyTest;
     private bool _disposedValue;
 
     /// <summary>
@@ -36,17 +36,17 @@ internal class OfficePropertyTest : IOfficePropertyTest
     /// <inheritdoc/>
     public MsoCondition Condition
     {
-        get => _propertyTest?.Condition != null ? (MsoCondition)(int)_propertyTest?.Condition : MsoCondition.msoConditionEquals;
+        get => _propertyTest?.Condition != null ? _propertyTest.Condition.EnumConvert(MsoCondition.msoConditionEquals) : MsoCondition.msoConditionEquals;
     }
 
     /// <inheritdoc/>
-    public object Value
+    public object? Value
     {
         get => _propertyTest?.Value;
     }
 
     /// <inheritdoc/>
-    public object SecondValue
+    public object? SecondValue
     {
         get => _propertyTest?.SecondValue;
     }

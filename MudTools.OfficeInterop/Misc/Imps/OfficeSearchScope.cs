@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeSearchScope : IOfficeSearchScope
 {
-    private MsCore.SearchScope _searchScope;
+    private MsCore.SearchScope? _searchScope;
     private bool _disposedValue;
 
     /// <summary>
@@ -28,8 +28,8 @@ internal class OfficeSearchScope : IOfficeSearchScope
     #region 属性实现
 
     /// <inheritdoc/>
-    public MsoSearchIn Type => _searchScope?.Type != null ? (MsoSearchIn)(int)_searchScope?.Type : MsoSearchIn.msoSearchInCustom;
-    public IOfficeScopeFolder ScopeFolder
+    public MsoSearchIn Type => _searchScope != null ? _searchScope.Type.EnumConvert(MsoSearchIn.msoSearchInCustom) : MsoSearchIn.msoSearchInCustom;
+    public IOfficeScopeFolder? ScopeFolder
     {
         get
         {
@@ -54,14 +54,7 @@ internal class OfficeSearchScope : IOfficeSearchScope
 
         if (disposing && _searchScope != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_searchScope);
-            }
-            catch
-            {
-                // 忽略释放异常
-            }
+            Marshal.ReleaseComObject(_searchScope);
             _searchScope = null;
         }
 
