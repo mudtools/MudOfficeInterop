@@ -25,7 +25,7 @@ public interface IOfficeSmartArt : IDisposable
     /// <summary>
     /// 获取或设置 SmartArt 图表的布局样式
     /// </summary>
-    IOfficeSmartArtLayout? Layout { get; }
+    IOfficeSmartArtLayout? Layout { get; set; }
 
     /// <summary>
     /// 获取或设置 SmartArt 图表的快速样式
@@ -35,7 +35,7 @@ public interface IOfficeSmartArt : IDisposable
     /// <summary>
     /// 获取或设置 SmartArt 图表的颜色样式
     /// </summary>
-    IOfficeSmartArtColor? Color { get; }
+    IOfficeSmartArtColor? Color { get; set; }
 
     /// <summary>
     /// 获取或设置是否反转 SmartArt 图表的布局方向

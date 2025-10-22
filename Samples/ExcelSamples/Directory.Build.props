@@ -14,7 +14,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="3.2.0" />
-		<ProjectReference Include="..\..\..\MudTools.OfficeInterop.Word\MudTools.OfficeInterop.Word.csproj" />
+		<ProjectReference Include="..\..\..\MudTools.OfficeInterop.Excel\MudTools.OfficeInterop.Excel.csproj" />
         <ProjectReference Include="..\..\..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
 	</ItemGroup>
 	<ItemGroup>

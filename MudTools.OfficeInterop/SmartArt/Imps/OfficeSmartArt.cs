@@ -58,6 +58,11 @@ internal class OfficeSmartArt : IOfficeSmartArt
             if (_smartArt == null) return null;
             return new OfficeSmartArtLayout(_smartArt.Layout);
         }
+        set
+        {
+            if (_smartArt == null || value == null) return;
+            _smartArt.Layout = ((OfficeSmartArtLayout)value)._smartArtLayout;
+        }
     }
 
     public IOfficeSmartArtQuickStyle? QuickStyle
@@ -75,6 +80,11 @@ internal class OfficeSmartArt : IOfficeSmartArt
         {
             if (_smartArt == null) return null;
             return new OfficeSmartArtColor(_smartArt.Color);
+        }
+        set
+        {
+            if (_smartArt == null || value == null) return;
+            _smartArt.Color = ((OfficeSmartArtColor)value)._smartArtColor;
         }
     }
 

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Imps;
 /// </summary>
 internal class OfficeSmartArtColor : IOfficeSmartArtColor
 {
-    private MsCore.SmartArtColor _smartArtColor;
+    internal MsCore.SmartArtColor _smartArtColor;
     private bool _disposedValue;
 
     /// <summary>

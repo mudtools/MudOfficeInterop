@@ -55,7 +55,7 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// 获取或设置图表标题
     /// 对应 Chart.ChartTitle 属性
     /// </summary>
-    string ChartTitle { get; set; }
+    IExcelChartTitle? ChartTitle { get; }
 
     /// <summary>
     /// 获取或设置是否包含图例
@@ -96,7 +96,14 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// 获取图表的坐标轴集合
     /// 对应 Chart.Axes 函数
     /// </summary>
-    IExcelAxes? Axes(XlAxisType? axisType = null, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary);
+    IExcelAxis? Axes(XlAxisType axisType, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary);
+
+
+    /// <summary>
+    /// 获取图表的坐标轴集合
+    /// 对应 Chart.Axes 函数
+    /// </summary>
+    IExcelAxes? Axes();
 
 
     /// <summary>

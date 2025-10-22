@@ -125,7 +125,7 @@ namespace GraphicsAndImageOperationsSample
                 {
                     if (System.IO.File.Exists(imagePath))
                     {
-                        var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
+                        using var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
                         var inlineShape = range.InlineShapes.AddPicture(imagePath);
                         ResizeImage(inlineShape, targetWidth, targetHeight);
                         SetAlternativeText(inlineShape, System.IO.Path.GetFileNameWithoutExtension(imagePath));

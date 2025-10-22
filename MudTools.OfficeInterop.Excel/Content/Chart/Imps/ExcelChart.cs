@@ -238,17 +238,9 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 获取或设置图表标题文本
     /// </summary>
-    public string ChartTitle
+    public IExcelChartTitle? ChartTitle
     {
-        get => _chart != null ? _chart.ChartTitle.Text : "";
-        set
-        {
-            if (_chart != null)
-            {
-                HasTitle = true;
-                _chart.ChartTitle.Text = value;
-            }
-        }
+        get => _chart != null ? new ExcelChartTitle(_chart.ChartTitle) : null;
     }
 
     /// <summary>
@@ -296,14 +288,25 @@ internal partial class ExcelChart : IExcelChart
     public IExcelChartGroup? Line3DGroup => _chart != null ? new ExcelChartGroup(_chart.Line3DGroup) : null;
 
 
-    public IExcelAxes? Axes(XlAxisType? axisType = null, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary)
+    public IExcelAxis? Axes(XlAxisType? axisType, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary)
     {
         if (_chart == null)
             return null;
         var charAxesObj = _chart.Axes(axisType.ComArgsConvert(x => x.EnumConvert(MsExcel.XlAxisType.xlValue)),
                           axisGroup.EnumConvert(MsExcel.XlAxisGroup.xlPrimary));
-        if (charAxesObj != null && charAxesObj is MsExcel.Axes charAxes)
-            return new ExcelAxes(charAxes);
+        if (charAxesObj != null && charAxesObj is MsExcel.Axis axis)
+            return new ExcelAxis(axis);
+        return null;
+    }
+
+    public IExcelAxes? Axes()
+    {
+        if (_chart == null)
+            return null;
+
+        var charAxesObj = _chart.Axes();
+        if (charAxesObj != null && charAxesObj is MsExcel.Axes axis)
+            return new ExcelAxes(axis);
         return null;
     }
 
