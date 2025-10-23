@@ -82,8 +82,6 @@ internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRa
     /// <returns>单元格对象</returns>
     public IExcelRange? this[int row] => this[row, null];
 
-
-
     /// <summary>
     /// 从DataTable复制数据到Excel工作表
     /// </summary>
@@ -146,15 +144,17 @@ internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRa
     /// <returns>是否发生替换</returns>
     public bool Replace(object what, object replacement, object lookAt, object searchOrder, object matchCase, object matchByte, object searchFormat, object replaceFormat)
     {
-        return InternalRange.Replace(
-            What: what,
-            Replacement: replacement,
-            LookAt: lookAt,
-            SearchOrder: searchOrder,
-            MatchCase: matchCase,
-            MatchByte: matchByte,
-            SearchFormat: searchFormat,
-            ReplaceFormat: replaceFormat);
+        if (_range == null)
+            return false;
+        return _range.Replace(
+                    What: what,
+                    Replacement: replacement,
+                    LookAt: lookAt,
+                    SearchOrder: searchOrder,
+                    MatchCase: matchCase,
+                    MatchByte: matchByte,
+                    SearchFormat: searchFormat,
+                    ReplaceFormat: replaceFormat);
     }
 
 
@@ -167,14 +167,16 @@ internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRa
     /// <param name="replace">是否替换现有分类汇总</param>
     /// <param name="pageBreaks">是否分页</param>
     /// <param name="summaryBelowData">汇总位置</param>
-    public void Subtotal(int groupBy, int function, object totalList, bool replace, bool pageBreaks, int summaryBelowData)
+    public void Subtotal(int groupBy, XlConsolidationFunction function, object totalList, bool replace, bool pageBreaks, XlSummaryRow summaryBelowData)
     {
-        InternalRange.Subtotal(
+        if (_range == null)
+            return;
+        _range.Subtotal(
             GroupBy: groupBy,
-            Function: (MsExcel.XlConsolidationFunction)function,
+            Function: function.EnumConvert(MsExcel.XlConsolidationFunction.xlCount),
             TotalList: totalList,
             Replace: replace,
             PageBreaks: pageBreaks,
-            SummaryBelowData: (MsExcel.XlSummaryRow)summaryBelowData);
+            SummaryBelowData: summaryBelowData.EnumConvert(MsExcel.XlSummaryRow.xlSummaryAbove));
     }
 }

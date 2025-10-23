@@ -6,9 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel;
-// =============================================
-// 接口定义：单个列表列（ListColumn）
-// =============================================
+
 /// <summary>
 /// 表示 Excel 表格（ListObject）中的一列，提供对列属性和操作的封装。
 /// </summary>
@@ -17,12 +15,12 @@ public interface IExcelListColumn : IDisposable
     /// <summary>
     /// 获取此列所属的父对象（通常是 ListObject）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此列所属的 Excel 应用程序对象。
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取此列在 ListColumns 集合中的索引（从 1 开始）。
@@ -38,12 +36,12 @@ public interface IExcelListColumn : IDisposable
     /// 获取此列对应的数据范围（DataBodyRange），不包含标题。
     /// 如果表无数据行，则可能为 null。
     /// </summary>
-    IExcelRange DataBodyRange { get; }
+    IExcelRange? DataBodyRange { get; }
 
     /// <summary>
     /// 获取此列的整个范围（包括标题和数据体）。
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 获取或设置此列的总计行公式（仅当 ListObject.ShowTotals = true 时有效）。
@@ -58,5 +56,5 @@ public interface IExcelListColumn : IDisposable
     /// <summary>
     /// 获取此列对应的总计行单元格（仅当启用总计行时有效）。
     /// </summary>
-    IExcelRange Total { get; }
+    IExcelRange? Total { get; }
 }

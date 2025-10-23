@@ -1405,10 +1405,55 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// <summary>
     /// 应用自动筛选
     /// </summary>
-    public void AutoFilter()
+    public IExcelAutoFilter? AutoFilter()
     {
-        InternalRange.AutoFilter();
+        var obj = InternalRange.AutoFilter();
+        if (obj != null && obj is MsExcel.AutoFilter autoFilter)
+            return new ExcelAutoFilter(autoFilter);
+        return null;
     }
+
+    public IExcelAutoFilter? AutoFilter(int? field, string? criteria1,
+     XlAutoFilterOperator @operator = XlAutoFilterOperator.xlAnd, string? criteria2 = null, bool? VisibleDropDown = null)
+    {
+        if (InternalRange == null)
+            return null;
+        var obj = InternalRange.AutoFilter(field.ComArgsVal(), criteria1.ComArgsVal(),
+                            @operator.ObjectConvertEnum(MsExcel.XlAutoFilterOperator.xlAnd),
+                            criteria2.ComArgsVal(), VisibleDropDown.ComArgsVal());
+        if (obj != null && obj is MsExcel.AutoFilter autoFilter)
+            return new ExcelAutoFilter(autoFilter);
+        return null;
+    }
+
+    public void AdvancedFilter(XlFilterAction action, IExcelRange? criteriaRange, IExcelRange? copyToRange, bool? unique = null)
+    {
+
+        InternalRange.AdvancedFilter(action.EnumConvert(MsExcel.XlFilterAction.xlFilterCopy),
+                                   criteriaRange != null ? ((ExcelRange)criteriaRange).InternalRange : Type.Missing,
+                                   copyToRange != null ? ((ExcelRange)copyToRange)?.InternalRange : Type.Missing, unique.ComArgsVal());
+    }
+
+
+
+    public void Group(object? start = null, object? end = null, object? by = null, object? periods = null)
+    {
+        if (InternalRange == null)
+            return;
+
+        InternalRange.Group(start != null ? start : Type.Missing,
+                               end != null ? end : Type.Missing,
+                               by != null ? by : Type.Missing,
+                               periods != null ? periods : Type.Missing
+                               );
+    }
+
+    public void RemoveDuplicates(object Columns, XlYesNoGuess Header = XlYesNoGuess.xlNo)
+    {
+        InternalRange.RemoveDuplicates(Columns, Header.EnumConvert(MsExcel.XlYesNoGuess.xlNo));
+    }
+
+
 
     /// <summary>
     /// 移除自动筛选

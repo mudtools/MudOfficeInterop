@@ -254,6 +254,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
                 return null;
             if (_cells != null)
                 return _cells;
+
             _cells = new ExcelCells(_worksheet.Cells);
             return _cells;
         }
@@ -1134,7 +1135,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     public void Copy()
     {
-        _worksheet.Copy();
+        _worksheet?.Copy();
     }
 
     /// <summary>
@@ -1150,6 +1151,15 @@ internal partial class ExcelWorksheet : IExcelWorksheet
             before is ExcelWorksheet beforeSheet ? beforeSheet._worksheet : System.Type.Missing,
             after is ExcelWorksheet afterSheet ? afterSheet._worksheet : System.Type.Missing
         );
+    }
+
+    public IExcelPivotCaches? PivotCaches()
+    {
+        var workbook = _worksheet?.Parent as MsExcel.Workbook;
+        var pivotCaches = workbook?.PivotCaches();
+        if (pivotCaches == null)
+            return null;
+        return new ExcelPivotCaches(pivotCaches);
     }
 
     public IExcelPivotTables? PivotTables()

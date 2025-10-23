@@ -206,6 +206,45 @@ internal partial class ExcelChart : IExcelChart
         }
     }
 
+    public int Elevation
+    {
+        get => _chart != null ? _chart.Elevation : 0;
+        set
+        {
+            if (_chart != null)
+                _chart.Elevation = value;
+        }
+    }
+
+    public int DepthPercent
+    {
+        get => _chart != null ? _chart.DepthPercent : 0;
+        set
+        {
+            if (_chart != null)
+                _chart.DepthPercent = value;
+        }
+    }
+
+    public int GapDepth
+    {
+        get => _chart != null ? _chart.GapDepth : 0;
+        set
+        {
+            if (_chart != null)
+                _chart.GapDepth = value;
+        }
+    }
+
+    public int Perspective
+    {
+        get => _chart != null ? _chart.Perspective : 0;
+        set
+        {
+            if (_chart != null)
+                _chart.Perspective = value;
+        }
+    }
     #endregion
 
     #region 数据源 (IExcelChart)
@@ -287,6 +326,18 @@ internal partial class ExcelChart : IExcelChart
 
     public IExcelChartGroup? Line3DGroup => _chart != null ? new ExcelChartGroup(_chart.Line3DGroup) : null;
 
+    public void ApplyDataLabels(XlDataLabelsType type = XlDataLabelsType.xlDataLabelsShowValue,
+                                bool? legendKey = null, string? autoText = null, bool? hasLeaderLines = null, string? showSeriesName = null,
+                                string? showCategoryName = null, double? showValue = null, string? showPercentage = null,
+                                double? showBubbleSize = null, string? separator = null)
+    {
+        if (_chart == null)
+            return;
+
+        _chart.ApplyDataLabels(type.EnumConvert(MsExcel.XlDataLabelsType.xlDataLabelsShowValue), legendKey.ComArgsVal(), autoText.ComArgsVal(),
+                                hasLeaderLines.ComArgsVal(), showSeriesName.ComArgsVal(), showCategoryName.ComArgsVal(),
+                                showValue.ComArgsVal(), showPercentage.ComArgsVal(), showBubbleSize.ComArgsVal(), separator.ComArgsVal());
+    }
 
     public IExcelAxis? Axes(XlAxisType? axisType, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary)
     {
@@ -407,7 +458,6 @@ internal partial class ExcelChart : IExcelChart
     #endregion
 
     #region 图表设置 (IExcelChart)
-
     /// <summary>
     /// 获取或设置是否在图表中显示数据表
     /// </summary>
@@ -425,9 +475,9 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 获取或设置图表样式编号
     /// </summary>
-    public XlChartType ChartStyle
+    public MsoChartType ChartStyle
     {
-        get => _chart != null ? _chart.ChartStyle.ObjectConvertEnum(XlChartType.xl3DColumn) : XlChartType.xl3DColumn;
+        get => _chart != null ? _chart.ChartStyle.ObjectConvertEnum(MsoChartType.xl3DColumn) : MsoChartType.xl3DColumn;
         set
         {
             if (_chart != null)

@@ -92,11 +92,11 @@ namespace PivotTableApplicationSample
                 dataRange.Value = salesData;
 
                 // 创建数据透视表工作表
-                var pivotWorksheet = workbook.Worksheets.Add();
+                var pivotWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 pivotWorksheet.Name = "基础透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:E13"));
+                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:E13"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "BasicPivotTable");
@@ -112,9 +112,6 @@ namespace PivotTableApplicationSample
                 var dataField = pivotTable.PivotFields("销售金额");
                 dataField.Orientation = XlPivotFieldOrientation.xlDataField;
                 dataField.Function = XlConsolidationFunction.xlSum;
-
-                // 设置数据透视表样式
-                pivotTable.TableStyle2 = "PivotStyleLight16";
 
                 // 自动调整列宽
                 sourceWorksheet.Columns.AutoFit();
@@ -184,11 +181,11 @@ namespace PivotTableApplicationSample
                 dataRange.Value = detailedSalesData;
 
                 // 创建数据透视表工作表
-                var pivotWorksheet = workbook.Worksheets.Add();
+                var pivotWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 pivotWorksheet.Name = "销售透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:H16"));
+                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:H16"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "SalesPivotTable");
@@ -222,9 +219,6 @@ namespace PivotTableApplicationSample
                 pivotTable.RowGrand = true;  // 显示行总计
                 pivotTable.ColumnGrand = true;  // 显示列总计
                 pivotTable.HasAutoFormat = true;  // 自动套用格式
-
-                // 设置数据透视表样式
-                pivotTable.TableStyle2 = "PivotStyleMedium9";
 
                 // 自动调整列宽
                 sourceWorksheet.Columns.AutoFit();
@@ -292,11 +286,11 @@ namespace PivotTableApplicationSample
                 dataRange.Value = quarterlyData;
 
                 // 创建数据透视表工作表
-                var pivotWorksheet = workbook.Worksheets.Add();
+                var pivotWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 pivotWorksheet.Name = "多维透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:F16"));
+                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:F16"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "MultiDimensionalPivotTable");
@@ -324,9 +318,6 @@ namespace PivotTableApplicationSample
                 pivotTable.RowGrand = true;
                 pivotTable.ColumnGrand = true;
                 pivotTable.HasAutoFormat = true;
-
-                // 设置数据透视表样式
-                pivotTable.TableStyle2 = "PivotStyleDark10";
 
                 // 自动调整列宽
                 sourceWorksheet.Columns.AutoFit();
@@ -386,11 +377,11 @@ namespace PivotTableApplicationSample
                 dataRange.Value = productData;
 
                 // 创建数据透视表工作表
-                var pivotWorksheet = workbook.Worksheets.Add();
+                var pivotWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 pivotWorksheet.Name = "计算字段透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:D10"));
+                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:D10"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "CalculatedFieldPivotTable");
@@ -420,9 +411,6 @@ namespace PivotTableApplicationSample
                 // 设置数据透视表选项
                 pivotTable.RowGrand = true;
                 pivotTable.ColumnGrand = true;
-
-                // 设置数据透视表样式
-                pivotTable.TableStyle2 = "PivotStyleLight20";
 
                 // 格式化利润率字段为百分比
                 var profitMarginField = pivotTable.PivotFields("利润率");
@@ -486,11 +474,11 @@ namespace PivotTableApplicationSample
                 dataRange.Value = salesData;
 
                 // 创建数据透视表工作表
-                var pivotWorksheet = workbook.Worksheets.Add();
+                var pivotWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 pivotWorksheet.Name = "格式透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:D10"));
+                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:D10"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "FormattingPivotTable");
@@ -510,9 +498,6 @@ namespace PivotTableApplicationSample
                 dataField.Orientation = XlPivotFieldOrientation.xlDataField;
                 dataField.Function = XlConsolidationFunction.xlSum;
                 dataField.NumberFormat = "¥#,##0";
-
-                // 设置数据透视表样式
-                pivotTable.TableStyle2 = "PivotStyleMedium4";
 
                 // 设置数据透视表选项
                 pivotTable.ShowTableStyleRowStripes = true;
@@ -586,11 +571,11 @@ namespace PivotTableApplicationSample
                 dataRange.Value = detailedSalesData;
 
                 // 创建数据透视表工作表
-                var pivotWorksheet = workbook.Worksheets.Add();
+                var pivotWorksheet = workbook.Worksheets.Add() as IExcelWorksheet;
                 pivotWorksheet.Name = "筛选透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(sourceWorksheet.Range("A1:F13"));
+                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:F13"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "FilterPivotTable");
@@ -613,12 +598,6 @@ namespace PivotTableApplicationSample
                 dataField.Orientation = XlPivotFieldOrientation.xlDataField;
                 dataField.Function = XlConsolidationFunction.xlSum;
                 dataField.NumberFormat = "¥#,##0";
-
-                // 设置筛选器默认值
-                // 注意：根据实际API调整筛选器设置方式
-
-                // 设置数据透视表样式
-                pivotTable.TableStyle2 = "PivotStyleLight16";
 
                 // 自动调整列宽
                 sourceWorksheet.Columns.AutoFit();

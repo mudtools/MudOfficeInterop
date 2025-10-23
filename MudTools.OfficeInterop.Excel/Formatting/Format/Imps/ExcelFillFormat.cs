@@ -62,13 +62,13 @@ internal class ExcelFillFormat : IExcelFillFormat
         get => _fillFormat != null ? _fillFormat.Pattern.EnumConvert(MsoPatternType.msoPattern5Percent) : MsoPatternType.msoPattern5Percent;
     }
 
-    public int Transparency
+    public float Transparency
     {
-        get => _fillFormat != null ? Convert.ToInt32(_fillFormat.Transparency * 100) : 0;
+        get => _fillFormat != null ? _fillFormat.Transparency : 0;
         set
         {
             if (_fillFormat != null)
-                _fillFormat.Transparency = value / 100.0f;
+                _fillFormat.Transparency = value;
         }
     }
 
@@ -216,5 +216,36 @@ internal class ExcelFillFormat : IExcelFillFormat
     public void UserTextured(string TextureFile)
     {
         _fillFormat?.UserTextured(TextureFile);
+    }
+
+    public void OneColorGradient(MsoGradientStyle style, int variant, float degree)
+    {
+        _fillFormat?.OneColorGradient(style.EnumConvert(MsCore.MsoGradientStyle.msoGradientMixed), variant, degree);
+    }
+
+    public void Patterned(MsoPatternType pattern)
+    {
+        _fillFormat?.Patterned(pattern.EnumConvert(MsCore.MsoPatternType.msoPatternMixed));
+    }
+
+    public void PresetTextured(MsoPresetTexture PresetTexture)
+    {
+        _fillFormat?.PresetTextured(PresetTexture.EnumConvert(MsCore.MsoPresetTexture.msoPresetTextureMixed));
+    }
+
+
+    public void TwoColorGradient(MsoGradientStyle style, int variant)
+    {
+        _fillFormat?.TwoColorGradient(style.EnumConvert(MsCore.MsoGradientStyle.msoGradientMixed), variant);
+    }
+
+    public void Solid()
+    {
+        _fillFormat?.Solid();
+    }
+
+    public void Background()
+    {
+        _fillFormat?.Background();
     }
 }

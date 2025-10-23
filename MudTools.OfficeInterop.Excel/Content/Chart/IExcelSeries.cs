@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -23,19 +23,25 @@ public interface IExcelSeries : IDisposable
     /// 获取数据系列的父对象 (通常是 SeriesCollection)
     /// 对应 Series.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据系列所在的 Application 对象
     /// 对应 Series.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置系列的图表类型
     /// 对应 Series.ChartType 属性
     /// </summary>
-    int ChartType { get; set; }
+    MsoChartType ChartType { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据系列的坐标轴组
+    /// 对应 Series.AxisGroup 属性
+    /// </summary>
+    XlAxisGroup AxisGroup { get; set; }
 
     /// <summary>
     /// 获取或设置系列的公式
@@ -67,44 +73,44 @@ public interface IExcelSeries : IDisposable
     /// 获取或设置系列的X轴值区域
     /// 对应 Series.XValues 属性，可以是 object[] 或 IExcelRange
     /// </summary>
-    object XValues { get; set; }
+    object? XValues { get; set; }
 
     /// <summary>
     /// 获取或设置系列的Y轴值区域
     /// 对应 Series.Values 属性，可以是 object[] 或 IExcelRange
     /// </summary>
-    object Values { get; set; }
+    object? Values { get; set; }
 
     /// <summary>
     /// 获取或设置系列的气泡大小值区域 (气泡图)， 可以是 object[] 或 IExcelRange
     /// 对应 Series.BubbleSizes 属性
     /// </summary>
-    object BubbleSizes { get; set; }
+    object? BubbleSizes { get; set; }
     #endregion
 
     #region 格式设置
     /// <summary>
     /// 获取绘图区的字体对象
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
 
     /// <summary>
     /// 获取系列的背景填充对象
     /// 对应 Series.Format.Fill 属性
     /// </summary>
-    IExcelChartFillFormat Fill { get; }
+    IExcelChartFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取系列的边框对象
     /// 对应 Series.Format.Line 属性
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取或设置系列的标记样式
     /// 对应 Series.MarkerStyle 属性
     /// </summary>
-    int MarkerStyle { get; set; } // 使用 int 代表 XlMarkerStyle
+    XlMarkerStyle MarkerStyle { get; set; }
 
     /// <summary>
     /// 获取或设置系列的标记大小
@@ -184,23 +190,58 @@ public interface IExcelSeries : IDisposable
     /// 获取样式的内部格式对象
     /// 对应 Style.Interior 属性
     /// </summary>
-    IExcelInterior Interior { get; }
-
-    /// <summary>
-    /// 获取系列的趋势线集合
-    /// 对应 Series.Trendlines 属性
-    /// </summary>
-    IExcelTrendlines Trendlines { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取系列的X轴误差线
     /// 对应 Series.ErrorBars 属性 (通常指Y轴误差线，X轴需要特殊获取)
     /// </summary>
-    IExcelErrorBars ErrorBars { get; } // 通常指 Y Error Bars
+    IExcelErrorBars? ErrorBars { get; } // 通常指 Y Error Bars
 
     #endregion
 
     #region 操作方法
+    /// <summary>
+    /// 为数据系列添加误差线
+    /// 对应 Series.ErrorBar 方法
+    /// </summary>
+    /// <param name="direction">误差线方向，水平(X轴)或垂直(Y轴)</param>
+    /// <param name="include">误差线包含范围，正误差线、负误差线或两者都包含</param>
+    /// <param name="type">误差线类型，如固定值、百分比、标准偏差等</param>
+    /// <param name="amount">正误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
+    /// <param name="minusValues">负误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
+    void ErrorBar(XlErrorBarDirection direction, XlErrorBarInclude include, XlErrorBarType type, float? amount = null, float? minusValues = null);
+
+    /// <summary>
+    /// 获取数据系列的所有趋势线集合
+    /// 对应 Series.Trendlines() 方法
+    /// </summary>
+    /// <returns>趋势线集合 <see cref="IExcelTrendlines"/> 对象，如果获取失败则返回 null</returns>
+    IExcelTrendlines? Trendlines();
+
+    /// <summary>
+    /// 获取指定类型的趋势线对象
+    /// 对应 Series.Trendlines(type) 方法
+    /// </summary>
+    /// <param name="trendlineType">趋势线类型 <see cref="XlTrendlineType"/></param>
+    /// <returns>趋势线对象 <see cref="IExcelTrendline"/>，如果获取失败则返回 null</returns>
+    IExcelTrendline? Trendlines(XlTrendlineType trendlineType);
+
+    /// <summary>
+    /// 获取数据系列的所有数据标签集合
+    /// 对应 Series.DataLabels() 方法
+    /// </summary>
+    /// <returns>数据标签集合 <see cref="IExcelDataLabels"/> 对象，如果获取失败则返回 null</returns>
+    IExcelDataLabels? DataLabels();
+
+    /// <summary>
+    /// 获取数据系列中特定索引的数据标签
+    /// 对应 Series.DataLabels(object) 方法
+    /// </summary>
+    /// <param name="obj">指定要返回的数据标签的索引号或标识</param>
+    /// <returns>指定的数据标签 <see cref="IExcelDataLabel"/> 对象，如果获取失败则返回 null</returns>
+    IExcelDataLabel? DataLabels(object obj);
+
     /// <summary>
     /// 选择数据系列
     /// 对应 Series.Select 方法
@@ -241,11 +282,12 @@ public interface IExcelSeries : IDisposable
     /// <param name="showPercentage">是否显示百分比</param>
     /// <param name="showBubbleSize">是否显示气泡大小</param>
     /// <param name="separator">分隔符</param>
-    void ApplyDataLabels(int type = 2, bool legendKey = false, bool autoText = true,
-                         bool hasLeaderLines = false, bool showSeriesName = false,
-                         bool showCategoryName = false, bool showValue = true,
-                         bool showPercentage = false, bool showBubbleSize = false,
-                         object separator = null); // type=2 对应 xlDataLabelsShowValue
+    void ApplyDataLabels(XlDataLabelsType type = XlDataLabelsType.xlDataLabelsShowValue,
+                                  bool legendKey = false, bool autoText = true,
+                                  bool hasLeaderLines = false, bool showSeriesName = false,
+                                  bool showCategoryName = false, bool showValue = true,
+                                  bool showPercentage = false, bool showBubbleSize = false,
+                                  string? separator = null);
 
     #endregion
 
@@ -257,6 +299,6 @@ public interface IExcelSeries : IDisposable
     /// <param name="size">标记大小</param>
     /// <param name="backgroundColor">背景色</param>
     /// <param name="foregroundColor">前景色</param>
-    void SetMarker(int style, int size, int backgroundColor, int foregroundColor);
+    void SetMarker(XlMarkerStyle style, int size, int backgroundColor, int foregroundColor);
     #endregion    
 }

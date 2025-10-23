@@ -78,7 +78,7 @@ public interface IExcelRange : ICoreRange<IExcelRange>, IDisposable
     /// <param name="replace">是否替换现有汇总</param>
     /// <param name="pageBreaks">是否在组间插入分页符</param>
     /// <param name="summaryBelowData">汇总行位置</param>
-    void Subtotal(int groupBy, int function, object totalList, bool replace, bool pageBreaks, int summaryBelowData);
+    void Subtotal(int groupBy, XlConsolidationFunction function, object totalList, bool replace, bool pageBreaks, XlSummaryRow summaryBelowData);
 
 }
 

@@ -88,20 +88,24 @@ internal class ExcelInterior : IExcelInterior
     /// <summary>
     /// 获取或设置内部图案类型
     /// </summary>
-    public int Pattern
+    public XlPattern Pattern
     {
-        get => _interior != null ? Convert.ToInt32(_interior.Pattern) : 0;
+        get => _interior != null ? _interior.Pattern.ObjectConvertEnum(XlPattern.xlPatternAutomatic) : XlPattern.xlPatternAutomatic;
         set
         {
             if (_interior != null)
-                _interior.Pattern = value;
+                _interior.Pattern = value.EnumConvert(MsExcel.XlPattern.xlPatternAutomatic);
         }
     }
 
     public XlColorIndex ColorIndex
     {
-        get => (XlColorIndex)_interior.ColorIndex;
-        set => _interior.ColorIndex = (MsExcel.XlColorIndex)value;
+        get => _interior != null ? _interior.ColorIndex.ObjectConvertEnum(XlColorIndex.xlColorIndexAutomatic) : XlColorIndex.xlColorIndexAutomatic;
+        set
+        {
+            if (_interior != null)
+                _interior.ColorIndex = value.EnumConvert(MsExcel.XlColorIndex.xlColorIndexAutomatic);
+        }
     }
 
     /// <summary>
@@ -173,16 +177,16 @@ internal class ExcelInterior : IExcelInterior
     /// <summary>
     /// 获取内部对象所在的父对象
     /// </summary>
-    public object Parent => _interior?.Parent;
+    public object? Parent => _interior?.Parent;
 
     /// <summary>
     /// 获取内部对象所在的Application对象
     /// </summary>
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
-            var application = _interior?.Application as MsExcel.Application;
+            var application = _interior?.Application;
             return application != null ? new ExcelApplication(application) : null;
         }
     }
@@ -199,7 +203,7 @@ internal class ExcelInterior : IExcelInterior
         try
         {
             Color = Color.White; // 白色
-            Pattern = -4142;   // xlPatternAutomatic
+            Pattern = XlPattern.xlPatternAutomatic;   // xlPatternAutomatic
             PatternColor = Color.Black; // 黑色
             ThemeColor = Color.Black;   // 默认主题颜色
             TintAndShade = 0; // 无着色和阴影
@@ -233,124 +237,6 @@ internal class ExcelInterior : IExcelInterior
         catch
         {
             // 忽略复制格式过程中的异常
-        }
-    }
-
-    /// <summary>
-    /// 应用预设样式
-    /// </summary>
-    /// <param name="presetStyle">预设样式类型</param>
-    public void ApplyPresetStyle(int presetStyle)
-    {
-        if (_interior == null) return;
-
-        try
-        {
-            switch (presetStyle)
-            {
-                case 1: // 实心填充
-                    Color = Color.White; // 白色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 2: // 灰色填充
-                    Color = Color.Gray; // 灰色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 3: // 蓝色填充
-                    Color = Color.Blue; // 蓝色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 4: // 红色填充
-                    Color = Color.Red;      // 红色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 5: // 绿色填充
-                    Color = Color.Green;    // 绿色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 6: // 黄色填充
-                    Color = Color.Yellow;    // 黄色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 7: // 洋红色填充
-                    Color = Color.MediumVioletRed; // 洋红色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 8: // 青色填充
-                    Color = Color.DarkGreen;    // 青色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-                case 9: // 黑色填充
-                    Color = Color.Black;        // 黑色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.White; // 白色
-                    break;
-                default:
-                    // 默认样式
-                    Color = Color.White; // 白色
-                    Pattern = -4142;   // xlPatternAutomatic
-                    PatternColor = Color.Black;  // 黑色
-                    break;
-            }
-        }
-        catch
-        {
-            // 忽略应用预设样式过程中的异常
-        }
-    }
-
-    #endregion
-
-    #region 导出和转换
-
-    /// <summary>
-    /// 导出内部对象到文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <param name="overwrite">是否覆盖已存在文件</param>
-    /// <returns>是否导出成功</returns>
-    public bool Export(string filename, bool overwrite = true)
-    {
-        if (_interior == null || string.IsNullOrEmpty(filename))
-            return false;
-
-        try
-        {
-            // 验证文件扩展名
-            string extension = System.IO.Path.GetExtension(filename)?.ToLower();
-            if (string.IsNullOrEmpty(extension))
-            {
-                filename += ".txt";
-            }
-
-            // 检查是否覆盖
-            if (System.IO.File.Exists(filename) && !overwrite)
-                return false;
-
-            using StreamWriter writer = new System.IO.StreamWriter(filename, false, System.Text.Encoding.UTF8);
-            writer.WriteLine("Excel Interior Export");
-            writer.WriteLine("====================");
-            writer.WriteLine($"Export Date: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-            writer.WriteLine($"Color: {Color}");
-            writer.WriteLine($"Pattern: {Pattern}");
-            writer.WriteLine($"PatternColor: {PatternColor}");
-            writer.WriteLine($"ThemeColor: {ThemeColor}");
-            writer.WriteLine($"TintAndShade: {TintAndShade}");
-            writer.WriteLine($"PatternThemeColor: {PatternThemeColor}");
-            writer.WriteLine($"PatternTintAndShade: {PatternTintAndShade}");
-            return true;
-        }
-        catch
-        {
-            return false;
         }
     }
     #endregion

@@ -543,7 +543,7 @@ internal class ExcelStyle : IExcelStyle
 
             // 重置填充属性
             Interior.Color = Color.White; // 白色
-            Interior.Pattern = -4142;  // xlPatternAutomatic
+            Interior.Pattern = XlPattern.xlPatternAutomatic;  // xlPatternAutomatic
             Interior.PatternColor = Color.Black; // 黑色
         }
         catch (Exception ex)

@@ -350,6 +350,12 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
     IExcelPivotTables? PivotTables();
 
     /// <summary>
+    /// 获取工作表所在工作簿的数据透视表缓存集合
+    /// </summary>
+    /// <returns>数据透视表缓存集合对象，如果获取失败则返回null</returns>
+    IExcelPivotCaches? PivotCaches();
+
+    /// <summary>
     /// 获取工作表的图表对象集合
     /// </summary>
     IExcelChartObjects? ChartObjects();

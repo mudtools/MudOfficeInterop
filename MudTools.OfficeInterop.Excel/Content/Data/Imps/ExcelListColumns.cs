@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 // =============================================
 internal class ExcelListColumns : IExcelListColumns
 {
-    internal MsExcel.ListColumns _listColumns;
+    internal MsExcel.ListColumns? _listColumns;
+    private DisposableList _disposables = new();
     private bool _disposedValue = false;
 
     /// <summary>
@@ -27,47 +28,51 @@ internal class ExcelListColumns : IExcelListColumns
     /// <summary>
     /// 获取集合中列的总数。
     /// </summary>
-    public int Count => _listColumns.Count;
+    public int Count => _listColumns?.Count ?? 0;
 
     /// <summary>
     /// 通过索引（从 1 开始）获取指定的列。
     /// </summary>
     /// <param name="index">列索引（1-based）</param>
     /// <returns>对应的列对象</returns>
-    public IExcelListColumn this[int index]
+    public IExcelListColumn? this[int index]
     {
         get
         {
-            if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelListColumns));
-            return new ExcelListColumn((MsExcel.ListColumn)_listColumns[index]);
+            if (_listColumns == null) return null;
+            var col = new ExcelListColumn(_listColumns[index]);
+            _disposables.Add(col);
+            return col;
         }
     }
 
     /// <summary>
     /// 获取此集合所属的父对象（通常是 ListObject）。
     /// </summary>
-    public object Parent => _listColumns.Parent;
+    public object? Parent => _listColumns?.Parent;
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
-    public IExcelApplication Application => new ExcelApplication(_listColumns.Application);
+    public IExcelApplication? Application => _listColumns != null ? new ExcelApplication(_listColumns.Application) : null;
 
     /// <summary>
     /// 向集合中添加一个新列（插入在末尾或指定位置）。
     /// </summary>
     /// <param name="position">插入位置（可选，默认为末尾）</param>
     /// <returns>新创建的列对象</returns>
-    public IExcelListColumn Add(int? position = null)
+    public IExcelListColumn? Add(int? position = null)
     {
-        if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelListColumns));
+        if (_listColumns == null) return null;
         MsExcel.ListColumn newColumn;
         if (position.HasValue)
             newColumn = _listColumns.Add(position.Value);
         else
-            newColumn = _listColumns.Add(); // 默认添加到末尾
+            newColumn = _listColumns.Add();
 
-        return new ExcelListColumn(newColumn);
+        var col = new ExcelListColumn(newColumn);
+        _disposables.Add(col);
+        return col;
     }
 
     #region IEnumerable<IExcelListColumn> Support
@@ -78,11 +83,12 @@ internal class ExcelListColumns : IExcelListColumns
     /// <returns>枚举器</returns>
     public IEnumerator<IExcelListColumn> GetEnumerator()
     {
-        if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelListColumns));
+        if (_listColumns == null)
+            yield break;
 
         for (int i = 1; i <= _listColumns.Count; i++)
         {
-            yield return new ExcelListColumn((MsExcel.ListColumn)_listColumns[i]);
+            yield return this[i];
         }
     }
 
@@ -107,13 +113,11 @@ internal class ExcelListColumns : IExcelListColumns
     {
         if (_disposedValue) return;
 
-        if (disposing)
+        if (disposing && _listColumns != null)
         {
-            if (_listColumns != null)
-            {
-                Marshal.ReleaseComObject(_listColumns);
-                _listColumns = null;
-            }
+            Marshal.ReleaseComObject(_listColumns);
+            _listColumns = null;
+            _disposables.Dispose();
         }
 
         _disposedValue = true;

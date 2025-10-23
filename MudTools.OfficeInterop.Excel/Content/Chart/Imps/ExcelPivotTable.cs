@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelPivotTable : IExcelPivotTable
 {
-    private MsExcel.PivotTable? _pivotTable;
+    internal MsExcel.PivotTable? _pivotTable;
     private bool _disposedValue = false;
 
     internal ExcelPivotTable(MsExcel.PivotTable pivotTable)
@@ -23,33 +23,83 @@ internal class ExcelPivotTable : IExcelPivotTable
     #region 基础属性
     public string Name
     {
-        get => _pivotTable.Name;
-        set => _pivotTable.Name = value;
+        get => _pivotTable?.Name ?? string.Empty;
+        set
+        {
+            if (_pivotTable != null)
+            {
+                _pivotTable.Name = value;
+            }
+        }
     }
 
-    public object Parent => _pivotTable.Parent;
+    public object? Parent => _pivotTable?.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_pivotTable.Application);
+    public IExcelApplication? Application => _pivotTable != null ? new ExcelApplication(_pivotTable.Application) : null;
 
-    public IExcelPivotCache PivotCache() => new ExcelPivotCache(_pivotTable.PivotCache());
+    public IExcelPivotCache? PivotCache() => _pivotTable != null ? new ExcelPivotCache(_pivotTable.PivotCache()) : null;
 
-    public object SourceData => _pivotTable.SourceData;
+    public object? SourceData
+    {
+        get
+        {
+            var srcObj = CreateSourceObj(_pivotTable?.SourceData);
+            return srcObj;
+        }
+        set
+        {
+            if (_pivotTable != null && value != null)
+            {
+                object? val = GetSourceObj(value);
+                if (val != null) _pivotTable.SourceData = val;
+            }
+        }
+    }
 
-    public int Version => (int)_pivotTable.Version;
+    private object? GetSourceObj(object? sourceData)
+    {
+        object? comSourceData = null;
+        if (sourceData is ExcelRange rrange && rrange.InternalRange != null)
+            comSourceData = rrange.InternalRange;
+        else if (sourceData is ExcelListObject lo && lo._listObject != null)
+            comSourceData = lo._listObject;
+        else if (sourceData is ExcelPivotTable dt && dt._pivotTable != null)
+            comSourceData = dt._pivotTable;
+        else if (sourceData is string sourceString)
+            comSourceData = sourceString;
+        else
+            comSourceData = null;
+        return comSourceData;
+    }
+
+    private object CreateSourceObj(object? sourceData)
+    {
+        object comSourceData = Type.Missing;
+        if (sourceData is MsExcel.Range rrange)
+            comSourceData = new ExcelRange(rrange);
+        else if (sourceData is MsExcel.ListObject lo)
+            comSourceData = new ExcelListObject(lo);
+        else if (sourceData is MsExcel.PivotTable dt)
+            comSourceData = new ExcelPivotTable(dt);
+        else if (sourceData is string sourceString)
+            comSourceData = sourceString;
+        return comSourceData;
+    }
+
+    public XlPivotTableVersionList Version => _pivotTable?.Version.EnumConvert(XlPivotTableVersionList.xlPivotTableVersionCurrent) ?? XlPivotTableVersionList.xlPivotTableVersionCurrent;
 
     #endregion
 
     #region 数据和字段
-    public IExcelRange DataBodyRange => new ExcelRange(_pivotTable.DataBodyRange);
-    public IExcelRange TableRange1 => new ExcelRange(_pivotTable.TableRange1);
-    public IExcelRange TableRange2 => new ExcelRange(_pivotTable.TableRange2);
-    public IExcelPivotFields PivotFields => new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.PivotFields());
-    public IExcelPivotFields PageFields => new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.PageFields);
-    public IExcelPivotFields RowFields => new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.RowFields);
-    public IExcelPivotFields ColumnFields => new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.ColumnFields);
-    public IExcelPivotFields DataFields => new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.DataFields);
-    public IExcelPivotFields VisibleFields => new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.VisibleFields);
-    public IExcelPivotFields HiddenFields => new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.HiddenFields);
+    public IExcelRange? DataBodyRange => _pivotTable != null ? new ExcelRange(_pivotTable.DataBodyRange) : null;
+    public IExcelRange? TableRange1 => _pivotTable != null ? new ExcelRange(_pivotTable.TableRange1) : null;
+    public IExcelRange? TableRange2 => _pivotTable != null ? new ExcelRange(_pivotTable.TableRange2) : null;
+    public IExcelPivotFields? PageFields => _pivotTable != null ? new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.PageFields) : null;
+    public IExcelPivotFields? RowFields => _pivotTable != null ? new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.RowFields) : null;
+    public IExcelPivotFields? ColumnFields => _pivotTable != null ? new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.ColumnFields) : null;
+    public IExcelPivotFields? DataFields => _pivotTable != null ? new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.DataFields) : null;
+    public IExcelPivotFields? VisibleFields => _pivotTable != null ? new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.VisibleFields) : null;
+    public IExcelPivotFields? HiddenFields => _pivotTable != null ? new ExcelPivotFields((MsExcel.PivotFields)_pivotTable.HiddenFields) : null;
     #endregion
 
     #region 格式和布局
@@ -58,26 +108,71 @@ internal class ExcelPivotTable : IExcelPivotTable
         get => new ExcelTableStyle(_pivotTable.TableStyle2 as MsExcel.TableStyle);
         set
         {
-            throw new NotImplementedException();
+            if (_pivotTable != null)
+            {
+                _pivotTable.TableStyle2 = ((ExcelTableStyle)value)._tableStyle;
+            }
         }
     }
 
-    public bool ShowRowStripes
+    public bool ShowTableStyleRowStripes
     {
-        get => _pivotTable.ShowTableStyleRowStripes;
-        set => _pivotTable.ShowTableStyleRowStripes = value;
+        get => _pivotTable?.ShowTableStyleRowStripes ?? false;
+        set
+        {
+            if (_pivotTable != null)
+                _pivotTable.ShowTableStyleRowStripes = value;
+        }
     }
 
-    public bool ShowColumnStripes
+    public bool ShowTableStyleColumnStripes
     {
-        get => _pivotTable.ShowTableStyleColumnStripes;
-        set => _pivotTable.ShowTableStyleColumnStripes = value;
+        get => _pivotTable?.ShowTableStyleColumnStripes ?? false;
+        set
+        {
+            if (_pivotTable != null)
+                _pivotTable.ShowTableStyleColumnStripes = value;
+        }
     }
 
-    public bool ShowLastColumn
+    public bool ShowTableStyleLastColumn
     {
-        get => _pivotTable.ShowTableStyleLastColumn;
-        set => _pivotTable.ShowTableStyleLastColumn = value;
+        get => _pivotTable?.ShowTableStyleLastColumn ?? false;
+        set
+        {
+            if (_pivotTable != null)
+                _pivotTable.ShowTableStyleLastColumn = value;
+        }
+    }
+
+    public bool RowGrand
+    {
+        get => _pivotTable?.RowGrand ?? false;
+        set
+        {
+            if (_pivotTable != null)
+                _pivotTable.RowGrand = value;
+        }
+    }
+
+    public bool ColumnGrand
+    {
+        get => _pivotTable?.ColumnGrand ?? false;
+        set
+        {
+            if (_pivotTable != null)
+                _pivotTable.ColumnGrand = value;
+        }
+    }
+
+    public bool HasAutoFormat
+    {
+        get => _pivotTable?.HasAutoFormat ?? false;
+        set
+        {
+            if (_pivotTable != null)
+                _pivotTable.HasAutoFormat = value;
+        }
     }
     #endregion
 
@@ -86,23 +181,55 @@ internal class ExcelPivotTable : IExcelPivotTable
     #endregion
 
     #region 操作方法
+
+    public IExcelPivotField? PivotFields(object Index)
+    {
+        if (_pivotTable == null) return null;
+        var pf = _pivotTable.PivotFields(Index);
+        if (pf is MsExcel.PivotField field)
+            return new ExcelPivotField(field);
+        return null;
+    }
+
+    public IExcelPivotFields? PivotFields()
+    {
+        if (_pivotTable == null) return null;
+        var pf = _pivotTable.PivotFields();
+        if (pf is MsExcel.PivotFields fields)
+            return new ExcelPivotFields(fields);
+        return null;
+    }
+
+    public IExcelCalculatedFields? CalculatedFields()
+    {
+        if (_pivotTable == null) return null;
+        var calFields = _pivotTable.CalculatedFields();
+        if (calFields is MsExcel.CalculatedFields fields)
+            return new ExcelCalculatedFields(fields);
+        return null;
+    }
+
     public void Select(bool replace = true)
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableRange1.Select();
     }
 
     public void Copy()
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableRange1.Copy();
     }
 
     public void Cut()
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableRange1.Cut();
     }
 
     public void Delete()
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableRange1.Clear();
     }
     #endregion
@@ -110,6 +237,7 @@ internal class ExcelPivotTable : IExcelPivotTable
     #region 数据透视表操作
     public void Refresh()
     {
+        if (_pivotTable == null) return;
         _pivotTable.RefreshTable();
     }
 
@@ -120,28 +248,33 @@ internal class ExcelPivotTable : IExcelPivotTable
 
     public void Clear()
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableRange1.ClearContents();
     }
 
     public void ClearFormats()
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableRange1.ClearFormats();
     }
 
     public void ClearAll()
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableRange1.Clear();
     }
 
-    public void ApplyAutoFormat(int format = 1)
+    public void ApplyAutoFormat(XlRangeAutoFormat format = XlRangeAutoFormat.xlRangeAutoFormatClassic1)
     {
-        _pivotTable.TableRange1.AutoFormat((MsExcel.XlRangeAutoFormat)format);
+        if (_pivotTable == null) return;
+        _pivotTable.TableRange1.AutoFormat(format.EnumConvert(MsExcel.XlRangeAutoFormat.xlRangeAutoFormatClassic1));
     }
     #endregion
 
     #region 格式设置
     public void SetStyle(string styleName)
     {
+        if (_pivotTable == null) return;
         _pivotTable.TableStyle2 = styleName;
     }
     #endregion
@@ -149,6 +282,7 @@ internal class ExcelPivotTable : IExcelPivotTable
     #region 高级功能
     public void PrintOut(bool preview = false)
     {
+        if (_pivotTable == null) return;
         if (preview)
         {
             _pivotTable.TableRange1.PrintPreview();
@@ -167,16 +301,8 @@ internal class ExcelPivotTable : IExcelPivotTable
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_pivotTable != null)
-                    Marshal.ReleaseComObject(_pivotTable);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            if (_pivotTable != null)
+                Marshal.ReleaseComObject(_pivotTable);
             _pivotTable = null;
         }
         _disposedValue = true;

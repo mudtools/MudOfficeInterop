@@ -200,6 +200,24 @@ public interface IExcelWorkbook : IDisposable
     /// 对应 Workbook.Subject 属性
     /// </summary>
     string? Subject { get; set; }
+
+    /// <summary>
+    /// 获取或设置工作簿的标题
+    /// 对应 Workbook.Title 属性
+    /// </summary>
+    string? Title { get; set; }
+
+    /// <summary>
+    /// 获取或设置工作簿的备注信息
+    /// 对应 Workbook.Comments 属性
+    /// </summary>
+    string? Comments { get; set; }
+
+    /// <summary>
+    /// 获取或设置工作簿的作者信息
+    /// 对应 Workbook.Author 属性
+    /// </summary>
+    string? Author { get; set; }
     #endregion
 
     #region 工作表管理 

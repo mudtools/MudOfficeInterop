@@ -9,7 +9,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelListObject : IExcelListObject
 {
-    private MsExcel.ListObject _listObject;
+    internal MsExcel.ListObject _listObject;
     private bool _disposedValue;
 
     internal ExcelListObject(MsExcel.ListObject listObject)

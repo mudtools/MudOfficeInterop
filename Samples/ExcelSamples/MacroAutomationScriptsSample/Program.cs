@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using MudTools.OfficeInterop;
+using MudTools.OfficeInterop.Vbe;
 using System.Drawing;
 
 namespace MacroAutomationScriptsSample
@@ -124,7 +125,7 @@ namespace MacroAutomationScriptsSample
 
                 // 添加VBA模块
                 var vbProject = workbook.VBProject;
-                var vbComponent = vbProject.VBComponents.Add(MsVBIDE.vbext_ComponentType.vbext_ct_StdModule);
+                var vbComponent = vbProject.VBComponents.Add(vbext_ComponentType.vbext_ct_StdModule);
                 vbComponent.Name = "SampleModule";
 
                 // 添加VBA代码
@@ -276,7 +277,7 @@ End Sub
 
                 // 添加VBA模块用于自动化脚本
                 var vbProject = workbook.VBProject;
-                var vbComponent = vbProject.VBComponents.Add(MsVBIDE.vbext_ComponentType.vbext_ct_StdModule);
+                var vbComponent = vbProject.VBComponents.Add(vbext_ComponentType.vbext_ct_StdModule);
                 vbComponent.Name = "AutomationModule";
 
                 // 添加复杂自动化脚本
@@ -416,7 +417,7 @@ End Sub
 
                 for (int i = 1; i <= workbook.VBProject.VBComponents.Count; i++)
                 {
-                    var component = workbook.VBProject.VBComponents.Item(i);
+                    var component = workbook.VBProject.VBComponents[i];
                     worksheet.Range($"A{6 + i}").Value = $"模块 {i}:";
                     worksheet.Range($"B{6 + i}").Value = component.Name;
                     worksheet.Range($"C{6 + i}").Value = component.Type.ToString();

@@ -5,6 +5,7 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Excel;
 
@@ -102,7 +103,7 @@ namespace AdvancedChartFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 修改利润率系列为折线图
-                var profitSeries = chart.SeriesCollection().Item(3);
+                var profitSeries = chart.SeriesCollection()[3];
                 profitSeries.ChartType = MsoChartType.xlLine;
 
                 // 设置次坐标轴
@@ -192,13 +193,13 @@ namespace AdvancedChartFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 设置动画效果
-                chart.ApplyDataTypes(); // 应用数据类型
+                chart.ApplyDataLabels(); // 应用数据类型
 
                 // 设置数据标签
                 var seriesCollection = chart.SeriesCollection();
                 for (int i = 1; i <= seriesCollection.Count; i++)
                 {
-                    var series = seriesCollection.Item(i);
+                    var series = seriesCollection[i];
                     series.HasDataLabels = true;
                     series.DataLabels().Position = XlDataLabelPosition.xlLabelPositionOutsideEnd;
                 }
@@ -348,7 +349,7 @@ namespace AdvancedChartFeaturesSample
                 dataRange.Value = salesData;
 
                 // 创建数据透视表
-                var pivotCache = worksheet.PivotCaches().Create(dataRange);
+                var pivotCache = worksheet.PivotCaches().Create(XlPivotTableSourceType.xlPivotTable, dataRange);
                 var pivotTable = worksheet.PivotTables().Add(pivotCache, worksheet.Range("E1"), "SalesPivotTable");
 
                 // 配置数据透视表字段
@@ -452,17 +453,16 @@ namespace AdvancedChartFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionRight;
 
                 // 应用图表样式
-                chart.ChartStyle = 209; // 应用预定义样式
+                chart.ChartStyle = MsoChartType.xl3DColumn; // 应用预定义样式
 
                 // 设置数据标签
-                var series = chart.SeriesCollection().Item(1);
+                var series = chart.SeriesCollection()[1];
                 series.HasDataLabels = true;
 
                 var dataLabels = series.DataLabels();
                 dataLabels.ShowCategoryName = true;
                 dataLabels.ShowValue = false;
                 dataLabels.ShowPercentage = true;
-                dataLabels.ShowLeaderLines = true;
                 dataLabels.Position = XlDataLabelPosition.xlLabelPositionBestFit;
 
                 // 设置数据系列格式
@@ -543,7 +543,7 @@ namespace AdvancedChartFeaturesSample
                 chart.ApplyLayout(3); // 应用预定义布局
 
                 // 应用图表样式
-                chart.ChartStyle = 210; // 应用预定义样式
+                chart.ChartStyle = MsoChartType.xlBarStacked; // 应用预定义样式
 
                 // 设置坐标轴标题
                 chart.Axes(XlAxisType.xlCategory).HasTitle = true;

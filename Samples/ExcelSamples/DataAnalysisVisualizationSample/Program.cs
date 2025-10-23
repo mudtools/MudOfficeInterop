@@ -623,7 +623,7 @@ namespace DataAnalysisVisualizationSample
                 pieChart.Legend.Position = XlLegendPosition.xlLegendPositionRight;
 
                 // 设置数据标签
-                var pieSeries = pieChart.SeriesCollection().Item(1);
+                var pieSeries = pieChart.SeriesCollection()[1];
                 pieSeries.HasDataLabels = true;
                 pieSeries.DataLabels().ShowCategoryName = true;
                 pieSeries.DataLabels().ShowPercentage = true;
@@ -674,7 +674,7 @@ namespace DataAnalysisVisualizationSample
                 comboChart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 修改增长率系列为折线图
-                var growthSeries = comboChart.SeriesCollection().Item(3);
+                var growthSeries = comboChart.SeriesCollection()[3];
                 growthSeries.ChartType = MsoChartType.xlLine;
 
                 // 设置次坐标轴
@@ -853,7 +853,7 @@ namespace DataAnalysisVisualizationSample
                 categoryChart.ChartTitle.Text = "按产品类别销售额分布";
                 categoryChart.HasLegend = true;
 
-                var categorySeries = categoryChart.SeriesCollection().Item(1);
+                var categorySeries = categoryChart.SeriesCollection()[1];
                 categorySeries.HasDataLabels = true;
                 categorySeries.DataLabels().ShowCategoryName = true;
                 categorySeries.DataLabels().ShowPercentage = true;

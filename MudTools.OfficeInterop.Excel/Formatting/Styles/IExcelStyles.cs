@@ -111,7 +111,7 @@ public interface IExcelStyles : IEnumerable<IExcelStyle>, IDisposable
     /// <param name="backgroundColor">背景色</param>
     /// <param name="pattern">图案类型</param>
     /// <returns>匹配的样式数组</returns>
-    IExcelStyle[] FindByColor(Color? foregroundColor = null, Color? backgroundColor = null, int pattern = -1);
+    IExcelStyle[] FindByColor(Color? foregroundColor = null, Color? backgroundColor = null, XlPattern pattern = XlPattern.xlPatternNone);
 
     /// <summary>
     /// 根据边框查找样式

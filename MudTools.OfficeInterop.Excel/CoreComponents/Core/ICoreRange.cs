@@ -765,13 +765,46 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// 对区域应用自动筛选
     /// 对应 Range.AutoFilter() 方法
     /// </summary>
-    void AutoFilter();
+    IExcelAutoFilter? AutoFilter();
+
+    /// <summary>
+    /// 对区域应用带条件的自动筛选
+    /// </summary>
+    /// <param name="field">指定要筛选的列（字段），从左开始计数，从1开始</param>
+    /// <param name="criteria1">筛选条件1，例如">=1000"</param>
+    /// <param name="operator">筛选操作符，默认为xlAnd（逻辑与）</param>
+    /// <param name="criteria2">筛选条件2，当需要多个条件时使用</param>
+    /// <param name="VisibleDropDown">是否显示下拉箭头，默认为null表示使用默认行为</param>
+    /// <returns>返回筛选器对象</returns>
+    IExcelAutoFilter? AutoFilter(int? field, string? criteria1,
+     XlAutoFilterOperator @operator = XlAutoFilterOperator.xlAnd, string? criteria2 = null, bool? VisibleDropDown = null);
+
+    /// <summary>
+    /// 执行高级筛选操作，可以根据复杂的条件筛选数据或将筛选结果复制到指定位置
+    /// </summary>
+    /// <param name="action">筛选动作，包括在原地筛选或复制到新位置</param>
+    /// <param name="criteriaRange">包含筛选条件的区域</param>
+    /// <param name="copyToRange">筛选结果复制的目标区域，仅当action为xlFilterCopy时有效</param>
+    /// <param name="unique">是否只筛选唯一值，默认为null表示筛选所有匹配项</param>
+    void AdvancedFilter(XlFilterAction action, IExcelRange? criteriaRange, IExcelRange? copyToRange, bool? unique = null);
+
+    /// <summary>
+    /// 对数据进行分组操作，常用于创建分级显示或数据透视图
+    /// </summary>
+    /// <param name="start">分组起始值</param>
+    /// <param name="end">分组结束值</param>
+    /// <param name="by">分组间隔</param>
+    /// <param name="periods">时间段分组选项</param>
+    /// <returns>返回分组操作结果</returns>
+    void Group(object? start = null, object? end = null, object? by = null, object? periods = null);
 
     /// <summary>
     /// 移除区域的自动筛选
     /// 对应 Range.AutoFilter() 方法
     /// </summary>
     void RemoveAutoFilter();
+
+    void RemoveDuplicates(object Columns, XlYesNoGuess Header = XlYesNoGuess.xlNo);
 
     /// <summary>
     /// 对区域进行排序

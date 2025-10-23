@@ -348,7 +348,7 @@ namespace ChartCreationConfigurationSample
                 chart.Axes(XlAxisType.xlCategory).AxisTitle.Text = "销售额";
 
                 // 设置数据标签
-                var series = chart.SeriesCollection().Item(1);
+                var series = chart.SeriesCollection()[1];
                 series.HasDataLabels = true;
                 series.DataLabels().Position = XlDataLabelPosition.xlLabelPositionInsideEnd;
                 series.DataLabels().NumberFormat = "¥#,##0";
@@ -606,7 +606,7 @@ namespace ChartCreationConfigurationSample
                 var seriesCollection = chart.SeriesCollection();
                 for (int i = 1; i <= seriesCollection.Count; i++)
                 {
-                    var series = seriesCollection.Item(i);
+                    var series = seriesCollection[i];
                     if (i != 3) // 利润率系列不显示数据标签
                     {
                         series.HasDataLabels = true;

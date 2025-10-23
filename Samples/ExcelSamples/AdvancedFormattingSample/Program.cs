@@ -367,7 +367,7 @@ namespace AdvancedFormattingSample
                 verticalMergeRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
                 verticalMergeRange.Merge();
                 verticalMergeRange.Interior.Color = Color.LightGreen;
-                verticalMergeRange.Orientation = 90; // 垂直文本
+                verticalMergeRange.Orientation = XlOrientation.xlVertical; // 垂直文本
 
                 // 合并后居中
                 var centerMergeRange = worksheet.Range("C5:E10");

@@ -27,7 +27,7 @@ public interface IExcelInterior : IDisposable
     /// 获取或设置内部图案类型
     /// 对应 Interior.Pattern 属性
     /// </summary>
-    int Pattern { get; set; }
+    XlPattern Pattern { get; set; }
 
     /// <summary>
     /// 获取或设置内部颜色索引
@@ -69,13 +69,13 @@ public interface IExcelInterior : IDisposable
     /// 获取内部对象所在的父对象
     /// 对应 Interior.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取内部对象所在的Application对象
     /// 对应 Interior.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     #endregion
 
@@ -90,25 +90,5 @@ public interface IExcelInterior : IDisposable
     /// </summary>
     /// <param name="sourceInterior">源内部对象</param>
     void CopyFormat(IExcelInterior sourceInterior);
-
-    /// <summary>
-    /// 应用预设样式
-    /// </summary>
-    /// <param name="presetStyle">预设样式类型</param>
-    void ApplyPresetStyle(int presetStyle);
-
     #endregion
-
-    #region 导出和转换
-
-    /// <summary>
-    /// 导出内部对象到文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <param name="overwrite">是否覆盖已存在文件</param>
-    /// <returns>是否导出成功</returns>
-    bool Export(string filename, bool overwrite = true);
-
-    #endregion
-
 }

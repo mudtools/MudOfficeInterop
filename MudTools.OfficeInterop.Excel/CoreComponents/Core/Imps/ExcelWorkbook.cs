@@ -183,6 +183,36 @@ internal partial class ExcelWorkbook : IExcelWorkbook
         }
     }
 
+    public string? Title
+    {
+        get => _workbook?.Title;
+        set
+        {
+            if (_workbook != null)
+                _workbook.Title = value;
+        }
+    }
+
+    public string? Comments
+    {
+        get => _workbook?.Comments;
+        set
+        {
+            if (_workbook != null)
+                _workbook.Comments = value;
+        }
+    }
+
+    public string? Author
+    {
+        get => _workbook?.Author;
+        set
+        {
+            if (_workbook != null)
+                _workbook.Author = value;
+        }
+    }
+
     public bool IsAddin
     {
         get => _workbook != null && _workbook.IsAddin;

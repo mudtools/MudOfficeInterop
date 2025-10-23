@@ -18,10 +18,30 @@ public enum XlSummaryRow
     /// 汇总行显示在明细行的上方
     /// </summary>
     xlSummaryAbove,
-    
+
     /// <summary>
     /// 汇总行在下方
     /// 汇总行显示在明细行的下方
     /// </summary>
     xlSummaryBelow
+}
+
+/// <summary>
+/// 汇总列位置枚举
+/// 用于指定在创建分级显示或数据透视表时，汇总列相对于明细列的位置
+/// </summary>
+public enum XlSummaryColumn
+{
+
+    /// <summary>
+    /// 汇总列在左侧
+    /// 汇总列显示在明细列的左侧
+    /// </summary>
+    xlSummaryOnLeft = -4131,
+
+    /// <summary>
+    /// 汇总列在右侧
+    /// 汇总列显示在明细列的右侧
+    /// </summary>
+    xlSummaryOnRight = -4152
 }

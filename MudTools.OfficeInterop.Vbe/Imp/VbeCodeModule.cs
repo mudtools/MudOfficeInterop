@@ -60,6 +60,18 @@ internal class VbeCodeModule : IVbeCodeModule
         }
     }
 
+    public void AddFromString(string codeText)
+    {
+        try
+        {
+            _codeModule.AddFromString(codeText);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error adding code: {ex.Message}");
+        }
+    }
+
     public string GetAllCode()
     {
         if (_codeModule.CountOfLines > 0)

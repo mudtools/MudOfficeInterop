@@ -147,7 +147,7 @@ namespace FormulaFunctionApplicationSample
                 worksheet.Range("C1").Value = "成本";
                 worksheet.Range("D1").Value = "利润";
 
-                string[,] salesData = {
+                object[,] salesData = {
                     {"1月", 50000, 30000},
                     {"2月", 55000, 32000},
                     {"3月", 60000, 35000},

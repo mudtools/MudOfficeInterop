@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -43,13 +43,22 @@ public interface IExcelPivotCaches : IEnumerable<IExcelPivotCache>, IDisposable
     #region 创建和添加
     /// <summary>
     /// 向集合中添加新的数据透视表缓存
+    /// 对应 PivotCaches.Add 方法
+    /// </summary>
+    /// <param name="sourceType">数据源类型</param>
+    /// <param name="sourceData">数据源</param>
+    /// <returns>新创建的数据透视表缓存对象</returns>
+    IExcelPivotCache? Add(XlPivotTableSourceType sourceType, object sourceData);
+
+    /// <summary>
+    /// 向集合中添加新的数据透视表缓存
     /// 对应 PivotCaches.Create 方法
     /// </summary>
     /// <param name="sourceType">数据源类型</param>
     /// <param name="sourceData">数据源</param>
     /// <param name="version">数据透视表版本</param>
     /// <returns>新创建的数据透视表缓存对象</returns>
-    IExcelPivotCache Create(int sourceType, object sourceData, object version = null);
+    IExcelPivotCache? Create(XlPivotTableSourceType sourceType, object? sourceData = null, object? version = null);
     #endregion
 
     #region 查找和筛选  

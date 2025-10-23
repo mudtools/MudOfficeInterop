@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 // =============================================
 internal class ExcelListColumn : IExcelListColumn
 {
-    internal MsExcel.ListColumn _listColumn;
+    internal MsExcel.ListColumn? _listColumn;
+    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelListColumn));
     private bool _disposedValue = false;
 
     /// <summary>
@@ -27,99 +28,78 @@ internal class ExcelListColumn : IExcelListColumn
     /// <summary>
     /// 获取此列所属的父对象（通常是 ListObject）。
     /// </summary>
-    public object Parent => _listColumn.Parent;
+    public object? Parent => _listColumn?.Parent;
 
     /// <summary>
     /// 获取此列所属的 Excel 应用程序对象。
     /// </summary>
-    public IExcelApplication Application => new ExcelApplication(_listColumn.Application);
+    public IExcelApplication? Application => _listColumn != null ? new ExcelApplication(_listColumn.Application) : null;
 
     /// <summary>
     /// 获取此列在 ListColumns 集合中的索引（从 1 开始）。
     /// </summary>
-    public int Index => _listColumn.Index;
+    public int Index => _listColumn?.Index ?? 0;
 
     /// <summary>
     /// 获取或设置此列的标题名称（即表头）。
     /// </summary>
     public string Name
     {
-        get => _listColumn.Name;
-        set => _listColumn.Name = value ?? throw new ArgumentNullException(nameof(value));
+        get => _listColumn?.Name ?? string.Empty;
+        set
+        {
+            if (_listColumn != null)
+                _listColumn.Name = value;
+        }
     }
 
     /// <summary>
     /// 获取此列对应的数据范围（DataBodyRange），不包含标题。
     /// 如果表无数据行，则可能为 null。
     /// </summary>
-    public IExcelRange? DataBodyRange
-    {
-        get
-        {
-            var range = _listColumn.DataBodyRange;
-            return range != null ? new ExcelRange(range) : null;
-        }
-    }
+    public IExcelRange? DataBodyRange => _listColumn != null ? new ExcelRange(_listColumn.DataBodyRange) : null;
 
     /// <summary>
     /// 获取此列的整个范围（包括标题和数据体）。
     /// </summary>
-    public IExcelRange? Range
-    {
-        get
-        {
-            var range = _listColumn.Range;
-            return range != null ? new ExcelRange(range) : null;
-        }
-    }
+    public IExcelRange? Range => _listColumn != null ? new ExcelRange(_listColumn.Range) : null;
 
     /// <summary>
     /// 获取或设置此列的总计行公式（仅当 ListObject.ShowTotals = true 时有效）。
     /// </summary>
     public XlTotalsCalculation TotalsCalculation
     {
-        get => _listColumn.TotalsCalculation.EnumConvert(XlTotalsCalculation.xlTotalsCalculationCount);
-        set => _listColumn.TotalsCalculation = value.EnumConvert(MsExcel.XlTotalsCalculation.xlTotalsCalculationCount);
-    }
-
-    public IExcelListDataFormat? ListDataFormat
-    {
-        get
+        get => _listColumn != null ? _listColumn.TotalsCalculation.EnumConvert(XlTotalsCalculation.xlTotalsCalculationCount) : XlTotalsCalculation.xlTotalsCalculationCount;
+        set
         {
-            var format = _listColumn.ListDataFormat;
-            return format != null ? new ExcelListDataFormat(format) : null;
+            if (_listColumn != null)
+                _listColumn.TotalsCalculation = value.EnumConvert(MsExcel.XlTotalsCalculation.xlTotalsCalculationCount);
         }
-
     }
+
+    public IExcelListDataFormat? ListDataFormat => _listColumn != null ? new ExcelListDataFormat(_listColumn.ListDataFormat) : null;
 
     /// <summary>
     /// 删除此列（将从表格中移除该列）。
     /// </summary>
     public void Delete()
     {
-        if (_disposedValue) throw new ObjectDisposedException(nameof(ExcelListColumn));
+        if (_listColumn == null) throw new ObjectDisposedException(nameof(ExcelListColumn));
         try
         {
             _listColumn.Delete();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"删除列 '{this.Name}' 失败: {ex.Message}");
-            throw; // 重新抛出，让调用方决定如何处理
+            log.Error($"删除列 '{this.Name}' 失败: {ex.Message}");
+            throw;
         }
     }
 
     /// <summary>
     /// 获取此列对应的总计行单元格（仅当启用总计行时有效）。
     /// </summary>
-    public IExcelRange Total
-    {
-        get
-        {
-            var range = _listColumn.Total;
-            return range != null ? new ExcelRange(range) : null;
-        }
-    }
+    public IExcelRange? Total => _listColumn != null ? new ExcelRange(_listColumn.Total) : null;
 
     #region IDisposable Support
 
@@ -131,13 +111,10 @@ internal class ExcelListColumn : IExcelListColumn
     {
         if (_disposedValue) return;
 
-        if (disposing)
+        if (disposing && _listColumn != null)
         {
-            if (_listColumn != null)
-            {
-                Marshal.ReleaseComObject(_listColumn);
-                _listColumn = null;
-            }
+            Marshal.ReleaseComObject(_listColumn);
+            _listColumn = null;
         }
 
         _disposedValue = true;

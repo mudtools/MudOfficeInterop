@@ -36,6 +36,30 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// </summary>
     double Rotation { get; set; }
 
+    /// <summary>
+    /// 获取或设置三维图表的视角高度
+    /// 对应 Chart.Elevation 属性，以度为单位，范围通常在-90到90之间
+    /// </summary>
+    int Elevation { get; set; }
+
+    /// <summary>
+    /// 获取或设置三维图表的深度百分比
+    /// 对应 Chart.DepthPercent 属性，表示图表深度相对于其宽度的百分比，范围通常在5到500之间
+    /// </summary>
+    int DepthPercent { get; set; }
+
+    /// <summary>
+    /// 获取或设置三维图表中数据系列之间的距离
+    /// 对应 Chart.GapDepth 属性，以图表宽度的百分比表示，范围通常在0到500之间
+    /// </summary>
+    int GapDepth { get; set; }
+
+    /// <summary>
+    /// 获取或设置三维图表的透视角度
+    /// 对应 Chart.Perspective 属性，以度为单位，范围通常在0到100之间
+    /// </summary>
+    int Perspective { get; set; }
+
     #endregion
 
     #region 数据源
@@ -84,20 +108,55 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// </summary>
     IExcelChartArea? ChartArea { get; }
 
+    /// <summary>
+    /// 获取图表中所有三维折线图组的第一个图表组
+    /// 对应 Chart.Line3DGroup 属性
+    /// </summary>
     IExcelChartGroup? Line3DGroup { get; }
 
+    /// <summary>
+    /// 为图表中的所有数据系列应用数据标签
+    /// </summary>
+    /// <param name="type">指定要显示的数据标签类型，默认为显示数值</param>
+    /// <param name="legendKey">图例标识，可选参数</param>
+    /// <param name="autoText">自动文本，可选参数</param>
+    /// <param name="hasLeaderLines">是否具有引导线，可选参数</param>
+    /// <param name="showSeriesName">是否显示系列名称，可选参数</param>
+    /// <param name="showCategoryName">是否显示分类名称，可选参数</param>
+    /// <param name="showValue">是否显示值，可选参数</param>
+    /// <param name="showPercentage">是否显示百分比，可选参数</param>
+    /// <param name="showBubbleSize">是否显示气泡大小，可选参数</param>
+    /// <param name="separator">分隔符，可选参数</param>
+    void ApplyDataLabels(XlDataLabelsType type = XlDataLabelsType.xlDataLabelsShowValue,
+                               bool? legendKey = null, string? autoText = null, bool? hasLeaderLines = null, string? showSeriesName = null,
+                               string? showCategoryName = null, double? showValue = null, string? showPercentage = null,
+                               double? showBubbleSize = null, string? separator = null);
+    /// <summary>
+    /// 返回图表中所有图表组的集合或指定索引的图表组
+    /// </summary>
+    /// <param name="Index">图表组的索引号，从1开始，如果省略则返回所有图表组</param>
+    /// <returns>图表组对象或图表组集合</returns>
     object? ChartGroups(object? Index = null);
 
+    /// <summary>
+    /// 返回图表中所有柱形图组的集合或指定索引的柱形图组
+    /// </summary>
+    /// <param name="Index">柱形图组的索引号，从1开始，如果省略则返回所有柱形图组</param>
+    /// <returns>柱形图组对象或柱形图组集合</returns>
     object? BarGroups(object? Index = null);
 
+    /// <summary>
+    /// 返回图表中所有折线图组的集合或指定索引的折线图组
+    /// </summary>
+    /// <param name="Index">折线图组的索引号，从1开始，如果省略则返回所有折线图组</param>
+    /// <returns>折线图组对象或折线图组集合</returns>
     object? LineGroups(object? Index = null);
 
     /// <summary>
     /// 获取图表的坐标轴集合
     /// 对应 Chart.Axes 函数
     /// </summary>
-    IExcelAxis? Axes(XlAxisType axisType, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary);
-
+    IExcelAxis? Axes(XlAxisType? axisType, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary);
 
     /// <summary>
     /// 获取图表的坐标轴集合
@@ -137,7 +196,7 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// 获取或设置图表样式
     /// 对应 Chart.ChartStyle 属性
     /// </summary>
-    XlChartType ChartStyle { get; set; }
+    MsoChartType ChartStyle { get; set; }
 
     #endregion
 

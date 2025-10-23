@@ -41,6 +41,28 @@ internal class ExcelPivotTables : IExcelPivotTables
     #endregion
 
     #region 查找和筛选
+
+    public IExcelPivotTable? Add(IExcelPivotCache pivotCache, IExcelRange tableDestination, string? tableName = null, bool? readData = null)
+    {
+        if (_pivotTables == null)
+            return null;
+        if (pivotCache == null || tableDestination == null)
+            return null;
+        try
+        {
+            var pt = ((ExcelPivotCache)pivotCache)._pivotCache;
+            var range = ((ExcelRange)tableDestination)._range;
+            var pivotTable = _pivotTables.Add(pt, range, tableName.ComArgsVal(), readData.ComArgsVal());
+            if (pivotTable == null)
+                return null;
+            return new ExcelPivotTable(pivotTable);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
     public IExcelPivotTable[] FindByName(string name, bool matchCase = false)
     {
         var results = new List<IExcelPivotTable>();

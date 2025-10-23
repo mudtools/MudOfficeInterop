@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -48,6 +48,16 @@ public interface IExcelPivotTables : IEnumerable<IExcelPivotTable>, IDisposable
     #endregion
 
     #region 查找和筛选
+
+    /// <summary>
+    /// 向数据透视表集合中添加一个新的数据透视表
+    /// </summary>
+    /// <param name="pivotCache">数据透视表缓存对象，包含数据源信息</param>
+    /// <param name="tableDestination">数据透视表放置的目标区域</param>
+    /// <param name="tableName">数据透视表的名称，可为null</param>
+    /// <param name="readData">是否立即读取数据，可为null</param>
+    /// <returns>新创建的数据透视表对象，如果创建失败则返回null</returns>
+    IExcelPivotTable? Add(IExcelPivotCache pivotCache, IExcelRange tableDestination, string? tableName = null, bool? readData = null);
     /// <summary>
     /// 根据名称查找数据透视表
     /// </summary>

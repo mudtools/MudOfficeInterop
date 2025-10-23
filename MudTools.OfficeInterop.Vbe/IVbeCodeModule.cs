@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -74,6 +74,13 @@ public interface IVbeCodeModule : IDisposable
     #endregion
 
     #region 操作方法
+
+    /// <summary>
+    /// 添加代码文本到模块末尾
+    /// 对应 CodeModule.AddFromString 方法
+    /// </summary>
+    /// <param name="codeText">要添加的代码文本</param>
+    void AddFromString(string codeText);
     /// <summary>
     /// 选择代码模块（通常在 VBE 中激活其父组件）
     /// </summary>

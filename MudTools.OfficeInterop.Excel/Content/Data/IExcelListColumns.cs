@@ -7,9 +7,6 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
-// =============================================
-// 接口定义：列表列集合（ListColumns）
-// =============================================
 /// <summary>
 /// 表示 Excel 表格（ListObject）中所有列的集合，支持遍历和索引访问。
 /// </summary>
@@ -25,22 +22,22 @@ public interface IExcelListColumns : IEnumerable<IExcelListColumn>, IDisposable
     /// </summary>
     /// <param name="index">列索引（1-based）</param>
     /// <returns>对应的列对象</returns>
-    IExcelListColumn this[int index] { get; }
+    IExcelListColumn? this[int index] { get; }
 
     /// <summary>
     /// 获取此集合所属的父对象（通常是 ListObject）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 向集合中添加一个新列（插入在末尾）。
     /// </summary>
     /// <param name="position">插入位置（可选，默认为末尾）</param>
     /// <returns>新创建的列对象</returns>
-    IExcelListColumn Add(int? position = null);
+    IExcelListColumn? Add(int? position = null);
 }

@@ -46,9 +46,9 @@ public interface IExcelFillFormat : IDisposable
     MsoPatternType Pattern { get; }
 
     /// <summary>
-    /// 获取或设置透明度（0-100）
+    /// 获取或设置透明度
     /// </summary>
-    int Transparency { get; set; }
+    float Transparency { get; set; }
 
     /// <summary>
     /// 获取或设置是否可见
@@ -135,4 +135,41 @@ public interface IExcelFillFormat : IDisposable
     /// </summary>
     /// <param name="TextureFile">纹理文件路径</param>
     void UserTextured(string TextureFile);
+
+    /// <summary>
+    /// 设置单色渐变填充效果
+    /// </summary>
+    /// <param name="style">渐变样式，指定渐变的方向和类型</param>
+    /// <param name="variant">渐变变体，指定渐变的特定变化形式</param>
+    /// <param name="degree">渐变度数，指定渐变的程度值</param>
+    void OneColorGradient(MsoGradientStyle style, int variant, float degree);
+
+    /// <summary>
+    /// 设置图案填充效果
+    /// </summary>
+    /// <param name="pattern">图案类型，指定要应用的图案样式</param>
+    void Patterned(MsoPatternType pattern);
+
+    /// <summary>
+    /// 设置预设纹理填充效果
+    /// </summary>
+    /// <param name="PresetTexture">预设纹理类型，指定要应用的纹理样式</param>
+    void PresetTextured(MsoPresetTexture PresetTexture);
+
+    /// <summary>
+    /// 设置双色渐变填充效果
+    /// </summary>
+    /// <param name="style">渐变样式，指定渐变的方向和类型</param>
+    /// <param name="variant">渐变变体，指定渐变的特定变化形式</param>
+    void TwoColorGradient(MsoGradientStyle style, int variant);
+
+    /// <summary>
+    /// 设置纯色填充效果
+    /// </summary>
+    void Solid();
+
+    /// <summary>
+    /// 设置背景填充效果
+    /// </summary>
+    void Background();
 }

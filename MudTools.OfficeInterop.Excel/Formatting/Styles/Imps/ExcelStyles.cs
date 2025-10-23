@@ -1,12 +1,11 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 
-using log4net;
 using System.Drawing;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
@@ -349,7 +348,7 @@ internal class ExcelStyles : IExcelStyles
     /// <param name="backgroundColor">背景色</param>
     /// <param name="pattern">图案类型</param>
     /// <returns>匹配的样式数组</returns>
-    public IExcelStyle[] FindByColor(Color? foregroundColor = null, Color? backgroundColor = null, int pattern = -1)
+    public IExcelStyle[] FindByColor(Color? foregroundColor = null, Color? backgroundColor = null, XlPattern pattern = XlPattern.xlPatternNone)
     {
         if (_styles == null || Count == 0)
             return [];
@@ -370,7 +369,7 @@ internal class ExcelStyles : IExcelStyles
                     if (backgroundColor != null && style.Interior?.Color != backgroundColor)
                         match = false;
 
-                    if (pattern != -1 && style.Interior?.Pattern != pattern)
+                    if (style.Interior?.Pattern != pattern)
                         match = false;
 
                     if (match)

@@ -492,7 +492,7 @@ namespace EnterpriseReportingSystemSample
 
                     // 添加条件格式突出显示高绩效员工
                     var performanceRange = worksheet.Range("G5:G" + lastDataRow);
-                    var condition = performanceRange.FormatConditions.Add(
+                    var condition = performanceRange?.FormatConditions.Add(
                         XlFormatConditionType.xlCellValue,
                         XlFormatConditionOperator.xlGreater,
                         4.5);
@@ -601,7 +601,7 @@ namespace EnterpriseReportingSystemSample
                 for (int col = 2; col <= 6; col++)
                 {
                     string colLetter = GetColumnLetter(col);
-                    worksheet.Range[$"{colLetter}11"].Formula = $"=SUM({colLetter}5:{colLetter}9)";
+                    worksheet.Range($"{colLetter}11").Formula = $"=SUM({colLetter}5:{colLetter}9)";
                 }
 
                 worksheet.Range("G11").Formula = "=AVERAGE(G5:G9)";

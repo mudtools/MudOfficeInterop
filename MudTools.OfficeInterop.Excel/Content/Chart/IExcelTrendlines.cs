@@ -55,7 +55,7 @@ public interface IExcelTrendlines : IEnumerable<IExcelTrendline>, IDisposable
     /// <param name="displayRSquared">是否显示 R 平方值</param>
     /// <param name="name">趋势线名称</param>
     /// <returns>新创建的趋势线对象</returns>
-    IExcelTrendline Add(int type = 1, int order = 2, int period = 2, double forward = 0,
+    IExcelTrendline Add(XlTrendlineType type = XlTrendlineType.xlLinear, int order = 2, int period = 2, double forward = 0,
                        double backward = 0, double intercept = double.NaN, bool displayEquation = false,
                        bool displayRSquared = false, string name = "");
     #endregion

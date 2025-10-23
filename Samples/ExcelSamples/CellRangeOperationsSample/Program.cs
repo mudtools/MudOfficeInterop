@@ -142,7 +142,7 @@ namespace CellRangeOperationsSample
                 // 方法3：使用Cells属性引用区域
                 var rangeA5C7 = worksheet.Cells[5, 1, 7, 3]; // 第5-7行，第1-3列
                 rangeA5C7.Value = "区域A5:C7";
-                rangeA5C7.Font.Underline = true;
+                rangeA5C7.Font.Underline = XlUnderlineStyle.xlUnderlineStyleSingle;
                 rangeA5C7.Interior.Color = Color.LightYellow;
 
                 // 使用Range方法定义区域范围
@@ -230,7 +230,7 @@ namespace CellRangeOperationsSample
 
                 // 获取活动工作簿和工作表
                 var workbook = excelApp.ActiveWorkbook;
-                var worksheet = workbook.ActiveSheet;
+                var worksheet = workbook.ActiveSheetWrap;
                 worksheet.Name = "区域数据操作";
 
                 // 写入区域数据（使用二维数组）

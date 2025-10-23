@@ -37,11 +37,11 @@ internal class ExcelTrendlines : IExcelTrendlines
     #endregion
 
     #region 创建和添加
-    public IExcelTrendline Add(int type = 1, int order = 2, int period = 2, double forward = 0,
+    public IExcelTrendline Add(XlTrendlineType type = XlTrendlineType.xlLinear, int order = 2, int period = 2, double forward = 0,
                                double backward = 0, double intercept = double.NaN, bool displayEquation = false,
                                bool displayRSquared = false, string name = "")
     {
-        MsExcel.XlTrendlineType xlType = (MsExcel.XlTrendlineType)type;
+        MsExcel.XlTrendlineType xlType = type.EnumConvert(MsExcel.XlTrendlineType.xlLinear);
 
         MsExcel.Trendline newTrendline = _trendlines.Add(
             Type: xlType,

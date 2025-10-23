@@ -48,21 +48,50 @@ internal class ExcelPivotCaches : IExcelPivotCaches
     #endregion
 
     #region 创建和添加
-    public IExcelPivotCache Create(int sourceType, object sourceData, object version = null)
+    public IExcelPivotCache? Add(XlPivotTableSourceType sourceType, object sourceData)
     {
+        if (_pivotCaches == null)
+            return null;
+        object comSourceData = GetSourceObj(sourceData);
+        MsExcel.PivotCache newCache = _pivotCaches.Add(sourceType.EnumConvert(MsExcel.XlPivotTableSourceType.xlPivotTable), comSourceData);
+        if (newCache != null)
+            return new ExcelPivotCache(newCache);
+        return null;
+    }
+
+    public IExcelPivotCache? Create(XlPivotTableSourceType sourceType, object? sourceData = null, object? version = null)
+    {
+        if (_pivotCaches == null)
+            return null;
         // 处理可选参数
         object comVersion = version ?? System.Type.Missing;
 
         // sourceData 可能是字符串、Range、ListObject 等，直接传递给 Interop
-        object comSourceData = sourceData;
+        object comSourceData = GetSourceObj(sourceData);
 
         // 调用 Interop 方法
         MsExcel.PivotCache newCache = _pivotCaches.Create(
-            (MsExcel.XlPivotTableSourceType)sourceType,
+            sourceType.EnumConvert(MsExcel.XlPivotTableSourceType.xlPivotTable),
             comSourceData,
             comVersion
         );
-        return new ExcelPivotCache(newCache);
+        if (newCache != null)
+            return new ExcelPivotCache(newCache);
+        return null;
+    }
+
+    private object GetSourceObj(object? sourceData)
+    {
+        object comSourceData = Type.Missing;
+        if (sourceData is ExcelRange rrange && rrange.InternalRange != null)
+            comSourceData = rrange.InternalRange;
+        else if (sourceData is ExcelListObject lo && lo._listObject != null)
+            comSourceData = lo._listObject;
+        else if (sourceData is ExcelPivotTable dt && dt._pivotTable != null)
+            comSourceData = dt._pivotTable;
+        else if (sourceData is string sourceString)
+            comSourceData = sourceString;
+        return comSourceData;
     }
     #endregion
 

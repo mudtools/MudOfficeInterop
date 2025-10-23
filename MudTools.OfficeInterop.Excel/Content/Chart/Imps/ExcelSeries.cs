@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelSeries : IExcelSeries
 {
-    internal MsExcel.Series _series;
+    internal MsExcel.Series? _series;
     private bool _disposedValue = false;
 
     internal ExcelSeries(MsExcel.Series series)
@@ -23,142 +23,234 @@ internal class ExcelSeries : IExcelSeries
     #region 基础属性
     public string Name
     {
-        get => _series.Name;
-        set => _series.Name = value;
+        get => _series?.Name ?? string.Empty;
+        set
+        {
+            if (_series == null)
+                return;
+            _series.Name = value;
+        }
     }
-    public object Parent => _series.Parent;
+    public object? Parent => _series?.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_series.Application);
+    public IExcelApplication? Application => _series != null ? new ExcelApplication(_series.Application) : null;
 
-    public int ChartType
+    public MsoChartType ChartType
     {
-        get => (int)_series.ChartType;
-        set => _series.ChartType = (MsExcel.XlChartType)value;
+        get => _series?.ChartType.EnumConvert(MsoChartType.xl3DColumn) ?? MsoChartType.xl3DColumn;
+        set
+        {
+            if (_series == null)
+                return;
+            _series.ChartType = value.EnumConvert(MsExcel.XlChartType.xl3DColumn);
+        }
+    }
+
+    public XlAxisGroup AxisGroup
+    {
+        get => _series?.AxisGroup.EnumConvert(XlAxisGroup.xlPrimary) ?? XlAxisGroup.xlPrimary;
+        set
+        {
+            if (_series == null)
+                return;
+            _series.AxisGroup = value.EnumConvert(MsExcel.XlAxisGroup.xlPrimary);
+        }
     }
 
     public string Formula
     {
-        get => _series.Formula;
-        set => _series.Formula = value;
+        get => _series?.Formula ?? string.Empty;
+        set
+        {
+            if (_series != null)
+                _series.Formula = value;
+        }
     }
 
     public string FormulaLocal
     {
-        get => _series.FormulaLocal;
-        set => _series.FormulaLocal = value;
+        get => _series?.FormulaLocal ?? string.Empty;
+        set
+        {
+            if (_series != null)
+                _series.FormulaLocal = value;
+        }
     }
 
     public string FormulaR1C1
     {
-        get => _series.FormulaR1C1;
-        set => _series.FormulaR1C1 = value;
+        get => _series?.FormulaR1C1 ?? string.Empty;
+        set
+        {
+            if (_series != null)
+                _series.FormulaR1C1 = value;
+        }
     }
 
     public string FormulaR1C1Local
     {
-        get => _series.FormulaR1C1Local;
-        set => _series.FormulaR1C1Local = value;
+        get => _series?.FormulaR1C1Local ?? string.Empty;
+        set
+        {
+            if (_series != null)
+                _series.FormulaR1C1Local = value;
+        }
     }
     #endregion
 
     #region 数据属性
-    public object XValues
+    public object? XValues
     {
-        get => _series.XValues;
-        set => _series.XValues = value; // value 可以是 object[] 或 MsExcel.Range
+        get => _series?.XValues ?? null;
+        set
+        {
+            if (_series != null)
+                _series.XValues = value;// value 可以是 object[] 或 MsExcel.Range
+        }
     }
 
-    public object Values
+    public object? Values
     {
-        get => _series.Values;
-        set => _series.Values = value; // value 可以是 object[] 或 MsExcel.Range
+        get => _series?.Values ?? null;
+        set
+        {
+            if (_series != null)
+                _series.Values = value;// value 可以是 object[] 或 MsExcel.Range
+        }
     }
 
-    public object BubbleSizes
+    public object? BubbleSizes
     {
-        get => _series.BubbleSizes;
-        set => _series.BubbleSizes = value; // value 可以是 object[] 或 MsExcel.Range
+        get => _series?.BubbleSizes ?? null;
+        set
+        {
+            if (_series != null)
+                _series.BubbleSizes = value;// value 可以是 object[] 或 MsExcel.Range
+        }
     }
     #endregion
 
     #region 格式设置
-    public IExcelChartFormat Format => new ExcelChartFormat(_series.Format);
+    public IExcelChartFormat? Format => _series != null ? new ExcelChartFormat(_series.Format) : null;
 
-    public IExcelChartFillFormat Fill => new ExcelChartFillFormat(_series.Fill);
+    public IExcelChartFillFormat? Fill => _series != null ? new ExcelChartFillFormat(_series.Fill) : null;
 
-    public IExcelBorder Border => new ExcelBorder(_series.Border);
+    public IExcelBorder? Border => _series != null ? new ExcelBorder(_series.Border) : null;
 
-    public int MarkerStyle
+    public XlMarkerStyle MarkerStyle
     {
-        get => (int)_series.MarkerStyle;
-        set => _series.MarkerStyle = (MsExcel.XlMarkerStyle)value;
+        get => _series?.MarkerStyle.EnumConvert(XlMarkerStyle.xlMarkerStyleAutomatic) ?? XlMarkerStyle.xlMarkerStyleAutomatic;
+        set
+        {
+            if (_series == null)
+                return;
+            _series.MarkerStyle = value.EnumConvert(MsExcel.XlMarkerStyle.xlMarkerStyleAutomatic);
+        }
     }
 
     public int MarkerSize
     {
-        get => _series.MarkerSize;
-        set => _series.MarkerSize = value;
+        get => _series?.MarkerSize ?? 0;
+        set
+        {
+            if (_series != null)
+                _series.MarkerSize = value;
+        }
     }
 
     public int MarkerBackgroundColor
     {
-        get => _series.MarkerBackgroundColor;
-        set => _series.MarkerBackgroundColor = value;
+        get => _series?.MarkerBackgroundColor ?? 0;
+        set
+        {
+            if (_series != null)
+                _series.MarkerBackgroundColor = value;
+        }
     }
 
     public XlColorIndex MarkerBackgroundColorIndex
     {
-        get => (XlColorIndex)_series.MarkerBackgroundColorIndex;
-        set => _series.MarkerBackgroundColorIndex = (MsExcel.XlColorIndex)value;
+        get => _series?.MarkerBackgroundColorIndex.EnumConvert(XlColorIndex.xlColorIndexAutomatic) ?? XlColorIndex.xlColorIndexAutomatic;
+        set
+        {
+            if (_series == null)
+                return;
+            _series.MarkerBackgroundColorIndex = value.EnumConvert(MsExcel.XlColorIndex.xlColorIndexAutomatic);
+        }
     }
+
 
     public int MarkerForegroundColor
     {
-        get => _series.MarkerForegroundColor;
-        set => _series.MarkerForegroundColor = value;
+        get => _series?.MarkerForegroundColor ?? 0;
+        set
+        {
+            if (_series != null)
+                _series.MarkerForegroundColor = value;
+        }
     }
 
     public XlColorIndex MarkerForegroundColorIndex
     {
-        get => (XlColorIndex)_series.MarkerForegroundColorIndex;
-        set => _series.MarkerForegroundColorIndex = (MsExcel.XlColorIndex)value;
+        get => _series?.MarkerForegroundColorIndex.EnumConvert(XlColorIndex.xlColorIndexAutomatic) ?? XlColorIndex.xlColorIndexAutomatic;
+        set
+        {
+            if (_series == null)
+                return;
+            _series.MarkerForegroundColorIndex = value.EnumConvert(MsExcel.XlColorIndex.xlColorIndexAutomatic);
+        }
     }
 
     public bool Smooth
     {
-        get => _series.Smooth;
-        set => _series.Smooth = value;
+        get => _series?.Smooth ?? false;
+        set
+        {
+            if (_series != null)
+                _series.Smooth = value;
+        }
     }
 
     public int PlotOrder
     {
-        get => _series.PlotOrder;
-        set => _series.PlotOrder = value;
+        get => _series?.PlotOrder ?? 0;
+        set
+        {
+            if (_series != null)
+                _series.PlotOrder = value;
+        }
     }
     #endregion
 
     #region 状态属性
     public bool HasLeaderLines
     {
-        get => _series.HasLeaderLines;
-        set => _series.HasLeaderLines = value;
-    }
-
-    public void DataLabels()
-    {
-        _series.DataLabels();
+        get => _series?.HasLeaderLines ?? false;
+        set
+        {
+            if (_series != null)
+                _series.HasLeaderLines = value;
+        }
     }
 
     public bool HasDataLabels
     {
-        get => _series.HasDataLabels;
-        set => _series.HasDataLabels = value;
+        get => _series?.HasDataLabels ?? false;
+        set
+        {
+            if (_series != null)
+                _series.HasDataLabels = value;
+        }
     }
 
     public bool HasErrorBars
     {
-        get => _series.HasErrorBars;
-        set => _series.HasErrorBars = value;
+        get => _series?.HasErrorBars ?? false;
+        set
+        {
+            if (_series != null)
+                _series.HasErrorBars = value;
+        }
     }
 
     public bool IsProtected => false;
@@ -169,43 +261,112 @@ internal class ExcelSeries : IExcelSeries
     /// <summary>
     /// 获取样式的内部格式对象
     /// </summary>
-    public IExcelInterior Interior => new ExcelInterior(_series.Interior);
+    public IExcelInterior? Interior => _series != null ? new ExcelInterior(_series.Interior) : null;
 
-    public IExcelTrendlines Trendlines => new ExcelTrendlines((MsExcel.Trendlines)_series.Trendlines());
-
-    public IExcelErrorBars ErrorBars => new ExcelErrorBars(_series.ErrorBars);
+    public IExcelErrorBars? ErrorBars => _series != null ? new ExcelErrorBars(_series.ErrorBars) : null;
 
     #endregion
 
     #region 操作方法
+
+    public void ErrorBar(XlErrorBarDirection direction, XlErrorBarInclude include, XlErrorBarType type,
+     float? amount = null, float? minusValues = null)
+    {
+        if (_series == null)
+            return;
+
+        _series.ErrorBar(direction.EnumConvert(MsExcel.XlErrorBarDirection.xlY),
+           include.EnumConvert(MsExcel.XlErrorBarInclude.xlErrorBarIncludeBoth),
+           type.EnumConvert(MsExcel.XlErrorBarType.xlErrorBarTypeCustom),
+           amount.ComArgsVal(), minusValues.ComArgsVal());
+    }
+
+    public IExcelTrendlines? Trendlines()
+    {
+        if (_series == null)
+            return null;
+        var trends = _series.Trendlines();
+        if (trends != null && trends is MsExcel.Trendlines trendlines)
+            return new ExcelTrendlines(trendlines);
+        return null;
+    }
+
+    public IExcelTrendline? Trendlines(XlTrendlineType trendlineType)
+    {
+        if (_series == null)
+            return null;
+        var trends = _series.Trendlines(trendlineType.EnumConvert(MsExcel.XlTrendlineType.xlExponential));
+        if (trends != null && trends is MsExcel.Trendline trendline)
+        {
+            return new ExcelTrendline(trendline);
+        }
+        return null;
+    }
+
+    public IExcelDataLabels? DataLabels()
+    {
+        if (_series == null)
+            return null;
+        if (!_series.HasDataLabels)
+            return null;
+
+        var labels = _series.DataLabels();
+        if (labels != null && labels is MsExcel.DataLabels dataLabels)
+            return new ExcelDataLabels(dataLabels);
+        return null;
+    }
+
+    public IExcelDataLabel? DataLabels(object obj)
+    {
+        if (_series == null)
+            return null;
+        if (!_series.HasDataLabels)
+            return null;
+        var label = _series.DataLabels(obj);
+        if (label != null && label is MsExcel.DataLabel dataLabel)
+            return new ExcelDataLabel(dataLabel);
+        return null;
+    }
+
     public void Select()
     {
+        if (_series == null)
+            return;
         _series.Select();
     }
 
     public void Delete()
     {
+        if (_series == null)
+            return;
         _series.Delete();
     }
 
     public void ClearFormats()
     {
+        if (_series == null)
+            return;
         _series.ClearFormats();
     }
 
     public void Copy()
     {
+        if (_series == null)
+            return;
         _series.Copy();
     }
     #endregion
 
     #region 图表操作
-    public void ApplyDataLabels(int type = 2, bool legendKey = false, bool autoText = true,
+    public void ApplyDataLabels(XlDataLabelsType type = XlDataLabelsType.xlDataLabelsShowValue,
+                                bool legendKey = false, bool autoText = true,
                                 bool hasLeaderLines = false, bool showSeriesName = false,
                                 bool showCategoryName = false, bool showValue = true,
                                 bool showPercentage = false, bool showBubbleSize = false,
-                                object separator = null)
+                                string? separator = null)
     {
+        if (_series == null)
+            return;
         _series.ApplyDataLabels(
             (MsExcel.XlDataLabelsType)type,
             legendKey,
@@ -216,7 +377,7 @@ internal class ExcelSeries : IExcelSeries
             showValue,
             showPercentage,
             showBubbleSize,
-            separator
+            separator.ComArgsVal()
         );
     }
 
@@ -224,8 +385,10 @@ internal class ExcelSeries : IExcelSeries
 
     #region 格式设置方法   
 
-    public void SetMarker(int style, int size, int backgroundColor, int foregroundColor)
+    public void SetMarker(XlMarkerStyle style, int size, int backgroundColor, int foregroundColor)
     {
+        if (_series == null)
+            return;
         MarkerStyle = style;
         MarkerSize = size;
         MarkerBackgroundColor = backgroundColor;
@@ -241,16 +404,8 @@ internal class ExcelSeries : IExcelSeries
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_series != null)
-                    Marshal.ReleaseComObject(_series);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            if (_series != null)
+                Marshal.ReleaseComObject(_series);
             _series = null;
         }
         _disposedValue = true;
@@ -258,7 +413,6 @@ internal class ExcelSeries : IExcelSeries
 
     ~ExcelSeries()
     {
-
         Dispose(disposing: false);
     }
 

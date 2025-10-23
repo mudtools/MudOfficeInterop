@@ -96,6 +96,19 @@ internal class ExcelValidation : IExcelValidation
         }
     }
 
+    public bool ShowInput
+    {
+        get => _validation != null ? _validation.ShowInput : false;
+        set
+        {
+            if (_validation != null)
+            {
+                _validation.ShowInput = value;
+            }
+
+        }
+    }
+
     public string ErrorTitle
     {
         get => _validation != null ? _validation.ErrorTitle : "";

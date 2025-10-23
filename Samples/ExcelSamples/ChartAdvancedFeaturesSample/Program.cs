@@ -108,7 +108,7 @@ namespace ChartAdvancedFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 添加线性趋势线
-                var series = chart.SeriesCollection().Item(1);
+                var series = chart.SeriesCollection()[1];
                 var linearTrendline = series.Trendlines().Add(XlTrendlineType.xlLinear);
                 linearTrendline.DisplayEquation = true;
                 linearTrendline.DisplayRSquared = true;
@@ -203,7 +203,7 @@ namespace ChartAdvancedFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 添加误差线
-                var series = chart.SeriesCollection().Item(1);
+                var series = chart.SeriesCollection()[1];
                 var errorBars = series.ErrorBar(XlErrorBarDirection.xlY,
                     XlErrorBarInclude.xlErrorBarIncludeBoth,
                     XlErrorBarType.xlErrorBarTypeCustom,
@@ -292,14 +292,13 @@ namespace ChartAdvancedFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionRight;
 
                 // 配置数据标签
-                var series = chart.SeriesCollection().Item(1);
+                var series = chart.SeriesCollection()[1];
                 series.HasDataLabels = true;
 
                 var dataLabels = series.DataLabels();
                 dataLabels.ShowCategoryName = true;
                 dataLabels.ShowValue = true;
                 dataLabels.ShowPercentage = true;
-                dataLabels.ShowLeaderLines = true;
 
                 // 设置数据标签位置
                 dataLabels.Position = XlDataLabelPosition.xlLabelPositionOutsideEnd;
@@ -406,7 +405,7 @@ namespace ChartAdvancedFeaturesSample
                 var seriesCollection = chart.SeriesCollection();
                 for (int i = 1; i <= seriesCollection.Count; i++)
                 {
-                    var series = seriesCollection.Item(i);
+                    var series = seriesCollection[i];
                     series.Format.Line.Weight = 2;
                 }
 
@@ -484,10 +483,7 @@ namespace ChartAdvancedFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 应用图表样式
-                chart.ChartStyle = 207; // 应用预定义样式
-
-                // 应用图表主题
-                chart.ChartTheme = "Office Theme";
+                chart.ChartStyle = MsoChartType.xl3DLine; // 应用预定义样式
 
                 // 设置坐标轴标题
                 chart.Axes(XlAxisType.xlCategory).HasTitle = true;
@@ -578,7 +574,7 @@ namespace ChartAdvancedFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 修改增长率系列为折线图
-                var growthSeries = chart.SeriesCollection().Item(3);
+                var growthSeries = chart.SeriesCollection()[3];
                 growthSeries.ChartType = MsoChartType.xlLine;
 
                 // 设置次坐标轴
@@ -590,7 +586,7 @@ namespace ChartAdvancedFeaturesSample
                 growthSeries.DataLabels().Font.Size = 9;
 
                 // 为销售额系列添加趋势线
-                var salesSeries = chart.SeriesCollection().Item(2);
+                var salesSeries = chart.SeriesCollection()[2];
                 var trendline = salesSeries.Trendlines().Add(XlTrendlineType.xlLinear);
                 trendline.DisplayEquation = true;
                 trendline.DisplayRSquared = true;
