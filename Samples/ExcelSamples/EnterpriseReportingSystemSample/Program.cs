@@ -250,6 +250,7 @@ namespace EnterpriseReportingSystemSample
 
                 // 保存报表文件
                 string reportFileName = $"SalesDataReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+
                 workbook.SaveAs(reportFileName);
 
                 Console.WriteLine($"✓ 成功演示数据填充与合并: {reportFileName}");
@@ -377,10 +378,10 @@ namespace EnterpriseReportingSystemSample
                 var chartRange = worksheet.Range("A6:J9");
                 var chart = worksheet.Shapes.AddChart2();
                 chart.Chart.SetSourceData(chartRange);
-                chart.Chart.ChartType = XlChartType.xlLineMarkers;
+                chart.Chart.ChartType = MsoChartType.xlLineMarkers;
                 chart.Name = "财务趋势图";
-                chart.Top = worksheet.Range("A13").Top;
-                chart.Left = worksheet.Range("A13").Left;
+                chart.Top = Convert.ToSingle(worksheet.Range("A13").Top);
+                chart.Left = Convert.ToSingle(worksheet.Range("A13").Left);
                 chart.Width = 800;
                 chart.Height = 300;
 
@@ -617,10 +618,10 @@ namespace EnterpriseReportingSystemSample
                 var chartRange = worksheet.Range("A5:F9");
                 var chart = worksheet.Shapes.AddChart2();
                 chart.Chart.SetSourceData(chartRange);
-                chart.Chart.ChartType = XlChartType.xlColumnClustered;
+                chart.Chart.ChartType = MsoChartType.xlColumnClustered;
                 chart.Name = "各业务板块收入对比";
-                chart.Top = worksheet.Range("A13").Top;
-                chart.Left = worksheet.Range("A13").Left;
+                chart.Top = Convert.ToSingle(worksheet.Range("A13").Top);
+                chart.Left = Convert.ToSingle(worksheet.Range("A13").Left);
                 chart.Width = 700;
                 chart.Height = 300;
 

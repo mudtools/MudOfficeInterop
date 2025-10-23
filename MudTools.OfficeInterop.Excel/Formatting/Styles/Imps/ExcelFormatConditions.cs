@@ -64,30 +64,34 @@ internal class ExcelFormatConditions : IExcelFormatConditions
     public IExcelFormatCondition? Add(
         XlFormatConditionType type,
         XlFormatConditionOperator? @operator,
-        string formula1 = "",
-        string formula2 = "")
+        object? formula1 = null,
+        object? formula2 = null,
+        object? @string = null,
+        object? textOperator = null,
+        object? dateOperator = null,
+        object? scopeType = null)
     {
         if (_formatConditions == null)
             return null;
-        object oper = Type.Missing;
-        if (@operator != null)
-            oper = @operator;
-
-        object formula1Obj = Type.Missing;
-        if (!string.IsNullOrEmpty(formula1))
-            formula1Obj = formula1;
-
-        object formula2Obj = Type.Missing;
-        if (!string.IsNullOrEmpty(formula2))
-            formula2Obj = formula2;
 
         MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             (MsExcel.XlFormatConditionType)type,
-            oper,
-            formula1Obj,
-            formula2Obj
+            GetObject(formula1), GetObject(formula2),
+            @string ?? Type.Missing,
+            textOperator ?? Type.Missing,
+            dateOperator ?? Type.Missing,
+            scopeType ?? Type.Missing
         );
         return new ExcelFormatCondition(newCondition);
+    }
+
+    private object? GetObject(object? obj)
+    {
+        if (obj == null)
+            return Type.Missing;
+        if (obj is IExcelRange range)
+            return range.Address;
+        return obj;
     }
 
     public IExcelFormatCondition? AddExpression(string formula)
@@ -116,18 +120,15 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelFormatCondition? AddDatabar()
+    public IExcelDataBar? AddDatabar()
     {
         if (_formatConditions == null)
             return null;
 
-        MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
-            MsExcel.XlFormatConditionType.xlDatabar,
-            Type.Missing,
-            Type.Missing,
-            Type.Missing
-        );
-        return new ExcelFormatCondition(newCondition);
+        var dataBarObj = _formatConditions.AddDatabar();
+        if (dataBarObj != null && dataBarObj is MsExcel.Databar dataBar)
+            return new ExcelDataBar(dataBar);
+        return null;
     }
 
     public IExcelFormatCondition? AddIconSetCondition(XlIconSet iconSet)

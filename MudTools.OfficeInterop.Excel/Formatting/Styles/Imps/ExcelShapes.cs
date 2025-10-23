@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -168,7 +168,7 @@ internal class ExcelShapes : IExcelShapes
     }
 
 
-    public IExcelShape? AddChart(XlChartType XlChartType, float Left, float Top, float Width, float Height)
+    public IExcelShape? AddChart(MsoChartType XlChartType, float Left, float Top, float Width, float Height)
     {
         if (_shapes == null)
             return null;
@@ -258,6 +258,19 @@ internal class ExcelShapes : IExcelShapes
 
         return _shapes.AddPolyline(points) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
     }
+
+    public IExcelShape? AddChart2(int style = -1, MsoChartType chartType = MsoChartType.xlPie,
+                     float? left = null, float? top = null, float?
+                     width = null, float? height = null, bool? newLayout = null)
+    {
+        if (_shapes == null)
+            return null;
+        var shape = _shapes.AddChart2(style, chartType.EnumConvert(MsCore.XlChartType.xlPie),
+        left.ComArgsVal(), top.ComArgsVal(), width.ComArgsVal(), height.ComArgsVal(), newLayout.ComArgsVal());
+
+        return shape != null ? new ExcelShape(shape) : null;
+    }
+
 
     /// <summary>
     /// 添加图片形状

@@ -210,7 +210,7 @@ public interface IExcelSeries : IDisposable
     /// <param name="type">误差线类型，如固定值、百分比、标准偏差等</param>
     /// <param name="amount">正误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
     /// <param name="minusValues">负误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
-    void ErrorBar(XlErrorBarDirection direction, XlErrorBarInclude include, XlErrorBarType type, float? amount = null, float? minusValues = null);
+    IExcelErrorBars? ErrorBar(XlErrorBarDirection direction, XlErrorBarInclude include, XlErrorBarType type, object? amount = null, object? minusValues = null);
 
     /// <summary>
     /// 获取数据系列的所有趋势线集合

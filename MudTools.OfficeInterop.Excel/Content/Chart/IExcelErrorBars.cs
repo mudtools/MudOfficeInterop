@@ -23,13 +23,13 @@ public interface IExcelErrorBars : IDisposable
     /// 获取误差线对象的父对象 (通常是 Series 或 Chart)
     /// 对应 ErrorBars.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取误差线对象所在的 Application 对象
     /// 对应 ErrorBars.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 格式设置
@@ -37,18 +37,18 @@ public interface IExcelErrorBars : IDisposable
     /// 获取误差线的边框对象
     /// 对应 ErrorBars.Border 属性
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取绘图区的字体对象
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
 
     /// <summary>
     /// 获取或设置误差线的结束样式
     /// 对应 ErrorBars.EndStyle 属性
     /// </summary>
-    int EndStyle { get; set; } // 使用 int 代表 XlEndStyleCap
+    XlEndStyleCap EndStyle { get; set; }
     #endregion   
 
     #region 操作方法

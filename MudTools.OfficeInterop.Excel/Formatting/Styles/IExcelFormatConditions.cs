@@ -52,10 +52,14 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// <param name="formula2">公式2</param>
     /// <returns>新创建的条件格式规则对象</returns>
     IExcelFormatCondition? Add(
-        XlFormatConditionType type,
-        XlFormatConditionOperator? @operator,
-        string formula1 = "",
-        string formula2 = "");
+         XlFormatConditionType type,
+         XlFormatConditionOperator? @operator,
+         object? formula1 = null,
+         object? formula2 = null,
+         object? @string = null,
+         object? textOperator = null,
+         object? dateOperator = null,
+         object? scopeType = null);
 
     /// <summary>
     /// 向集合中添加新的条件格式规则 (xlExpression)
@@ -78,7 +82,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlDatabar)
     /// </summary>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelFormatCondition? AddDatabar();
+    IExcelDataBar? AddDatabar();
 
     /// <summary>
     /// 向集合中添加新的图标集条件格式规则
