@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -23,7 +23,7 @@ internal class ExcelDataBar : IExcelDataBar
     #region 基础属性
     public object Parent => _databar.Parent;
 
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
@@ -39,6 +39,18 @@ internal class ExcelDataBar : IExcelDataBar
             if (_databar == null)
                 return null;
             return new ExcelRange(_databar.AppliesTo);
+        }
+    }
+
+    public IExcelFormatColor? BarColor
+    {
+        get
+        {
+            if (_databar == null)
+                return null;
+            if (_databar.BarColor is MsExcel.FormatColor formatColor)
+                return new ExcelFormatColor(formatColor);
+            return null;
         }
     }
 
@@ -72,10 +84,15 @@ internal class ExcelDataBar : IExcelDataBar
         }
     }
 
+
     public XlDataBarFillType BarFillType
     {
-        get => _databar.BarFillType.EnumConvert(XlDataBarFillType.xlDataBarFillSolid);
-        set => _databar.BarFillType = value.EnumConvert(MsExcel.XlDataBarFillType.xlDataBarFillSolid);
+        get => _databar?.BarFillType.EnumConvert(XlDataBarFillType.xlDataBarFillSolid) ?? XlDataBarFillType.xlDataBarFillSolid;
+        set
+        {
+            if (_databar != null)
+                _databar.BarFillType = value.EnumConvert(MsExcel.XlDataBarFillType.xlDataBarFillSolid);
+        }
     }
 
     public bool ShowBarOnly

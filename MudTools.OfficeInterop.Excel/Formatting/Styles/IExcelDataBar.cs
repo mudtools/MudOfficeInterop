@@ -18,15 +18,25 @@ public interface IExcelDataBar : IDisposable
     /// 获取数据条对象的父对象 (通常是 FormatCondition)
     /// 对应 Databar.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据条对象所在的Application对象
     /// 对应 Databar.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
+    /// <summary>
+    /// 获取应用数据条格式的单元格范围
+    /// 对应 Databar.AppliesTo 属性
+    /// </summary>
     IExcelRange? AppliesTo { get; }
+
+    /// <summary>
+    /// 获取数据条的颜色设置
+    /// 对应 Databar.BarColor 属性
+    /// </summary>
+    IExcelFormatColor? BarColor { get; }
 
     /// <summary>
     /// 获取或设置最小条件值

@@ -269,16 +269,41 @@ internal class ExcelSeries : IExcelSeries
 
     #region 操作方法
 
-    public void ErrorBar(XlErrorBarDirection direction, XlErrorBarInclude include, XlErrorBarType type,
-     float? amount = null, float? minusValues = null)
+    public IExcelErrorBars? ErrorBar(
+                            XlErrorBarDirection direction, XlErrorBarInclude include,
+                            XlErrorBarType type,
+                            object? amount = null,
+                            object? minusValues = null)
     {
         if (_series == null)
-            return;
+            return null;
 
-        _series.ErrorBar(direction.EnumConvert(MsExcel.XlErrorBarDirection.xlY),
-           include.EnumConvert(MsExcel.XlErrorBarInclude.xlErrorBarIncludeBoth),
-           type.EnumConvert(MsExcel.XlErrorBarType.xlErrorBarTypeCustom),
-           amount.ComArgsVal(), minusValues.ComArgsVal());
+        var amountObj = Type.Missing;
+        var minusValuesObj = Type.Missing;
+        if (amount != null && amount is IExcelRange range)
+        {
+            amountObj = range.Value;
+        }
+        else if (amount != null)
+        {
+            amountObj = amount;
+        }
+        if (minusValues != null && minusValues is IExcelRange mrange)
+        {
+            minusValuesObj = mrange.Value;
+        }
+        else if (minusValues != null)
+        {
+            minusValuesObj = minusValues;
+        }
+
+        var errorObj = _series.ErrorBar(direction.EnumConvert(MsExcel.XlErrorBarDirection.xlY),
+                             include.EnumConvert(MsExcel.XlErrorBarInclude.xlErrorBarIncludeBoth),
+                             type.EnumConvert(MsExcel.XlErrorBarType.xlErrorBarTypeCustom),
+                             amountObj, minusValuesObj);
+        if (errorObj is MsExcel.ErrorBars errorBar)
+            return new ExcelErrorBars(errorBar);
+        return null;
     }
 
     public IExcelTrendlines? Trendlines()

@@ -118,10 +118,12 @@ public interface IExcelValidation : IDisposable
     /// </summary>
     /// <param name="type">验证类型</param>
     /// <param name="alertStyle">警告样式</param>
+    /// <param name="conditionOperator">数据验证运算符。</param>
     /// <param name="formula1">公式1</param>
     /// <param name="formula2">公式2</param>
     /// <param name="value">是否为值</param>
-    void Add(XlDVType type, XlDVAlertStyle alertStyle, string formula1 = "", string formula2 = "", bool value = true);
+    void Add(XlDVType type, XlDVAlertStyle alertStyle, XlFormatConditionOperator conditionOperator,
+        object? formula1 = null, object? formula2 = null, bool value = true);
 
     /// <summary>
     /// 修改此数据验证规则

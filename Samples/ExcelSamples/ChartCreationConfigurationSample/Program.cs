@@ -270,7 +270,6 @@ namespace ChartCreationConfigurationSample
                 series.DataLabels().ShowCategoryName = true;
                 series.DataLabels().ShowValue = false;
                 series.DataLabels().ShowPercentage = true;
-                series.DataLabels().ShowLeaderLines = true;
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

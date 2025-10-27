@@ -65,6 +65,21 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     IExcelShape? AddEllipse(float left, float top, float width, float height);
 
     /// <summary>
+    /// 添加图表形状(增强版)
+    /// </summary>
+    /// <param name="style">图表样式索引，-1表示默认样式</param>
+    /// <param name="chartType">图表类型</param>
+    /// <param name="left">图表左边距，null表示默认值</param>
+    /// <param name="top">图表顶边距，null表示默认值</param>
+    /// <param name="width">图表宽度，null表示默认值</param>
+    /// <param name="height">图表高度，null表示默认值</param>
+    /// <param name="newLayout">是否使用新布局，null表示默认设置</param>
+    /// <returns>新创建的形状对象</returns>
+    IExcelShape? AddChart2(int style = -1, MsoChartType chartType = MsoChartType.xlPie,
+                     float? left = null, float? top = null, float?
+                     width = null, float? height = null, bool? newLayout = null);
+
+    /// <summary>
     /// 添加线条形状
     /// </summary>
     /// <param name="x1">起点X坐标</param>
@@ -117,7 +132,7 @@ public interface IExcelShapes : IEnumerable<IExcelShape>, IDisposable
     /// <param name="Width">宽度</param>
     /// <param name="Height">高度</param>
     /// <returns>新创建的形状对象</returns>
-    IExcelShape? AddChart(XlChartType XlChartType, float Left, float Top, float Width, float Height);
+    IExcelShape? AddChart(MsoChartType XlChartType, float Left, float Top, float Width, float Height);
 
     /// <summary>
     /// 添加SmartArt形状

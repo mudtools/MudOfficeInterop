@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 /// </summary>
 internal class ExcelErrorBars : IExcelErrorBars
 {
-    private MsExcel.ErrorBars _errorBars;
+    private MsExcel.ErrorBars? _errorBars;
     private bool _disposedValue = false;
 
     internal ExcelErrorBars(MsExcel.ErrorBars errorBars)
@@ -21,39 +21,43 @@ internal class ExcelErrorBars : IExcelErrorBars
     }
 
     #region 基础属性
-    public string Name => _errorBars.Name;
+    public string Name => _errorBars?.Name ?? String.Empty;
 
-    public object Parent => _errorBars.Parent;
+    public object? Parent => _errorBars?.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_errorBars.Application);
+    public IExcelApplication? Application => _errorBars != null ? new ExcelApplication(_errorBars.Application) : null;
     #endregion
 
     #region 格式设置
-    public IExcelBorder Border => new ExcelBorder(_errorBars.Border);
+    public IExcelBorder? Border => _errorBars != null ? new ExcelBorder(_errorBars.Border) : null;
 
-    public IExcelChartFormat Format => new ExcelChartFormat(_errorBars.Format);
+    public IExcelChartFormat? Format => _errorBars != null ? new ExcelChartFormat(_errorBars.Format) : null;
 
-    public int EndStyle
+    public XlEndStyleCap EndStyle
     {
-        get => (int)_errorBars.EndStyle;
-        set => _errorBars.EndStyle = (MsExcel.XlEndStyleCap)value;
+        get => _errorBars?.EndStyle.EnumConvert(XlEndStyleCap.xlNoCap) ?? XlEndStyleCap.xlNoCap;
+        set
+        {
+            if (_errorBars != null)
+                _errorBars.EndStyle = value.EnumConvert(MsExcel.XlEndStyleCap.xlNoCap);
+        }
     }
     #endregion
 
     #region 操作方法
     public void Select()
     {
-        _errorBars.Select();
+        _errorBars?.Select();
     }
 
     public void Delete()
     {
-        _errorBars.Delete();
+        _errorBars?.Delete();
     }
 
     public void ClearFormats()
     {
-        _errorBars.ClearFormats();
+        _errorBars?.ClearFormats();
     }
     #endregion   
 
@@ -64,16 +68,8 @@ internal class ExcelErrorBars : IExcelErrorBars
 
         if (disposing)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_errorBars != null)
-                    Marshal.ReleaseComObject(_errorBars);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
+            if (_errorBars != null)
+                Marshal.ReleaseComObject(_errorBars);
             _errorBars = null;
         }
         _disposedValue = true;
