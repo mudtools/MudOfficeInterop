@@ -1513,6 +1513,59 @@ internal class WordDocument : IWordDocument
         }
     }
 
+    public void SelectAllEditableRanges(string? editorID = null)
+    {
+        CheckComObj();
+        try
+        {
+            _document?.SelectAllEditableRanges(editorID.ComArgsVal());
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to select all editable ranges.", ex);
+        }
+    }
+
+    public void SelectAllEditableRanges(WdEditorType editorID)
+    {
+        CheckComObj();
+        try
+        {
+            _document?.SelectAllEditableRanges(editorID.EnumConvert(MsWord.WdEditionType.wdPublisher));
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to select all editable ranges.", ex);
+        }
+    }
+
+    public void DeleteAllEditableRanges(string? editorID = null)
+    {
+        CheckComObj();
+        try
+        {
+            _document?.DeleteAllEditableRanges(editorID.ComArgsVal());
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to delete all editable ranges.", ex);
+        }
+
+    }
+
+    public void DeleteAllEditableRanges(WdEditorType editorID)
+    {
+        CheckComObj();
+        try
+        {
+            _document?.DeleteAllEditableRanges(editorID.EnumConvert(MsWord.WdEditionType.wdPublisher));
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to delete all editable ranges.", ex);
+        }
+    }
+
 
     public void ExportAsPdf(string fileName)
     {

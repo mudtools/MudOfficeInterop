@@ -690,6 +690,29 @@ public interface IWordDocument : IDisposable
     /// </summary>
     void RejectAllRevisions();
 
+    /// <summary>
+    /// 选择所有可编辑区域
+    /// </summary>
+    /// <param name="editorID">编辑器标识符，如果为null则表示选择所有编辑器的可编辑区域</param>
+    void SelectAllEditableRanges(string? editorID = null);
+
+    /// <summary>
+    /// 选择所有可编辑区域
+    /// </summary>
+    /// <param name="editorID">编辑器类型</param>
+    void SelectAllEditableRanges(WdEditorType editorID);
+
+    /// <summary>
+    /// 删除所有指定类型的可编辑区域
+    /// </summary>
+    /// <param name="editorID">要删除的可编辑区域的编辑器类型</param>
+    void DeleteAllEditableRanges(WdEditorType editorID);
+
+    /// <summary>
+    /// 删除所有指定标识符的可编辑区域
+    /// </summary>
+    /// <param name="editorID">要删除的可编辑区域的编辑器标识符，如果为null则表示删除所有编辑器的可编辑区域</param>
+    void DeleteAllEditableRanges(string? editorID = null);
 
     /// <summary>
     /// 导出为 PDF

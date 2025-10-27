@@ -300,7 +300,8 @@ namespace DocumentAutomationProcessingSample
                 {
                     using var section = document.Sections[i];
                     using var header = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
-                    using var shape = header.Range.ShapeRange.AddTextEffect(
+                    using var shapes = header.Range.ShapeRange.Parent as IWordShapes;
+                    using var shape = shapes.AddTextEffect(
                         MsoPresetTextEffect.msoTextEffect1,
                         watermarkText,
                         "Arial",

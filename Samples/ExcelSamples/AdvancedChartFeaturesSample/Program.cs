@@ -5,9 +5,9 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using System.Drawing;
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Excel;
+using System.Drawing;
 
 namespace AdvancedChartFeaturesSample
 {
@@ -127,7 +127,7 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Columns.AutoFit();
 
                 // 保存工作簿
-                string fileName = $"CombinationChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                string fileName = Path.Combine(AppContext.BaseDirectory, $"CombinationChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
                 workbook.SaveAs(fileName);
 
                 Console.WriteLine($"✓ 成功演示组合图表技术: {fileName}");
@@ -215,7 +215,7 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Columns.AutoFit();
 
                 // 保存工作簿
-                string fileName = $"DynamicChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                string fileName = Path.Combine(AppContext.BaseDirectory, $"DynamicChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
                 workbook.SaveAs(fileName);
 
                 Console.WriteLine($"✓ 成功演示动态图表效果: {fileName}");
@@ -297,7 +297,7 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Columns.AutoFit();
 
                 // 保存工作簿
-                string fileName = $"ThreeDChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                string fileName = Path.Combine(AppContext.BaseDirectory, $"ThreeDChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
                 workbook.SaveAs(fileName);
 
                 Console.WriteLine($"✓ 成功演示3D图表功能: {fileName}");
@@ -386,7 +386,7 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Columns.AutoFit();
 
                 // 保存工作簿
-                string fileName = $"InteractiveChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                string fileName = Path.Combine(AppContext.BaseDirectory, $"InteractiveChart_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
                 workbook.SaveAs(fileName);
 
                 Console.WriteLine($"✓ 成功演示图表交互功能: {fileName}");
@@ -473,7 +473,7 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Columns.AutoFit();
 
                 // 保存工作簿
-                string fileName = $"AdvancedChartStyling_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                string fileName = Path.Combine(AppContext.BaseDirectory, $"AdvancedChartStyling_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
                 workbook.SaveAs(fileName);
 
                 Console.WriteLine($"✓ 成功演示高级图表样式: {fileName}");
@@ -559,7 +559,7 @@ namespace AdvancedChartFeaturesSample
                 worksheet.Columns.AutoFit();
 
                 // 保存工作簿
-                string fileName = $"ChartTemplate_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                string fileName = Path.Combine(AppContext.BaseDirectory, $"ChartTemplate_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
                 workbook.SaveAs(fileName);
 
                 Console.WriteLine($"✓ 成功演示图表模板应用: {fileName}");

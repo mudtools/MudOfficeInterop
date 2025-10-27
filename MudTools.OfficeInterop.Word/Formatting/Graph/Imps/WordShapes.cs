@@ -74,6 +74,30 @@ internal class WordShapes : IWordShapes
     #endregion
 
     #region 方法实现
+     }
+
+    public IWordShape AddTextEffect(MsoPresetTextEffect presetTextEffect, string text,
+     string fontName, float fontSize, bool fontBold, bool fontItalic,
+      float left, float top, IWordRange? anchor = null)
+    {
+        if (_shapes == null)
+        {
+            throw new ObjectDisposedException(nameof(WordShapes));
+        }
+        try
+        {
+            var anchorObj = (anchor as WordRange)?._range;
+            var shape = _shapes.AddTextEffect((MsCore.MsoPresetTextEffect)(int)presetTextEffect, text,
+             fontName, fontSize, fontBold.ConvertTriState(), fontItalic.ConvertTriState(),
+             left, top, anchorObj ?? Type.Missing);
+            return new WordShape(shape);
+        }
+        catch (COMException ex)
+        {
+            throw new InvalidOperationException("无法添加文本效果形状。", ex);
+        }
+    }
+
     public IWordShape AddSmartArt(IOfficeSmartArtLayout Layout, float Left, float Top, float Width, float Height, IWordRange? Anchor = null)
     {
         if (_shapes == null)

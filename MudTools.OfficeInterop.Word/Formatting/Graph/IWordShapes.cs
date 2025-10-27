@@ -38,6 +38,23 @@ public interface IWordShapes : IEnumerable<IWordShape>, IDisposable
     IWordShape this[string name] { get; }
 
     /// <summary>
+    /// 添加艺术字效果到文档中。
+    /// </summary>
+    /// <param name="presetTextEffect">预设的艺术字效果样式。</param>
+    /// <param name="text">艺术字中显示的文本内容。</param>
+    /// <param name="fontName">艺术字的字体名称。</param>
+    /// <param name="fontSize">艺术字的字体大小。</param>
+    /// <param name="fontBold">是否使用粗体样式。</param>
+    /// <param name="fontItalic">是否使用斜体样式。</param>
+    /// <param name="left">艺术字形状的左边距位置。</param>
+    /// <param name="top">艺术字形状的上边距位置。</param>
+    /// <param name="anchor">可选的锚点范围，用于确定形状的位置参考。</param>
+    /// <returns>返回新添加的艺术字形状对象。</returns>
+    IWordShape AddTextEffect(MsoPresetTextEffect presetTextEffect, string text,
+     string fontName, float fontSize, bool fontBold, bool fontItalic,
+      float left, float top, IWordRange? anchor = null);
+
+    /// <summary>
     /// 添加 SmartArt 图形。
     /// </summary>
     /// <param name="Layout">SmartArt 布局类型。</param>
