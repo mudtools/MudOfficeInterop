@@ -455,6 +455,16 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 另存为文档
     /// </summary>
+    /// <param name="fileName">要保存到的文件名</param>
+    /// <param name="password">打开文件所需的密码</param>
+    /// <param name="writePassword">修改文件所需的密码</param>
+    /// <param name="fileFormat">文件保存格式，默认为Word默认文档格式</param>
+    /// <param name="readOnlyRecommended">是否建议以只读方式打开，默认为false</param>
+    void SaveAs(string fileName, string password, string writePassword, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault, bool readOnlyRecommended = false);
+
+    /// <summary>
+    /// 另存为文档
+    /// </summary>
     /// <param name="fileName">文件名</param>
     /// <param name="fileFormat">文件格式</param>
     /// <param name="readOnlyRecommended">是否推荐只读打开</param>

@@ -1,9 +1,11 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
 using MudTools.OfficeInterop.Word;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DocumentProtectionAndSecuritySample
 {
@@ -28,7 +30,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _document = document ?? throw new ArgumentNullException(nameof(document));
-            
+
             _protectionHelper = new DocumentProtectionHelper(document);
             _contentProtectionManager = new ContentProtectionManager(document);
             _signatureManager = new DigitalSignatureManager(application, document);
@@ -44,9 +46,9 @@ namespace DocumentProtectionAndSecuritySample
         /// <param name="protectionSettings">保护设置</param>
         /// <returns>是否创建成功</returns>
         public bool CreateSecureContract(
-            string title, 
-            List<ContractParty> parties, 
-            List<ContractTerm> terms, 
+            string title,
+            List<ContractParty> parties,
+            List<ContractTerm> terms,
             DocumentProtectionSettings protectionSettings)
         {
             try
@@ -64,7 +66,7 @@ namespace DocumentProtectionAndSecuritySample
                 titleRange.Text = $"{title}\n";
                 titleRange.Font.Name = "微软雅黑";
                 titleRange.Font.Size = 18;
-                titleRange.Font.Bold = 1;
+                titleRange.Font.Bold = true;
                 titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                 titleRange.ParagraphFormat.SpaceAfter = 24;
 
@@ -120,11 +122,11 @@ namespace DocumentProtectionAndSecuritySample
             {
                 contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 contentRange.Text = $"{party.PartyType}（{party.PartyRole}）：\n";
-                contentRange.Font.Bold = 1;
+                contentRange.Font.Bold = true;
 
                 contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 contentRange.Text = $"公司名称：{party.CompanyName}\n";
-                contentRange.Font.Bold = 0;
+                contentRange.Font.Bold = false;
 
                 contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 contentRange.Text = $"地址：{party.Address}\n";
@@ -155,11 +157,11 @@ namespace DocumentProtectionAndSecuritySample
             {
                 contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 contentRange.Text = $"{term.TermNumber} {term.TermTitle}\n";
-                contentRange.Font.Bold = 1;
+                contentRange.Font.Bold = true;
 
                 contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                 contentRange.Text = $"{term.TermContent}\n\n";
-                contentRange.Font.Bold = 0;
+                contentRange.Font.Bold = false;
             }
         }
 
@@ -206,7 +208,7 @@ namespace DocumentProtectionAndSecuritySample
                     foreach (var section in settings.ConfidentialSections)
                     {
                         _contentProtectionManager.CreateConfidentialSection(
-                            section.Content, 
+                            section.Content,
                             section.AllowedEditors);
                     }
                 }
@@ -217,8 +219,8 @@ namespace DocumentProtectionAndSecuritySample
                     foreach (var section in settings.EditableSections)
                     {
                         _contentProtectionManager.CreateEditableSection(
-                            section.Content, 
-                            section.EditorType, 
+                            section.Content,
+                            section.EditorType,
                             section.EditorName);
                     }
                 }
@@ -252,7 +254,7 @@ namespace DocumentProtectionAndSecuritySample
 
                 // 应用保护
                 _protectionHelper.ApplyProtection(
-                    settings.ProtectionType, 
+                    settings.ProtectionType,
                     settings.ProtectionPassword);
 
                 Console.WriteLine("文档保护已应用");
@@ -274,7 +276,7 @@ namespace DocumentProtectionAndSecuritySample
                 if (settings.AllowedUsers != null && settings.AllowedUsers.Any())
                 {
                     _permissionManager.CreateStandardCorporatePolicy(
-                        settings.AllowedUsers, 
+                        settings.AllowedUsers,
                         settings.PermissionExpirationDays);
                 }
 
@@ -294,8 +296,8 @@ namespace DocumentProtectionAndSecuritySample
         /// <param name="protectionSettings">保护设置</param>
         /// <returns>是否创建成功</returns>
         public bool CreateProtectedForm(
-            string title, 
-            List<FormFieldDefinition> formFields, 
+            string title,
+            List<FormFieldDefinition> formFields,
             DocumentProtectionSettings protectionSettings)
         {
             try
@@ -347,13 +349,13 @@ namespace DocumentProtectionAndSecuritySample
 
                 // 检查文档保护状态
                 result.ProtectionStatus = _protectionHelper.CheckProtectionStatus();
-                
+
                 // 检查权限管理状态
                 result.PermissionStatus = _permissionManager.GetPermissionManagementStatus();
-                
+
                 // 验证签名
                 result.SignatureValidation = _signatureManager.ValidateSignatures();
-                
+
                 // 获取受保护内容信息
                 result.ProtectedContent = _contentProtectionManager.GetAllProtectedContentInfo();
 
@@ -386,16 +388,16 @@ namespace DocumentProtectionAndSecuritySample
             {
                 // 获取保护状态
                 report.ProtectionStatus = _protectionHelper.CheckProtectionStatus();
-                
+
                 // 获取权限状态
                 report.PermissionStatus = _permissionManager.GetPermissionManagementStatus();
-                
+
                 // 获取签名信息
                 report.Signatures = _signatureManager.GetDocumentSignatures();
-                
+
                 // 获取受保护内容
                 report.ProtectedContent = _contentProtectionManager.GetAllProtectedContentInfo();
-                
+
                 // 生成权限报告
                 report.PermissionReport = _permissionManager.CreatePermissionReport();
 
@@ -421,10 +423,10 @@ namespace DocumentProtectionAndSecuritySample
             try
             {
                 // 保存文档
-                _document.SaveAs2(
-                    FileName: filePath,
-                    Password: protectionSettings.OpenPassword,
-                    WritePassword: protectionSettings.ModifyPassword
+                _document.SaveAs(
+                    fileName: filePath,
+                    password: protectionSettings.OpenPassword,
+                    writePassword: protectionSettings.ModifyPassword
                 );
 
                 Console.WriteLine($"安全文档已保存: {filePath}");
@@ -579,7 +581,7 @@ namespace DocumentProtectionAndSecuritySample
         /// <summary>
         /// 允许的编辑者列表
         /// </summary>
-        public List<string> AllowedEditors { get; set; }
+        public List<WdEditorType> AllowedEditors { get; set; }
     }
 
     /// <summary>

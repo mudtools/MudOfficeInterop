@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using MudTools.OfficeInterop.Word;
+using System.Linq;
 using System.Text;
 
 namespace RibbonCustomizationSample
@@ -333,7 +334,7 @@ namespace RibbonCustomizationSample
                 codeBuilder.AppendLine();
 
                 // 生成OnAction回调函数
-                var actionControls = controls.Where(c => !string.IsNullOrEmpty(c.OnAction)).DistinctBy(c => c.OnAction);
+                var actionControls = controls.Where(c => !string.IsNullOrEmpty(c.OnAction)).GroupBy(c => c.OnAction).Select(g => g.First());
                 foreach (var control in actionControls)
                 {
                     codeBuilder.AppendLine($"public void {control.OnAction}(IRibbonControl control)");
@@ -345,7 +346,7 @@ namespace RibbonCustomizationSample
                 }
 
                 // 生成GetEnabled回调函数
-                var enabledControls = controls.Where(c => !string.IsNullOrEmpty(c.GetEnabled)).DistinctBy(c => c.GetEnabled);
+                var enabledControls = controls.Where(c => !string.IsNullOrEmpty(c.GetEnabled)).GroupBy(c => c.GetEnabled).Select(g => g.First());
                 foreach (var control in enabledControls)
                 {
                     codeBuilder.AppendLine($"public bool {control.GetEnabled}(IRibbonControl control)");
@@ -357,7 +358,7 @@ namespace RibbonCustomizationSample
                 }
 
                 // 生成GetPressed回调函数
-                var pressedControls = controls.Where(c => !string.IsNullOrEmpty(c.GetPressed)).DistinctBy(c => c.GetPressed);
+                var pressedControls = controls.Where(c => !string.IsNullOrEmpty(c.GetPressed)).GroupBy(c => c.GetPressed).Select(g => g.First());
                 foreach (var control in pressedControls)
                 {
                     codeBuilder.AppendLine($"public bool {control.GetPressed}(IRibbonControl control)");

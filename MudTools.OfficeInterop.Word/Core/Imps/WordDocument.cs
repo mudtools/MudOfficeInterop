@@ -932,6 +932,28 @@ internal class WordDocument : IWordDocument
             throw new InvalidOperationException("无法操作已释放的COM对象。");
     }
 
+    public void SaveAs(string fileName, string password, string writePassword, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault, bool readOnlyRecommended = false)
+    {
+        if (string.IsNullOrEmpty(fileName))
+            throw new ArgumentException("File name cannot be null or empty.", nameof(fileName));
+
+        CheckComObj();
+        try
+        {
+            var readOnly = readOnlyRecommended ? (object)true : missing;
+            _document?.SaveAs2(
+                FileName: fileName,
+                FileFormat: fileFormat.EnumConvert(MsWord.WdSaveFormat.wdFormatDocumentDefault),
+                LockComments: readOnly,
+                Password: password,
+                WritePassword: writePassword);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to save document as.", ex);
+        }
+    }
+
     public void SaveAs(string fileName, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault, bool readOnlyRecommended = false)
     {
         if (string.IsNullOrEmpty(fileName))
