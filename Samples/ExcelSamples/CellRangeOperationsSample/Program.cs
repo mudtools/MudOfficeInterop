@@ -139,8 +139,8 @@ namespace CellRangeOperationsSample
                 rangeE1G3.Font.Italic = true;
                 rangeE1G3.Interior.Color = Color.LightGreen;
 
-                // 方法3：使用Cells属性引用区域
-                var rangeA5C7 = worksheet.Cells[5, 1, 7, 3]; // 第5-7行，第1-3列
+                // 方法3：使用Range方法引用区域（行列号）
+                var rangeA5C7 = worksheet.Range(worksheet.Cells[5, 1], worksheet.Cells[7, 3]); // 第5-7行，第1-3列
                 rangeA5C7.Value = "区域A5:C7";
                 rangeA5C7.Font.Underline = XlUnderlineStyle.xlUnderlineStyleSingle;
                 rangeA5C7.Interior.Color = Color.LightYellow;

@@ -1,5 +1,5 @@
 //
-// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求.
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -72,7 +72,7 @@ namespace AdvancedFormattingSample
                 integerRange.Value = "整数验证 (1-100)";
                 var integerValidationRange = worksheet.Range("A2");
                 var integerValidation = integerValidationRange.Validation;
-                integerValidation.Add(XlDVType.xlValidateWholeNumber, XlDVAlertStyle.xlValidAlertStop, "1", "100");
+                integerValidation.Add(XlDVType.xlValidateWholeNumber, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlBetween, "1", "100");
                 integerValidation.InputTitle = "整数输入";
                 integerValidation.InputMessage = "请输入1到100之间的整数";
                 integerValidation.ErrorTitle = "输入错误";
@@ -85,7 +85,7 @@ namespace AdvancedFormattingSample
                 decimalRange.Value = "小数验证 (0.0-10.0)";
                 var decimalValidationRange = worksheet.Range("B2");
                 var decimalValidation = decimalValidationRange.Validation;
-                decimalValidation.Add(XlDVType.xlValidateDecimal, XlDVAlertStyle.xlValidAlertStop, "0.0", "10.0");
+                decimalValidation.Add(XlDVType.xlValidateDecimal, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlBetween, "0.0", "10.0");
                 decimalValidation.InputTitle = "小数输入";
                 decimalValidation.InputMessage = "请输入0.0到10.0之间的小数";
                 decimalValidation.ErrorTitle = "输入错误";
@@ -98,7 +98,7 @@ namespace AdvancedFormattingSample
                 listRange.Value = "列表验证";
                 var listValidationRange = worksheet.Range("C2");
                 var listValidation = listValidationRange.Validation;
-                listValidation.Add(XlDVType.xlValidateList, XlDVAlertStyle.xlValidAlertStop, "选项1,选项2,选项3,选项4", "");
+                listValidation.Add(XlDVType.xlValidateList, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlEqual, "选项1,选项2,选项3,选项4", "");
                 listValidation.InputTitle = "列表选择";
                 listValidation.InputMessage = "请选择列表中的一个选项";
                 listValidation.ErrorTitle = "输入错误";
@@ -111,7 +111,7 @@ namespace AdvancedFormattingSample
                 dateRange.Value = "日期验证";
                 var dateValidationRange = worksheet.Range("D2");
                 var dateValidation = dateValidationRange.Validation;
-                dateValidation.Add(XlDVType.xlValidateDate, XlDVAlertStyle.xlValidAlertStop, "2020/1/1", "2030/12/31");
+                dateValidation.Add(XlDVType.xlValidateDate, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlBetween, "2020/1/1", "2030/12/31");
                 dateValidation.InputTitle = "日期输入";
                 dateValidation.InputMessage = "请输入2020年到2030年之间的日期";
                 dateValidation.ErrorTitle = "输入错误";
@@ -124,7 +124,7 @@ namespace AdvancedFormattingSample
                 textRange.Value = "文本长度验证 (最多10字符)";
                 var textValidationRange = worksheet.Range("E2");
                 var textValidation = textValidationRange.Validation;
-                textValidation.Add(XlDVType.xlValidateTextLength, XlDVAlertStyle.xlValidAlertStop, "", "10");
+                textValidation.Add(XlDVType.xlValidateTextLength, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlLessEqual, "", "10");
                 textValidation.InputTitle = "文本输入";
                 textValidation.InputMessage = "请输入最多10个字符的文本";
                 textValidation.ErrorTitle = "输入错误";
@@ -201,7 +201,7 @@ namespace AdvancedFormattingSample
                 var belowTargetFormat = aboveTargetRange.FormatConditions.Add(
                     XlFormatConditionType.xlCellValue,
                     XlFormatConditionOperator.xlLess,
-                    "1");
+                    "0.9");
                 belowTargetFormat.Interior.Color = Color.LightCoral;
 
                 // 设置数字格式
@@ -440,7 +440,7 @@ namespace AdvancedFormattingSample
                 // 设置数据验证
                 // 姓名列 - 文本长度限制
                 var nameValidation = worksheet.Range("A3:A20").Validation;
-                nameValidation.Add(XlDVType.xlValidateTextLength, XlDVAlertStyle.xlValidAlertStop, "", "20");
+                nameValidation.Add(XlDVType.xlValidateTextLength, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlLessEqual, "", "20");
                 nameValidation.InputTitle = "姓名输入";
                 nameValidation.InputMessage = "请输入员工姓名（最多20个字符）";
                 nameValidation.ErrorTitle = "输入错误";
@@ -450,7 +450,7 @@ namespace AdvancedFormattingSample
 
                 // 部门列 - 列表选择
                 var departmentValidation = worksheet.Range("B3:B20").Validation;
-                departmentValidation.Add(XlDVType.xlValidateList, XlDVAlertStyle.xlValidAlertStop, "技术部,销售部,市场部,人事部,财务部", "");
+                departmentValidation.Add(XlDVType.xlValidateList, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlEqual, "技术部,销售部,市场部,人事部,财务部", "");
                 departmentValidation.InputTitle = "部门选择";
                 departmentValidation.InputMessage = "请选择员工所属部门";
                 departmentValidation.ErrorTitle = "输入错误";
@@ -460,7 +460,7 @@ namespace AdvancedFormattingSample
 
                 // 年龄列 - 整数范围
                 var ageValidation = worksheet.Range("C3:C20").Validation;
-                ageValidation.Add(XlDVType.xlValidateWholeNumber, XlDVAlertStyle.xlValidAlertStop, "18", "65");
+                ageValidation.Add(XlDVType.xlValidateWholeNumber, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlBetween, "18", "65");
                 ageValidation.InputTitle = "年龄输入";
                 ageValidation.InputMessage = "请输入员工年龄（18-65岁）";
                 ageValidation.ErrorTitle = "输入错误";
@@ -470,7 +470,7 @@ namespace AdvancedFormattingSample
 
                 // 工资列 - 小数范围
                 var salaryValidation = worksheet.Range("D3:D20").Validation;
-                salaryValidation.Add(XlDVType.xlValidateDecimal, XlDVAlertStyle.xlValidAlertStop, "3000", "100000");
+                salaryValidation.Add(XlDVType.xlValidateDecimal, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlBetween, "3000", "100000");
                 salaryValidation.InputTitle = "工资输入";
                 salaryValidation.InputMessage = "请输入员工工资（3000-100000）";
                 salaryValidation.ErrorTitle = "输入错误";
@@ -480,7 +480,7 @@ namespace AdvancedFormattingSample
 
                 // 入职日期列 - 日期范围
                 var dateValidation = worksheet.Range("E3:E20").Validation;
-                dateValidation.Add(XlDVType.xlValidateDate, XlDVAlertStyle.xlValidAlertStop, "2020/1/1", "2030/12/31");
+                dateValidation.Add(XlDVType.xlValidateDate, XlDVAlertStyle.xlValidAlertStop, XlFormatConditionOperator.xlBetween, "2020/1/1", "2030/12/31");
                 dateValidation.InputTitle = "日期输入";
                 dateValidation.InputMessage = "请输入入职日期（2020-2030年）";
                 dateValidation.ErrorTitle = "输入错误";

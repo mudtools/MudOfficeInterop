@@ -39,7 +39,7 @@ namespace ExcelApplicationManagementSample
             OpenExistingWorkbookExample();
 
             // 演示连接到现有Excel实例
-            ConnectionExample();
+            //ConnectionExample();
 
             Console.WriteLine("所有示例已完成。按任意键退出...");
             Console.ReadKey();
@@ -246,10 +246,10 @@ namespace ExcelApplicationManagementSample
 
                 // 在实际应用中，这里需要获取现有Excel实例的COM对象
                 // 由于演示限制，我们直接使用testExcelApp的COM对象
-                var comObj = testExcelApp.ComObject;
+                //var comObj = testExcelApp.ComObject;
 
                 // 使用Connection方法连接到现有Excel实例
-                var connectedApp = ExcelFactory.Connection(comObj);
+                var connectedApp = ExcelFactory.Connection(null);
 
                 if (connectedApp != null)
                 {
