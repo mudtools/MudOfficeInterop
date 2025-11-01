@@ -206,6 +206,11 @@ public interface IWordDocument : IDisposable
     WdDocumentKind Kind { get; set; }
 
     /// <summary>
+    /// 获取文档的权限设置对象，用于管理和控制文档的访问权限
+    /// </summary>
+    IOfficePermission? Permission { get; }
+
+    /// <summary>
     /// 获取文档是否受保护
     /// </summary>
     bool ReadOnly { get; }

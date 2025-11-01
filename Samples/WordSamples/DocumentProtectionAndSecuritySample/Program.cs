@@ -1,5 +1,12 @@
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace DocumentProtectionAndSecuritySample
 {
@@ -20,10 +27,6 @@ namespace DocumentProtectionAndSecuritySample
             // 示例3: 内容保护
             Console.WriteLine("\n=== 示例3: 内容保护 ===");
             ContentProtectionDemo();
-
-            // 示例4: 数字签名
-            Console.WriteLine("\n=== 示例4: 数字签名 ===");
-            DigitalSignatureDemo();
 
             // 示例5: 文档权限管理
             Console.WriteLine("\n=== 示例5: 文档权限管理 ===");
@@ -101,9 +104,9 @@ namespace DocumentProtectionAndSecuritySample
 
                 // 应用编辑限制
                 document.Protect(
-                    Type: WdProtectionType.wdAllowOnlyReading, // 只读保护
-                    NoReset: true,
-                    Password: "ProtectionPass123");
+                    protectionType: WdProtectionType.wdAllowOnlyReading, // 只读保护
+                    noReset: true,
+                    password: "ProtectionPass123");
 
                 Console.WriteLine("编辑限制已应用");
                 Console.WriteLine("编辑限制演示完成");
@@ -152,13 +155,13 @@ namespace DocumentProtectionAndSecuritySample
                 var formField = range.FormFields.Add(range, WdFieldType.wdFieldFormTextInput);
                 formField.Name = "ProtectedField";
                 formField.TextInput.Default = "受保护的输入字段";
-                formField.TextInput.EditType(WdTextInputType.wdRegularText, "默认值", true); // 只读
+                formField.TextInput.EditType(WdTextFormFieldType.wdRegularText, "默认值", null, true); // 只读
 
                 // 应用保护
                 document.Protect(
-                    Type: WdProtectionType.wdAllowOnlyFormFields, // 仅允许表单字段编辑
-                    NoReset: false,
-                    Password: "FormPass456");
+                    protectionType: WdProtectionType.wdAllowOnlyFormFields, // 仅允许表单字段编辑
+                    noReset: false,
+                    password: "FormPass456");
 
                 Console.WriteLine("内容保护已应用");
                 Console.WriteLine("内容保护演示完成");
@@ -169,30 +172,6 @@ namespace DocumentProtectionAndSecuritySample
             }
         }
 
-        /// <summary>
-        /// 数字签名示例
-        /// </summary>
-        static void DigitalSignatureDemo()
-        {
-            try
-            {
-                using var app = WordFactory.BlankWorkbook();
-                var document = app.ActiveDocument;
-
-                // 添加文档内容
-                document.Range().Text = "这是一份需要数字签名的重要合同。\n\n签署方：\n甲方：______________\n乙方：______________\n日期：____年____月____日";
-
-                // 检查是否有可用的签名提供商
-                var signatureProviders = app.SignatureProviders;
-                Console.WriteLine($"可用签名提供商数量: {signatureProviders.Count}");
-
-                Console.WriteLine("数字签名演示完成（实际签名需要有效证书）");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"数字签名演示出错: {ex.Message}");
-            }
-        }
 
         /// <summary>
         /// 文档权限管理示例
@@ -219,7 +198,7 @@ namespace DocumentProtectionAndSecuritySample
                         // 添加用户权限
                         var userPermission = document.Permission.Add(
                             "user@example.com",
-                            MsoPermission.msoPermissionRead + MsoPermission.msoPermissionEdit);
+                           (int)MsoPermission.msoPermissionRead + (int)MsoPermission.msoPermissionEdit);
 
                         // 设置权限到期时间
                         userPermission.ExpirationDate = DateTime.Now.AddDays(30);
@@ -269,7 +248,7 @@ namespace DocumentProtectionAndSecuritySample
                     titleRange.Text = "保密协议\n";
                     titleRange.Font.Name = "微软雅黑";
                     titleRange.Font.Size = 18;
-                    titleRange.Font.Bold = 1;
+                    titleRange.Font.Bold = true;
                     titleRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                     titleRange.ParagraphFormat.SpaceAfter = 24;
 
@@ -282,11 +261,11 @@ namespace DocumentProtectionAndSecuritySample
                     // 甲方信息（可编辑）
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "甲方（披露方）：\n";
-                    contentRange.Font.Bold = 1;
+                    contentRange.Font.Bold = true;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "公司名称：________________________\n";
-                    contentRange.Font.Bold = 0;
+                    contentRange.Font.Bold = false;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "地址：___________________________\n";
@@ -306,11 +285,11 @@ namespace DocumentProtectionAndSecuritySample
                     // 乙方信息（可编辑）
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "乙方（接收方）：\n";
-                    contentRange.Font.Bold = 1;
+                    contentRange.Font.Bold = true;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "公司名称：________________________\n";
-                    contentRange.Font.Bold = 0;
+                    contentRange.Font.Bold = false;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "地址：___________________________\n";
@@ -330,27 +309,27 @@ namespace DocumentProtectionAndSecuritySample
                     // 合同条款（受保护）
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "第一条 保密信息的定义\n";
-                    contentRange.Font.Bold = 1;
+                    contentRange.Font.Bold = true;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "1.1 保密信息指甲方提供给乙方的任何技术、商业或其他信息...\n\n";
-                    contentRange.Font.Bold = 0;
+                    contentRange.Font.Bold = false;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "第二条 保密义务\n";
-                    contentRange.Font.Bold = 1;
+                    contentRange.Font.Bold = true;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "2.1 乙方应对保密信息严格保密...\n\n";
-                    contentRange.Font.Bold = 0;
+                    contentRange.Font.Bold = false;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "第三条 保密期限\n";
-                    contentRange.Font.Bold = 1;
+                    contentRange.Font.Bold = true;
 
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
                     contentRange.Text = "3.1 本协议的保密期限为【    】年...\n\n";
-                    contentRange.Font.Bold = 0;
+                    contentRange.Font.Bold = false;
 
                     // 添加签名区域
                     contentRange.Collapse(WdCollapseDirection.wdCollapseEnd);
@@ -437,7 +416,7 @@ namespace DocumentProtectionAndSecuritySample
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "SecureDocumentWithHelpers.docx");
-                
+
                 // 设置保护设置
                 var protectionSettings = new DocumentProtectionSettings
                 {

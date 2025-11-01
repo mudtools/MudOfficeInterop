@@ -5,6 +5,7 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
 
 namespace DocumentProtectionAndSecuritySample
@@ -89,7 +90,7 @@ namespace DocumentProtectionAndSecuritySample
         /// <param name="permissions">权限列表</param>
         /// <param name="expirationDate">过期日期</param>
         /// <returns>用户权限对象</returns>
-        public IWordUserPermission AddUserPermission(
+        public IOfficeUserPermission AddUserPermission(
             string userEmail,
             List<MsoPermission> permissions,
             DateTime? expirationDate = null)
@@ -131,9 +132,20 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                _document.Permission.Remove(userEmail);
-                Console.WriteLine($"用户权限已移除: {userEmail}");
-                return true;
+                // 遍历所有用户权限，找到匹配的用户并删除
+                for (int i = 1; i <= _document.Permission.Count; i++)
+                {
+                    var userPermission = _document.Permission[i];
+                    if (userPermission.UserId.Equals(userEmail, StringComparison.OrdinalIgnoreCase))
+                    {
+                        userPermission.Remove();
+                        Console.WriteLine($"用户权限已移除: {userEmail}");
+                        return true;
+                    }
+                }
+                
+                Console.WriteLine($"未找到用户权限: {userEmail}");
+                return false;
             }
             catch (Exception ex)
             {
@@ -174,7 +186,7 @@ namespace DocumentProtectionAndSecuritySample
             {
                 for (int i = 1; i <= _document.Permission.Count; i++)
                 {
-                    var userPermission = _document.Permission.Item(i);
+                    var userPermission = _document.Permission[i];
                     var permissionInfo = new UserPermissionInfo
                     {
                         UserId = userPermission.UserId,

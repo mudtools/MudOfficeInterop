@@ -48,6 +48,7 @@ internal class WordDocument : IWordDocument
     private IWordTablesOfAuthorities? _tableOfAuthorities;
     private IWordEnvelope? _envelope;
     private IWordMailMerge? _mailMerge;
+    private IOfficePermission? _officePermission;
 
     /// <inheritdoc/>
     public IWordApplication Application => _document != null ? new WordApplication(_document.Application) : null;
@@ -455,6 +456,16 @@ internal class WordDocument : IWordDocument
         {
             if (_document != null)
                 _document.Kind = value.EnumConvert(MsWord.WdDocumentKind.wdDocumentNotSpecified);
+        }
+    }
+
+    public IOfficePermission? Permission
+    {
+        get
+        {
+            if (_document == null) return null;
+            _officePermission ??= new OfficePermission(_document.Permission);
+            return _officePermission;
         }
     }
 
@@ -1632,6 +1643,7 @@ internal class WordDocument : IWordDocument
             _content?.Dispose();
             _storyRanges?.Dispose();
             _bookmarks?.Dispose();
+            _officePermission?.Dispose();
             _tables?.Dispose();
             _paragraphs?.Dispose();
             _sections?.Dispose();
@@ -1681,6 +1693,7 @@ internal class WordDocument : IWordDocument
         _content = null;
         _storyRanges = null;
         _bookmarks = null;
+        _officePermission = null;
         _tables = null;
         _paragraphs = null;
         _sections = null;
