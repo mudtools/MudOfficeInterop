@@ -74,8 +74,6 @@ internal class WordShapes : IWordShapes
     #endregion
 
     #region 方法实现
-     }
-
     public IWordShape AddTextEffect(MsoPresetTextEffect presetTextEffect, string text,
      string fontName, float fontSize, bool fontBold, bool fontItalic,
       float left, float top, IWordRange? anchor = null)
