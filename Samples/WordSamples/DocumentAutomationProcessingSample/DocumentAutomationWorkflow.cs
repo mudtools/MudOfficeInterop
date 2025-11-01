@@ -314,15 +314,15 @@ namespace DocumentAutomationProcessingSample
                     // 设置水印属性
                     shape.Fill.Visible = true;
                     shape.Fill.Solid();
-                    shape.Fill.ForeColor.RGB = 0x00CCCCCCCC; // 半透明灰色
+                    shape.Fill.ForeColor.RGB = unchecked((int)0x00CCCCCCCC); // 半透明灰色
                     shape.Line.Visible = false;
                     shape.Rotation = 315; // 斜角
                     shape.WrapFormat.AllowOverlap = true;
                     shape.WrapFormat.Type = WdWrapType.wdWrapNone;
                     shape.RelativeHorizontalPosition = WdRelativeHorizontalPosition.wdRelativeHorizontalPositionMargin;
                     shape.RelativeVerticalPosition = WdRelativeVerticalPosition.wdRelativeVerticalPositionMargin;
-                    shape.Left = WdShapePosition.wdShapeCenter;
-                    shape.Top = WdShapePosition.wdShapeCenter;
+                    shape.LeftPosition = WdShapePosition.wdShapeCenter;
+                    shape.TopPosition = WdShapePosition.wdShapeCenter;
                 }
 
                 Console.WriteLine("  - 水印已添加");

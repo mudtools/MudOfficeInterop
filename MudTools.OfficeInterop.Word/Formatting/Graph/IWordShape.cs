@@ -40,9 +40,20 @@ public interface IWordShape : IDisposable
     float Left { get; set; }
 
     /// <summary>
+    /// 获取或设置形状的左边距（相对于页面）。
+    /// </summary>
+    WdShapePosition LeftPosition { get; set; }
+
+
+    /// <summary>
     /// 获取或设置形状的上边距（相对于页面）。
     /// </summary>
     float Top { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状的上边距（相对于页面）。
+    /// </summary>
+    WdShapePosition TopPosition { get; set; }
 
     /// <summary>
     /// 获取或设置形状的宽度。

@@ -60,6 +60,16 @@ internal class WordShape : IWordShape
         }
     }
 
+    public WdShapePosition LeftPosition
+    {
+        get => _shape?.Left.ObjectConvertEnum(WdShapePosition.wdShapeLeft) ?? WdShapePosition.wdShapeLeft;
+        set
+        {
+            if (_shape != null)
+                _shape.Left = (float)value;
+        }
+    }
+
     /// <inheritdoc/>
     public float Top
     {
@@ -68,6 +78,16 @@ internal class WordShape : IWordShape
         {
             if (_shape != null)
                 _shape.Top = value;
+        }
+    }
+
+    public WdShapePosition TopPosition
+    {
+        get => _shape?.Top.ObjectConvertEnum(WdShapePosition.wdShapeTop) ?? WdShapePosition.wdShapeTop;
+        set
+        {
+            if (_shape != null)
+                _shape.Top = (float)value;
         }
     }
 

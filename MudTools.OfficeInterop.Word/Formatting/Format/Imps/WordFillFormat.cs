@@ -201,6 +201,12 @@ internal class WordFillFormat : IWordFillFormat
     #region 方法实现
 
     /// <inheritdoc/>
+    public void Solid()
+    {
+        _fillFormat?.Solid();
+    }
+
+    /// <inheritdoc/>
     public void Solid(int color)
     {
         if (_fillFormat != null)
