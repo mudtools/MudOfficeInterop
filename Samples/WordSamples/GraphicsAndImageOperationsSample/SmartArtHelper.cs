@@ -37,7 +37,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultList,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -54,7 +54,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultCycle,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -71,7 +71,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultHierarchy,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -88,7 +88,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultProcess,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -249,7 +249,7 @@ namespace GraphicsAndImageOperationsSample
         /// <param name="nodeTexts">节点文本</param>
         /// <returns>SmartArt图形对象</returns>
         public IWordShape CreateCustomSmartArt(
-            MsoSmartArtDefaultConstants type,
+            IOfficeSmartArtLayout type, // 修改参数类型为IOfficeSmartArtLayout
             float left, float top, float width, float height,
             List<string> nodeTexts)
         {

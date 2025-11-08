@@ -30,46 +30,6 @@ namespace TaskPanesAndDialogsSample
         }
 
         /// <summary>
-        /// 处理字体格式化交互
-        /// </summary>
-        /// <returns>是否处理成功</returns>
-        public bool HandleFontFormattingInteraction()
-        {
-            try
-            {
-                Console.WriteLine("开始处理字体格式化交互...");
-
-                // 获取当前选择
-                var selection = _application.Selection;
-                if (selection == null)
-                {
-                    Console.WriteLine("未找到当前选择");
-                    return false;
-                }
-
-                // 显示字体对话框
-                var dialogManager = new DialogManager(_application, _document);
-                var fontSettings = dialogManager.ShowCustomFontDialog();
-
-                if (fontSettings.IsApplied)
-                {
-                    Console.WriteLine("字体格式化已应用到当前选择");
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("用户取消了字体格式化操作");
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"处理字体格式化交互时出错: {ex.Message}");
-                return false;
-            }
-        }
-
-        /// <summary>
         /// 处理段落格式化交互
         /// </summary>
         /// <returns>是否处理成功</returns>
