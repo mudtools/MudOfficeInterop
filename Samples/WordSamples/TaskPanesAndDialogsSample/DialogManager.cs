@@ -145,58 +145,6 @@ namespace TaskPanesAndDialogsSample
             }
         }
 
-        /// <summary>
-        /// 显示自定义字体对话框并应用设置
-        /// </summary>
-        /// <returns>字体设置信息</returns>
-        public FontSettings ShowCustomFontDialog()
-        {
-            var fontSettings = new FontSettings();
-
-            try
-            {
-                using var fontDialog = _application.Dialogs[WdWordDialog.wdDialogFormatFont];
-                fontDialog.DefaultTab = WdWordDialogTab.wdDialogFormatFontTabFont;
-
-                // 显示对话框并获取结果
-                var result = fontDialog.Show();
-
-                if (result) // 用户点击了确定
-                {
-                    // 获取用户选择的设置
-                    fontSettings.FontName = fontDialog.Font;
-                    fontSettings.FontSize = fontDialog.Points;
-                    fontSettings.IsBold = fontDialog.Bold != 0;
-                    fontSettings.IsItalic = fontDialog.Italic != 0;
-
-                    Console.WriteLine($"用户选择了字体: {fontSettings.FontName}, 大小: {fontSettings.FontSize}");
-                    Console.WriteLine($"粗体: {fontSettings.IsBold}, 斜体: {fontSettings.IsItalic}");
-
-                    // 应用到当前选择
-                    var selection = _application.Selection;
-                    if (selection != null)
-                    {
-                        selection.Font.Name = fontSettings.FontName;
-                        selection.Font.Size = fontSettings.FontSize;
-                        selection.Font.Bold = fontSettings.IsBold;
-                        selection.Font.Italic = fontSettings.IsItalic;
-                    }
-
-                    fontSettings.IsApplied = true;
-                }
-                else
-                {
-                    Console.WriteLine("用户取消了字体设置");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"显示自定义字体对话框时出错: {ex.Message}");
-                fontSettings.ErrorMessage = ex.Message;
-            }
-
-            return fontSettings;
-        }
 
         /// <summary>
         /// 显示自定义页面设置对话框并应用设置

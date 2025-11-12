@@ -37,7 +37,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultList,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -54,7 +54,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultCycle,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -71,7 +71,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultHierarchy,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -88,7 +88,7 @@ namespace GraphicsAndImageOperationsSample
         {
             var range = _document.Range(_document.Content.End - 1, _document.Content.End - 1);
             var smartArtShape = _document.Shapes.AddSmartArt(
-                MsoSmartArtDefaultConstants.msoSmartArtDefaultProcess,
+                null, // 需要传入具体的SmartArtLayout对象，暂时传null
                 left, top, width, height);
             return smartArtShape;
         }
@@ -173,14 +173,14 @@ namespace GraphicsAndImageOperationsSample
         /// <param name="colorIndex">颜色索引</param>
         public void SetColorStyle(IWordShape smartArtShape, int colorIndex)
         {
-            if (smartArtShape?.SmartArt?.Parent?.SmartArtColors != null)
+            if (smartArtShape?.SmartArt != null && _document?.Application?.SmartArtColors != null)
             {
                 try
                 {
                     var smartArt = smartArtShape.SmartArt;
-                    if (smartArt.Parent.SmartArtColors.Count >= colorIndex)
+                    if (_document.Application.SmartArtColors.Count >= colorIndex)
                     {
-                        smartArt.Color = smartArt.Parent.SmartArtColors[colorIndex];
+                        smartArt.Color = _document.Application.SmartArtColors[colorIndex];
                     }
                 }
                 catch (Exception ex)
@@ -197,72 +197,20 @@ namespace GraphicsAndImageOperationsSample
         /// <param name="layoutIndex">布局索引</param>
         public void SetLayoutStyle(IWordShape smartArtShape, int layoutIndex)
         {
-            if (smartArtShape?.SmartArt?.Parent?.SmartArtLayouts != null)
+            if (smartArtShape?.SmartArt != null && _document?.Application?.SmartArtLayouts != null)
             {
                 try
                 {
                     var smartArt = smartArtShape.SmartArt;
-                    if (smartArt.Parent.SmartArtLayouts.Count >= layoutIndex)
+                    if (_document.Application.SmartArtLayouts.Count >= layoutIndex)
                     {
-                        smartArt.Layout = smartArt.Parent.SmartArtLayouts[layoutIndex];
+                        smartArt.Layout = _document.Application.SmartArtLayouts[layoutIndex];
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"设置布局样式时出错: {ex.Message}");
                 }
-            }
-        }
-
-        /// <summary>
-        /// 设置SmartArt样式
-        /// </summary>
-        /// <param name="smartArtShape">SmartArt图形对象</param>
-        /// <param name="styleIndex">样式索引</param>
-        public void SetStyle(IWordShape smartArtShape, int styleIndex)
-        {
-            if (smartArtShape?.SmartArt?.Parent?.SmartArtQuickStyles != null)
-            {
-                try
-                {
-                    var smartArt = smartArtShape.SmartArt;
-                    if (smartArt.Parent.SmartArtQuickStyles.Count >= styleIndex)
-                    {
-                        smartArt.QuickStyle = smartArt.Parent.SmartArtQuickStyles[styleIndex];
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"设置样式时出错: {ex.Message}");
-                }
-            }
-        }
-
-        /// <summary>
-        /// 创建自定义SmartArt图表
-        /// </summary>
-        /// <param name="type">SmartArt类型</param>
-        /// <param name="left">左侧位置</param>
-        /// <param name="top">顶部位置</param>
-        /// <param name="width">宽度</param>
-        /// <param name="height">高度</param>
-        /// <param name="nodeTexts">节点文本</param>
-        /// <returns>SmartArt图形对象</returns>
-        public IWordShape CreateCustomSmartArt(
-            MsoSmartArtDefaultConstants type,
-            float left, float top, float width, float height,
-            List<string> nodeTexts)
-        {
-            try
-            {
-                var smartArtShape = _document.Shapes.AddSmartArt(type, left, top, width, height);
-                SetNodeTexts(smartArtShape, nodeTexts);
-                return smartArtShape;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"创建自定义SmartArt时出错: {ex.Message}");
-                return null;
             }
         }
     }
