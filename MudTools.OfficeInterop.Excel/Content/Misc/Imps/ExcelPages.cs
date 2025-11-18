@@ -9,14 +9,43 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelPages : IExcelPages
 {
-    private MsExcel.Pages _pages;
+    private MsExcel.Pages? _pages;
     private bool _disposedValue;
+    private DisposableList _disposables = [];
 
-    public int Count => _pages.Count;
+    public int? Count => _pages?.Count;
 
-    public IExcelPage this[int index] => new ExcelPage(_pages[index]);
 
-    public IExcelPage this[string name] => new ExcelPage(_pages[name]);
+    public IExcelPage? this[int index]
+    {
+        get
+        {
+            if (index < 1 || index > Count)
+            {
+                return null;
+            }
+            if (_pages == null)
+                return null;
+            var page = new ExcelPage(_pages[index]);
+            _disposables.Add(page);
+            return page;
+        }
+    }
+
+    public IExcelPage? this[string name]
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+
+            if (_pages == null)
+                return null;
+            var page = new ExcelPage(_pages[name]);
+            _disposables.Add(page);
+            return page;
+        }
+    }
 
     internal ExcelPages(MsExcel.Pages pages)
     {
@@ -40,11 +69,8 @@ internal class ExcelPages : IExcelPages
 
         if (disposing && _pages != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_pages) > 0) { }
-            }
-            catch { }
+            Marshal.ReleaseComObject(_pages);
+            _disposables.Dispose();
             _pages = null;
         }
 

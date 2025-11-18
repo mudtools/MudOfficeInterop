@@ -39,7 +39,7 @@ internal class ExcelErrors : IExcelErrors
 
         if (disposing && _errors != null)
         {
-            Marshal.ReleaseComObject(_errors)
+            Marshal.ReleaseComObject(_errors);
             _disposables.Dispose();
             _errors = null;
         }
