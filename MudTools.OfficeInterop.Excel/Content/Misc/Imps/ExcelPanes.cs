@@ -9,12 +9,39 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelPanes : IExcelPanes
 {
-    private MsExcel.Panes _panes;
+    private MsExcel.Panes? _panes;
     private bool _disposedValue;
 
-    public int Count => _panes.Count;
+    private DisposableList _disposables = [];
 
-    public IExcelPane this[int index] => new ExcelPane(_panes[index]);
+    public object? Parent => _panes?.Parent;
+
+    public IExcelApplication? Application
+    {
+        get
+        {
+            var application = _panes?.Application;
+            return application != null ? new ExcelApplication(application) : null;
+        }
+    }
+
+    public int? Count => _panes?.Count;
+
+    public IExcelPane? this[int index]
+    {
+        get
+        {
+            if (index < 1 || index > Count)
+            {
+                return null;
+            }
+            if (_panes == null)
+                return null;
+            var page = new ExcelPane(_panes[index]);
+            _disposables.Add(page);
+            return page;
+        }
+    }
 
     internal ExcelPanes(MsExcel.Panes panes)
     {
@@ -39,6 +66,7 @@ internal class ExcelPanes : IExcelPanes
         if (disposing && _panes != null)
         {
             Marshal.ReleaseComObject(_panes);
+            _disposables.Dispose();
             _panes = null;
         }
 

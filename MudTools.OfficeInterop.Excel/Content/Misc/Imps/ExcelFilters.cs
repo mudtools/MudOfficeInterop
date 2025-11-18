@@ -15,6 +15,8 @@ internal class ExcelFilters : IExcelFilters
 
     public int? Count => _autoFilters?.Count;
 
+    public object? Parent => _autoFilters?.Parent;
+
     public IExcelApplication? Application
     {
         get
@@ -62,7 +64,6 @@ internal class ExcelFilters : IExcelFilters
         }
     }
 
-    public object? Parent => _autoFilters?.Parent;
 
     public IEnumerator<IExcelFilter> GetEnumerator()
     {
