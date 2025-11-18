@@ -9,12 +9,13 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 internal class ExcelFilters : IExcelFilters
 {
-    private MsExcel.Filters _autoFilters;
+    private MsExcel.Filters? _autoFilters;
     private bool _disposedValue;
+    private DisposableList _disposables = [];
 
-    public int Count => _autoFilters.Count;
+    public int? Count => _autoFilters?.Count;
 
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {
@@ -23,7 +24,20 @@ internal class ExcelFilters : IExcelFilters
         }
     }
 
-    public IExcelFilter this[int index] => new ExcelFilter(_autoFilters.Item[index]);
+    public IExcelFilter? this[int index]
+    {
+        get
+        {
+            if (_autoFilters == null)
+                return null;
+            var autoFilter = _autoFilters?[index];
+            if (autoFilter == null)
+                return null;
+            var excelFilter = new ExcelFilter(autoFilter);
+            _disposables.Add(excelFilter);
+            return excelFilter;
+        }
+    }
 
     internal ExcelFilters(MsExcel.Filters autoFilters)
     {
@@ -48,7 +62,7 @@ internal class ExcelFilters : IExcelFilters
         }
     }
 
-    public object Parent => _autoFilters.Parent;
+    public object? Parent => _autoFilters?.Parent;
 
     public IEnumerator<IExcelFilter> GetEnumerator()
     {
@@ -66,11 +80,8 @@ internal class ExcelFilters : IExcelFilters
 
         if (disposing && _autoFilters != null)
         {
-            try
-            {
-                Marshal.ReleaseComObject(_autoFilters);
-            }
-            catch { }
+            Marshal.ReleaseComObject(_autoFilters);
+            _disposables.Dispose();
             _autoFilters = null;
         }
 

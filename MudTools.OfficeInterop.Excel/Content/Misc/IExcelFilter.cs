@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -7,6 +7,10 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
+/// <summary>
+/// Excel筛选器接口，提供对Excel工作表中筛选功能的抽象定义
+/// 该接口继承自IDisposable，确保资源得到正确释放
+/// </summary>
 public interface IExcelFilter : IDisposable
 {
     /// <summary>
@@ -14,6 +18,9 @@ public interface IExcelFilter : IDisposable
     /// </summary>
     IExcelApplication Application { get; }
 
+    /// <summary>
+    /// 获取筛选条件的数量
+    /// </summary>
     int Count { get; }
 
     /// <summary>
@@ -27,7 +34,7 @@ public interface IExcelFilter : IDisposable
     string Criteria2 { get; }
 
     /// <summary>
-    /// 获取筛选操作符
+    /// 获取或设置筛选操作符
     /// </summary>
     XlAutoFilterOperator Operator { get; set; }
 
