@@ -3,15 +3,29 @@
 
 internal class ExcelErrors : IExcelErrors
 {
-    private MsExcel.Errors _errors;
+    private MsExcel.Errors? _errors;
     private bool _disposedValue;
+    private DisposableList _disposables = [];
 
-    public object Parent => _errors.Parent;
+    public object? Parent => _errors?.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_errors.Application);
+    public IExcelApplication? Application => new ExcelApplication(_errors.Application);
 
 
-    public IExcelError this[object index] => new ExcelError(_errors[index]);
+    public IExcelError? this[object index]
+    {
+        get
+        {
+            if (_errors == null)
+                return null;
+            var error = _errors[index];
+            if (error == null)
+                return null;
+            var excelError = new ExcelError(error);
+            _disposables.Add(excelError);
+            return excelError;
+        }
+    }
 
     internal ExcelErrors(MsExcel.Errors errors)
     {
@@ -25,11 +39,8 @@ internal class ExcelErrors : IExcelErrors
 
         if (disposing && _errors != null)
         {
-            try
-            {
-                while (Marshal.ReleaseComObject(_errors) > 0) { }
-            }
-            catch { }
+            Marshal.ReleaseComObject(_errors)
+            _disposables.Dispose();
             _errors = null;
         }
 
