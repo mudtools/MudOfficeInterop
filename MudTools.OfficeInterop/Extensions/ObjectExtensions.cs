@@ -245,3 +245,4 @@ internal static class ObjectExtensions
 
     private delegate bool TryParseDelegate<T>(string s, out T result);
 }
+

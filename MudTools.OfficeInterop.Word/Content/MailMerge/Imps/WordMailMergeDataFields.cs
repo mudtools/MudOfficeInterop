@@ -45,8 +45,7 @@ internal class WordMailMergeDataFields : IWordMailMergeDataFields
             }
             catch (COMException ce)
             {
-                log.Error($"根据索引 {index} 检索 MailMergeDataField 对象失败: {ce.Message}", ce);
-                return null;
+                throw new ExcelOperationException("根据索引检索 MailMergeDataField 对象失败: " + ce.Message, ce);
             }
         }
     }
@@ -69,8 +68,7 @@ internal class WordMailMergeDataFields : IWordMailMergeDataFields
             }
             catch (COMException ce)
             {
-                log.Error($"根据字段名 '{fieldName}' 检索 MailMergeDataField 对象失败: {ce.Message}", ce);
-                return null;
+                throw new ExcelOperationException("根据字段名称检索 MailMergeDataField 对象失败: " + ce.Message, ce);
             }
         }
     }

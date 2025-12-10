@@ -188,7 +188,7 @@ internal class WordFrame : IWordFrame
             {
                 // 如果框架有父形状，可以通过父形状设置Z轴顺序
                 var parentShape = Parent as MsWord.Shape;
-                parentShape?.ZOrder((MsCore.MsoZOrderCmd)(int)position);
+                parentShape?.ZOrder(position.EnumConvert(MsCore.MsoZOrderCmd.msoBringForward));
             }
             catch
             {
