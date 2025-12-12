@@ -8,26 +8,27 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 表示 SmartArt 图表节点集合的接口
-/// 继承自 IEnumerable[IOfficeDiagramNode] 和 IDisposable，支持遍历和资源释放
+/// 指定 Office 形状对象的自动调整大小行为
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeDiagramNodes : IEnumerable<IOfficeDiagramNode>, IDisposable
+public enum MsoAutoSize
 {
     /// <summary>
-    /// 选择集合中的所有图表节点
+    /// 混合自动调整大小模式
     /// </summary>
-    void SelectAll();
+    msoAutoSizeMixed = -2,
 
     /// <summary>
-    /// 获取集合中图表节点的数量
+    /// 不自动调整大小
     /// </summary>
-    int Count { get; }
+    msoAutoSizeNone = 0,
 
     /// <summary>
-    /// 通过索引获取集合中的特定图表节点
+    /// 调整形状大小以适应文本内容
     /// </summary>
-    /// <param name="index">要获取的节点在集合中的索引位置</param>
-    /// <returns>指定索引位置的图表节点</returns>
-    IOfficeDiagramNode this[int index] { get; }
+    msoAutoSizeShapeToFitText = 1,
+
+    /// <summary>
+    /// 调整文本大小以适应形状
+    /// </summary>
+    msoAutoSizeTextToFitShape = 2
 }

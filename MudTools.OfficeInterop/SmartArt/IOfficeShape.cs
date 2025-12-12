@@ -47,6 +47,8 @@ public interface IOfficeShape : IDisposable
     /// </summary>
     IOfficeCanvasShapes CanvasItems { get; }
 
+    IOfficeTextFrame2 TextFrame2 { get; }
+
     /// <summary>
     /// 获取一个值，该值指示形状是否为子形状
     /// </summary>
