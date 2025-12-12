@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.2.0
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11304.174 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudTools.OfficeInterop", "MudTools.OfficeInterop\MudTools.OfficeInterop.csproj", "{50AA401E-713B-3FF4-66A0-23306F6631F3}"
 EndProject
@@ -89,6 +89,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationIntegrationSample", "Samples\ExcelSamples\WebApplicationIntegrationSample\WebApplicationIntegrationSample.csproj", "{B6FF0E93-465F-E629-BCD2-697E83FD211A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkbookWorksheetOperationsSample", "Samples\ExcelSamples\WorkbookWorksheetOperationsSample\WorkbookWorksheetOperationsSample.csproj", "{1893BA45-3D31-C94E-B321-34AD7056D418}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{6D4C466B-0128-4844-929C-B1E5294F142F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
