@@ -10,6 +10,8 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// 表示 Office 中形状范围的接口封装，用于同时操作多个形状。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
+[ItemIndex]
 public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
 {
     /// <summary>
@@ -79,6 +81,7 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// <summary>
     /// 获取一个值，该值指示形状是否为连接符。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Connector { get; }
 
     /// <summary>
@@ -150,14 +153,14 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// </summary>
     /// <param name="alignCmd">对齐命令。</param>
     /// <param name="relativeTo">相对于什么对齐。</param>
-    void Align(MsoAlignCmd alignCmd, bool relativeTo = false);
+    void Align(MsoAlignCmd alignCmd, [ConvertTriState] bool relativeTo = false);
 
     /// <summary>
     /// 分布形状范围中的形状。
     /// </summary>
     /// <param name="distributeCmd">分布命令。</param>
     /// <param name="relativeTo">相对于什么分布。</param>
-    void Distribute(MsoDistributeCmd distributeCmd, bool relativeTo = false);
+    void Distribute(MsoDistributeCmd distributeCmd, [ConvertTriState] bool relativeTo = false);
 
     /// <summary>
     /// 设置形状范围的Z轴顺序。
@@ -171,7 +174,7 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="scale">缩放比例。</param>
     /// <param name="scaleWidth">是否缩放宽度。</param>
     /// <param name="scaleHeight">是否缩放高度。</param>
-    void ScaleHeight(float scale, bool scaleWidth, MsoScaleFrom scaleHeight = MsoScaleFrom.msoScaleFromTopLeft);
+    void ScaleHeight(float scale, [ConvertTriState] bool scaleWidth, MsoScaleFrom scaleHeight = MsoScaleFrom.msoScaleFromTopLeft);
 
     /// <summary>
     /// 应用锁定比例缩放。
@@ -179,7 +182,7 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="scale">缩放比例。</param>
     /// <param name="scaleWidth">是否缩放宽度。</param>
     /// <param name="scaleHeight">是否缩放高度。</param>
-    void ScaleWidth(float scale, bool scaleWidth, MsoScaleFrom scaleHeight = MsoScaleFrom.msoScaleFromTopLeft);
+    void ScaleWidth(float scale, [ConvertTriState] bool scaleWidth, MsoScaleFrom scaleHeight = MsoScaleFrom.msoScaleFromTopLeft);
 
     /// <summary>
     /// 移动形状范围。

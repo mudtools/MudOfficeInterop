@@ -6,23 +6,10 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
-
 /// <summary>
-/// 表示 Office 中选取器字段集合的接口封装。
-/// 该接口提供对选取器字段集合的访问和管理。
+/// 标记属性或参数需要转换为int。
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePickerFields : IEnumerable<IOfficePickerField>, IDisposable
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
+public class ConvertIntAttribute : Attribute
 {
-    /// <summary>
-    /// 获取选取器字段集合中项的数量。
-    /// </summary>
-    int Count { get; }
-
-    /// <summary>
-    /// 通过索引获取选取器字段（索引从 1 开始）。
-    /// </summary>
-    /// <param name="index">选取器字段索引。</param>
-    /// <returns>选取器字段对象。</returns>
-    IOfficePickerField this[int index] { get; }
 }

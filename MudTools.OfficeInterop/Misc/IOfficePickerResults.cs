@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中选取器结果集合的接口封装。
 /// 该接口提供对选取器结果集合的访问和管理。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficePickerResults : IEnumerable<IOfficePickerResult>, IDisposable
 {
     /// <summary>

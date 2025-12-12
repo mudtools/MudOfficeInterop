@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中 SmartArt 颜色方案集合的接口封装。
 /// 该接口提供对 SmartArt 颜色方案集合的访问和管理。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficeSmartArtColors : IEnumerable<IOfficeSmartArtColor>, IDisposable
 {
     /// <summary>
@@ -37,10 +38,5 @@ public interface IOfficeSmartArtColors : IEnumerable<IOfficeSmartArtColor>, IDis
     /// </summary>
     object Parent { get; }
 
-    /// <summary>
-    /// 通过名称查找 SmartArt 颜色方案。
-    /// </summary>
-    /// <param name="colorName">颜色方案名称。</param>
-    /// <returns>SmartArt 颜色方案对象。</returns>
-    IOfficeSmartArtColor? FindByName(string colorName);
+
 }

@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中选取器对话框的接口封装。
 /// 该接口提供对选取器对话框功能的访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficePickerDialog : IDisposable
 {
     /// <summary>
@@ -39,10 +40,6 @@ public interface IOfficePickerDialog : IDisposable
     /// <param name="singleSelect">是否单选模式。</param>
     /// <param name="existingResults">父窗口句柄。</param>
     /// <returns>选取结果集合。</returns>
-    IOfficePickerResults Show(bool singleSelect = true, IOfficePickerResults? existingResults = null);
+    IOfficePickerResults Show(bool singleSelect = true, IOfficePickerResults existingResults = null);
 
-    /// <summary>
-    /// 检查是否已创建属性集合。
-    /// </summary>
-    bool IsPickerPropertiesCreated { get; }
 }

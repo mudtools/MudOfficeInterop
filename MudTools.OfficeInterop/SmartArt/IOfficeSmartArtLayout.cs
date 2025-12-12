@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中 SmartArt 布局的接口封装。
 /// 该接口提供对单个 SmartArt 布局属性的访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeSmartArtLayout : IDisposable
 {
     /// <summary>
@@ -35,5 +36,5 @@ public interface IOfficeSmartArtLayout : IDisposable
     /// <summary>
     /// 获取 SmartArt 布局的父对象。
     /// </summary>
-    IOfficeSmartArtLayouts Parent { get; }
+    object Parent { get; }
 }

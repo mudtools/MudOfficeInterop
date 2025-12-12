@@ -10,8 +10,11 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// 表示 Office 中图片格式的接口封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficePictureFormat : IDisposable
 {
+    IOfficeCrop Crop { get; }
+
     /// <summary>
     /// 获取或设置图片的亮度（-1.0 到 1.0 之间）。
     /// </summary>
@@ -50,6 +53,7 @@ public interface IOfficePictureFormat : IDisposable
     /// <summary>
     /// 获取或设置图片是否使用透明度颜色。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool TransparentBackground { get; set; }
 
     /// <summary>

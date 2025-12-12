@@ -9,6 +9,7 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// 表示 Office 中阴影格式的接口封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeShadowFormat : IDisposable
 {
     /// <summary>
@@ -44,16 +45,19 @@ public interface IOfficeShadowFormat : IDisposable
     /// <summary>
     /// 获取或设置阴影的可见性。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
     /// 获取或设置阴影是否随形状旋转。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool RotateWithShape { get; set; }
 
     /// <summary>
     /// 获取或设置阴影是否被遮挡。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Obscured { get; set; }
 
     /// <summary>
@@ -72,10 +76,4 @@ public interface IOfficeShadowFormat : IDisposable
     /// 获取或设置阴影的样式。
     /// </summary>
     MsoShadowStyle Style { get; set; }
-
-    /// <summary>
-    /// 设置阴影为纯色。
-    /// </summary>
-    /// <param name="color">RGB 颜色值。</param>
-    void Solid(int color);
 }

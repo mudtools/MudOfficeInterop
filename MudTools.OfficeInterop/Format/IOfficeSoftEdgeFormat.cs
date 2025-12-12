@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.SoftEdgeFormat
 /// 提供柔化边缘的半径、类型等属性设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeSoftEdgeFormat : IDisposable
 {
     /// <summary>

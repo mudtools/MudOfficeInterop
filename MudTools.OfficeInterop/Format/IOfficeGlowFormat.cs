@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中发光格式的接口封装。
 /// 该接口提供对形状发光效果的访问和设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeGlowFormat : IDisposable
 {
     /// <summary>

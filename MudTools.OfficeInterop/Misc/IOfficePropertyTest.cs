@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中属性测试条件的接口封装。
 /// 该接口提供对单个属性测试条件属性的访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficePropertyTest : IDisposable
 {
     /// <summary>

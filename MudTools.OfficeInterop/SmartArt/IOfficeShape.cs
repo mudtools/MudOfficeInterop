@@ -9,6 +9,7 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// 表示 Office 中的一个形状对象（如文本框、图片等）的接口封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeShape : IDisposable
 {
     /// <summary>
@@ -39,6 +40,7 @@ public interface IOfficeShape : IDisposable
     /// <summary>
     /// 获取或设置形状是否可见
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
@@ -78,13 +80,6 @@ public interface IOfficeShape : IDisposable
 
 
     void Apply();
-
-    /// <summary>
-    /// 调整形状的大小
-    /// </summary>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    void Resize(float width, float height);
 
     /// <summary>
     /// 将形状复制到剪贴板

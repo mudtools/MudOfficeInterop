@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中搜索范围文件夹集合的接口封装。
 /// 该接口提供对搜索范围文件夹集合的访问和管理。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficeScopeFolders : IEnumerable<IOfficeScopeFolder>, IDisposable
 {
     /// <summary>

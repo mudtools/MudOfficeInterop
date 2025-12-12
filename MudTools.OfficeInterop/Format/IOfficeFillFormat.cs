@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office填充格式对象的接口
 /// 封装了Microsoft.Office.Core.FillFormat COM对象
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeFillFormat : IDisposable
 {
     /// <summary>

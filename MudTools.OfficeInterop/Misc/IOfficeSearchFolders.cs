@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中搜索文件夹集合的接口封装。
 /// 该接口提供对搜索文件夹集合的访问和管理。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficeSearchFolders : IEnumerable<IOfficeScopeFolder>, IDisposable
 {
     /// <summary>
@@ -38,8 +39,4 @@ public interface IOfficeSearchFolders : IEnumerable<IOfficeScopeFolder>, IDispos
     /// <param name="index">要移除的搜索文件夹索引。</param>
     void Remove(int index);
 
-    /// <summary>
-    /// 清空搜索文件夹集合。
-    /// </summary>
-    void Clear();
 }

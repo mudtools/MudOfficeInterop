@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中选取器字段的接口封装。
 /// 该接口提供对单个选取器字段属性的访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficePickerField : IDisposable
 {
     /// <summary>

@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// <para>注：FoundFiles 对象是 FileSearch 对象的成员。</para>
 /// <para>注：此接口基于对 Office FileSearch 对象模型的理解实现，因为 Word 特定的 FoundFiles SDK 文档有限。</para>
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficeFoundFiles : IEnumerable<string>, IDisposable
 {
     #region 基本属性 (Basic Properties)
@@ -23,36 +24,6 @@ public interface IOfficeFoundFiles : IEnumerable<string>, IDisposable
     /// 获取集合中的文件路径名数量。
     /// </summary>
     int Count { get; }
-
-    /// <summary>
-    /// 获取搜索结果中的第一个文件路径。
-    /// </summary>
-    string First { get; }
-
-    /// <summary>
-    /// 获取搜索结果中的最后一个文件路径。
-    /// </summary>
-    string Last { get; }
-
-    /// <summary>
-    /// 检查指定文件是否在搜索结果中。
-    /// </summary>
-    /// <param name="fileName">要检查的文件名。</param>
-    /// <returns>如果文件存在返回 true，否则返回 false。</returns>
-    bool Contains(string fileName);
-
-    /// <summary>
-    /// 获取搜索结果中指定文件的索引。
-    /// </summary>
-    /// <param name="fileName">文件名。</param>
-    /// <returns>文件的索引（从 1 开始），如果不存在返回 0。</returns>
-    int IndexOf(string fileName);
-
-    /// <summary>
-    /// 将搜索结果导出到数组。
-    /// </summary>
-    /// <returns>包含所有文件路径的字符串数组。</returns>
-    string[] ToArray();
 
     #endregion
 

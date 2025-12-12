@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中 SmartArt 布局集合的接口封装。
 /// 该接口提供对 SmartArt 布局集合的访问和管理。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficeSmartArtLayouts : IEnumerable<IOfficeSmartArtLayout>, IDisposable
 {
     /// <summary>
@@ -36,10 +37,4 @@ public interface IOfficeSmartArtLayouts : IEnumerable<IOfficeSmartArtLayout>, ID
     /// </summary>
     object Parent { get; }
 
-    /// <summary>
-    /// 通过名称查找 SmartArt 布局。
-    /// </summary>
-    /// <param name="layoutName">布局名称。</param>
-    /// <returns>SmartArt 布局对象。</returns>
-    IOfficeSmartArtLayout FindByName(string layoutName);
 }

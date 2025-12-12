@@ -9,6 +9,7 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// 表示 Office 中三维格式的接口封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeThreeDFormat : IDisposable
 {
     /// <summary>
@@ -36,14 +37,26 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     float BevelBottomDepth { get; set; }
 
+    MsoBevelType BevelBottomType { get; set; }
+
+    MsoBevelType BevelTopType { get; set; }
+
+    MsoLightRigType PresetLighting { get; set; }
+
+    MsoPresetThreeDFormat PresetThreeDFormat { get; }
+
+    MsoPresetExtrusionDirection PresetExtrusionDirection { get; }
+
     /// <summary>
     /// 获取或设置三维效果的透视效果启用状态。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Perspective { get; set; }
 
     /// <summary>
     /// 获取或设置三维效果的可见性。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
@@ -51,23 +64,6 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     float Z { get; set; }
 
-    /// <summary>
-    /// 水平旋转角度增量调整。
-    /// </summary>
-    /// <param name="increment">水平旋转角度的增量值</param>
-    void IncrementRotationHorizontal(float increment);
-
-    /// <summary>
-    /// X轴旋转角度增量调整。
-    /// </summary>
-    /// <param name="increment">X轴旋转角度的增量值</param>
-    void IncrementRotationX(float increment);
-
-    /// <summary>
-    /// Y轴旋转角度增量调整。
-    /// </summary>
-    /// <param name="increment">Y轴旋转角度的增量值</param>
-    void IncrementRotationY(float increment);
 
     /// <summary>
     /// 获取或设置三维效果的旋转X轴角度。
@@ -120,22 +116,40 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     MsoExtrusionColorType ExtrusionColorType { get; set; }
 
+    IOfficeColorFormat ContourColor { get; }
+
+    float ContourWidth { get; set; }
+
+    MsoPresetCamera PresetCamera { get; }
+
+    /// <summary>
+    /// 水平旋转角度增量调整。
+    /// </summary>
+    /// <param name="increment">水平旋转角度的增量值</param>
+    void IncrementRotationHorizontal(float increment);
+
+    /// <summary>
+    /// X轴旋转角度增量调整。
+    /// </summary>
+    /// <param name="increment">X轴旋转角度的增量值</param>
+    void IncrementRotationX(float increment);
+
+    /// <summary>
+    /// Y轴旋转角度增量调整。
+    /// </summary>
+    /// <param name="increment">Y轴旋转角度的增量值</param>
+    void IncrementRotationY(float increment);
+
     /// <summary>
     /// 设置三维效果的透视相机。
     /// </summary>
     /// <param name="presetCamera">预设相机类型。</param>
     void SetThreeDFormat(MsoPresetThreeDFormat presetCamera);
 
-    /// <summary>
-    /// 应用预设的三维效果。
-    /// </summary>
-    /// <param name="presetThreeDFormat">预设三维效果。</param>
-    void PresetThreeDFormat(MsoPresetExtrusionDirection presetThreeDFormat);
+    void SetPresetCamera(MsoPresetCamera PresetCamera);
 
-    /// <summary>
-    /// 设置灯光效果。
-    /// </summary>
-    void SetLightRig(MsoPresetCamera presetCamera);
+    void IncrementRotationZ(float increment);
+
 
     /// <summary>
     /// 重置三维格式。

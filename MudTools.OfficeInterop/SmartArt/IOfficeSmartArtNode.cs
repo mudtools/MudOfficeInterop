@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// SmartArtNode 封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeSmartArtNode : IDisposable
 {
     /// <summary>
@@ -19,12 +20,6 @@ public interface IOfficeSmartArtNode : IDisposable
     /// 返回包含此节点的父对象，如果此节点是根节点则可能为null
     /// </value>
     object? Parent { get; }
-
-    /// <summary>
-    /// 获取或设置节点显示的文本内容
-    /// </summary>
-    string Text { get; set; }
-
 
     /// <summary>
     /// 获取关联的 Shape 对象（如果存在）
@@ -46,6 +41,7 @@ public interface IOfficeSmartArtNode : IDisposable
     /// </summary>
     MsoSmartArtNodeType Type { get; }
 
+
     /// <summary>
     /// 获取节点所在的层级
     /// </summary>
@@ -54,12 +50,8 @@ public interface IOfficeSmartArtNode : IDisposable
     /// <summary>
     /// 获取节点是否为隐藏状态
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Hidden { get; }
-
-    /// <summary>
-    /// 判断节点是否为根节点
-    /// </summary>
-    bool IsRoot { get; }
 
     /// <summary>
     /// 删除当前节点及其所有子节点

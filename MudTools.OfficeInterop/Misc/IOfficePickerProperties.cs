@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中选取器属性集合的接口封装。
 /// 该接口提供对选取器属性集合的访问和管理。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficePickerProperties : IEnumerable<IOfficePickerProperty>, IDisposable
 {
     /// <summary>
@@ -38,11 +39,4 @@ public interface IOfficePickerProperties : IEnumerable<IOfficePickerProperty>, I
     /// </summary>
     /// <param name="id">要移除的选取器属性索引。</param>
     void Remove(string id);
-
-    /// <summary>
-    /// 检查集合中是否包含指定键的属性。
-    /// </summary>
-    /// <param name="id">属性键。</param>
-    /// <returns>如果包含返回 true，否则返回 false。</returns>
-    bool Contains(string id);
 }

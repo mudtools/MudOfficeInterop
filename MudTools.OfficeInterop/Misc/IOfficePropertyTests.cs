@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中属性测试条件集合的接口封装。
 /// 该接口提供对属性测试条件集合的访问和管理。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficePropertyTests : IEnumerable<IOfficePropertyTest>, IDisposable
 {
     /// <summary>
@@ -34,7 +35,7 @@ public interface IOfficePropertyTests : IEnumerable<IOfficePropertyTest>, IDispo
     /// <param name="secondValue">第二个比较值（可选）。</param>
     /// <param name="connector"></param>
     /// <returns>新添加的属性测试条件对象。</returns>
-    IOfficePropertyTest? Add(string name,
+    void Add(string name,
         MsoCondition condition,
         object value, object? secondValue = null,
         MsoConnector connector = MsoConnector.msoConnectorAnd);
@@ -44,9 +45,4 @@ public interface IOfficePropertyTests : IEnumerable<IOfficePropertyTest>, IDispo
     /// </summary>
     /// <param name="index">要移除的属性测试条件索引。</param>
     void Remove(int index);
-
-    /// <summary>
-    /// 移除所有属性测试条件。
-    /// </summary>
-    void Clear();
 }

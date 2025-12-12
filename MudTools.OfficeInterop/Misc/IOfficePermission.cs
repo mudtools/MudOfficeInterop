@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示活动文档的权限设置。此接口是对 Microsoft.Office.Core.Permission COM 对象的封装。
 /// 使用此对象可以限制对活动文档的访问权限，并返回或设置特定的权限设置 [[1]], [[14]].
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficePermission : IEnumerable<IOfficeUserPermission>, IDisposable
 {
     /// <summary>

@@ -10,15 +10,9 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中帮助系统接口的封装。
 /// 提供对 Office 帮助系统的访问和控制功能。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore", ComClassName = "IAssistance")]
 public interface IOfficeAssistance : IDisposable
 {
-    /// <summary>
-    /// 显示指定帮助主题的帮助窗口。
-    /// </summary>
-    /// <param name="helpId">帮助主题的 ID。</param>
-    /// <param name="scope">帮助搜索范围。</param>
-    void ShowHelp(string helpId, string scope = "");
-
     /// <summary>
     /// 搜索帮助内容。
     /// </summary>
@@ -27,13 +21,12 @@ public interface IOfficeAssistance : IDisposable
     void SearchHelp(string query, string scope = "");
 
     /// <summary>
-    /// 检查帮助系统是否可用。
-    /// </summary>
-    bool IsAvailable { get; }
-
-    /// <summary>
     /// 显示上下文相关的帮助。
     /// </summary>
-    /// <param name="contextId">上下文 ID。</param>
-    void ShowContextHelp(int contextId);
+    void ShowHelp(string helpId = "", string scope = "");
+
+
+    void SetDefaultContext(string helpId);
+
+    void ClearDefaultContext(string helpId);
 }

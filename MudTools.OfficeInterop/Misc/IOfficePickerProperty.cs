@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中选取器属性的接口封装。
 /// 该接口提供对单个选取器属性的访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficePickerProperty : IDisposable
 {
     /// <summary>
@@ -20,6 +21,7 @@ public interface IOfficePickerProperty : IDisposable
     /// <summary>
     /// 获取或设置选取器属性的值。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string Value { get; }
 
     /// <summary>

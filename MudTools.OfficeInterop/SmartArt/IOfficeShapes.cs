@@ -10,6 +10,8 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// 表示一组 Office 形状对象的集合接口。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
+[ItemIndex]
 public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
 {
     /// <summary>
@@ -53,16 +55,22 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <returns>新添加的文本框形状</returns>
     IOfficeShape? AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height);
 
-    /// <summary>
-    /// 从集合中删除所有形状
-    /// </summary>
-    void DeleteAll();
+    IOfficeShape AddTextEffect(MsoPresetTextEffect presetTextEffect, string text, string fontName, float fontSize, [ConvertTriState] bool fontBold, [ConvertTriState] bool fontItalic, float left, float top);
 
-    /// <summary>
-    /// 根据名称选择形状
-    /// </summary>
-    /// <param name="name">形状名称</param>
-    /// <returns>选定的形状</returns>
-    IOfficeShape? SelectByName(string name);
 
+    IOfficeShape AddCallout(MsoCalloutType type, float left, float top, float width, float height);
+
+    IOfficeShape AddConnector(MsoConnectorType type, float beginX, float beginY, float endX, float endY);
+
+    IOfficeShape AddCurve(object safeArrayOfPoints);
+
+    IOfficeShape AddLabel(MsoTextOrientation orientation, float left, float top, float width, float height);
+
+    IOfficeShape AddLine(float beginX, float beginY, float endX, float endY);
+
+    IOfficeShape AddPicture(string fileName, [ConvertTriState] bool linkToFile, [ConvertTriState] bool saveWithDocument, float left, float top, float width = -1f, float height = -1f);
+
+    IOfficeShape AddPolyline(object safeArrayOfPoints);
+
+    IOfficeShapeRange Range(int index);
 }

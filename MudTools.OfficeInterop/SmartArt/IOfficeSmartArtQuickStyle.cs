@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中 SmartArt 快速样式的接口封装。
 /// 该接口提供对单个 SmartArt 快速样式属性的访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeSmartArtQuickStyle : IDisposable
 {
     /// <summary>
@@ -35,5 +36,5 @@ public interface IOfficeSmartArtQuickStyle : IDisposable
     /// <summary>
     /// 获取 SmartArt 快速样式的父对象。
     /// </summary>
-    IOfficeSmartArtQuickStyles Parent { get; }
+    object? Parent { get; }
 }

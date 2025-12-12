@@ -8,21 +8,9 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 表示 Office 中选取器字段集合的接口封装。
-/// 该接口提供对选取器字段集合的访问和管理。
+/// 标记属性或参数需要进行三态转换。
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePickerFields : IEnumerable<IOfficePickerField>, IDisposable
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
+public class ConvertTriStateAttribute : Attribute
 {
-    /// <summary>
-    /// 获取选取器字段集合中项的数量。
-    /// </summary>
-    int Count { get; }
-
-    /// <summary>
-    /// 通过索引获取选取器字段（索引从 1 开始）。
-    /// </summary>
-    /// <param name="index">选取器字段索引。</param>
-    /// <returns>选取器字段对象。</returns>
-    IOfficePickerField this[int index] { get; }
 }

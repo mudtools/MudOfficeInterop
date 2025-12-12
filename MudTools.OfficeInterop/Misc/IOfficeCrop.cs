@@ -8,44 +8,48 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// SmartArt 图表的抽象接口，提供对布局、样式、颜色、节点等核心功能的访问。
+/// 表示 Office 中图片裁剪功能的接口封装，用于控制图片在形状中的显示方式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArt : IDisposable
+public interface IOfficeCrop : IDisposable
 {
     /// <summary>
-    /// 获取所有节点的集合（包括嵌套子节点）
+    /// 获取或设置图片相对于形状的水平偏移量
     /// </summary>
-    IOfficeSmartArtNodes? AllNodes { get; }
+    float PictureOffsetX { get; set; }
 
     /// <summary>
-    /// 获取 SmartArt 图表的直接子节点集合
+    /// 获取或设置图片相对于形状的垂直偏移量
     /// </summary>
-    IOfficeSmartArtNodes? Nodes { get; }
+    float PictureOffsetY { get; set; }
 
     /// <summary>
-    /// 获取或设置 SmartArt 图表的布局样式
+    /// 获取或设置图片的宽度
     /// </summary>
-    IOfficeSmartArtLayout? Layout { get; set; }
+    float PictureWidth { get; set; }
 
     /// <summary>
-    /// 获取或设置 SmartArt 图表的快速样式
+    /// 获取或设置图片的高度
     /// </summary>
-    IOfficeSmartArtQuickStyle? QuickStyle { get; }
+    float PictureHeight { get; set; }
 
     /// <summary>
-    /// 获取或设置 SmartArt 图表的颜色样式
+    /// 获取或设置形状的左边缘位置（相对于图片容器的左边缘）
     /// </summary>
-    IOfficeSmartArtColor? Color { get; set; }
+    float ShapeLeft { get; set; }
 
     /// <summary>
-    /// 获取或设置是否反转 SmartArt 图表的布局方向
+    /// 获取或设置形状的上边缘位置（相对于图片容器的上边缘）
     /// </summary>
-    [ComPropertyWrap(NeedConvert = true)]
-    bool Reverse { get; set; }
+    float ShapeTop { get; set; }
 
     /// <summary>
-    /// 重置 SmartArt 为默认布局和内容
+    /// 获取或设置形状的宽度
     /// </summary>
-    void Reset();
+    float ShapeWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状的高度
+    /// </summary>
+    float ShapeHeight { get; set; }
 }

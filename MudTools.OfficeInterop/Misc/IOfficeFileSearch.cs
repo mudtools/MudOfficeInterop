@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中文件搜索功能的接口封装。
 /// 该接口提供对文件搜索功能的完整访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeFileSearch : IDisposable
 {
     /// <summary>
@@ -81,23 +82,13 @@ public interface IOfficeFileSearch : IDisposable
     void RefreshScopes();
 
     /// <summary>
-    /// 获取搜索的文件数量。
-    /// </summary>
-    int FoundFilesCount { get; }
-
-    /// <summary>
-    /// 获取搜索的属性测试条件数量。
-    /// </summary>
-    int PropertyTestsCount { get; }
-
-    /// <summary>
     /// 执行文件搜索。
     /// </summary>
     /// <param name="sortBy">排序方式。</param>
     /// <param name="alwaysAccurate"></param>
     /// <param name="sortOrder"></param>
     /// <returns>找到的文件数量。</returns>
-    int Execute(MsoSortBy sortBy = MsoSortBy.msoSortByFileName,
+    int? Execute(MsoSortBy sortBy = MsoSortBy.msoSortByFileName,
                        MsoSortOrder sortOrder = MsoSortOrder.msoSortOrderAscending,
                        bool alwaysAccurate = true);
 

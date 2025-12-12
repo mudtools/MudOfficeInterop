@@ -27,14 +27,26 @@ internal class ExcelListObjects : IExcelListObjects
         _disposedValue = false;
     }
 
-    public IExcelListObject Add(XlListObjectSourceType sourceType, object source, object link, XlYesNoGuess xlListObjectHasHeaders = XlYesNoGuess.xlGuess, object? destination = null)
+    public IExcelListObject? Add(XlListObjectSourceType sourceType, object source, object link, XlYesNoGuess xlListObjectHasHeaders = XlYesNoGuess.xlGuess, object? destination = null)
     {
         try
         {
-            var listObject = _listObjects.Add((MsExcel.XlListObjectSourceType)(int)sourceType, source ?? Type.Missing, link ?? Type.Missing, (MsExcel.XlYesNoGuess)(int)xlListObjectHasHeaders, destination ?? Type.Missing);
+            var sourceObj = source != null ? source : System.Type.Missing;
+            var linkObj = link != null ? link : System.Type.Missing;
+            var destinationObj = destination != null ? destination : System.Type.Missing;
+            var listObject = _listObjects.Add(
+                        sourceType.EnumConvert(MsExcel.XlListObjectSourceType.xlSrcExternal),
+                        sourceObj,
+                        linkObj,
+                        xlListObjectHasHeaders.EnumConvert(MsExcel.XlYesNoGuess.xlGuess),
+                        destinationObj);
             return listObject != null ? new ExcelListObject(listObject) : null;
         }
-        catch (COMException ex)
+        catch (COMException cx)
+        {
+            throw new ExcelOperationException("无法添加列表对象。", cx);
+        }
+        catch (Exception ex)
         {
             throw new InvalidOperationException("无法添加列表对象。", ex);
         }

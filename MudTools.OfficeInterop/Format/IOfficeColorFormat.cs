@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office颜色格式对象的接口
 /// 封装了Microsoft.Office.Core.ColorFormat COM对象
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeColorFormat : IDisposable
 {
     /// <summary>

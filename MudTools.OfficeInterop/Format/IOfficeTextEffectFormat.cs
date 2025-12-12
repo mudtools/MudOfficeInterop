@@ -9,6 +9,7 @@ namespace MudTools.OfficeInterop;
 /// <summary>
 /// 表示 Office 中艺术字格式的接口封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeTextEffectFormat : IDisposable
 {
     /// <summary>
@@ -29,11 +30,13 @@ public interface IOfficeTextEffectFormat : IDisposable
     /// <summary>
     /// 获取或设置艺术字的字体粗细。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool FontBold { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字的字体倾斜。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool FontItalic { get; set; }
 
     /// <summary>
@@ -54,11 +57,13 @@ public interface IOfficeTextEffectFormat : IDisposable
     /// <summary>
     /// 获取或设置艺术字旋转。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool RotatedChars { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字的水平缩放。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool NormalizedHeight { get; set; }
 
     /// <summary>

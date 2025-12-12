@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中文件类型集合的接口封装。
 /// 该接口提供对可搜索文件类型的管理功能。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficeFileTypes : IEnumerable<MsoFileType>, IDisposable
 {
     /// <summary>
@@ -35,56 +36,5 @@ public interface IOfficeFileTypes : IEnumerable<MsoFileType>, IDisposable
     /// 从集合中移除指定的文件类型。
     /// </summary>
     /// <param name="fileType">要移除的文件类型。</param>
-    void Remove(MsoFileType fileType);
-
-    /// <summary>
-    /// 检查集合中是否包含指定的文件类型。
-    /// </summary>
-    /// <param name="fileType">要检查的文件类型。</param>
-    /// <returns>如果包含返回 true，否则返回 false。</returns>
-    bool Contains(MsoFileType fileType);
-
-    /// <summary>
-    /// 清空文件类型集合。
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 获取指定文件类型的索引。
-    /// </summary>
-    /// <param name="fileType">文件类型。</param>
-    /// <returns>文件类型的索引（从 1 开始），如果不存在返回 0。</returns>
-    int IndexOf(MsoFileType fileType);
-
-    /// <summary>
-    /// 移除指定索引位置的文件类型。
-    /// </summary>
-    /// <param name="index">要移除的索引（从 1 开始）。</param>
-    void RemoveAt(int index);
-
-    /// <summary>
-    /// 获取所有支持的文件类型。
-    /// </summary>
-    /// <returns>包含所有文件类型的数组。</returns>
-    MsoFileType[] GetAllFileTypes();
-
-    /// <summary>
-    /// 设置默认的文件类型集合。
-    /// </summary>
-    void SetDefault();
-
-    /// <summary>
-    /// 获取文件类型的描述信息。
-    /// </summary>
-    /// <param name="fileType">文件类型。</param>
-    /// <returns>文件类型的描述字符串。</returns>
-    string GetDescription(MsoFileType fileType);
-
-    /// <summary>
-    /// 获取文件类型对应的文件扩展名。
-    /// </summary>
-    /// <param name="fileType">文件类型。</param>
-    /// <returns>文件扩展名。</returns>
-    string GetExtension(MsoFileType fileType);
-
+    void Remove([ConvertInt] MsoFileType fileType);
 }

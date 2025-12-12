@@ -6,9 +6,11 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
+
 /// <summary>
 /// 表示 Office 中连接符格式的接口封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeConnectorFormat : IDisposable
 {
     /// <summary>
@@ -29,21 +31,23 @@ public interface IOfficeConnectorFormat : IDisposable
     /// <summary>
     /// 获取连接符起始连接的形状。
     /// </summary>
-    IOfficeShape BeginConnectedShape { get; }
+    IOfficeShape? BeginConnectedShape { get; }
 
     /// <summary>
     /// 获取连接符结束连接的形状。
     /// </summary>
-    IOfficeShape EndConnectedShape { get; }
+    IOfficeShape? EndConnectedShape { get; }
 
     /// <summary>
     /// 获取连接符起始点是否已连接。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool BeginConnected { get; }
 
     /// <summary>
     /// 获取连接符结束点是否已连接。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool EndConnected { get; }
 
     /// <summary>
