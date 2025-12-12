@@ -181,7 +181,7 @@ internal class ExcelShapes : IExcelShapes
             return null;
         if (Layout is not OfficeSmartArtLayout officeSmartArtLayout)
             return null;
-        return _shapes.AddSmartArt(officeSmartArtLayout._smartArtLayout, Left, Top, Width, Height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
+        return _shapes.AddSmartArt(officeSmartArtLayout.InternalComObject, Left, Top, Width, Height) is MsExcel.Shape shape ? new ExcelShape(shape) : null;
     }
 
 
