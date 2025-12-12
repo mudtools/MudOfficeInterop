@@ -28,6 +28,11 @@ public interface IOfficeShape : IDisposable
     IOfficeScript Script { get; }
 
     /// <summary>
+    /// 获取与形状关联的 SmartArt 图表对象
+    /// </summary>
+    IOfficeDiagram Diagram { get; }
+
+    /// <summary>
     /// 获取一个值，该值指示形状是否包含图表
     /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
