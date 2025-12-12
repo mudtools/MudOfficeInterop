@@ -1,8 +1,16 @@
-﻿namespace MudTools.OfficeInterop;
+﻿//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
+
+namespace MudTools.OfficeInterop;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.PictureEffects 的接口，用于操作图片效果集合。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore")]
 public interface IOfficePictureEffects : IEnumerable<IOfficePictureEffect>, IDisposable
 {
     /// <summary>
@@ -18,7 +26,7 @@ public interface IOfficePictureEffects : IEnumerable<IOfficePictureEffect>, IDis
     /// <summary>
     /// 根据效果类型获取图片效果。
     /// </summary>
-    IOfficePictureEffect this[MsoPictureEffectType effectType] { get; }
+    IOfficePictureEffect this[[ConvertInt] MsoPictureEffectType effectType] { get; }
 
     /// <summary>
     /// 添加新的图片效果。
@@ -32,48 +40,5 @@ public interface IOfficePictureEffects : IEnumerable<IOfficePictureEffect>, IDis
     /// 删除指定索引的图片效果。
     /// </summary>
     /// <param name="index">效果索引。</param>
-    void Delete(int index);
-
-    /// <summary>
-    /// 删除指定类型的所有图片效果。
-    /// </summary>
-    /// <param name="effectType">效果类型。</param>
-    void DeleteByType(MsoPictureEffectType effectType);
-
-    /// <summary>
-    /// 清除所有图片效果。
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 检查是否包含指定类型的效果。
-    /// </summary>
-    /// <param name="effectType">效果类型。</param>
-    /// <returns>是否包含。</returns>
-    bool Contains(MsoPictureEffectType effectType);
-
-    /// <summary>
-    /// 获取指定类型的效果数量。
-    /// </summary>
-    /// <param name="effectType">效果类型。</param>
-    /// <returns>效果数量。</returns>
-    int GetCountByType(MsoPictureEffectType effectType);
-
-    /// <summary>
-    /// 获取所有效果类型的列表。
-    /// </summary>
-    /// <returns>效果类型列表。</returns>
-    List<MsoPictureEffectType> GetAllEffectTypes();
-
-    /// <summary>
-    /// 将效果移动到指定位置。
-    /// </summary>
-    /// <param name="effect">要移动的效果。</param>
-    /// <param name="newPosition">新位置。</param>
-    void MoveEffect(IOfficePictureEffect effect, int newPosition);
-
-    /// <summary>
-    /// 重置所有图片效果为默认设置。
-    /// </summary>
-    void Reset();
+    void Delete(int index = -1);
 }
