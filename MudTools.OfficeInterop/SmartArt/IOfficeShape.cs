@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -21,6 +21,23 @@ public interface IOfficeShape : IDisposable
     /// 获取或设置形状的名称
     /// </summary>
     string Name { get; set; }
+
+    /// <summary>
+    /// 获取与形状关联的脚本对象
+    /// </summary>
+    IOfficeScript Script { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否包含图表
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasDiagram { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否包含图表节点
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasDiagramNode { get; }
 
     /// <summary>
     /// 获取形状的类型
@@ -79,6 +96,9 @@ public interface IOfficeShape : IDisposable
     void ZOrder(MsoZOrderCmd ZOrderCmd);
 
 
+    /// <summary>
+    /// 应用对形状所做的更改
+    /// </summary>
     void Apply();
 
     /// <summary>

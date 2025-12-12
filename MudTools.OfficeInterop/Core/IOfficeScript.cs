@@ -8,25 +8,43 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 表示 Office 中选取器字段的接口封装。
-/// 该接口提供对单个选取器字段属性的访问。
+/// 表示 Office 文档中的脚本对象接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficePickerField : IDisposable
+public interface IOfficeScript : IDisposable
 {
     /// <summary>
-    /// 获取或设置选取器字段的名称。
+    /// 获取脚本对象的父对象
     /// </summary>
-    string Name { get; }
+    object Parent { get; }
 
     /// <summary>
-    /// 获取或设置选取器字段的类型。
+    /// 获取或设置脚本的扩展属性
     /// </summary>
-    MsoPickerField Type { get; }
-
+    string Extended { get; set; }
 
     /// <summary>
-    /// 获取一个值，该值指示选取器字段是否隐藏。
+    /// 获取或设置脚本的唯一标识符
     /// </summary>
-    bool IsHidden { get; }
+    string Id { get; set; }
+
+    /// <summary>
+    /// 获取或设置脚本的文本内容
+    /// </summary>
+    string ScriptText { get; set; }
+
+    /// <summary>
+    /// 获取或设置脚本的语言类型
+    /// </summary>
+    MsoScriptLanguage Language { get; set; }
+
+    /// <summary>
+    /// 获取脚本在文档中的位置
+    /// </summary>
+    MsoScriptLocation Location { get; }
+
+    /// <summary>
+    /// 删除当前脚本对象
+    /// </summary>
+    void Delete();
 }

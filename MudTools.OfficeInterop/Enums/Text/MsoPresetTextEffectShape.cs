@@ -13,7 +13,6 @@ namespace MudTools.OfficeInterop;
 public enum MsoPresetTextEffectShape
 {
     /// <summary>
-/// <summary>
     /// 混合形状（保留值）
     /// </summary>
     msoTextEffectShapeMixed = -2,

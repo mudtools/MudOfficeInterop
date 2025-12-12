@@ -37,14 +37,29 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     float BevelBottomDepth { get; set; }
 
+    /// <summary>
+    /// 获取或设置底部斜面类型。
+    /// </summary>
     MsoBevelType BevelBottomType { get; set; }
 
+    /// <summary>
+    /// 获取或设置顶部斜面类型。
+    /// </summary>
     MsoBevelType BevelTopType { get; set; }
 
+    /// <summary>
+    /// 获取或设置预设光源类型。
+    /// </summary>
     MsoLightRigType PresetLighting { get; set; }
 
+    /// <summary>
+    /// 获取预设的三维格式类型。
+    /// </summary>
     MsoPresetThreeDFormat PresetThreeDFormat { get; }
 
+    /// <summary>
+    /// 获取预设的挤出方向。
+    /// </summary>
     MsoPresetExtrusionDirection PresetExtrusionDirection { get; }
 
     /// <summary>
@@ -116,10 +131,19 @@ public interface IOfficeThreeDFormat : IDisposable
     /// </summary>
     MsoExtrusionColorType ExtrusionColorType { get; set; }
 
+    /// <summary>
+    /// 获取三维形状的轮廓颜色。
+    /// </summary>
     IOfficeColorFormat ContourColor { get; }
 
+    /// <summary>
+    /// 获取或设置三维形状的轮廓宽度。
+    /// </summary>
     float ContourWidth { get; set; }
 
+    /// <summary>
+    /// 获取三维形状的预设相机效果。
+    /// </summary>
     MsoPresetCamera PresetCamera { get; }
 
     /// <summary>
@@ -146,8 +170,16 @@ public interface IOfficeThreeDFormat : IDisposable
     /// <param name="presetCamera">预设相机类型。</param>
     void SetThreeDFormat(MsoPresetThreeDFormat presetCamera);
 
+    /// <summary>
+    /// 设置预设相机效果。
+    /// </summary>
+    /// <param name="PresetCamera">预设相机类型。</param>
     void SetPresetCamera(MsoPresetCamera PresetCamera);
 
+    /// <summary>
+    /// Z轴旋转角度增量调整。
+    /// </summary>
+    /// <param name="increment">Z轴旋转角度的增量值</param>
     void IncrementRotationZ(float increment);
 
 
