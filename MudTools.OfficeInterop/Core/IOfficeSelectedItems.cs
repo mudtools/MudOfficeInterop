@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -11,6 +11,8 @@ namespace MudTools.OfficeInterop;
 /// Office SelectedItems 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Core.FileDialogSelectedItems 的安全访问和操作
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsCore", ComClassName = "FileDialogSelectedItems")]
+[ItemIndex]
 public interface IOfficeSelectedItems : IEnumerable<string>, IDisposable
 {
     #region 基础属性
@@ -39,13 +41,5 @@ public interface IOfficeSelectedItems : IEnumerable<string>, IDisposable
     /// 对应 FileDialogSelectedItems.Application 属性
     /// </summary>
     object Application { get; }
-    #endregion
-
-    #region 高级功能
-    /// <summary>
-    /// 获取所有所选项的路径
-    /// </summary>
-    /// <returns>所选文件路径数组</returns>
-    string[] GetAllItems();
     #endregion
 }

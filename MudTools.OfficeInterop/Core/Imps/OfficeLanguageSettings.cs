@@ -11,28 +11,13 @@ namespace MudTools.OfficeInterop.Imps;
 /// Office LanguageSettings 对象的二次封装实现类
 /// 实现 IOfficeLanguageSettings 接口
 /// </summary>
-internal class OfficeLanguageSettings : IOfficeLanguageSettings
+internal partial class OfficeLanguageSettings
 {
-    private MsCore.LanguageSettings _languageSettings;
-    private bool _disposedValue = false;
-
-    /// <summary>
-    /// 初始化 OfficeLanguageSettings 实例
-    /// </summary>
-    /// <param name="languageSettings">要封装的 Microsoft.Office.Core.LanguageSettings 对象</param>
-    internal OfficeLanguageSettings(MsCore.LanguageSettings languageSettings)
-    {
-        _languageSettings = languageSettings ?? throw new ArgumentNullException(nameof(languageSettings));
-    }
-
-    #region 基础属性
-    public object Application => _languageSettings.Application;
-    #endregion
 
     #region 语言设置属性
     public MsoLanguageID GetLanguageID(MsoAppLanguageID languageID)
     {
-        return (MsoLanguageID)_languageSettings.LanguageID[(MsCore.MsoAppLanguageID)languageID];
+        return (MsoLanguageID)_languagesettings.LanguageID[(MsCore.MsoAppLanguageID)languageID];
     }
 
     public MsoLanguageID this[MsoAppLanguageID languageID]
@@ -42,44 +27,10 @@ internal class OfficeLanguageSettings : IOfficeLanguageSettings
 
     public bool GetLanguagePreferredForEditing(MsoLanguageID languageID)
     {
-        return _languageSettings.get_LanguagePreferredForEditing((MsCore.MsoLanguageID)languageID);
+        return _languagesettings.get_LanguagePreferredForEditing((MsCore.MsoLanguageID)languageID);
     }
 
     #endregion
 
 
-    #region IDisposable Support
-    protected virtual void Dispose(bool disposing)
-    {
-        if (_disposedValue) return;
-
-        if (disposing)
-        {
-            try
-            {
-                // 释放底层COM对象
-                if (_languageSettings != null)
-                    Marshal.ReleaseComObject(_languageSettings);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
-            _languageSettings = null;
-        }
-
-        _disposedValue = true;
-    }
-
-    ~OfficeLanguageSettings()
-    {
-        Dispose(disposing: false);
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
-    #endregion
 }

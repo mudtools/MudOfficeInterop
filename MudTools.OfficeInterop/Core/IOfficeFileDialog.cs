@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// Office FileDialog 对象的二次封装接口
 /// 提供对 Microsoft.Office.Core.FileDialog 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeFileDialog : IDisposable
 {
     #region 基础属性
@@ -86,6 +87,6 @@ public interface IOfficeFileDialog : IDisposable
     /// 对应 FileDialog.Show 方法
     /// </summary>
     /// <returns>用户操作结果 (例如, Ok = -1, Cancel = 0)</returns>
-    int Show();
+    int? Show();
     #endregion
 }
