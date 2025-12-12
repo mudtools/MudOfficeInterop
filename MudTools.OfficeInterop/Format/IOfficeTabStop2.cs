@@ -8,27 +8,29 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定线条端点的样式
+/// 表示Office应用程序中的制表位接口，提供对制表位属性和操作的访问。
 /// </summary>
-public enum MsoLineCapStyle
+[ComObjectWrap(ComNamespace = "MsCore")]
+public interface IOfficeTabStop2 : IDisposable
 {
     /// <summary>
-    /// 混合线条端点样式
+    /// 获取制表位的父对象。
     /// </summary>
-    msoLineCapMixed = -2,
+    object Parent { get; }
 
     /// <summary>
-    /// 方形线条端点样式
+    /// 获取或设置制表位的位置（以磅为单位）。
     /// </summary>
-    msoLineCapSquare = 1,
+    float Position { get; set; }
 
     /// <summary>
-    /// 圆形线条端点样式
+    /// 获取或设置制表位的类型。
     /// </summary>
-    msoLineCapRound = 2,
+    MsoTabStopType Type { get; set; }
 
     /// <summary>
-    /// 平头线条端点样式
+    /// 清除此制表位。
     /// </summary>
-    msoLineCapFlat = 3
+    void Clear();
+
 }

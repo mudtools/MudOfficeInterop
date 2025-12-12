@@ -8,80 +8,103 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 表示 Office 主题颜色索引的枚举类型
+/// 指定文本下划线类型
 /// </summary>
-public enum MsoThemeColorIndex
+public enum MsoTextUnderlineType
 {
+
     /// <summary>
-    /// 混合主题颜色
+    /// 混合下划线类型
     /// </summary>
-    msoThemeColorMixed = -2,
+    msoUnderlineMixed = -2,
+
     /// <summary>
-    /// 非主题颜色
+    /// 无下划线
     /// </summary>
-    msoNotThemeColor = 0,
+    msoNoUnderline = 0,
+
     /// <summary>
-    /// 主题深色 1
+    /// 仅为单词添加下划线
     /// </summary>
-    msoThemeColorDark1 = 1,
+    msoUnderlineWords = 1,
+
     /// <summary>
-    /// 主题浅色 1
+    /// 单线下划线
     /// </summary>
-    msoThemeColorLight1 = 2,
+    msoUnderlineSingleLine = 2,
+
     /// <summary>
-    /// 主题深色 2
+    /// 双线下划线
     /// </summary>
-    msoThemeColorDark2 = 3,
+    msoUnderlineDoubleLine = 3,
+
     /// <summary>
-    /// 主题浅色 2
+    /// 粗单线下划线
     /// </summary>
-    msoThemeColorLight2 = 4,
+    msoUnderlineHeavyLine = 4,
+
     /// <summary>
-    /// 强调色 1
+    /// 点状下划线
     /// </summary>
-    msoThemeColorAccent1 = 5,
+    msoUnderlineDottedLine = 5,
+
     /// <summary>
-    /// 强调色 2
+    /// 粗点状下划线
     /// </summary>
-    msoThemeColorAccent2 = 6,
+    msoUnderlineDottedHeavyLine = 6,
+
     /// <summary>
-    /// 强调色 3
+    /// 虚线下划线
     /// </summary>
-    msoThemeColorAccent3 = 7,
+    msoUnderlineDashLine = 7,
+
     /// <summary>
-    /// 强调色 4
+    /// 粗虚线下划线
     /// </summary>
-    msoThemeColorAccent4 = 8,
+    msoUnderlineDashHeavyLine = 8,
+
     /// <summary>
-    /// 强调色 5
+    /// 部长虚线下划线
     /// </summary>
-    msoThemeColorAccent5 = 9,
+    msoUnderlineDashLongLine = 9,
+
     /// <summary>
-    /// 强调色 6
+    /// 粗长虚线下划线
     /// </summary>
-    msoThemeColorAccent6 = 10,
+    msoUnderlineDashLongHeavyLine = 10,
+
     /// <summary>
-    /// 超链接颜色
+    /// 点划线下划线
     /// </summary>
-    msoThemeColorHyperlink = 11,
+    msoUnderlineDotDashLine = 11,
+
     /// <summary>
-    /// 已访问的超链接颜色
+    /// 粗点划线下划线
     /// </summary>
-    msoThemeColorFollowedHyperlink = 12,
+    msoUnderlineDotDashHeavyLine = 12,
+
     /// <summary>
-    /// 文本颜色 1
+    /// 双点划线下划线
     /// </summary>
-    msoThemeColorText1 = 13,
+    msoUnderlineDotDotDashLine = 13,
+
     /// <summary>
-    /// 背景颜色 1
+    /// 粗双点划线下划线
     /// </summary>
-    msoThemeColorBackground1 = 14,
+    msoUnderlineDotDotDashHeavyLine = 14,
+
     /// <summary>
-    /// 文本颜色 2
+    /// 波浪下划线
     /// </summary>
-    msoThemeColorText2 = 15,
+    msoUnderlineWavyLine = 15,
+
     /// <summary>
-    /// 背景颜色 2
+    /// 粗波浪下划线
     /// </summary>
-    msoThemeColorBackground2 = 16
+    msoUnderlineWavyHeavyLine = 16,
+
+    /// <summary>
+    /// 双波浪下划线
+    /// </summary>
+    msoUnderlineWavyDoubleLine = 17
 }

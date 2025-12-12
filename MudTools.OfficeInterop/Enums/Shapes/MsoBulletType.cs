@@ -8,27 +8,28 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定线条端点的样式
+/// 指定文本幻灯片中 bullet 的类型
 /// </summary>
-public enum MsoLineCapStyle
+public enum MsoBulletType
 {
     /// <summary>
-    /// 混合线条端点样式
+    /// 混合类型的 bullet
     /// </summary>
-    msoLineCapMixed = -2,
-
+    msoBulletMixed = -2,
     /// <summary>
-    /// 方形线条端点样式
+    /// 无 bullet
     /// </summary>
-    msoLineCapSquare = 1,
-
+    msoBulletNone = 0,
     /// <summary>
-    /// 圆形线条端点样式
+    /// 未编号的 bullet（如圆点）
     /// </summary>
-    msoLineCapRound = 2,
-
+    msoBulletUnnumbered = 1,
     /// <summary>
-    /// 平头线条端点样式
+    /// 编号的 bullet（如数字或字母）
     /// </summary>
-    msoLineCapFlat = 3
+    msoBulletNumbered = 2,
+    /// <summary>
+    /// 图片类型的 bullet
+    /// </summary>
+    msoBulletPicture = 3
 }

@@ -5,30 +5,31 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop;
-
 /// <summary>
-/// 指定线条端点的样式
+/// 指定文本的删除线样式
 /// </summary>
-public enum MsoLineCapStyle
+public enum MsoTextStrike
 {
-    /// <summary>
-    /// 混合线条端点样式
-    /// </summary>
-    msoLineCapMixed = -2,
 
     /// <summary>
-    /// 方形线条端点样式
+    /// 混合删除线样式
     /// </summary>
-    msoLineCapSquare = 1,
+    msoStrikeMixed = -2,
+
 
     /// <summary>
-    /// 圆形线条端点样式
+    /// 无删除线
     /// </summary>
-    msoLineCapRound = 2,
+    msoNoStrike = 0,
 
     /// <summary>
-    /// 平头线条端点样式
+    /// 单删除线
     /// </summary>
-    msoLineCapFlat = 3
+    msoSingleStrike = 1,
+
+
+    /// <summary>
+    /// 双删除线
+    /// </summary>
+    msoDoubleStrike = 2
 }

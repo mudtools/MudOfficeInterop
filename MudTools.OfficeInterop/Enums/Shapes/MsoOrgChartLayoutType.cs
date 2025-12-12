@@ -36,7 +36,7 @@ public enum MsoOrgChartLayoutType
     /// 右侧悬挂布局类型
     /// </summary>
     msoOrgChartLayoutRightHanging = 4,
-    
+
     /// <summary>
     /// 默认布局类型
     /// </summary>

@@ -8,27 +8,28 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定线条端点的样式
+/// 指定在Office应用程序中使用的制表符类型
 /// </summary>
-public enum MsoLineCapStyle
+public enum MsoTabStopType
 {
     /// <summary>
-    /// 混合线条端点样式
+    /// 混合制表符类型（用于表示多种制表符类型的组合）
     /// </summary>
-    msoLineCapMixed = -2,
-
+    msoTabStopMixed = -2,
     /// <summary>
-    /// 方形线条端点样式
+    /// 左对齐制表符
     /// </summary>
-    msoLineCapSquare = 1,
-
+    msoTabStopLeft = 1,
     /// <summary>
-    /// 圆形线条端点样式
+    /// 居中对齐制表符
     /// </summary>
-    msoLineCapRound = 2,
-
+    msoTabStopCenter = 2,
     /// <summary>
-    /// 平头线条端点样式
+    /// 右对齐制表符
     /// </summary>
-    msoLineCapFlat = 3
+    msoTabStopRight = 3,
+    /// <summary>
+    /// 小数点对齐制表符
+    /// </summary>
+    msoTabStopDecimal = 4
 }

@@ -5,30 +5,49 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-namespace MudTools.OfficeInterop;
-
 /// <summary>
-/// 指定线条端点的样式
+/// 指定段落对齐方式的枚举
 /// </summary>
-public enum MsoLineCapStyle
+public enum MsoParagraphAlignment
 {
-    /// <summary>
-    /// 混合线条端点样式
-    /// </summary>
-    msoLineCapMixed = -2,
 
     /// <summary>
-    /// 方形线条端点样式
+    /// 混合对齐方式
     /// </summary>
-    msoLineCapSquare = 1,
+    msoAlignMixed = -2,
 
     /// <summary>
-    /// 圆形线条端点样式
+    /// 左对齐
     /// </summary>
-    msoLineCapRound = 2,
+    msoAlignLeft = 1,
 
     /// <summary>
-    /// 平头线条端点样式
+    /// 居中对齐
     /// </summary>
-    msoLineCapFlat = 3
+    msoAlignCenter = 2,
+
+    /// <summary>
+    /// 右对齐
+    /// </summary>
+    msoAlignRight = 3,
+
+    /// <summary>
+    /// 两端对齐
+    /// </summary>
+    msoAlignJustify = 4,
+
+    /// <summary>
+    /// 分散对齐
+    /// </summary>
+    msoAlignDistribute = 5,
+
+    /// <summary>
+    /// 泰语分散对齐
+    /// </summary>
+    msoAlignThaiDistribute = 6,
+
+    /// <summary>
+    /// 低度两端对齐
+    /// </summary>
+    msoAlignJustifyLow = 7
 }

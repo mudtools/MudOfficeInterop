@@ -8,27 +8,37 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定线条端点的样式
+/// 指定文本基线对齐方式
 /// </summary>
-public enum MsoLineCapStyle
+public enum MsoBaselineAlignment
 {
     /// <summary>
-    /// 混合线条端点样式
+    /// 混合基线对齐模式
     /// </summary>
-    msoLineCapMixed = -2,
+    msoBaselineAlignMixed = -2,
 
     /// <summary>
-    /// 方形线条端点样式
+    /// 基线对齐
     /// </summary>
-    msoLineCapSquare = 1,
+    msoBaselineAlignBaseline = 1,
 
     /// <summary>
-    /// 圆形线条端点样式
+    /// 顶部对齐
     /// </summary>
-    msoLineCapRound = 2,
+    msoBaselineAlignTop = 2,
 
     /// <summary>
-    /// 平头线条端点样式
+    /// 居中对齐
     /// </summary>
-    msoLineCapFlat = 3
+    msoBaselineAlignCenter = 3,
+
+    /// <summary>
+    /// 远东语言50%对齐（专门针对东亚文字的特殊对齐方式）
+    /// </summary>
+    msoBaselineAlignFarEast50 = 4,
+
+    /// <summary>
+    /// 自动对齐
+    /// </summary>
+    msoBaselineAlignAuto = 5
 }

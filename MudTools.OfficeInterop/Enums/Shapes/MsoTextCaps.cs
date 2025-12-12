@@ -8,27 +8,28 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定线条端点的样式
+/// 指定文本的大写格式
 /// </summary>
-public enum MsoLineCapStyle
+public enum MsoTextCaps
 {
-    /// <summary>
-    /// 混合线条端点样式
-    /// </summary>
-    msoLineCapMixed = -2,
 
     /// <summary>
-    /// 方形线条端点样式
+    /// 混合大写格式
     /// </summary>
-    msoLineCapSquare = 1,
+    msoCapsMixed = -2,
 
     /// <summary>
-    /// 圆形线条端点样式
+    /// 无大写格式
     /// </summary>
-    msoLineCapRound = 2,
+    msoNoCaps = 0,
 
     /// <summary>
-    /// 平头线条端点样式
+    /// 小型大写字母格式
     /// </summary>
-    msoLineCapFlat = 3
+    msoSmallCaps = 1,
+
+    /// <summary>
+    /// 全大写格式
+    /// </summary>
+    msoAllCaps = 2
 }

@@ -17,102 +17,102 @@ public enum MsoPresetThreeDFormat
     /// 混合三维格式（未使用）
     /// </summary>
     msoPresetThreeDFormatMixed = -2,
-    
+
     /// <summary>
     /// 第一个三维格式
     /// </summary>
     msoThreeD1 = 1,
-    
+
     /// <summary>
     /// 第二个三维格式
     /// </summary>
     msoThreeD2 = 2,
-    
+
     /// <summary>
     /// 第三个三维格式
     /// </summary>
     msoThreeD3 = 3,
-    
+
     /// <summary>
     /// 第四个三维格式
     /// </summary>
     msoThreeD4 = 4,
-    
+
     /// <summary>
     /// 第五个三维格式
     /// </summary>
     msoThreeD5 = 5,
-    
+
     /// <summary>
     /// 第六个三维格式
     /// </summary>
     msoThreeD6 = 6,
-    
+
     /// <summary>
     /// 第七个三维格式
     /// </summary>
     msoThreeD7 = 7,
-    
+
     /// <summary>
     /// 第八个三维格式
     /// </summary>
     msoThreeD8 = 8,
-    
+
     /// <summary>
     /// 第九个三维格式
     /// </summary>
     msoThreeD9 = 9,
-    
+
     /// <summary>
     /// 第十个三维格式
     /// </summary>
     msoThreeD10 = 10,
-    
+
     /// <summary>
     /// 第十一个三维格式
     /// </summary>
     msoThreeD11 = 11,
-    
+
     /// <summary>
     /// 第十二个三维格式
     /// </summary>
     msoThreeD12 = 12,
-    
+
     /// <summary>
     /// 第十三个三维格式
     /// </summary>
     msoThreeD13 = 13,
-    
+
     /// <summary>
     /// 第十四个三维格式
     /// </summary>
     msoThreeD14 = 14,
-    
+
     /// <summary>
     /// 第十五个三维格式
     /// </summary>
     msoThreeD15 = 15,
-    
+
     /// <summary>
     /// 第十六个三维格式
     /// </summary>
     msoThreeD16 = 16,
-    
+
     /// <summary>
     /// 第十七个三维格式
     /// </summary>
     msoThreeD17 = 17,
-    
+
     /// <summary>
     /// 第十八个三维格式
     /// </summary>
     msoThreeD18 = 18,
-    
+
     /// <summary>
     /// 第十九个三维格式
     /// </summary>
     msoThreeD19 = 19,
-    
+
     /// <summary>
     /// 第二十个三维格式
     /// </summary>
