@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop;
 /// Office CustomTaskPane 对象的二次封装接口
 /// 提供对 Microsoft.Office.Core.CustomTaskPane 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsCore", NoneConstructor = true, NoneDisposed = true)]
 public interface IOfficeCustomTaskPane : IDisposable
 {
     #region 事件
@@ -36,13 +37,13 @@ public interface IOfficeCustomTaskPane : IDisposable
     /// 获取自定义任务窗格所在的Application对象
     /// 对应 CustomTaskPane.Application 属性
     /// </summary>
-    object Application { get; } // 使用 object 作为通用占位符
+    object Application { get; }
 
     /// <summary>
     /// 获取自定义任务窗格关联的窗口对象
     /// 对应 CustomTaskPane.Window 属性
     /// </summary>
-    object Window { get; } // 使用 object 作为通用占位符，通常是 Excel.Window, Word.Document 等
+    object Window { get; }
 
     /// <summary>
     /// 获取或设置自定义任务窗格是否可见
@@ -60,13 +61,13 @@ public interface IOfficeCustomTaskPane : IDisposable
     /// 获取或设置自定义任务窗格的停靠位置
     /// 对应 CustomTaskPane.DockPosition 属性
     /// </summary>
-    MsoDockPosition DockPosition { get; set; }
+    MsoCTPDockPosition DockPosition { get; set; }
 
     /// <summary>
     /// 获取或设置自定义任务窗格的停靠位置限制
     /// 对应 CustomTaskPane.DockPositionRestrict 属性
     /// </summary>
-    MsoDockPositionRestrict DockPositionRestrict { get; set; }
+    MsoCTPDockPositionRestrict DockPositionRestrict { get; set; }
     #endregion
 
     #region 位置和大小
@@ -89,17 +90,5 @@ public interface IOfficeCustomTaskPane : IDisposable
     /// 对应 CustomTaskPane.Delete 方法
     /// </summary>
     void Delete();
-    #endregion
-
-    #region 高级功能 (概念性或依赖具体实现)
-    /// <summary>
-    /// 刷新自定义任务窗格显示
-    /// </summary>
-    void Refresh();
-
-    /// <summary>
-    /// 激活自定义任务窗格中的内容控件（如果支持）
-    /// </summary>
-    void ActivateContent();
     #endregion
 }

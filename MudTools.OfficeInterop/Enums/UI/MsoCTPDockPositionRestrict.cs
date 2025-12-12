@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -8,27 +8,27 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定停靠位置限制的枚举，用于限制自定义任务窗格的停靠行为
+/// 指定自定义任务窗格停靠位置限制的枚举类型
 /// </summary>
-public enum MsoDockPositionRestrict
+public enum MsoCTPDockPositionRestrict
 {
     /// <summary>
-    /// 无限制 - 可以停靠在任何位置
+    /// 自定义任务窗格的停靠行为没有限制
     /// </summary>
     msoCTPDockPositionRestrictNone,
 
     /// <summary>
-    /// 无变化 - 保持当前停靠状态，不允许更改
+    /// 无法更改停靠位置，如果自定义任务窗格是浮动的，则不能停靠到窗口的一侧
     /// </summary>
     msoCTPDockPositionRestrictNoChange,
 
     /// <summary>
-    /// 无水平移动 - 限制水平方向的停靠调整
+    /// 自定义任务窗格不能水平停靠（不能停靠在窗口的顶部或底部）
     /// </summary>
     msoCTPDockPositionRestrictNoHorizontal,
 
     /// <summary>
-    /// 无垂直移动 - 限制垂直方向的停靠调整
+    /// 自定义任务窗格不能垂直停靠（不能停靠在窗口的左侧或右侧）
     /// </summary>
     msoCTPDockPositionRestrictNoVertical
 }

@@ -34,13 +34,13 @@ public class TaskPaneDockPositionChangedEventArgs : EventArgs
     /// <summary>
     /// 设置新的停靠位置
     /// </summary>
-    public MsoDockPosition NewDockPosition { get; }
+    public MsoCTPDockPosition NewDockPosition { get; }
 
     /// <summary>
     /// 默认构造函数。
     /// </summary>
     /// <param name="newPosition"></param>
-    public TaskPaneDockPositionChangedEventArgs(MsoDockPosition newPosition)
+    public TaskPaneDockPositionChangedEventArgs(MsoCTPDockPosition newPosition)
     {
         NewDockPosition = newPosition;
     }

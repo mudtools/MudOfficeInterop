@@ -11,11 +11,9 @@ namespace MudTools.OfficeInterop.Imps;
 /// Office CustomTaskPane 对象的二次封装实现类
 /// 实现 IOfficeCustomTaskPane 接口
 /// </summary>
-internal class OfficeCustomTaskPane : IOfficeCustomTaskPane
+internal partial class OfficeCustomTaskPane
 {
-    private MsCore.CustomTaskPane? _customTaskPane;
     private MsCore._CustomTaskPaneEvents_Event _customTaskPaneEvents_Event;
-    private bool _disposedValue = false;
 
     public event EventHandler<TaskPaneVisibleStateChangedEventArgs> VisibleStateChanged;
     public event EventHandler<TaskPaneDockPositionChangedEventArgs> DockPositionChanged;
@@ -26,7 +24,7 @@ internal class OfficeCustomTaskPane : IOfficeCustomTaskPane
     /// <param name="customTaskPane">要封装的 Microsoft.Office.Core.CustomTaskPane 对象</param>
     internal OfficeCustomTaskPane(MsCore.CustomTaskPane customTaskPane)
     {
-        _customTaskPane = customTaskPane ?? throw new ArgumentNullException(nameof(customTaskPane));
+        _customtaskpane = customTaskPane ?? throw new ArgumentNullException(nameof(customTaskPane));
         _customTaskPaneEvents_Event = customTaskPane;
         ConectEvent();
     }
@@ -56,96 +54,21 @@ internal class OfficeCustomTaskPane : IOfficeCustomTaskPane
 
     private void OnComDockPositionChanged(MsCore.CustomTaskPane customTaskPane)
     {
-        DockPositionChanged?.Invoke(this, new TaskPaneDockPositionChangedEventArgs((MsoDockPosition)customTaskPane.DockPosition));
+        DockPositionChanged?.Invoke(this, new TaskPaneDockPositionChangedEventArgs((MsoCTPDockPosition)customTaskPane.DockPosition));
     }
-
-    #region 基础属性
-    public string Title => _customTaskPane.Title;
-
-    public object Application => _customTaskPane.Application; // 通用占位符
-
-    public object Window => _customTaskPane.Window; // 通用占位符
-
-    public bool Visible
-    {
-        get => _customTaskPane.Visible;
-        set => _customTaskPane.Visible = value;
-    }
-
-    public object ContentControl => _customTaskPane.ContentControl;
-
-    public MsoDockPosition DockPosition
-    {
-        get => (MsoDockPosition)_customTaskPane.DockPosition;
-        set => _customTaskPane.DockPosition = (MsCore.MsoCTPDockPosition)value;
-    }
-
-    public MsoDockPositionRestrict DockPositionRestrict
-    {
-        get => (MsoDockPositionRestrict)_customTaskPane.DockPositionRestrict;
-        set => _customTaskPane.DockPositionRestrict = (MsCore.MsoCTPDockPositionRestrict)value;
-    }
-    #endregion
-
-    #region 位置和大小
-    public int Width
-    {
-        get => _customTaskPane.Width;
-        set => _customTaskPane.Width = value;
-    }
-
-    public int Height
-    {
-        get => _customTaskPane.Height;
-        set => _customTaskPane.Height = value;
-    }
-
-    #endregion
-
-    #region 操作方法
-    public void Delete()
-    {
-        _customTaskPane.Delete();
-    }
-    #endregion
-
-    #region 高级功能 (概念性)
-    public void Refresh()
-    {
-        bool currentVis = this.Visible;
-        this.Visible = !currentVis;
-        this.Visible = currentVis;
-    }
-
-    public void ActivateContent()
-    {
-
-    }
-    #endregion
 
     #region IDisposable Support
-    protected virtual void Dispose(bool disposing)
+    protected void Dispose(bool disposing)
     {
         if (_disposedValue) return;
-        if (disposing && _customTaskPane != null)
+        if (disposing && _customtaskpane != null)
         {
             DisConnectEvent();
-            Marshal.ReleaseComObject(_customTaskPane);
-            _customTaskPane = null;
+            Marshal.ReleaseComObject(_customtaskpane);
+            _customtaskpane = null;
             _customTaskPaneEvents_Event = null;
         }
         _disposedValue = true;
-    }
-
-    ~OfficeCustomTaskPane()
-    {
-        Dispose(disposing: false);
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
     }
     #endregion
 }
