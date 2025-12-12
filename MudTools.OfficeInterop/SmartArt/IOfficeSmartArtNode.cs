@@ -27,6 +27,14 @@ public interface IOfficeSmartArtNode : IDisposable
     IOfficeShapeRange? Shapes { get; }
 
     /// <summary>
+    /// 获取与该 SmartArt 节点关联的文本框对象
+    /// </summary>
+    /// <value>
+    /// 返回一个 IOfficeTextFrame2 对象，用于访问和操作与此 SmartArt 节点关联的文本内容和格式设置
+    /// </value>
+    IOfficeTextFrame2 TextFrame2 { get; }
+
+    /// <summary>
     /// 获取子节点集合
     /// </summary>
     IOfficeSmartArtNodes Nodes { get; }

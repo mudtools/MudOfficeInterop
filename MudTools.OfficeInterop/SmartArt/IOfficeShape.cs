@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop;
+
 /// <summary>
 /// 表示 Office 中的一个形状对象（如文本框、图片等）的接口封装。
 /// </summary>
@@ -46,6 +47,7 @@ public interface IOfficeShape : IDisposable
     /// 获取形状的画布子项集合
     /// </summary>
     IOfficeCanvasShapes CanvasItems { get; }
+
 
     IOfficeTextFrame2 TextFrame2 { get; }
 

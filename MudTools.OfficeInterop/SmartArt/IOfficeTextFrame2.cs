@@ -38,9 +38,20 @@ public interface IOfficeTextFrame2 : IDisposable
     /// </summary>
     float MarginTop { get; set; }
 
+    /// <summary>
+    /// 获取文本框架中的文本范围
+    /// </summary>
     IOfficeTextRange2 TextRange { get; }
 
+    /// <summary>
+    /// 获取文本框架中的文本列
+    /// </summary>
     IOfficeTextColumn2 Column { get; }
+
+    /// <summary>
+    /// 获取文本框架中的标尺
+    /// </summary>
+    IOfficeRuler2 Ruler { get; }
 
     /// <summary>
     /// 获取或设置文本方向。
