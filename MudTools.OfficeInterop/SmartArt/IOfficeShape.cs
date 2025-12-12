@@ -33,6 +33,27 @@ public interface IOfficeShape : IDisposable
     IOfficeDiagram Diagram { get; }
 
     /// <summary>
+    /// 获取与形状关联的 SmartArt 图表节点
+    /// </summary>
+    IOfficeDiagramNode DiagramNode { get; }
+
+    /// <summary>
+    /// 获取形状的父级组合形状
+    /// </summary>
+    IOfficeShape ParentGroup { get; }
+
+    /// <summary>
+    /// 获取形状的画布子项集合
+    /// </summary>
+    IOfficeCanvasShapes CanvasItems { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否为子形状
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Child { get; }
+
+    /// <summary>
     /// 获取一个值，该值指示形状是否包含图表
     /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
@@ -43,6 +64,12 @@ public interface IOfficeShape : IDisposable
     /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
     bool HasDiagramNode { get; }
+
+    /// <summary>
+    /// 获取一个值，该值指示形状是否包含图表
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasChart { get; }
 
     /// <summary>
     /// 获取形状的类型
@@ -98,8 +125,31 @@ public interface IOfficeShape : IDisposable
     /// <summary>
     /// 将形状置于 Z 顺序的前面
     /// </summary>
-    void ZOrder(MsoZOrderCmd ZOrderCmd);
+    void ZOrder(MsoZOrderCmd zOrderCmd);
 
+    /// <summary>
+    /// 裁剪形状的左侧边缘
+    /// </summary>
+    /// <param name="increment">裁剪增量，正值表示向内裁剪，负值表示向外扩展</param>
+    void CanvasCropLeft(float increment);
+
+    /// <summary>
+    /// 裁剪形状的顶部边缘
+    /// </summary>
+    /// <param name="increment">裁剪增量，正值表示向内裁剪，负值表示向外扩展</param>
+    void CanvasCropTop(float increment);
+
+    /// <summary>
+    /// 裁剪形状的右侧边缘
+    /// </summary>
+    /// <param name="increment">裁剪增量，正值表示向内裁剪，负值表示向外扩展</param>
+    void CanvasCropRight(float increment);
+
+    /// <summary>
+    /// 裁剪形状的底部边缘
+    /// </summary>
+    /// <param name="increment">裁剪增量，正值表示向内裁剪，负值表示向外扩展</param>
+    void CanvasCropBottom(float increment);
 
     /// <summary>
     /// 应用对形状所做的更改
