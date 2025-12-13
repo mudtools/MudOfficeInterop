@@ -17,6 +17,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
 
     #region 私有字段
     internal MsExcel.Range? _range; // 封装的Excel Range对象（COM对象）
+    internal MsExcel.Range? InternalComObject => _range;
     private bool _disposedValue;   // 资源释放标记
     protected DisposableList _disposableList = [];
     /// <summary>

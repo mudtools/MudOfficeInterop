@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -7,6 +7,8 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
+
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelGraphic : IDisposable
 {
     /// <summary>
@@ -24,6 +26,7 @@ public interface IExcelGraphic : IDisposable
     /// </summary>
     float Height { get; set; }
 
+    [ComPropertyWrap(NeedConvert = true)]
     bool LockAspectRatio { get; set; }
 
     /// <summary>
@@ -45,11 +48,6 @@ public interface IExcelGraphic : IDisposable
     /// 获取图形的文件名
     /// </summary>
     string Filename { get; set; }
-
-    /// <summary>
-    /// 获取图形是否被裁剪
-    /// </summary>
-    bool IsCropped { get; }
 
     /// <summary>
     /// 获取图形的裁剪左边界

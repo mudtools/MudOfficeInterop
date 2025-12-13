@@ -58,5 +58,6 @@ public interface IExcelCharacters : IDisposable
     /// </summary>
     /// <param name="text">要插入的文本</param>
     /// <returns>插入后的字符对象</returns>
+    [ReturnValueConvert]
     IExcelCharacters? Insert(string text);
 }

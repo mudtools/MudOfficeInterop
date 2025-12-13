@@ -32,11 +32,13 @@ public interface IExcelFilter : IDisposable
     /// <summary>
     /// 获取第一个筛选条件
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string Criteria1 { get; }
 
     /// <summary>
     /// 获取第二个筛选条件
-    /// </summary>    
+    /// </summary> 
+    [ComPropertyWrap(NeedConvert = true)]
     string Criteria2 { get; }
 
     /// <summary>
