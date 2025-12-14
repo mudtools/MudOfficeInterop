@@ -10,8 +10,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Microsoft.Office.Interop.Excel.Pane 实现的二次封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPane : IDisposable
 {
+    /// <summary>
+    /// 获取当前COM对象的父对象。
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取当前COM对象的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
     /// <summary>
     /// 获取窗格索引
     /// </summary>
@@ -38,12 +49,6 @@ public interface IExcelPane : IDisposable
     void Activate();
 
     /// <summary>
-    /// 将指定范围滚动到窗格视图中
-    /// </summary>
-    /// <param name="range">要滚动到视图中的范围</param>
-    void ScrollIntoView(IExcelRange range);
-
-    /// <summary>
     /// 将指定矩形区域滚动到窗格视图中
     /// </summary>
     /// <param name="left">矩形区域左上角的水平坐标（单位：磅）</param>
@@ -58,14 +63,14 @@ public interface IExcelPane : IDisposable
     /// </summary>
     /// <param name="points">点单位坐标值</param>
     /// <returns>对应的屏幕像素X坐标</returns>
-    int PointsToScreenPixelsX(int points);
+    int? PointsToScreenPixelsX(int points);
 
     /// <summary>
     /// 将点单位转换为屏幕像素的垂直坐标
     /// </summary>
     /// <param name="points">点单位坐标值</param>
     /// <returns>对应的屏幕像素Y坐标</returns>
-    int PointsToScreenPixelsY(int points);
+    int? PointsToScreenPixelsY(int points);
 
     /// <summary>
     /// 执行大幅度滚动操作

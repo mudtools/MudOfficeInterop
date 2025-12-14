@@ -11,17 +11,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示 Excel 窗格集合的接口，提供对多个窗格的访问和操作功能
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface IExcelPanes : IDisposable, IEnumerable<IExcelPane>
 {
     /// <summary>
-    /// 获取对象所在的Application对象
+    /// 获取当前COM对象的父对象。
     /// </summary>
-    IExcelApplication? Application { get; }
+    object Parent { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取当前COM对象的Application对象
     /// </summary>
-    object? Parent { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取窗格数量
