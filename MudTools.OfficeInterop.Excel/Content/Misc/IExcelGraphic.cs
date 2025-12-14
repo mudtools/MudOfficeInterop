@@ -42,6 +42,7 @@ public interface IExcelGraphic : IDisposable
     /// <summary>
     /// 获取或设置图形的颜色类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPictureColorType ColorType { get; set; }
 
     /// <summary>

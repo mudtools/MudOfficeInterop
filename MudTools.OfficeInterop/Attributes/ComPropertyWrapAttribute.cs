@@ -15,6 +15,11 @@ namespace MudTools.OfficeInterop;
 public class ComPropertyWrapAttribute : Attribute
 {
     /// <summary>
+    /// 属性对象所在的COM对象命名空间。
+    /// </summary>
+    public string? ComNamespace { get; set; }
+
+    /// <summary>
     /// 属性默认值。
     /// </summary>
     public string? DefaultValue { get; set; }
