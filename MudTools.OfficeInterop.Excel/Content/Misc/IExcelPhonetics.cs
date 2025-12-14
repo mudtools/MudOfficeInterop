@@ -13,9 +13,14 @@ namespace MudTools.OfficeInterop.Excel;
 [ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface IExcelPhonetics : IEnumerable<IExcelPhonetic>, IDisposable
 {
+    /// <summary>
+    /// 获取当前COM对象的父对象。
+    /// 对应 RecentFile.Parent 属性
+    /// </summary>
+    object Parent { get; }
 
     /// <summary>
-    /// 获取坐标轴集合所在的 Application 对象
+    /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }

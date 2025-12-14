@@ -15,14 +15,15 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelFilter : IDisposable
 {
     /// <summary>
-    /// 获取条件值对象所在的Application对象
-    /// </summary>
-    IExcelApplication Application { get; }
-
-    /// <summary>
-    /// 获取父级工作表
+    /// 获取当前COM对象的父对象。
     /// </summary>
     object Parent { get; }
+
+    /// <summary>
+    /// 获取当前COM对象的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取筛选条件的数量

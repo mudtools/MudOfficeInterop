@@ -15,8 +15,14 @@ public interface IExcelAutoFilter : IDisposable
 {
 
     /// <summary>
-    /// 获取条件值对象所在的Application对象
+    /// 获取当前COM对象的父对象。
     /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取当前COM对象的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
@@ -28,11 +34,6 @@ public interface IExcelAutoFilter : IDisposable
     /// 获取筛选器应用的范围
     /// </summary>
     IExcelRange? Range { get; }
-
-    /// <summary>
-    /// 获取筛选器的父级对象
-    /// </summary>
-    object Parent { get; }
 
     /// <summary>
     /// 获取筛选器的父级自动筛选器集合

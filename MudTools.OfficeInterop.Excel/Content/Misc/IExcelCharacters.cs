@@ -14,14 +14,15 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelCharacters : IDisposable
 {
     /// <summary>
-    /// 获取条件值对象所在的Application对象
+    /// 获取当前COM对象的父对象。
     /// </summary>
-    IExcelApplication? Application { get; }
+    object Parent { get; }
 
     /// <summary>
-    /// 获取字符对象的父级对象
+    /// 获取当前COM对象的Application对象
     /// </summary>
-    object? Parent { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取字符数量

@@ -17,9 +17,15 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelAdjustments : IEnumerable<float>, IDisposable
 {
     /// <summary>
-    /// 获取父对象
+    /// 获取当前COM对象的父对象。
     /// </summary>
     object Parent { get; }
+
+    /// <summary>
+    /// 获取当前COM对象的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取集合中元素的数量

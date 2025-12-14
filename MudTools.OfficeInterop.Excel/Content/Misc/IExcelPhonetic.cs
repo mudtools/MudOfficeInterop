@@ -13,7 +13,17 @@ namespace MudTools.OfficeInterop.Excel;
 [ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPhonetic : IDisposable
 {
+    /// <summary>
+    /// 获取当前COM对象的父对象。
+    /// 对应 RecentFile.Parent 属性
+    /// </summary>
     object Parent { get; }
+
+    /// <summary>
+    /// 获取当前COM对象的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取或设置注音符号的文本内容

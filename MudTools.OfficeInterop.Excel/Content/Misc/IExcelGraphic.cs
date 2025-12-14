@@ -16,9 +16,16 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelGraphic : IDisposable
 {
     /// <summary>
-    /// 获取图形对象的父级对象
+    /// 获取当前COM对象的父对象。
+    /// 对应 RecentFile.Parent 属性
     /// </summary>
     object Parent { get; }
+
+    /// <summary>
+    /// 获取当前COM对象的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取或设置图形的宽度

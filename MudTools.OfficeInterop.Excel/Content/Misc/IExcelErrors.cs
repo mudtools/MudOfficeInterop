@@ -16,14 +16,15 @@ using System;
 public interface IExcelErrors : IDisposable
 {
     /// <summary>
-    /// 获取父对象
+    /// 获取当前COM对象的父对象。
     /// </summary>
-    object? Parent { get; }
+    object Parent { get; }
 
     /// <summary>
-    /// 获取应用程序对象
+    /// 获取当前COM对象的Application对象
     /// </summary>
-    IExcelApplication? Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 通过索引获取错误
