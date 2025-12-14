@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -10,8 +10,11 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示 Excel 中单个注音符号的封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPhonetic : IDisposable
 {
+    object Parent { get; }
+
     /// <summary>
     /// 获取或设置注音符号的文本内容
     /// </summary>
@@ -22,32 +25,15 @@ public interface IExcelPhonetic : IDisposable
     /// </summary>
     bool Visible { get; set; }
 
+    /// <summary>
+    /// 获取注音符号的字体属性。
+    /// </summary>
     IExcelFont? Font { get; }
 
     /// <summary>
-    /// 获取或设置注音符号的字体名称
+    /// 获取或设置注音符号的字符类型
     /// </summary>
-    string FontName { get; set; }
-
-    /// <summary>
-    /// 获取或设置注音符号的字体大小
-    /// </summary>
-    double FontSize { get; set; }
-
-    /// <summary>
-    /// 获取或设置注音符号是否粗体
-    /// </summary>
-    bool FontBold { get; set; }
-
-    /// <summary>
-    /// 获取或设置注音符号是否斜体
-    /// </summary>
-    bool FontItalic { get; set; }
-
-    /// <summary>
-    /// 获取或设置注音符号的颜色（RGB值）
-    /// </summary>
-    int FontColor { get; set; }
+    int CharacterType { get; set; }
 
     /// <summary>
     /// 获取或设置注音符号的对齐方式
