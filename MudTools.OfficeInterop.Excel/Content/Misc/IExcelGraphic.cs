@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,6 +8,10 @@
 namespace MudTools.OfficeInterop.Excel;
 
 
+/// <summary>
+/// 表示Excel中的图形对象接口，提供对Excel图形元素的基本操作功能。
+/// 该接口继承自IDisposable接口，支持资源释放功能，并通过ComObjectWrap特性与Excel COM对象进行交互。
+/// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelGraphic : IDisposable
 {
@@ -26,6 +30,10 @@ public interface IExcelGraphic : IDisposable
     /// </summary>
     float Height { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否锁定图形的纵横比。
+    /// 当设置为true时，调整图形大小时会保持原始宽高比；当设置为false时，可以自由调整图形的宽度和高度。
+    /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
     bool LockAspectRatio { get; set; }
 
