@@ -70,11 +70,6 @@ public interface IExcelSlicer : IDisposable
     bool DisplayHeader { get; set; }
 
     /// <summary>
-    /// 获取或设置切片器项的列数。
-    /// </summary>
-    int Columns { get; set; }
-
-    /// <summary>
     /// 获取切片器缓存的类型，表示切片器是标准切片器还是时间线切片器。
     /// </summary>
     XlSlicerCacheType SlicerCacheType { get; }
