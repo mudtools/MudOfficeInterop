@@ -17,7 +17,6 @@ public interface IExcelRecentFile : IDisposable
     #region 基础属性
     /// <summary>
     /// 获取当前COM对象的父对象。
-    /// 对应 RecentFile.Parent 属性
     /// </summary>
     object Parent { get; }
 

@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -7,12 +7,23 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
-public interface IExcelSheetViews : IDisposable, IEnumerable<IExcelUserAccess>
+
+/// <summary>
+/// 表示Excel工作表视图集合的接口，提供对工作表视图集合的访问和操作功能
+/// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelSheetViews : IDisposable, IEnumerable<object>
 {
     /// <summary>
-    /// 获取父对象
+    /// 获取当前COM对象的父对象。
     /// </summary>
     object Parent { get; }
+
+    /// <summary>
+    /// 获取当前COM对象的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取工作表视图集合中的视图数量
@@ -20,14 +31,9 @@ public interface IExcelSheetViews : IDisposable, IEnumerable<IExcelUserAccess>
     int Count { get; }
 
     /// <summary>
-    /// 获取应用程序对象
-    /// </summary>
-    object Application { get; }
-
-    /// <summary>
     /// 通过索引获取工作表视图
     /// </summary>
     /// <param name="index">工作表视图索引</param>
     /// <returns>工作表视图对象</returns>
-    IExcelUserAccess this[object index] { get; }
+    object? this[int index] { get; }
 }

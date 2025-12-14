@@ -17,13 +17,11 @@ public interface IExcelRecentFiles : IEnumerable<IExcelRecentFile>, IDisposable
     #region 基础属性
     /// <summary>
     /// 获取最近使用的文件集合所在的父对象（通常是 Application）
-    /// 对应 RecentFiles.Parent 属性
     /// </summary>
     object Parent { get; }
 
     /// <summary>
     /// 获取最近使用的文件集合所在的Application对象
-    /// 对应 RecentFiles.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
