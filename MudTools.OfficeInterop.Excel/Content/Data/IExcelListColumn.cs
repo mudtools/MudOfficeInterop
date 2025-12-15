@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示 Excel 表格（ListObject）中的一列，提供对列属性和操作的封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelListColumn : IDisposable
 {
     /// <summary>
@@ -20,7 +21,13 @@ public interface IExcelListColumn : IDisposable
     /// <summary>
     /// 获取此列所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
+
+
+    IExcelListDataFormat ListDataFormat { get; }
+
+    IExcelXPath XPath { get; }
 
     /// <summary>
     /// 获取此列在 ListColumns 集合中的索引（从 1 开始）。

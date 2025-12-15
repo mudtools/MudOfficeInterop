@@ -46,7 +46,66 @@ public interface IExcelDataFeedConnection : IDisposable
     bool SavePassword { get; set; }
 
     /// <summary>
+    /// 获取或设置是否始终使用连接文件
+    /// </summary>
+    bool AlwaysUseConnectionFile { get; set; }
+
+    /// <summary>
+    /// 获取或设置连接字符串
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    string Connection { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用刷新功能
+    /// </summary>
+    bool EnableRefresh { get; set; }
+
+    /// <summary>
+    /// 获取上次刷新日期时间
+    /// </summary>
+    DateTime RefreshDate { get; }
+
+    /// <summary>
+    /// 获取当前是否正在刷新数据
+    /// </summary>
+    bool Refreshing { get; }
+
+    /// <summary>
+    /// 获取或设置刷新周期（秒）
+    /// </summary>
+    int RefreshPeriod { get; set; }
+
+    /// <summary>
+    /// 获取或设置服务器凭据方法
+    /// </summary>
+    XlCredentialsMethod ServerCredentialsMethod { get; set; }
+
+    /// <summary>
+    /// 获取或设置源数据文件路径
+    /// </summary>
+    string SourceDataFile { get; set; }
+
+    /// <summary>
+    /// 获取或设置源连接文件路径
+    /// </summary>
+    string SourceConnectionFile { get; set; }
+
+    /// <summary>
     /// 刷新数据源连接
     /// </summary>
     void Refresh();
+
+    /// <summary>
+    /// 取消正在进行的数据刷新操作
+    /// </summary>
+    void CancelRefresh();
+
+    /// <summary>
+    /// 将数据连接保存为 Office 数据连接 (ODC) 文件
+    /// </summary>
+    /// <param name="ODCFileName">要保存的 ODC 文件名</param>
+    /// <param name="Description">连接描述信息</param>
+    /// <param name="Keywords">连接关键字</param>
+    void SaveAsODC(string ODCFileName, string Description, string Keywords);
 }

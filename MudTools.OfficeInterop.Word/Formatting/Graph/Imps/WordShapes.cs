@@ -109,7 +109,7 @@ internal class WordShapes : IWordShapes
         try
         {
             var anchorObj = (Anchor as WordRange)?._range;
-            var layoutObj = (Layout as OfficeSmartArtLayout)?._smartArtLayout;
+            var layoutObj = (Layout as OfficeSmartArtLayout)?.InternalComObject;
             var shape = _shapes.AddSmartArt(layoutObj, Left, Top, Width, Height, anchorObj ?? System.Type.Missing);
             return new WordShape(shape);
         }
