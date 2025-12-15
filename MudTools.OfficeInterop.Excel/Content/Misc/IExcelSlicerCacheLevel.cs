@@ -26,6 +26,9 @@ public interface IExcelSlicerCacheLevel : IDisposable
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
+    /// <summary>
+    /// 获取此层级在其父集合中的序号位置（从 1 开始计数）。
+    /// </summary>
     int Ordinal { get; }
 
     /// <summary>
