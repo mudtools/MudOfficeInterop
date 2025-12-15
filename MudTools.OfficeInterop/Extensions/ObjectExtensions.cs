@@ -12,6 +12,15 @@ internal static class ObjectExtensions
     /// <summary>
     /// 将枚举值转换为另一种枚举类型（非空到非空）
     /// </summary>
+    public static TReturn EnumConvert<TReturn>(this object val, TReturn defaultVal = default)
+        where TReturn : struct, Enum
+    {
+        return ConvertEnumValue(val, defaultVal);
+    }
+
+    /// <summary>
+    /// 将枚举值转换为另一种枚举类型（非空到非空）
+    /// </summary>
     public static TReturn EnumConvert<T, TReturn>(this T val, TReturn defaultVal = default)
         where T : struct, Enum
         where TReturn : struct, Enum
@@ -55,6 +64,27 @@ internal static class ObjectExtensions
         var underlyingValue = GetUnderlyingValue(val);
         return Enum.IsDefined(typeof(TReturn), underlyingValue)
             ? (TReturn)Enum.ToObject(typeof(TReturn), underlyingValue)
+            : defaultVal;
+    }
+
+    private static TReturn ConvertEnumValue<TReturn>(object val, TReturn defaultVal)
+    where TReturn : struct, Enum
+    {
+        var targetType = typeof(TReturn);
+        var underlyingType = Enum.GetUnderlyingType(targetType);
+
+        object converted;
+        try
+        {
+            converted = Convert.ChangeType(val, underlyingType);
+        }
+        catch (Exception)
+        {
+            return defaultVal;
+        }
+
+        return Enum.IsDefined(targetType, converted)
+            ? (TReturn)Enum.ToObject(targetType, converted)
             : defaultVal;
     }
 

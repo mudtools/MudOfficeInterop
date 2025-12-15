@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Validation 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Validation 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelValidation : IDisposable
 {
     #region 基础属性
@@ -30,31 +31,31 @@ public interface IExcelValidation : IDisposable
     /// 获取或设置验证类型
     /// 对应 Validation.Type 属性
     /// </summary>
-    XlDVType Type { get; set; } // 使用 int 代表 XlDVType
+    XlDVType Type { get; }
 
     /// <summary>
     /// 获取或设置错误警告样式
     /// 对应 Validation.AlertStyle 属性
     /// </summary>
-    XlDVAlertStyle AlertStyle { get; set; } // 使用 int 代表 XlDVAlertStyle
+    XlDVAlertStyle AlertStyle { get; }
 
     /// <summary>
     /// 获取或设置公式1
     /// 对应 Validation.Formula1 属性
     /// </summary>
-    string Formula1 { get; set; }
+    string Formula1 { get; }
 
     /// <summary>
     /// 获取或设置公式2
     /// 对应 Validation.Formula2 属性
     /// </summary>
-    string Formula2 { get; set; }
+    string Formula2 { get; }
 
     /// <summary>
     /// 获取或设置是否为值
     /// 对应 Validation.Value 属性 (或 Add 方法的参数)
     /// </summary>
-    bool Value { get; set; }
+    bool Value { get; }
 
     /// <summary>
     /// 获取或设置输入提示标题
@@ -114,26 +115,30 @@ public interface IExcelValidation : IDisposable
 
     /// <summary>
     /// 添加数据验证规则
-    /// 对应 Validation.Add 方法
     /// </summary>
     /// <param name="type">验证类型</param>
     /// <param name="alertStyle">警告样式</param>
     /// <param name="conditionOperator">数据验证运算符。</param>
-    /// <param name="formula1">公式1</param>
-    /// <param name="formula2">公式2</param>
-    /// <param name="value">是否为值</param>
-    void Add(XlDVType type, XlDVAlertStyle alertStyle, XlFormatConditionOperator conditionOperator,
-        object? formula1 = null, object? formula2 = null, bool value = true);
+    /// <param name="formula1"> 数据验证公式中的第一部分。</param>
+    /// <param name="formula2">当 为 xlBetween 或 xlNotBetween 时Operator，数据验证的第二部分 (否则，将忽略此参数) 。</param>
+    void Add(XlDVType type,
+        XlDVAlertStyle? alertStyle = null,
+        XlFormatConditionOperator? conditionOperator = null,
+        string? formula1 = null,
+        string? formula2 = null);
 
     /// <summary>
-    /// 修改此数据验证规则
-    /// 对应 Validation.Modify 方法
+    /// 修改指定区域的数据有效性验证。
     /// </summary>
     /// <param name="type">验证类型</param>
     /// <param name="alertStyle">警告样式</param>
-    /// <param name="formula1">公式1</param>
-    /// <param name="formula2">公式2</param>
-    /// <param name="value">是否为值</param>
-    void Modify(XlDVType type, XlDVAlertStyle alertStyle, string formula1 = "", string formula2 = "", bool value = true);
+    /// <param name="formula1">数据验证公式中的第一部分。</param>
+    /// <param name="formula2">当 为 xlBetween 或 xlNotBetween 时Operator，数据验证的第二部分 (否则，将忽略此参数) 。</param>
+    /// <param name="formatConditionOperator">数据验证运算符。</param>
+    void Modify(
+        XlDVType type,
+        XlDVAlertStyle? alertStyle = null,
+        XlFormatConditionOperator? formatConditionOperator = null,
+        string? formula1 = null, string? formula2 = null);
     #endregion
 }
