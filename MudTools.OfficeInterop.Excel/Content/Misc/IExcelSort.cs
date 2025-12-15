@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -10,17 +10,24 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 提供Excel排序功能的接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelSort : IDisposable
 {
     /// <summary>
+    /// 获取父级工作表
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
     /// 获取条件值对象所在的Application对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取或设置排序范围
     /// </summary>
-    IExcelRange? Range { get; }
+    IExcelRange? Rng { get; }
 
     /// <summary>
     /// 获取或设置排序头行
@@ -39,9 +46,14 @@ public interface IExcelSort : IDisposable
     IExcelSortFields? SortFields { get; }
 
     /// <summary>
-    /// 获取父级工作表
+    /// 获取或设置是否区分大小写
     /// </summary>
-    object Parent { get; }
+    bool MatchCase { get; set; }
+
+    /// <summary>
+    /// 获取或设置排序方向（数据方向）
+    /// </summary>
+    XlSortOrientation Orientation { get; set; }
 
     /// <summary>
     /// 设置排序范围
@@ -53,14 +65,4 @@ public interface IExcelSort : IDisposable
     /// 应用排序
     /// </summary>
     void Apply();
-
-    /// <summary>
-    /// 获取或设置是否区分大小写
-    /// </summary>
-    bool MatchCase { get; set; }
-
-    /// <summary>
-    /// 获取或设置排序方向（数据方向）
-    /// </summary>
-    XlSortOrientation Orientation { get; set; }
 }
