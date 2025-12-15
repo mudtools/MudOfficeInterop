@@ -7,12 +7,11 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
-// =============================================
-// 接口定义：单个列表行（ListRow）
-// =============================================
+
 /// <summary>
 /// 表示 Excel 表格（ListObject）中的一行数据，提供对行属性和操作的封装。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelListRow : IDisposable
 {
     /// <summary>
@@ -23,6 +22,7 @@ public interface IExcelListRow : IDisposable
     /// <summary>
     /// 获取此行所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
