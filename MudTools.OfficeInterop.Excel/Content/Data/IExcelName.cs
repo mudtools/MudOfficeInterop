@@ -10,9 +10,24 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Name 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Name 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelName : IDisposable
 {
     #region 基础属性
+
+    /// <summary>
+    /// 获取名称所在的父对象
+    /// 对应 Name.Parent 属性
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取名称所在的Application对象
+    /// 对应 Name.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
+
     /// <summary>
     /// 获取或设置名称的值
     /// 对应 Name.Value 属性或 Name.RefersTo 属性
@@ -41,24 +56,28 @@ public interface IExcelName : IDisposable
     /// 获取或设置引用
     /// 对应 Name.RefersTo 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string RefersTo { get; set; }
 
     /// <summary>
     /// 获取或设置本地引用
     /// 对应 Name.RefersToLocal 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string RefersToLocal { get; set; }
 
     /// <summary>
     /// 获取或设置R1C1引用
     /// 对应 Name.RefersToR1C1 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string RefersToR1C1 { get; set; }
 
     /// <summary>
     /// 获取或设置本地R1C1引用
     /// 对应 Name.RefersToR1C1Local 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string RefersToR1C1Local { get; set; }
 
     /// <summary>
@@ -91,17 +110,6 @@ public interface IExcelName : IDisposable
     /// </summary>
     string ShortcutKey { get; set; }
 
-    /// <summary>
-    /// 获取名称所在的父对象
-    /// 对应 Name.Parent 属性
-    /// </summary>
-    object Parent { get; }
-
-    /// <summary>
-    /// 获取名称所在的Application对象
-    /// 对应 Name.Application 属性
-    /// </summary>
-    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取引用的区域对象
@@ -125,56 +133,6 @@ public interface IExcelName : IDisposable
     /// </summary>
     void Delete();
 
-    /// <summary>
-    /// 选择名称引用的区域
-    /// </summary>
-    void Select();
-
-    /// <summary>
-    /// 激活名称引用的区域
-    /// </summary>
-    void Activate();
-
-    /// <summary>
-    /// 复制名称
-    /// </summary>
-    /// <param name="newName">新名称</param>
-    /// <param name="parent">父对象</param>
-    /// <returns>复制的名称对象</returns>
-    IExcelName? Copy(string newName = "", object? parent = null);
-
-    /// <summary>
-    /// 重命名名称
-    /// </summary>
-    /// <param name="newName">新名称</param>
-    void Rename(string newName);
-
-    /// <summary>
-    /// 更新引用
-    /// </summary>
-    /// <param name="newRefersTo">新引用</param>
-    void UpdateRefersTo(string newRefersTo);
-
-    /// <summary>
-    /// 刷新名称
-    /// </summary>
-    void Refresh();
-
     #endregion
 
-    #region 高级功能
-
-    /// <summary>
-    /// 转换引用格式
-    /// </summary>
-    /// <param name="toR1C1">是否转换为R1C1格式</param>
-    /// <returns>转换后的引用</returns>
-    string ConvertReferenceFormat(bool toR1C1 = true);
-    /// <summary>
-    /// 检查循环引用
-    /// </summary>
-    /// <returns>是否存在循环引用</returns>
-    bool HasCircularReference();
-
-    #endregion
 }

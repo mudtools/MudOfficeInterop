@@ -10,9 +10,23 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Names 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Names 的安全访问和操作
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
 public interface IExcelNames : IEnumerable<IExcelName>, IDisposable
 {
     #region 基础属性
+
+    /// <summary>
+    /// 获取名称集合所在的父对象（通常是工作簿或工作表）
+    /// 对应 Names.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取名称集合所在的Application对象
+    /// 对应 Names.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取名称集合中的名称数量
@@ -35,17 +49,6 @@ public interface IExcelNames : IEnumerable<IExcelName>, IDisposable
     /// <returns>名称对象</returns>
     IExcelName? this[string name] { get; }
 
-    /// <summary>
-    /// 获取名称集合所在的父对象（通常是工作簿或工作表）
-    /// 对应 Names.Parent 属性
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取名称集合所在的Application对象
-    /// 对应 Names.Application 属性
-    /// </summary>
-    IExcelApplication? Application { get; }
 
     #endregion
 
@@ -68,118 +71,8 @@ public interface IExcelNames : IEnumerable<IExcelName>, IDisposable
     /// <param name="refersToR1C1Local">本地R1C1引用</param>
     /// <returns>新创建的名称对象</returns>
     IExcelName? Add(string name, string? refersTo = null, bool visible = true,
-                         int macroType = 0, string shortcutKey = "", string? category = null,
+                         XlXLMMacroType? macroType = null, string shortcutKey = "", string? category = null,
                          string nameLocal = "", string? refersToLocal = null, string? categoryLocal = null,
                          string refersToR1C1 = "", string refersToR1C1Local = "");
-
-
-    /// <summary>
-    /// 基于区域创建名称
-    /// </summary>
-    /// <param name="range">区域对象</param>
-    /// <param name="name">名称</param>
-    /// <param name="useColumnNames">是否使用列名</param>
-    /// <param name="useRowNames">是否使用行名</param>
-    /// <returns>创建的名称对象</returns>
-    IExcelName? CreateFromRange(IExcelRange range, string name = "",
-                              bool useColumnNames = false, bool useRowNames = false);
-
-    /// <summary>
-    /// 创建工作表名称
-    /// </summary>
-    /// <param name="worksheet">工作表对象</param>
-    /// <param name="name">名称</param>
-    /// <returns>创建的名称对象</returns>
-    IExcelName? CreateWorksheetName(IExcelWorksheet worksheet, string name = "");
-
-    #endregion
-
-    #region 查找和筛选
-    /// <summary>
-    /// 根据名称查找
-    /// </summary>
-    /// <param name="name">名称</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的名称数组</returns>
-    IExcelName[] FindByName(string name, bool matchCase = false);
-
-    /// <summary>
-    /// 根据引用查找
-    /// </summary>
-    /// <param name="refersTo">引用</param>
-    /// <returns>匹配的名称数组</returns>
-    IExcelName[] FindByRefersTo(string refersTo);
-
-    /// <summary>
-    /// 根据可见性查找
-    /// </summary>
-    /// <param name="visible">可见性</param>
-    /// <returns>匹配的名称数组</returns>
-    IExcelName[] FindByVisibility(bool visible);
-
-    /// <summary>
-    /// 根据类别查找
-    /// </summary>
-    /// <param name="category">类别</param>
-    /// <returns>匹配的名称数组</returns>
-    IExcelName[] FindByCategory(string category);
-
-    /// <summary>
-    /// 获取可见的名称
-    /// </summary>
-    /// <returns>可见名称数组</returns>
-    IExcelName[] GetVisibleNames();
-
-    /// <summary>
-    /// 获取隐藏的名称
-    /// </summary>
-    /// <returns>隐藏名称数组</returns>
-    IExcelName[] GetHiddenNames();
-
-    /// <summary>
-    /// 获取工作簿级别的名称
-    /// </summary>
-    /// <returns>工作簿级别名称数组</returns>
-    IExcelName[] GetWorkbookNames();
-
-    /// <summary>
-    /// 获取工作表级别的名称
-    /// </summary>
-    /// <returns>工作表级别名称数组</returns>
-    IExcelName[] GetWorksheetNames();
-
-    #endregion
-
-    #region 操作方法
-
-    /// <summary>
-    /// 删除所有名称
-    /// 对应 Names.Delete 方法
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 删除指定索引的名称
-    /// </summary>
-    /// <param name="index">要删除的名称索引</param>
-    void Delete(int index);
-
-    /// <summary>
-    /// 删除指定名称的名称
-    /// </summary>
-    /// <param name="name">要删除的名称</param>
-    void Delete(string name);
-
-    /// <summary>
-    /// 删除指定的名称对象
-    /// </summary>
-    /// <param name="nameObject">要删除的名称对象</param>
-    void Delete(IExcelName nameObject);
-
-    /// <summary>
-    /// 批量删除名称
-    /// </summary>
-    /// <param name="names">要删除的名称数组</param>
-    void DeleteRange(string[] names);
     #endregion
 }
