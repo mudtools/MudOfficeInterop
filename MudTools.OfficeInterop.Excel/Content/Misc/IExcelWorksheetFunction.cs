@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -129,7 +129,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要计算其对数的正实数</param>
     /// <param name="baseNumber">对数的底数</param>
     /// <returns>指定底数的对数</returns>
-    double? Log(double number, object baseNumber = null);
+    double? Log(double number, object? baseNumber = null);
 
     /// <summary>
     /// 返回数字以 10 为底的对数
@@ -347,7 +347,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="withinText">要在其中查找 FindText 参数的文本</param>
     /// <param name="startNum">withinText 参数中从第几个字符开始查找</param>
     /// <returns>起始位置编号</returns>
-    double? Find(string findText, string withinText, object startNum = null);
+    double? Find(string findText, string withinText, object? startNum = null);
 
     /// <summary>
     /// 返回替换指定字符数的文本字符串
@@ -378,7 +378,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="newText">用于替换 OldText 的新文本</param>
     /// <param name="instanceNum">指定要用 newText 替换 oldText 的第几次出现</param>
     /// <returns>替换后的文本</returns>
-    string Substitute(string text, string oldText, string newText, object instanceNum = null);
+    string Substitute(string text, string oldText, string newText, object? instanceNum = null);
     #endregion
 
     #region 日期和时间函数   
@@ -391,7 +391,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="endDate">计算期间的结束日期</param>
     /// <param name="method">指示在计算中是采用美国方法 (NASD) 还是欧洲方法</param>
     /// <returns>天数</returns>
-    double? Days360(object startDate, object endDate, object method = null);
+    double? Days360(object startDate, object endDate, object? method = null);
 
     /// <summary>
     /// 返回某日期所对应的星期数
@@ -400,7 +400,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="serialNumber">要查找其星期数的日期</param>
     /// <param name="returnType">用于确定返回值类型的数字</param>
     /// <returns>星期数</returns>
-    double? Weekday(object serialNumber, object returnType = null);
+    double? Weekday(object serialNumber, object? returnType = null);
 
     /// <summary>
     /// 返回某个日期是当年的第几周
@@ -409,7 +409,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="serialNumber">要确定其位于第几周的日期</param>
     /// <param name="returnType">一个数字，确定每周从哪一天开始</param>
     /// <returns>周数</returns>
-    double? WeekNum(object serialNumber, object returnType = null);
+    double? WeekNum(object serialNumber, object? returnType = null);
     #endregion
 
     #region 查找和引用函数
@@ -421,7 +421,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="rowNum">选择数组中的某行</param>
     /// <param name="columnNum">选择数组中的某列</param>
     /// <returns>选定的值</returns>
-    object Index(object array, double rowNum, object columnNum = null);
+    object Index(object array, double rowNum, object? columnNum = null);
 
     /// <summary>
     /// 在单元格区域中查找值，然后返回该区域中指定单元格的值
@@ -432,7 +432,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="rowIndexNum">tableArray 中待返回值的行序号</param>
     /// <param name="rangeLookup">指定查找方式</param>
     /// <returns>查找到的值</returns>
-    object HLookup(object lookupValue, object tableArray, double rowIndexNum, object rangeLookup = null);
+    object HLookup(object lookupValue, object tableArray, double rowIndexNum, object? rangeLookup = null);
 
     /// <summary>
     /// 在单元格区域中查找值，然后返回该区域中指定单元格的值
@@ -443,7 +443,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="columnIndexNum">tableArray 中待返回值的列序号</param>
     /// <param name="rangeLookup">指定查找方式</param>
     /// <returns>查找到的值</returns>
-    object VLookup(object lookupValue, object tableArray, double columnIndexNum, object rangeLookup = null);
+    object VLookup(object lookupValue, object tableArray, double columnIndexNum, object? rangeLookup = null);
 
     #endregion
 
@@ -463,7 +463,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的二进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>十六进制数</returns>
-    string Bin2Hex(string number, object places = null);
+    string Bin2Hex(string number, object? places = null);
 
     /// <summary>
     /// 将二进制数转换为八进制数
@@ -472,7 +472,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的二进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>八进制数</returns>
-    string Bin2Oct(string number, object places = null);
+    string Bin2Oct(string number, object? places = null);
 
     /// <summary>
     /// 将十进制数转换为二进制数
@@ -481,7 +481,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的十进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>二进制数</returns>
-    string Dec2Bin(double number, object places = null);
+    string Dec2Bin(double number, object? places = null);
 
     /// <summary>
     /// 将十进制数转换为十六进制数
@@ -490,7 +490,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的十进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>十六进制数</returns>
-    string Dec2Hex(double number, object places = null);
+    string Dec2Hex(double number, object? places = null);
 
     /// <summary>
     /// 将十进制数转换为八进制数
@@ -499,7 +499,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的十进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>八进制数</returns>
-    string Dec2Oct(double number, object places = null);
+    string Dec2Oct(double number, object? places = null);
 
     /// <summary>
     /// 将十六进制数转换为二进制数
@@ -508,7 +508,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的十六进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>二进制数</returns>
-    string Hex2Bin(string number, object places = null);
+    string Hex2Bin(string number, object? places = null);
 
     /// <summary>
     /// 将十六进制数转换为十进制数
@@ -525,7 +525,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的十六进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>八进制数</returns>
-    string Hex2Oct(string number, object places = null);
+    string Hex2Oct(string number, object? places = null);
 
     /// <summary>
     /// 将八进制数转换为二进制数
@@ -534,7 +534,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的八进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>二进制数</returns>
-    string Oct2Bin(string number, object places = null);
+    string Oct2Bin(string number, object? places = null);
 
     /// <summary>
     /// 将八进制数转换为十进制数
@@ -551,7 +551,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="number">要转换的八进制数</param>
     /// <param name="places">要使用的字符数</param>
     /// <returns>十六进制数</returns>
-    string Oct2Hex(string number, object places = null);
+    string Oct2Hex(string number, object? places = null);
     #endregion
 
     #region 信息函数
@@ -630,7 +630,13 @@ public interface IExcelWorksheetFunction : IDisposable
     #endregion
 
     #region 逻辑函数
-    object Transpose(object arg1);
+    /// <summary>
+    /// 返回数组的转置
+    /// 对应 WorksheetFunction.Transpose 方法
+    /// </summary>
+    /// <param name="arg1">要转置的数组或区域</param>
+    /// <returns>转置后的数组</returns>
+    object Transpose(object? arg1);
 
     /// <summary>
     /// 如果逻辑值参数均为 TRUE，则返回 TRUE
@@ -663,7 +669,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="type">数字 0 或 1，用以指定各期的付款时间是在期初还是期末</param>
     /// <param name="guess">预期利率</param>
     /// <returns>利率</returns>
-    double? Rate(double nper, double pmt, double pv, object fv = null, object type = null, object guess = null);
+    double? Rate(double nper, double pmt, double pv, object? fv = null, object? type = null, object? guess = null);
 
     /// <summary>
     /// 返回某项投资的期数
@@ -675,7 +681,7 @@ public interface IExcelWorksheetFunction : IDisposable
     /// <param name="fv">未来值</param>
     /// <param name="type">数字 0 或 1，用以指定各期的付款时间是在期初还是期末</param>
     /// <returns>期数</returns>
-    double? NPer(double rate, double pmt, double pv, object fv = null, object type = null);
+    double? NPer(double rate, double pmt, double pv, object? fv = null, object? type = null);
 
     #endregion
 
