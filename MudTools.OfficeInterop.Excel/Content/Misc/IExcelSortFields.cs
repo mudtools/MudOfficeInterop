@@ -13,7 +13,6 @@ namespace MudTools.OfficeInterop.Excel;
 [ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface IExcelSortFields : IDisposable, IEnumerable<IExcelSortField>
 {
-
     /// <summary>
     /// 获取父级排序对象
     /// </summary>

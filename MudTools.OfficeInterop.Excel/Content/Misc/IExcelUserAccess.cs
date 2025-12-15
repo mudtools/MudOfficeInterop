@@ -7,6 +7,7 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelUserAccess : IDisposable
 {
     /// <summary>
