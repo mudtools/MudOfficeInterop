@@ -25,6 +25,7 @@ public interface IExcelValidation : IDisposable
     /// 获取数据验证规则所在的Application对象
     /// 对应 Validation.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
