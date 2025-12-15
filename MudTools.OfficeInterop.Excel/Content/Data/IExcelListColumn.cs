@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelListColumn : IDisposable
 {
     /// <summary>
-    /// 获取此列所属的父对象（通常是 ListObject）。
+    /// 获取此列所属的父对象。
     /// </summary>
     object? Parent { get; }
 

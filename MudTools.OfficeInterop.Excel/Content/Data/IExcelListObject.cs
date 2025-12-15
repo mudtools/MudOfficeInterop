@@ -11,8 +11,21 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中的表格对象（ListObject）接口，提供对Excel表格的各种操作和属性访问功能。
 /// 该接口继承自IDisposable，使用完后需要正确释放资源。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelListObject : IDisposable
 {
+
+    /// <summary>
+    /// 获取所属的父对象。
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取所属的 Excel 应用程序对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取或设置表格名称
     /// </summary>
@@ -26,7 +39,7 @@ public interface IExcelListObject : IDisposable
     /// <summary>
     /// 获取表格的数据范围（Range）
     /// </summary>
-    IExcelRange? DataRange { get; }
+    IExcelRange? DataBodyRange { get; }
 
     /// <summary>
     /// 获取表格的标题行范围（Range）
@@ -149,11 +162,6 @@ public interface IExcelListObject : IDisposable
     bool ShowTotals { get; set; }
 
     /// <summary>
-    /// 获取表格所在的 Worksheet 名称
-    /// </summary>
-    string WorksheetName { get; }
-
-    /// <summary>
     /// 将当前表格对象导出到Visio中
     /// </summary>
     void ExportToVisio();
@@ -167,4 +175,35 @@ public interface IExcelListObject : IDisposable
     /// 删除表格
     /// </summary>
     void Delete();
+
+    /// <summary>
+    /// 将表格发布到指定的目标位置
+    /// </summary>
+    /// <param name="target">发布目标对象</param>
+    /// <param name="LinkSource">是否链接到源数据</param>
+    /// <returns>发布操作的结果字符串</returns>
+    string Publish(object target, bool LinkSource);
+
+
+    /// <summary>
+    /// 断开表格与数据源之间的链接
+    /// </summary>
+    void Unlink();
+
+    /// <summary>
+    /// 取消表格列表格式，将其转换为普通区域
+    /// </summary>
+    void Unlist();
+
+    /// <summary>
+    /// 更新表格中的更改
+    /// </summary>
+    /// <param name="conflictType">冲突处理方式，默认为弹出对话框让用户选择</param>
+    void UpdateChanges(XlListConflict conflictType = XlListConflict.xlListConflictDialog);
+
+    /// <summary>
+    /// 调整表格的大小范围
+    /// </summary>
+    /// <param name="range">新的范围对象</param>
+    void Resize(IExcelRange range);
 }
