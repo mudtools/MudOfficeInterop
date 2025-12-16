@@ -1256,49 +1256,6 @@ internal class ExcelShapeRange : IExcelShapeRange
             log.Error($"分布形状失败: {x.Message}");
         }
     }
-
-    /// <summary>
-    /// 统一形状区域中形状的大小
-    /// </summary>
-    /// <param name="useWidth">是否使用宽度作为标准</param>
-    public void SizeToSame(bool useWidth = true)
-    {
-        if (_shapeRange == null || Count == 0) return;
-
-        try
-        {
-            // 获取第一个形状的尺寸作为标准
-            var firstShape = this[1];
-            if (firstShape != null)
-            {
-                double standardWidth = firstShape.Width;
-                double standardHeight = firstShape.Height;
-
-                for (int i = 2; i <= Count; i++)
-                {
-                    var shape = this[i];
-                    if (shape != null)
-                    {
-                        if (useWidth)
-                        {
-                            float scale = (float)(standardWidth / shape.Width);
-                            shape.Scale(scale, scale);
-                        }
-                        else
-                        {
-                            float scale = (float)(standardHeight / shape.Height);
-                            shape.Scale(scale, scale);
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception x)
-        {
-            log.Error($"统一大小失败: {x.Message}");
-        }
-    }
-
     #endregion
 
     #region 组合操作

@@ -538,12 +538,6 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape>, IDisposable
     /// <param name="distribution">分布方式</param>
     void Distribute(MsoDistributeCmd distribution);
 
-    /// <summary>
-    /// 统一形状区域中形状的大小
-    /// </summary>
-    /// <param name="useWidth">是否使用宽度作为标准</param>
-    void SizeToSame(bool useWidth = true);
-
     #endregion
 
     #region 组合操作

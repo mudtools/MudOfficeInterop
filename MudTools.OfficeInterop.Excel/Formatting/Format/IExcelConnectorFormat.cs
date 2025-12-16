@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.ConnectorFormat
 /// 用于控制连接符的类型、起始/终止连接对象及连接点。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelConnectorFormat : IDisposable
 {
     /// <summary>
@@ -22,12 +23,14 @@ public interface IExcelConnectorFormat : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取或设置连接符的类型（直线、曲线、直角等）。
     /// 使用 <see cref="MsoConnectorType"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoConnectorType Type { get; set; }
 
     /// <summary>
@@ -45,11 +48,13 @@ public interface IExcelConnectorFormat : IDisposable
     /// <summary>
     /// 获取连接符起始端是否已连接到某个形状。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool BeginConnected { get; }
 
     /// <summary>
     /// 获取连接符终止端是否已连接到某个形状。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool EndConnected { get; }
 
     /// <summary>
