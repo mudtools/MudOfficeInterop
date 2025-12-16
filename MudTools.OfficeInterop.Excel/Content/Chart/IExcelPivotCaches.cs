@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel PivotCaches 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.PivotCaches 的安全访问和操作
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface IExcelPivotCaches : IEnumerable<IExcelPivotCache>, IDisposable
 {
     #region 基础属性
@@ -37,6 +38,7 @@ public interface IExcelPivotCaches : IEnumerable<IExcelPivotCache>, IDisposable
     /// 获取数据透视表缓存集合所在的Application对象
     /// 对应 PivotCaches.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
     #endregion
 
@@ -59,42 +61,5 @@ public interface IExcelPivotCaches : IEnumerable<IExcelPivotCache>, IDisposable
     /// <param name="version">数据透视表版本</param>
     /// <returns>新创建的数据透视表缓存对象</returns>
     IExcelPivotCache? Create(XlPivotTableSourceType sourceType, object? sourceData = null, object? version = null);
-    #endregion
-
-    #region 查找和筛选  
-
-    /// <summary>
-    /// 根据内存使用量查找缓存 (占位符)
-    /// </summary>
-    /// <param name="minSize">最小内存大小 (字节)</param>
-    /// <returns>匹配的缓存对象数组</returns>
-    IExcelPivotCache[] FindByMemoryUsage(long minSize);
-    #endregion
-
-    #region 操作方法
-    /// <summary>
-    /// 刷新所有数据透视表缓存
-    /// </summary>
-    void Refresh();
-    #endregion
-
-    #region 导出和导入
-    // PivotCaches 本身不直接导出/导入，但可以导出关联的数据或信息
-    /// <summary>
-    /// 导出所有缓存的元数据信息到文件夹
-    /// </summary>
-    /// <param name="folderPath">导出文件夹路径</param>
-    /// <param name="format">导出格式 (例如 "json", "xml")</param>
-    /// <param name="prefix">文件名前缀</param>
-    /// <returns>成功导出的缓存信息数量</returns>
-    int ExportMetadataToFolder(string folderPath, string format = "json", string prefix = "pivotcache_");
-    #endregion
-
-    #region 高级功能  
-
-    /// <summary>
-    /// 刷新所有数据透视表缓存并更新关联的数据透视表
-    /// </summary>
-    void RefreshAll();
     #endregion
 }

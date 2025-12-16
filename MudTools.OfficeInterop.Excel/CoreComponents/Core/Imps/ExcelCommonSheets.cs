@@ -152,11 +152,11 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         {
             // 准备参数
             object beforeObj = options.Before != null ?
-                ((ExcelWorksheet)options.Before).Worksheet :
+                ((ExcelWorksheet)options.Before).InternalComObject :
                 Type.Missing;
 
             object afterObj = options.After != null ?
-                ((ExcelWorksheet)options.After).Worksheet :
+                ((ExcelWorksheet)options.After).InternalComObject :
                 Type.Missing;
 
             object countObj = options.Count;
@@ -164,7 +164,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
 
             // 处理模板
             object templateObj = options.Template != null ?
-                ((ExcelWorksheet)options.Template).Worksheet :
+                ((ExcelWorksheet)options.Template).InternalComObject :
                 Type.Missing;
             MsExcel.Worksheet? newSheet = null;
             if (NativeSheets is MsExcel.Sheets _nativeSheets)
@@ -250,7 +250,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         try
         {
             // 获取底层工作表对象
-            var nativeSheet = (source as ExcelWorksheet)?.Worksheet;
+            var nativeSheet = (source as ExcelWorksheet)?.InternalComObject;
             if (nativeSheet == null)
                 throw new ArgumentException("无效的工作表对象", nameof(source));
 
@@ -265,11 +265,11 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
 
             // 准备复制参数
             object beforeObj = options.Before != null ?
-                ((ExcelWorksheet)options.Before).Worksheet :
+                ((ExcelWorksheet)options.Before).InternalComObject :
                 Type.Missing;
 
             object afterObj = options.After != null ?
-                ((ExcelWorksheet)options.After).Worksheet :
+                ((ExcelWorksheet)options.After).InternalComObject :
                 Type.Missing;
 
             // 执行复制

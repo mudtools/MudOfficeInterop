@@ -963,7 +963,7 @@ internal partial class ExcelApplication : IExcelApplication
         try
         {
             var excelWorksheet = worksheet as ExcelWorksheet;
-            excelWorksheet?.Worksheet?.Calculate();
+            excelWorksheet?.InternalComObject?.Calculate();
             _performanceStats.CalculationOperations++;
         }
         catch
@@ -2567,7 +2567,7 @@ internal partial class ExcelApplication : IExcelApplication
             // 如果 relativeTo 是 ExcelWorksheet, 需要提取内部 MsExcel.Worksheet 的 Range? 通常 relativeTo 是一个 Range
             else if (relativeTo is ExcelWorksheet excelWorksheet)
             {
-                comRelativeTo = excelWorksheet.Worksheet; // 不确定是否正确，通常需要 Range
+                comRelativeTo = excelWorksheet.InternalComObject; // 不确定是否正确，通常需要 Range
             }
 
             object result = _application.ConvertFormula(formula,

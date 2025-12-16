@@ -163,14 +163,14 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     {
         object? beforeObj = before switch
         {
-            ExcelWorksheet ws => ws.Worksheet,
+            ExcelWorksheet ws => ws.InternalComObject,
             ExcelChart chart => chart._chart,
             _ => Type.Missing
         };
 
         object? afterObj = after switch
         {
-            ExcelWorksheet ws => ws.Worksheet,
+            ExcelWorksheet ws => ws.InternalComObject,
             ExcelChart chart => chart._chart,
             _ => Type.Missing
         };
@@ -206,14 +206,14 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         {
             object? beforeObj = before switch
             {
-                ExcelWorksheet ws => ws.Worksheet,
+                ExcelWorksheet ws => ws.InternalComObject,
                 ExcelChart chart => chart._chart,
                 _ => Type.Missing
             };
 
             object? afterObj = after switch
             {
-                ExcelWorksheet ws => ws.Worksheet,
+                ExcelWorksheet ws => ws.InternalComObject,
                 ExcelChart chart => chart._chart,
                 _ => Type.Missing
             };
@@ -281,14 +281,14 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         {
             object? beforeObj = before switch
             {
-                ExcelWorksheet ws => ws.Worksheet,
+                ExcelWorksheet ws => ws.InternalComObject,
                 ExcelChart chart => chart._chart,
                 _ => Type.Missing
             };
 
             object? afterObj = after switch
             {
-                ExcelWorksheet ws => ws.Worksheet,
+                ExcelWorksheet ws => ws.InternalComObject,
                 ExcelChart chart => chart._chart,
                 _ => Type.Missing
             };
