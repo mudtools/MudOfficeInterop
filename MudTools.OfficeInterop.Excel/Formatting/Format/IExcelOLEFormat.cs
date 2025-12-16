@@ -10,13 +10,14 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示 Excel 中 OLE 对象格式的封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelOLEFormat : IDisposable
 {
 
     /// <summary>
     /// 获取 OLE 对象的程序标识符
     /// </summary>
-    string ProgID { get; }
+    string progID { get; }
 
     /// <summary>
     /// 获取父对象
@@ -26,15 +27,11 @@ public interface IExcelOLEFormat : IDisposable
     /// <summary>
     /// 获取应用程序对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
-    /// 获取创建者信息
-    /// </summary>
-    int Creator { get; }
-
-    /// <summary>
-    /// 获取 OLE 对象的原始格式
+    /// 返回与此 OLE 对象相联系的 OLE 自动化对象。
     /// </summary>
     object Object { get; }
 
@@ -44,8 +41,8 @@ public interface IExcelOLEFormat : IDisposable
     void Activate();
 
     /// <summary>
-    /// 转换 OLE 对象的类型
+    /// 向指定的 OLE 对象服务器发送动词。
     /// </summary>
-    /// <param name="classType">新的类类型</param>
-    void Verb(object classType);
+    /// <param name="verb">可选 对象。 OLE 对象服务器将执行其操作的动词。 如果省略此参数，则发送默认动词。</param>
+    void Verb(XlOLEVerb? verb = null);
 }
