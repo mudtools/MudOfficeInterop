@@ -5,15 +5,17 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
 /// Excel NegativeBarFormat 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.NegativeBarFormat 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelNegativeBarFormat : IDisposable
 {
-    #region 基础属性
     /// <summary>
     /// 获取负值数据条格式对象的父对象 (通常是 DataBar)
     /// 对应 NegativeBarFormat.Parent 属性
@@ -24,30 +26,33 @@ public interface IExcelNegativeBarFormat : IDisposable
     /// 获取负值数据条格式对象所在的Application对象
     /// 对应 NegativeBarFormat.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取或设置负值数据条的颜色类型
     /// 对应 NegativeBarFormat.ColorType 属性
     /// </summary>
-    int ColorType { get; set; } // Use int for XlDataBarNegativeColorType
+    XlDataBarNegativeColorType ColorType { get; set; }
 
     /// <summary>
     /// 获取或设置负值数据条的边框颜色类型
     /// 对应 NegativeBarFormat.BorderColorType 属性
     /// </summary>
-    int BorderColorType { get; set; } // Use int for XlDataBarNegativeColorType
+    XlDataBarNegativeColorType BorderColorType { get; set; }
 
     /// <summary>
     /// 获取或设置负值数据条的填充颜色
     /// 对应 NegativeBarFormat.Color 属性
     /// </summary>
-    int Color { get; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color Color { get; }
 
     /// <summary>
     /// 获取或设置负值数据条的边框颜色
     /// 对应 NegativeBarFormat.BorderColor 属性
     /// </summary>
-    int BorderColor { get; }
-    #endregion
+    [ComPropertyWrap(NeedConvert = true)]
+    Color BorderColor { get; }
+
 }
