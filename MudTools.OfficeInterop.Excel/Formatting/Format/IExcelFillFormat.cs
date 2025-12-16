@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel FillFormat 对象的二次封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelFillFormat : IDisposable
 {
     #region 基础属性
@@ -22,12 +23,14 @@ public interface IExcelFillFormat : IDisposable
     /// <summary>
     /// 获取 ChartFormat 对象所在的 Application 对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication Application { get; }
     #endregion
 
     /// <summary>
     /// 获取或设置填充类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoFillType Type { get; }
 
     /// <summary>
@@ -53,11 +56,13 @@ public interface IExcelFillFormat : IDisposable
     /// <summary>
     /// 获取或设置是否可见
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
     /// 获取渐变颜色类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoGradientColorType GradientColorType { get; }
 
     /// <summary>
@@ -68,6 +73,7 @@ public interface IExcelFillFormat : IDisposable
     /// <summary>
     /// 获取渐变样式
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoGradientStyle GradientStyle { get; }
 
     /// <summary>
@@ -78,21 +84,25 @@ public interface IExcelFillFormat : IDisposable
     /// <summary>
     /// 获取预设渐变类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetGradientType PresetGradientType { get; }
 
     /// <summary>
     /// 获取预设纹理
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetTexture PresetTexture { get; }
 
     /// <summary>
     /// 获取或设置纹理对齐方式
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextureAlignment TextureAlignment { get; set; }
 
     /// <summary>
     /// 获取纹理类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextureType TextureType { get; }
 
     /// <summary>
@@ -118,6 +128,7 @@ public interface IExcelFillFormat : IDisposable
     /// <summary>
     /// 获取或设置是否平铺纹理
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool TextureTile { get; set; }
     /// <summary>
     /// 获取纹理名称
@@ -142,26 +153,26 @@ public interface IExcelFillFormat : IDisposable
     /// <param name="style">渐变样式，指定渐变的方向和类型</param>
     /// <param name="variant">渐变变体，指定渐变的特定变化形式</param>
     /// <param name="degree">渐变度数，指定渐变的程度值</param>
-    void OneColorGradient(MsoGradientStyle style, int variant, float degree);
+    void OneColorGradient([ComNamespace("MsCore")] MsoGradientStyle style, int variant, float degree);
 
     /// <summary>
     /// 设置图案填充效果
     /// </summary>
     /// <param name="pattern">图案类型，指定要应用的图案样式</param>
-    void Patterned(MsoPatternType pattern);
+    void Patterned([ComNamespace("MsCore")] MsoPatternType pattern);
 
     /// <summary>
     /// 设置预设纹理填充效果
     /// </summary>
-    /// <param name="PresetTexture">预设纹理类型，指定要应用的纹理样式</param>
-    void PresetTextured(MsoPresetTexture PresetTexture);
+    /// <param name="presetTexture">预设纹理类型，指定要应用的纹理样式</param>
+    void PresetTextured([ComNamespace("MsCore")] MsoPresetTexture presetTexture);
 
     /// <summary>
     /// 设置双色渐变填充效果
     /// </summary>
     /// <param name="style">渐变样式，指定渐变的方向和类型</param>
     /// <param name="variant">渐变变体，指定渐变的特定变化形式</param>
-    void TwoColorGradient(MsoGradientStyle style, int variant);
+    void TwoColorGradient([ComNamespace("MsCore")] MsoGradientStyle style, int variant);
 
     /// <summary>
     /// 设置纯色填充效果

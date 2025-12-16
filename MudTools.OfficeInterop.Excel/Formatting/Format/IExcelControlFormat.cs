@@ -16,13 +16,14 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelControlFormat : IDisposable
 {
     /// <summary>
-    /// 获取此对象的父对象（通常是 Shape）。
+    /// 获取此对象的父对象。
     /// </summary>
     object Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>

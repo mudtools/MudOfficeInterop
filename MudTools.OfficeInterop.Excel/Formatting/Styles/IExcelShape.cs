@@ -14,6 +14,16 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelShape : IDisposable
 {
     #region 基础属性
+    /// <summary>
+    /// 获取此对象的父对象。
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取此对象所属的 Excel 应用程序对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取形状的 OLE 格式设置属性
@@ -118,12 +128,6 @@ public interface IExcelShape : IDisposable
     /// 对应 Shape.ID 属性
     /// </summary>
     int ID { get; }
-
-    /// <summary>
-    /// 获取形状的父对象
-    /// 对应 Shape.Parent 属性
-    /// </summary>
-    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置形状的定位方式
