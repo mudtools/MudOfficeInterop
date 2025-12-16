@@ -165,8 +165,23 @@ public interface IExcelChartGroup : IDisposable
 
     /// <summary>
     /// 获取图表组中的系列集合。
-    /// 返回封装后的 <see cref="IExcelSeriesCollection"/> 接口。
+    /// 返回封装后的 <see cref="IExcelSeries"/> 接口。
     /// </summary>
     [ReturnValueConvert]
     IExcelSeries? SeriesCollection(int index);
+
+    /// <summary>
+    /// 获取图表组中的分类集合。
+    /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
+    /// </summary>
+    [ReturnValueConvert]
+    IExcelCategoryCollection CategoryCollection();
+
+    /// <summary>
+    /// 获取图表组中指定索引的图表分类。
+    /// 返回封装后的 <see cref="IExcelChartCategory"/> 接口。
+    /// </summary>
+    /// <param name="index">要获取的图表分类的索引</param>
+    [ReturnValueConvert]
+    IExcelChartCategory CategoryCollection(int index);
 }
