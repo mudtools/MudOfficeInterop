@@ -22,9 +22,22 @@ public interface IExcelPivotLines : IEnumerable<IExcelPivotLine>, IDisposable
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
+    /// <summary>
+    /// 获取集合中项的数目。
+    /// </summary>
     int Count { get; }
 
+    /// <summary>
+    /// 获取集合中指定索引位置的透视图行。
+    /// </summary>
+    /// <param name="index">要获取的项的索引。</param>
+    /// <returns>指定索引位置的透视图行。</returns>
     IExcelPivotLine? this[int index] { get; }
 
+    /// <summary>
+    /// 获取集合中具有指定名称的透视图行。
+    /// </summary>
+    /// <param name="name">要获取的项的名称。</param>
+    /// <returns>具有指定名称的透视图行。</returns>
     IExcelPivotLine? this[string name] { get; }
 }
