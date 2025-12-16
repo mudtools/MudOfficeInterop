@@ -184,4 +184,19 @@ public interface IExcelChartGroup : IDisposable
     /// <param name="index">要获取的图表分类的索引</param>
     [ReturnValueConvert]
     IExcelChartCategory CategoryCollection(int index);
+
+    /// <summary>
+    /// 获取图表组中的完整分类集合。
+    /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
+    /// </summary>
+    [ReturnValueConvert]
+    IExcelCategoryCollection FullCategoryCollection();
+
+    /// <summary>
+    /// 获取图表组中指定索引的完整分类集合。
+    /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
+    /// </summary>
+    /// <param name="index">要获取的分类集合的索引</param>
+    [ReturnValueConvert]
+    IExcelCategoryCollection FullCategoryCollection(int index);
 }

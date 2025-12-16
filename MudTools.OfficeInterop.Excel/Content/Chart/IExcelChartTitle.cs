@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ChartTitle 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.ChartTitle 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelChartTitle : IDisposable
 {
     #region 基础属性
@@ -40,6 +41,7 @@ public interface IExcelChartTitle : IDisposable
     /// 获取图表标题所在的 Application 对象
     /// 对应 ChartTitle.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
     #endregion
 
@@ -103,6 +105,7 @@ public interface IExcelChartTitle : IDisposable
     /// 获取或设置是否自动缩放字体
     /// 对应 ChartTitle.AutoScaleFont 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoScaleFont { get; set; }
 
     /// <summary>
