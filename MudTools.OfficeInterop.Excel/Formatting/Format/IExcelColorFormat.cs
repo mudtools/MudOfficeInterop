@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Excel;
 
 
@@ -51,12 +53,14 @@ public interface IExcelColorFormat : IDisposable
     /// <summary>
     /// 获取或设置RGB颜色值
     /// </summary>
-    int? RGB { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color RGB { get; set; }
 
     /// <summary>
     /// 获取或设置颜色方案索引
     /// </summary>
-    int SchemeColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color SchemeColor { get; set; }
 
 
 }
