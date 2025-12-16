@@ -14,6 +14,19 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelChartTitle : IDisposable
 {
     #region 基础属性
+
+    /// <summary>
+    /// 获取图表标题的父对象
+    /// 对应 ChartTitle.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取图表标题所在的 Application 对象
+    /// 对应 ChartTitle.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
     /// <summary>
     /// 获取或设置图表标题的名称
     /// 对应 ChartTitle.Name 属性
@@ -30,19 +43,6 @@ public interface IExcelChartTitle : IDisposable
     /// 获取或设置图表标题的说明文字
     /// </summary>
     string Caption { get; set; }
-
-    /// <summary>
-    /// 获取图表标题的父对象
-    /// 对应 ChartTitle.Parent 属性
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取图表标题所在的 Application 对象
-    /// 对应 ChartTitle.Application 属性
-    /// </summary>
-    [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication? Application { get; }
     #endregion
 
     #region 位置和大小
