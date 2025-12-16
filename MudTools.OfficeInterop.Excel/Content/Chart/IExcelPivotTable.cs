@@ -114,6 +114,165 @@ public interface IExcelPivotTable : IDisposable
     IExcelPivotFields? HiddenFields { get; }
     #endregion
 
+    IExcelRange ColumnRange { get; }
+
+    IExcelRange DataLabelRange { get; }
+
+    string InnerDetail { get; set; }
+
+    IExcelRange PageRange { get; }
+
+    IExcelRange PageRangeCells { get; }
+
+    IExcelRange RowRange { get; }
+
+    IExcelPivotFormulas PivotFormulas { get; }
+
+    IExcelCubeFields CubeFields { get; }
+
+    IExcelPivotField DataPivotField { get; }
+
+    IExcelCalculatedMembers CalculatedMembers { get; }
+
+    IExcelPivotAxis PivotColumnAxis { get; }
+
+    IExcelPivotAxis PivotRowAxis { get; }
+
+    IExcelPivotFilters ActiveFilters { get; }
+
+    IExcelSlicers Slicers { get; }
+
+    IExcelPivotTableChangeList ChangeList { get; }
+
+    IExcelShape PivotChart { get; }
+
+    string AlternativeText { get; set; }
+
+    string Summary { get; set; }
+
+    bool VisualTotalsForSets { get; set; }
+
+    bool ShowValuesRow { get; set; }
+
+    bool CalculatedMembersInFilters { get; set; }
+
+    bool InGridDropZones { get; set; }
+
+    bool ShowDrillIndicators { get; set; }
+
+    bool PrintDrillIndicators { get; set; }
+
+    bool DisplayMemberPropertyTooltips { get; set; }
+
+    bool DisplayContextTooltips { get; set; }
+
+    int CompactRowIndent { get; set; }
+
+    XlLayoutRowType LayoutRowDefault { get; set; }
+
+    bool DisplayFieldCaptions { get; set; }
+
+    bool ViewCalculatedMembers { get; set; }
+
+    bool DisplayEmptyRow { get; set; }
+
+    bool DisplayEmptyColumn { get; set; }
+
+    bool ShowCellBackgroundFromOLAP { get; set; }
+
+    bool DisplayImmediateItems { get; set; }
+
+    bool ShowPageMultipleItemLabel { get; set; }
+
+    bool VisualTotals { get; set; }
+
+    bool EnableFieldList { get; set; }
+
+    string Value { get; }
+
+    string MDX { get; }
+
+    DateTime RefreshDate { get; }
+
+    string RefreshName { get; }
+
+    bool SaveData { get; set; }
+
+    int CacheIndex { get; set; }
+
+    bool DisplayErrorString { get; set; }
+
+    bool DisplayNullString { get; set; }
+
+    bool EnableDrilldown { get; set; }
+
+    bool EnableFieldDialog { get; set; }
+
+    string ErrorString { get; set; }
+
+    bool ManualUpdate { get; set; }
+
+    bool MergeLabels { get; set; }
+
+    string NullString { get; set; }
+
+    bool SubtotalHiddenPageItems { get; set; }
+
+    int PageFieldOrder { get; set; }
+
+    string PageFieldStyle { get; set; }
+
+    int PageFieldWrapCount { get; set; }
+
+    bool PreserveFormatting { get; set; }
+
+    string PivotSelection { get; set; }
+
+    XlPTSelectionMode SelectionMode { get; set; }
+
+    string Tag { get; set; }
+
+    string VacatedStyle { get; set; }
+
+    bool PrintTitles { get; set; }
+
+    string GrandTotalName { get; set; }
+
+    bool SmallGrid { get; set; }
+
+    bool RepeatItemsOnEachPrintedPage { get; set; }
+
+    bool TotalsAnnotation { get; set; }
+
+    string PivotSelectionStandard { get; set; }
+
+    object TableStyle2 { get; set; }
+
+    bool ShowTableStyleRowHeaders { get; set; }
+
+    bool ShowTableStyleColumnHeaders { get; set; }
+
+    bool AllowMultipleFilters { get; set; }
+
+    string CompactLayoutRowHeader { get; set; }
+
+    string CompactLayoutColumnHeader { get; set; }
+
+    bool FieldListSortAscending { get; set; }
+
+    bool SortUsingCustomLists { get; set; }
+
+    string Location { get; set; }
+
+    bool EnableWriteback { get; set; }
+
+    XlAllocation Allocation { get; set; }
+
+    XlAllocationValue AllocationValue { get; set; }
+
+    XlAllocationMethod AllocationMethod { get; set; }
+
+    string AllocationWeightExpression { get; set; }
     #region 格式和布局
     /// <summary>
     /// 获取或设置数据透视表的表格样式

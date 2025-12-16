@@ -27,6 +27,8 @@ public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
     /// <returns>指定索引处的 <see cref="IExcelDataLabel"/> 对象。</returns>
     IExcelDataLabel? this[int index] { get; }
 
+    IExcelDataLabel? this[string name] { get; }
+
     /// <summary>
     /// 获取该对象的父对象。
     /// </summary>
