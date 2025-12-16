@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,36 +8,23 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// Excel ChartColorFormat 对象的二次封装接口
-/// 提供对 Microsoft.Office.Interop.Excel.ChartColorFormat 的安全访问和操作
-/// 用于设置形状或图表元素的颜色
+/// 指定图表中图片的显示类型
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartColorFormat : IDisposable
+public enum XlChartPictureType
 {
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
-    object Parent { get; }
 
     /// <summary>
-    /// 获取应用程序对象
+    /// 拉伸图片以填充整个区域
     /// </summary>
-    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    xlStretch = 1,
 
     /// <summary>
-    /// 获取颜色类型
+    /// 将图片堆叠显示
     /// </summary>
-    int Type { get; }
+    xlStack = 2,
 
     /// <summary>
-    /// 获取或设置RGB颜色值
+    /// 堆叠图片并缩放以适应区域
     /// </summary>
-    int RGB { get; }
-
-    /// <summary>
-    /// 获取或设置颜色方案索引
-    /// </summary>
-    int SchemeColor { get; set; }
+    xlStackScale = 3
 }

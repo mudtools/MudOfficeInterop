@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,36 +8,42 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// Excel ChartColorFormat 对象的二次封装接口
-/// 提供对 Microsoft.Office.Interop.Excel.ChartColorFormat 的安全访问和操作
-/// 用于设置形状或图表元素的颜色
+/// 指定图表中图片标记的放置位置
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartColorFormat : IDisposable
+public enum XlChartPicturePlacement
 {
     /// <summary>
-    /// 获取父对象
+    /// 图片标记显示在数据标记的两侧
     /// </summary>
-    object Parent { get; }
+    xlSides = 1,
 
     /// <summary>
-    /// 获取应用程序对象
+    /// 图片标记显示在数据标记的末端
     /// </summary>
-    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    xlEnd,
 
     /// <summary>
-    /// 获取颜色类型
+    /// 图片标记显示在数据标记的末端和两侧
     /// </summary>
-    int Type { get; }
+    xlEndSides,
 
     /// <summary>
-    /// 获取或设置RGB颜色值
+    /// 图片标记显示在数据标记的前端
     /// </summary>
-    int RGB { get; }
+    xlFront,
 
     /// <summary>
-    /// 获取或设置颜色方案索引
+    /// 图片标记显示在数据标记的前端和两侧
     /// </summary>
-    int SchemeColor { get; set; }
+    xlFrontSides,
+
+    /// <summary>
+    /// 图片标记显示在数据标记的前端和末端
+    /// </summary>
+    xlFrontEnd,
+
+    /// <summary>
+    /// 图片标记显示在数据标记的所有面上
+    /// </summary>
+    xlAllFaces
 }

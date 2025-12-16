@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 定义Excel颜色格式的接口，提供对Excel中颜色相关属性和操作的访问
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelColorFormat : IDisposable
 {
     /// <summary>
@@ -18,14 +19,23 @@ public interface IExcelColorFormat : IDisposable
     /// </summary>
     object Parent { get; }
 
+
+    /// <summary>
+    /// 获取或设置颜色的应用程序版本
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IExcelApplication Application { get; }
+
     /// <summary>
     /// 获取或设置颜色类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoColorType? Type { get; }
 
     /// <summary>
     /// 获取或设置对象的主题颜色索引
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoThemeColorIndex? ObjectThemeColor { get; set; }
 
     /// <summary>
@@ -44,64 +54,9 @@ public interface IExcelColorFormat : IDisposable
     int? RGB { get; set; }
 
     /// <summary>
-    /// 获取或设置颜色的应用程序版本
+    /// 获取或设置颜色方案索引
     /// </summary>
-    IExcelApplication Application { get; }
+    int SchemeColor { get; set; }
 
 
-    /// <summary>
-    /// 获取颜色的十六进制表示
-    /// </summary>
-    /// <returns>十六进制颜色字符串</returns>
-    string ToHexString();
-
-    /// <summary>
-    /// 获取颜色的HSL值
-    /// </summary>
-    /// <param name="hue">色相</param>
-    /// <param name="saturation">饱和度</param>
-    /// <param name="lightness">亮度</param>
-    void GetHSL(out double hue, out double saturation, out double lightness);
-
-    /// <summary>
-    /// 设置HSL颜色值
-    /// </summary>
-    /// <param name="hue">色相</param>
-    /// <param name="saturation">饱和度</param>
-    /// <param name="lightness">亮度</param>
-    void SetHSL(double hue, double saturation, double lightness);
-
-    /// <summary>
-    /// 获取颜色名称
-    /// </summary>
-    /// <returns>颜色名称</returns>
-    string GetColorName();
-
-
-    /// <summary>
-    /// 获取颜色的对比色
-    /// </summary>
-    /// <returns>对比色</returns>
-    int GetContrastColor();
-
-    /// <summary>
-    /// 混合两种颜色
-    /// </summary>
-    /// <param name="color1">第一种颜色</param>
-    /// <param name="color2">第二种颜色</param>
-    /// <param name="ratio">混合比例</param>
-    /// <returns>混合后的颜色</returns>
-    int BlendColors(int color1, int color2, double ratio);
-
-    /// <summary>
-    /// 获取颜色亮度值
-    /// </summary>
-    /// <returns>亮度值</returns>
-    double GetLuminance();
-
-    /// <summary>
-    /// 获取颜色饱和度值
-    /// </summary>
-    /// <returns>饱和度值</returns>
-    double GetSaturation();
 }

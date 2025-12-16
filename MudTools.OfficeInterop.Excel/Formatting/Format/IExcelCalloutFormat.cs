@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.CalloutFormat
 /// 用于控制标注的引线类型、角度、边距、起点等。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelCalloutFormat : IDisposable
 {
     /// <summary>
@@ -22,23 +23,27 @@ public interface IExcelCalloutFormat : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取或设置标注的类型（如无引线、单引线、角度引线等）。
     /// 使用 <see cref="MsoCalloutType"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoCalloutType Type { get; set; }
 
     /// <summary>
     /// 获取或设置标注引线的角度（仅对角度引线有效）。
     /// 使用 <see cref="MsoCalloutAngleType"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoCalloutAngleType Angle { get; set; }
 
     /// <summary>
     /// 获取或设置标注形状的边框显示状态。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Border { get; set; }
 
     /// <summary>
@@ -56,16 +61,19 @@ public interface IExcelCalloutFormat : IDisposable
     /// 获取标注引线起点类型（自动/手动）。
     /// 使用 <see cref="MsoCalloutDropType"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoCalloutDropType DropType { get; }
 
     /// <summary>
     /// 获取或设置是否在标注中显示引线（仅对带引线类型有效）。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Accent { get; set; }
 
     /// <summary>
     /// 获取或设置标注引线是否自动调整以避免遮挡文本。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoAttach { get; set; }
 
     /// <summary>
@@ -94,6 +102,6 @@ public interface IExcelCalloutFormat : IDisposable
     /// <summary>
     /// 将标注引线起点设置为预设位置之一。
     /// </summary>
-    /// <param name="DropType">指定预设的引线起点位置，使用 <see cref="MsoCalloutDropType"/> 枚举。</param>
-    void PresetDrop(MsoCalloutDropType DropType);
+    /// <param name="dropType">指定预设的引线起点位置，使用 <see cref="MsoCalloutDropType"/> 枚举。</param>
+    void PresetDrop([ComNamespace("MsCore")] MsoCalloutDropType dropType);
 }

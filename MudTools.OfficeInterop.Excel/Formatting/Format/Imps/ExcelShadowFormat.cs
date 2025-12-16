@@ -64,7 +64,7 @@ internal class ExcelShadowFormat : IExcelShadowFormat
         {
             if (_shadowFormat != null && value is ExcelColorFormat format)
             {
-                _shadowFormat.ForeColor = format._colorFormat;
+                _shadowFormat.ForeColor = format.InternalComObject;
             }
         }
     }

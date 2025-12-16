@@ -48,13 +48,13 @@ internal class ExcelFillFormat : IExcelFillFormat
     public IExcelColorFormat ForeColor
     {
         get => new ExcelColorFormat(_fillFormat.ForeColor);
-        set => _fillFormat.ForeColor = ((ExcelColorFormat)value)._colorFormat;
+        set => _fillFormat.ForeColor = ((ExcelColorFormat)value).InternalComObject;
     }
 
     public IExcelColorFormat BackColor
     {
         get => new ExcelColorFormat(_fillFormat.BackColor);
-        set => _fillFormat.BackColor = ((ExcelColorFormat)value)._colorFormat;
+        set => _fillFormat.BackColor = ((ExcelColorFormat)value).InternalComObject;
     }
 
     public MsoPatternType Pattern
