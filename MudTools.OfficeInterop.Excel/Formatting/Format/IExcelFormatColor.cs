@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中对象的颜色格式设置的封装接口（语义命名为 FormatColor
 /// 用于设置前景色、背景色、透明度、主题色等。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelFormatColor : IDisposable
 {
     /// <summary>
@@ -22,17 +23,20 @@ public interface IExcelFormatColor : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置颜色的 RGB 值（如 0xFF0000 表示红色）。
     /// 设置此属性会清除主题色设置。
     /// </summary>
-    int RGB { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color RGB { get; set; }
 
     /// <summary>
     /// 获取或设置颜色。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     Color Color { get; set; }
 
     /// <summary>
