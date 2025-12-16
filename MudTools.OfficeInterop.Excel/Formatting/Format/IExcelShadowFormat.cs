@@ -10,11 +10,24 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel ShadowFormat 对象的二次封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelShadowFormat : IDisposable
 {
     /// <summary>
+    /// 获取图片格式对象的父对象
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取与该图片格式相关联的Excel应用程序对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IExcelApplication Application { get; }
+
+    /// <summary>
     /// 获取或设置阴影类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoShadowType Type { get; set; }
 
     /// <summary>
@@ -35,27 +48,25 @@ public interface IExcelShadowFormat : IDisposable
     /// <summary>
     /// 获取或设置阴影样式
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoShadowStyle Style { get; set; }
 
     /// <summary>
     /// 获取或设置阴影是否被遮挡
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Obscured { get; set; }
 
     /// <summary>
     /// 获取或设置阴影是否随形状旋转
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool RotateWithShape { get; set; }
-
-    /// <summary>
-    /// 获取或设置阴影颜色
-    /// </summary>
-    int Color { get; set; }
 
     /// <summary>
     /// 获取或设置阴影透明度
     /// </summary>
-    int Transparency { get; set; }
+    float Transparency { get; set; }
 
     /// <summary>
     /// 获取或设置阴影偏移X坐标
@@ -70,6 +81,7 @@ public interface IExcelShadowFormat : IDisposable
     /// <summary>
     /// 获取或设置是否可见
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
