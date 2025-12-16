@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel PivotItem 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.PivotItem 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPivotItem : IDisposable
 {
     #region 基础属性
@@ -30,6 +31,7 @@ public interface IExcelPivotItem : IDisposable
     /// 获取数据透视表项目所在的Application对象
     /// 对应 PivotItem.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
@@ -44,9 +46,9 @@ public interface IExcelPivotItem : IDisposable
     /// 获取数据透视表项目的源名称
     /// 对应 PivotItem.SourceName 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string SourceName { get; }
     #endregion
-
 
 
     #region 图表元素 (子对象)
@@ -63,32 +65,7 @@ public interface IExcelPivotItem : IDisposable
     IExcelRange LabelRange { get; }
     #endregion
 
-    #region 操作方法
-    /// <summary>
-    /// 选择数据透视表项目
-    /// 对应 PivotItem.Select 方法
-    /// </summary>
-    /// <param name="replace">是否替换当前选择</param>
-    void Select(bool replace = true);
+    void Delete();
 
-    /// <summary>
-    /// 隐藏数据透视表项目 (通常意味着设置 Visible = false)
-    /// </summary>
-    void Hide();
-
-    /// <summary>
-    /// 显示数据透视表项目 (通常意味着设置 Visible = true)
-    /// </summary>
-    void Show();
-
-    /// <summary>
-    /// 复制数据透视表项目
-    /// </summary>
-    void Copy();
-
-    /// <summary>
-    /// 剪切数据透视表项目
-    /// </summary>
-    void Cut();
-    #endregion
+    void DrillTo(string field);
 }
