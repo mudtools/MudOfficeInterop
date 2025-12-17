@@ -38,12 +38,6 @@ public interface IExcelTableStyle : IDisposable
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
-
-    /// <summary>
-    /// 获取表格样式是否为内置样式
-    /// 对应 TableStyle.BuiltIn 属性
-    /// </summary>
-    bool IsBuiltIn { get; }
     #endregion
 
     /// <summary>

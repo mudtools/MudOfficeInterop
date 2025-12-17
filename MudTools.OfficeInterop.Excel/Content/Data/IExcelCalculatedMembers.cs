@@ -15,13 +15,13 @@ public interface IExcelCalculatedMembers : IEnumerable<IExcelCalculatedMember>, 
     /// <summary>
     /// 获取所属的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 根据索引获取集合中的计算成员。
@@ -50,7 +50,7 @@ public interface IExcelCalculatedMembers : IEnumerable<IExcelCalculatedMember>, 
     /// <param name="solveOrder">求解顺序，可为空。</param>
     /// <param name="type">计算成员类型，可为空。</param>
     /// <returns>新创建的计算成员。</returns>
-    IExcelCalculatedMember Add(string name, string formula, int? solveOrder = null, XlCalculatedMemberType? type = null);
+    IExcelCalculatedMember? Add(string name, string formula, int? solveOrder = null, XlCalculatedMemberType? type = null);
 
     /// <summary>
     /// 向集合中添加新的计算成员（增强版）。
@@ -63,7 +63,7 @@ public interface IExcelCalculatedMembers : IEnumerable<IExcelCalculatedMember>, 
     /// <param name="displayFolder">显示文件夹路径，可为空。</param>
     /// <param name="hierarchizeDistinct">是否分层区分，可为空。</param>
     /// <returns>新创建的计算成员。</returns>
-    IExcelCalculatedMember Add2(string name, string? formula = null, int? solveOrder = null, XlCalculatedMemberType? type = null, bool? dynamic = null, string? displayFolder = null, bool? hierarchizeDistinct = null);
+    IExcelCalculatedMember? Add2(string name, string? formula = null, int? solveOrder = null, XlCalculatedMemberType? type = null, bool? dynamic = null, string? displayFolder = null, bool? hierarchizeDistinct = null);
 
     /// <summary>
     /// 添加计算成员到集合中。
@@ -78,6 +78,6 @@ public interface IExcelCalculatedMembers : IEnumerable<IExcelCalculatedMember>, 
     /// <param name="parentMember">上级成员名称，可为空。</param>
     /// <param name="numberFormat">数字格式类型，可为空。</param>
     /// <returns>新创建的计算成员。</returns>
-    IExcelCalculatedMember AddCalculatedMember(string name, string? formula = null, int? solveOrder = null, XlCalculatedMemberType? type = null, string? displayFolder = null, string? measureGroup = null, string? parentHierarchy = null, string? parentMember = null, XlCalcMemNumberFormatType? numberFormat = null);
+    IExcelCalculatedMember? AddCalculatedMember(string name, string? formula = null, int? solveOrder = null, XlCalculatedMemberType? type = null, string? displayFolder = null, string? measureGroup = null, string? parentHierarchy = null, string? parentMember = null, XlCalcMemNumberFormatType? numberFormat = null);
 
 }

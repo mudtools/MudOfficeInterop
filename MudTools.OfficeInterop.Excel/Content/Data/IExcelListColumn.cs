@@ -25,7 +25,7 @@ public interface IExcelListColumn : IDisposable
     IExcelApplication? Application { get; }
 
 
-    IExcelListDataFormat ListDataFormat { get; }
+    IExcelListDataFormat? ListDataFormat { get; }
 
     IExcelXPath XPath { get; }
 
@@ -53,7 +53,7 @@ public interface IExcelListColumn : IDisposable
     /// <summary>
     /// 获取或设置此列的总计行公式（仅当 ListObject.ShowTotals = true 时有效）。
     /// </summary>
-    XlTotalsCalculation TotalsCalculation { get; set; }
+    XlTotalsCalculation? TotalsCalculation { get; set; }
 
     /// <summary>
     /// 删除此列（将从表格中移除该列）。

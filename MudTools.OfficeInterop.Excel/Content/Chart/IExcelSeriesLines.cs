@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.SeriesLines
 /// 用于控制连接主次坐标轴数据系列的连线样式（如柱形图与折线图之间的连线）。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelSeriesLines : IDisposable
 {
     /// <summary>
@@ -23,6 +24,11 @@ public interface IExcelSeriesLines : IDisposable
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
     IExcelApplication? Application { get; }
+
+    /// <summary>
+    /// 获取系列连线的名称。
+    /// </summary>
+    string Name { get; }
 
     /// <summary>
     /// 获取系列连线的边框格式（用于设置颜色、线型、粗细等）。

@@ -18,13 +18,13 @@ public interface IExcelCubeField : IDisposable
     /// <summary>
     /// 获取所在的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取 Cube 字段的类型
@@ -54,7 +54,7 @@ public interface IExcelCubeField : IDisposable
     /// <summary>
     /// 获取字段的树状视图控件
     /// </summary>
-    IExcelTreeviewControl TreeviewControl { get; }
+    IExcelTreeviewControl? TreeviewControl { get; }
 
     /// <summary>
     /// 获取或设置是否允许将字段拖拽到列区域
@@ -99,7 +99,7 @@ public interface IExcelCubeField : IDisposable
     /// <summary>
     /// 获取字段关联的数据透视表字段集合
     /// </summary>
-    IExcelPivotFields PivotFields { get; }
+    IExcelPivotFields? PivotFields { get; }
 
     /// <summary>
     /// 获取或设置是否允许多个页面项

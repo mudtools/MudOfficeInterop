@@ -19,13 +19,13 @@ public interface IExcelListRows : IEnumerable<IExcelListRow>, IDisposable
     /// <summary>
     /// 获取此集合所属的父对象（通常是 ListObject）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
 
     /// <summary>
@@ -38,13 +38,13 @@ public interface IExcelListRows : IEnumerable<IExcelListRow>, IDisposable
     /// </summary>
     /// <param name="index">行索引（1-based）</param>
     /// <returns>对应的行对象</returns>
-    IExcelListRow this[int index] { get; }
+    IExcelListRow? this[int index] { get; }
 
     /// <summary>
     /// 向集合中添加一个新行（插入在末尾）。
     /// </summary>
     /// <returns>新创建的行对象</returns>
-    IExcelListRow Add();
+    IExcelListRow? Add();
 
     /// <summary>
     /// 在指定位置添加一个新行。
@@ -52,5 +52,5 @@ public interface IExcelListRows : IEnumerable<IExcelListRow>, IDisposable
     /// <param name="position">要插入新行的位置</param>
     /// <param name="alwaysInsert">是否始终插入新行，即使可能只需要更新现有行</param>
     /// <returns>新创建的行对象</returns>
-    IExcelListRow AddEx(int position, bool? alwaysInsert = null);
+    IExcelListRow? AddEx(int position, bool? alwaysInsert = null);
 }

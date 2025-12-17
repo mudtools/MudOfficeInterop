@@ -32,14 +32,14 @@ public interface IExcelListObjects : IDisposable, IEnumerable<IExcelListObject>
     /// </summary>
     /// <param name="index">索引</param>
     /// <returns>列表对象</returns>
-    IExcelListObject this[int index] { get; }
+    IExcelListObject? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取列表对象
     /// </summary>
     /// <param name="name">名称</param>
     /// <returns>列表对象</returns>
-    IExcelListObject this[string name] { get; }
+    IExcelListObject? this[string name] { get; }
 
     /// <summary>
     /// 添加新的列表对象
@@ -50,6 +50,6 @@ public interface IExcelListObjects : IDisposable, IEnumerable<IExcelListObject>
     /// <param name="xlListObjectHasHeaders">是否有标题行</param>
     /// <param name="destination">目标位置</param>
     /// <returns>新创建的列表对象</returns>
-    IExcelListObject AddEx(XlListObjectSourceType sourceType, object source, object link, XlYesNoGuess xlListObjectHasHeaders = XlYesNoGuess.xlGuess, object? destination = null);
+    IExcelListObject? AddEx(XlListObjectSourceType sourceType, object source, object link, XlYesNoGuess xlListObjectHasHeaders = XlYesNoGuess.xlGuess, object? destination = null);
 
 }

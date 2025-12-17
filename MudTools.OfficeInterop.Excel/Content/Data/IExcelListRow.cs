@@ -17,13 +17,13 @@ public interface IExcelListRow : IDisposable
     /// <summary>
     /// 获取此行所属的父对象（通常是 ListObject）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此行所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取此行在 ListRows 集合中的索引（从 1 开始）。
@@ -41,7 +41,7 @@ public interface IExcelListRow : IDisposable
     /// <summary>
     /// 获取此行对应的单元格范围（Range），包含该行所有列的数据。
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 删除此行（将从表格中移除该数据行）。

@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using Microsoft.Office.Interop.Excel;
+
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
@@ -33,15 +35,9 @@ public interface IExcelTableStyleElements : IEnumerable<IExcelTableStyleElement>
     /// <summary>
     /// 通过索引位置获取表格样式元素
     /// </summary>
-    /// <param name="index">元素在集合中的索引位置</param>
+    /// <param name="type">元素在集合中的索引位置</param>
     /// <returns>指定索引位置的表格样式元素</returns>
-    IExcelTableStyleElement? this[int index] { get; }
+    IExcelTableStyleElement? this[XlTableStyleElementType type] { get; }
 
-    /// <summary>
-    /// 通过名称获取表格样式元素
-    /// </summary>
-    /// <param name="name">元素的名称</param>
-    /// <returns>指定名称的表格样式元素</returns>
-    IExcelTableStyleElement? this[string name] { get; }
 
 }
