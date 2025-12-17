@@ -54,225 +54,406 @@ public interface IExcelPivotTable : IDisposable
 
     #region 数据和字段
     /// <summary>
-    /// 获取数据透视表的数据主体区域 (不包括页字段报告筛选器)
-    /// 对应 PivotTable.DataBodyRange 属性
+    /// 获取数据透视表的列范围
     /// </summary>
-    IExcelRange? DataBodyRange { get; }
-
-    /// <summary>
-    /// 获取数据透视表的整个表格区域 (包括页字段报告筛选器)
-    /// 对应 PivotTable.TableRange1 属性
-    /// </summary>
-    IExcelRange? TableRange1 { get; }
-
-    /// <summary>
-    /// 获取数据透视表的第二区域 (如果有页字段报告筛选器，则包含这些字段)
-    /// 对应 PivotTable.TableRange2 属性
-    /// </summary>
-    IExcelRange? TableRange2 { get; }
-
-    /// <summary>
-    /// 获取数据透视表的页字段 (报告筛选器) 集合
-    /// 对应 PivotTable.PageFields 属性
-    /// </summary>
-    [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotFields? PageFields { get; }
-
-    /// <summary>
-    /// 获取数据透视表的行字段集合
-    /// 对应 PivotTable.RowFields 属性
-    /// </summary>
-    [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotFields? RowFields { get; }
-
-    /// <summary>
-    /// 获取数据透视表的列字段集合
-    /// 对应 PivotTable.ColumnFields 属性
-    /// </summary>
-    [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotFields? ColumnFields { get; }
-
-    /// <summary>
-    /// 获取数据透视表的数据字段集合
-    /// 对应 PivotTable.DataFields 属性
-    /// </summary>
-    [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotFields? DataFields { get; }
-
-    /// <summary>
-    /// 获取数据透视表的可见数据字段集合
-    /// 对应 PivotTable.VisibleFields 属性
-    /// </summary>
-    [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotFields? VisibleFields { get; }
-
-    /// <summary>
-    /// 获取数据透视表的隐藏数据字段集合
-    /// 对应 PivotTable.HiddenFields 属性
-    /// </summary>
-    [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotFields? HiddenFields { get; }
-    #endregion
-
     IExcelRange ColumnRange { get; }
 
+    /// <summary>
+    /// 获取数据透视表的数据标签范围
+    /// </summary>
     IExcelRange DataLabelRange { get; }
 
+    /// <summary>
+    /// 获取或设置内部详细信息
+    /// </summary>
     string InnerDetail { get; set; }
 
+    /// <summary>
+    /// 获取数据透视表的页面范围
+    /// </summary>
     IExcelRange PageRange { get; }
 
+    /// <summary>
+    /// 获取数据透视表的页面范围单元格
+    /// </summary>
     IExcelRange PageRangeCells { get; }
 
+    /// <summary>
+    /// 获取数据透视表的行范围
+    /// </summary>
     IExcelRange RowRange { get; }
 
+    /// <summary>
+    /// 获取数据透视表的公式集合
+    /// </summary>
     IExcelPivotFormulas PivotFormulas { get; }
 
+    /// <summary>
+    /// 获取数据透视表的多维数据集字段
+    /// </summary>
     IExcelCubeFields CubeFields { get; }
 
+    /// <summary>
+    /// 获取数据透视表的数据透视字段
+    /// </summary>
     IExcelPivotField DataPivotField { get; }
 
+    /// <summary>
+    /// 获取计算成员集合
+    /// </summary>
     IExcelCalculatedMembers CalculatedMembers { get; }
 
+    /// <summary>
+    /// 获取数据透视表的列轴
+    /// </summary>
     IExcelPivotAxis PivotColumnAxis { get; }
 
+    /// <summary>
+    /// 获取数据透视表的行轴
+    /// </summary>
     IExcelPivotAxis PivotRowAxis { get; }
 
+    /// <summary>
+    /// 获取活动筛选器集合
+    /// </summary>
     IExcelPivotFilters ActiveFilters { get; }
 
+    /// <summary>
+    /// 获取切片器集合
+    /// </summary>
     IExcelSlicers Slicers { get; }
 
+    /// <summary>
+    /// 获取数据透视表更改列表
+    /// </summary>
     IExcelPivotTableChangeList ChangeList { get; }
 
+    /// <summary>
+    /// 获取数据透视图表
+    /// </summary>
     IExcelShape PivotChart { get; }
 
+    /// <summary>
+    /// 获取或设置替代文本
+    /// </summary>
     string AlternativeText { get; set; }
 
+    /// <summary>
+    /// 获取或设置摘要信息
+    /// </summary>
     string Summary { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否为集合显示视觉总计
+    /// </summary>
     bool VisualTotalsForSets { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示值行
+    /// </summary>
     bool ShowValuesRow { get; set; }
 
+    /// <summary>
+    /// 获取或设置筛选器中是否包含计算成员
+    /// </summary>
     bool CalculatedMembersInFilters { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否处于网格拖放区域模式
+    /// </summary>
     bool InGridDropZones { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示钻取指示器
+    /// </summary>
     bool ShowDrillIndicators { get; set; }
 
+    /// <summary>
+    /// 获取或设置打印时是否显示钻取指示器
+    /// </summary>
     bool PrintDrillIndicators { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示成员属性工具提示
+    /// </summary>
     bool DisplayMemberPropertyTooltips { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示上下文工具提示
+    /// </summary>
     bool DisplayContextTooltips { get; set; }
 
+    /// <summary>
+    /// 获取或设置紧凑布局行缩进
+    /// </summary>
     int CompactRowIndent { get; set; }
 
+    /// <summary>
+    /// 获取或设置默认布局行类型
+    /// </summary>
     XlLayoutRowType LayoutRowDefault { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示字段标题
+    /// </summary>
     bool DisplayFieldCaptions { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否查看计算成员
+    /// </summary>
     bool ViewCalculatedMembers { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示空行
+    /// </summary>
     bool DisplayEmptyRow { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示空列
+    /// </summary>
     bool DisplayEmptyColumn { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示来自OLAP的单元格背景
+    /// </summary>
     bool ShowCellBackgroundFromOLAP { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示即时项目
+    /// </summary>
     bool DisplayImmediateItems { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示页面多项标签
+    /// </summary>
     bool ShowPageMultipleItemLabel { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否启用视觉总计
+    /// </summary>
     bool VisualTotals { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否启用字段列表
+    /// </summary>
     bool EnableFieldList { get; set; }
 
+    /// <summary>
+    /// 获取值
+    /// </summary>
     string Value { get; }
 
+    /// <summary>
+    /// 获取MDX查询字符串
+    /// </summary>
     string MDX { get; }
 
+    /// <summary>
+    /// 获取刷新日期
+    /// </summary>
     DateTime RefreshDate { get; }
 
+    /// <summary>
+    /// 获取刷新者姓名
+    /// </summary>
     string RefreshName { get; }
 
+    /// <summary>
+    /// 获取或设置是否保存数据
+    /// </summary>
     bool SaveData { get; set; }
 
+    /// <summary>
+    /// 获取或设置缓存索引
+    /// </summary>
     int CacheIndex { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示错误字符串
+    /// </summary>
     bool DisplayErrorString { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示空值字符串
+    /// </summary>
     bool DisplayNullString { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否启用钻取功能
+    /// </summary>
     bool EnableDrilldown { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否启用字段对话框
+    /// </summary>
     bool EnableFieldDialog { get; set; }
 
+    /// <summary>
+    /// 获取或设置错误字符串
+    /// </summary>
     string ErrorString { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否手动更新
+    /// </summary>
     bool ManualUpdate { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否合并标签
+    /// </summary>
     bool MergeLabels { get; set; }
 
+    /// <summary>
+    /// 获取或设置空值字符串
+    /// </summary>
     string NullString { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否对隐藏的页面项目进行小计
+    /// </summary>
     bool SubtotalHiddenPageItems { get; set; }
 
+    /// <summary>
+    /// 获取或设置页面字段顺序
+    /// </summary>
     int PageFieldOrder { get; set; }
 
+    /// <summary>
+    /// 获取或设置页面字段样式
+    /// </summary>
     string PageFieldStyle { get; set; }
 
+    /// <summary>
+    /// 获取或设置页面字段换行计数
+    /// </summary>
     int PageFieldWrapCount { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否保留格式
+    /// </summary>
     bool PreserveFormatting { get; set; }
 
+    /// <summary>
+    /// 获取或设置数据透视表选择
+    /// </summary>
     string PivotSelection { get; set; }
 
+    /// <summary>
+    /// 获取或设置选择模式
+    /// </summary>
     XlPTSelectionMode SelectionMode { get; set; }
 
+    /// <summary>
+    /// 获取或设置标签
+    /// </summary>
     string Tag { get; set; }
 
+    /// <summary>
+    /// 获取或设置腾出空间的样式
+    /// </summary>
     string VacatedStyle { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否打印标题
+    /// </summary>
     bool PrintTitles { get; set; }
 
+    /// <summary>
+    /// 获取或设置总计名称
+    /// </summary>
     string GrandTotalName { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否使用小型网格
+    /// </summary>
     bool SmallGrid { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否在每页打印时重复项目
+    /// </summary>
     bool RepeatItemsOnEachPrintedPage { get; set; }
 
+    /// <summary>
+    /// 获取或设置总计注释
+    /// </summary>
     bool TotalsAnnotation { get; set; }
 
+    /// <summary>
+    /// 获取或设置标准数据透视表选择
+    /// </summary>
     string PivotSelectionStandard { get; set; }
 
+    /// <summary>
+    /// 获取或设置表格样式2
+    /// </summary>
     object TableStyle2 { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示表格样式行标题
+    /// </summary>
     bool ShowTableStyleRowHeaders { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示表格样式列标题
+    /// </summary>
     bool ShowTableStyleColumnHeaders { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否允许多重筛选
+    /// </summary>
     bool AllowMultipleFilters { get; set; }
 
+    /// <summary>
+    /// 获取或设置紧凑布局行标题
+    /// </summary>
     string CompactLayoutRowHeader { get; set; }
 
+    /// <summary>
+    /// 获取或设置紧凑布局列标题
+    /// </summary>
     string CompactLayoutColumnHeader { get; set; }
 
+    /// <summary>
+    /// 获取或设置字段列表是否按升序排序
+    /// </summary>
     bool FieldListSortAscending { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否使用自定义列表排序
+    /// </summary>
     bool SortUsingCustomLists { get; set; }
 
+    /// <summary>
+    /// 获取或设置位置
+    /// </summary>
     string Location { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否启用回写功能
+    /// </summary>
     bool EnableWriteback { get; set; }
 
+    /// <summary>
+    /// 获取或设置分配方式
+    /// </summary>
     XlAllocation Allocation { get; set; }
 
+    /// <summary>
+    /// 获取或设置分配值
+    /// </summary>
     XlAllocationValue AllocationValue { get; set; }
 
+    /// <summary>
+    /// 获取或设置分配方法
+    /// </summary>
     XlAllocationMethod AllocationMethod { get; set; }
 
+    /// <summary>
+    /// 获取或设置分配权重表达式
+    /// </summary>
     string AllocationWeightExpression { get; set; }
+    #endregion
+
     #region 格式和布局
     /// <summary>
     /// 获取或设置数据透视表的表格样式
@@ -416,14 +597,38 @@ public interface IExcelPivotTable : IDisposable
     /// <param name="pivotLine">指定操作起始成员所在的数据透视表中的行。</param>
     void DrillDown(IExcelPivotItem pivotItem, IExcelRange? pivotLine);
 
+    /// <summary>
+    /// 钻取到指定的多维数据集字段
+    /// </summary>
+    /// <param name="pivotItem">数据透视表项</param>
+    /// <param name="cubeField">多维数据集字段</param>
+    /// <param name="pivotLine">数据透视表行范围</param>
     void DrillTo(IExcelPivotItem pivotItem, IExcelCubeField cubeField, IExcelRange? pivotLine);
 
+    /// <summary>
+    /// 向上钻取到指定层级
+    /// </summary>
+    /// <param name="PivotItem">数据透视表项</param>
+    /// <param name="pivotLine">数据透视表行范围</param>
+    /// <param name="levelUniqueName">层级唯一名称</param>
     void DrillUp(IExcelPivotItem PivotItem, IExcelRange? pivotLine, object? levelUniqueName);
 
+    /// <summary>
+    /// 设置数据透视表的格式类型
+    /// </summary>
+    /// <param name="Format">透视表格式类型</param>
     void Format(XlPivotFormatType Format);
 
+    /// <summary>
+    /// 更改数据透视表的数据缓存
+    /// </summary>
+    /// <param name="pivotCache">数据透视表缓存名称</param>
     void ChangePivotCache(string pivotCache);
 
+    /// <summary>
+    /// 更改数据透视表的数据缓存
+    /// </summary>
+    /// <param name="pivotCache">数据透视表缓存对象</param>
     void ChangePivotCache(IExcelPivotCache pivotCache);
 
     /// <summary>
@@ -441,6 +646,12 @@ public interface IExcelPivotTable : IDisposable
         string? field13 = null, string? item13 = null, string? field14 = null,
         string? item14 = null);
 
+    /// <summary>
+    /// 获取数据透视表中指定行列位置的数值单元格
+    /// </summary>
+    /// <param name="rowline">行索引，从0开始计数</param>
+    /// <param name="columnline">列索引，从0开始计数</param>
+    /// <returns>指定位置的数据透视表数值单元格对象</returns>
     IExcelPivotValueCell PivotValueCell(int? rowline, int? columnline);
 
     /// <summary>
@@ -504,6 +715,13 @@ public interface IExcelPivotTable : IDisposable
     /// </summary>
     void AllocateChanges();
 
+    /// <summary>
+    /// 向数据透视表添加数据字段
+    /// </summary>
+    /// <param name="field">要添加的字段，可以是字段名称或字段索引</param>
+    /// <param name="caption">字段的显示标题，如果为null则使用默认标题</param>
+    /// <param name="function">聚合函数名称，如"Sum"、"Count"等</param>
+    /// <returns>添加的数据透视表字段对象，如果添加失败则返回null</returns>
     IExcelPivotField? AddDataField(object field, string? caption, string? function);
 
     /// <summary>

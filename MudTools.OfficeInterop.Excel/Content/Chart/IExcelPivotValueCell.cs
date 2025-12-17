@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -7,23 +7,32 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
+/// <summary>
+/// Excel数据透视表值单元格接口，提供对数据透视表中值单元格的访问和操作功能
+/// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPivotValueCell : IDisposable
 {
+
     /// <summary>
-    /// 获取数据透视表缓存的父对象 (通常是 Workbook)
-    /// 对应 PivotCache.Parent 属性
+    /// 获取该对象的父对象
     /// </summary>
     object Parent { get; }
 
+
     /// <summary>
-    /// 获取数据透视表缓存所在的Application对象
-    /// 对应 PivotCache.Application 属性
+    /// 获取一个 <see cref="IExcelApplication"/> 对象，该对象代表 Microsoft Excel 应用程序
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
+    /// <summary>
+    /// 获取单元格的值
+    /// </summary>
     object Value { get; }
 
+    /// <summary>
+    /// 显示与数据透视表值单元格相关的明细数据
+    /// </summary>
     void ShowDetail();
 }

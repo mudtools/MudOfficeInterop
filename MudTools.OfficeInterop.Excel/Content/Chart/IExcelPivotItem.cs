@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -40,6 +40,10 @@ public interface IExcelPivotItem : IDisposable
     /// </summary>
     bool Visible { get; set; }
 
+    /// <summary>
+    /// 获取或设置数据透视表项目的公式
+    /// 对应 PivotItem.Formula 属性
+    /// </summary>
     string Formula { get; set; }
 
     /// <summary>
@@ -65,7 +69,16 @@ public interface IExcelPivotItem : IDisposable
     IExcelRange LabelRange { get; }
     #endregion
 
+    /// <summary>
+    /// 删除数据透视表项目
+    /// 对应 PivotItem.Delete 方法
+    /// </summary>
     void Delete();
 
+    /// <summary>
+    /// 钻取到指定的数据透视表字段
+    /// 对应 PivotItem.DrillTo 方法
+    /// </summary>
+    /// <param name="field">要钻取到的字段名称</param>
     void DrillTo(string field);
 }
