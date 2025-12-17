@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel PlotArea 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.PlotArea 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPlotArea : IDisposable
 {
     #region 基础属性
@@ -27,6 +28,7 @@ public interface IExcelPlotArea : IDisposable
     /// <summary>
     /// 获取绘图区所在的 Application 对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
     #endregion
 
@@ -70,6 +72,8 @@ public interface IExcelPlotArea : IDisposable
     /// 获取或设置绘图区的内部高度
     /// </summary>
     double InsideHeight { get; set; }
+
+    XlChartElementPosition Position { get; set; }
     #endregion
 
     #region 格式设置
@@ -81,20 +85,23 @@ public interface IExcelPlotArea : IDisposable
     /// <summary>
     /// 获取绘图区的背景填充对象
     /// </summary>
-    IExcelFillFormat Fill { get; }
+    IExcelChartFillFormat Fill { get; }
 
     /// <summary>
     /// 获取绘图区的边框对象
     /// </summary>
     IExcelBorder Border { get; }
 
+    IExcelInterior Interior { get; }
     #endregion
 
     #region 操作方法  
     /// <summary>
     /// 清除绘图区格式
     /// </summary>
-    void ClearFormats();
+    object ClearFormats();
+
+    object Select();
 
     #endregion
 }
