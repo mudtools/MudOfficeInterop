@@ -39,7 +39,7 @@ public interface IExcelPivotCaches : IEnumerable<IExcelPivotCache>, IDisposable
     /// 对应 PivotCaches.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 创建和添加

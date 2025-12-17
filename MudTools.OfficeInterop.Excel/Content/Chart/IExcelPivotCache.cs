@@ -34,7 +34,7 @@ public interface IExcelPivotCache : IDisposable
     /// 对应 PivotCache.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取数据透视表缓存的源数据类型
@@ -90,7 +90,7 @@ public interface IExcelPivotCache : IDisposable
     /// <param name="width">对象的宽度，以磅为单位。</param>
     /// <param name="height">对象的高度，以磅为单位。</param>
     /// <returns></returns>
-    IExcelShape CreatePivotChart(IExcelWorksheet chartDestination, XlChartType? xlChartType,
+    IExcelShape? CreatePivotChart(IExcelWorksheet chartDestination, XlChartType? xlChartType,
         int? left, int? top, int? width, int? height);
 
     /// <summary>
@@ -101,7 +101,7 @@ public interface IExcelPivotCache : IDisposable
     /// <param name="readData">可选 对象。 如果该值为 True，则创建一个包含外部数据库中所有记录的数据透视表高速缓存；此高速缓存可以很大。 如果为 False，则允许在实际读取数据之前将某些字段设置为基于服务器的页字段。</param>
     /// <param name="defaultVersion">可选 对象。 数据透视表的默认版本。</param>
     /// <returns></returns>
-    IExcelPivotTable CreatePivotTable(IExcelRange tableDestination, string? tableName = null,
+    IExcelPivotTable? CreatePivotTable(IExcelRange tableDestination, string? tableName = null,
         bool? readData = null, XlPivotTableVersionList? defaultVersion = null);
     #endregion
 }

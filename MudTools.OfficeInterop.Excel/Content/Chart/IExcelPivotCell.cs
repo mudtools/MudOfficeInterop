@@ -34,37 +34,37 @@ public interface IExcelPivotCell : IDisposable
     /// <summary>
     /// 获取包含此单元格的数据透视表。
     /// </summary>
-    IExcelPivotTable PivotTable { get; }
+    IExcelPivotTable? PivotTable { get; }
 
     /// <summary>
     /// 获取与此单元格关联的数据字段。
     /// </summary>
-    IExcelPivotField DataField { get; }
+    IExcelPivotField? DataField { get; }
 
     /// <summary>
     /// 获取与此单元格关联的数据透视表字段。
     /// </summary>
-    IExcelPivotField PivotField { get; }
+    IExcelPivotField? PivotField { get; }
 
     /// <summary>
     /// 获取与此单元格关联的数据透视表项。
     /// </summary>
-    IExcelPivotItem PivotItem { get; }
+    IExcelPivotItem? PivotItem { get; }
 
     /// <summary>
     /// 获取与此单元格在同一行上的项目列表。
     /// </summary>
-    IExcelPivotItemList RowItems { get; }
+    IExcelPivotItemList? RowItems { get; }
 
     /// <summary>
     /// 获取与此单元格在同一列上的项目列表。
     /// </summary>
-    IExcelPivotItemList ColumnItems { get; }
+    IExcelPivotItemList? ColumnItems { get; }
 
     /// <summary>
     /// 获取与此数据透视表单元格对应的区域对象。
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 获取自定义分类汇总函数。
@@ -74,12 +74,12 @@ public interface IExcelPivotCell : IDisposable
     /// <summary>
     /// 获取与此单元格关联的数据透视表行线。
     /// </summary>
-    IExcelPivotLine PivotRowLine { get; }
+    IExcelPivotLine? PivotRowLine { get; }
 
     /// <summary>
     /// 获取与此单元格关联的数据透视表列线。
     /// </summary>
-    IExcelPivotLine PivotColumnLine { get; }
+    IExcelPivotLine? PivotColumnLine { get; }
 
     /// <summary>
     /// 分配更改到数据透视表单元格的值。

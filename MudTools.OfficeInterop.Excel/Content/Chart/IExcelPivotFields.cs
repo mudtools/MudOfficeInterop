@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.PivotFields 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelPivotFields : IEnumerable<IExcelPivotField>, IDisposable
+public interface IExcelPivotFields : IEnumerable<IExcelPivotField?>, IDisposable
 {
     #region 基础属性
     /// <summary>
@@ -27,7 +27,7 @@ public interface IExcelPivotFields : IEnumerable<IExcelPivotField>, IDisposable
     /// <param name="index">字段索引（从1开始）</param>
     /// <returns>数据透视表字段对象</returns>
     [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotField this[int index] { get; }
+    IExcelPivotField? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的数据透视表字段对象
@@ -35,20 +35,20 @@ public interface IExcelPivotFields : IEnumerable<IExcelPivotField>, IDisposable
     /// <param name="name">字段名称</param>
     /// <returns>数据透视表字段对象</returns>
     [ComPropertyWrap(NeedConvert = true)]
-    IExcelPivotField this[string name] { get; }
+    IExcelPivotField? this[string name] { get; }
 
     /// <summary>
     /// 获取字段集合所在的父对象（通常是 PivotTable）
     /// 对应 PivotFields.Parent 属性
     /// </summary>
-    IExcelPivotTable Parent { get; }
+    IExcelPivotTable? Parent { get; }
 
     /// <summary>
     /// 获取字段集合所在的Application对象
     /// 对应 PivotFields.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
 }

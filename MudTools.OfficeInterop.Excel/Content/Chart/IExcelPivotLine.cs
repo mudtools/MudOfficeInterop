@@ -38,10 +38,10 @@ public interface IExcelPivotLine : IDisposable
     /// <summary>
     /// 获取数据透视表线条单元格集合。
     /// </summary>
-    IExcelPivotLineCells PivotLineCells { get; }
+    IExcelPivotLineCells? PivotLineCells { get; }
 
     /// <summary>
     /// 获取完整的数据透视表线条单元格集合。
     /// </summary>
-    IExcelPivotLineCells PivotLineCellsFull { get; }
+    IExcelPivotLineCells? PivotLineCellsFull { get; }
 }

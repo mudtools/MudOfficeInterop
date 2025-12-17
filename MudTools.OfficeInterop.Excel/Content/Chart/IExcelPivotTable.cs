@@ -687,7 +687,7 @@ public interface IExcelPivotTable : IDisposable
     /// </summary>
     /// <param name="pageField"></param>
     /// <returns></returns>
-    object ShowPages(string pageField);
+    object? ShowPages(string pageField);
 
     /// <summary>
     /// 选定数据透视表的一部分。

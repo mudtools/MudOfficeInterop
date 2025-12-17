@@ -31,7 +31,7 @@ public interface IExcelPivotField : IDisposable
     /// 对应 PivotField.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置数据透视表字段的方向 (行、列、页、数据或隐藏)
@@ -71,37 +71,37 @@ public interface IExcelPivotField : IDisposable
     /// 获取与数据透视表字段关联的多维数据集字段
     /// 对应 PivotField.CubeField 属性
     /// </summary>
-    IExcelCubeField CubeField { get; }
+    IExcelCubeField? CubeField { get; }
 
     /// <summary>
     /// 获取此字段的父属性字段
     /// 对应 PivotField.PropertyParentField 属性
     /// </summary>
-    IExcelPivotField PropertyParentField { get; }
+    IExcelPivotField? PropertyParentField { get; }
 
     /// <summary>
     /// 获取数据透视表字段的筛选器集合
     /// 对应 PivotField.PivotFilters 属性
     /// </summary>
-    IExcelPivotFilters PivotFilters { get; }
+    IExcelPivotFilters? PivotFilters { get; }
 
     /// <summary>
     /// 获取自动排序所依据的数据透视表线
     /// 对应 PivotField.AutoSortPivotLine 属性
     /// </summary>
-    IExcelPivotLine AutoSortPivotLine { get; }
+    IExcelPivotLine? AutoSortPivotLine { get; }
 
     /// <summary>
     /// 获取当前字段的子字段
     /// 对应 PivotField.ChildField 属性
     /// </summary>
-    IExcelPivotField ChildField { get; }
+    IExcelPivotField? ChildField { get; }
 
     /// <summary>
     /// 获取当前字段的父字段
     /// 对应 PivotField.ParentField 属性
     /// </summary>
-    IExcelPivotField ParentField { get; }
+    IExcelPivotField? ParentField { get; }
 
     /// <summary>
     /// 获取或设置是否显示所有项（包括未在筛选器中选择的项）
@@ -435,13 +435,13 @@ public interface IExcelPivotField : IDisposable
     /// 获取数据透视表字段的数据范围 (如果适用)
     /// 对应 PivotField.DataRange 属性
     /// </summary>
-    IExcelRange DataRange { get; }
+    IExcelRange? DataRange { get; }
 
     /// <summary>
     /// 获取数据透视表字段的标签范围 (如果适用)
     /// 对应 PivotField.LabelRange 属性
     /// </summary>
-    IExcelRange LabelRange { get; }
+    IExcelRange? LabelRange { get; }
     #endregion
 
 
@@ -464,7 +464,7 @@ public interface IExcelPivotField : IDisposable
     /// 对应 PivotField.CalculatedItems 方法
     /// </summary>
     /// <returns>计算项集合对象</returns>
-    IExcelCalculatedItems CalculatedItems();
+    IExcelCalculatedItems? CalculatedItems();
 
     /// <summary>
     /// 对指定数据字段的值进行自动排序
@@ -533,7 +533,7 @@ public interface IExcelPivotField : IDisposable
     /// <param name="index">项目索引</param>
     /// <returns>数据透视表项目对象</returns>
     [ReturnValueConvert]
-    IExcelPivotItems PivotItems(int index);
+    IExcelPivotItems? PivotItems(int index);
 
     /// <summary>
     /// 获取具有指定名称的数据透视表项目
@@ -542,7 +542,7 @@ public interface IExcelPivotField : IDisposable
     /// <param name="name">项目名称</param>
     /// <returns>数据透视表项目对象</returns>
     [ReturnValueConvert]
-    IExcelPivotItems PivotItems(string name);
+    IExcelPivotItems? PivotItems(string name);
 
     /// <summary>
     /// 获取数据透视表项目集合
@@ -550,5 +550,5 @@ public interface IExcelPivotField : IDisposable
     /// </summary>
     /// <returns>数据透视表项目集合对象</returns>
     [ReturnValueConvert]
-    IExcelPivotItem PivotItems();
+    IExcelPivotItem? PivotItems();
 }

@@ -29,22 +29,22 @@ public interface IExcelPoint : IDisposable
     /// <summary>
     /// 获取数据点的边框属性
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取数据点的内部填充属性
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取数据点的填充格式属性
     /// </summary>
-    IExcelChartFillFormat Fill { get; }
+    IExcelChartFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取数据点的图表格式属性
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
 
     /// <summary>
     /// 获取或设置数据点从饼图中心移出的距离
@@ -167,31 +167,31 @@ public interface IExcelPoint : IDisposable
     /// 清除数据点的格式
     /// </summary>
     /// <returns>操作结果对象</returns>
-    object ClearFormats();
+    object? ClearFormats();
 
     /// <summary>
     /// 复制数据点
     /// </summary>
     /// <returns>操作结果对象</returns>
-    object Copy();
+    object? Copy();
 
     /// <summary>
     /// 删除数据点
     /// </summary>
     /// <returns>操作结果对象</returns>
-    object Delete();
+    object? Delete();
 
     /// <summary>
     /// 粘贴内容到数据点
     /// </summary>
     /// <returns>操作结果对象</returns>
-    object Paste();
+    object? Paste();
 
     /// <summary>
     /// 选择数据点
     /// </summary>
     /// <returns>操作结果对象</returns>
-    object Select();
+    object? Select();
 
     /// <summary>
     /// 应用数据标签到数据点

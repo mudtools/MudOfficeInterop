@@ -29,7 +29,7 @@ public interface IExcelPlotArea : IDisposable
     /// 获取绘图区所在的 Application 对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 位置和大小
@@ -80,28 +80,28 @@ public interface IExcelPlotArea : IDisposable
     /// <summary>
     /// 获取绘图区的字体对象
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
 
     /// <summary>
     /// 获取绘图区的背景填充对象
     /// </summary>
-    IExcelChartFillFormat Fill { get; }
+    IExcelChartFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取绘图区的边框对象
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
     #endregion
 
     #region 操作方法  
     /// <summary>
     /// 清除绘图区格式
     /// </summary>
-    object ClearFormats();
+    object? ClearFormats();
 
-    object Select();
+    object? Select();
 
     #endregion
 }

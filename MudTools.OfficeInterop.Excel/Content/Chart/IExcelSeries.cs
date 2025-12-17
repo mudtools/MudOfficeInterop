@@ -367,32 +367,32 @@ public interface IExcelSeries : IDisposable
     /// 选择数据系列
     /// 对应 Series.Select 方法
     /// </summary>
-    object Select();
+    object? Select();
 
     /// <summary>
     /// 删除数据系列
     /// 对应 Series.Delete 方法
     /// </summary>
-    object Delete();
+    object? Delete();
 
     /// <summary>
     /// 清除数据系列格式
     /// 对应 Series.ClearFormats 方法
     /// </summary>
-    object ClearFormats();
+    object? ClearFormats();
 
     /// <summary>
     /// 复制数据系列
     /// 对应 Series.Copy 方法
     /// </summary>
-    object Copy();
+    object? Copy();
 
     /// <summary>
     /// 获取数据系列中的所有数据点
     /// </summary>
     /// <returns>IExcelPoints 对象，包含系列中的所有数据点</returns>
     [ReturnValueConvert]
-    IExcelPoints Points();
+    IExcelPoints? Points();
 
     /// <summary>
     /// 根据名称获取数据系列中的特定数据点
@@ -400,7 +400,7 @@ public interface IExcelSeries : IDisposable
     /// <param name="name">数据点的名称</param>
     /// <returns>IExcelPoint 对象，表示指定名称的数据点</returns>
     [ReturnValueConvert]
-    IExcelPoint Points(string name);
+    IExcelPoint? Points(string name);
 
     /// <summary>
     /// 根据索引获取数据系列中的特定数据点
@@ -408,7 +408,7 @@ public interface IExcelSeries : IDisposable
     /// <param name="index">数据点在系列中的索引位置</param>
     /// <returns>IExcelPoint 对象，表示指定索引位置的数据点</returns>
     [ReturnValueConvert]
-    IExcelPoint Points(int index);
+    IExcelPoint? Points(int index);
     #endregion
 
     #region 图表操作
