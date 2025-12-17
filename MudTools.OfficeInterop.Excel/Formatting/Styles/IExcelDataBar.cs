@@ -5,13 +5,16 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
 /// Excel Databar 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Databar 的安全访问和操作
 /// </summary>
-public interface IExcelDataBar : IDisposable
+[ComObjectWrap(ComNamespace = "MsExcel")]
+public interface IExcelDatabar : IDisposable
 {
     #region 基础属性
     /// <summary>
@@ -24,6 +27,7 @@ public interface IExcelDataBar : IDisposable
     /// 获取数据条对象所在的Application对象
     /// 对应 Databar.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
@@ -36,6 +40,7 @@ public interface IExcelDataBar : IDisposable
     /// 获取数据条的颜色设置
     /// 对应 Databar.BarColor 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     IExcelFormatColor? BarColor { get; }
 
     /// <summary>
@@ -63,22 +68,63 @@ public interface IExcelDataBar : IDisposable
     XlDataBarFillType BarFillType { get; set; }
 
     /// <summary>
-    /// 获取或设置是否显示数据条的边框
-    /// 对应 Databar.BarBorder 属性的设置
+    /// 获取或设置数据透视表条件格式的作用范围
+    /// 对应 Databar.ScopeType 属性
     /// </summary>
-    bool ShowBarOnly { get; set; }
+    XlPivotConditionScope ScopeType { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据条的轴位置
+    /// 对应 Databar.AxisPosition 属性
+    /// </summary>
+    XlDataBarAxisPosition AxisPosition { get; set; }
+
+    /// <summary>
+    /// 获取数据条轴的颜色
+    /// 对应 Databar.AxisColor 属性
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    Color? AxisColor { get; }
+
+    /// <summary>
+    /// 获取一个值，指示条件格式是否与数据透视表相关
+    /// 对应 Databar.PTCondition 属性
+    /// </summary>
+    bool PTCondition { get; }
+
+    /// <summary>
+    /// 获取或设置数据条的最大百分比值
+    /// 对应 Databar.PercentMax 属性
+    /// </summary>
+    int PercentMax { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据条的最小百分比值
+    /// 对应 Databar.PercentMin 属性
+    /// </summary>
+    int PercentMin { get; set; }
+
+    /// <summary>
+    /// 获取或设置条件格式规则的优先级
+    /// 对应 Databar.Priority 属性
+    /// </summary>
+    int Priority { get; set; }
+
+    /// <summary>
+    /// 获取或设置当条件为真时是否停止评估其他条件格式规则
+    /// 对应 Databar.StopIfTrue 属性
+    /// </summary>
+    bool StopIfTrue { get; }
     #endregion
 
     #region 格式设置
-    /// <summary>
-    /// 获取数据条的边框对象
-    /// </summary>
-    IExcelDataBarBorder? Borders { get; }
 
-    /// <summary>
-    /// 获取数据条的颜色格式设置对象
-    /// </summary>
-    IExcelFormatColor? Color { get; }
+
+    IExcelDataBarBorder? BarBorder { get; }
+
+    int Type { get; }
+
+    bool ShowValue { get; set; }
 
     /// <summary>
     /// 获取负值数据条的格式设置对象
@@ -90,4 +136,25 @@ public interface IExcelDataBar : IDisposable
     /// </summary>
     string Formula { get; set; }
     #endregion
+
+    /// <summary>
+    /// 修改应用数据条格式的单元格范围
+    /// </summary>
+    /// <param name="Range">新的单元格范围</param>
+    void ModifyAppliesToRange(IExcelRange Range);
+
+    /// <summary>
+    /// 删除数据条条件格式规则
+    /// </summary>
+    void Delete();
+
+    /// <summary>
+    /// 将数据条条件格式规则的优先级设置为最低
+    /// </summary>
+    void SetLastPriority();
+
+    /// <summary>
+    /// 将数据条条件格式规则的优先级设置为最高
+    /// </summary>
+    void SetFirstPriority();
 }

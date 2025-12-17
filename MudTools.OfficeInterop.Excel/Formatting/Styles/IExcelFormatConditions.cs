@@ -82,7 +82,7 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlDatabar)
     /// </summary>
     /// <returns>新创建的条件格式规则对象</returns>
-    IExcelDataBar? AddDatabar();
+    IExcelDatabar? AddDatabar();
 
     /// <summary>
     /// 向集合中添加新的图标集条件格式规则
