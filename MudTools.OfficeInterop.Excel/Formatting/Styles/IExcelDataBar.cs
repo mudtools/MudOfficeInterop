@@ -120,10 +120,22 @@ public interface IExcelDatabar : IDisposable
     #region 格式设置
 
 
+    /// <summary>
+    /// 获取数据条边框格式设置对象
+    /// 对应 Databar.BarBorder 属性
+    /// </summary>
     IExcelDataBarBorder? BarBorder { get; }
 
+    /// <summary>
+    /// 获取数据条条件格式的类型
+    /// 对应 Databar.Type 属性
+    /// </summary>
     int Type { get; }
 
+    /// <summary>
+    /// 获取或设置是否在数据条上显示单元格值
+    /// 对应 Databar.ShowValue 属性
+    /// </summary>
     bool ShowValue { get; set; }
 
     /// <summary>

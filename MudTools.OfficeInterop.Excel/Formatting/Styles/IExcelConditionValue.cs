@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.ConditionValue 的安全访问和操作
 /// ConditionValue 对象通常用于定义 ColorScale 和 Databar 的最小值、中间值（ColorScale）和最大值点。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelConditionValue : IDisposable
 {
     #region 基础属性
@@ -24,7 +25,8 @@ public interface IExcelConditionValue : IDisposable
     /// <summary>
     /// 获取条件值对象所在的Application对象
     /// </summary>
-    IExcelApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置条件值的类型
