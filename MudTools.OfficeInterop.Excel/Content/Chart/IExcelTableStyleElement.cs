@@ -5,43 +5,50 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示 Excel 组合图表中系列连线（Series Lines）的封装接口。
-/// 对应 COM 对象：Microsoft.Office.Interop.Excel.SeriesLines
-/// 用于控制连接主次坐标轴数据系列的连线样式（如柱形图与折线图之间的连线）。
+/// 表示Excel中表格样式元素的接口，用于定义和操作Excel表格的样式元素
+/// 继承自IDisposable接口，支持资源释放功能
 /// </summary>
-public interface IExcelSeriesLines : IDisposable
+[ComObjectWrap(ComNamespace = "MsExcel")]
+public interface IExcelTableStyleElement : IDisposable
 {
     /// <summary>
-    /// 获取此对象的父对象（通常是 Chart 或 SeriesCollection）。
+    /// 获取父对象
     /// </summary>
     object? Parent { get; }
 
+
     /// <summary>
-    /// 获取此对象所属的 Excel 应用程序对象。
+    /// 获取与该样式元素关联的Excel应用程序对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取系列连线的边框格式（用于设置颜色、线型、粗细等）。
-    /// 返回封装后的 <see cref="IExcelBorder"/> 接口。
+    /// 获取或设置单元格内部属性（如背景色等）
     /// </summary>
-    IExcelBorder? Border { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
-    /// 获取系列连线的格式设置对象，用于控制其外观样式（如填充、线条、阴影等）。
+    /// 获取边框样式集合
     /// </summary>
-    IExcelChartFormat? Format { get; }
+    IExcelBorders? Borders { get; }
 
     /// <summary>
-    /// 选中此系列连线（激活并高亮显示）。
+    /// 获取字体样式设置
     /// </summary>
-    void Select();
+    IExcelFont? Font { get; }
 
     /// <summary>
-    /// 删除此系列连线（将其设为不可见，并从图表中移除）。
+    /// 获取或设置条纹大小
     /// </summary>
-    void Delete();
+    int StripeSize { get; set; }
+
+    /// <summary>
+    /// 清除样式元素的所有格式设置
+    /// </summary>
+    void Clear();
 }
