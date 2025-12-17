@@ -7,6 +7,18 @@ namespace MudTools.OfficeInterop.Excel;
 [ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface ISlicerPivotTables : IEnumerable<IExcelPivotTable>, IDisposable
 {
+    /// <summary>
+    /// 获取数据透视表集合所在的父对象（通常是 Worksheet）
+    /// 对应 PivotTables.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取数据透视表集合所在的Application对象
+    /// 对应 PivotTables.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
 
     #region 基础属性
     /// <summary>
@@ -30,17 +42,5 @@ public interface ISlicerPivotTables : IEnumerable<IExcelPivotTable>, IDisposable
     /// <returns>数据透视表对象</returns>
     IExcelPivotTable? this[string name] { get; }
 
-    /// <summary>
-    /// 获取数据透视表集合所在的父对象（通常是 Worksheet）
-    /// 对应 PivotTables.Parent 属性
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取数据透视表集合所在的Application对象
-    /// 对应 PivotTables.Application 属性
-    /// </summary>
-    [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication? Application { get; }
     #endregion
 }

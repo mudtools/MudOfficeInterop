@@ -7,6 +7,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.UpBars
 /// 用于设置上涨柱（开盘价低于收盘价）的填充、边框、可见性等。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelUpBars : IDisposable
 {
     /// <summary>
@@ -17,6 +18,7 @@ public interface IExcelUpBars : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
@@ -24,6 +26,11 @@ public interface IExcelUpBars : IDisposable
     /// 返回封装后的 <see cref="IExcelBorder"/> 接口。
     /// </summary>
     IExcelBorder? Border { get; }
+
+    /// <summary>
+    /// 获取上涨柱对象的名称。
+    /// </summary>
+    string Name { get; }
 
     /// <summary>
     /// 获取上涨柱的填充格式。
