@@ -15,6 +15,17 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
 {
     /// <summary>
+    /// 获取该对象的父对象。
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取一个 <see cref="IExcelApplication"/> 对象，该对象代表 Microsoft Excel 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
+    /// <summary>
     /// 获取集合中的数据标签总数。
     /// </summary>
     int Count { get; }
@@ -27,18 +38,13 @@ public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
     /// <returns>指定索引处的 <see cref="IExcelDataLabel"/> 对象。</returns>
     IExcelDataLabel? this[int index] { get; }
 
+    /// <summary>
+    /// 获取集合中指定索引处的数据标签。
+    /// 索引从 1 开始。
+    /// </summary>
+    /// <param name="name">数据标签的索引（从1开始）。</param>
+    /// <returns>指定索引处的 <see cref="IExcelDataLabel"/> 对象。</returns>
     IExcelDataLabel? this[string name] { get; }
-
-    /// <summary>
-    /// 获取该对象的父对象。
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取一个 <see cref="IExcelApplication"/> 对象，该对象代表 Microsoft Excel 应用程序。
-    /// </summary>
-    [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否在所有数据标签中显示图例项标示。

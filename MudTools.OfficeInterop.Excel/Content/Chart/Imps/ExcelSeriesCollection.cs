@@ -6,127 +6,66 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
-/// <summary>
-/// Excel SeriesCollection 对象的二次封装实现类
-/// 实现 IExcelSeriesCollection 接口
-/// </summary>
-internal class ExcelSeriesCollection : IExcelSeriesCollection
+
+
+partial class ExcelSeriesCollection
 {
-    private MsExcel.SeriesCollection _seriesCollection;
-    private bool _disposedValue = false;
-
-    internal ExcelSeriesCollection(MsExcel.SeriesCollection seriesCollection)
+    public object Extend(object source, XlRowCol rowcol = XlRowCol.xlRows, bool? categoryLabels = null)
     {
-        _seriesCollection = seriesCollection ?? throw new ArgumentNullException(nameof(seriesCollection));
-    }
+        if (_seriescollection == null)
+            throw new ObjectDisposedException(nameof(_seriescollection));
+        if (source is null)
+            throw new ArgumentNullException(nameof(source));
+        var sourceObj = source;
+        if (source is ExcelRange range)
+            sourceObj = range.InternalComObject;
+        var rowcolObj = rowcol.EnumConvert(MsExcel.XlRowCol.xlColumns);
+        var categoryLabelsObj = categoryLabels != null ? (object)categoryLabels : System.Type.Missing;
 
-    #region 基础属性
-    public int Count => _seriesCollection.Count;
-
-    public IExcelSeries this[int index]
-    {
-        get
-        {
-            MsExcel.Series series = _seriesCollection.Item(index);
-            return new ExcelSeries(series);
-        }
-    }
-    public object Parent => _seriesCollection.Parent;
-
-    public IExcelApplication Application => new ExcelApplication(_seriesCollection.Application);
-    #endregion
-
-    #region 创建和添加
-    public IExcelSeries Add()
-    {
-        MsExcel.Series newSeries = _seriesCollection.NewSeries();
-        return new ExcelSeries(newSeries);
-    }
-
-    public IExcelSeries CreateSeries(IExcelRange source, int rowcol = 1, bool seriesLabels = false, bool categoryLabels = false)
-    {
-        ExcelRange comSource = source as ExcelRange;
-
-        MsExcel.Series newSeries = _seriesCollection.Add(
-            comSource.InternalRange,
-            (MsExcel.XlRowCol)rowcol,
-            seriesLabels,
-            categoryLabels
-        );
-        return new ExcelSeries(newSeries);
-    }
-    #endregion
-
-    #region 操作方法  
-
-    public void Delete(int index)
-    {
         try
         {
-            MsExcel.Series seriesToDelete = _seriesCollection.Item(index);
-            seriesToDelete?.Delete();
+            var returnValue = _seriescollection?.Extend(sourceObj, rowcolObj, categoryLabelsObj);
+            return returnValue;
         }
-        catch
+        catch (COMException cx)
         {
-
+            throw new InvalidOperationException("执行Extend操作失败。", cx);
         }
-    }
-
-    public void Delete(IExcelSeries series)
-    {
-        if (series is ExcelSeries excelSeries && excelSeries != null)
+        catch (Exception ex)
         {
-            excelSeries.InternalComObject.Delete();
+            throw new ExcelOperationException("执行Extend操作失败", ex);
         }
     }
-    #endregion
 
-    #region IEnumerable<IExcelSeries> Support
-    public IEnumerator<IExcelSeries> GetEnumerator()
+    public IExcelSeries? Add(object source, XlRowCol rowcol = XlRowCol.xlRows, bool? seriesLabels = null, bool? categoryLabels = null, bool? replace = null)
     {
-        for (int i = 1; i <= _seriesCollection.Count; i++)
+        if (_seriescollection == null)
+            throw new ObjectDisposedException(nameof(_seriescollection));
+        if (source is null)
+            throw new ArgumentNullException(nameof(source));
+        var sourceObj = source;
+        if (source is ExcelRange range)
+            sourceObj = range.InternalComObject;
+
+        var rowcolObj = rowcol.EnumConvert(MsExcel.XlRowCol.xlColumns);
+        var seriesLabelsObj = seriesLabels != null ? (object)seriesLabels : System.Type.Missing;
+        var categoryLabelsObj = categoryLabels != null ? (object)categoryLabels : System.Type.Missing;
+        var replaceObj = replace != null ? (object)replace : System.Type.Missing;
+
+        try
         {
-            yield return new ExcelSeries(_seriesCollection.Item(i) as MsExcel.Series);
+            var comObj = _seriescollection?.Add(sourceObj, rowcolObj, seriesLabelsObj, categoryLabelsObj, replaceObj);
+            if (comObj == null)
+                return null;
+            return new ExcelSeries(comObj);
         }
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-    #endregion
-
-    #region IDisposable Support
-    protected virtual void Dispose(bool disposing)
-    {
-        if (_disposedValue) return;
-
-        if (disposing)
+        catch (COMException cx)
         {
-            try
-            {
-                // 释放底层COM对象
-                if (_seriesCollection != null)
-                    Marshal.ReleaseComObject(_seriesCollection);
-            }
-            catch
-            {
-                // 忽略释放过程中的异常
-            }
-            _seriesCollection = null;
+            throw new InvalidOperationException("添加对象操作失败。", cx);
         }
-        _disposedValue = true;
+        catch (Exception ex)
+        {
+            throw new ExcelOperationException("添加对象操作失败", ex);
+        }
     }
-
-    ~ExcelSeriesCollection()
-    {
-        Dispose(disposing: false);
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
-    #endregion
 }
