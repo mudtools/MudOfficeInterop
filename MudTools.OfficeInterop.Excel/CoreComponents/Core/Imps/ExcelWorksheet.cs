@@ -23,7 +23,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     /// </summary>
     private MsExcel.Worksheet? _worksheet;
 
-    internal MsExcel.Worksheet? Worksheet => _worksheet;
+    internal MsExcel.Worksheet? InternalComObject => _worksheet;
 
     /// <summary>
     /// 标记对象是否已被释放

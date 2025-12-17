@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel SeriesCollection 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.SeriesCollection 的安全访问和操作
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
 public interface IExcelSeriesCollection : IEnumerable<IExcelSeries>, IDisposable
 {
     #region 基础属性
@@ -19,13 +20,20 @@ public interface IExcelSeriesCollection : IEnumerable<IExcelSeries>, IDisposable
     /// </summary>
     int Count { get; }
 
+
     /// <summary>
-    /// 获取指定索引的系列对象
-    /// 索引从1开始
+    /// 通过索引获取系列集合中的元素
     /// </summary>
-    /// <param name="index">系列索引（从1开始）</param>
-    /// <returns>系列对象</returns>
+    /// <param name="index">要获取的系列的从零开始的索引</param>
+    /// <returns>指定索引处的 Excel 系列对象</returns>
     IExcelSeries this[int index] { get; }
+
+    /// <summary>
+    /// 通过名称获取系列集合中的元素
+    /// </summary>
+    /// <param name="name">要获取的系列的名称</param>
+    /// <returns>具有指定名称的 Excel 系列对象</returns>
+    IExcelSeries this[string name] { get; }
 
     /// <summary>
     /// 获取系列集合所在的父对象（通常是 Chart）
@@ -37,41 +45,51 @@ public interface IExcelSeriesCollection : IEnumerable<IExcelSeries>, IDisposable
     /// 获取系列集合所在的 Application 对象
     /// 对应 SeriesCollection.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
     #endregion
 
-    #region 创建和添加
     /// <summary>
-    /// 向集合中添加新的空数据系列
-    /// 对应 SeriesCollection.NewSeries 方法
+    /// 创建一个新的数据系列并将其添加到集合中
     /// </summary>
-    /// <returns>新创建的系列对象</returns>
-    IExcelSeries Add();
+    /// <returns>新创建的数据系列对象，如果创建失败则返回null</returns>
+    IExcelSeries? NewSeries();
 
     /// <summary>
-    /// 基于数据源创建新的数据系列
-    /// 对应 SeriesCollection.Add 方法
+    /// 扩展现有数据系列集合，将新的数据源添加到现有系列中
     /// </summary>
-    /// <param name="source">数据源，可以是 Range、Workbook.WorksheetFunction 或公式字符串</param>
-    /// <param name="rowcol">指定数据在源中的排列方式 (1=列, 2=行)</param>
-    /// <param name="seriesLabels">是否包含系列标签</param>
-    /// <param name="categoryLabels">是否包含分类标签</param>
-    /// <returns>新创建的系列对象</returns>
-    IExcelSeries CreateSeries(IExcelRange source, int rowcol = 1, bool seriesLabels = false, bool categoryLabels = false);
-    #endregion
-
-    #region 操作方法
-    /// <summary>
-    /// 删除指定索引的系列
-    /// </summary>
-    /// <param name="index">要删除的系列索引</param>
-    void Delete(int index);
+    /// <param name="source">数据源，可以是Range对象或其他数据源</param>
+    /// <param name="rowcol">指定数据排列方式，按行(XlRowCol.xlRows)或按列(XlRowCol.xlColumns)</param>
+    /// <param name="categoryLabels">是否将第一行/列作为分类标签处理</param>
+    /// <returns>扩展操作的结果对象</returns>
+    [IgnoreGenerator]
+    object Extend(object source, XlRowCol rowcol = XlRowCol.xlRows, bool? categoryLabels = null);
 
     /// <summary>
-    /// 删除指定的系列对象
+    /// 向集合中添加新的数据系列
     /// </summary>
-    /// <param name="series">要删除的系列对象</param>
-    void Delete(IExcelSeries series);
+    /// <param name="source">数据源，可以是Range对象或其他数据源</param>
+    /// <param name="rowcol">指定数据排列方式，按行(XlRowCol.xlRows)或按列(XlRowCol.xlColumns)</param>
+    /// <param name="seriesLabels">是否将第一行/列作为系列标签处理</param>
+    /// <param name="categoryLabels">是否将第一行/列作为分类标签处理</param>
+    /// <param name="replace">是否替换现有的冲突系列</param>
+    /// <returns>新添加的数据系列对象，如果添加失败则返回null</returns>
+    [IgnoreGenerator]
+    IExcelSeries? Add(object source,
+        XlRowCol rowcol = XlRowCol.xlRows,
+        bool? seriesLabels = null,
+        bool? categoryLabels = null,
+        bool? replace = null);
 
-    #endregion
+    /// <summary>
+    /// 将剪贴板中的数据粘贴到系列集合中
+    /// </summary>
+    /// <param name="rowcol">指定数据排列方式，按行(XlRowCol.xlRows)或按列(XlRowCol.xlColumns)</param>
+    /// <param name="seriesLabels">是否将第一行/列作为系列标签处理</param>
+    /// <param name="categoryLabels">是否将第一行/列作为分类标签处理</param>
+    /// <param name="replace">是否替换现有的冲突系列</param>
+    /// <param name="newSeries">是否创建新系列</param>
+    /// <returns>粘贴操作的结果对象</returns>
+    object Paste(XlRowCol rowcol = XlRowCol.xlRows, bool? seriesLabels = null,
+         bool? categoryLabels = null, bool? replace = null, bool? newSeries = null);
 }

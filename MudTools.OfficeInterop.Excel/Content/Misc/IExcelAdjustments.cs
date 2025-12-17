@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <remarks>
 /// 该接口继承自IEnumerable&lt;float&gt;和IDisposable，支持迭代访问和资源释放
 /// </remarks>
-[ComCollectionWrap(ComNamespace = "MsExcel")]
+[ComCollectionWrap(ComNamespace = "MsExcel"), NoneEnumerable]
 public interface IExcelAdjustments : IEnumerable<float>, IDisposable
 {
     /// <summary>

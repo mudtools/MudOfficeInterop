@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示Excel中图片的格式设置接口，提供对图片的各种格式属性和操作方法的访问
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPictureFormat : IDisposable
 {
     /// <summary>
@@ -20,6 +21,7 @@ public interface IExcelPictureFormat : IDisposable
     /// <summary>
     /// 获取与该图片格式相关联的Excel应用程序对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication Application { get; }
 
     /// <summary>
@@ -30,6 +32,7 @@ public interface IExcelPictureFormat : IDisposable
     /// <summary>
     /// 获取或设置图片的颜色类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPictureColorType ColorType { get; set; }
 
     /// <summary>
@@ -60,17 +63,18 @@ public interface IExcelPictureFormat : IDisposable
     /// <summary>
     /// 获取或设置图片是否具有透明背景
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool TransparentBackground { get; set; }
 
     /// <summary>
     /// 按指定增量增加或减少图片的亮度
     /// </summary>
-    /// <param name="Increment">亮度的增量值，正数增加亮度，负数减少亮度</param>
-    void IncrementBrightness(float Increment);
+    /// <param name="increment">亮度的增量值，正数增加亮度，负数减少亮度</param>
+    void IncrementBrightness(float increment);
 
     /// <summary>
     /// 按指定增量增加或减少图片的对比度
     /// </summary>
-    /// <param name="Increment">对比度的增量值，正数增加对比度，负数减少对比度</param>
-    void IncrementContrast(float Increment);
+    /// <param name="increment">对比度的增量值，正数增加对比度，负数减少对比度</param>
+    void IncrementContrast(float increment);
 }

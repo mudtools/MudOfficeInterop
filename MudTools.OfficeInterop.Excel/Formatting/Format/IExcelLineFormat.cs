@@ -9,6 +9,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel LineFormat 对象的二次封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelLineFormat : IDisposable
 {
     #region 基础属性
@@ -20,6 +21,7 @@ public interface IExcelLineFormat : IDisposable
     /// <summary>
     /// 获取线条对象所在的 Application 对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication Application { get; }
     #endregion
 
@@ -35,11 +37,6 @@ public interface IExcelLineFormat : IDisposable
     IExcelColorFormat? BackColor { get; }
 
     /// <summary>
-    /// 获取或设置线条颜色的RGB值
-    /// </summary>
-    int Color { get; set; }
-
-    /// <summary>
     /// 获取或设置线条的透明度
     /// </summary>
     float Transparency { get; set; }
@@ -48,52 +45,58 @@ public interface IExcelLineFormat : IDisposable
     /// <summary>
     /// 获取或设置线条的虚线样式（别名属性，实际对应DashStyle）
     /// </summary>
-    MsoLineDashStyle Style { get; set; }
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoLineStyle Style { get; set; }
 
     /// <summary>
     /// 获取或设置线条的实际虚线样式
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoLineDashStyle DashStyle { get; set; }
 
-    // 起点箭头
     /// <summary>
     /// 获取或设置线条起点箭头的长度
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoArrowheadLength BeginArrowheadLength { get; set; }
 
     /// <summary>
     /// 获取或设置线条起点箭头的样式
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoArrowheadStyle BeginArrowheadStyle { get; set; }
 
     /// <summary>
     /// 获取或设置线条起点箭头的宽度
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoArrowheadWidth BeginArrowheadWidth { get; set; }
 
     // 终点箭头
     /// <summary>
     /// 获取或设置线条终点箭头的长度
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoArrowheadLength EndArrowheadLength { get; set; }
 
     /// <summary>
     /// 获取或设置线条终点箭头的样式
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoArrowheadStyle EndArrowheadStyle { get; set; }
 
     /// <summary>
     /// 获取或设置线条终点箭头的宽度
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoArrowheadWidth EndArrowheadWidth { get; set; }
 
-    // 填充图案
     /// <summary>
     /// 获取或设置线条的填充图案类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPatternType Pattern { get; set; }
 
-    // 其他属性
     /// <summary>
     /// 获取或设置线条粗细
     /// </summary>
@@ -102,10 +105,12 @@ public interface IExcelLineFormat : IDisposable
     /// <summary>
     /// 获取或设置线条是否可见
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
     /// 获取或设置是否使用内嵌画笔绘制线条
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool InsetPen { get; set; }
 }

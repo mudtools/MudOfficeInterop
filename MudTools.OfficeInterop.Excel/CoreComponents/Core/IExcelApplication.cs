@@ -442,21 +442,6 @@ public interface IExcelApplication : IOfficeApplication
     bool AreContiguous(params IExcelRange[] ranges);
 
     /// <summary>
-    /// 合并区域并应用格式
-    /// </summary>
-    /// <param name="format">要应用的单元格格式</param>
-    /// <param name="ranges">要合并和格式化的区域集合</param>
-    void FormatUnionRange(IExcelCellFormat format, params IExcelRange[] ranges);
-
-    /// <summary>
-    /// 将单元格格式应用到指定区域
-    /// </summary>
-    /// <param name="range">目标区域</param>
-    /// <param name="format">单元格格式配置</param>
-    /// <param name="applyToSubAreas">是否应用到不连续的子区域</param>
-    void ApplyCellFormat(IExcelRange range, IExcelCellFormat format, bool applyToSubAreas = false);
-
-    /// <summary>
     /// 计算 Excel 公式
     /// </summary>
     /// <param name="formula">Excel 公式字符串</param>

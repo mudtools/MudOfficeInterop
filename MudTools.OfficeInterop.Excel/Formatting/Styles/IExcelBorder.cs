@@ -12,8 +12,23 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Border 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Border 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelBorder : IDisposable
 {
+
+    /// <summary>
+    /// 获取边框所在的父对象
+    /// 对应 Border.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取边框所在的Application对象
+    /// 对应 Border.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     #region 基础属性
     /// <summary>
     /// 获取或设置边框的线条样式
@@ -31,6 +46,7 @@ public interface IExcelBorder : IDisposable
     /// 获取或设置边框的颜色
     /// 对应 Border.Color 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     Color Color { get; set; }
 
     /// <summary>
@@ -43,45 +59,15 @@ public interface IExcelBorder : IDisposable
     /// 获取或设置边框的主题颜色
     /// 对应 Border.ThemeColor 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     Color ThemeColor { get; set; }
 
     /// <summary>
     /// 获取或设置边框的着色和阴影
     /// 对应 Border.TintAndShade 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     double TintAndShade { get; set; }
-
-    /// <summary>
-    /// 获取边框所在的父对象
-    /// 对应 Border.Parent 属性
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取边框所在的Application对象
-    /// 对应 Border.Application 属性
-    /// </summary>
-    IExcelApplication? Application { get; }
-    #endregion
-
-    #region 格式设置  
-
-    /// <summary>
-    /// 重置边框为默认值
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 复制边框格式
-    /// </summary>
-    /// <param name="sourceBorder">源边框</param>
-    void CopyFormat(IExcelBorder sourceBorder);
-
-    /// <summary>
-    /// 应用预设样式
-    /// </summary>
-    /// <param name="presetStyle">预设样式类型</param>
-    void ApplyPresetStyle(int presetStyle);
 
     #endregion
 }

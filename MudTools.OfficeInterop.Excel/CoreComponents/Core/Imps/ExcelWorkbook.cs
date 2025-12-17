@@ -534,8 +534,8 @@ internal partial class ExcelWorkbook : IExcelWorkbook
             ExcelWorksheet? afterSheet = after as ExcelWorksheet;
 
             return _workbook.Worksheets.Add(
-                                    beforeSheet?.Worksheet,
-                                    afterSheet?.Worksheet,
+                                    beforeSheet?.InternalComObject,
+                                    afterSheet?.InternalComObject,
                                     count,
                 (MsExcel.XlSheetType)type
             ) is MsExcel.Worksheet worksheet ? new ExcelWorksheet(worksheet) : null;

@@ -11,8 +11,20 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Hyperlink 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Hyperlink 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelHyperlink : IDisposable
 {
+    /// <summary>
+    /// 获取对象的父对象 
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取对象所在的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取超链接的名称
     /// 对应 Hyperlink.Name 属性
@@ -53,13 +65,13 @@ public interface IExcelHyperlink : IDisposable
     /// 获取与超链接关联的形状对象
     /// 对应 Hyperlink.Shape 属性
     /// </summary>
-    IExcelShape Shape { get; }
+    IExcelShape? Shape { get; }
 
     /// <summary>
     /// 获取超链接所在的区域对象
     /// 对应 Hyperlink.Range 属性
     /// </summary>
-    IExcelRange Range { get; }
+    IExcelRange? Range { get; }
 
     /// <summary>
     /// 获取超链接的类型

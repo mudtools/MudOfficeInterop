@@ -120,14 +120,14 @@ internal class ExcelFormatConditions : IExcelFormatConditions
         return new ExcelFormatCondition(newCondition);
     }
 
-    public IExcelDataBar? AddDatabar()
+    public IExcelDatabar? AddDatabar()
     {
         if (_formatConditions == null)
             return null;
 
         var dataBarObj = _formatConditions.AddDatabar();
         if (dataBarObj != null && dataBarObj is MsExcel.Databar dataBar)
-            return new ExcelDataBar(dataBar);
+            return new ExcelDatabar(dataBar);
         return null;
     }
 

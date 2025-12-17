@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel DataTable 对象的二次封装接口 (图表中的数据表)
 /// 提供对 Microsoft.Office.Interop.Excel.DataTable 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelDataTable : IDisposable
 {
     #region 基础属性    
@@ -24,6 +25,7 @@ public interface IExcelDataTable : IDisposable
     /// 获取数据表对象所在的 Application 对象
     /// 对应 DataTable.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
     #endregion
 
@@ -38,6 +40,7 @@ public interface IExcelDataTable : IDisposable
     /// 获取或设置是否自动缩放字体
     /// 对应 DataTable.AutoScaleFont 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoScaleFont { get; set; }
 
     /// <summary>
@@ -90,16 +93,6 @@ public interface IExcelDataTable : IDisposable
     /// 对应 DataTable.Delete 方法 (如果存在，但通常不直接调用)
     /// </summary>
     void Delete();
-    #endregion   
+    #endregion  
 
-    #region 格式设置方法  
-
-    /// <summary>
-    /// 设置数据表样式
-    /// </summary>
-    /// <param name="hasHorizontal">是否有水平边框</param>
-    /// <param name="hasVertical">是否有垂直边框</param>
-    /// <param name="hasOutline">是否有轮廓边框</param>
-    void SetDataTableStyle(bool hasHorizontal, bool hasVertical, bool hasOutline);
-    #endregion   
 }

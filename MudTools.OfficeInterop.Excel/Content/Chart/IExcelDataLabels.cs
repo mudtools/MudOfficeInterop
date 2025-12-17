@@ -1,4 +1,9 @@
-
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
+//
+// 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel;
 
@@ -6,8 +11,20 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示图表系列中所有数据标签的集合。
 /// 此接口是对 Microsoft.Office.Interop.Excel.DataLabels COM 对象的封装。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
 public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
 {
+    /// <summary>
+    /// 获取该对象的父对象。
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取一个 <see cref="IExcelApplication"/> 对象，该对象代表 Microsoft Excel 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取集合中的数据标签总数。
     /// </summary>
@@ -22,14 +39,12 @@ public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
     IExcelDataLabel? this[int index] { get; }
 
     /// <summary>
-    /// 获取该对象的父对象。
+    /// 获取集合中指定索引处的数据标签。
+    /// 索引从 1 开始。
     /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取一个 <see cref="IExcelApplication"/> 对象，该对象代表 Microsoft Excel 应用程序。
-    /// </summary>
-    IExcelApplication? Application { get; }
+    /// <param name="name">数据标签的索引（从1开始）。</param>
+    /// <returns>指定索引处的 <see cref="IExcelDataLabel"/> 对象。</returns>
+    IExcelDataLabel? this[string name] { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否在所有数据标签中显示图例项标示。
@@ -94,12 +109,12 @@ public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
     /// <summary>
     /// 获取或设置所有数据标签的水平对齐方式。
     /// </summary>
-    object? HorizontalAlignment { get; set; }
+    XlHAlign? HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置所有数据标签的垂直对齐方式。
     /// </summary>
-    object? VerticalAlignment { get; set; }
+    XlVAlign? VerticalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置所有数据标签文本的阅读顺序。
@@ -109,7 +124,9 @@ public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
     /// <summary>
     /// 获取或设置所有数据标签文本的方向（角度）。
     /// </summary>
-    object? Orientation { get; set; }
+    XlOrientation? Orientation { get; set; }
+
+    object Select();
 
     /// <summary>
     /// 删除集合中的所有数据标签。
@@ -120,5 +137,5 @@ public interface IExcelDataLabels : IEnumerable<IExcelDataLabel>, IDisposable
     /// 将单个数据标签的内容和格式应用到系列中的所有其他数据标签。
     /// </summary>
     /// <param name="index">要传播的单个数据标签的索引。</param>
-    void Propagate(int index);
+    void Propagate(int? index);
 }

@@ -12,16 +12,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.ControlFormat
 /// 用于管理控件的列表项、当前值、范围、多选等属性。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelControlFormat : IDisposable
 {
     /// <summary>
-    /// 获取此对象的父对象（通常是 Shape）。
+    /// 获取此对象的父对象。
     /// </summary>
     object Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
@@ -43,7 +45,7 @@ public interface IExcelControlFormat : IDisposable
     /// <summary>
     /// 获取或设置控件是否允许多选（适用于列表框）。
     /// </summary>
-    bool MultiSelect { get; set; }
+    int MultiSelect { get; set; }
 
     /// <summary>
     /// 获取控件中列表项的总数。
@@ -89,23 +91,16 @@ public interface IExcelControlFormat : IDisposable
     /// </summary>
     /// <param name="text">要添加的文本。</param>
     /// <param name="index">插入位置（从1开始），0=追加到末尾。</param>
-    void AddItem(string text, int index = 0);
+    void AddItem(string text, int? index = 0);
 
     /// <summary>
     /// 从控件列表中移除指定索引的项。
     /// </summary>
     /// <param name="index">要删除的项索引（从1开始）。</param>
-    void RemoveItem(int index);
+    void RemoveItem(int index, int? count = null);
 
     /// <summary>
     /// 清空控件中的所有列表项。
     /// </summary>
     void RemoveAllItems();
-
-    /// <summary>
-    /// 获取指定索引项的文本内容。
-    /// </summary>
-    /// <param name="index">项索引（从1开始）。</param>
-    /// <returns>项文本，若无效则返回空字符串。</returns>
-    string GetItemText(int index);
 }

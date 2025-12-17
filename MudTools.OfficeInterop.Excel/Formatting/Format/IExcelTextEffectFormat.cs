@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.TextEffectFormat
 /// 用于控制艺术字的文字方向、对齐、缩放、路径样式等。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelTextEffectFormat : IDisposable
 {
     /// <summary>
@@ -21,12 +22,14 @@ public interface IExcelTextEffectFormat : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取或设置艺术字的对齐方式（左对齐、居中、右对齐等）。
     /// 使用 <see cref="MsoTextEffectAlignment"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextEffectAlignment Alignment { get; set; }
 
     /// <summary>
@@ -34,6 +37,7 @@ public interface IExcelTextEffectFormat : IDisposable
     /// 该属性值对应于艺术字库对话框中从左到右、从上到下排列的格式。
     /// 设置此属性会自动设置指定形状的许多其他格式属性。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetTextEffect PresetTextEffect { get; set; }
 
     /// <summary>
@@ -44,21 +48,25 @@ public interface IExcelTextEffectFormat : IDisposable
     /// <summary>
     /// 获取或设置艺术字是否使用粗体样式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool FontBold { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字是否使用斜体样式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool FontItalic { get; set; }
 
     /// <summary>
     /// 获取或设置是否将所有字符调整为相同高度（规范化高度）。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool NormalizedHeight { get; set; }
 
     /// <summary>
     /// 获取或设置字符是否沿路径旋转（适用于弯曲或倾斜的艺术字效果）。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool RotatedChars { get; set; }
 
     /// <summary>
@@ -76,12 +84,14 @@ public interface IExcelTextEffectFormat : IDisposable
     /// <summary>
     /// 获取或设置艺术字是否保持文本比例（锁定宽高比）。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool KernedPairs { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字的预设文本路径样式（如拱形、波浪形等）。
     /// 使用 <see cref="MsoPresetTextEffectShape"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetTextEffectShape PresetShape { get; set; }
 
 

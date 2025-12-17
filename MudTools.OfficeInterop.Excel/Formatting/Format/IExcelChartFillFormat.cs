@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.FillFormat 或 ChartFillFormat 的安全访问和操作
 /// 用于设置形状或图表元素的背景填充
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelChartFillFormat : IDisposable
 {
     #region 基础属性
@@ -23,6 +24,7 @@ public interface IExcelChartFillFormat : IDisposable
     /// <summary>
     /// 获取填充对象所在的 Application 对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication Application { get; }
     #endregion
 
@@ -43,19 +45,20 @@ public interface IExcelChartFillFormat : IDisposable
     /// 获取或设置填充类型
     /// 对应 FillFormat.Type (使用 MsoFillType 枚举对应的 int 值)
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoFillType? Type { get; }
 
     /// <summary>
     /// 获取或设置图案类型 (如果 FillType 为 msoFillPatterned)
     /// 对应 FillFormat.Pattern (使用 MsoPatternType 枚举对应的 int 值)
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPatternType? Pattern { get; }
 
-    // --- 渐变填充属性 (占位符) ---
-    // 这些属性较为复杂，需要更细致的封装
     /// <summary>
     /// 获取或设置渐变填充的样式
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoGradientStyle? GradientStyle { get; }
     /// <summary>
     /// 获取或设置渐变填充的变体
@@ -64,6 +67,7 @@ public interface IExcelChartFillFormat : IDisposable
     /// <summary>
     /// 获取或设置渐变填充的颜色类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoGradientColorType? GradientColorType { get; }
 
     /// <summary>
@@ -79,42 +83,78 @@ public interface IExcelChartFillFormat : IDisposable
     /// <summary>
     /// 获取或设置预设渐变类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetGradientType? PresetGradientType { get; }
 
     /// <summary>
     /// 获取或设置预设纹理类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetTexture? PresetTexture { get; }
 
     /// <summary>
     /// 获取或设置纹理类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextureType? TextureType { get; }
-    // /// <summary>
-    // /// 设置指定索引的渐变停止点颜色
-    // /// </summary>
-    // /// <param name="index">停止点索引 (1-based)</param>
-    // /// <param name="color">RGB 颜色值</param>
-    // void SetGradientStopColor(int index, int color);
-    // /// <summary>
-    // /// 设置指定索引的渐变停止点位置
-    // /// </summary>
-    // /// <param name="index">停止点索引 (1-based)</param>
-    // /// <param name="position">位置 (0.0 到 1.0)</param>
-    // void SetGradientStopPosition(int index, float position);
+
+    /// <summary>
+    /// 获取或设置填充格式是否可见
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Visible { get; set; }
+
     #endregion
 
     #region 操作方法
     /// <summary>
-    /// 将填充设置为纯色
-    /// 对应 FillFormat.Solid 方法
+    /// 设置单色渐变填充效果
     /// </summary>
-    void SetSolid();
+    /// <param name="style">渐变样式</param>
+    /// <param name="variant">渐变变体 (1-4之间的整数)</param>
+    /// <param name="degree">渐变程度 (0.0-1.0之间的浮点数)</param>
+    void OneColorGradient([ComNamespace("MsCore")] MsoGradientStyle style, int variant, float degree);
 
     /// <summary>
-    /// 将填充设置为无填充
-    /// 对应 FillFormat.Visible = MsoTriState.msoFalse
+    /// 设置双色渐变填充效果
     /// </summary>
-    void SetNoFill();
+    /// <param name="style">渐变样式</param>
+    /// <param name="variant">渐变变体 (1-4之间的整数)</param>
+    void TwoColorGradient([ComNamespace(Name = "MsCore")] MsoGradientStyle style, int variant);
+
+    /// <summary>
+    /// 设置纯色填充效果
+    /// </summary>
+    void Solid();
+
+    /// <summary>
+    /// 设置预设纹理填充效果
+    /// </summary>
+    /// <param name="presetTexture">预设纹理类型</param>
+    void PresetTextured([ComNamespace("MsCore")] MsoPresetTexture presetTexture);
+
+    /// <summary>
+    /// 设置图案填充效果
+    /// </summary>
+    /// <param name="pattern">图案类型</param>
+    void Patterned([ComNamespace("MsCore")] MsoPatternType pattern);
+
+    /// <summary>
+    /// 使用用户指定的图片作为填充
+    /// </summary>
+    /// <param name="pictureFile">图片文件路径</param>
+    /// <param name="pictureFormat">图片格式，默认为拉伸</param>
+    /// <param name="pictureStackUnit">图片堆叠单位</param>
+    /// <param name="PicturePlacement">图片放置位置，默认为侧面</param>
+    void UserPicture(string pictureFile,
+        XlChartPictureType? pictureFormat = null,
+        int? pictureStackUnit = null,
+        XlChartPicturePlacement? PicturePlacement = null);
+
+    /// <summary>
+    /// 使用用户指定的纹理图片作为填充
+    /// </summary>
+    /// <param name="textureFile">纹理图片文件路径</param>
+    void UserTextured(string textureFile);
     #endregion
 }

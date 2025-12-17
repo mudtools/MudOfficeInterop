@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.ChartGroup
 /// 用于控制系列的间隙宽度、重叠、坐标轴、数据标签、趋势线等共享属性。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelChartGroup : IDisposable
 {
     /// <summary>
@@ -22,6 +23,7 @@ public interface IExcelChartGroup : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
@@ -53,8 +55,8 @@ public interface IExcelChartGroup : IDisposable
 
     /// <summary>
     /// 获取图表组的类型（柱形图、折线图、饼图等）。
-    /// 使用 <see cref="XlChartType"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoChartType Type { get; }
 
     /// <summary>
@@ -62,11 +64,6 @@ public interface IExcelChartGroup : IDisposable
     /// </summary>
     int Index { get; }
 
-    /// <summary>
-    /// 获取图表组中的系列集合。
-    /// 返回封装后的 <see cref="IExcelSeriesCollection"/> 接口。
-    /// </summary>
-    IExcelSeriesCollection? SeriesCollection(int? index = null);
 
     /// <summary>
     /// 获取图表组的系列连线对象，用于设置系列之间的连接线格式
@@ -119,6 +116,7 @@ public interface IExcelChartGroup : IDisposable
     /// 获取或设置图表分割的临界值
     /// 根据 <see cref="SplitType"/> 的不同，表示位置、值或百分比
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     double SplitValue { get; set; }
 
     /// <summary>
@@ -156,4 +154,49 @@ public interface IExcelChartGroup : IDisposable
     /// 返回封装后的 <see cref="IExcelDropLines"/> 接口。
     /// </summary>
     IExcelDropLines? DropLines { get; }
+
+
+    /// <summary>
+    /// 获取图表组中的系列集合。
+    /// 返回封装后的 <see cref="IExcelSeriesCollection"/> 接口。
+    /// </summary>
+    [ReturnValueConvert]
+    IExcelSeriesCollection? SeriesCollection();
+
+    /// <summary>
+    /// 获取图表组中的系列集合。
+    /// 返回封装后的 <see cref="IExcelSeries"/> 接口。
+    /// </summary>
+    [ReturnValueConvert]
+    IExcelSeries? SeriesCollection(int index);
+
+    /// <summary>
+    /// 获取图表组中的分类集合。
+    /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
+    /// </summary>
+    [ReturnValueConvert]
+    IExcelCategoryCollection CategoryCollection();
+
+    /// <summary>
+    /// 获取图表组中指定索引的图表分类。
+    /// 返回封装后的 <see cref="IExcelChartCategory"/> 接口。
+    /// </summary>
+    /// <param name="index">要获取的图表分类的索引</param>
+    [ReturnValueConvert]
+    IExcelChartCategory CategoryCollection(int index);
+
+    /// <summary>
+    /// 获取图表组中的完整分类集合。
+    /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
+    /// </summary>
+    [ReturnValueConvert]
+    IExcelCategoryCollection FullCategoryCollection();
+
+    /// <summary>
+    /// 获取图表组中指定索引的完整分类集合。
+    /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
+    /// </summary>
+    /// <param name="index">要获取的分类集合的索引</param>
+    [ReturnValueConvert]
+    IExcelCategoryCollection FullCategoryCollection(int index);
 }

@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
@@ -12,6 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.ChartColorFormat 的安全访问和操作
 /// 用于设置形状或图表元素的颜色
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelChartColorFormat : IDisposable
 {
     /// <summary>
@@ -22,6 +25,7 @@ public interface IExcelChartColorFormat : IDisposable
     /// <summary>
     /// 获取应用程序对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication Application { get; }
 
     /// <summary>
@@ -32,27 +36,12 @@ public interface IExcelChartColorFormat : IDisposable
     /// <summary>
     /// 获取或设置RGB颜色值
     /// </summary>
-    int RGB { get; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color RGB { get; }
 
     /// <summary>
     /// 获取或设置颜色方案索引
     /// </summary>
-    int SchemeColor { get; set; }
-
-    /// <summary>
-    /// 获取颜色的HSL值
-    /// </summary>
-    /// <param name="hue">色相</param>
-    /// <param name="saturation">饱和度</param>
-    /// <param name="lightness">亮度</param>
-    void GetHSL(out double hue, out double saturation, out double lightness);
-
-    /// <summary>
-    /// 混合两种颜色
-    /// </summary>
-    /// <param name="color1">第一种颜色</param>
-    /// <param name="color2">第二种颜色</param>
-    /// <param name="ratio">混合比例</param>
-    /// <returns>混合后的颜色</returns>
-    int BlendColors(int color1, int color2, double ratio);
+    [ComPropertyWrap(NeedConvert = true)]
+    Color SchemeColor { get; set; }
 }

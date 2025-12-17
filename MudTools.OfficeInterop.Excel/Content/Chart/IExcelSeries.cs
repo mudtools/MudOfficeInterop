@@ -5,11 +5,14 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel Series 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Series 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelSeries : IDisposable
 {
     #region 基础属性
@@ -29,13 +32,14 @@ public interface IExcelSeries : IDisposable
     /// 获取数据系列所在的 Application 对象
     /// 对应 Series.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置系列的图表类型
     /// 对应 Series.ChartType 属性
     /// </summary>
-    MsoChartType ChartType { get; set; }
+    XlChartType ChartType { get; set; }
 
     /// <summary>
     /// 获取或设置数据系列的坐标轴组
@@ -122,25 +126,121 @@ public interface IExcelSeries : IDisposable
     /// 获取或设置系列的标记背景色
     /// 对应 Series.MarkerBackgroundColor 属性
     /// </summary>
-    int MarkerBackgroundColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color MarkerBackgroundColor { get; set; }
 
     /// <summary>
     /// 获取或设置系列的标记背景色索引
     /// 对应 Series.MarkerBackgroundColorIndex 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex MarkerBackgroundColorIndex { get; set; }
 
     /// <summary>
     /// 获取或设置系列的标记前景色
     /// 对应 Series.MarkerForegroundColor 属性
     /// </summary>
-    int MarkerForegroundColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color MarkerForegroundColor { get; set; }
 
     /// <summary>
     /// 获取或设置系列的标记前景色索引
     /// 对应 Series.MarkerForegroundColorIndex 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex MarkerForegroundColorIndex { get; set; }
+
+    /// <summary>
+    /// 获取或设置图片图表类型
+    /// 对应 Series.PictureType 属性
+    /// </summary>
+    XlChartPictureType PictureType { get; set; }
+
+    /// <summary>
+    /// 获取或设置图片单位大小（整数形式）
+    /// 对应 Series.PictureUnit 属性
+    /// </summary>
+    int PictureUnit { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据系列的类型
+    /// 对应 Series.Type 属性
+    /// </summary>
+    int Type { get; set; }
+
+    /// <summary>
+    /// 获取或设置三维条形图形状
+    /// 对应 Series.BarShape 属性
+    /// </summary>
+    XlBarShape BarShape { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否将图片应用于柱体的侧面
+    /// 对应 Series.ApplyPictToSides 属性
+    /// </summary>
+    bool ApplyPictToSides { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否将图片应用于柱体的正面
+    /// 对应 Series.ApplyPictToFront 属性
+    /// </summary>
+    bool ApplyPictToFront { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否将图片应用于柱体的末端
+    /// 对应 Series.ApplyPictToEnd 属性
+    /// </summary>
+    bool ApplyPictToEnd { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据系列是否具有三维效果
+    /// 对应 Series.Has3DEffect 属性
+    /// </summary>
+    bool Has3DEffect { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据系列是否具有阴影效果
+    /// 对应 Series.Shadow 属性
+    /// </summary>
+    bool Shadow { get; set; }
+
+    /// <summary>
+    /// 获取或设置图片单位大小（浮点数形式）
+    /// 对应 Series.PictureUnit2 属性
+    /// </summary>
+    double PictureUnit2 { get; set; }
+
+    /// <summary>
+    /// 获取绘图区的颜色索引
+    /// 对应 Series.PlotColorIndex 属性
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    XlColorIndex PlotColorIndex { get; }
+
+    /// <summary>
+    /// 获取或设置反转颜色
+    /// 对应 Series.InvertColor 属性
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    Color InvertColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置反转颜色索引
+    /// 对应 Series.InvertColorIndex 属性
+    /// </summary>
+    int InvertColorIndex { get; set; }
+
+    /// <summary>
+    /// 获取数据标签的引导线对象
+    /// 对应 Series.LeaderLines 属性
+    /// </summary>
+    IExcelLeaderLines LeaderLines { get; }
+
+    /// <summary>
+    /// 获取或设置数据系列是否被筛选隐藏
+    /// 对应 Series.IsFiltered 属性
+    /// </summary>
+    bool IsFiltered { get; set; }
 
 
     /// <summary>
@@ -154,6 +254,19 @@ public interface IExcelSeries : IDisposable
     /// 对应 Series.PlotOrder 属性
     /// </summary>
     int PlotOrder { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据系列的分离程度（饼图扇区分离距离）
+    /// 对应 Series.Explosion 属性
+    /// </summary>
+    int Explosion { get; set; }
+
+    /// <summary>
+    /// 获取或设置当值为负数时是否反转颜色
+    /// 对应 Series.InvertIfNegative 属性
+    /// </summary>
+    bool InvertIfNegative { get; set; }
+
     #endregion
 
     #region 状态属性
@@ -176,12 +289,6 @@ public interface IExcelSeries : IDisposable
     /// 对应 Series.HasErrorBars 属性
     /// </summary>
     bool HasErrorBars { get; set; }
-
-    /// <summary>
-    /// 获取系列是否被保护 (通常由图表或工作表保护决定)
-    /// 对应 Series.IsProtected 属性 (如果存在，或通过父级判断)
-    /// </summary>
-    bool IsProtected { get; }
     #endregion
 
     #region 图表元素 (子对象)
@@ -196,7 +303,7 @@ public interface IExcelSeries : IDisposable
     /// 获取系列的X轴误差线
     /// 对应 Series.ErrorBars 属性 (通常指Y轴误差线，X轴需要特殊获取)
     /// </summary>
-    IExcelErrorBars? ErrorBars { get; } // 通常指 Y Error Bars
+    IExcelErrorBars? ErrorBars { get; }
 
     #endregion
 
@@ -210,6 +317,7 @@ public interface IExcelSeries : IDisposable
     /// <param name="type">误差线类型，如固定值、百分比、标准偏差等</param>
     /// <param name="amount">正误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
     /// <param name="minusValues">负误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
+    [ReturnValueConvert]
     IExcelErrorBars? ErrorBar(XlErrorBarDirection direction, XlErrorBarInclude include, XlErrorBarType type, object? amount = null, object? minusValues = null);
 
     /// <summary>
@@ -217,6 +325,7 @@ public interface IExcelSeries : IDisposable
     /// 对应 Series.Trendlines() 方法
     /// </summary>
     /// <returns>趋势线集合 <see cref="IExcelTrendlines"/> 对象，如果获取失败则返回 null</returns>
+    [ReturnValueConvert]
     IExcelTrendlines? Trendlines();
 
     /// <summary>
@@ -225,6 +334,7 @@ public interface IExcelSeries : IDisposable
     /// </summary>
     /// <param name="trendlineType">趋势线类型 <see cref="XlTrendlineType"/></param>
     /// <returns>趋势线对象 <see cref="IExcelTrendline"/>，如果获取失败则返回 null</returns>
+    [ReturnValueConvert]
     IExcelTrendline? Trendlines(XlTrendlineType trendlineType);
 
     /// <summary>
@@ -232,39 +342,73 @@ public interface IExcelSeries : IDisposable
     /// 对应 Series.DataLabels() 方法
     /// </summary>
     /// <returns>数据标签集合 <see cref="IExcelDataLabels"/> 对象，如果获取失败则返回 null</returns>
+    [ReturnValueConvert]
     IExcelDataLabels? DataLabels();
 
     /// <summary>
     /// 获取数据系列中特定索引的数据标签
     /// 对应 Series.DataLabels(object) 方法
     /// </summary>
-    /// <param name="obj">指定要返回的数据标签的索引号或标识</param>
+    /// <param name="index">指定要返回的数据标签的索引号或标识</param>
     /// <returns>指定的数据标签 <see cref="IExcelDataLabel"/> 对象，如果获取失败则返回 null</returns>
-    IExcelDataLabel? DataLabels(object obj);
+    [ReturnValueConvert]
+    IExcelDataLabel? DataLabels(int index);
+
+    /// <summary>
+    /// 获取数据系列中特定索引的数据标签
+    /// 对应 Series.DataLabels(object) 方法
+    /// </summary>
+    /// <param name="name">指定要返回的数据标签的索引号或标识</param>
+    /// <returns>指定的数据标签 <see cref="IExcelDataLabel"/> 对象，如果获取失败则返回 null</returns>
+    [ReturnValueConvert]
+    IExcelDataLabel? DataLabels(string name);
 
     /// <summary>
     /// 选择数据系列
     /// 对应 Series.Select 方法
     /// </summary>
-    void Select();
+    object? Select();
 
     /// <summary>
     /// 删除数据系列
     /// 对应 Series.Delete 方法
     /// </summary>
-    void Delete();
+    object? Delete();
 
     /// <summary>
     /// 清除数据系列格式
     /// 对应 Series.ClearFormats 方法
     /// </summary>
-    void ClearFormats();
+    object? ClearFormats();
 
     /// <summary>
     /// 复制数据系列
     /// 对应 Series.Copy 方法
     /// </summary>
-    void Copy();
+    object? Copy();
+
+    /// <summary>
+    /// 获取数据系列中的所有数据点
+    /// </summary>
+    /// <returns>IExcelPoints 对象，包含系列中的所有数据点</returns>
+    [ReturnValueConvert]
+    IExcelPoints? Points();
+
+    /// <summary>
+    /// 根据名称获取数据系列中的特定数据点
+    /// </summary>
+    /// <param name="name">数据点的名称</param>
+    /// <returns>IExcelPoint 对象，表示指定名称的数据点</returns>
+    [ReturnValueConvert]
+    IExcelPoint? Points(string name);
+
+    /// <summary>
+    /// 根据索引获取数据系列中的特定数据点
+    /// </summary>
+    /// <param name="index">数据点在系列中的索引位置</param>
+    /// <returns>IExcelPoint 对象，表示指定索引位置的数据点</returns>
+    [ReturnValueConvert]
+    IExcelPoint? Points(int index);
     #endregion
 
     #region 图表操作
@@ -289,16 +433,12 @@ public interface IExcelSeries : IDisposable
                                   bool showPercentage = false, bool showBubbleSize = false,
                                   string? separator = null);
 
-    #endregion
 
-    #region 格式设置方法    
     /// <summary>
-    /// 设置系列标记
+    /// 将自定义图表类型应用于当前数据系列
     /// </summary>
-    /// <param name="style">标记样式</param>
-    /// <param name="size">标记大小</param>
-    /// <param name="backgroundColor">背景色</param>
-    /// <param name="foregroundColor">前景色</param>
-    void SetMarker(XlMarkerStyle style, int size, int backgroundColor, int foregroundColor);
-    #endregion    
+    /// <param name="ChartType">指定要应用的图表类型，该类型定义了数据系列的可视化表现形式</param>
+    void ApplyCustomType(XlChartType ChartType);
+
+    #endregion
 }

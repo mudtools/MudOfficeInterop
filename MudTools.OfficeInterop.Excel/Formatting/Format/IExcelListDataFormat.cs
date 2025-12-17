@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：Microsoft.Office.Interop.Excel.ListDataFormat
 /// 提供数据类型、校验、默认值等只读属性。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelListDataFormat : IDisposable
 {
     /// <summary>
@@ -22,6 +23,7 @@ public interface IExcelListDataFormat : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication Application { get; }
 
     /// <summary>
@@ -46,6 +48,10 @@ public interface IExcelListDataFormat : IDisposable
     /// </summary>
     XlListDataType Type { get; }
 
+    /// <summary>
+    /// 获取该列中文本数据的最大字符数限制。
+    /// 如果未设置限制或类型不支持，返回 0。
+    /// </summary>
     int MaxCharacters { get; }
 
     /// <summary>
@@ -66,6 +72,10 @@ public interface IExcelListDataFormat : IDisposable
     bool ReadOnly { get; }
 
 
+    /// <summary>
+    /// 获取该列数值类型数据的小数位数。
+    /// 如果未设置或类型不支持，返回 0。
+    /// </summary>
     int DecimalPlaces { get; }
 
 }

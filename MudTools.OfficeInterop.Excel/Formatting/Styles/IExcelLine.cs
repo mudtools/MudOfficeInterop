@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.LineFormat 的安全访问和操作
 /// 用于设置形状或图表元素的边框线条
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelLine : IDisposable
 {
     #region 基础属性
@@ -23,7 +24,8 @@ public interface IExcelLine : IDisposable
     /// <summary>
     /// 获取线条对象所在的 Application 对象
     /// </summary>
-    IExcelApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 线条属性
@@ -85,6 +87,7 @@ public interface IExcelLine : IDisposable
     /// <summary>
     /// 获取或设置箭头头部长度
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     float ArrowHeadLength { get; set; }
 
     /// <summary>
@@ -123,37 +126,37 @@ public interface IExcelLine : IDisposable
     /// 将对象放到最前面
     /// </summary>
     /// <returns>操作结果</returns>
-    object BringToFront();
+    object? BringToFront();
 
     /// <summary>
     /// 将对象放到最后面
     /// </summary>
     /// <returns>操作结果</returns>
-    object SendToBack();
+    object? SendToBack();
 
     /// <summary>
     /// 剪切对象
     /// </summary>
     /// <returns>操作结果</returns>
-    object Cut();
+    object? Cut();
 
     /// <summary>
     /// 复制对象
     /// </summary>
     /// <returns>操作结果</returns>
-    object Copy();
+    object? Copy();
 
     /// <summary>
     /// 删除对象
     /// </summary>
     /// <returns>操作结果</returns>
-    object Delete();
+    object? Delete();
 
     /// <summary>
     /// 复制对象
     /// </summary>
     /// <returns>复制的对象</returns>
-    object Duplicate();
+    object? Duplicate();
 
     /// <summary>
     /// 复制对象图片
@@ -161,13 +164,13 @@ public interface IExcelLine : IDisposable
     /// <param name="appearance">图片外观样式</param>
     /// <param name="format">图片格式</param>
     /// <returns>操作结果</returns>
-    object CopyPicture(XlPictureAppearance appearance, XlCopyPictureFormat format);
+    object? CopyPicture(XlPictureAppearance appearance, XlCopyPictureFormat format);
 
     /// <summary>
     /// 选择对象
     /// </summary>
     /// <param name="replace">是否替换当前选择</param>
     /// <returns>操作结果</returns>
-    object Select(bool replace = true);
+    object? Select(bool replace = true);
     #endregion
 }

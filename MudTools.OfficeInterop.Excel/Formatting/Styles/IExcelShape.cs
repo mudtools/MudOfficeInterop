@@ -10,9 +10,20 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Shape 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Shape 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelShape : IDisposable
 {
     #region 基础属性
+    /// <summary>
+    /// 获取此对象的父对象。
+    /// </summary>
+    object Parent { get; }
+
+    /// <summary>
+    /// 获取此对象所属的 Excel 应用程序对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取形状的 OLE 格式设置属性
@@ -36,7 +47,7 @@ public interface IExcelShape : IDisposable
     /// 获取自由形状中所有路径节点的集合
     /// 对应 Shape.Nodes 属性，支持遍历、索引访问和节点操作
     /// </summary>
-    IExcelShapeNodes? ShapeNodes { get; }
+    IExcelShapeNodes? Nodes { get; }
 
     /// <summary>
     /// 获取形状的链接格式设置属性
@@ -77,18 +88,21 @@ public interface IExcelShape : IDisposable
     /// <summary>
     /// 获取一个值，该值指示形状是否包含图表
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool HasChart { get; }
 
     /// <summary>
     /// 获取或设置形状样式
     /// 对应 Office.Core 中的 MsoShapeStyleIndex 枚举值
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoShapeStyleIndex ShapeStyle { get; set; }
 
     /// <summary>
     /// 获取或设置形状背景样式
     /// 对应 Office.Core 中的 MsoBackgroundStyleIndex 枚举值
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoBackgroundStyleIndex BackgroundStyle { get; set; }
 
     /// <summary>
@@ -106,6 +120,7 @@ public interface IExcelShape : IDisposable
     /// 获取形状的类型
     /// 对应 Shape.Type 属性
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoShapeType Type { get; }
 
     /// <summary>
@@ -113,12 +128,6 @@ public interface IExcelShape : IDisposable
     /// 对应 Shape.ID 属性
     /// </summary>
     int ID { get; }
-
-    /// <summary>
-    /// 获取形状的父对象
-    /// 对应 Shape.Parent 属性
-    /// </summary>
-    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置形状的定位方式
@@ -130,30 +139,35 @@ public interface IExcelShape : IDisposable
     /// 获取形状是否为连接符
     /// 对应 Shape.Connector 属性，用于判断形状是否为连接符类型
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Connector { get; }
 
     /// <summary>
     /// 获取或设置形状的宽高比锁定状态
     /// 对应 Shape.LockAspectRatio 属性，当设置为 true 时，调整形状大小会保持原始宽高比
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool LockAspectRatio { get; set; }
 
     /// <summary>
     /// 获取形状是否已水平翻转
     /// 对应 Shape.HorizontalFlip 属性，用于判断形状是否经过水平翻转
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool HorizontalFlip { get; }
 
     /// <summary>
     /// 获取或设置自选图形的类型
     /// 对应 Shape.AutoShapeType 属性，用于指定自选图形的具体类型（如矩形、圆形等）
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoAutoShapeType AutoShapeType { get; set; }
 
     /// <summary>
     /// 获取或设置形状在黑白模式下的显示方式
     /// 对应 Shape.BlackWhiteMode 属性，用于控制形状在黑白视图中的显示效果
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoBlackWhiteMode BlackWhiteMode { get; set; }
 
     /// <summary>
@@ -161,6 +175,9 @@ public interface IExcelShape : IDisposable
     /// 对应 Shape.FormControlType 属性，用于确定表单控件的具体类型（如按钮、复选框等）
     /// </summary>
     XlFormControl FormControlType { get; }
+
+    [ComPropertyWrap(NeedConvert = true)]
+    bool VerticalFlip { get; }
 
     #endregion
 
@@ -203,6 +220,7 @@ public interface IExcelShape : IDisposable
     /// 获取或设置形状是否可见
     /// 对应 Shape.Visible 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
@@ -262,6 +280,8 @@ public interface IExcelShape : IDisposable
     /// </summary>
     IExcelTextFrame TextFrame { get; }
 
+    IExcelTextFrame2 TextFrame2 { get; }
+
     /// <summary>
     /// 获取形状的阴影格式对象
     /// 对应 Shape.Shadow 属性，用于设置形状阴影的颜色、偏移量、模糊度等视觉效果
@@ -275,33 +295,6 @@ public interface IExcelShape : IDisposable
     IExcelThreeDFormat ThreeD { get; }
     #endregion
 
-    #region 文本属性
-
-    /// <summary>
-    /// 获取或设置形状中的文本内容
-    /// 对应 Shape.TextFrame.Characters.Text 属性
-    /// </summary>
-    string Text { get; set; }
-
-    /// <summary>
-    /// 获取或设置形状中文本的自动调整大小
-    /// 对应 Shape.TextFrame.AutoSize 属性
-    /// </summary>
-    bool AutoSize { get; set; }
-
-    /// <summary>
-    /// 获取或设置形状中文本的水平对齐方式
-    /// 对应 Shape.TextFrame.HorizontalAlignment 属性
-    /// </summary>
-    XlHAlign HorizontalAlignment { get; set; }
-
-    /// <summary>
-    /// 获取或设置形状中文本的垂直对齐方式
-    /// 对应 Shape.TextFrame.VerticalAlignment 属性
-    /// </summary>
-    XlVAlign VerticalAlignment { get; set; }
-
-    #endregion
 
     #region 操作方法
 
@@ -339,49 +332,26 @@ public interface IExcelShape : IDisposable
     /// <summary>
     /// 高度缩放
     /// </summary>
-    /// <param name="Factor"></param>
-    /// <param name="RelativeToOriginalSize">是否相对于原始大小</param>
-    /// <param name="Scale">缩放比例</param>
-    void ScaleHeight(float Factor, bool RelativeToOriginalSize, float Scale);
+    /// <param name="factor"></param>
+    /// <param name="relativeToOriginalSize">是否相对于原始大小</param>
+    /// <param name="scale">缩放比例</param>
+    void ScaleHeight(float factor, [ConvertTriState] bool relativeToOriginalSize, float scale);
 
     /// <summary>
     /// 宽度缩放
     /// </summary>
-    /// <param name="Factor"></param>
-    /// <param name="RelativeToOriginalSize">是否相对于原始大小</param>
-    /// <param name="Scale">缩放比例</param>
-    void ScaleWidth(float Factor, bool RelativeToOriginalSize, float Scale);
-
-    /// <summary>
-    /// 调整形状大小
-    /// 对应 Shape.ScaleWidth 和 Shape.ScaleHeight 方法
-    /// </summary>
-    /// <param name="widthScale">宽度缩放比例</param>
-    /// <param name="heightScale">高度缩放比例</param>
+    /// <param name="factor"></param>
     /// <param name="relativeToOriginalSize">是否相对于原始大小</param>
-    void Scale(float widthScale, float heightScale, bool relativeToOriginalSize = false);
+    /// <param name="scale">缩放比例</param>
+    void ScaleWidth(float factor, [ConvertTriState] bool relativeToOriginalSize, float scale);
 
-    /// <summary>
-    /// 移动形状
-    /// 对应 Shape.IncrementLeft 和 Shape.IncrementTop 方法
-    /// </summary>
-    /// <param name="leftIncrement">左边距增量</param>
-    /// <param name="topIncrement">顶边距增量</param>
-    void Move(float leftIncrement, float topIncrement);
-
-    /// <summary>
-    /// 旋转形状
-    /// 对应 Shape.IncrementRotation 方法
-    /// </summary>
-    /// <param name="rotationIncrement">旋转角度增量（度）</param>
-    void Rotate(float rotationIncrement);
 
     /// <summary>
     /// 设置形状的堆叠顺序（Z轴顺序）
     /// 对应 Shape.ZOrder 方法
     /// </summary>
     /// <param name="orderCmd">Z轴顺序命令，指定如何重新排列对象的堆叠顺序</param>
-    void ZOrder(MsoZOrderCmd orderCmd);
+    void ZOrder([ComNamespace("MsCore")] MsoZOrderCmd orderCmd);
 
     /// <summary>
     /// 按指定增量调整形状的水平位置
@@ -402,7 +372,7 @@ public interface IExcelShape : IDisposable
     /// 对应 Shape.Flip 方法
     /// </summary>
     /// <param name="FlipCmd">翻转方向命令，指定是水平翻转还是垂直翻转</param>
-    void Flip(MsoFlipCmd FlipCmd);
+    void Flip([ComNamespace("MsCore")] MsoFlipCmd FlipCmd);
 
     /// <summary>
     /// 重新路由任何连接符附加到该形状的连接点
@@ -439,18 +409,6 @@ public interface IExcelShape : IDisposable
     void CanvasCropBottom(float Increment);
 
     /// <summary>
-    /// 将形状置于最前面
-    /// 对应 Shape.ZOrder 方法
-    /// </summary>
-    void BringToFront();
-
-    /// <summary>
-    /// 将形状置于最后面
-    /// 对应 Shape.ZOrder 方法
-    /// </summary>
-    void SendToBack();
-
-    /// <summary>
     /// 取消组合形状
     /// 对应 Shape.Ungroup 方法
     /// </summary>
@@ -468,6 +426,8 @@ public interface IExcelShape : IDisposable
     /// 对应 Shape.PickUp 方法
     /// </summary>
     void PickUp();
+
+    void SetShapesDefaultProperties();
 
     #endregion
 
