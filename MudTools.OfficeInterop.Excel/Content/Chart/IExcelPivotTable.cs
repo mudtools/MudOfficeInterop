@@ -56,12 +56,12 @@ public interface IExcelPivotTable : IDisposable
     /// <summary>
     /// 获取数据透视表的列范围
     /// </summary>
-    IExcelRange ColumnRange { get; }
+    IExcelRange? ColumnRange { get; }
 
     /// <summary>
     /// 获取数据透视表的数据标签范围
     /// </summary>
-    IExcelRange DataLabelRange { get; }
+    IExcelRange? DataLabelRange { get; }
 
     /// <summary>
     /// 获取或设置内部详细信息
@@ -71,67 +71,67 @@ public interface IExcelPivotTable : IDisposable
     /// <summary>
     /// 获取数据透视表的页面范围
     /// </summary>
-    IExcelRange PageRange { get; }
+    IExcelRange? PageRange { get; }
 
     /// <summary>
     /// 获取数据透视表的页面范围单元格
     /// </summary>
-    IExcelRange PageRangeCells { get; }
+    IExcelRange? PageRangeCells { get; }
 
     /// <summary>
     /// 获取数据透视表的行范围
     /// </summary>
-    IExcelRange RowRange { get; }
+    IExcelRange? RowRange { get; }
 
     /// <summary>
     /// 获取数据透视表的公式集合
     /// </summary>
-    IExcelPivotFormulas PivotFormulas { get; }
+    IExcelPivotFormulas? PivotFormulas { get; }
 
     /// <summary>
     /// 获取数据透视表的多维数据集字段
     /// </summary>
-    IExcelCubeFields CubeFields { get; }
+    IExcelCubeFields? CubeFields { get; }
 
     /// <summary>
     /// 获取数据透视表的数据透视字段
     /// </summary>
-    IExcelPivotField DataPivotField { get; }
+    IExcelPivotField? DataPivotField { get; }
 
     /// <summary>
     /// 获取计算成员集合
     /// </summary>
-    IExcelCalculatedMembers CalculatedMembers { get; }
+    IExcelCalculatedMembers? CalculatedMembers { get; }
 
     /// <summary>
     /// 获取数据透视表的列轴
     /// </summary>
-    IExcelPivotAxis PivotColumnAxis { get; }
+    IExcelPivotAxis? PivotColumnAxis { get; }
 
     /// <summary>
     /// 获取数据透视表的行轴
     /// </summary>
-    IExcelPivotAxis PivotRowAxis { get; }
+    IExcelPivotAxis? PivotRowAxis { get; }
 
     /// <summary>
     /// 获取活动筛选器集合
     /// </summary>
-    IExcelPivotFilters ActiveFilters { get; }
+    IExcelPivotFilters? ActiveFilters { get; }
 
     /// <summary>
     /// 获取切片器集合
     /// </summary>
-    IExcelSlicers Slicers { get; }
+    IExcelSlicers? Slicers { get; }
 
     /// <summary>
     /// 获取数据透视表更改列表
     /// </summary>
-    IExcelPivotTableChangeList ChangeList { get; }
+    IExcelPivotTableChangeList? ChangeList { get; }
 
     /// <summary>
     /// 获取数据透视图表
     /// </summary>
-    IExcelShape PivotChart { get; }
+    IExcelShape? PivotChart { get; }
 
     /// <summary>
     /// 获取或设置替代文本
@@ -652,7 +652,7 @@ public interface IExcelPivotTable : IDisposable
     /// <param name="rowline">行索引，从0开始计数</param>
     /// <param name="columnline">列索引，从0开始计数</param>
     /// <returns>指定位置的数据透视表数值单元格对象</returns>
-    IExcelPivotValueCell PivotValueCell(int? rowline, int? columnline);
+    IExcelPivotValueCell? PivotValueCell(int? rowline, int? columnline);
 
     /// <summary>
     /// 分离工作表上创建数据透视表的计算项和计算字段的列表。
@@ -732,7 +732,7 @@ public interface IExcelPivotTable : IDisposable
     /// <param name="pageFields">可选 对象。 指定字段名称(或字段名称数组) ，添加为页或要添加到页面区域。</param>
     /// <param name="addToTable">可选 对象。 仅适用于数据透视表。 如果为 True，则将指定的字段添加到报表中（不替换现有字段）。 如果为 False，则用新的字段替换现有的字段。 默认值为 False。</param>
     /// <returns></returns>
-    object AddFields(object? rowFields, object? columnFields, object? pageFields, bool? addToTable);
+    object? AddFields(object? rowFields, object? columnFields, object? pageFields, bool? addToTable);
 
     #endregion
 }

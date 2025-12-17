@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -13,14 +13,30 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Interior 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Interior 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelInterior : IDisposable
 {
+
+    /// <summary>
+    /// 获取内部对象所在的父对象
+    /// 对应 Interior.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取内部对象所在的Application对象
+    /// 对应 Interior.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     #region 基础属性
 
     /// <summary>
     /// 获取或设置内部颜色
     /// 对应 Interior.Color 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     Color Color { get; set; }
 
     /// <summary>
@@ -39,56 +55,42 @@ public interface IExcelInterior : IDisposable
     /// 获取或设置图案颜色
     /// 对应 Interior.PatternColor 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     Color PatternColor { get; set; }
 
     /// <summary>
     /// 获取或设置主题颜色
     /// 对应 Interior.ThemeColor 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     Color ThemeColor { get; set; }
 
     /// <summary>
     /// 获取或设置着色和阴影
     /// 对应 Interior.TintAndShade 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     double TintAndShade { get; set; }
 
     /// <summary>
     /// 获取或设置图案主题颜色
     /// 对应 Interior.PatternThemeColor 属性
     /// </summary>
-    int PatternThemeColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color PatternThemeColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置图案颜色索引
+    /// 对应 Interior.PatternColorIndex 属性
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    XlColorIndex PatternColorIndex { get; set; }
 
     /// <summary>
     /// 获取或设置图案着色和阴影
     /// 对应 Interior.PatternTintAndShade 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     double PatternTintAndShade { get; set; }
-
-    /// <summary>
-    /// 获取内部对象所在的父对象
-    /// 对应 Interior.Parent 属性
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取内部对象所在的Application对象
-    /// 对应 Interior.Application 属性
-    /// </summary>
-    IExcelApplication? Application { get; }
-
-    #endregion
-
-    #region 格式设置
-    /// <summary>
-    /// 重置内部对象为默认值
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 复制内部对象格式
-    /// </summary>
-    /// <param name="sourceInterior">源内部对象</param>
-    void CopyFormat(IExcelInterior sourceInterior);
     #endregion
 }
