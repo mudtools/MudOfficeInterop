@@ -9,37 +9,13 @@ using System.Drawing;
 
 namespace MudTools.OfficeInterop.Excel;
 
-
 /// <summary>
 /// Excel Borders 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Borders 的安全访问和操作
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
 {
-    #region 基础属性
-    /// <summary>
-    /// 应用到全局。
-    /// </summary>
-    bool ApplyToAll { get; set; }
-
-    /// <summary>
-    /// 获取边框集合中的边框数量
-    /// 对应 Borders.Count 属性
-    /// </summary>
-    int Count { get; }
-
-    /// <summary>
-    /// 获取或设置自定义边框集合
-    /// 键为边框索引类型，值为单元格格式对象
-    /// </summary>
-    Dictionary<XlBordersIndex, IExcelCellFormat> CustomBorders { get; set; }
-
-    /// <summary>
-    /// 获取指定类型的边框对象
-    /// </summary>
-    /// <param name="borderType">边框类型</param>
-    /// <returns>边框对象</returns>
-    IExcelBorder? this[XlBordersIndex borderType] { get; }
 
     /// <summary>
     /// 获取边框集合所在的父对象
@@ -51,7 +27,30 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// 获取边框集合所在的Application对象
     /// 对应 Borders.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
+
+    #region 基础属性   
+
+    /// <summary>
+    /// 获取边框集合中的边框数量
+    /// 对应 Borders.Count 属性
+    /// </summary>
+    int Count { get; }
+
+    /// <summary>
+    /// 获取指定类型的边框对象
+    /// </summary>
+    /// <param name="borderType">边框类型</param>
+    /// <returns>边框对象</returns>
+    IExcelBorder? this[XlBordersIndex borderType] { get; }
+
+    /// <summary>
+    /// 获取或设置边框的线条样式。
+    /// 对应 Borders.Value 属性
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    XlLineStyle Value { get; set; }
 
     /// <summary>
     /// 获取或设置边框线条样式
@@ -66,6 +65,7 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// <summary>
     /// 获取或设置边框颜色
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     Color Color { get; set; }
 
     /// <summary>
@@ -74,74 +74,10 @@ public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
     /// </summary>
     XlColorIndex ColorIndex { get; set; }
 
+    [ComPropertyWrap(NeedConvert = true)]
+    Color ThemeColor { get; set; }
+
+    [ComPropertyWrap(NeedConvert = true)]
+    float TintAndShade { get; set; }
     #endregion
-
-    #region 查找和筛选
-
-    /// <summary>
-    /// 根据线条样式查找边框
-    /// </summary>
-    /// <param name="lineStyle">线条样式</param>
-    /// <returns>匹配的边框数组</returns>
-    IExcelBorder[] FindByLineStyle(int lineStyle);
-
-    /// <summary>
-    /// 根据颜色查找边框
-    /// </summary>
-    /// <param name="color">边框颜色</param>
-    /// <returns>匹配的边框数组</returns>
-    IExcelBorder[] FindByColor(int color);
-
-    /// <summary>
-    /// 根据粗细查找边框
-    /// </summary>
-    /// <param name="weight">边框粗细</param>
-    /// <returns>匹配的边框数组</returns>
-    IExcelBorder[] FindByWeight(XlBorderWeight weight);
-    #endregion
-
-    #region 格式设置
-
-    /// <summary>
-    /// 设置所有边框的线条样式
-    /// </summary>
-    /// <param name="lineStyle">线条样式</param>
-    /// <param name="weight">边框粗细</param>
-    void SetLineStyle(XlLineStyle lineStyle, XlBorderWeight weight = XlBorderWeight.xlHairline);
-
-    /// <summary>
-    /// 设置所有边框的颜色
-    /// </summary>
-    /// <param name="color">边框颜色</param>
-    void SetColor(Color color);
-
-    /// <summary>
-    /// 设置所有边框的粗细
-    /// </summary>
-    /// <param name="weight">边框粗细</param>
-    void SetWeight(XlBorderWeight weight);
-
-    /// <summary>
-    /// 统一所有边框的格式
-    /// </summary>
-    /// <param name="lineStyle">线条样式</param>
-    /// <param name="color">边框颜色</param>
-    /// <param name="weight">边框粗细</param>
-    void UniformFormat(Color color, XlLineStyle lineStyle = XlLineStyle.xlLineStyleNone, XlBorderWeight weight = XlBorderWeight.xlThin);
-
-    /// <summary>
-    /// 复制边框格式
-    /// </summary>
-    /// <param name="sourceBorder">源边框</param>
-    /// <param name="applyToAll">是否应用到所有边框</param>
-    void CopyFormat(IExcelBorder sourceBorder, bool applyToAll = false);
-
-    /// <summary>
-    /// 应用预设边框样式
-    /// </summary>
-    /// <param name="presetStyle">预设样式类型</param>
-    void ApplyPresetStyle(int presetStyle);
-
-    #endregion
-
 }
