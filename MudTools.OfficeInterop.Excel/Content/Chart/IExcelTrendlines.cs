@@ -59,48 +59,5 @@ public interface IExcelTrendlines : IEnumerable<IExcelTrendline>, IDisposable
                        double backward = 0, double intercept = double.NaN, bool displayEquation = false,
                        bool displayRSquared = false, string name = "");
     #endregion
-
-    #region 查找和筛选
-    /// <summary>
-    /// 根据类型查找趋势线
-    /// </summary>
-    /// <param name="type">趋势线类型</param>
-    /// <returns>匹配的趋势线数组</returns>
-    IExcelTrendline[] FindByType(int type);
-
-    /// <summary>
-    /// 根据名称查找趋势线
-    /// </summary>
-    /// <param name="name">趋势线名称</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的趋势线数组</returns>
-    IExcelTrendline[] FindByName(string name, bool matchCase = false);
-    #endregion
-
-    #region 操作方法
-    /// <summary>
-    /// 删除所有趋势线
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 删除指定索引的趋势线
-    /// </summary>
-    /// <param name="index">要删除的趋势线索引</param>
-    void Delete(int index);
-
-    /// <summary>
-    /// 删除指定的趋势线对象
-    /// </summary>
-    /// <param name="trendline">要删除的趋势线对象</param>
-    void Delete(IExcelTrendline trendline);
-
-    /// <summary>
-    /// 批量删除趋势线
-    /// </summary>
-    /// <param name="indices">要删除的趋势线索引数组</param>
-    void DeleteRange(int[] indices);
-
-    #endregion
 }
 
