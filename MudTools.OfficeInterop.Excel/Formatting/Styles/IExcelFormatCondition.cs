@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel FormatCondition 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.FormatCondition (及 ColorScale, DataBar, IconSetCondition) 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelFormatCondition : IDisposable
 {
     #region 基础属性
@@ -36,19 +37,19 @@ public interface IExcelFormatCondition : IDisposable
     /// 获取或设置比较操作符 (对于 xlCellValue 类型)
     /// 对应 FormatCondition.Operator 属性
     /// </summary>
-    XlFormatConditionOperator Operator { get; set; }
+    XlFormatConditionOperator Operator { get; }
 
     /// <summary>
     /// 获取或设置公式1
     /// 对应 FormatCondition.Formula1 属性
     /// </summary>
-    string Formula1 { get; set; }
+    string Formula1 { get; }
 
     /// <summary>
     /// 获取或设置公式2
     /// 对应 FormatCondition.Formula2 属性
     /// </summary>
-    string Formula2 { get; set; }
+    string Formula2 { get; }
 
     /// <summary>
     /// 获取或设置文本 (对于 xlTextString 类型)
@@ -122,6 +123,7 @@ public interface IExcelFormatCondition : IDisposable
     /// 获取或设置条件格式规则的编号格式
     /// 对应 FormatCondition.NumberFormat 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string? NumberFormat { get; set; }
     #endregion
 
@@ -154,16 +156,17 @@ public interface IExcelFormatCondition : IDisposable
     /// 对应 FormatCondition.Modify 方法
     /// </summary>
     /// <param name="type">条件类型</param>
-    /// <param name="operator">比较操作符</param>
+    /// <param name="cOperator">比较操作符</param>
     /// <param name="formula1">公式1</param>
     /// <param name="formula2">公式2</param>
-    void Modify(XlFormatConditionType type, XlFormatConditionOperator @operator, string formula1, string formula2);
+    void Modify(XlFormatConditionType type, XlFormatConditionOperator cOperator, string formula1, string formula2);
 
     /// <summary>
-    /// 修改此条件格式规则为表达式类型
+    /// 修改此条件格式规则 (适用于 xlCellValue, xlExpression)
+    /// 对应 FormatCondition.ModifyEx 方法
     /// </summary>
-    /// <param name="formula">条件公式</param>
-    void ModifyExpression(string formula);
+    void ModifyEx(XlFormatConditionType type, XlFormatConditionOperator cOperator1, object formula1, string formula2, object String, XlFormatConditionOperator cOperator2);
+
     #endregion
 
 }
