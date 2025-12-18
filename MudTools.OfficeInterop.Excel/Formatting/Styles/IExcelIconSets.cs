@@ -8,49 +8,41 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示Excel工作表中的水平分页符接口
+/// 表示Excel中图标集集合的接口，提供对图标集集合的访问和操作功能
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelHPageBreak : IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelIconSets : IEnumerable<IExcelIconSet?>, IDisposable
 {
 
     /// <summary>
-    /// 获取父级水平分页符集合
+    /// 获取父对象
     /// </summary>
-    IExcelWorksheet? Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
-    /// 获取此对象所属的 Excel 应用程序对象。
+    /// 获取应用程序对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置水平分页符的类型
+    /// 获取集合中的图标集数量
     /// </summary>
-    XlPageBreak Type { get; set; }
+    int Count { get; }
 
     /// <summary>
-    /// 获取或设置水平分页符的位置范围
+    /// 通过索引获取指定位置的图标集
     /// </summary>
-    IExcelRange? Location { get; set; }
+    /// <param name="index">图标集在集合中的索引位置</param>
+    /// <returns>指定索引位置的图标集</returns>
+    [ComPropertyWrap(NeedConvert = true)]
+    IExcelIconSet? this[int index] { get; }
 
     /// <summary>
-    /// 获取水平分页符的应用范围类型
+    /// 通过名称获取指定的图标集
     /// </summary>
-    XlPageBreakExtent Extent { get; }
-
-
-    /// <summary>
-    /// 将分页符从指定方向和区域索引拖离
-    /// </summary>
-    /// <param name="direction">拖离的方向</param>
-    /// <param name="regionIndex">区域索引</param>
-    void DragOff(XlDirection direction, int regionIndex);
-
-    /// <summary>
-    /// 移除水平分页符
-    /// </summary>
-    void Delete();
-
+    /// <param name="name">图标集的名称</param>
+    /// <returns>具有指定名称的图标集</returns>
+    [ComPropertyWrap(NeedConvert = true)]
+    IExcelIconSet? this[string name] { get; }
 }

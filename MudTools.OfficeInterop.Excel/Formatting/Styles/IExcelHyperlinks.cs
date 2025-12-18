@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Hyperlinks 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Hyperlinks 的安全访问和操作
 /// </summary>
-public interface IExcelHyperlinks : IEnumerable<IExcelHyperlink>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelHyperlinks : IEnumerable<IExcelHyperlink?>, IDisposable
 {
     /// <summary>
     /// 获取超链接集合中的超链接数量
@@ -37,6 +38,7 @@ public interface IExcelHyperlinks : IEnumerable<IExcelHyperlink>, IDisposable
     /// <param name="screenTip">鼠标悬停时显示的提示文本</param>
     /// <param name="textToDisplay">要显示的文本</param>
     /// <returns>新创建的超链接对象</returns>
+    [ReturnValueConvert]
     IExcelHyperlink? Add(IExcelRange anchor, string address, string? subAddress = null, string? screenTip = null, string? textToDisplay = null);
 
     /// <summary>
@@ -45,9 +47,4 @@ public interface IExcelHyperlinks : IEnumerable<IExcelHyperlink>, IDisposable
     /// </summary>
     void Delete();
 
-    /// <summary>
-    /// 删除指定索引的超链接
-    /// </summary>
-    /// <param name="index">要删除的超链接索引</param>
-    void Delete(int index);
 }

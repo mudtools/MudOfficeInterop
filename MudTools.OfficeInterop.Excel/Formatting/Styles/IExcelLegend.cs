@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Legend 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Legend 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelLegend : IDisposable
 {
     #region 基础属性
@@ -23,13 +24,14 @@ public interface IExcelLegend : IDisposable
     /// 获取图例的父对象
     /// 对应 Legend.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取图例所在的 Application 对象
     /// 对应 Legend.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 位置和大小
@@ -63,31 +65,32 @@ public interface IExcelLegend : IDisposable
     /// 获取图例的字体对象
     /// 对应 Legend.Font 属性
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取或设置是否自动缩放字体
     /// 对应 Legend.AutoScaleFont 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoScaleFont { get; set; }
 
     /// <summary>
     /// 获取图例的背景填充对象
     /// 对应 Legend.Format.Fill 或 Legend.Interior 属性
     /// </summary>
-    IExcelChartFillFormat Fill { get; }
+    IExcelChartFillFormat? Fill { get; }
 
 
     /// <summary>
     /// 获取绘图区的边框对象
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取样式的内部格式对象
     /// 对应 Style.Interior 属性
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取或设置图例的位置

@@ -8,35 +8,37 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示自由形状（Freeform）路径中的一个节点，包含位置、类型和控制点信息。
+/// 指定值是高于还是低于平均值
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelShapeNode : IDisposable
+public enum XlAboveBelow
 {
     /// <summary>
-    /// 获取此节点所属的父对象（通常是 ShapeNodes 集合）。
+    /// 高于平均值
     /// </summary>
-    object Parent { get; }
+    xlAboveAverage,
 
     /// <summary>
-    /// 获取此节点所属的 Excel 应用程序对象。
+    /// 低于平均值
     /// </summary>
-    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    xlBelowAverage,
 
     /// <summary>
-    /// 获取节点类型（角点或曲线点）。
+    /// 等于或高于平均值
     /// </summary>
-    MsoEditingType EditingType { get; }
+    xlEqualAboveAverage,
 
     /// <summary>
-    /// 获取节点的坐标点。
+    /// 等于或低于平均值
     /// </summary>
-    object Points { get; }
+    xlEqualBelowAverage,
 
     /// <summary>
-    /// 获取节点的分段类型。
+    /// 高于标准差
     /// </summary>
-    [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoSegmentType SegmentType { get; }
+    xlAboveStdDev,
+
+    /// <summary>
+    /// 低于标准差
+    /// </summary>
+    xlBelowStdDev
 }

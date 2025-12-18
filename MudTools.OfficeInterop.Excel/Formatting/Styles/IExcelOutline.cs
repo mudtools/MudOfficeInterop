@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Outline 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Outline (Worksheet.Outline) 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelOutline : IDisposable
 {
     #region 基础属性
@@ -19,13 +20,14 @@ public interface IExcelOutline : IDisposable
     /// 获取大纲对象的父对象 (通常是 Worksheet)
     /// 对应 Outline.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取大纲对象所在的Application对象
     /// 对应 Outline.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置自动创建大纲时是否同时创建行大纲和列大纲
@@ -53,17 +55,5 @@ public interface IExcelOutline : IDisposable
     /// <param name="rowLevels">要展开的行大纲级别 (0 表示全部)</param>
     /// <param name="columnLevels">要展开的列大纲级别 (0 表示全部)</param>
     void ShowLevels(int rowLevels = 0, int columnLevels = 0);
-    #endregion
-
-    #region 高级功能
-    /// <summary>
-    /// 折叠所有大纲级别
-    /// </summary>
-    void CollapseAll();
-
-    /// <summary>
-    /// 展开所有大纲级别
-    /// </summary>
-    void ExpandAll();
     #endregion
 }

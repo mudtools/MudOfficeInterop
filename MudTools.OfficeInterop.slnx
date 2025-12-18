@@ -1,0 +1,55 @@
+<Solution>
+  <Folder Name="/samples/" />
+  <Folder Name="/samples/ExcelSample/">
+    <Project Path="Samples/ExcelSamples/AdvancedChartFeaturesSample/AdvancedChartFeaturesSample.csproj" />
+    <Project Path="Samples/ExcelSamples/AdvancedDataOperationsSample/AdvancedDataOperationsSample.csproj" />
+    <Project Path="Samples/ExcelSamples/AdvancedFormattingSample/AdvancedFormattingSample.csproj" />
+    <Project Path="Samples/ExcelSamples/CellFormattingSample/CellFormattingSample.csproj" />
+    <Project Path="Samples/ExcelSamples/CellRangeOperationsSample/CellRangeOperationsSample.csproj" />
+    <Project Path="Samples/ExcelSamples/ChartAdvancedFeaturesSample/ChartAdvancedFeaturesSample.csproj" />
+    <Project Path="Samples/ExcelSamples/ChartCreationConfigurationSample/ChartCreationConfigurationSample.csproj" />
+    <Project Path="Samples/ExcelSamples/DataAnalysisVisualizationSample/DataAnalysisVisualizationSample.csproj" />
+    <Project Path="Samples/ExcelSamples/DataImportExportSample/DataImportExportSample.csproj" />
+    <Project Path="Samples/ExcelSamples/EnterpriseReportingSystemSample/EnterpriseReportingSystemSample.csproj" />
+    <Project Path="Samples/ExcelSamples/ExcelApplicationManagementSample/ExcelApplicationManagementSample.csproj" />
+    <Project Path="Samples/ExcelSamples/FormulaFunctionApplicationSample/FormulaFunctionApplicationSample.csproj" />
+    <Project Path="Samples/ExcelSamples/MacroAutomationScriptsSample/MacroAutomationScriptsSample.csproj" />
+    <Project Path="Samples/ExcelSamples/PageLayoutPrintingSample/PageLayoutPrintingSample.csproj" />
+    <Project Path="Samples/ExcelSamples/PerformanceOptimizationSample/PerformanceOptimizationSample.csproj" />
+    <Project Path="Samples/ExcelSamples/PivotTableApplicationSample/PivotTableApplicationSample.csproj" />
+    <Project Path="Samples/ExcelSamples/WebApplicationIntegrationSample/WebApplicationIntegrationSample.csproj" />
+    <Project Path="Samples/ExcelSamples/WorkbookWorksheetOperationsSample/WorkbookWorksheetOperationsSample.csproj" />
+  </Folder>
+  <Folder Name="/samples/WordSample/">
+    <Project Path="Samples/WordSamples/BasicDocumentOperationsSample/BasicDocumentOperationsSample.csproj" />
+    <Project Path="Samples/WordSamples/DocumentAutomationProcessingSample/DocumentAutomationProcessingSample.csproj" />
+    <Project Path="Samples/WordSamples/DocumentProtectionAndSecuritySample/DocumentProtectionAndSecuritySample.csproj" />
+    <Project Path="Samples/WordSamples/DocumentStructureAndRangeOperationsSample/DocumentStructureAndRangeOperationsSample.csproj" />
+    <Project Path="Samples/WordSamples/FAQSample/FAQSample.csproj" />
+    <Project Path="Samples/WordSamples/FindAndReplaceSample/FindAndReplaceSample.csproj" />
+    <Project Path="Samples/WordSamples/GraphicsAndImageOperationsSample/GraphicsAndImageOperationsSample.csproj" />
+    <Project Path="Samples/WordSamples/IntegrationWithWebApplicationsSample/IntegrationWithWebApplicationsSample.csproj" />
+    <Project Path="Samples/WordSamples/MailMergeSample/MailMergeSample.csproj" />
+    <Project Path="Samples/WordSamples/PageLayoutAndPrintingSample/PageLayoutAndPrintingSample.csproj" />
+    <Project Path="Samples/WordSamples/ReportGenerationSystemSample/ReportGenerationSystemSample.csproj" />
+    <Project Path="Samples/WordSamples/RibbonCustomizationSample/RibbonCustomizationSample.csproj" />
+    <Project Path="Samples/WordSamples/SelectionOperationsSample/SelectionOperationsSample.csproj" />
+    <Project Path="Samples/WordSamples/TableOperationsSample/TableOperationsSample.csproj" />
+    <Project Path="Samples/WordSamples/TaskPanesAndDialogsSample/TaskPanesAndDialogsSample.csproj" />
+    <Project Path="Samples/WordSamples/TextFormattingSample/TextFormattingSample.csproj" />
+    <Project Path="Samples/WordSamples/WordFactorySample/WordFactorySample.csproj" />
+  </Folder>
+  <Folder Name="/solution/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="MudTools.OfficeInterop.Excel/MudTools.OfficeInterop.Excel.csproj" />
+    <Project Path="MudTools.OfficeInterop.PowerPoint/MudTools.OfficeInterop.PowerPoint.csproj" />
+    <Project Path="MudTools.OfficeInterop.Vbe/MudTools.OfficeInterop.Vbe.csproj" />
+    <Project Path="MudTools.OfficeInterop.Word/MudTools.OfficeInterop.Word.csproj" />
+    <Project Path="MudTools.OfficeInterop/MudTools.OfficeInterop.csproj" />
+  </Folder>
+</Solution>
