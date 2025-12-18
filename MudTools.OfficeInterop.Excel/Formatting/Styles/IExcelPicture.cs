@@ -10,8 +10,17 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Picture 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Picture 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPicture : IDisposable
 {
+
+    /// <summary>
+    /// 获取图例所在的 Application 对象
+    /// 对应 Picture .Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     #region 基础属性
 
     /// <summary>
@@ -133,20 +142,6 @@ public interface IExcelPicture : IDisposable
     /// 对应 Picture.Shadow 属性
     /// </summary>
     bool? Shadow { get; set; }
-    /// <summary>
-    /// 获取图片的原始宽度
-    /// </summary>
-    double OriginalWidth { get; }
-
-    /// <summary>
-    /// 获取图片的原始高度
-    /// </summary>
-    double OriginalHeight { get; }
-
-    /// <summary>
-    /// 获取图片的纵横比
-    /// </summary>
-    double AspectRatio { get; }
 
     #endregion
 
@@ -181,6 +176,7 @@ public interface IExcelPicture : IDisposable
     /// 对应 Picture.Copy 方法
     /// </summary>
     /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
+    [ReturnValueConvert]
     IExcelPicture? Copy();
 
     /// <summary>
@@ -188,6 +184,7 @@ public interface IExcelPicture : IDisposable
     /// 对应 Picture.Duplicate 方法
     /// </summary>
     /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
+    [ReturnValueConvert]
     IExcelPicture? Duplicate();
 
     /// <summary>
@@ -197,6 +194,7 @@ public interface IExcelPicture : IDisposable
     /// <param name="Appearance">指定图片外观类型，如屏幕显示样式或打印机样式</param>
     /// <param name="Format">指定复制的图片格式，如位图或图片格式</param>
     /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
+    [ReturnValueConvert]
     IExcelPicture? CopyPicture(
        XlPictureAppearance Appearance = XlPictureAppearance.xlPrinter,
        XlCopyPictureFormat Format = XlCopyPictureFormat.xlPicture);
@@ -206,30 +204,8 @@ public interface IExcelPicture : IDisposable
     /// 对应 Picture.Cut 方法
     /// </summary>
     /// <returns>返回剪切的图片对象，如果剪切失败则返回 null</returns>
+    [ReturnValueConvert]
     IExcelPicture? Cut();
 
-    /// <summary>
-    /// 调整图片大小
-    /// </summary>
-    /// <param name="width">新宽度</param>
-    /// <param name="height">新高度</param>
-    /// <param name="keepAspectRatio">是否保持纵横比</param>
-    void Resize(double width, double height, bool keepAspectRatio = true);
-
-    /// <summary>
-    /// 移动图片
-    /// </summary>
-    /// <param name="left">新左边距</param>
-    /// <param name="top">新顶边距</param>
-    void Move(double left, double top);
-
-    #endregion
-
-    #region 图像处理  
-    /// <summary>
-    /// 按比例缩放图片
-    /// </summary>
-    /// <param name="scale">缩放比例</param>
-    void Scale(double scale);
     #endregion
 }
