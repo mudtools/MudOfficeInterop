@@ -5,46 +5,50 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+
 namespace MudTools.OfficeInterop.Excel;
 
-
 /// <summary>
-/// 表示 Excel 表格（ListObject）中的一行数据，提供对行属性和操作的封装。
+/// 表示Excel中表格样式元素的接口，用于定义和操作Excel表格的样式元素
+/// 继承自IDisposable接口，支持资源释放功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelListRow : IDisposable
+public interface IExcelTableStyleElement : IDisposable
 {
     /// <summary>
-    /// 获取此行所属的父对象（通常是 ListObject）。
+    /// 获取父对象
     /// </summary>
     object? Parent { get; }
 
+
     /// <summary>
-    /// 获取此行所属的 Excel 应用程序对象。
+    /// 获取与该样式元素关联的Excel应用程序对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取此行在 ListRows 集合中的索引（从 1 开始）。
+    /// 获取或设置单元格内部属性（如背景色等）
     /// </summary>
-    int Index { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
-    /// 获取一个值，指示此行是否包含无效数据。
+    /// 获取边框样式集合
     /// </summary>
-    /// <value>
-    /// 如果行包含无效数据则为 <see langword="true"/>；否则为 <see langword="false"/>。
-    /// </value>
-    bool InvalidData { get; }
+    IExcelBorders? Borders { get; }
 
     /// <summary>
-    /// 获取此行对应的单元格范围（Range），包含该行所有列的数据。
+    /// 获取字体样式设置
     /// </summary>
-    IExcelRange? Range { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
-    /// 删除此行（将从表格中移除该数据行）。
+    /// 获取或设置条纹大小
     /// </summary>
-    void Delete();
+    int StripeSize { get; set; }
+
+    /// <summary>
+    /// 清除样式元素的所有格式设置
+    /// </summary>
+    void Clear();
 }

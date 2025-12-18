@@ -16,13 +16,13 @@ public interface IExcelDataFeedConnection : IDisposable
     /// <summary>
     /// 获取父级对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取条件值对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取连接的命令文本

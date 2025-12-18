@@ -34,14 +34,14 @@ public interface IExcelCubeFields : IEnumerable<IExcelCubeField>, IDisposable
     /// </summary>
     /// <param name="index">要获取的字段的从零开始的索引</param>
     /// <returns>指定索引处的 Cube 字段</returns>
-    IExcelCubeField this[int index] { get; }
+    IExcelCubeField? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取集合中的 Cube 字段
     /// </summary>
     /// <param name="name">要获取的字段的名称</param>
     /// <returns>具有指定名称的 Cube 字段</returns>
-    IExcelCubeField this[string name] { get; }
+    IExcelCubeField? this[string name] { get; }
 
     /// <summary>
     /// 向集合中添加新的命名集字段
@@ -49,7 +49,7 @@ public interface IExcelCubeFields : IEnumerable<IExcelCubeField>, IDisposable
     /// <param name="name">命名集的名称</param>
     /// <param name="caption">字段的标题</param>
     /// <returns>新创建的 Cube 字段</returns>
-    IExcelCubeField AddSet(string name, string caption);
+    IExcelCubeField? AddSet(string name, string caption);
 
     /// <summary>
     /// 获取度量值字段
@@ -58,6 +58,6 @@ public interface IExcelCubeFields : IEnumerable<IExcelCubeField>, IDisposable
     /// <param name="function">合并计算函数</param>
     /// <param name="caption">字段标题，可选参数</param>
     /// <returns>度量值 Cube 字段</returns>
-    IExcelCubeField GetMeasure(object AttributeHierarchy, XlConsolidationFunction function, string? caption = null);
+    IExcelCubeField? GetMeasure(object AttributeHierarchy, XlConsolidationFunction function, string? caption = null);
 
 }

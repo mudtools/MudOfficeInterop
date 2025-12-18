@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Trendlines 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Trendlines 的安全访问和操作
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
 public interface IExcelTrendlines : IEnumerable<IExcelTrendline>, IDisposable
 {
     #region 基础属性
@@ -25,19 +26,20 @@ public interface IExcelTrendlines : IEnumerable<IExcelTrendline>, IDisposable
     /// </summary>
     /// <param name="index">趋势线索引（从1开始）</param>
     /// <returns>趋势线对象</returns>
-    IExcelTrendline this[int index] { get; }
+    IExcelTrendline? this[int index] { get; }
 
     /// <summary>
     /// 获取趋势线集合所在的父对象 (通常是 Series)
     /// 对应 Trendlines.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取趋势线集合所在的 Application 对象
     /// 对应 Trendlines.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 创建和添加
@@ -55,52 +57,9 @@ public interface IExcelTrendlines : IEnumerable<IExcelTrendline>, IDisposable
     /// <param name="displayRSquared">是否显示 R 平方值</param>
     /// <param name="name">趋势线名称</param>
     /// <returns>新创建的趋势线对象</returns>
-    IExcelTrendline Add(XlTrendlineType type = XlTrendlineType.xlLinear, int order = 2, int period = 2, double forward = 0,
-                       double backward = 0, double intercept = double.NaN, bool displayEquation = false,
-                       bool displayRSquared = false, string name = "");
-    #endregion
-
-    #region 查找和筛选
-    /// <summary>
-    /// 根据类型查找趋势线
-    /// </summary>
-    /// <param name="type">趋势线类型</param>
-    /// <returns>匹配的趋势线数组</returns>
-    IExcelTrendline[] FindByType(int type);
-
-    /// <summary>
-    /// 根据名称查找趋势线
-    /// </summary>
-    /// <param name="name">趋势线名称</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的趋势线数组</returns>
-    IExcelTrendline[] FindByName(string name, bool matchCase = false);
-    #endregion
-
-    #region 操作方法
-    /// <summary>
-    /// 删除所有趋势线
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 删除指定索引的趋势线
-    /// </summary>
-    /// <param name="index">要删除的趋势线索引</param>
-    void Delete(int index);
-
-    /// <summary>
-    /// 删除指定的趋势线对象
-    /// </summary>
-    /// <param name="trendline">要删除的趋势线对象</param>
-    void Delete(IExcelTrendline trendline);
-
-    /// <summary>
-    /// 批量删除趋势线
-    /// </summary>
-    /// <param name="indices">要删除的趋势线索引数组</param>
-    void DeleteRange(int[] indices);
-
+    IExcelTrendline Add(XlTrendlineType type = XlTrendlineType.xlLinear, int? order = null, int? period = null, double? forward = null,
+                       double? backward = null, double? intercept = null, bool? displayEquation = false,
+                       bool? displayRSquared = false, string? name = "");
     #endregion
 }
 

@@ -24,7 +24,7 @@ public interface IExcelConnections : IDisposable, IEnumerable<IExcelWorkbookConn
     /// 获取当前对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取连接集合中的连接数量
@@ -36,14 +36,14 @@ public interface IExcelConnections : IDisposable, IEnumerable<IExcelWorkbookConn
     /// </summary>
     /// <param name="index">连接索引</param>
     /// <returns>工作簿连接对象</returns>
-    IExcelWorkbookConnection this[int index] { get; }
+    IExcelWorkbookConnection? this[int index] { get; }
 
     /// <summary>
     /// 根据名称获取连接
     /// </summary>
     /// <param name="name">连接名称</param>
     /// <returns>工作簿连接对象</returns>
-    IExcelWorkbookConnection this[string name] { get; }
+    IExcelWorkbookConnection? this[string name] { get; }
 
 
     /// <summary>
@@ -69,7 +69,7 @@ public interface IExcelConnections : IDisposable, IEnumerable<IExcelWorkbookConn
     /// <param name="createModelConnection">是否创建模型连接</param>
     /// <param name="importRelationships">是否导入关系</param>
     /// <returns>新创建的工作簿连接对象</returns>
-    IExcelWorkbookConnection Add2(string name, string description,
+    IExcelWorkbookConnection? Add2(string name, string description,
         string connectionString, string? commandText = null,
         XlCmdType lCmdtype = XlCmdType.xlCmdSql, bool? createModelConnection = null,
         bool? importRelationships = null);
@@ -80,7 +80,7 @@ public interface IExcelConnections : IDisposable, IEnumerable<IExcelWorkbookConn
     /// </summary>
     /// <param name="filename">文件名</param>
     /// <returns>新创建的工作簿连接对象</returns>
-    IExcelWorkbookConnection AddFromFile(string filename);
+    IExcelWorkbookConnection? AddFromFile(string filename);
 
     /// <summary>
     /// 从文件添加新的工作簿连接（增强版）
@@ -89,5 +89,5 @@ public interface IExcelConnections : IDisposable, IEnumerable<IExcelWorkbookConn
     /// <param name="createModelConnection">是否创建模型连接</param>
     /// <param name="importRelationships">是否导入关系</param>
     /// <returns>新创建的工作簿连接对象</returns>
-    IExcelWorkbookConnection AddFromFile2(string filename, bool? createModelConnection, bool? importRelationships);
+    IExcelWorkbookConnection? AddFromFile2(string filename, bool? createModelConnection, bool? importRelationships);
 }
