@@ -25,6 +25,7 @@ public interface IExcelFormatCondition : IDisposable
     /// 获取条件格式规则所在的Application对象
     /// 对应 FormatCondition.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>

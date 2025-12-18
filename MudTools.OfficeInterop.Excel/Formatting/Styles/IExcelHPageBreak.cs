@@ -10,8 +10,21 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示Excel工作表中的水平分页符接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelHPageBreak : IDisposable
 {
+
+    /// <summary>
+    /// 获取父级水平分页符集合
+    /// </summary>
+    IExcelWorksheet? Parent { get; }
+
+    /// <summary>
+    /// 获取此对象所属的 Excel 应用程序对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取或设置水平分页符的类型
     /// </summary>
@@ -23,39 +36,10 @@ public interface IExcelHPageBreak : IDisposable
     IExcelRange? Location { get; set; }
 
     /// <summary>
-    /// 获取水平分页符的起始行号
-    /// </summary>
-    int StartRow { get; }
-
-    /// <summary>
-    /// 获取水平分页符的结束行号
-    /// </summary>
-    int EndRow { get; }
-
-    /// <summary>
-    /// 获取水平分页符是否为手动分页符
-    /// </summary>
-    bool IsManual { get; }
-
-    /// <summary>
-    /// 获取水平分页符是否为自动分页符
-    /// </summary>
-    bool IsAutomatic { get; }
-
-    /// <summary>
-    /// 获取父级水平分页符集合
-    /// </summary>
-    IExcelHPageBreaks? Parent { get; }
-
-    /// <summary>
-    /// 获取关联的工作表
-    /// </summary>
-    IExcelWorksheet? Worksheet { get; }
-
-    /// <summary>
     /// 获取水平分页符的应用范围类型
     /// </summary>
     XlPageBreakExtent Extent { get; }
+
 
     /// <summary>
     /// 将分页符从指定方向和区域索引拖离
@@ -69,21 +53,4 @@ public interface IExcelHPageBreak : IDisposable
     /// </summary>
     void Delete();
 
-    /// <summary>
-    /// 移动分页符到指定行
-    /// </summary>
-    /// <param name="row">目标行号</param>
-    void MoveToRow(int row);
-
-    /// <summary>
-    /// 获取分页符前一页的范围
-    /// </summary>
-    /// <returns>范围对象</returns>
-    IExcelRange? GetPreviousPageRange();
-
-    /// <summary>
-    /// 获取分页符后一页的范围
-    /// </summary>
-    /// <returns>范围对象</returns>
-    IExcelRange? GetNextPageRange();
 }

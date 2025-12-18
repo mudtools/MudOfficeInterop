@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 对应 COM 对象：实际上是 Microsoft.Office.Interop.Excel.Shape（Type = msoGroup）
 /// 本接口语义命名为 GroupObject，用于管理组合形状及其子项。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelGroupObject : IDisposable
 {
     /// <summary>
@@ -22,6 +23,7 @@ public interface IExcelGroupObject : IDisposable
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
@@ -57,13 +59,13 @@ public interface IExcelGroupObject : IDisposable
     /// 获取组合形状的字体格式。
     /// 返回封装后的 <see cref="IExcelFont"/>。
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取组合形状的内部填充格式。
     /// 返回封装后的 <see cref="IExcelInterior"/>。
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取或设置是否自动缩进。
@@ -156,6 +158,7 @@ public interface IExcelGroupObject : IDisposable
     /// 返回新创建的 Shapes 集合（包含所有拆分后的子项）。
     /// </summary>
     /// <returns>拆分后的子形状集合。</returns>
+    [ReturnValueConvert]
     IExcelShapes? Ungroup();
 
     /// <summary>

@@ -11,8 +11,20 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 工作表中水平分页符的集合接口
 /// 继承自 IDisposable 和 IEnumerable 接口，支持资源释放和枚举功能
 /// </summary>
-public interface IExcelHPageBreaks : IDisposable, IEnumerable<IExcelHPageBreak>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelHPageBreaks : IDisposable, IEnumerable<IExcelHPageBreak?>
 {
+    /// <summary>
+    /// 获取父级工作表
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取此对象所属的 Excel 应用程序对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取水平分页符集合中的分页符数量
     /// </summary>
@@ -31,53 +43,4 @@ public interface IExcelHPageBreaks : IDisposable, IEnumerable<IExcelHPageBreak>
     /// <param name="before">分页符位置（在指定范围之前）</param>
     /// <returns>新创建的水平分页符对象</returns>
     IExcelHPageBreak? Add(IExcelRange before);
-
-    /// <summary>
-    /// 根据行号查找水平分页符
-    /// </summary>
-    /// <param name="row">行号</param>
-    /// <returns>水平分页符对象</returns>
-    IExcelHPageBreak? FindByRow(int row);
-
-    /// <summary>
-    /// 移除指定索引的水平分页符
-    /// </summary>
-    /// <param name="index">分页符索引</param>
-    void RemoveAt(int index);
-
-    /// <summary>
-    /// 移除指定行号的水平分页符
-    /// </summary>
-    /// <param name="row">行号</param>
-    void RemoveByRow(int row);
-
-    /// <summary>
-    /// 清除所有水平分页符
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 获取父级工作表
-    /// </summary>
-    IExcelWorksheet? Parent { get; }
-
-    /// <summary>
-    /// 获取分页符应用的范围
-    /// </summary>
-    IExcelRange? Range { get; }
-
-    /// <summary>
-    /// 获取指定类型的水平分页符
-    /// </summary>
-    /// <param name="type">分页符类型</param>
-    /// <returns>水平分页符枚举</returns>
-    IEnumerable<IExcelHPageBreak> GetPageBreaksByType(XlPageBreak type);
-
-    /// <summary>
-    /// 根据位置范围筛选分页符
-    /// </summary>
-    /// <param name="startRow">起始行</param>
-    /// <param name="endRow">结束行</param>
-    /// <returns>水平分页符枚举</returns>
-    IEnumerable<IExcelHPageBreak> GetPageBreaksInRange(int startRow, int endRow);
 }
