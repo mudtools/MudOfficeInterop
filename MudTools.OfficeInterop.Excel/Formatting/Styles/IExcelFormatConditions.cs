@@ -50,16 +50,21 @@ public interface IExcelFormatConditions : IEnumerable<IExcelFormatCondition>, ID
     /// <param name="operator">比较操作符</param>
     /// <param name="formula1">公式1</param>
     /// <param name="formula2">公式2</param>
+    /// <param name="strOperator">字符串</param>
+    /// <param name="textOperator">文本</param>
+    /// <param name="dateOperator">日期</param>
+    /// <param name="scopeType">范围类型</param>
     /// <returns>新创建的条件格式规则对象</returns>
     IExcelFormatCondition? Add(
          XlFormatConditionType type,
          XlFormatConditionOperator? @operator,
          object? formula1 = null,
          object? formula2 = null,
-         object? @string = null,
+         object? strOperator = null,
          object? textOperator = null,
          object? dateOperator = null,
          object? scopeType = null);
+
 
     /// <summary>
     /// 向集合中添加新的条件格式规则 (xlExpression)
