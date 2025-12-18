@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel 窗口集合接口，用于操作 Excel 窗口集合
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface IExcelWindows : IDisposable, IEnumerable<IExcelWindow>
 {
     /// <summary>
@@ -20,68 +21,58 @@ public interface IExcelWindows : IDisposable, IEnumerable<IExcelWindow>
     /// <summary>
     /// 获取父对象（通常是 Application）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取所在的Application对象
+    /// 对应 Windows.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 根据索引获取窗口（从1开始）
     /// </summary>
     /// <param name="index">窗口索引</param>
     /// <returns>窗口对象</returns>
-    IExcelWindow this[int index] { get; }
+    IExcelWindow? this[int index] { get; }
 
     /// <summary>
     /// 根据窗口标题获取窗口
     /// </summary>
     /// <param name="caption">窗口标题</param>
     /// <returns>窗口对象</returns>
-    IExcelWindow this[string caption] { get; }
+    IExcelWindow? this[string caption] { get; }
 
     /// <summary>
-    /// 创建新窗口
+    /// 对屏幕上的窗口进行排列。
     /// </summary>
-    /// <returns>新创建的窗口对象</returns>
-    IExcelWindow NewWindow();
+    /// <param name="arrangeStyle">指定窗口在屏幕上的排列方式。</param>
+    /// <param name="activeWorkbook">如果为 True，则只排列活动工作簿的可见窗口。 如果为 False，则排列所有窗口。 默认值为 False。</param>
+    /// <param name="syncHorizontal">如果为 True，则在水平滚动时同步活动工作簿的窗口。 False 表示不同步窗口。 默认值为 False。</param>
+    /// <param name="syncVertical">如果为 True，则在垂直滚动时同步活动工作簿的窗口。 False 表示不同步窗口。 默认值为 False。</param>
+    /// <returns></returns>
+    object? Arrange(
+        XlArrangeStyle arrangeStyle = XlArrangeStyle.xlArrangeStyleTiled,
+        bool? activeWorkbook = false,
+        bool? syncHorizontal = false,
+        bool? syncVertical = false);
 
     /// <summary>
-    /// 获取活动窗口
+    /// 可结束两个窗口的并排模式。
     /// </summary>
-    /// <returns>活动窗口对象</returns>
-    IExcelWindow GetActiveWindow();
+    /// <returns></returns>
+    bool? BreakSideBySide();
 
     /// <summary>
-    /// 根据条件查找窗口
+    /// 以并排模式打开两个窗口。
     /// </summary>
-    /// <param name="predicate">查找条件</param>
-    /// <returns>符合条件的窗口列表</returns>
-    IEnumerable<IExcelWindow> Find(Func<IExcelWindow, bool> predicate);
+    /// <param name="WindowName">要打开的窗口的名称。</param>
+    /// <returns></returns>
+    bool? CompareSideBySideWith(string? WindowName);
 
     /// <summary>
-    /// 按窗口标题排序
+    /// 重置正在进行并排比较的两个工作表窗口的位置。
     /// </summary>
-    /// <param name="ascending">是否升序排列</param>
-    /// <returns>排序后的窗口列表</returns>
-    IEnumerable<IExcelWindow> OrderByCaption(bool ascending = true);
-
-    /// <summary>
-    /// 按窗口索引排序
-    /// </summary>
-    /// <param name="ascending">是否升序排列</param>
-    /// <returns>排序后的窗口列表</returns>
-    IEnumerable<IExcelWindow> OrderByIndex(bool ascending = true);
-
-    /// <summary>
-    /// 刷新所有窗口
-    /// </summary>
-    void RefreshAll();
-
-    /// <summary>
-    /// 关闭所有窗口（除了指定的窗口）
-    /// </summary>
-    /// <param name="exceptWindow">要保留的窗口</param>
-    void CloseAllExcept(IExcelWindow? exceptWindow = null);
-
-    /// <summary>
-    /// 激活所有窗口
-    /// </summary>
-    void ActivateAll();
+    void ResetPositionsSideBySide();
 }

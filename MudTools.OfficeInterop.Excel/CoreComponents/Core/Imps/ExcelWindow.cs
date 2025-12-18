@@ -391,7 +391,7 @@ internal class ExcelWindow : IExcelWindow
                 return new ExcelWorkbook(workbook);
 
             if (_window.Parent is MsExcel.Windows wins)
-                return new ExcelWindows(wins, null);
+                return new ExcelWindows(wins);
 
             return _window.Parent;
         }
