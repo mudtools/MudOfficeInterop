@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示Excel中的下拉框控件接口，继承自IExcelControl和IDisposable接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelDropDown : IExcelControl, IDisposable
 {
     /// <summary>
@@ -32,6 +33,11 @@ public interface IExcelDropDown : IExcelControl, IDisposable
     /// </summary>
     int DropDownLines { get; set; }
 
+
+    /// <summary>
+    /// 获取或设置下拉框的文本内容
+    /// </summary>
+    string Text { get; set; }
 
     /// <summary>
     /// 获取或设置下拉框的值（选中项的索引）
@@ -58,20 +64,6 @@ public interface IExcelDropDown : IExcelControl, IDisposable
     /// 剪切下拉框
     /// </summary>
     void Cut();
-
-    /// <summary>
-    /// 移动下拉框到指定位置
-    /// </summary>
-    /// <param name="left">新左侧位置</param>
-    /// <param name="top">新顶部位置</param>
-    void Move(double left, double top);
-
-    /// <summary>
-    /// 调整下拉框大小
-    /// </summary>
-    /// <param name="width">新宽度</param>
-    /// <param name="height">新高度</param>
-    void Resize(double width, double height);
 
     /// <summary>
     /// 清除下拉框中的所有项目

@@ -24,27 +24,20 @@ public interface IExcelControl
     /// <summary>
     /// 获取下拉框的类型
     /// </summary>
+    [IgnoreGenerator]
     XlFormControl Type { get; }
 
     /// <summary>
     /// 获取父级工作表
     /// </summary>
-    IExcelWorksheet Parent { get; }
-
-    /// <summary>
-    /// 获取关联的工作表
-    /// </summary>
-    IExcelWorksheet Worksheet { get; }
-
-    /// <summary>
-    /// 获取或设置下拉框的文本内容
-    /// </summary>
-    string Text { get; set; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置复选框是否启用
     /// </summary>
     bool Enabled { get; set; }
+
+
 
     /// <summary>
     /// 获取或设置列表框的左侧位置

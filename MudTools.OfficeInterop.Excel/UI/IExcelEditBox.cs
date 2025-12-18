@@ -11,12 +11,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中的编辑框控件接口
 /// 继承自IExcelControl接口和IDisposable接口，提供编辑框特有的功能
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelEditBox : IExcelControl, IDisposable
 {
     /// <summary>
     /// 获取或设置编辑框的标题
     /// </summary>
     string Caption { get; set; }
+
+
+    /// <summary>
+    /// 获取或设置下拉框的文本内容
+    /// </summary>
+    string Text { get; set; }
 
     /// <summary>
     /// 选择编辑框
@@ -39,18 +46,4 @@ public interface IExcelEditBox : IExcelControl, IDisposable
     /// 剪切编辑框
     /// </summary>
     void Cut();
-
-    /// <summary>
-    /// 移动编辑框到指定位置
-    /// </summary>
-    /// <param name="left">新左侧位置</param>
-    /// <param name="top">新顶部位置</param>
-    void Move(double left, double top);
-
-    /// <summary>
-    /// 调整编辑框大小
-    /// </summary>
-    /// <param name="width">新宽度</param>
-    /// <param name="height">新高度</param>
-    void Resize(double width, double height);
 }
