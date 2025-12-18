@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Product>Mud Office COM组件二次封装</Product>
-		<Description>Office COM组件核心功能二次封装</Description>
+		<Product>Mud Office COM组件封装库</Product>
+		<Description>适用于 .NET 平台的现代化 Office 封装组件，提供面向对象的接口以替代微软 VSTO。显著简化与底层 COM 组件的交互，让开发者能够更专注于业务逻辑的开发。</Description>
 		<AssemblyName>MudTools.OfficeInterop</AssemblyName>
 		<PackageId>MudTools.OfficeInterop</PackageId>
 		<PackageTags>Office;Interop;COM;Core;Ribbon</PackageTags>
