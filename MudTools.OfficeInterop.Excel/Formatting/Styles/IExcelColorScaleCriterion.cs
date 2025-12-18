@@ -11,14 +11,10 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.ColorScaleCriterion 的安全访问和操作
 /// ColorScaleCriterion 对象代表颜色刻度条件格式中的一个特定条件（例如，最小值、中间值、最大值）。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelColorScaleCriterion : IDisposable
 {
     #region 基础属性
-    /// <summary>
-    /// 获取颜色刻度条件对象所在的Application对象
-    /// 对应 ColorScaleCriterion.Application 属性
-    /// </summary>
-    IExcelApplication Application { get; }
 
     /// <summary>
     /// 获取颜色刻度条件的索引（在 ColorScaleCriteria 集合中）
@@ -42,6 +38,6 @@ public interface IExcelColorScaleCriterion : IDisposable
     /// 获取或设置颜色刻度条件对应的颜色
     /// 对应 ColorScaleCriterion.FormatColor 属性 或相关颜色属性
     /// </summary>
-    int Color { get; set; }
+    IExcelFormatColor FormatColor { get; }
     #endregion
 }
