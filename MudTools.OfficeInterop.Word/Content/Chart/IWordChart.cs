@@ -80,9 +80,19 @@ public interface IWordChart : IDisposable
     [ReturnValueConvert]
     IWordSeriesCollection? SeriesCollection();
 
+    /// <summary>
+    /// 根据索引获取系列集合。
+    /// </summary>
+    /// <param name="index">要获取的系列集合的从零开始的索引。</param>
+    /// <returns>指定索引处的系列集合。</returns>
     [ReturnValueConvert]
     IWordSeriesCollection? SeriesCollection(int index);
 
+    /// <summary>
+    /// 根据名称获取系列集合。
+    /// </summary>
+    /// <param name="name">要获取的系列集合的名称。</param>
+    /// <returns>具有指定名称的系列集合。</returns>
     [ReturnValueConvert]
     IWordSeriesCollection? SeriesCollection(string name);
 
