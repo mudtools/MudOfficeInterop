@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,14 +10,25 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表数据的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordChartData : IDisposable
 {
-    bool IsLinked { get; }
 
     /// <summary>
     /// 获取工作簿对象。
     /// </summary>
     object Workbook { get; }
+
+
+    /// <summary>
+    /// 获取一个值，该值指示图表数据是否链接到外部数据源。
+    /// </summary>
+    bool IsLinked { get; }
+
+    /// <summary>
+    /// 激活图表数据窗口。
+    /// </summary>
+    void ActivateChartDataWindow();
 
     /// <summary>
     /// 激活图表数据。
@@ -28,4 +39,5 @@ public interface IWordChartData : IDisposable
     /// 切断与工作簿的链接。
     /// </summary>
     void BreakLink();
+
 }
