@@ -175,7 +175,7 @@ internal class WordChartDataLabels : IWordChartDataLabels
     #region 索引器实现
 
     /// <inheritdoc/>
-    public IWordChartDataLabel this[int index]
+    public IWordDataLabel this[int index]
     {
         get
         {
@@ -184,7 +184,7 @@ internal class WordChartDataLabels : IWordChartDataLabels
             try
             {
                 var comDataLabel = _dataLabels[index];
-                return new WordChartDataLabel(comDataLabel);
+                return new WordDataLabel(comDataLabel);
             }
             catch
             {
@@ -224,7 +224,7 @@ internal class WordChartDataLabels : IWordChartDataLabels
     #region 枚举支持
 
     /// <inheritdoc/>
-    public IEnumerator<IWordChartDataLabel> GetEnumerator()
+    public IEnumerator<IWordDataLabel> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {

@@ -85,7 +85,7 @@ public interface IWordChartTrendline : IDisposable
     /// <summary>
     /// 获取数据标签。
     /// </summary>
-    IWordChartDataLabel? DataLabel { get; }
+    IWordDataLabel? DataLabel { get; }
 
     /// <summary>
     /// 选择趋势线。

@@ -5,21 +5,26 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using Microsoft.Office.Interop.Word;
+
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
 /// 表示 Word 图表数据标签的封装接口。
 /// </summary>
-public interface IWordChartDataLabel : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordDataLabel : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置数据标签名称。
@@ -74,16 +79,17 @@ public interface IWordChartDataLabel : IDisposable
     /// <summary>
     /// 获取或设置水平对齐方式。
     /// </summary>
-    XlHAlign HorizontalAlignment { get; set; }
+    XlConstants HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置垂直对齐方式。
     /// </summary>
-    XlVAlign VerticalAlignment { get; set; }
+    XlConstants VerticalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置是否自动缩放字体。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoScaleFont { get; set; }
 
     /// <summary>
@@ -105,6 +111,14 @@ public interface IWordChartDataLabel : IDisposable
     /// 获取或设置高度。
     /// </summary>
     double Height { get; set; }
+
+    string NumberFormat { get; set; }
+
+    bool NumberFormatLinked { get; set; }
+
+    object NumberFormatLocal { get; set; }
+
+    object Type { get; set; }
 
     /// <summary>
     /// 获取字符对象。

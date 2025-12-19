@@ -131,7 +131,7 @@ internal class WordChartTrendline : IWordChartTrendline
     public IWordChartFormat? Format => _trendline?.Format != null ? new WordChartFormat(_trendline.Format) : null;
 
     /// <inheritdoc/>
-    public IWordChartDataLabel? DataLabel => _trendline?.DataLabel != null ? new WordChartDataLabel(_trendline.DataLabel) : null;
+    public IWordDataLabel? DataLabel => _trendline?.DataLabel != null ? new WordDataLabel(_trendline.DataLabel) : null;
 
     #endregion
 
