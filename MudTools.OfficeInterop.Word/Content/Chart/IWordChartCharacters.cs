@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表字符的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordChartCharacters : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置字符数量。
@@ -30,7 +32,7 @@ public interface IWordChartCharacters : IDisposable
     /// <summary>
     /// 获取或设置字体格式。
     /// </summary>
-    IWordChartFont Font { get; }
+    IWordChartFont? Font { get; }
 
     /// <summary>
     /// 获取或设置文本内容。
