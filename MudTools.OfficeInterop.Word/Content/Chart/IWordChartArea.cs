@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表区域的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordChartArea : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置图表区域名称。
@@ -30,6 +32,7 @@ public interface IWordChartArea : IDisposable
     /// <summary>
     /// 获取或设置是否自动缩放字体。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoScaleFont { get; set; }
 
     /// <summary>
@@ -53,19 +56,9 @@ public interface IWordChartArea : IDisposable
     double Height { get; set; }
 
     /// <summary>
-    /// 获取或设置内部颜色。
-    /// </summary>
-    object InteriorColor { get; set; }
-
-    /// <summary>
-    /// 获取或设置边框颜色。
-    /// </summary>
-    object BorderColor { get; set; }
-
-    /// <summary>
     /// 获取或设置是否填充。
     /// </summary>
-    bool Fill { get; set; }
+    IWordChartFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取或设置阴影效果。
@@ -81,11 +74,6 @@ public interface IWordChartArea : IDisposable
     /// 获取内部区域格式。
     /// </summary>
     IWordInterior? Interior { get; }
-
-    /// <summary>
-    /// 获取填充格式。
-    /// </summary>
-    IWordChartFillFormat? FillFormat { get; }
 
     /// <summary>
     /// 获取边框格式。

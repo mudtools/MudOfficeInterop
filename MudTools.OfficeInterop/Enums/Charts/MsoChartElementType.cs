@@ -8,282 +8,543 @@
 namespace MudTools.OfficeInterop;
 
 /// <summary>
-/// 指定图表元素类型的枚举，用于标识和操作图表中的不同元素
+/// 图表元素类型枚举，用于指定图表中各种元素的显示方式和位置
 /// </summary>
 public enum MsoChartElementType
 {
+    // 图表标题设置
     /// <summary>
-    /// 图表底座
+    /// 不显示图表标题
     /// </summary>
-    msoElementChartFloor = 1101,
+    msoElementChartTitleNone = 0,
+    /// <summary>
+    /// 图表标题居中覆盖在图表上方
+    /// </summary>
+    msoElementChartTitleCenteredOverlay = 1,
+    /// <summary>
+    /// 图表标题显示在图表上方
+    /// </summary>
+    msoElementChartTitleAboveChart = 2,
 
+    // 图例设置 (100-106)
     /// <summary>
-    /// 图表背景墙
+    /// 不显示图例
     /// </summary>
-    msoElementChartWall = 1102,
+    msoElementLegendNone = 100,
+    /// <summary>
+    /// 图例显示在右侧
+    /// </summary>
+    msoElementLegendRight = 101,
+    /// <summary>
+    /// 图例显示在顶部
+    /// </summary>
+    msoElementLegendTop = 102,
+    /// <summary>
+    /// 图例显示在左侧
+    /// </summary>
+    msoElementLegendLeft = 103,
+    /// <summary>
+    /// 图例显示在底部
+    /// </summary>
+    msoElementLegendBottom = 104,
+    /// <summary>
+    /// 图例以覆盖方式显示在右侧
+    /// </summary>
+    msoElementLegendRightOverlay = 105,
+    /// <summary>
+    /// 图例以覆盖方式显示在左侧
+    /// </summary>
+    msoElementLegendLeftOverlay = 106,
 
+    // 数据标签设置 (200-211)
     /// <summary>
-    /// 系列轴
+    /// 不显示数据标签
     /// </summary>
-    msoElementSeriesAxis = 1103,
+    msoElementDataLabelNone = 200,
+    /// <summary>
+    /// 显示数据标签
+    /// </summary>
+    msoElementDataLabelShow = 201,
+    /// <summary>
+    /// 数据标签居中显示
+    /// </summary>
+    msoElementDataLabelCenter = 202,
+    /// <summary>
+    /// 数据标签显示在内部末端
+    /// </summary>
+    msoElementDataLabelInsideEnd = 203,
+    /// <summary>
+    /// 数据标签显示在内部基部
+    /// </summary>
+    msoElementDataLabelInsideBase = 204,
+    /// <summary>
+    /// 数据标签显示在外部末端
+    /// </summary>
+    msoElementDataLabelOutSideEnd = 205,
+    /// <summary>
+    /// 数据标签显示在左侧
+    /// </summary>
+    msoElementDataLabelLeft = 206,
+    /// <summary>
+    /// 数据标签显示在右侧
+    /// </summary>
+    msoElementDataLabelRight = 207,
+    /// <summary>
+    /// 数据标签显示在顶部
+    /// </summary>
+    msoElementDataLabelTop = 208,
+    /// <summary>
+    /// 数据标签显示在底部
+    /// </summary>
+    msoElementDataLabelBottom = 209,
+    /// <summary>
+    /// 数据标签最佳适应位置显示
+    /// </summary>
+    msoElementDataLabelBestFit = 210,
+    /// <summary>
+    /// 数据标签以标注线形式显示
+    /// </summary>
+    msoElementDataLabelCallout = 211,
 
+    // 坐标轴标题设置 (300-327)
     /// <summary>
-    /// 数值轴
+    /// 不显示主分类坐标轴标题
     /// </summary>
-    msoElementValueAxis = 1104,
+    msoElementPrimaryCategoryAxisTitleNone = 300,
+    /// <summary>
+    /// 主分类坐标轴标题紧邻坐标轴显示
+    /// </summary>
+    msoElementPrimaryCategoryAxisTitleAdjacentToAxis = 301,
+    /// <summary>
+    /// 主分类坐标轴标题显示在坐标轴下方
+    /// </summary>
+    msoElementPrimaryCategoryAxisTitleBelowAxis = 302,
+    /// <summary>
+    /// 主分类坐标轴标题旋转显示
+    /// </summary>
+    msoElementPrimaryCategoryAxisTitleRotated = 303,
+    /// <summary>
+    /// 主分类坐标轴标题垂直显示
+    /// </summary>
+    msoElementPrimaryCategoryAxisTitleVertical = 304,
+    /// <summary>
+    /// 主分类坐标轴标题水平显示
+    /// </summary>
+    msoElementPrimaryCategoryAxisTitleHorizontal = 305,
+    /// <summary>
+    /// 不显示主数值坐标轴标题
+    /// </summary>
+    msoElementPrimaryValueAxisTitleNone = 306,
+    /// <summary>
+    /// 主数值坐标轴标题紧邻坐标轴显示
+    /// </summary>
+    msoElementPrimaryValueAxisTitleAdjacentToAxis = 306,
+    /// <summary>
+    /// 主数值坐标轴标题显示在坐标轴下方
+    /// </summary>
+    msoElementPrimaryValueAxisTitleBelowAxis = 308,
+    /// <summary>
+    /// 主数值坐标轴标题旋转显示
+    /// </summary>
+    msoElementPrimaryValueAxisTitleRotated = 309,
+    /// <summary>
+    /// 主数值坐标轴标题垂直显示
+    /// </summary>
+    msoElementPrimaryValueAxisTitleVertical = 310,
+    /// <summary>
+    /// 主数值坐标轴标题水平显示
+    /// </summary>
+    msoElementPrimaryValueAxisTitleHorizontal = 311,
+    /// <summary>
+    /// 不显示次分类坐标轴标题
+    /// </summary>
+    msoElementSecondaryCategoryAxisTitleNone = 312,
+    /// <summary>
+    /// 次分类坐标轴标题紧邻坐标轴显示
+    /// </summary>
+    msoElementSecondaryCategoryAxisTitleAdjacentToAxis = 313,
+    /// <summary>
+    /// 次分类坐标轴标题显示在坐标轴下方
+    /// </summary>
+    msoElementSecondaryCategoryAxisTitleBelowAxis = 314,
+    /// <summary>
+    /// 次分类坐标轴标题旋转显示
+    /// </summary>
+    msoElementSecondaryCategoryAxisTitleRotated = 315,
+    /// <summary>
+    /// 次分类坐标轴标题垂直显示
+    /// </summary>
+    msoElementSecondaryCategoryAxisTitleVertical = 316,
+    /// <summary>
+    /// 次分类坐标轴标题水平显示
+    /// </summary>
+    msoElementSecondaryCategoryAxisTitleHorizontal = 317,
+    /// <summary>
+    /// 不显示次数值坐标轴标题
+    /// </summary>
+    msoElementSecondaryValueAxisTitleNone = 318,
+    /// <summary>
+    /// 次数值坐标轴标题紧邻坐标轴显示
+    /// </summary>
+    msoElementSecondaryValueAxisTitleAdjacentToAxis = 319,
+    /// <summary>
+    /// 次数值坐标轴标题显示在坐标轴下方
+    /// </summary>
+    msoElementSecondaryValueAxisTitleBelowAxis = 320,
+    /// <summary>
+    /// 次数值坐标轴标题旋转显示
+    /// </summary>
+    msoElementSecondaryValueAxisTitleRotated = 321,
+    /// <summary>
+    /// 次数值坐标轴标题垂直显示
+    /// </summary>
+    msoElementSecondaryValueAxisTitleVertical = 322,
+    /// <summary>
+    /// 次数值坐标轴标题水平显示
+    /// </summary>
+    msoElementSecondaryValueAxisTitleHorizontal = 323,
+    /// <summary>
+    /// 不显示系列坐标轴标题
+    /// </summary>
+    msoElementSeriesAxisTitleNone = 324,
+    /// <summary>
+    /// 系列坐标轴标题旋转显示
+    /// </summary>
+    msoElementSeriesAxisTitleRotated = 325,
+    /// <summary>
+    /// 系列坐标轴标题垂直显示
+    /// </summary>
+    msoElementSeriesAxisTitleVertical = 326,
+    /// <summary>
+    /// 系列坐标轴标题水平显示
+    /// </summary>
+    msoElementSeriesAxisTitleHorizontal = 327,
 
+    // 网格线设置 (328-347)
     /// <summary>
-    /// 分类轴
+    /// 不显示主数值网格线
     /// </summary>
-    msoElementCategoryAxis = 1105,
+    msoElementPrimaryValueGridLinesNone = 328,
+    /// <summary>
+    /// 显示主数值次要网格线
+    /// </summary>
+    msoElementPrimaryValueGridLinesMinor = 329,
+    /// <summary>
+    /// 显示主数值主要网格线
+    /// </summary>
+    msoElementPrimaryValueGridLinesMajor = 330,
+    /// <summary>
+    /// 显示主数值主要和次要网格线
+    /// </summary>
+    msoElementPrimaryValueGridLinesMinorMajor = 331,
+    /// <summary>
+    /// 不显示主分类网格线
+    /// </summary>
+    msoElementPrimaryCategoryGridLinesNone = 332,
+    /// <summary>
+    /// 显示主分类次要网格线
+    /// </summary>
+    msoElementPrimaryCategoryGridLinesMinor = 333,
+    /// <summary>
+    /// 显示主分类主要网格线
+    /// </summary>
+    msoElementPrimaryCategoryGridLinesMajor = 334,
+    /// <summary>
+    /// 显示主分类主要和次要网格线
+    /// </summary>
+    msoElementPrimaryCategoryGridLinesMinorMajor = 335,
+    /// <summary>
+    /// 不显示次数值网格线
+    /// </summary>
+    msoElementSecondaryValueGridLinesNone = 336,
+    /// <summary>
+    /// 显示次数值次要网格线
+    /// </summary>
+    msoElementSecondaryValueGridLinesMinor = 337,
+    /// <summary>
+    /// 显示次数值主要网格线
+    /// </summary>
+    msoElementSecondaryValueGridLinesMajor = 338,
+    /// <summary>
+    /// 显示次数值主要和次要网格线
+    /// </summary>
+    msoElementSecondaryValueGridLinesMinorMajor = 339,
+    /// <summary>
+    /// 不显示次分类网格线
+    /// </summary>
+    msoElementSecondaryCategoryGridLinesNone = 340,
+    /// <summary>
+    /// 显示次分类次要网格线
+    /// </summary>
+    msoElementSecondaryCategoryGridLinesMinor = 341,
+    /// <summary>
+    /// 显示次分类主要网格线
+    /// </summary>
+    msoElementSecondaryCategoryGridLinesMajor = 342,
+    /// <summary>
+    /// 显示次分类主要和次要网格线
+    /// </summary>
+    msoElementSecondaryCategoryGridLinesMinorMajor = 343,
+    /// <summary>
+    /// 不显示系列轴网格线
+    /// </summary>
+    msoElementSeriesAxisGridLinesNone = 344,
+    /// <summary>
+    /// 显示系列轴次要网格线
+    /// </summary>
+    msoElementSeriesAxisGridLinesMinor = 345,
+    /// <summary>
+    /// 显示系列轴主要网格线
+    /// </summary>
+    msoElementSeriesAxisGridLinesMajor = 346,
+    /// <summary>
+    /// 显示系列轴主要和次要网格线
+    /// </summary>
+    msoElementSeriesAxisGridLinesMinorMajor = 347,
 
+    // 坐标轴设置 (348-379)
     /// <summary>
-    /// 数据表
+    /// 不显示主分类坐标轴
     /// </summary>
-    msoElementDataTable = 1106,
+    msoElementPrimaryCategoryAxisNone = 348,
+    /// <summary>
+    /// 显示主分类坐标轴
+    /// </summary>
+    msoElementPrimaryCategoryAxisShow = 349,
+    /// <summary>
+    /// 显示无标签的主分类坐标轴
+    /// </summary>
+    msoElementPrimaryCategoryAxisWithoutLabels = 350,
+    /// <summary>
+    /// 反向显示主分类坐标轴
+    /// </summary>
+    msoElementPrimaryCategoryAxisReverse = 351,
+    /// <summary>
+    /// 不显示主数值坐标轴
+    /// </summary>
+    msoElementPrimaryValueAxisNone = 352,
+    /// <summary>
+    /// 显示主数值坐标轴
+    /// </summary>
+    msoElementPrimaryValueAxisShow = 353,
+    /// <summary>
+    /// 主数值坐标轴以千为单位显示
+    /// </summary>
+    msoElementPrimaryValueAxisThousands = 354,
+    /// <summary>
+    /// 主数值坐标轴以百万为单位显示
+    /// </summary>
+    msoElementPrimaryValueAxisMillions = 355,
+    /// <summary>
+    /// 主数值坐标轴以十亿为单位显示
+    /// </summary>
+    msoElementPrimaryValueAxisBillions = 356,
+    /// <summary>
+    /// 主数值坐标轴使用对数刻度
+    /// </summary>
+    msoElementPrimaryValueAxisLogScale = 357,
+    /// <summary>
+    /// 不显示次分类坐标轴
+    /// </summary>
+    msoElementSecondaryCategoryAxisNone = 358,
+    /// <summary>
+    /// 显示次分类坐标轴
+    /// </summary>
+    msoElementSecondaryCategoryAxisShow = 359,
+    /// <summary>
+    /// 显示无标签的次分类坐标轴
+    /// </summary>
+    msoElementSecondaryCategoryAxisWithoutLabels = 360,
+    /// <summary>
+    /// 反向显示次分类坐标轴
+    /// </summary>
+    msoElementSecondaryCategoryAxisReverse = 361,
+    /// <summary>
+    /// 不显示次数值坐标轴
+    /// </summary>
+    msoElementSecondaryValueAxisNone = 362,
+    /// <summary>
+    /// 显示次数值坐标轴
+    /// </summary>
+    msoElementSecondaryValueAxisShow = 363,
+    /// <summary>
+    /// 次数值坐标轴以千为单位显示
+    /// </summary>
+    msoElementSecondaryValueAxisThousands = 364,
+    /// <summary>
+    /// 次数值坐标轴以百万为单位显示
+    /// </summary>
+    msoElementSecondaryValueAxisMillions = 365,
+    /// <summary>
+    /// 次数值坐标轴以十亿为单位显示
+    /// </summary>
+    msoElementSecondaryValueAxisBillions = 366,
+    /// <summary>
+    /// 次数值坐标轴使用对数刻度
+    /// </summary>
+    msoElementSecondaryValueAxisLogScale = 367,
+    /// <summary>
+    /// 不显示系列坐标轴
+    /// </summary>
+    msoElementSeriesAxisNone = 368,
+    /// <summary>
+    /// 显示系列坐标轴
+    /// </summary>
+    msoElementSeriesAxisShow = 369,
+    /// <summary>
+    /// 显示无标签的系列坐标轴
+    /// </summary>
+    msoElementSeriesAxisWithoutLabeling = 370,
+    /// <summary>
+    /// 反向显示系列坐标轴
+    /// </summary>
+    msoElementSeriesAxisReverse = 371,
+    /// <summary>
+    /// 主分类坐标轴以千为单位显示
+    /// </summary>
+    msoElementPrimaryCategoryAxisThousands = 372,
+    /// <summary>
+    /// 主分类坐标轴以百万为单位显示
+    /// </summary>
+    msoElementPrimaryCategoryAxisMillions = 373,
+    /// <summary>
+    /// 主分类坐标轴以十亿为单位显示
+    /// </summary>
+    msoElementPrimaryCategoryAxisBillions = 374,
+    /// <summary>
+    /// 主分类坐标轴使用对数刻度
+    /// </summary>
+    msoElementPrimaryCategoryAxisLogScale = 375,
+    /// <summary>
+    /// 次分类坐标轴以千为单位显示
+    /// </summary>
+    msoElementSecondaryCategoryAxisThousands = 376,
+    /// <summary>
+    /// 次分类坐标轴以百万为单位显示
+    /// </summary>
+    msoElementSecondaryCategoryAxisMillions = 377,
+    /// <summary>
+    /// 次分类坐标轴以十亿为单位显示
+    /// </summary>
+    msoElementSecondaryCategoryAxisBillions = 378,
+    /// <summary>
+    /// 次分类坐标轴使用对数刻度
+    /// </summary>
+    msoElementSecondaryCategoryAxisLogScale = 379,
 
+    // 数据表设置 (500-502)
     /// <summary>
-    /// 图例
+    /// 不显示数据表
     /// </summary>
-    msoElementLegend = 1107,
+    msoElementDataTableNone = 500,
+    /// <summary>
+    /// 显示数据表
+    /// </summary>
+    msoElementDataTableShow = 501,
+    /// <summary>
+    /// 显示带图例键的数据表
+    /// </summary>
+    msoElementDataTableWithLegendKeys = 502,
 
+    // 趋势线设置 (600-604)
     /// <summary>
-    /// 绘图区
+    /// 不显示趋势线
     /// </summary>
-    msoElementPlotArea = 1108,
+    msoElementTrendlineNone = 600,
+    /// <summary>
+    /// 添加线性趋势线
+    /// </summary>
+    msoElementTrendlineAddLinear = 601,
+    /// <summary>
+    /// 添加指数趋势线
+    /// </summary>
+    msoElementTrendlineAddExponential = 602,
+    /// <summary>
+    /// 添加线性预测趋势线
+    /// </summary>
+    msoElementTrendlineAddLinearForecast = 603,
+    /// <summary>
+    /// 添加两期移动平均趋势线
+    /// </summary>
+    msoElementTrendlineAddTwoPeriodMovingAverage = 604,
 
+    // 误差线设置 (700-703)
     /// <summary>
-    /// 主要分类轴标题
+    /// 不显示误差线
     /// </summary>
-    msoElementPrimaryCategoryAxisTitle = 1109,
+    msoElementErrorBarNone = 700,
+    /// <summary>
+    /// 显示标准误差误差线
+    /// </summary>
+    msoElementErrorBarStandardError = 701,
+    /// <summary>
+    /// 显示百分比误差线
+    /// </summary>
+    msoElementErrorBarPercentage = 702,
+    /// <summary>
+    /// 显示标准偏差误差线
+    /// </summary>
+    msoElementErrorBarStandardDeviation = 703,
 
+    // 线条设置 (800-804)
     /// <summary>
-    /// 主要数值轴标题
+    /// 不显示线条
     /// </summary>
-    msoElementPrimaryValueAxisTitle = 1110,
+    msoElementLineNone = 800,
+    /// <summary>
+    /// 显示垂直线
+    /// </summary>
+    msoElementLineDropLine = 801,
+    /// <summary>
+    /// 显示高低点连线
+    /// </summary>
+    msoElementLineHiLoLine = 802,
+    /// <summary>
+    /// 显示系列线
+    /// </summary>
+    msoElementLineSeriesLine = 803,
+    /// <summary>
+    /// 显示垂直和高低点连线
+    /// </summary>
+    msoElementLineDropHiLoLine = 804,
 
+    // 上下限柱设置 (900-901)
     /// <summary>
-    /// 主要分类轴
+    /// 不显示上下限柱
     /// </summary>
-    msoElementPrimaryCategoryAxis = 1111,
+    msoElementUpDownBarsNone = 900,
+    /// <summary>
+    /// 显示上下限柱
+    /// </summary>
+    msoElementUpDownBarsShow = 901,
 
+    // 绘图区设置 (1000-1001)
     /// <summary>
-    /// 主要数值轴
+    /// 不显示绘图区
     /// </summary>
-    msoElementPrimaryValueAxis = 1112,
+    msoElementPlotAreaNone = 1000,
+    /// <summary>
+    /// 显示绘图区
+    /// </summary>
+    msoElementPlotAreaShow = 1001,
 
+    // 图表墙设置 (1100-1101)
     /// <summary>
-    /// 次要分类轴
+    /// 不显示图表墙
     /// </summary>
-    msoElementSecondaryCategoryAxis = 1113,
+    msoElementChartWallNone = 1100,
+    /// <summary>
+    /// 显示图表墙
+    /// </summary>
+    msoElementChartWallShow = 1101,
 
+    // 图表底板设置 (1200-1201)
     /// <summary>
-    /// 次要数值轴
+    /// 不显示图表底板
     /// </summary>
-    msoElementSecondaryValueAxis = 1114,
-
+    msoElementChartFloorNone = 1200,
     /// <summary>
-    /// 次要分类轴标题
+    /// 显示图表底板
     /// </summary>
-    msoElementSecondaryCategoryAxisTitle = 1115,
-
-    /// <summary>
-    /// 次要数值轴标题
-    /// </summary>
-    msoElementSecondaryValueAxisTitle = 1116,
-
-    /// <summary>
-    /// 系列轴标题
-    /// </summary>
-    msoElementSeriesAxisTitle = 1117,
-
-    /// <summary>
-    /// 主要分类网格线
-    /// </summary>
-    msoElementPrimaryCategoryGridLines = 1118,
-
-    /// <summary>
-    /// 主要数值网格线
-    /// </summary>
-    msoElementPrimaryValueGridLines = 1119,
-
-    /// <summary>
-    /// 次要分类网格线
-    /// </summary>
-    msoElementSecondaryCategoryGridLines = 1120,
-
-    /// <summary>
-    /// 次要数值网格线
-    /// </summary>
-    msoElementSecondaryValueGridLines = 1121,
-
-    /// <summary>
-    /// 系列轴网格线
-    /// </summary>
-    msoElementSeriesAxisGridLines = 1122,
-
-    /// <summary>
-    /// 无标签的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisWithoutLabels = 1123,
-
-    /// <summary>
-    /// 反向的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisReverse = 1124,
-
-    /// <summary>
-    /// 反向的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisReverse = 1125,
-
-    /// <summary>
-    /// 百万级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisMillions = 1126,
-
-    /// <summary>
-    /// 百万级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisMillions = 1127,
-
-    /// <summary>
-    /// 十亿级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisBillions = 1128,
-
-    /// <summary>
-    /// 十亿级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisBillions = 1129,
-
-    /// <summary>
-    /// 对数刻度的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisLogScale = 1130,
-
-    /// <summary>
-    /// 对数刻度的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisLogScale = 1131,
-
-    /// <summary>
-    /// 千级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisThousands = 1132,
-
-    /// <summary>
-    /// 千级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisThousands = 1133,
-
-    /// <summary>
-    /// 百级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisHundreds = 1134,
-
-    /// <summary>
-    /// 百级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisHundreds = 1135,
-
-    /// <summary>
-    /// 十级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisTens = 1136,
-
-    /// <summary>
-    /// 十级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisTens = 1137,
-
-    /// <summary>
-    /// 个位级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisOnes = 1138,
-
-    /// <summary>
-    /// 个位级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisOnes = 1139,
-
-    /// <summary>
-    /// 小数级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisDecimal = 1140,
-
-    /// <summary>
-    /// 小数级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisDecimal = 1141,
-
-    /// <summary>
-    /// 货币级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisCurrency = 1142,
-
-    /// <summary>
-    /// 货币级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisCurrency = 1143,
-
-    /// <summary>
-    /// 百分级的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisPercentage = 1144,
-
-    /// <summary>
-    /// 百分级的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisPercentage = 1145,
-
-    /// <summary>
-    /// 科学计数法的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisScientific = 1146,
-
-    /// <summary>
-    /// 科学计数法的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisScientific = 1147,
-
-    /// <summary>
-    /// 日期型的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisDate = 1148,
-
-    /// <summary>
-    /// 日期型的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisDate = 1149,
-
-    /// <summary>
-    /// 时间型的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisTime = 1150,
-
-    /// <summary>
-    /// 时间型的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisTime = 1151,
-
-    /// <summary>
-    /// 分数型的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisFraction = 1152,
-
-    /// <summary>
-    /// 分数型的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisFraction = 1153,
-
-    /// <summary>
-    /// 自定义的主要分类轴
-    /// </summary>
-    msoElementPrimaryCategoryAxisCustom = 1154,
-
-    /// <summary>
-    /// 自定义的主要数值轴
-    /// </summary>
-    msoElementPrimaryValueAxisCustom = 1155
+    msoElementChartFloorShow = 1201
 }
