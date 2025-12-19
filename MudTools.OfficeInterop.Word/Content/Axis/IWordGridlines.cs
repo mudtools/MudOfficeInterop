@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表网格线的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordGridlines : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取网格线名称。
@@ -30,12 +32,12 @@ public interface IWordGridlines : IDisposable
     /// <summary>
     /// 获取边框格式。
     /// </summary>
-    IWordChartBorder Border { get; }
+    IWordChartBorder? Border { get; }
 
     /// <summary>
     /// 获取格式对象。
     /// </summary>
-    IWordChartFormat Format { get; }
+    IWordChartFormat? Format { get; }
 
     /// <summary>
     /// 选择网格线。
