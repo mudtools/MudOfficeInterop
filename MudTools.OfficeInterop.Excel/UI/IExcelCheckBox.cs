@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示Excel中的复选框控件接口，继承自IExcelControl和IDisposable接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelCheckBox : IExcelControl, IDisposable
 {
     /// <summary>
@@ -17,6 +18,11 @@ public interface IExcelCheckBox : IExcelControl, IDisposable
     /// </summary>
     string LinkedCell { get; set; }
 
+
+    /// <summary>
+    /// 获取或设置下拉框的文本内容
+    /// </summary>
+    string Text { get; set; }
 
     /// <summary>
     /// 获取或设置下拉框的值（选中项的索引）
@@ -49,18 +55,4 @@ public interface IExcelCheckBox : IExcelControl, IDisposable
     /// 剪切复选框
     /// </summary>
     void Cut();
-
-    /// <summary>
-    /// 移动复选框到指定位置
-    /// </summary>
-    /// <param name="left">新左侧位置</param>
-    /// <param name="top">新顶部位置</param>
-    void Move(double left, double top);
-
-    /// <summary>
-    /// 调整复选框大小
-    /// </summary>
-    /// <param name="width">新宽度</param>
-    /// <param name="height">新高度</param>
-    void Resize(double width, double height);
 }

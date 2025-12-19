@@ -7,6 +7,7 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelListBox : IExcelControl, IDisposable
 {
 
@@ -50,25 +51,4 @@ public interface IExcelListBox : IExcelControl, IDisposable
     /// 剪切列表框
     /// </summary>
     void Cut();
-
-    /// <summary>
-    /// 移动列表框到指定位置
-    /// </summary>
-    /// <param name="left">新左侧位置</param>
-    /// <param name="top">新顶部位置</param>
-    void Move(double left, double top);
-
-    /// <summary>
-    /// 调整列表框大小
-    /// </summary>
-    /// <param name="width">新宽度</param>
-    /// <param name="height">新高度</param>
-    void Resize(double width, double height);
-
-    /// <summary>
-    /// 设置指定索引的项目文本
-    /// </summary>
-    /// <param name="index">项目索引</param>
-    /// <param name="text">项目文本</param>
-    void SetItem(int index, string text);
 }

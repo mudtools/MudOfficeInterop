@@ -872,7 +872,7 @@ internal partial class ExcelApplication : IExcelApplication
 
     private IExcelWindows _windows;
 
-    public IExcelWindows Windows => _windows ??= new ExcelWindows(_application?.Windows, this);
+    public IExcelWindows Windows => _windows ??= new ExcelWindows(_application?.Windows);
 
     private IExcelProtectedViewWindows _protectedViewWindows;
     public IExcelProtectedViewWindows ProtectedViewWindows => _protectedViewWindows ??= new ExcelProtectedViewWindows(_application?.ProtectedViewWindows);

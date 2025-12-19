@@ -320,7 +320,7 @@ internal partial class ExcelWorkbook : IExcelWorkbook
             if (_windows != null)
                 return _windows;
 
-            _windows = new ExcelWindows(_workbook.Windows, Application);
+            _windows = new ExcelWindows(_workbook.Windows);
             return _windows;
         }
     }
@@ -411,7 +411,7 @@ internal partial class ExcelWorkbook : IExcelWorkbook
                 return new ExcelWindow(win);
 
             if (_workbook.Parent is MsExcel.Windows wins)
-                return new ExcelWindows(wins, Application);
+                return new ExcelWindows(wins);
 
             return _workbook.Parent;
         }
