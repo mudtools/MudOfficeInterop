@@ -17,7 +17,7 @@ internal partial class OfficeLanguageSettings
     #region 语言设置属性
     public MsoLanguageID GetLanguageID(MsoAppLanguageID languageID)
     {
-        return (MsoLanguageID)_languagesettings.LanguageID[(MsCore.MsoAppLanguageID)languageID];
+        return (MsoLanguageID)_languageSettings.LanguageID[(MsCore.MsoAppLanguageID)languageID];
     }
 
     public MsoLanguageID this[MsoAppLanguageID languageID]
@@ -27,7 +27,7 @@ internal partial class OfficeLanguageSettings
 
     public bool GetLanguagePreferredForEditing(MsoLanguageID languageID)
     {
-        return _languagesettings.get_LanguagePreferredForEditing((MsCore.MsoLanguageID)languageID);
+        return _languageSettings.get_LanguagePreferredForEditing((MsCore.MsoLanguageID)languageID);
     }
 
     #endregion

@@ -25,10 +25,10 @@ internal partial class ExcelFormatConditions : IExcelFormatConditions
         object? dateOperator = null,
         object? scopeType = null)
     {
-        if (_formatconditions == null)
+        if (_formatConditions == null)
             return null;
 
-        MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatconditions.Add(
+        MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             (MsExcel.XlFormatConditionType)type,
             GetObject(formula1), GetObject(formula2),
             @string ?? Type.Missing,
@@ -50,9 +50,9 @@ internal partial class ExcelFormatConditions : IExcelFormatConditions
 
     public IExcelFormatCondition? AddExpression(string formula)
     {
-        if (_formatconditions == null)
+        if (_formatConditions == null)
             return null;
-        MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatconditions.Add(
+        MsExcel.FormatCondition newCondition = (MsExcel.FormatCondition)_formatConditions.Add(
             MsExcel.XlFormatConditionType.xlExpression,
             Type.Missing,
             formula,

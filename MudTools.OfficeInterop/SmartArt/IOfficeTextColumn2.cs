@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -7,11 +7,24 @@
 
 namespace MudTools.OfficeInterop;
 
+/// <summary>
+/// 表示 Office 文本文档中的一列，提供对列数、间距和文本方向的控制
+/// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeTextColumn2 : IDisposable
 {
+    /// <summary>
+    /// 获取或设置列的数量
+    /// </summary>
     int Number { get; set; }
+    
+    /// <summary>
+    /// 获取或设置列之间的间距
+    /// </summary>
     float Spacing { get; set; }
 
+    /// <summary>
+    /// 获取或设置文本方向
+    /// </summary>
     MsoTextDirection TextDirection { get; set; }
 }
