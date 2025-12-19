@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表轴的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordAxis : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取轴类型。
@@ -35,7 +37,7 @@ public interface IWordAxis : IDisposable
     /// <summary>
     /// 获取或设置轴标题。
     /// </summary>
-    string AxisTitle { get; set; }
+    IWordAxisTitle? AxisTitle { get; }
 
     /// <summary>
     /// 获取或设置是否显示轴标题。
@@ -115,7 +117,7 @@ public interface IWordAxis : IDisposable
     /// <summary>
     /// 获取或设置轴交叉方式。
     /// </summary>
-    MsWord.XlAxisCrosses Crosses { get; set; }
+    XlAxisCrosses Crosses { get; set; }
 
     /// <summary>
     /// 获取或设置是否反转轴。
@@ -125,12 +127,7 @@ public interface IWordAxis : IDisposable
     /// <summary>
     /// 获取或设置是否对数刻度。
     /// </summary>
-    bool ScaleType { get; set; }
-
-    /// <summary>
-    /// 获取轴标题对象。
-    /// </summary>
-    IWordAxisTitle? AxisTitleObject { get; }
+    XlScaleType ScaleType { get; set; }
 
     /// <summary>
     /// 获取刻度线标签对象。
