@@ -24,7 +24,7 @@ internal partial class OfficeCustomTaskPane
     /// <param name="customTaskPane">要封装的 Microsoft.Office.Core.CustomTaskPane 对象</param>
     internal OfficeCustomTaskPane(MsCore.CustomTaskPane customTaskPane)
     {
-        _customtaskpane = customTaskPane ?? throw new ArgumentNullException(nameof(customTaskPane));
+        _customTaskPane = customTaskPane ?? throw new ArgumentNullException(nameof(customTaskPane));
         _customTaskPaneEvents_Event = customTaskPane;
         ConectEvent();
     }
@@ -61,11 +61,11 @@ internal partial class OfficeCustomTaskPane
     protected void Dispose(bool disposing)
     {
         if (_disposedValue) return;
-        if (disposing && _customtaskpane != null)
+        if (disposing && _customTaskPane != null)
         {
             DisConnectEvent();
-            Marshal.ReleaseComObject(_customtaskpane);
-            _customtaskpane = null;
+            Marshal.ReleaseComObject(_customTaskPane);
+            _customTaskPane = null;
             _customTaskPaneEvents_Event = null;
         }
         _disposedValue = true;
