@@ -10,12 +10,12 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// <summary>
 /// Word.SeriesCollection 的封装实现类。
 /// </summary>
-internal class WordChartSeriesCollection : IWordChartSeriesCollection
+internal class WordSeriesCollection : IWordSeriesCollection
 {
     private MsWord.SeriesCollection _seriesCollection;
     private bool _disposedValue;
 
-    internal WordChartSeriesCollection(MsWord.SeriesCollection seriesCollection)
+    internal WordSeriesCollection(MsWord.SeriesCollection seriesCollection)
     {
         _seriesCollection = seriesCollection ?? throw new ArgumentNullException(nameof(seriesCollection));
         _disposedValue = false;

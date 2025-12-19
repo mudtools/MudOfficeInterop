@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表系列集合的封装接口。
 /// </summary>
-public interface IWordChartSeriesCollection : IEnumerable<IWordChartSeries>, IDisposable
+public interface IWordSeriesCollection : IEnumerable<IWordChartSeries>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

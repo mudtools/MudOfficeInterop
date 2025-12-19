@@ -9,22 +9,25 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordChart : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置图表类型。
     /// </summary>
-    MsoChartType ChartType { get; set; }
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    XlChartType ChartType { get; set; }
 
     /// <summary>
     /// 获取或设置是否显示图例。
@@ -49,7 +52,7 @@ public interface IWordChart : IDisposable
     /// <summary>
     /// 获取绘图区域。
     /// </summary>
-    IWordPlotArea PlotArea { get; }
+    IWordPlotArea? PlotArea { get; }
 
     /// <summary>
     /// 获取图例。
@@ -74,32 +77,20 @@ public interface IWordChart : IDisposable
     /// <summary>
     /// 获取系列集合。
     /// </summary>
-    IWordChartSeriesCollection? SeriesCollection { get; }
+    [ReturnValueConvert]
+    IWordSeriesCollection? SeriesCollection();
+
+    [ReturnValueConvert]
+    IWordSeriesCollection? SeriesCollection(int index);
+
+    [ReturnValueConvert]
+    IWordSeriesCollection? SeriesCollection(string name);
 
     /// <summary>
     /// 获取图表组集合。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     IWordChartGroups? ChartGroups { get; }
-
-    /// <summary>
-    /// 获取分类轴。
-    /// </summary>
-    IWordAxis? CategoryAxis { get; }
-
-    /// <summary>
-    /// 获取数值轴。
-    /// </summary>
-    IWordAxis? ValueAxis { get; }
-
-    /// <summary>
-    /// 获取次分类轴。
-    /// </summary>
-    IWordAxis? SecondaryCategoryAxis { get; }
-
-    /// <summary>
-    /// 获取次数值轴。
-    /// </summary>
-    IWordAxis? SecondaryValueAxis { get; }
 
     /// <summary>
     /// 获取墙壁。
@@ -110,12 +101,6 @@ public interface IWordChart : IDisposable
     /// 获取地板。
     /// </summary>
     IWordFloor? Floor { get; }
-
-    /// <summary>
-    /// 应用图表样式。
-    /// </summary>
-    /// <param name="style">图表样式。</param>
-    void ApplyChartStyle(MsoChartType style);
 
     /// <summary>
     /// 应用数据标签。
@@ -156,11 +141,11 @@ public interface IWordChart : IDisposable
     /// <param name="filename">文件名。</param>
     /// <param name="filterName">过滤器名称。</param>
     /// <param name="interactive">是否交互式。</param>
-    void Export(string filename, string filterName, bool interactive);
+    void Export(string filename, string? filterName = null, bool? interactive = null);
 
     /// <summary>
     /// 设置图表元素。
     /// </summary>
     /// <param name="element">图表元素。</param>
-    void SetElement(MsoChartElementType element);
+    void SetElement([ComNamespace("MsCore")] MsoChartElementType element);
 }
