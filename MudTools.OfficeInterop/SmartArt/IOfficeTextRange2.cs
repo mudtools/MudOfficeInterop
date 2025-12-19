@@ -32,6 +32,9 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// </summary>
     int Count { get; }
 
+    /// <summary>
+    /// 获取段落格式属性
+    /// </summary>
     IOfficeParagraphFormat2 ParagraphFormat { get; }
 
     /// <summary>
