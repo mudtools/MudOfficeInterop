@@ -12,8 +12,8 @@ partial class ExcelSeriesCollection
 {
     public object Extend(object source, XlRowCol rowcol = XlRowCol.xlRows, bool? categoryLabels = null)
     {
-        if (_seriescollection == null)
-            throw new ObjectDisposedException(nameof(_seriescollection));
+        if (_seriesCollection == null)
+            throw new ObjectDisposedException(nameof(_seriesCollection));
         if (source is null)
             throw new ArgumentNullException(nameof(source));
         var sourceObj = source;
@@ -24,7 +24,7 @@ partial class ExcelSeriesCollection
 
         try
         {
-            var returnValue = _seriescollection?.Extend(sourceObj, rowcolObj, categoryLabelsObj);
+            var returnValue = _seriesCollection?.Extend(sourceObj, rowcolObj, categoryLabelsObj);
             return returnValue;
         }
         catch (COMException cx)
@@ -39,8 +39,8 @@ partial class ExcelSeriesCollection
 
     public IExcelSeries? Add(object source, XlRowCol rowcol = XlRowCol.xlRows, bool? seriesLabels = null, bool? categoryLabels = null, bool? replace = null)
     {
-        if (_seriescollection == null)
-            throw new ObjectDisposedException(nameof(_seriescollection));
+        if (_seriesCollection == null)
+            throw new ObjectDisposedException(nameof(_seriesCollection));
         if (source is null)
             throw new ArgumentNullException(nameof(source));
         var sourceObj = source;
@@ -54,7 +54,7 @@ partial class ExcelSeriesCollection
 
         try
         {
-            var comObj = _seriescollection?.Add(sourceObj, rowcolObj, seriesLabelsObj, categoryLabelsObj, replaceObj);
+            var comObj = _seriesCollection?.Add(sourceObj, rowcolObj, seriesLabelsObj, categoryLabelsObj, replaceObj);
             if (comObj == null)
                 return null;
             return new ExcelSeries(comObj);
