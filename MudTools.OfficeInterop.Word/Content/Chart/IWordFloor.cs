@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表地板的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordFloor : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置地板名称。
@@ -31,6 +33,12 @@ public interface IWordFloor : IDisposable
     /// 获取或设置厚度。
     /// </summary>
     int Thickness { get; set; }
+
+    /// <summary>
+    /// 获取或设置图表的图片类型。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    XlChartPictureType PictureType { get; set; }
 
     /// <summary>
     /// 获取内部区域格式。
@@ -56,4 +64,15 @@ public interface IWordFloor : IDisposable
     /// 选择地板。
     /// </summary>
     void Select();
+
+    /// <summary>
+    /// 从剪贴板粘贴内容到地板。
+    /// </summary>
+    void Paste();
+
+    /// <summary>
+    /// 清除地板的所有格式设置。
+    /// </summary>
+    /// <returns>操作结果对象。</returns>
+    object ClearFormats();
 }
