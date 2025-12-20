@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表图例的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordLegend : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置图例名称。
@@ -55,31 +57,32 @@ public interface IWordLegend : IDisposable
     /// <summary>
     /// 获取字体格式。
     /// </summary>
-    IWordChartFont Font { get; }
+    IWordChartFont? Font { get; }
 
     /// <summary>
     /// 获取内部区域格式。
     /// </summary>
-    IWordInterior Interior { get; }
+    IWordInterior? Interior { get; }
 
     /// <summary>
     /// 获取填充格式。
     /// </summary>
-    IWordChartFillFormat Fill { get; }
+    IWordChartFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取边框格式。
     /// </summary>
-    IWordChartBorder Border { get; }
+    IWordChartBorder? Border { get; }
 
     /// <summary>
     /// 获取格式对象。
     /// </summary>
-    IWordChartFormat Format { get; }
+    IWordChartFormat? Format { get; }
 
     /// <summary>
     /// 获取或设置自动缩放字体。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoScaleFont { get; set; }
 
     /// <summary>
@@ -101,4 +104,27 @@ public interface IWordLegend : IDisposable
     /// 删除图例。
     /// </summary>
     void Delete();
+
+    /// <summary>
+    /// 通过索引获取图例项。
+    /// </summary>
+    /// <param name="index">图例项的索引值。</param>
+    /// <returns>指定索引的图例项对象。</returns>
+    [ReturnValueConvert]
+    IWordLegendEntry? LegendEntries(int index);
+
+    /// <summary>
+    /// 通过名称获取图例项。
+    /// </summary>
+    /// <param name="name">图例项的名称。</param>
+    /// <returns>指定名称的图例项对象。</returns>
+    [ReturnValueConvert]
+    IWordLegendEntry? LegendEntries(string name);
+
+    /// <summary>
+    /// 获取所有图例项集合。
+    /// </summary>
+    /// <returns>包含所有图例项的集合对象。</returns>
+    [ReturnValueConvert]
+    IWordLegendEntries? LegendEntries();
 }

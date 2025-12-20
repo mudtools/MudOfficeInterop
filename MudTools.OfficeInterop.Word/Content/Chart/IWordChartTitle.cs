@@ -15,12 +15,12 @@ public interface IWordChartTitle : IDisposable
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置标题文本。
@@ -87,8 +87,14 @@ public interface IWordChartTitle : IDisposable
     /// </summary>
     bool AutoScaleFont { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否在布局中包含标题。
+    /// </summary>
     bool IncludeInLayout { get; set; }
 
+    /// <summary>
+    /// 获取或设置阅读顺序。
+    /// </summary>
     int ReadingOrder { get; set; }
 
     /// <summary>
