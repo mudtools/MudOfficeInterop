@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表数据标签集合的封装接口。
 /// </summary>
-public interface IWordChartDataLabels : IEnumerable<IWordDataLabel>, IDisposable
+public interface IWordDataLabels : IEnumerable<IWordDataLabel>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

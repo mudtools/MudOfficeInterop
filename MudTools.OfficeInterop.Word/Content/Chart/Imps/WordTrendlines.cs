@@ -10,12 +10,12 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// <summary>
 /// Word.Trendlines 的封装实现类。
 /// </summary>
-internal class WordChartTrendlines : IWordChartTrendlines
+internal class WordTrendlines : IWordTrendlines
 {
     private MsWord.Trendlines _trendlines;
     private bool _disposedValue;
 
-    internal WordChartTrendlines(MsWord.Trendlines trendlines)
+    internal WordTrendlines(MsWord.Trendlines trendlines)
     {
         _trendlines = trendlines ?? throw new ArgumentNullException(nameof(trendlines));
         _disposedValue = false;
@@ -37,7 +37,7 @@ internal class WordChartTrendlines : IWordChartTrendlines
     #region 索引器实现
 
     /// <inheritdoc/>
-    public IWordChartTrendline this[int index]
+    public IWordTrendline this[int index]
     {
         get
         {
@@ -46,7 +46,7 @@ internal class WordChartTrendlines : IWordChartTrendlines
             try
             {
                 var comTrendline = _trendlines[index];
-                return new WordChartTrendline(comTrendline);
+                return new WordTrendline(comTrendline);
             }
             catch
             {
@@ -60,12 +60,12 @@ internal class WordChartTrendlines : IWordChartTrendlines
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordChartTrendline Add(MsWord.XlTrendlineType type, object order, object period)
+    public IWordTrendline Add(MsWord.XlTrendlineType type, object order, object period)
     {
         try
         {
             var newTrendline = _trendlines.Add(type, order, period);
-            return new WordChartTrendline(newTrendline);
+            return new WordTrendline(newTrendline);
         }
         catch (COMException ex)
         {
@@ -89,7 +89,7 @@ internal class WordChartTrendlines : IWordChartTrendlines
     #region 枚举支持
 
     /// <inheritdoc/>
-    public IEnumerator<IWordChartTrendline> GetEnumerator()
+    public IEnumerator<IWordTrendline> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {

@@ -5,22 +5,26 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 表示 Word 图表系列的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord", ComClassName = "Series")]
 public interface IWordChartSeries : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置系列名称。
@@ -45,7 +49,8 @@ public interface IWordChartSeries : IDisposable
     /// <summary>
     /// 获取或设置图表类型。
     /// </summary>
-    MsoChartType ChartType { get; set; }
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    XlChartType ChartType { get; set; }
 
     /// <summary>
     /// 获取或设置是否平滑线。
@@ -60,12 +65,14 @@ public interface IWordChartSeries : IDisposable
     /// <summary>
     /// 获取或设置标记背景色。
     /// </summary>
-    int MarkerBackgroundColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color MarkerBackgroundColor { get; set; }
 
     /// <summary>
     /// 获取或设置标记前景色。
     /// </summary>
-    int MarkerForegroundColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color MarkerForegroundColor { get; set; }
 
     /// <summary>
     /// 获取或设置是否显示数据标签。
@@ -85,12 +92,38 @@ public interface IWordChartSeries : IDisposable
     /// <summary>
     /// 获取数据标签集合。
     /// </summary>
-    IWordChartDataLabels? DataLabels { get; }
+    [ReturnValueConvert]
+    IWordDataLabels? DataLabels();
+
+    /// <summary>
+    /// 获取数据标签。
+    /// </summary>
+    [ReturnValueConvert]
+    IWordDataLabel? DataLabels(int index);
+
+    /// <summary>
+    /// 获取数据标签。
+    /// </summary>
+    [ReturnValueConvert]
+    IWordDataLabel? DataLabels(string name);
 
     /// <summary>
     /// 获取趋势线集合。
     /// </summary>
-    IWordChartTrendlines? Trendlines { get; }
+    [ReturnValueConvert]
+    IWordTrendlines? Trendlines();
+
+    /// <summary>
+    /// 获取趋势线。
+    /// </summary>
+    [ReturnValueConvert]
+    IWordTrendline? Trendlines(int index);
+
+    /// <summary>
+    /// 获取趋势线。
+    /// </summary>
+    [ReturnValueConvert]
+    IWordTrendline? Trendlines(string name);
 
     /// <summary>
     /// 获取误差线对象。
@@ -104,7 +137,7 @@ public interface IWordChartSeries : IDisposable
     /// <param name="legendKey">是否显示图例项标示。</param>
     /// <param name="autoText">是否自动文本。</param>
     /// <param name="hasLeaderLines">是否有引导线。</param>
-    void ApplyDataLabels(MsWord.XlDataLabelsType type, bool legendKey, bool autoText, bool hasLeaderLines);
+    void ApplyDataLabels(XlDataLabelsType type, bool legendKey, bool autoText, bool hasLeaderLines);
 
     /// <summary>
     /// 选择系列。

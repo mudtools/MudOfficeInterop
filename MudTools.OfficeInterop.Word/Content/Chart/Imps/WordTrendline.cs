@@ -10,12 +10,12 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// <summary>
 /// Word.Trendline 的封装实现类。
 /// </summary>
-internal class WordChartTrendline : IWordChartTrendline
+internal class WordTrendline : IWordTrendline
 {
     private MsWord.Trendline _trendline;
     private bool _disposedValue;
 
-    internal WordChartTrendline(MsWord.Trendline trendline)
+    internal WordTrendline(MsWord.Trendline trendline)
     {
         _trendline = trendline ?? throw new ArgumentNullException(nameof(trendline));
         _disposedValue = false;

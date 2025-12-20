@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表趋势线集合的封装接口。
 /// </summary>
-public interface IWordChartTrendlines : IEnumerable<IWordChartTrendline>, IDisposable
+public interface IWordTrendlines : IEnumerable<IWordTrendline>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -30,7 +30,7 @@ public interface IWordChartTrendlines : IEnumerable<IWordChartTrendline>, IDispo
     /// <summary>
     /// 通过索引获取趋势线。
     /// </summary>
-    IWordChartTrendline this[int index] { get; }
+    IWordTrendline this[int index] { get; }
 
     /// <summary>
     /// 添加新的趋势线。
@@ -39,7 +39,7 @@ public interface IWordChartTrendlines : IEnumerable<IWordChartTrendline>, IDispo
     /// <param name="order">趋势线顺序（用于多项式趋势线）。</param>
     /// <param name="period">趋势线周期（用于移动平均线）。</param>
     /// <returns>新创建的趋势线。</returns>
-    IWordChartTrendline Add(MsWord.XlTrendlineType type, object order, object period);
+    IWordTrendline Add(MsWord.XlTrendlineType type, object order, object period);
 
     /// <summary>
     /// 获取所有趋势线索引列表。

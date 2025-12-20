@@ -10,12 +10,12 @@ namespace MudTools.OfficeInterop.Word.Imps;
 /// <summary>
 /// Word.DataLabels 的封装实现类。
 /// </summary>
-internal class WordChartDataLabels : IWordChartDataLabels
+internal class WordDataLabels : IWordDataLabels
 {
     private MsWord.DataLabels _dataLabels;
     private bool _disposedValue;
 
-    internal WordChartDataLabels(MsWord.DataLabels dataLabels)
+    internal WordDataLabels(MsWord.DataLabels dataLabels)
     {
         _dataLabels = dataLabels ?? throw new ArgumentNullException(nameof(dataLabels));
         _disposedValue = false;
