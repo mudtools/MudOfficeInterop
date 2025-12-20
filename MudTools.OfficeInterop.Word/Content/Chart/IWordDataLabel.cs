@@ -118,7 +118,7 @@ public interface IWordDataLabel : IDisposable
     string NumberFormat { get; set; }
 
     /// <summary>
-    /// 获取或设置一个布尔值，该值指示数字格式是否与绑定的数据源链接。
+    /// 获取或设置一个布尔值，指示数字格式是否与绑定的数据源链接。
     /// </summary>
     bool NumberFormatLinked { get; set; }
 
@@ -126,6 +126,41 @@ public interface IWordDataLabel : IDisposable
     /// 获取或设置数据标签的本地化数字格式。
     /// </summary>
     object NumberFormatLocal { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，指示是否以百分比形式显示数据标签值。
+    /// </summary>
+    bool ShowPercentageP { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据标签中各项之间的分隔符。
+    /// </summary>
+    object Separator { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据标签的公式（A1样式表示法）。
+    /// </summary>
+    string Formula { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据标签的公式（R1C1样式表示法）。
+    /// </summary>
+    string FormulaR1C1 { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据标签的本地化公式（A1样式表示法）。
+    /// </summary>
+    string FormulaLocal { get; set; }
+
+    /// <summary>
+    /// 获取或设置数据标签的本地化公式（R1C1样式表示法）。
+    /// </summary>
+    string FormulaR1C1Local { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，指示是否显示数据标签的范围。
+    /// </summary>
+    bool ShowRange { get; set; }
 
     /// <summary>
     /// 获取或设置数据标签的类型。
