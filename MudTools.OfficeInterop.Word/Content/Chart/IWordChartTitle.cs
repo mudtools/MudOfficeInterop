@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表标题的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordChartTitle : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -58,11 +60,6 @@ public interface IWordChartTitle : IDisposable
     IWordChartBorder? Border { get; }
 
     /// <summary>
-    /// 获取字符对象。
-    /// </summary>
-    IWordChartCharacters? Characters { get; }
-
-    /// <summary>
     /// 获取字体格式。
     /// </summary>
     IWordChartFont? Font { get; }
@@ -75,16 +72,25 @@ public interface IWordChartTitle : IDisposable
     /// <summary>
     /// 获取或设置水平对齐方式。
     /// </summary>
-    XlHAlign HorizontalAlignment { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    XlConstants HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置垂直对齐方式。
     /// </summary>
-    XlVAlign VerticalAlignment { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    XlConstants VerticalAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本方向。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    XlOrientation Orientation { get; set; }
 
     /// <summary>
     /// 获取或设置自动缩放。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AutoScaleFont { get; set; }
 
     /// <summary>
@@ -126,4 +132,13 @@ public interface IWordChartTitle : IDisposable
     /// 删除标题。
     /// </summary>
     void Delete();
+
+    /// <summary>
+    /// 返回一个代表图表标题中文本字符的对象，可用于对部分文本进行格式设置。
+    /// </summary>
+    /// <param name="start">可选参数，指定要返回的第一个字符的位置（从1开始计数）。如果省略此参数，则包含所有字符。</param>
+    /// <param name="length">可选参数，指定要返回的字符数量。如果省略此参数，则包含从起始位置到文本末尾的所有字符。</param>
+    /// <returns>返回表示图表标题中指定字符范围的IWordChartCharacters对象。</returns>
+    [IgnoreGenerator]
+    IWordChartCharacters? Characters(int? start = null, int? length = null);
 }

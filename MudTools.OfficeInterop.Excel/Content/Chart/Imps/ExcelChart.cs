@@ -327,9 +327,9 @@ internal partial class ExcelChart : IExcelChart
     public IExcelChartGroup? Line3DGroup => _chart != null ? new ExcelChartGroup(_chart.Line3DGroup) : null;
 
     public void ApplyDataLabels(XlDataLabelsType type = XlDataLabelsType.xlDataLabelsShowValue,
-                                bool? legendKey = null, string? autoText = null, bool? hasLeaderLines = null, string? showSeriesName = null,
-                                string? showCategoryName = null, double? showValue = null, string? showPercentage = null,
-                                double? showBubbleSize = null, string? separator = null)
+                               bool? legendKey = null, string? autoText = null, bool? hasLeaderLines = null, bool? showSeriesName = null,
+                               bool? showCategoryName = null, bool? showValue = null, bool? showPercentage = null,
+                               bool? showBubbleSize = null, string? separator = null)
     {
         if (_chart == null)
             return;

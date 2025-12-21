@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档的邮件合并功能的二次封装接口。
 /// 此接口提供了对邮件合并操作的全面控制，包括数据源管理、执行合并和状态查询 [[2]]。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordMailMerge : IDisposable
 {
     /// <summary>
     /// 获取此邮件合并对象所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -40,8 +42,16 @@ public interface IWordMailMerge : IDisposable
     /// </summary>
     WdMailMergeState State { get; }
 
+    /// <summary>
+    /// 获取或设置一个值，该值指示是否突出显示邮件合并域。
+    /// 当设置为 true 时，邮件合并域将在文档中以高亮形式显示，便于识别和编辑。
+    /// </summary>
     bool HighlightMergeFields { get; set; }
 
+    /// <summary>
+    /// 获取或设置邮件合并的邮件格式。
+    /// 该属性决定通过电子邮件发送合并结果时使用的邮件格式，可以是纯文本或 HTML 格式。
+    /// </summary>
     WdMailMergeMailFormat MailFormat { get; set; }
 
     /// <summary>
