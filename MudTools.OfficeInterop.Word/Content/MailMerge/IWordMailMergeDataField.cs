@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示邮件合并数据源中当前活动记录的单个数据字段的二次封装接口。
 /// 此接口提供了对字段名称及其值的访问，值可以被读取和修改 [[1]]。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordMailMergeDataField : IDisposable
 {
     /// <summary>
     /// 获取此数据字段所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
