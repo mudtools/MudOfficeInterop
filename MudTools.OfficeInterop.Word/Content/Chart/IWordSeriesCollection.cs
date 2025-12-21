@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表系列集合的封装接口。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsWord")]
 public interface IWordSeriesCollection : IEnumerable<IWordSeries>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取系列数量。
@@ -30,12 +32,12 @@ public interface IWordSeriesCollection : IEnumerable<IWordSeries>, IDisposable
     /// <summary>
     /// 通过索引获取系列。
     /// </summary>
-    IWordSeries this[int index] { get; }
+    IWordSeries? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取系列。
     /// </summary>
-    IWordSeries this[string name] { get; }
+    IWordSeries? this[string name] { get; }
 
     /// <summary>
     /// 添加新的数据系列。
@@ -46,18 +48,20 @@ public interface IWordSeriesCollection : IEnumerable<IWordSeries>, IDisposable
     /// <param name="categoryLabels">是否包含分类标签。</param>
     /// <param name="bubbleSizes">气泡大小数据范围。</param>
     /// <returns>新创建的系列。</returns>
-    IWordSeries Add(object source, MsWord.XlRowCol rowcol, bool seriesLabels, bool categoryLabels, object bubbleSizes);
+    IWordSeries? Add(object source, XlRowCol rowcol, bool seriesLabels, bool? categoryLabels = null, bool? bubbleSizes = null);
 
     /// <summary>
-    /// 判断是否存在指定名称的系列。
+    /// 扩展现有数据系列的数据范围
     /// </summary>
-    /// <param name="name">系列名称。</param>
-    /// <returns>是否存在。</returns>
-    bool Contains(string name);
+    /// <param name="source">包含新数据的数据源范围</param>
+    /// <param name="rowcol">指定数据在工作表中的排列方式</param>
+    /// <param name="categoryLabels">指示第一行或第一列是否包含分类标签</param>
+    /// <returns>扩展后的对象</returns>
+    object? Extend(object source, XlRowCol rowcol, bool? categoryLabels = null);
 
     /// <summary>
-    /// 获取所有系列名称列表。
+    /// 创建一个新的数据系列
     /// </summary>
-    /// <returns>系列名称列表。</returns>
-    List<string> GetNames();
+    /// <returns>新创建的数据系列</returns>
+    IWordSeries? NewSeries();
 }
