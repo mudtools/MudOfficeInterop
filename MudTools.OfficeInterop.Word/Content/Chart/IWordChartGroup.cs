@@ -69,7 +69,7 @@ public interface IWordChartGroup : IDisposable
     /// <summary>
     /// 获取第一个数据系列。
     /// </summary>
-    IWordChartSeries? SeriesCollection { get; }
+    IWordSeries? SeriesCollection { get; }
 
     /// <summary>
     /// 获取高低线对象。

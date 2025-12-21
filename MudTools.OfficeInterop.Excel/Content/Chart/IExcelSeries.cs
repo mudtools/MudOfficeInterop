@@ -427,10 +427,10 @@ public interface IExcelSeries : IDisposable
     /// <param name="showBubbleSize">是否显示气泡大小</param>
     /// <param name="separator">分隔符</param>
     void ApplyDataLabels(XlDataLabelsType type = XlDataLabelsType.xlDataLabelsShowValue,
-                                  bool legendKey = false, bool autoText = true,
-                                  bool hasLeaderLines = false, bool showSeriesName = false,
-                                  bool showCategoryName = false, bool showValue = true,
-                                  bool showPercentage = false, bool showBubbleSize = false,
+                                  bool? legendKey = null, bool? autoText = null,
+                                  bool? hasLeaderLines = null, bool? showSeriesName = null,
+                                  bool? showCategoryName = null, bool? showValue = null,
+                                  bool? showPercentage = null, bool? showBubbleSize = null,
                                   string? separator = null);
 
 

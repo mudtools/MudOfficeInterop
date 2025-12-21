@@ -37,7 +37,7 @@ internal class WordSeriesCollection : IWordSeriesCollection
     #region 索引器实现
 
     /// <inheritdoc/>
-    public IWordChartSeries this[int index]
+    public IWordSeries this[int index]
     {
         get
         {
@@ -46,7 +46,7 @@ internal class WordSeriesCollection : IWordSeriesCollection
             try
             {
                 var comSeries = _seriesCollection[index];
-                return new WordChartSeries(comSeries);
+                return new WordSeries(comSeries);
             }
             catch
             {
@@ -56,7 +56,7 @@ internal class WordSeriesCollection : IWordSeriesCollection
     }
 
     /// <inheritdoc/>
-    public IWordChartSeries this[string name]
+    public IWordSeries this[string name]
     {
         get
         {
@@ -65,7 +65,7 @@ internal class WordSeriesCollection : IWordSeriesCollection
             try
             {
                 var comSeries = _seriesCollection[name];
-                return comSeries != null ? new WordChartSeries(comSeries) : null;
+                return comSeries != null ? new WordSeries(comSeries) : null;
             }
             catch
             {
@@ -79,12 +79,12 @@ internal class WordSeriesCollection : IWordSeriesCollection
     #region 方法实现
 
     /// <inheritdoc/>
-    public IWordChartSeries Add(object source, MsWord.XlRowCol rowcol, bool seriesLabels, bool categoryLabels, object bubbleSizes)
+    public IWordSeries Add(object source, MsWord.XlRowCol rowcol, bool seriesLabels, bool categoryLabels, object bubbleSizes)
     {
         try
         {
             var newSeries = _seriesCollection.Add(source, rowcol, seriesLabels, categoryLabels, bubbleSizes);
-            return new WordChartSeries(newSeries);
+            return new WordSeries(newSeries);
         }
         catch (COMException ex)
         {
@@ -93,12 +93,12 @@ internal class WordSeriesCollection : IWordSeriesCollection
     }
 
     /// <inheritdoc/>
-    public IWordChartSeries NewSeries()
+    public IWordSeries NewSeries()
     {
         try
         {
             var newSeries = _seriesCollection.NewSeries();
-            return new WordChartSeries(newSeries);
+            return new WordSeries(newSeries);
         }
         catch (COMException ex)
         {
@@ -139,7 +139,7 @@ internal class WordSeriesCollection : IWordSeriesCollection
     #region 枚举支持
 
     /// <inheritdoc/>
-    public IEnumerator<IWordChartSeries> GetEnumerator()
+    public IEnumerator<IWordSeries> GetEnumerator()
     {
         for (int i = 1; i <= Count; i++)
         {

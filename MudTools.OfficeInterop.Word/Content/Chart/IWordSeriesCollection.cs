@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表系列集合的封装接口。
 /// </summary>
-public interface IWordSeriesCollection : IEnumerable<IWordChartSeries>, IDisposable
+public interface IWordSeriesCollection : IEnumerable<IWordSeries>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -30,12 +30,12 @@ public interface IWordSeriesCollection : IEnumerable<IWordChartSeries>, IDisposa
     /// <summary>
     /// 通过索引获取系列。
     /// </summary>
-    IWordChartSeries this[int index] { get; }
+    IWordSeries this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取系列。
     /// </summary>
-    IWordChartSeries this[string name] { get; }
+    IWordSeries this[string name] { get; }
 
     /// <summary>
     /// 添加新的数据系列。
@@ -46,7 +46,7 @@ public interface IWordSeriesCollection : IEnumerable<IWordChartSeries>, IDisposa
     /// <param name="categoryLabels">是否包含分类标签。</param>
     /// <param name="bubbleSizes">气泡大小数据范围。</param>
     /// <returns>新创建的系列。</returns>
-    IWordChartSeries Add(object source, MsWord.XlRowCol rowcol, bool seriesLabels, bool categoryLabels, object bubbleSizes);
+    IWordSeries Add(object source, MsWord.XlRowCol rowcol, bool seriesLabels, bool categoryLabels, object bubbleSizes);
 
     /// <summary>
     /// 判断是否存在指定名称的系列。

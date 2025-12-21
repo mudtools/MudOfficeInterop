@@ -128,9 +128,9 @@ public interface IExcelChart : IExcelComSheet, IDisposable
     /// <param name="showBubbleSize">是否显示气泡大小，可选参数</param>
     /// <param name="separator">分隔符，可选参数</param>
     void ApplyDataLabels(XlDataLabelsType type = XlDataLabelsType.xlDataLabelsShowValue,
-                               bool? legendKey = null, string? autoText = null, bool? hasLeaderLines = null, string? showSeriesName = null,
-                               string? showCategoryName = null, double? showValue = null, string? showPercentage = null,
-                               double? showBubbleSize = null, string? separator = null);
+                               bool? legendKey = null, string? autoText = null, bool? hasLeaderLines = null, bool? showSeriesName = null,
+                               bool? showCategoryName = null, bool? showValue = null, bool? showPercentage = null,
+                               bool? showBubbleSize = null, string? separator = null);
     /// <summary>
     /// 返回图表中所有图表组的集合或指定索引的图表组
     /// </summary>

@@ -157,8 +157,8 @@ internal class WordChartGroup : IWordChartGroup
     #region 对象属性实现
 
     /// <inheritdoc/>
-    public IWordChartSeries? SeriesCollection => _chartGroup?.SeriesCollection() != null ?
-        new WordChartSeries(_chartGroup.SeriesCollection() as MsWord.Series) : null;
+    public IWordSeries? SeriesCollection => _chartGroup?.SeriesCollection() != null ?
+        new WordSeries(_chartGroup.SeriesCollection() as MsWord.Series) : null;
 
     /// <inheritdoc/>
     public IWordChartHiLoLines? HiLoLines => _chartGroup?.HiLoLines != null ?
