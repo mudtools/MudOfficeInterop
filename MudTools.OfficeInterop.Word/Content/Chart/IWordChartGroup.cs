@@ -224,5 +224,5 @@ public interface IWordChartGroup : IDisposable
     /// <summary>
     /// 获取趋势线对象。
     /// </summary>
-    IWordChartSeriesLines? SeriesLines { get; }
+    IWordSeriesLines? SeriesLines { get; }
 }
