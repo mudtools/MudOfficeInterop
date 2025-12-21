@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表趋势线的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTrendline : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取趋势线名称。
@@ -73,6 +75,26 @@ public interface IWordTrendline : IDisposable
     double Intercept { get; set; }
 
     /// <summary>
+    /// 获取或设置趋势线与 Y 轴的交点是否为自动计算。
+    /// </summary>
+    bool InterceptIsAuto { get; set; }
+
+    /// <summary>
+    /// 获取或设置趋势线名称是否为自动分配。
+    /// </summary>
+    bool NameIsAuto { get; set; }
+
+    /// <summary>
+    /// 获取或设置向后预测周期数（双精度浮点型）。
+    /// </summary>
+    double Backward2 { get; set; }
+
+    /// <summary>
+    /// 获取或设置向前预测周期数（双精度浮点型）。
+    /// </summary>
+    double Forward2 { get; set; }
+
+    /// <summary>
     /// 获取边框格式。
     /// </summary>
     IWordChartBorder? Border { get; }
@@ -90,10 +112,16 @@ public interface IWordTrendline : IDisposable
     /// <summary>
     /// 选择趋势线。
     /// </summary>
-    void Select();
+    object? Select();
 
     /// <summary>
     /// 删除趋势线。
     /// </summary>
-    void Delete();
+    object? Delete();
+
+    /// <summary>
+    /// 清除趋势线的格式设置并将其恢复为默认格式。
+    /// </summary>
+    /// <returns>表示操作结果的对象。</returns>
+    object? ClearFormats();
 }
