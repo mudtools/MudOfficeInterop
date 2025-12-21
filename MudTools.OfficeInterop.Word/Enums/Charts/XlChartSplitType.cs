@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,34 +8,27 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 表示 Word 图表组集合的封装接口。
+/// 指定在复合饼图或条饼图的第二个图表中显示的值
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordChartGroups : IEnumerable<IWordChartGroup?>, IDisposable
+public enum XlChartSplitType
 {
     /// <summary>
-    /// 获取应用程序对象。
+    /// 第二个图表显示数据系列中的最小值，显示的值数量由 SplitValue 属性指定
     /// </summary>
-    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IWordApplication? Application { get; }
+    xlSplitByPosition = 1,
 
     /// <summary>
-    /// 获取父对象。
+    /// 第二个图表显示小于总值某个百分比的值，百分比由 SplitValue 属性指定
     /// </summary>
-    object Parent { get; }
+    xlSplitByPercentValue = 3,
 
     /// <summary>
-    /// 获取图表组数量。
+    /// 在第二个图表中显示任意数据切片
     /// </summary>
-    int Count { get; }
+    xlSplitByCustomSplit = 4,
 
     /// <summary>
-    /// 通过索引获取图表组。
+    /// 第二个图表显示小于 SplitValue 属性指定值的值
     /// </summary>
-    IWordChartGroup? this[int index] { get; }
-
-    /// <summary>
-    /// 通过索引获取图表组。
-    /// </summary>
-    IWordChartGroup? this[string name] { get; }
+    xlSplitByValue = 2
 }

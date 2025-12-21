@@ -10,19 +10,89 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 图表组的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordChartGroup : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
+    /// <summary>
+    /// 获取或设置图表组使用的坐标轴组。
+    /// </summary>
     XlAxisGroup AxisGroup { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否在雷达图上显示分类轴标签。
+    /// </summary>
+    bool HasRadarAxisLabels { get; set; }
+
+    /// <summary>
+    /// 获取或设置圆环图内孔的大小，以图表大小的百分比表示（10-90）。
+    /// </summary>
+    int DoughnutHoleSize { get; set; }
+
+    /// <summary>
+    /// 获取或设置饼图中第一个扇区的角度（0-360度）。
+    /// </summary>
+    int FirstSliceAngle { get; set; }
+
+    /// <summary>
+    /// 获取或设置图表组是否具有跌落线。
+    /// </summary>
+    bool HasDropLines { get; set; }
+
+    /// <summary>
+    /// 获取或设置图表组的子类型。
+    /// </summary>
+    int SubType { get; set; }
+
+    /// <summary>
+    /// 获取或设置图表组的类型。
+    /// </summary>
+    int Type { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否按类别改变图表颜色。
+    /// </summary>
+    bool VaryByCategories { get; set; }
+
+    /// <summary>
+    /// 获取或设置气泡图中气泡大小所代表的含义。
+    /// </summary>
+    XlSizeRepresents SizeRepresents { get; set; }
+
+    /// <summary>
+    /// 获取或设置分离型饼图的分离方式。
+    /// </summary>
+    XlChartSplitType SplitType { get; set; }
+
+    /// <summary>
+    /// 获取或设置分离型图表的分离值。
+    /// </summary>
+    object SplitValue { get; set; }
+
+    /// <summary>
+    /// 获取或设置第二绘图区的大小，以主绘图区的百分比表示（5-200）。
+    /// </summary>
+    int SecondPlotSize { get; set; }
+
+    /// <summary>
+    /// 获取图表组的索引号。
+    /// </summary>
+    int Index { get; }
+
+    /// <summary>
+    /// 获取图表组的上涨柱线集合。
+    /// </summary>
+    IWordUpBars? UpBars { get; }
 
     /// <summary>
     /// 获取或设置是否显示趋势线。
@@ -49,7 +119,6 @@ public interface IWordChartGroup : IDisposable
     /// </summary>
     int GapWidth { get; set; }
 
-    bool HasRadarAxisLabels { get; set; }
 
     /// <summary>
     /// 获取或设置是否显示气泡大小。
@@ -69,12 +138,71 @@ public interface IWordChartGroup : IDisposable
     /// <summary>
     /// 获取第一个数据系列。
     /// </summary>
-    IWordSeries? SeriesCollection { get; }
+    [ReturnValueConvert]
+    IWordSeriesCollection? SeriesCollection();
+
+    /// <summary>
+    /// 获取第一个数据系列。
+    /// </summary>
+    [ReturnValueConvert]
+    IWordSeries? SeriesCollection(int index);
+
+    /// <summary>
+    /// 获取第一个数据系列。
+    /// </summary>
+    [ReturnValueConvert]
+    IWordSeries? SeriesCollection(string name);
+
+    /// <summary>
+    /// 获取图表的所有分类集合。
+    /// </summary>
+    /// <returns>包含所有分类的集合。</returns>
+    [ReturnValueConvert]
+    IWordCategoryCollection? CategoryCollection();
+
+    /// <summary>
+    /// 根据索引获取特定的图表分类。
+    /// </summary>
+    /// <param name="index">分类的从零开始的索引。</param>
+    /// <returns>指定索引处的分类对象。</returns>
+    [ReturnValueConvert]
+    IWordChartCategory? CategoryCollection(int index);
+
+    /// <summary>
+    /// 根据名称获取特定的图表分类。
+    /// </summary>
+    /// <param name="name">分类的名称。</param>
+    /// <returns>具有指定名称的分类对象。</returns>
+    [ReturnValueConvert]
+    IWordChartCategory? CategoryCollection(string name);
+
+    /// <summary>
+    /// 获取图表的完整分类集合，包括可见和隐藏的分类。
+    /// </summary>
+    /// <returns>包含所有分类（包括被过滤掉的分类）的集合。</returns>
+    [ReturnValueConvert]
+    IWordCategoryCollection? FullCategoryCollection();
+
+    /// <summary>
+    /// 根据索引获取完整的图表分类（包括可见和隐藏的分类）。
+    /// </summary>
+    /// <param name="index">分类的从零开始的索引。</param>
+    /// <returns>指定索引处的分类对象。</returns>
+    [ReturnValueConvert]
+    IWordChartCategory? FullCategoryCollection(int index);
+
+    /// <summary>
+    /// 根据名称获取完整的图表分类（包括可见和隐藏的分类）。
+    /// </summary>
+    /// <param name="name">分类的名称。</param>
+    /// <returns>具有指定名称的分类对象。</returns>
+    [ReturnValueConvert]
+    IWordChartCategory? FullCategoryCollection(string name);
 
     /// <summary>
     /// 获取高低线对象。
     /// </summary>
-    IWordChartHiLoLines? HiLoLines { get; }
+    IWordHiLoLines? HiLoLines { get; }
 
 
     /// <summary>
@@ -96,5 +224,5 @@ public interface IWordChartGroup : IDisposable
     /// <summary>
     /// 获取趋势线对象。
     /// </summary>
-    IWordChartSeriesLines SeriesLines { get; }
+    IWordChartSeriesLines? SeriesLines { get; }
 }

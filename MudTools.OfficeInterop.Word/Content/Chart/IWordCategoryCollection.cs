@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -7,40 +7,40 @@
 
 namespace MudTools.OfficeInterop.Word;
 
+
 /// <summary>
-/// 表示 Word 图表高低线的封装接口。
+/// 表示 Word 图表分类集合的封装接口。
 /// </summary>
-public interface IWordChartHiLoLines : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordCategoryCollection : IEnumerable<IWordChartCategory?>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
-
-    string Name { get; }
+    object? Parent { get; }
 
     /// <summary>
-    /// 获取图表格式对象。
+    /// 获取集合中分类的数量。
     /// </summary>
-    IWordChartFormat Format { get; }
+    int Count { get; }
 
     /// <summary>
-    /// 获取图表边框对象。
+    /// 通过索引获取分类对象。
     /// </summary>
-    IWordChartBorder Border { get; }
+    /// <param name="index">分类的从零开始的索引。</param>
+    /// <returns>指定索引处的分类对象。</returns>
+    IWordChartCategory? this[int index] { get; }
 
     /// <summary>
-    /// 选择高低线对象。
+    /// 通过名称获取分类对象。
     /// </summary>
-    void Select();
-
-    /// <summary>
-    /// 删除高低线。
-    /// </summary>
-    void Delete();
+    /// <param name="name">分类的名称。</param>
+    /// <returns>具有指定名称的分类对象。</returns>
+    IWordChartCategory? this[string name] { get; }
 }
