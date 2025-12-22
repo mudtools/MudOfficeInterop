@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中的一个邮件合并域（如 MERGEFIELD 域）的二次封装接口。
 /// 此接口提供了对该域的范围、数据源字段名称以及操作的访问 [[1]]。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordMailMergeField : IDisposable
 {
     /// <summary>
     /// 获取此邮件合并域所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -46,7 +48,7 @@ public interface IWordMailMergeField : IDisposable
     /// <summary>
     /// 获取或设置域是否被锁定。锁定的域在文档更新时不会改变。
     /// </summary>
-    bool locked { get; set; }
+    bool Locked { get; set; }
 
     /// <summary>
     /// 从文档中删除此邮件合并域。

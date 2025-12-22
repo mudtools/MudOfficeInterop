@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示邮件合并数据源中的单个字段名称的二次封装接口。
 /// 此接口提供了对字段名称及其相关信息的只读访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordMailMergeFieldName : IDisposable
 {
     /// <summary>
     /// 获取此字段名称所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
