@@ -12,11 +12,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示邮件合并操作所使用的数据源的二次封装接口。
 /// 此接口提供了对数据源的连接信息、字段、记录以及记录导航的访问。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordMailMergeDataSource : IDisposable
 {
     /// <summary>
     /// 获取此数据源所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -111,8 +113,8 @@ public interface IWordMailMergeDataSource : IDisposable
     /// <summary>
     /// 设置所有记录的包含标志。
     /// </summary>
-    /// <param name="Included">如果为 true，则包含所有记录；否则排除所有记录。</param>
-    void SetAllIncludedFlags(bool Included);
+    /// <param name="included">如果为 true，则包含所有记录；否则排除所有记录。</param>
+    void SetAllIncludedFlags(bool included);
 
     /// <summary>
     /// 设置所有记录的错误标志。
@@ -133,5 +135,5 @@ public interface IWordMailMergeDataSource : IDisposable
     /// <param name="text">要搜索的文本。</param>
     /// <returns>如果找到匹配的记录，则为 true；否则为 false。</returns>
     /// <exception cref="ArgumentNullException">当 <paramref name="fieldName"/> 或 <paramref name="text"/> 为 null 或空时抛出。</exception>
-    bool FindRecord(string text, string? fieldName = null);
+    bool? FindRecord(string text, string? fieldName = null);
 }
