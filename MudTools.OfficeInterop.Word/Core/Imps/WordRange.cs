@@ -15,6 +15,9 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordRange : IWordRange
 {
     internal MsWord.Range _range;
+
+    internal MsWord.Range InternalComObject => _range;
+
     private bool _disposedValue;
     private IWordRange? _duplicate;
     private IWordDocument? _document;

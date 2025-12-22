@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中所有邮件合并域的集合的二次封装接口。
 /// 此接口允许枚举、访问特定域，并向文档中添加新的邮件合并域 [[1]]。
 /// </summary>
-public interface IWordMailMergeFields : IEnumerable<IWordMailMergeField>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordMailMergeFields : IEnumerable<IWordMailMergeField?>, IDisposable
 {
     /// <summary>
     /// 获取此邮件合并域集合所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -44,5 +46,93 @@ public interface IWordMailMergeFields : IEnumerable<IWordMailMergeField>, IDispo
     /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
     /// <exception cref="ArgumentNullException">当 <paramref name="range"/> 或 <paramref name="fieldName"/> 为 null 或空时抛出。</exception>
     /// <exception cref="InvalidOperationException">当添加邮件合并域操作失败时抛出。</exception>
-    IWordMailMergeField Add(IWordRange range, string fieldName);
+    IWordMailMergeField? Add(IWordRange range, string fieldName);
+
+    /// <summary>
+    /// 向文档中添加 Ask 邮件合并域。Ask 域会在执行邮件合并时提示用户输入信息。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <param name="name">Ask 域的名称。</param>
+    /// <param name="prompt">提示用户输入信息的文本。</param>
+    /// <param name="defaultAskText">Ask 域的默认文本。</param>
+    /// <param name="askOnce">如果为 true，则仅提示用户一次并在整个合并过程中使用该值。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddAsk(IWordRange range, string name, string? prompt = null, string? defaultAskText = null, bool? askOnce = null);
+
+    /// <summary>
+    /// 向文档中添加 Fill-In 邮件合并域。Fill-In 域会提示用户输入信息以填充空白。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <param name="prompt">提示用户输入信息的文本。</param>
+    /// <param name="defaultFillInText">Fill-In 域的默认文本。</param>
+    /// <param name="askOnce">如果为 true，则仅提示用户一次并在整个合并过程中使用该值。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddFillIn(IWordRange range, string? prompt = null, string? defaultFillInText = null, bool? askOnce = null);
+
+    /// <summary>
+    /// 向文档中添加 IF 邮件合并域。IF 域根据条件比较结果决定显示哪个文本。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <param name="mergeField">要比较的邮件合并字段名称。</param>
+    /// <param name="comparison">比较操作类型，参考 <see cref="WdMailMergeComparison"/> 枚举。</param>
+    /// <param name="compareTo">要与邮件合并字段比较的字符串。</param>
+    /// <param name="trueAutoText">当条件为真时使用的自动图文集条目。</param>
+    /// <param name="trueText">当条件为真时显示的文本。</param>
+    /// <param name="falseAutoText">当条件为假时使用的自动图文集条目。</param>
+    /// <param name="falseText">当条件为假时显示的文本。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddIf(IWordRange range, string mergeField, WdMailMergeComparison comparison, string? compareTo = null, string? trueAutoText = null, string? trueText = null, string? falseAutoText = null, string? falseText = null);
+
+    /// <summary>
+    /// 向文档中添加 MergeRec 邮件合并域。MergeRec 域会插入数据源记录号。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddMergeRec(IWordRange range);
+
+    /// <summary>
+    /// 向文档中添加 MergeSeq 邮件合并域。MergeSeq 域会插入当前记录的序列号。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddMergeSeq(IWordRange range);
+
+    /// <summary>
+    /// 向文档中添加 Next 邮件合并域。Next 域会使数据源移动到下一条记录。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddNext(IWordRange range);
+
+    /// <summary>
+    /// 向文档中添加 NextIf 邮件合并域。NextIf 域会根据条件比较结果决定是否移到下一条记录。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <param name="MergeField">要比较的邮件合并字段名称。</param>
+    /// <param name="Comparison">比较操作类型，参考 <see cref="WdMailMergeComparison"/> 枚举。</param>
+    /// <param name="CompareTo">要与邮件合并字段比较的字符串。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddNextIf(IWordRange range, string MergeField, WdMailMergeComparison Comparison, string? CompareTo = null);
+
+    /// <summary>
+    /// 向文档中添加 Set 邮件合并域。Set 域会为 Ask 或 Fill-In 域设置默认值。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <param name="Name">要为其设置值的 Ask 或 Fill-In 域的名称。</param>
+    /// <param name="valueText">要设置的文本值。</param>
+    /// <param name="valueAutoText">要设置的自动图文集条目。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddSet(IWordRange range, string Name, string? valueText = null, string? valueAutoText = null);
+
+    /// <summary>
+    /// 向文档中添加 SkipIf 邮件合并域。SkipIf 域会根据条件比较结果决定是否跳过记录。
+    /// </summary>
+    /// <param name="range">要插入邮件合并域的位置。</param>
+    /// <param name="mergeField">要比较的邮件合并字段名称。</param>
+    /// <param name="comparison">比较操作类型，参考 <see cref="WdMailMergeComparison"/> 枚举。</param>
+    /// <param name="compareTo">要与邮件合并字段比较的字符串。</param>
+    /// <returns>新创建的 <see cref="IWordMailMergeField"/> 对象。</returns>
+    IWordMailMergeField? AddSkipIf(IWordRange range, string mergeField, WdMailMergeComparison comparison, string? compareTo = null);
+
+
 }
