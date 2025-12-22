@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示邮件合并数据源中所有字段名称的集合的二次封装接口。
 /// 此接口允许枚举和访问数据源中的各个字段。
 /// </summary>
-public interface IWordMailMergeFieldNames : IEnumerable<IWordMailMergeFieldName>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordMailMergeFieldNames : IEnumerable<IWordMailMergeFieldName?>, IDisposable
 {
     /// <summary>
     /// 获取此字段名称集合所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -34,4 +36,11 @@ public interface IWordMailMergeFieldNames : IEnumerable<IWordMailMergeFieldName>
     /// <param name="index">字段名称的索引（从 1 开始）。</param>
     /// <returns>指定索引处的 <see cref="IWordMailMergeFieldName"/> 对象，如果索引无效则返回 null。</returns>
     IWordMailMergeFieldName? this[int index] { get; }
+
+    /// <summary>
+    /// 获取集合中指定索引处的字段名称。索引从 1 开始。
+    /// </summary>
+    /// <param name="name">字段名称的索引（从 1 开始）。</param>
+    /// <returns>指定索引处的 <see cref="IWordMailMergeFieldName"/> 对象，如果索引无效则返回 null。</returns>
+    IWordMailMergeFieldName? this[string name] { get; }
 }
