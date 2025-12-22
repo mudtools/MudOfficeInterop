@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示邮件合并中所有标准字段与数据源字段之间映射关系的集合的二次封装接口。
 /// 此集合包含了 Word 支持的所有预定义标准字段（如姓名、地址、城市等）的映射 [[1]]。
 /// </summary>
-public interface IWordMappedDataFields : IEnumerable<IWordMappedDataField>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordMappedDataFields : IEnumerable<IWordMappedDataField?>, IDisposable
 {
     /// <summary>
     /// 获取此映射字段集合所属的 Word 应用程序对象。
