@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示邮件合并中一个标准字段与数据源字段之间映射关系的二次封装接口。
 /// 此接口允许获取或设置与预定义标准字段（如“姓氏”）关联的数据源字段名称 [[1]]。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordMappedDataField : IDisposable
 {
     /// <summary>
     /// 获取此映射字段所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -30,7 +32,19 @@ public interface IWordMappedDataField : IDisposable
     string? Name { get; }
 
     /// <summary>
+    /// 获取与该标准字段关联的数据源字段值。
+    /// </summary>
+    string Value { get; }
+
+
+    /// <summary>
+    /// 获取或设置与该标准字段关联的数据源字段索引。
+    /// </summary>
+    int DataFieldIndex { get; }
+
+    /// <summary>
     /// 获取与该标准字段映射的数据源中的实际字段名称。
     /// </summary>
-    string? DataFieldName { get; }
+    string DataFieldName { get; }
+
 }
