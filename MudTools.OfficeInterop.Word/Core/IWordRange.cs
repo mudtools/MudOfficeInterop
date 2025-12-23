@@ -697,104 +697,118 @@ public interface IWordRange : IDisposable
     float? Calculate();
 
     /// <summary>
-    /// 跳转到文档中的指定位置。
+    /// 跳转到文档中的指定位置
     /// </summary>
-    /// <param name="what">要跳转到的项目类型，如书签、页面、行等，参考 <see cref="WdGoToItem"/> 枚举。</param>
-    /// <param name="which">跳转方向或特定位置，参考 <see cref="WdGoToDirection"/> 枚举。</param>
-    /// <param name="count">跳转的次数或位置编号，如果为null则使用默认值。</param>
-    /// <param name="name">特定项目的名称（如书签名称），如果为null则使用默认值。</param>
-    /// <returns>返回表示跳转位置的范围对象；如果操作失败，则返回null。</returns>
+    /// <param name="what">要跳转到的对象类型，如页面、书签、行等</param>
+    /// <param name="which">跳转方向，如下一个、上一个、绝对位置等</param>
+    /// <param name="count">跳转的次数或位置</param>
+    /// <param name="name">特定书签或项目的名称</param>
+    /// <returns>表示跳转后位置的Word范围对象，如果未找到则返回null</returns>
     IWordRange? GoTo(WdGoToItem? what = null, WdGoToDirection? which = null, int? count = null, string? name = null);
 
     /// <summary>
-    /// 跳转到文档中下一个指定类型的项目。
+    /// 跳转到下一个指定类型的项目
     /// </summary>
-    /// <param name="what">要查找的项目类型，参考 <see cref="WdGoToItem"/> 枚举。</param>
-    /// <returns>返回表示下一个项目位置的范围对象；如果未找到，则返回null。</returns>
+    /// <param name="what">要查找的项目类型</param>
+    /// <returns>表示下一个项目位置的Word范围对象，如果未找到则返回null</returns>
     IWordRange? GoToNext(WdGoToItem what);
 
     /// <summary>
-    /// 跳转到文档中上一个指定类型的项目。
+    /// 跳转到上一个指定类型的项目
     /// </summary>
-    /// <param name="what">要查找的项目类型，参考 <see cref="WdGoToItem"/> 枚举。</param>
-    /// <returns>返回表示上一个项目位置的范围对象；如果未找到，则返回null。</returns>
+    /// <param name="what">要查找的项目类型</param>
+    /// <returns>表示上一个项目位置的Word范围对象，如果未找到则返回null</returns>
     IWordRange? GoToPrevious(WdGoToItem what);
 
     /// <summary>
-    /// 以特殊格式粘贴剪贴板内容。
+    /// 以特殊格式粘贴剪贴板内容
     /// </summary>
-    /// <param name="iconIndex">图标索引，如果为null则使用默认值。</param>
-    /// <param name="link">是否链接到原始数据，如果为null则使用默认值。</param>
-    /// <param name="placement">OLE对象的放置方式，参考 <see cref="WdOLEPlacement"/> 枚举。</param>
-    /// <param name="displayAsIcon">是否以图标形式显示，如果为null则使用默认值。</param>
-    /// <param name="dataType">粘贴数据的类型，参考 <see cref="WdPasteDataType"/> 枚举。</param>
-    /// <param name="iconFileName">图标的文件名，如果为null则使用默认图标。</param>
-    /// <param name="IconLabel">图标的标签文本，如果为null则使用默认标签。</param>
+    /// <param name="iconIndex">图标文件中的图标索引</param>
+    /// <param name="link">是否链接到源文件</param>
+    /// <param name="placement">OLE对象的放置方式</param>
+    /// <param name="displayAsIcon">是否以图标形式显示</param>
+    /// <param name="dataType">要粘贴的数据类型</param>
+    /// <param name="iconFileName">图标的文件路径</param>
+    /// <param name="IconLabel">图标的标签文本</param>
     void PasteSpecial(int? iconIndex = null, object? link = null, WdOLEPlacement? placement = null,
                     bool? displayAsIcon = null, WdPasteDataType? dataType = null,
                     string? iconFileName = null, string? IconLabel = null);
 
+
     /// <summary>
-    /// 查找名称属性。
+    /// 查找并显示名称属性信息
     /// </summary>
     void LookupNameProperties();
 
     /// <summary>
-    /// 计算指定的文档统计信息。
+    /// 计算文档的统计信息
     /// </summary>
-    /// <param name="Statistic">要计算的统计类型，参考 <see cref="WdStatistic"/> 枚举。</param>
-    /// <returns>返回计算结果的数值；如果操作失败，则返回null。</returns>
+    /// <param name="Statistic">要计算的统计类型</param>
+    /// <returns>计算得到的统计值，如果无法计算则返回null</returns>
     int? ComputeStatistics(WdStatistic Statistic);
 
     /// <summary>
-    /// 重新定位到指定方向。
+    /// 重新定位当前范围
     /// </summary>
-    /// <param name="direction">重定位的方向，参考 <see cref="WdRelocate"/> 枚举。</param>
+    /// <param name="direction">重新定位的方向</param>
     void Relocate([ConvertInt] WdRelocate direction);
 
     /// <summary>
-    /// 检查同义词。
+    /// 检查所选文本的同义词
     /// </summary>
     void CheckSynonyms();
 
     /// <summary>
-    /// 插入自动图文集条目。
+    /// 插入自动图文集条目
     /// </summary>
     void InsertAutoText();
 
     /// <summary>
-    /// 自动格式化范围内容。
+    /// 自动格式化当前范围的内容
     /// </summary>
     void AutoFormat();
 
     /// <summary>
-    /// 在当前范围前插入一个段落标记。
+    /// 在当前位置前插入一个段落标记
     /// </summary>
     void InsertParagraphBefore();
 
     /// <summary>
-    /// 跳转到下一个子文档。
+    /// 移动到下一个子文档
     /// </summary>
     void NextSubdocument();
 
     /// <summary>
-    /// 跳转到上一个子文档。
+    /// 移动到上一个子文档
     /// </summary>
     void PreviousSubdocument();
 
     /// <summary>
-    /// 以嵌套表格形式粘贴内容。
+    /// 将剪贴板内容作为嵌套表格粘贴
     /// </summary>
     void PasteAsNestedTable();
 
+
     /// <summary>
-    /// 检测范围内的语言。
+    /// 检测当前范围的语言
     /// </summary>
     void DetectLanguage();
 
     /// <summary>
     /// 执行拼写检查。
     /// </summary>
+    /// <param name="customDictionary">自定义词典，用于扩展默认词典进行拼写检查</param>
+    /// <param name="ignoreUppercase">是否忽略大写单词</param>
+    /// <param name="alwaysSuggest">是否始终提供建议</param>
+    /// <param name="customDictionary2">附加自定义词典2</param>
+    /// <param name="customDictionary3">附加自定义词典3</param>
+    /// <param name="customDictionary4">附加自定义词典4</param>
+    /// <param name="customDictionary5">附加自定义词典5</param>
+    /// <param name="customDictionary6">附加自定义词典6</param>
+    /// <param name="customDictionary7">附加自定义词典7</param>
+    /// <param name="customDictionary8">附加自定义词典8</param>
+    /// <param name="customDictionary9">附加自定义词典9</param>
+    /// <param name="customDictionary10">附加自定义词典10</param>
     void CheckSpelling(IWordDictionary? customDictionary = null, bool? ignoreUppercase = null, bool? alwaysSuggest = null,
                         IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
                         IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
@@ -802,6 +816,23 @@ public interface IWordRange : IDisposable
                         IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
                         IWordDictionary? customDictionary10 = null);
 
+    /// <summary>
+    /// 获取拼写建议。
+    /// </summary>
+    /// <param name="CustomDictionary">自定义词典，用于扩展默认词典</param>
+    /// <param name="ignoreUppercase">是否忽略大写单词</param>
+    /// <param name="MainDictionary">主词典</param>
+    /// <param name="SuggestionMode">建议模式，指定如何生成建议</param>
+    /// <param name="customDictionary2">附加自定义词典2</param>
+    /// <param name="customDictionary3">附加自定义词典3</param>
+    /// <param name="customDictionary4">附加自定义词典4</param>
+    /// <param name="customDictionary5">附加自定义词典5</param>
+    /// <param name="customDictionary6">附加自定义词典6</param>
+    /// <param name="customDictionary7">附加自定义词典7</param>
+    /// <param name="customDictionary8">附加自定义词典8</param>
+    /// <param name="customDictionary9">附加自定义词典9</param>
+    /// <param name="customDictionary10">附加自定义词典10</param>
+    /// <returns>返回拼写建议列表，如果没有找到建议则返回null</returns>
     IWordSpellingSuggestions? GetSpellingSuggestions(IWordDictionary? CustomDictionary = null, bool? ignoreUppercase = null, IWordDictionary? MainDictionary = null,
                         WdSpellingWordType? SuggestionMode = null, IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
                         IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
@@ -809,27 +840,91 @@ public interface IWordRange : IDisposable
                         IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
                         IWordDictionary? customDictionary10 = null);
 
-
-
+    /// <summary>
+    /// 插入数据库内容。
+    /// </summary>
+    /// <param name="format">表格格式</param>
+    /// <param name="style">样式</param>
+    /// <param name="linkToSource">是否链接到源</param>
+    /// <param name="connection">数据库连接信息</param>
+    /// <param name="SQLStatement">SQL语句</param>
+    /// <param name="SQLStatement1">附加SQL语句</param>
+    /// <param name="passwordDocument">文档密码</param>
+    /// <param name="passwordTemplate">模板密码</param>
+    /// <param name="writePasswordDocument">写入文档密码</param>
+    /// <param name="writePasswordTemplate">写入模板密码</param>
+    /// <param name="dataSource">数据源</param>
+    /// <param name="from">起始记录位置</param>
+    /// <param name="to">结束记录位置</param>
+    /// <param name="includeFields">是否包含字段</param>
     void InsertDatabase(WdTableFormat? format = null, object? style = null, bool? linkToSource = null,
                         object? connection = null, string? SQLStatement = null, string? SQLStatement1 = null,
                         string? passwordDocument = null, string? passwordTemplate = null, string? writePasswordDocument = null,
                         string? writePasswordTemplate = null, string? dataSource = null, int? from = null, int? to = null, bool? includeFields = null);
 
-
+    /// <summary>
+    /// 转换韩文和汉字。
+    /// </summary>
+    /// <param name="conversionsMode">转换模式</param>
+    /// <param name="fastConversion">是否快速转换</param>
+    /// <param name="checkHangulEnding">是否检查韩文结尾</param>
+    /// <param name="enableRecentOrdering">是否启用最近排序</param>
+    /// <param name="customDictionary">自定义词典</param>
     void ConvertHangulAndHanja(WdMultipleWordConversionsMode conversionsMode, bool? fastConversion, bool? checkHangulEnding,
                                bool? enableRecentOrdering, IWordDictionary? customDictionary);
 
+    /// <summary>
+    /// 修改封装样式。
+    /// </summary>
+    /// <param name="style">封装样式</param>
+    /// <param name="symbol">封装符号类型</param>
+    /// <param name="enclosedText">被封装的文本，如果为null则使用当前范围的文本</param>
     void ModifyEnclosure(WdEncloseStyle? style, WdEnclosureType symbol, string? enclosedText = null);
 
+    /// <summary>
+    /// 添加拼音指南。
+    /// </summary>
+    /// <param name="Text">要添加拼音的文本</param>
+    /// <param name="alignment">对齐方式</param>
+    /// <param name="raise">拼音提升高度</param>
+    /// <param name="fontSize">拼音字体大小</param>
+    /// <param name="fontName">拼音字体名称</param>
     void PhoneticGuide(string Text, WdPhoneticGuideAlignmentType alignment = WdPhoneticGuideAlignmentType.wdPhoneticGuideAlignmentLeft,
                        int raise = 0, int fontSize = 0, string fontName = "");
 
-
+    /// <summary>
+    /// 插入日期和时间。
+    /// </summary>
+    /// <param name="dateTimeFormat">日期时间格式</param>
+    /// <param name="insertAsField">是否作为字段插入</param>
+    /// <param name="insertAsFullWidth">是否以全角格式插入</param>
+    /// <param name="dateLanguage">日期语言</param>
+    /// <param name="calendarType">日历类型</param>
     void InsertDateTime(string? dateTimeFormat = null, bool? insertAsField = null, bool? insertAsFullWidth = null,
                         WdDateLanguage? dateLanguage = null, WdCalendarTypeBi? calendarType = null);
 
-
+    /// <summary>
+    /// 对范围内的内容进行排序。
+    /// </summary>
+    /// <param name="excludeHeader">是否排除标题行</param>
+    /// <param name="fieldNumber">第一个排序字段</param>
+    /// <param name="sortFieldType">第一个排序字段类型</param>
+    /// <param name="sortOrder">第一个排序顺序</param>
+    /// <param name="fieldNumber2">第二个排序字段</param>
+    /// <param name="sortFieldType2">第二个排序字段类型</param>
+    /// <param name="sortOrder2">第二个排序顺序</param>
+    /// <param name="fieldNumber3">第三个排序字段</param>
+    /// <param name="sortFieldType3">第三个排序字段类型</param>
+    /// <param name="sortOrder3">第三个排序顺序</param>
+    /// <param name="sortColumn">排序列</param>
+    /// <param name="separator">分隔符类型</param>
+    /// <param name="caseSensitive">是否区分大小写</param>
+    /// <param name="bidiSort">是否双向排序</param>
+    /// <param name="ignoreThe">是否忽略英文"the"</param>
+    /// <param name="ignoreKashida">是否忽略阿拉伯语kashida</param>
+    /// <param name="ignoreDiacritics">是否忽略变音符号</param>
+    /// <param name="ignoreHe">是否忽略希伯来语he</param>
+    /// <param name="languageID">语言ID</param>
     void Sort(bool? excludeHeader = null, string? fieldNumber = null, WdSortFieldType? sortFieldType = null,
             WdSortOrder? sortOrder = null, string? fieldNumber2 = null, WdSortFieldType? sortFieldType2 = null,
             WdSortOrder? sortOrder2 = null, string? fieldNumber3 = null, WdSortFieldType? sortFieldType3 = null,
@@ -838,12 +933,44 @@ public interface IWordRange : IDisposable
             bool? ignoreKashida = null, bool? ignoreDiacritics = null, bool? ignoreHe = null,
             WdLanguageID? languageID = null);
 
+    /// <summary>
+    /// 对范围内的内容按标题进行排序。
+    /// </summary>
+    /// <param name="sortFieldType">排序字段类型</param>
+    /// <param name="sortOrder">排序顺序</param>
+    /// <param name="caseSensitive">是否区分大小写</param>
+    /// <param name="bidiSort">是否双向排序</param>
+    /// <param name="ignoreThe">是否忽略英文"the"</param>
+    /// <param name="ignoreKashida">是否忽略阿拉伯语kashida</param>
+    /// <param name="ignoreDiacritics">是否忽略变音符号</param>
+    /// <param name="ignoreHe">是否忽略希伯来语he</param>
+    /// <param name="languageID">语言ID</param>
     void SortByHeadings(WdSortFieldType? sortFieldType, WdSortOrder? sortOrder,
                         bool? caseSensitive, bool? bidiSort,
                         bool? ignoreThe, bool? ignoreKashida, bool? ignoreDiacritics,
                         bool? ignoreHe, WdLanguageID? languageID);
 
 
+    /// <summary>
+    /// 将当前范围转换为表格
+    /// </summary>
+    /// <param name="separator">表格字段分隔符，默认为null</param>
+    /// <param name="numRows">表格行数，默认为null</param>
+    /// <param name="numColumns">表格列数，默认为null</param>
+    /// <param name="initialColumnWidth">初始列宽，默认为null</param>
+    /// <param name="format">表格格式，默认为null</param>
+    /// <param name="applyBorders">是否应用边框，默认为null</param>
+    /// <param name="applyShading">是否应用底纹，默认为null</param>
+    /// <param name="applyFont">是否应用字体格式，默认为null</param>
+    /// <param name="applyColor">是否应用颜色，默认为null</param>
+    /// <param name="applyHeadingRows">是否应用标题行格式，默认为null</param>
+    /// <param name="applyLastRow">是否应用最后一行格式，默认为null</param>
+    /// <param name="applyFirstColumn">是否应用第一列格式，默认为null</param>
+    /// <param name="applyLastColumn">是否应用最后一列格式，默认为null</param>
+    /// <param name="autoFit">是否自动调整大小，默认为null</param>
+    /// <param name="autoFitBehavior">自动调整行为，默认为null</param>
+    /// <param name="defaultTableBehavior">默认表格行为，默认为null</param>
+    /// <returns>返回表示表格的IWordTable对象，如果转换失败则返回null</returns>
     IWordTable? ConvertToTable(WdTableFieldSeparator? separator = null, int? numRows = null, int? numColumns = null,
                                 double? initialColumnWidth = null, WdTableFormat? format = null, bool? applyBorders = null,
                                 bool? applyShading = null, bool? applyFont = null, bool? applyColor = null,
@@ -851,37 +978,129 @@ public interface IWordRange : IDisposable
                                 bool? applyLastColumn = null, bool? autoFit = null, WdAutoFitBehavior? autoFitBehavior = null,
                                 WdDefaultTableBehavior? defaultTableBehavior = null);
 
+    /// <summary>
+    /// 执行TCSC（繁简转换）转换
+    /// </summary>
+    /// <param name="WdTCSCConverterDirection">转换方向，默认为自动</param>
+    /// <param name="commonTerms">是否转换常用词，默认为false</param>
+    /// <param name="useVariants">是否使用变体，默认为false</param>
     void TCSCConverter(WdTCSCConverterDirection WdTCSCConverterDirection = WdTCSCConverterDirection.wdTCSCConverterDirectionAuto, bool commonTerms = false, bool useVariants = false);
 
 
+    /// <summary>
+    /// 粘贴并格式化内容
+    /// </summary>
+    /// <param name="type">恢复类型</param>
     void PasteAndFormat(WdRecoveryType type);
 
+    /// <summary>
+    /// 粘贴Excel表格
+    /// </summary>
+    /// <param name="linkedToExcel">是否链接到Excel</param>
+    /// <param name="wordFormatting">是否使用Word格式</param>
+    /// <param name="RTF">是否使用RTF格式</param>
     void PasteExcelTable(bool linkedToExcel, bool wordFormatting, bool RTF);
 
+    /// <summary>
+    /// 粘贴并追加表格
+    /// </summary>
     void PasteAppendTable();
 
+    /// <summary>
+    /// 跳转到可编辑范围
+    /// </summary>
+    /// <param name="editorID">编辑器ID</param>
+    /// <returns>返回表示可编辑范围的IWordRange对象，如果找不到则返回null</returns>
     IWordRange? GoToEditableRange(string? editorID);
 
+    /// <summary>
+    /// 插入XML内容
+    /// </summary>
+    /// <param name="XML">要插入的XML字符串</param>
+    /// <param name="transform">转换样式，可选</param>
     void InsertXML(string XML, string? transform);
 
+    /// <summary>
+    /// 插入题注
+    /// </summary>
+    /// <param name="label">题注标签ID，默认为null</param>
+    /// <param name="title">题注标题，默认为null</param>
+    /// <param name="titleAutoText">自动图文集中的标题，默认为null</param>
+    /// <param name="position">题注位置，默认为null</param>
+    /// <param name="excludeLabel">是否排除标签，默认为null</param>
     void InsertCaption(WdCaptionLabelID? label = null, string? title = null, string? titleAutoText = null, WdCaptionPosition? position = null, bool? excludeLabel = null);
 
+    /// <summary>
+    /// 插入交叉引用（使用题注标签ID）
+    /// </summary>
+    /// <param name="referenceType">引用类型（题注标签ID）</param>
+    /// <param name="referenceKind">引用种类</param>
+    /// <param name="referenceItem">引用项目，默认为null</param>
+    /// <param name="insertAsHyperlink">是否作为超链接插入，默认为null</param>
+    /// <param name="includePosition">是否包含位置信息，默认为null</param>
+    /// <param name="separateNumbers">是否分离数字，默认为null</param>
+    /// <param name="separatorString">分隔字符串，默认为null</param>
     void InsertCrossReference(WdCaptionLabelID referenceType, WdReferenceKind referenceKind,
                               string? referenceItem = null, bool? insertAsHyperlink = null, bool? includePosition = null,
                               bool? separateNumbers = null, string? separatorString = null);
 
+    /// <summary>
+    /// 插入交叉引用（使用引用类型）
+    /// </summary>
+    ///<param name="referenceType">引用类型</param>
+    /// <param name="referenceKind">引用种类</param>
+    /// <param name="referenceItem">引用项目，默认为null</param>
+    /// <param name="insertAsHyperlink">是否作为超链接插入，默认为null</param>
+    /// <param name="includePosition">是否包含位置信息，默认为null</param>
+    /// <param name="separateNumbers">是否分离数字，默认为null</param>
+    /// <param name="separatorString">分隔字符串，默认为null</param>
     void InsertCrossReference(WdReferenceType referenceType, WdReferenceKind referenceKind,
                                 string? referenceItem = null, bool? insertAsHyperlink = null, bool? includePosition = null,
                                 bool? separateNumbers = null, string? separatorString = null);
 
+    /// <summary>
+    /// 导出文档片段到指定格式的文件
+    /// </summary>
+    /// <param name="fileName">输出文件名</param>
+    /// <param name="format">保存格式</param>
     void ExportFragment(string fileName, WdSaveFormat format);
 
+    /// <summary>
+    /// 设置列表级别
+    /// </summary>
+    /// <param name="level">列表级别</param>
     void SetListLevel(short level);
 
+    /// <summary>
+    /// 插入对齐制表符
+    /// </summary>
+    /// <param name="alignment">对齐方式</param>
+    /// <param name="relativeTo">相对于的位置，默认为0</param>
     void InsertAlignmentTab([ConvertInt] WdAlignmentTabAlignment alignment, int relativeTo = 0);
 
+    /// <summary>
+    /// 导入文档片段
+    /// </summary>
+    /// <param name="fileName">要导入的文件名</param>
+    /// <param name="matchDestination">是否匹配目标格式，默认为false</param>
     void ImportFragment(string fileName, bool matchDestination = false);
 
+    /// <summary>
+    /// 导出为固定格式文件（如PDF或XPS）
+    /// </summary>
+    /// <param name="outputFileName">输出文件名</param>
+    /// <param name="exportFormat">导出格式</param>
+    /// <param name="openAfterExport">导出后是否打开文件，默认为false</param>
+    /// <param name="optimizeFor">优化目标，默认为打印优化</param>
+    /// <param name="exportCurrentPage">是否仅导出当前页，默认为false</param>
+    /// <param name="item">要导出的项目类型，默认为文档内容</param>
+    /// <param name="includeDocProps">是否包含文档属性，默认为false</param>
+    /// <param name="keepIRM">是否保留IRM信息，默认为true</param>
+    /// <param name="createBookmarks">创建书签的方式，默认为不创建</param>
+    /// <param name="docStructureTags">是否包含文档结构标签，默认为true</param>
+    /// <param name="bitmapMissingFonts">是否位图化缺失字体，默认为true</param>
+    /// <param name="useISO19005_1">是否使用ISO 19005-1标准（PDF/A），默认为false</param>
+    /// <param name="fixedFormatExtClassPtr">固定格式扩展类指针，默认为null</param>
     void ExportAsFixedFormat(string outputFileName, WdExportFormat exportFormat, bool openAfterExport = false,
                                WdExportOptimizeFor optimizeFor = WdExportOptimizeFor.wdExportOptimizeForPrint,
                                bool exportCurrentPage = false, WdExportItem item = WdExportItem.wdExportDocumentContent,
@@ -890,50 +1109,118 @@ public interface IWordRange : IDisposable
                                bool docStructureTags = true, bool bitmapMissingFonts = true,
                                bool useISO19005_1 = false, object? fixedFormatExtClassPtr = null);
 
-
+    /// <summary>
+    /// 获取或设置适合文本的宽度（以磅为单位）
+    /// </summary>
     float FitTextWidth { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否合并字符
+    /// </summary>
     bool CombineCharacters { get; set; }
 
+    /// <summary>
+    /// 获取或设置是否显示所有内容（包括隐藏内容）
+    /// </summary>
     bool ShowAll { get; set; }
 
+    /// <summary>
+    /// 获取顶级表格集合
+    /// </summary>
     IWordTables? TopLevelTables { get; }
 
+    /// <summary>
+    /// 获取HTML分隔集合
+    /// </summary>
     IWordHTMLDivisions? HTMLDivisions { get; }
 
+    /// <summary>
+    /// 获取Office脚本集合
+    /// </summary>
     IOfficeScripts? Scripts { get; }
 
+    /// <summary>
+    /// 获取智能标签集合
+    /// </summary>
     IWordSmartTags? SmartTags { get; }
 
+    /// <summary>
+    /// 获取脚注选项
+    /// </summary>
     IWordFootnoteOptions? FootnoteOptions { get; }
 
+    /// <summary>
+    /// 获取尾注选项
+    /// </summary>
     IWordEndnoteOptions? EndnoteOptions { get; }
 
+    /// <summary>
+    /// 获取XML节点集合
+    /// </summary>
     IWordXMLNodes? XMLNodes { get; }
 
+    /// <summary>
+    /// 获取XML父节点
+    /// </summary>
     IWordXMLNode? XMLParentNode { get; }
 
+    /// <summary>
+    /// 获取数学对象集合
+    /// </summary>
     IWordOMaths? OMaths { get; }
 
+    /// <summary>
+    /// 获取协作锁定集合
+    /// </summary>
     IWordCoAuthLocks? Locks { get; }
 
+    /// <summary>
+    /// 获取协作更新集合
+    /// </summary>
     IWordCoAuthUpdates? Updates { get; }
 
+    /// <summary>
+    /// 获取屏幕上可见文本的数量
+    /// </summary>
     int TextVisibleOnScreen { get; }
 
+    /// <summary>
+    /// 获取父内容控件
+    /// </summary>
     IWordContentControl ParentContentControl { get; }
 
+    /// <summary>
+    /// 获取范围的XML表示
+    /// </summary>
     string XML { get; }
 
+    /// <summary>
+    /// 获取范围的Word Open XML表示
+    /// </summary>
     string WordOpenXML { get; }
 
+    /// <summary>
+    /// 获取增强图元文件位
+    /// </summary>
     object EnhMetaFileBits { get; }
 
+    /// <summary>
+    /// 获取或设置字符样式
+    /// </summary>
     object CharacterStyle { get; }
 
+    /// <summary>
+    /// 获取或设置段落样式
+    /// </summary>
     object ParagraphStyle { get; }
 
+    /// <summary>
+    /// 获取或设置列表样式
+    /// </summary>
     object ListStyle { get; }
 
+    /// <summary>
+    /// 获取或设置表格样式
+    /// </summary>
     object TableStyle { get; }
 }
