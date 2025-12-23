@@ -9,17 +9,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 尾注的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordEndnote : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取尾注索引。
@@ -29,84 +31,16 @@ public interface IWordEndnote : IDisposable
     /// <summary>
     /// 获取或设置引用文本范围。
     /// </summary>
-    IWordRange Reference { get; }
+    IWordRange? Reference { get; }
 
     /// <summary>
     /// 获取或设置尾注文本范围。
     /// </summary>
-    IWordRange Range { get; }
-
-    /// <summary>
-    /// 获取尾注编号。
-    /// </summary>
-    string Number { get; }
-
-    /// <summary>
-    /// 获取或设置尾注字体。
-    /// </summary>
-    IWordFont Font { get; }
-
-    /// <summary>
-    /// 获取或设置尾注段落格式。
-    /// </summary>
-    IWordParagraphFormat ParagraphFormat { get; }
-
-    /// <summary>
-    /// 选择尾注。
-    /// </summary>
-    void Select();
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 删除尾注。
     /// </summary>
     void Delete();
 
-    /// <summary>
-    /// 复制尾注。
-    /// </summary>
-    /// <returns>复制的尾注。</returns>
-    IWordEndnote Copy();
-
-    /// <summary>
-    /// 更新尾注编号。
-    /// </summary>
-    void Update();
-
-    /// <summary>
-    /// 获取尾注引用位置。
-    /// </summary>
-    /// <returns>引用位置范围。</returns>
-    IWordRange GetReferenceRange();
-
-    /// <summary>
-    /// 获取尾注内容位置。
-    /// </summary>
-    /// <returns>内容位置范围。</returns>
-    IWordRange GetContentRange();
-
-    /// <summary>
-    /// 修改尾注文本内容。
-    /// </summary>
-    /// <param name="newText">新文本内容。</param>
-    void ModifyText(string newText);
-
-    /// <summary>
-    /// 获取尾注文本内容。
-    /// </summary>
-    /// <returns>尾注文本。</returns>
-    string GetText();
-
-    /// <summary>
-    /// 设置尾注文本内容。
-    /// </summary>
-    /// <param name="text">文本内容。</param>
-    void SetText(string text);
-
-    /// <summary>
-    /// 检查尾注是否包含指定文本。
-    /// </summary>
-    /// <param name="text">要检查的文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <returns>是否包含。</returns>
-    bool ContainsText(string text, bool matchCase = false);
 }
