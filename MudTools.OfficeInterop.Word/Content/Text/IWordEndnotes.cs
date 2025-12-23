@@ -9,17 +9,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 尾注集合的封装接口。
 /// </summary>
-public interface IWordEndnotes : IEnumerable<IWordEndnote>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordEndnotes : IEnumerable<IWordEndnote?>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取尾注数量。
@@ -29,32 +31,22 @@ public interface IWordEndnotes : IEnumerable<IWordEndnote>, IDisposable
     /// <summary>
     /// 通过索引获取尾注。
     /// </summary>
-    IWordEndnote this[int index] { get; }
-
-    /// <summary>
-    /// 获取第一个尾注。
-    /// </summary>
-    IWordEndnote First { get; }
-
-    /// <summary>
-    /// 获取最后一个尾注。
-    /// </summary>
-    IWordEndnote Last { get; }
+    IWordEndnote? this[int index] { get; }
 
     /// <summary>
     /// 获取尾注分隔符。
     /// </summary>
-    IWordRange Separator { get; }
+    IWordRange? Separator { get; }
 
     /// <summary>
     /// 获取尾注续分隔符。
     /// </summary>
-    IWordRange ContinuationSeparator { get; }
+    IWordRange? ContinuationSeparator { get; }
 
     /// <summary>
     /// 获取尾注续说明。
     /// </summary>
-    IWordRange ContinuationNotice { get; }
+    IWordRange? ContinuationNotice { get; }
 
     /// <summary>
     /// 获取或设置尾注编号方式。
@@ -76,7 +68,6 @@ public interface IWordEndnotes : IEnumerable<IWordEndnote>, IDisposable
     /// </summary>
     WdEndnoteLocation Location { get; set; }
 
-
     /// <summary>
     /// 添加新的尾注。
     /// </summary>
@@ -84,42 +75,30 @@ public interface IWordEndnotes : IEnumerable<IWordEndnote>, IDisposable
     /// <param name="referenceText">引用文本。</param>
     /// <param name="noteText">尾注文本。</param>
     /// <returns>新创建的尾注。</returns>
-    IWordEndnote Add(IWordRange range, string referenceText = null, string noteText = null);
+    IWordEndnote? Add(IWordRange range, string? referenceText = null, string? noteText = null);
 
     /// <summary>
-    /// 删除指定索引的尾注。
+    /// 将尾注转换为内嵌格式（inline）或从内嵌格式转换回来
     /// </summary>
-    /// <param name="index">尾注索引。</param>
-    void Delete(int index);
+    void Convert();
 
     /// <summary>
-    /// 删除所有尾注。
+    /// 与脚注交换位置，将尾注转换为脚注或将脚注转换为尾注
     /// </summary>
-    void Clear();
+    void SwapWithFootnotes();
 
     /// <summary>
-    /// 获取所有尾注索引列表。
+    /// 重置尾注分隔符为默认样式
     /// </summary>
-    /// <returns>尾注索引列表。</returns>
-    List<int> GetIndexes();
+    void ResetSeparator();
 
     /// <summary>
-    /// 重新编号所有尾注。
+    /// 重置尾注续分隔符为默认样式
     /// </summary>
-    void Renumber();
+    void ResetContinuationSeparator();
 
     /// <summary>
-    /// 获取指定范围内的尾注数量。
+    /// 重置尾注续说明为默认样式
     /// </summary>
-    /// <param name="range">范围对象。</param>
-    /// <returns>尾注数量。</returns>
-    int CountInRange(IWordRange range);
-
-    /// <summary>
-    /// 查找包含指定文本的尾注。
-    /// </summary>
-    /// <param name="text">要查找的文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <returns>尾注列表。</returns>
-    List<IWordEndnote> FindByText(string text, bool matchCase = false);
+    void ResetContinuationNotice();
 }
