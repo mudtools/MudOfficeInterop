@@ -14,6 +14,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <remarks>
 /// TextColumn 对象是 TextColumns 集合的成员。每个 TextColumn 对象代表页面或节中的一列文本。
 /// </remarks>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTextColumn : IDisposable
 {
     #region 属性
@@ -21,18 +22,14 @@ public interface IWordTextColumn : IDisposable
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
-    IWordApplication Application { get; }
-
-    /// <summary>
-    /// 获取一个 32 位整数，该整数指示创建指定对象的应用程序。
-    /// </summary>
-    int Creator { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取代表 <see cref="IWordTextColumn"/> 对象的父对象。
     /// </summary>
     /// <remarks>父对象通常是 TextColumns 集合。</remarks>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置文本列的宽度（以磅为单位）。
