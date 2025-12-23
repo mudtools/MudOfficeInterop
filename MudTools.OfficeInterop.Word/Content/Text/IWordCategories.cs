@@ -11,8 +11,20 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示对 Microsoft Word 中 Categories 集合的封装接口。
 /// 该集合包含某一构建基块类型（如页眉、页脚）下的所有类别（Category）。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
 public interface IWordCategories : IEnumerable<IWordCategory?>, IDisposable
 {
+    /// <summary>
+    /// 获取该对象关联的Word应用程序实例
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取该对象的父对象
+    /// </summary>
+    object? Parent { get; }
+
     /// <summary>
     /// 获取集合中类别的总数。
     /// </summary>
@@ -32,16 +44,4 @@ public interface IWordCategories : IEnumerable<IWordCategory?>, IDisposable
     /// <returns>封装后的类别对象，若不存在则返回 null。</returns>
     IWordCategory? this[string name] { get; }
 
-    /// <summary>
-    /// 判断是否存在指定名称的类别。
-    /// </summary>
-    /// <param name="name">要查找的类别名称。</param>
-    /// <returns>存在返回 true，否则 false。</returns>
-    bool Contains(string name);
-
-    /// <summary>
-    /// 获取所有类别的名称列表。
-    /// </summary>
-    /// <returns>类别名称字符串列表。</returns>
-    List<string> GetNames();
 }

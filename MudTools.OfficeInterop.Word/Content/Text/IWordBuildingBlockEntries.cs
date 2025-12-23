@@ -15,6 +15,17 @@ namespace MudTools.OfficeInterop.Word;
 public interface IWordBuildingBlockEntries : IEnumerable<IWordBuildingBlock?>, IDisposable
 {
     /// <summary>
+    /// 获取该对象关联的Word应用程序实例
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取该对象的父对象
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
     /// 获取集合中构建基块的数量。
     /// </summary>
     int Count { get; }
