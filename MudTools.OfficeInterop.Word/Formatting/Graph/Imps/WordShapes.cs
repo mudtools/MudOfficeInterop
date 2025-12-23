@@ -84,7 +84,7 @@ internal class WordShapes : IWordShapes
         }
         try
         {
-            var anchorObj = (anchor as WordRange)?._range;
+            var anchorObj = (anchor as WordRange)?.InternalComObject;
             var shape = _shapes.AddTextEffect((MsCore.MsoPresetTextEffect)(int)presetTextEffect, text,
              fontName, fontSize, fontBold.ConvertTriState(), fontItalic.ConvertTriState(),
              left, top, anchorObj ?? Type.Missing);
@@ -108,7 +108,7 @@ internal class WordShapes : IWordShapes
         }
         try
         {
-            var anchorObj = (Anchor as WordRange)?._range;
+            var anchorObj = (Anchor as WordRange)?.InternalComObject;
             var layoutObj = (Layout as OfficeSmartArtLayout)?.InternalComObject;
             var shape = _shapes.AddSmartArt(layoutObj, Left, Top, Width, Height, anchorObj ?? System.Type.Missing);
             return new WordShape(shape);
@@ -129,7 +129,7 @@ internal class WordShapes : IWordShapes
         }
         try
         {
-            var anchorObj = (Anchor as WordRange)?._range;
+            var anchorObj = (Anchor as WordRange)?.InternalComObject;
 
             var shape = _shapes.AddShape((int)Type, Left, Top, Width, Height, anchorObj ?? System.Type.Missing);
             return new WordShape(shape);
@@ -341,7 +341,7 @@ internal class WordShapes : IWordShapes
 
         try
         {
-            var wordRange = (range as WordRange)?._range;
+            var wordRange = (range as WordRange)?.InternalComObject;
             if (wordRange != null)
             {
                 var rangeShapes = wordRange.ShapeRange;

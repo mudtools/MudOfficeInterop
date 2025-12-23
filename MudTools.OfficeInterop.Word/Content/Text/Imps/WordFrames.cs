@@ -72,7 +72,7 @@ internal class WordFrames : IWordFrames
 
         try
         {
-            var comRange = (range as WordRange)?._range;
+            var comRange = (range as WordRange)?.InternalComObject;
             if (comRange != null)
             {
                 var newFrame = _frames.Add(comRange);

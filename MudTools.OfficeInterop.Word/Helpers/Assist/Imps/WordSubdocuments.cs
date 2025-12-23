@@ -70,7 +70,7 @@ internal class WordSubdocuments : IWordSubdocuments
 
         try
         {
-            var newSubdocument = _subdocuments.AddFromRange(((WordRange)range)._range);
+            var newSubdocument = _subdocuments.AddFromRange(((WordRange)range).InternalComObject);
             return newSubdocument != null ? new WordSubdocument(newSubdocument) : null;
         }
         catch (COMException ex)

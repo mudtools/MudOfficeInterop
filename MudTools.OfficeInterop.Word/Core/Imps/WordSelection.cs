@@ -15,6 +15,9 @@ internal class WordSelection : IWordSelection
 {
     private static readonly ILog log = LogManager.GetLogger(typeof(WordSelection));
     private MsWord.Selection _selection;
+
+
+    internal MsWord.Selection InternalComObject => _selection;
     private bool _disposedValue;
     private IWordFind _find;
     private IWordRange _range;
@@ -726,7 +729,7 @@ internal class WordSelection : IWordSelection
             if (_selection == null || range == null)
                 return false;
 
-            return _selection.InRange(((WordRange)range)._range);
+            return _selection.InRange(((WordRange)range).InternalComObject);
         }
         catch (Exception ex)
         {

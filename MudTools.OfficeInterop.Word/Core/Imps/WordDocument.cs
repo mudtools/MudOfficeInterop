@@ -786,7 +786,7 @@ internal class WordDocument : IWordDocument
         get
         {
             if (_document == null) return null;
-            _customProperties ??= new WordCustomProperties(_document.CustomDocumentProperties, this);
+            _customProperties ??= new WordCustomProperties(_document.CustomDocumentProperties);
             return _customProperties;
         }
     }

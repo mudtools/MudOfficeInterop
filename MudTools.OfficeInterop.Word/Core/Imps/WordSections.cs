@@ -163,7 +163,7 @@ internal class WordSections : IWordSections
         if (_sections == null) return null;
         try
         {
-            var newSection = _sections.Add(((WordRange)range)._range, (MsWord.WdSectionStart)(int)start);
+            var newSection = _sections.Add(((WordRange)range).InternalComObject, (MsWord.WdSectionStart)(int)start);
             return newSection != null ? new WordSection(newSection) : null;
         }
         catch (COMException ex)

@@ -391,9 +391,10 @@ internal partial class WordApplication : IWordApplication
          object fixedFormatExtClassPtr = null)
     {
         _application?.ActiveDocument?.ExportAsFixedFormat(
-            outputFileName, exportFormat, openAfterExport,
-            optimizeFor, range, from, to, item, includeDocProps,
-            keepIRM, createBookmarks, docStructureTags,
+            outputFileName, exportFormat.EnumConvert(MsWord.WdExportFormat.wdExportFormatPDF), openAfterExport,
+            optimizeFor.EnumConvert(MsWord.WdExportOptimizeFor.wdExportOptimizeForPrint), range, from,
+            to, item.EnumConvert(MsWord.WdExportItem.wdExportDocumentContent), includeDocProps,
+            keepIRM, createBookmarks.EnumConvert(MsWord.WdExportCreateBookmarks.wdExportCreateWordBookmarks), docStructureTags,
             bitmapMissingFonts, useISO19005_1, fixedFormatExtClassPtr);
     }
 

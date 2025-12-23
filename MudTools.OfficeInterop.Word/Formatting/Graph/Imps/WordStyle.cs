@@ -160,7 +160,7 @@ internal class WordStyle : IWordStyle
 
         try
         {
-            var wordRange = (range as WordRange)?._range;
+            var wordRange = (range as WordRange)?.InternalComObject;
             wordRange?.set_Style(NameLocal);
         }
         catch (COMException ex)

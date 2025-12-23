@@ -124,7 +124,7 @@ internal class WordEndnotes : IWordEndnotes
         try
         {
             // 获取原始 Range 对象
-            var comRange = (range as WordRange)?._range;
+            var comRange = (range as WordRange)?.InternalComObject;
             if (comRange != null)
             {
                 MsWord.Range referenceRange = null;
@@ -226,7 +226,7 @@ internal class WordEndnotes : IWordEndnotes
         int count = 0;
         try
         {
-            var comRange = (range as WordRange)?._range;
+            var comRange = (range as WordRange)?.InternalComObject;
             if (comRange != null)
             {
                 for (int i = 1; i <= Count; i++)

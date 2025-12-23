@@ -66,7 +66,7 @@ internal class WordTablesOfContents : IWordTablesOfContents
         try
         {
             // 将二次封装的 Range 转换回原始 COM 对象
-            var comRange = (range as WordRange)?._range;
+            var comRange = (range as WordRange)?.InternalComObject;
             if (comRange == null)
                 throw new ArgumentException("提供的范围对象无效。", nameof(range));
 

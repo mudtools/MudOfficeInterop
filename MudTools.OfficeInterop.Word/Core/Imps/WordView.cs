@@ -265,13 +265,13 @@ internal class WordView : IWordView
     /// <inheritdoc/>
     public void ExpandOutline(IWordRange rang)
     {
-        _view?.ExpandOutline(((WordRange)rang)._range);
+        _view?.ExpandOutline(((WordRange)rang).InternalComObject);
     }
 
     /// <inheritdoc/>
     public void CollapseOutline(IWordRange rang)
     {
-        _view?.CollapseOutline(((WordRange)rang)._range);
+        _view?.CollapseOutline(((WordRange)rang).InternalComObject);
     }
 
     /// <inheritdoc/>

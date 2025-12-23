@@ -13,6 +13,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordDictionary : IWordDictionary
 {
     internal MsWord.Dictionary _dictionary;
+
+    internal MsWord.Dictionary InternalComObject => _dictionary;
     private bool _disposedValue;
 
     /// <summary>

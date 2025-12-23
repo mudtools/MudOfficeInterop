@@ -51,7 +51,7 @@ internal class WordHyperlinks : IWordHyperlinks
         try
         {
             var range = anchor as WordRange;
-            var newHyperlink = _hyperlinks.Add(range._range, address, subAddress, screenTip, textToDisplay, target);
+            var newHyperlink = _hyperlinks.Add(range.InternalComObject, address, subAddress, screenTip, textToDisplay, target);
             return new WordHyperlink(newHyperlink);
         }
         catch (COMException ex)

@@ -47,7 +47,7 @@ public interface IWordColumns : IEnumerable<IWordColumn>, IDisposable
     /// </summary>
     /// <param name="beforeColumn">在指定列前添加。</param>
     /// <returns>新创建的列。</returns>
-    IWordColumn Add(object beforeColumn = null);
+    IWordColumn Add(object? beforeColumn = null);
 
     /// <summary>
     /// 删除指定索引的列。

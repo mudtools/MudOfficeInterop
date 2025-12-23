@@ -138,7 +138,7 @@ internal class WordTables : IWordTables
     /// <returns>COM Range 对象</returns>
     private MsWord.Range GetComRange(IWordRange range)
     {
-        return ((WordRange)range)._range;
+        return ((WordRange)range).InternalComObject;
     }
 
     /// <summary>

@@ -12,6 +12,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordRow : IWordRow
 {
     internal MsWord.Row _row;
+
+    internal MsWord.Row InternalComObject => _row;
     private bool _disposedValue;
 
     internal WordRow(MsWord.Row row)

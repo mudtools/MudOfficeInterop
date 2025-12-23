@@ -13,6 +13,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordPageSetup : IWordPageSetup
 {
     internal MsWord.PageSetup? _pageSetup;
+
+    internal MsWord.PageSetup? InternalComObject => _pageSetup;
     private bool _disposedValue;
 
     #region 页面尺寸和边距设置

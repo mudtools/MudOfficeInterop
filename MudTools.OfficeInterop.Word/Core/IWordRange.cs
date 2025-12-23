@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>每个 Range 对象都由起始字符和结束字符位置定义。Range 对象独立于所选内容，可以定义多个区域。</para>
 /// <para>注：此接口封装了 Microsoft.Office.Interop.Word.Range 的主要属性和方法。</para>
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordRange : IDisposable
 {
     #region 基本属性 (Basic Properties)
@@ -19,6 +20,7 @@ public interface IWordRange : IDisposable
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -66,6 +68,69 @@ public interface IWordRange : IDisposable
     /// </summary>
     IWordRange? NextStoryRange { get; }
 
+    /// <summary>
+    /// 获取区域中的单元格集合。
+    /// </summary>
+    IWordCells? Cells { get; }
+
+    /// <summary>
+    /// 获取区域中的节集合。
+    /// </summary>
+    IWordSections? Sections { get; }
+
+    /// <summary>
+    /// 获取文本检索模式对象，用于控制文本的检索方式。
+    /// </summary>
+    IWordTextRetrievalMode? TextRetrievalMode { get; }
+
+    /// <summary>
+    /// 获取区域中的框架集合。
+    /// </summary>
+    IWordFrames? Frames { get; }
+
+    /// <summary>
+    /// 获取与区域关联的同义词信息对象。
+    /// </summary>
+    IWordSynonymInfo? SynonymInfo { get; }
+
+    /// <summary>
+    /// 获取区域中的列集合。
+    /// </summary>
+    IWordColumns? Columns { get; }
+
+    /// <summary>
+    /// 获取区域中的行集合。
+    /// </summary>
+    IWordRows? Rows { get; }
+
+    /// <summary>
+    /// 获取一个值，指示是否可以编辑此区域。
+    /// </summary>
+    int CanEdit { get; }
+
+    /// <summary>
+    /// 获取一个值，指示是否可以在此区域粘贴内容。
+    /// </summary>
+    int CanPaste { get; }
+
+    /// <summary>
+    /// 获取一个值，指示此区域是否位于行尾标记处。
+    /// </summary>
+    bool IsEndOfRowMark { get; }
+
+    /// <summary>
+    /// 获取区域的书签ID（如果有）。
+    /// </summary>
+    int BookmarkID { get; }
+
+    /// <summary>
+    /// 获取前一个书签的ID。
+    /// </summary>
+    int PreviousBookmarkID { get; }
+
+
+    //WdInformation Information { get; }
+
     #endregion
 
     #region 格式化属性 (Formatting Properties - 字体和段落)
@@ -79,11 +144,6 @@ public interface IWordRange : IDisposable
     /// 获取或设置区域的段落格式。
     /// </summary>
     IWordParagraphFormat? ParagraphFormat { get; }
-
-    /// <summary>
-    /// 获取或设置区域的样式。
-    /// </summary>
-    object? Style { get; set; }
 
     /// <summary>
     /// 获取或设置区域的粗体格式 (0=False, 1=True, 9999999=Undefined)。
@@ -194,6 +254,7 @@ public interface IWordRange : IDisposable
     /// </summary>
     IWordEndnotes? Endnotes { get; }
 
+
     #endregion
 
     #region 状态和工具属性 (State & Utility Properties)
@@ -211,7 +272,7 @@ public interface IWordRange : IDisposable
     /// <summary>
     /// 获取或设置拼写和语法检查器是否忽略指定的文本。
     /// </summary>
-    bool NoProofing { get; set; }
+    int NoProofing { get; set; }
 
     /// <summary>
     /// 获取 Find 对象，用于查找操作。
@@ -289,27 +350,6 @@ public interface IWordRange : IDisposable
     /// </summary>
     void Delete();
 
-    /// <summary>
-    /// 将另一个范围的内容复制到此区域 (通过 FormattedText)。
-    /// </summary>
-    /// <param name="source">源范围。</param>
-    void CopyAsText(IWordRange source);
-
-    /// <summary>
-    /// 获取有关区域的信息。
-    /// </summary>
-    /// <param name="type">信息类型。</param>
-    /// <returns>相关信息。</returns>
-    object Information(WdInformation type);
-
-    /// <summary>
-    /// 查找并替换文本。
-    /// </summary>
-    /// <param name="findText">要查找的文本。</param>
-    /// <param name="replaceWith">替换文本。</param>
-    /// <param name="replace">替换操作类型。</param>
-    /// <returns>是否找到并替换。</returns>
-    bool FindAndReplace(object findText, object replaceWith, MsWord.WdReplace replace);
 
     #endregion
 
@@ -453,51 +493,447 @@ public interface IWordRange : IDisposable
     /// </summary>
     void CheckGrammar();
 
-    /// <summary>
-    /// 将区域转换为书签。
-    /// </summary>
-    /// <param name="name">书签名称。</param>
-    /// <returns>创建的书签。</returns>
-    IWordBookmark? Bookmark(string name);
-
-    /// <summary>
-    /// 将区域转换为超链接。
-    /// </summary>
-    /// <param name="address">链接地址。</param>
-    /// <param name="subAddress">子地址。</param>
-    /// <param name="screenTip">屏幕提示。</param>
-    /// <param name="textToDisplay">显示文本。</param>
-    /// <param name="target">目标框架。</param>
-    /// <returns>创建的超链接。</returns>
-    IWordHyperlink? Hyperlink(object address, object subAddress, object screenTip, object textToDisplay, object target);
-
-    /// <summary>
-    /// 合并单元格（如果区域在表格内）。
-    /// </summary>
-    void CellsMerge();
-
-    /// <summary>
-    /// 拆分表格单元格（如果区域在表格内）。
-    /// </summary>
-    /// <param name="numRows">行数。</param>
-    /// <param name="numColumns">列数。</param>
-    /// <param name="mergeBeforeSplit">拆分前是否合并。</param>
-    void CellsSplit(int numRows, int numColumns, bool mergeBeforeSplit);
-
-    /// <summary>
-    /// 排序段落。
-    /// </summary>
-    /// <param name="excludeHeader">是否排除标题。</param>
-    /// <param name="fieldNumber">字段号。</param>
-    /// <param name="sortFieldType">排序字段类型。</param>
-    /// <param name="ascending">是否升序。</param>
-    void Sort(object excludeHeader, object fieldNumber, object sortFieldType, object ascending);
-
-    /// <summary>
-    /// 将区域另存为文本文件。
-    /// </summary>
-    /// <param name="fileName">文件名。</param>
-    void SaveAsText(string fileName);
-
     #endregion
+
+    /// <summary>
+    /// 将范围折叠到指定方向（开始或结束位置）。
+    /// </summary>
+    /// <param name="direction">折叠方向，默认为wdCollapseStart（折叠到开始位置）。</param>
+    void Collapse(WdCollapseDirection? direction = null);
+
+    /// <summary>
+    /// 获取指定单位的下一个区域范围。
+    /// </summary>
+    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
+    /// <param name="count">移动的单位数量，默认为1。</param>
+    /// <returns>返回一个新的范围对象，表示移动后的位置；如果操作失败，则返回null。</returns>
+    IWordRange? Next(WdUnits? unit = null, int? count = null);
+
+    /// <summary>
+    /// 获取指定单位的上一个区域范围。
+    /// </summary>
+    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
+    /// <param name="count">移动的单位数量，默认为1。</param>
+    /// <returns>返回一个新的范围对象，表示移动后的位置；如果操作失败，则返回null。</returns>
+    IWordRange? Previous(WdUnits? unit = null, int? count = null);
+
+    /// <summary>
+    /// 将范围的起始位置移动到指定单元的开始位置。
+    /// </summary>
+    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
+    /// <param name="extend">指定移动方式，wdMove表示移动范围边界，wdExtend表示扩展范围；默认为wdMove。</param>
+    /// <returns>返回移动的字符数；如果操作失败，则返回null。</returns>
+    int? StartOf(WdUnits? unit = null, WdMovementType? extend = null);
+
+    /// <summary>
+    /// 将范围的结束位置移动到指定单元的结束位置。
+    /// </summary>
+    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
+    /// <param name="extend">指定移动方式，wdMove表示移动范围边界，wdExtend表示扩展范围；默认为wdMove。</param>
+    /// <returns>返回移动的字符数；如果操作失败，则返回null。</returns>
+    int? EndOf(WdUnits? unit = null, WdMovementType? extend = null);
+
+    /// <summary>
+    /// 将范围移动指定的单位和数量。
+    /// </summary>
+    /// <param name="unit">移动单位，默认为wdCharacter（字符）。</param>
+    /// <param name="count">移动的单位数量，默认为1。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? Move(WdUnits? unit = null, int? count = null);
+
+    /// <summary>
+    /// 移动范围的起始边界指定的单位和数量。
+    /// </summary>
+    /// <param name="unit">移动单位，默认为wdCharacter（字符）。</param>
+    /// <param name="count">移动的单位数量，默认为1。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveStart(WdUnits? unit = null, int? count = null);
+
+    /// <summary>
+    /// 移动范围的结束边界指定的单位和数量。
+    /// </summary>
+    /// <param name="unit">移动单位，默认为wdCharacter（字符）。</param>
+    /// <param name="count">移动的单位数量，默认为1。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveEnd(WdUnits? unit = null, int? count = null);
+
+    /// <summary>
+    /// 将范围移动，直到遇到不在指定字符集中的字符为止，或移动指定次数。
+    /// </summary>
+    /// <param name="cset">要移动的字符集（字符串）。</param>
+    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveWhile(string cset, int? count = null);
+
+    /// <summary>
+    /// 移动范围的起始边界，直到遇到不在指定字符集中的字符为止，或移动指定次数。
+    /// </summary>
+    /// <param name="cset">要移动的字符集（字符串）。</param>
+    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveStartWhile(string cset, int? count = null);
+
+    /// <summary>
+    /// 移动范围的结束边界，直到遇到不在指定字符集中的字符为止，或移动指定次数。
+    /// </summary>
+    /// <param name="cset">要移动的字符集（字符串）。</param>
+    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveEndWhile(string cset, int? count = null);
+
+    /// <summary>
+    /// 将范围移动，直到遇到指定字符集中的字符为止，或移动指定次数。
+    /// </summary>
+    /// <param name="cset">要查找的字符集（字符串）。</param>
+    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveUntil(string cset, int? count = null);
+
+    /// <summary>
+    /// 移动范围的起始边界，直到遇到指定字符集中的字符为止，或移动指定次数。
+    /// </summary>
+    /// <param name="cset">要查找的字符集（字符串）。</param>
+    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveStartUntil(string cset, int? count = null);
+
+    /// <summary>
+    /// 移动范围的结束边界，直到遇到指定字符集中的字符为止，或移动指定次数。
+    /// </summary>
+    /// <param name="cset">要查找的字符集（字符串）。</param>
+    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
+    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    int? MoveEndUntil(string cset, int? count = null);
+
+    /// <summary>
+    /// 在当前范围中插入一个外部文件的内容。
+    /// </summary>
+    /// <param name="fileName">要插入的文件的完整路径名。</param>
+    /// <param name="range">指定插入文件内容的范围，如果为null则在当前位置插入。</param>
+    /// <param name="confirmConversions">是否在插入不同格式的文件时显示确认对话框。如果为null则使用Word默认设置。</param>
+    /// <param name="link">是否将插入的文件作为链接插入。如果为null则使用Word默认设置。</param>
+    /// <param name="attachment">是否将插入的文件作为附件插入。如果为null则使用Word默认设置。</param>
+    void InsertFile(string fileName, object? range = null, bool? confirmConversions = null, bool? link = null, bool? attachment = null);
+
+    /// <summary>
+    /// 检查指定范围是否在当前范围的同一篇文章中。
+    /// </summary>
+    /// <param name="Range">要检查的范围。</param>
+    /// <returns>如果指定范围在当前范围的同一篇文章中则返回true，否则返回false或null。</returns>
+    bool? InStory(IWordRange Range);
+
+    /// <summary>
+    /// 检查指定范围是否在当前范围内。
+    /// </summary>
+    /// <param name="Range">要检查的范围。</param>
+    /// <returns>如果指定范围在当前范围内则返回true，否则返回false或null。</returns>
+    bool? InRange(IWordRange Range);
+
+    /// <summary>
+    /// 删除当前范围或指定单位的内容。
+    /// </summary>
+    /// <param name="unit">要删除的单位（如字符、单词、段落等），如果为null则删除当前范围的内容。</param>
+    /// <param name="count">要删除的单位数量，默认为1。</param>
+    /// <returns>返回实际删除的字符数，如果操作失败则返回null。</returns>
+    int? Delete(WdUnits? unit = null, int? count = null);
+
+    /// <summary>
+    /// 选择整个文档的内容。
+    /// </summary>
+    void WholeStory();
+
+    /// <summary>
+    /// 扩展当前范围以包含指定单位的整个内容。
+    /// </summary>
+    /// <param name="unit">要扩展到的单位（如字符、单词、段落等），如果为null则使用默认单位。</param>
+    /// <returns>返回扩展的字符数，如果操作失败则返回null。</returns>
+    int? Expand(WdUnits? unit = null);
+
+    /// <summary>
+    /// 在当前范围的开始处插入一个段落标记。
+    /// </summary>
+    void InsertParagraph();
+
+    /// <summary>
+    /// 在当前范围的末尾插入一个段落标记。
+    /// </summary>
+    void InsertParagraphAfter();
+
+    /// <summary>
+    /// 在当前范围插入一个特殊符号。
+    /// </summary>
+    /// <param name="characterNumber">要插入的符号的字符代码。</param>
+    /// <param name="font">符号的字体名称，如果为null则使用当前字体。</param>
+    /// <param name="Unicode">是否使用Unicode编码，如果为null则使用默认设置。</param>
+    /// <param name="Bias">字体选择的倾向性，如果为null则使用默认设置。</param>
+    void InsertSymbol(int characterNumber, string? font = null, bool? Unicode = null, WdFontBias? Bias = null);
+
+    /// <summary>
+    /// 将当前范围的内容复制为图片格式到剪贴板。
+    /// </summary>
+    void CopyAsPicture();
+
+    /// <summary>
+    /// 对当前范围的内容进行升序排序。
+    /// </summary>
+    void SortAscending();
+
+    /// <summary>
+    /// 对当前范围的内容进行降序排序。
+    /// </summary>
+    void SortDescending();
+
+    /// <summary>
+    /// 检查指定范围是否与当前范围相等。
+    /// </summary>
+    /// <param name="range">要比较的范围。</param>
+    /// <returns>如果两个范围相等则返回true，否则返回false或null。</returns>
+    bool? IsEqual(IWordRange range);
+
+    /// <summary>
+    /// 计算当前范围中文本表示的数学表达式。
+    /// </summary>
+    /// <returns>返回计算结果，如果无法计算则返回null。</returns>
+    float? Calculate();
+
+    /// <summary>
+    /// 跳转到文档中的指定位置。
+    /// </summary>
+    /// <param name="what">要跳转到的项目类型，如书签、页面、行等，参考 <see cref="WdGoToItem"/> 枚举。</param>
+    /// <param name="which">跳转方向或特定位置，参考 <see cref="WdGoToDirection"/> 枚举。</param>
+    /// <param name="count">跳转的次数或位置编号，如果为null则使用默认值。</param>
+    /// <param name="name">特定项目的名称（如书签名称），如果为null则使用默认值。</param>
+    /// <returns>返回表示跳转位置的范围对象；如果操作失败，则返回null。</returns>
+    IWordRange? GoTo(WdGoToItem? what = null, WdGoToDirection? which = null, int? count = null, string? name = null);
+
+    /// <summary>
+    /// 跳转到文档中下一个指定类型的项目。
+    /// </summary>
+    /// <param name="what">要查找的项目类型，参考 <see cref="WdGoToItem"/> 枚举。</param>
+    /// <returns>返回表示下一个项目位置的范围对象；如果未找到，则返回null。</returns>
+    IWordRange? GoToNext(WdGoToItem what);
+
+    /// <summary>
+    /// 跳转到文档中上一个指定类型的项目。
+    /// </summary>
+    /// <param name="what">要查找的项目类型，参考 <see cref="WdGoToItem"/> 枚举。</param>
+    /// <returns>返回表示上一个项目位置的范围对象；如果未找到，则返回null。</returns>
+    IWordRange? GoToPrevious(WdGoToItem what);
+
+    /// <summary>
+    /// 以特殊格式粘贴剪贴板内容。
+    /// </summary>
+    /// <param name="iconIndex">图标索引，如果为null则使用默认值。</param>
+    /// <param name="link">是否链接到原始数据，如果为null则使用默认值。</param>
+    /// <param name="placement">OLE对象的放置方式，参考 <see cref="WdOLEPlacement"/> 枚举。</param>
+    /// <param name="displayAsIcon">是否以图标形式显示，如果为null则使用默认值。</param>
+    /// <param name="dataType">粘贴数据的类型，参考 <see cref="WdPasteDataType"/> 枚举。</param>
+    /// <param name="iconFileName">图标的文件名，如果为null则使用默认图标。</param>
+    /// <param name="IconLabel">图标的标签文本，如果为null则使用默认标签。</param>
+    void PasteSpecial(int? iconIndex = null, object? link = null, WdOLEPlacement? placement = null,
+                    bool? displayAsIcon = null, WdPasteDataType? dataType = null,
+                    string? iconFileName = null, string? IconLabel = null);
+
+    /// <summary>
+    /// 查找名称属性。
+    /// </summary>
+    void LookupNameProperties();
+
+    /// <summary>
+    /// 计算指定的文档统计信息。
+    /// </summary>
+    /// <param name="Statistic">要计算的统计类型，参考 <see cref="WdStatistic"/> 枚举。</param>
+    /// <returns>返回计算结果的数值；如果操作失败，则返回null。</returns>
+    int? ComputeStatistics(WdStatistic Statistic);
+
+    /// <summary>
+    /// 重新定位到指定方向。
+    /// </summary>
+    /// <param name="direction">重定位的方向，参考 <see cref="WdRelocate"/> 枚举。</param>
+    void Relocate([ConvertInt] WdRelocate direction);
+
+    /// <summary>
+    /// 检查同义词。
+    /// </summary>
+    void CheckSynonyms();
+
+    /// <summary>
+    /// 插入自动图文集条目。
+    /// </summary>
+    void InsertAutoText();
+
+    /// <summary>
+    /// 自动格式化范围内容。
+    /// </summary>
+    void AutoFormat();
+
+    /// <summary>
+    /// 在当前范围前插入一个段落标记。
+    /// </summary>
+    void InsertParagraphBefore();
+
+    /// <summary>
+    /// 跳转到下一个子文档。
+    /// </summary>
+    void NextSubdocument();
+
+    /// <summary>
+    /// 跳转到上一个子文档。
+    /// </summary>
+    void PreviousSubdocument();
+
+    /// <summary>
+    /// 以嵌套表格形式粘贴内容。
+    /// </summary>
+    void PasteAsNestedTable();
+
+    /// <summary>
+    /// 检测范围内的语言。
+    /// </summary>
+    void DetectLanguage();
+
+    /// <summary>
+    /// 执行拼写检查。
+    /// </summary>
+    void CheckSpelling(IWordDictionary? customDictionary = null, bool? ignoreUppercase = null, bool? alwaysSuggest = null,
+                        IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
+                        IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
+                        IWordDictionary? customDictionary6 = null, IWordDictionary? customDictionary7 = null,
+                        IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
+                        IWordDictionary? customDictionary10 = null);
+
+    IWordSpellingSuggestions? GetSpellingSuggestions(IWordDictionary? CustomDictionary = null, bool? ignoreUppercase = null, IWordDictionary? MainDictionary = null,
+                        WdSpellingWordType? SuggestionMode = null, IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
+                        IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
+                        IWordDictionary? customDictionary6 = null, IWordDictionary? customDictionary7 = null,
+                        IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
+                        IWordDictionary? customDictionary10 = null);
+
+
+
+    void InsertDatabase(WdTableFormat? format = null, object? style = null, bool? linkToSource = null,
+                        object? connection = null, string? SQLStatement = null, string? SQLStatement1 = null,
+                        string? passwordDocument = null, string? passwordTemplate = null, string? writePasswordDocument = null,
+                        string? writePasswordTemplate = null, string? dataSource = null, int? from = null, int? to = null, bool? includeFields = null);
+
+
+    void ConvertHangulAndHanja(WdMultipleWordConversionsMode conversionsMode, bool? fastConversion, bool? checkHangulEnding,
+                               bool? enableRecentOrdering, IWordDictionary? customDictionary);
+
+    void ModifyEnclosure(WdEncloseStyle? style, WdEnclosureType symbol, string? enclosedText = null);
+
+    void PhoneticGuide(string Text, WdPhoneticGuideAlignmentType alignment = WdPhoneticGuideAlignmentType.wdPhoneticGuideAlignmentLeft,
+                       int raise = 0, int fontSize = 0, string fontName = "");
+
+
+    void InsertDateTime(string? dateTimeFormat = null, bool? insertAsField = null, bool? insertAsFullWidth = null,
+                        WdDateLanguage? dateLanguage = null, WdCalendarTypeBi? calendarType = null);
+
+
+    void Sort(bool? excludeHeader = null, string? fieldNumber = null, WdSortFieldType? sortFieldType = null,
+            WdSortOrder? sortOrder = null, string? fieldNumber2 = null, WdSortFieldType? sortFieldType2 = null,
+            WdSortOrder? sortOrder2 = null, string? fieldNumber3 = null, WdSortFieldType? sortFieldType3 = null,
+            WdSortOrder? sortOrder3 = null, IWordRange? sortColumn = null, WdSortSeparator? separator = null,
+            bool? caseSensitive = null, bool? bidiSort = null, bool? ignoreThe = null,
+            bool? ignoreKashida = null, bool? ignoreDiacritics = null, bool? ignoreHe = null,
+            WdLanguageID? languageID = null);
+
+    void SortByHeadings(WdSortFieldType? sortFieldType, WdSortOrder? sortOrder,
+                        bool? caseSensitive, bool? bidiSort,
+                        bool? ignoreThe, bool? ignoreKashida, bool? ignoreDiacritics,
+                        bool? ignoreHe, WdLanguageID? languageID);
+
+
+    IWordTable? ConvertToTable(WdTableFieldSeparator? separator = null, int? numRows = null, int? numColumns = null,
+                                double? initialColumnWidth = null, WdTableFormat? format = null, bool? applyBorders = null,
+                                bool? applyShading = null, bool? applyFont = null, bool? applyColor = null,
+                                bool? applyHeadingRows = null, bool? applyLastRow = null, bool? applyFirstColumn = null,
+                                bool? applyLastColumn = null, bool? autoFit = null, WdAutoFitBehavior? autoFitBehavior = null,
+                                WdDefaultTableBehavior? defaultTableBehavior = null);
+
+    void TCSCConverter(WdTCSCConverterDirection WdTCSCConverterDirection = WdTCSCConverterDirection.wdTCSCConverterDirectionAuto, bool commonTerms = false, bool useVariants = false);
+
+
+    void PasteAndFormat(WdRecoveryType type);
+
+    void PasteExcelTable(bool linkedToExcel, bool wordFormatting, bool RTF);
+
+    void PasteAppendTable();
+
+    IWordRange? GoToEditableRange(string? editorID);
+
+    void InsertXML(string XML, string? transform);
+
+    void InsertCaption(WdCaptionLabelID? label = null, string? title = null, string? titleAutoText = null, WdCaptionPosition? position = null, bool? excludeLabel = null);
+
+    void InsertCrossReference(WdCaptionLabelID referenceType, WdReferenceKind referenceKind,
+                              string? referenceItem = null, bool? insertAsHyperlink = null, bool? includePosition = null,
+                              bool? separateNumbers = null, string? separatorString = null);
+
+    void InsertCrossReference(WdReferenceType referenceType, WdReferenceKind referenceKind,
+                                string? referenceItem = null, bool? insertAsHyperlink = null, bool? includePosition = null,
+                                bool? separateNumbers = null, string? separatorString = null);
+
+    void ExportFragment(string fileName, WdSaveFormat format);
+
+    void SetListLevel(short level);
+
+    void InsertAlignmentTab([ConvertInt] WdAlignmentTabAlignment alignment, int relativeTo = 0);
+
+    void ImportFragment(string fileName, bool matchDestination = false);
+
+    void ExportAsFixedFormat(string outputFileName, WdExportFormat exportFormat, bool openAfterExport = false,
+                               WdExportOptimizeFor optimizeFor = WdExportOptimizeFor.wdExportOptimizeForPrint,
+                               bool exportCurrentPage = false, WdExportItem item = WdExportItem.wdExportDocumentContent,
+                               bool includeDocProps = false, bool keepIRM = true,
+                               WdExportCreateBookmarks createBookmarks = WdExportCreateBookmarks.wdExportCreateNoBookmarks,
+                               bool docStructureTags = true, bool bitmapMissingFonts = true,
+                               bool useISO19005_1 = false, object? fixedFormatExtClassPtr = null);
+
+
+    float FitTextWidth { get; set; }
+
+    bool CombineCharacters { get; set; }
+
+    bool ShowAll { get; set; }
+
+    IWordTables? TopLevelTables { get; }
+
+    IWordHTMLDivisions? HTMLDivisions { get; }
+
+    IOfficeScripts? Scripts { get; }
+
+    IWordSmartTags? SmartTags { get; }
+
+    IWordFootnoteOptions? FootnoteOptions { get; }
+
+    IWordEndnoteOptions? EndnoteOptions { get; }
+
+    IWordXMLNodes? XMLNodes { get; }
+
+    IWordXMLNode? XMLParentNode { get; }
+
+    IWordOMaths? OMaths { get; }
+
+    IWordCoAuthLocks? Locks { get; }
+
+    IWordCoAuthUpdates? Updates { get; }
+
+    int TextVisibleOnScreen { get; }
+
+    IWordContentControl ParentContentControl { get; }
+
+    string XML { get; }
+
+    string WordOpenXML { get; }
+
+    object EnhMetaFileBits { get; }
+
+    object CharacterStyle { get; }
+
+    object ParagraphStyle { get; }
+
+    object ListStyle { get; }
+
+    object TableStyle { get; }
 }

@@ -12,6 +12,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordTable : IWordTable
 {
     private MsWord.Table _table;
+
+    internal MsWord.Table InternalComObject => _table;
     private bool _disposedValue;
 
     internal WordTable(MsWord.Table table)

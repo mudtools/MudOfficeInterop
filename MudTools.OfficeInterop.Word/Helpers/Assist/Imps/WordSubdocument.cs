@@ -81,7 +81,7 @@ internal class WordSubdocument : IWordSubdocument
     public void Split(IWordRange range)
     {
 
-        _subdocument?.Split(((WordRange)range)._range);
+        _subdocument?.Split(((WordRange)range).InternalComObject);
     }
 
     #endregion

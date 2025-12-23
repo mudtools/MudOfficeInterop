@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordCustomProperties : IWordCustomProperties
 {
     private readonly object _customProperties; // 使用 object 类型因为可能需要特殊处理
-    private readonly IWordDocument _document;
+    internal object InternalComObject => _customProperties;
     private bool _disposedValue;
 
     /// <summary>
@@ -47,11 +47,9 @@ internal class WordCustomProperties : IWordCustomProperties
     /// 构造函数
     /// </summary>
     /// <param name="customProperties">COM CustomProperties 对象</param>
-    /// <param name="document">关联的文档对象</param>
-    internal WordCustomProperties(object customProperties, IWordDocument document)
+    internal WordCustomProperties(object customProperties)
     {
         _customProperties = customProperties ?? throw new ArgumentNullException(nameof(customProperties));
-        _document = document ?? throw new ArgumentNullException(nameof(document));
         _disposedValue = false;
     }
 

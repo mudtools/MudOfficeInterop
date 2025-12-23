@@ -123,7 +123,7 @@ internal class WordFootnotes : IWordFootnotes
         try
         {
             // 获取原始 Range 对象
-            var comRange = (range as WordRange)?._range;
+            var comRange = (range as WordRange)?.InternalComObject;
             if (comRange != null)
             {
                 MsWord.Range referenceRange = null;
@@ -216,7 +216,7 @@ internal class WordFootnotes : IWordFootnotes
         if (_footnotes == null || range == null) return 0;
 
         int count = 0;
-        var comRange = (range as WordRange)?._range;
+        var comRange = (range as WordRange)?.InternalComObject;
         if (comRange != null)
         {
             for (int i = 1; i <= Count; i++)

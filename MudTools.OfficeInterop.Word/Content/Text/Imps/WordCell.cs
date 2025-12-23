@@ -13,6 +13,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordCell : IWordCell
 {
     internal MsWord.Cell _cell;
+
+    internal MsWord.Cell InternalComObject => _cell;
     private bool _disposedValue;
 
     internal WordCell(MsWord.Cell cell)

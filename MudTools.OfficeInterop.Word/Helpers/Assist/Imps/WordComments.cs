@@ -73,7 +73,7 @@ internal class WordComments : IWordComments
         try
         {
             // 获取原始 Range 对象
-            var comRange = (range as WordRange)?._range;
+            var comRange = (range as WordRange)?.InternalComObject;
             if (comRange != null)
             {
                 var newComment = _comments.Add(comRange, text ?? string.Empty);

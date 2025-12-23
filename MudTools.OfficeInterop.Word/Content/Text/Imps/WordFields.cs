@@ -65,7 +65,7 @@ internal class WordFields : IWordFields
 
             try
             {
-                var wordRange = (range as WordRange)?._range;
+                var wordRange = (range as WordRange)?.InternalComObject;
                 if (wordRange != null)
                 {
                     // 查找与范围相交的域
@@ -225,7 +225,7 @@ internal class WordFields : IWordFields
 
         try
         {
-            var wordRange = (range as WordRange)?._range;
+            var wordRange = (range as WordRange)?.InternalComObject;
             if (wordRange != null)
             {
                 var field = _fields.Add(wordRange, (MsWord.WdFieldType)(int)type, text, preserveFormatting ? 1 : 0);

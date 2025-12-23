@@ -61,7 +61,7 @@ internal class WordFormFields : IWordFormFields
 
         try
         {
-            var newField = _formFields.Add(((WordRange)range)._range, (MsWord.WdFieldType)(int)type);
+            var newField = _formFields.Add(((WordRange)range).InternalComObject, (MsWord.WdFieldType)(int)type);
             return new WordFormField(newField);
         }
         catch (COMException ex)

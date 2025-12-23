@@ -13,6 +13,9 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordParagraph : IWordParagraph
 {
     private MsWord.Paragraph _paragraph;
+
+    internal MsWord.Paragraph InternalComObject => _paragraph;
+
     private bool _disposedValue;
 
     internal WordParagraph(MsWord.Paragraph paragraph)

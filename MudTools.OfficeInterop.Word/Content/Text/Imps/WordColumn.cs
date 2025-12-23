@@ -13,6 +13,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordColumn : IWordColumn
 {
     internal MsWord.Column _column;
+    internal MsWord.Column InternalComObject => _column;
     private bool _disposedValue;
 
     internal WordColumn(MsWord.Column column)
