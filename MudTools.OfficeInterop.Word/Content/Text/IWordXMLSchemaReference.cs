@@ -8,11 +8,11 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 表示 Word 中 XML 子节点建议的接口，用于操作 Word 文档中的 XML 结构建议
-/// 该接口封装了 COM 对象，提供对 Word XML 节点建议功能的访问和操作能力
+/// 表示Word文档中的XML架构引用，用于处理与XML架构相关的操作。
+/// 此接口提供了访问和管理Word文档中XML架构引用的功能，包括获取架构信息、删除和重新加载架构引用等操作。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordXMLChildNodeSuggestion : IDisposable
+public interface IWordXMLSchemaReference : IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -26,24 +26,22 @@ public interface IWordXMLChildNodeSuggestion : IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取此 XML 节点的基本名称（不含命名空间前缀的名称）。
-    /// </summary>
-    string BaseName { get; }
-
-    /// <summary>
-    /// 获取此 XML 节点的命名空间 URI。
+    /// 获取命名空间 URI。
     /// </summary>
     string NamespaceURI { get; }
 
     /// <summary>
-    /// 获取与此 XML 节点关联的 XML 架构引用。
+    /// 获取架构引用的位置。
     /// </summary>
-    IWordXMLSchemaReference? XMLSchemaReference { get; }
+    string Location { get; }
 
     /// <summary>
-    /// 将此 XML 节点插入到文档的指定范围中。
+    /// 删除此 XML 架构引用。
     /// </summary>
-    /// <param name="range">要插入节点的文档范围，可以为 null 使用默认位置</param>
-    /// <returns>表示插入的 XML 节点的对象</returns>
-    IWordXMLNode? Insert(IWordRange? range);
+    void Delete();
+
+    /// <summary>
+    /// 重新加载此 XML 架构引用。
+    /// </summary>
+    void Reload();
 }
