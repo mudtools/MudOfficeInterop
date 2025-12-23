@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示对 Microsoft Word 中 BuildingBlocks 集合的封装接口。
 /// 该集合包含某一特定类型（如页眉）和类别（如“常规”）下的所有构建基块条目。
 /// </summary>
-public interface IWordBuildingBlocks : IEnumerable<IWordBuildingBlock>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
+public interface IWordBuildingBlocks : IEnumerable<IWordBuildingBlock?>, IDisposable
 {
     /// <summary>
     /// 获取集合中构建基块的总数。
@@ -33,32 +34,13 @@ public interface IWordBuildingBlocks : IEnumerable<IWordBuildingBlock>, IDisposa
     IWordBuildingBlock? this[string name] { get; }
 
     /// <summary>
-    /// 向当前集合（即当前类型+类别）中添加一个新的构建基块。
-    /// 如果指定名称已存在，Word 会抛出异常。
+    /// 在集合中添加一个新的构建基块。
     /// </summary>
     /// <param name="name">构建基块的名称。</param>
-    /// <param name="value">要添加的内容文本。</param>
-    /// <param name="insertOptions"></param>
-    /// <returns>新创建的封装构建基块对象。</returns>
-    /// <exception cref="ArgumentException">当 name 为空时抛出。</exception>
-    /// <exception cref="InvalidOperationException">当添加失败时抛出。</exception>
-    public IWordBuildingBlock Add(string name, string value, WdDocPartInsertOptions insertOptions);
+    /// <param name="range">包含构建基块内容的Word范围对象。</param>
+    /// <param name="description">构建基块的描述信息，可选参数，默认为null。</param>
+    /// <param name="insertOptions">插入选项，指定如何插入构建基块，默认为wdInsertContent。</param>
+    /// <returns>如果成功添加则返回封装后的构建基块对象，否则返回null。</returns>
+    IWordBuildingBlock? Add(string name, IWordRange range, string? description = null, WdDocPartInsertOptions insertOptions = WdDocPartInsertOptions.wdInsertContent);
 
-    /// <summary>
-    /// 判断当前集合中是否存在指定名称的构建基块。
-    /// </summary>
-    /// <param name="name">要查找的名称。</param>
-    /// <returns>存在返回 true，否则 false。</returns>
-    bool Contains(string name);
-
-    /// <summary>
-    /// 获取当前集合中所有构建基块的名称列表。
-    /// </summary>
-    /// <returns>名称字符串列表。</returns>
-    List<string> GetNames();
-
-    /// <summary>
-    /// 删除当前集合中的所有构建基块。
-    /// </summary>
-    void Clear();
 }

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示对 Microsoft Word 中 Categories 集合的封装接口。
 /// 该集合包含某一构建基块类型（如页眉、页脚）下的所有类别（Category）。
 /// </summary>
-public interface IWordCategories : IEnumerable<IWordCategory>, IDisposable
+public interface IWordCategories : IEnumerable<IWordCategory?>, IDisposable
 {
     /// <summary>
     /// 获取集合中类别的总数。
