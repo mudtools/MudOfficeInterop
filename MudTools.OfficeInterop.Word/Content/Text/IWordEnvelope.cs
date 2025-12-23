@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 每个 Word 文档仅包含一个信封对象，可通过 Document.Envelope 属性获取 [[1]]。
 /// 该对象始终可用，无论信封是否已插入到文档中 [[4]]。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordEnvelope : IDisposable
 {
     #region 信封属性
