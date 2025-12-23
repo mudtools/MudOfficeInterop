@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 表格单元格的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordCell : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取单元格行索引。
@@ -66,12 +68,12 @@ public interface IWordCell : IDisposable
     /// <summary>
     /// 获取单元格边框。
     /// </summary>
-    IWordBorders Borders { get; }
+    IWordBorders? Borders { get; }
 
     /// <summary>
     /// 获取单元格底纹。
     /// </summary>
-    IWordShading Shading { get; }
+    IWordShading? Shading { get; }
 
     /// <summary>
     /// 获取单元格首选宽度。
@@ -111,7 +113,37 @@ public interface IWordCell : IDisposable
     /// <summary>
     /// 获取单元格所在的表格。
     /// </summary>
-    IWordTables Tables { get; }
+    IWordTables? Tables { get; }
+
+    /// <summary>
+    /// 获取单元格的嵌套级别。嵌套级别表示表格在嵌套表格结构中的层级，主表格为级别1，嵌套在其中的表格为更高级别。
+    /// </summary>
+    int NestingLevel { get; }
+
+    /// <summary>
+    /// 获取或设置单元格内的文本是否自动换行。
+    /// </summary>
+    bool WordWrap { get; set; }
+
+    /// <summary>
+    /// 获取或设置单元格的标识符。
+    /// </summary>
+    string ID { get; set; }
+
+    /// <summary>
+    /// 获取或设置单元格所在行的高度规则。
+    /// </summary>
+    WdRowHeightRule HeightRule { get; set; }
+
+    /// <summary>
+    /// 获取下一个相邻的单元格。
+    /// </summary>
+    IWordCell? Next { get; }
+
+    /// <summary>
+    /// 获取前一个相邻的单元格。
+    /// </summary>
+    IWordCell? Previous { get; }
 
     /// <summary>
     /// 选择单元格。
@@ -121,7 +153,7 @@ public interface IWordCell : IDisposable
     /// <summary>
     /// 删除单元格。
     /// </summary>
-    void Delete();
+    void Delete(WdDeleteCells? shiftCells = null);
 
     /// <summary>
     /// 合并单元格。
@@ -137,74 +169,28 @@ public interface IWordCell : IDisposable
     void Split(int numRows, int numColumns);
 
     /// <summary>
-    /// 获取单元格文本内容。
+    /// 在单元格中插入公式。
     /// </summary>
-    /// <returns>单元格文本。</returns>
-    string GetText();
+    /// <param name="formula">要插入的公式，如果为null则使用默认公式</param>
+    /// <param name="numFormat">数字格式代码，用于格式化结果，如果为null则使用默认格式</param>
+    void Formula(string? formula = null, string? numFormat = null);
 
     /// <summary>
-    /// 设置单元格文本内容。
+    /// 设置单元格的宽度。
     /// </summary>
-    /// <param name="text">文本内容。</param>
-    void SetText(string text);
+    /// <param name="columnWidth">列宽值（以磅为单位）</param>
+    /// <param name="rulerStyle">标尺样式，指定如何测量宽度</param>
+    void SetWidth(float columnWidth, WdRulerStyle rulerStyle);
 
     /// <summary>
-    /// 清除单元格内容。
+    /// 设置单元格的高度。
     /// </summary>
-    void ClearContents();
+    /// <param name="rowHeight">行高值（以磅为单位）</param>
+    /// <param name="heightRule">行高规则，指定如何应用高度设置</param>
+    void SetHeight(float rowHeight, WdRowHeightRule heightRule);
 
     /// <summary>
-    /// 复制单元格。
+    /// 对单元格上方的数字进行自动求和。
     /// </summary>
-    void Copy();
-
-    /// <summary>
-    /// 剪切单元格。
-    /// </summary>
-    void Cut();
-
-    /// <summary>
-    /// 粘贴内容到单元格。
-    /// </summary>
-    void Paste();
-
-    /// <summary>
-    /// 设置单元格边框。
-    /// </summary>
-    /// <param name="lineStyle">线条样式。</param>
-    /// <param name="lineWidth">线条宽度。</param>
-    /// <param name="color">颜色。</param>
-    void SetBorders(WdLineStyle lineStyle = WdLineStyle.wdLineStyleSingle,
-                          WdLineWidth lineWidth = WdLineWidth.wdLineWidth100pt,
-                          WdColor color = WdColor.wdColorAutomatic);
-
-    /// <summary>
-    /// 移除单元格边框。
-    /// </summary>
-    void RemoveBorders();
-
-    /// <summary>
-    /// 设置单元格底纹。
-    /// </summary>
-    /// <param name="pattern">图案。</param>
-    /// <param name="foregroundColor">前景色。</param>
-    /// <param name="backgroundColor">背景色。</param>
-    void SetShading(WdTextureIndex pattern = WdTextureIndex.wdTextureNone,
-                          WdColor foregroundColor = WdColor.wdColorAutomatic,
-                          WdColor backgroundColor = WdColor.wdColorWhite);
-
-    /// <summary>
-    /// 移除单元格底纹。
-    /// </summary>
-    void RemoveShading();
-
-    /// <summary>
-    /// 获取单元格字体对象。
-    /// </summary>
-    IWordFont Font { get; }
-
-    /// <summary>
-    /// 获取单元格段落格式对象。
-    /// </summary>
-    IWordParagraphFormat ParagraphFormat { get; }
+    void AutoSum();
 }
