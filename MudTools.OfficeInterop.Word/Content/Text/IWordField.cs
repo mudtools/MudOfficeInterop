@@ -12,34 +12,31 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.Field 的接口，用于操作Word域对象。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordField : IDisposable
 {
     /// <summary>
-    /// 获取应用程序对象。
+    /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取代表 <see cref="IWordField"/> 对象的父对象。
+    /// </summary>
+    /// <remarks>父对象通常是 TextColumns 集合。</remarks>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取域的类型。
     /// </summary>
     WdFieldType Type { get; }
 
+    /// <summary>
+    /// 获取域的种类。
+    /// </summary>
     WdFieldKind Kind { get; }
 
-    /// <summary>
-    /// 获取域的结果范围。
-    /// </summary>
-    IWordRange? ResultRange { get; }
-
-    /// <summary>
-    /// 获取域的代码范围。
-    /// </summary>
-    IWordRange? CodeRange { get; }
-
-    /// <summary>
-    /// 获取域的父对象。
-    /// </summary>
-    object Parent { get; }
 
     /// <summary>
     /// 获取或设置域是否锁定。
@@ -57,34 +54,9 @@ public interface IWordField : IDisposable
     string Data { get; set; }
 
     /// <summary>
-    /// 获取域的结果文本。
-    /// </summary>
-    string Result { get; set; }
-
-    /// <summary>
-    /// 获取域的代码文本。
-    /// </summary>
-    string Code { get; set; }
-
-    /// <summary>
     /// 获取域是否显示结果。
     /// </summary>
     bool ShowCodes { get; set; }
-
-    /// <summary>
-    /// 获取域的下一个域。
-    /// </summary>
-    IWordField? NextField { get; }
-
-    /// <summary>
-    /// 获取域的上一个域。
-    /// </summary>
-    IWordField? PreviousField { get; }
-
-    /// <summary>
-    /// 获取域是否为链接域。
-    /// </summary>
-    bool IsLinked { get; }
 
     /// <summary>
     /// 获取域的链接格式。
@@ -97,10 +69,35 @@ public interface IWordField : IDisposable
     IWordOLEFormat? OLEFormat { get; }
 
     /// <summary>
+    /// 获取与域关联的内联形状对象。
+    /// </summary>
+    IWordInlineShape? InlineShape { get; }
+
+    /// <summary>
+    /// 获取文档中当前域之前的域。
+    /// </summary>
+    IWordField? Previous { get; }
+
+    /// <summary>
+    /// 获取文档中当前域之后的域。
+    /// </summary>
+    IWordField? Next { get; }
+
+    /// <summary>
+    /// 获取域的结果范围。
+    /// </summary>
+    IWordRange? Result { get; }
+
+    /// <summary>
+    /// 获取域代码的范围。
+    /// </summary>
+    IWordRange? Code { get; }
+
+    /// <summary>
     /// 更新域。
     /// </summary>
     /// <returns>是否更新成功。</returns>
-    bool Update();
+    bool? Update();
 
     /// <summary>
     /// 取消域的链接。
@@ -133,41 +130,7 @@ public interface IWordField : IDisposable
     void DoClick();
 
     /// <summary>
-    /// 验证域代码是否有效。
+    /// 更新域的源内容。
     /// </summary>
-    /// <returns>域代码是否有效。</returns>
-    bool ValidateCode();
-
-    /// <summary>
-    /// 获取域的源文件路径（如果是链接域）。
-    /// </summary>
-    /// <returns>源文件路径。</returns>
-    string GetSourcePath();
-
-    /// <summary>
-    /// 设置域代码。
-    /// </summary>
-    /// <param name="code">新的域代码。</param>
-    void SetCode(string code);
-
-    /// <summary>
-    /// 设置域结果。
-    /// </summary>
-    /// <param name="result">新的域结果。</param>
-    void SetResult(string result);
-
-    /// <summary>
-    /// 获取域是否为日期域。
-    /// </summary>
-    bool IsDateField { get; }
-
-    /// <summary>
-    /// 获取域是否为页码域。
-    /// </summary>
-    bool IsPageField { get; }
-
-    /// <summary>
-    /// 获取域是否为目录域。
-    /// </summary>
-    bool IsTOCField { get; }
+    void UpdateSource();
 }

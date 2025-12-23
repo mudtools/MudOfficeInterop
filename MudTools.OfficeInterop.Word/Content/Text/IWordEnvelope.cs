@@ -15,6 +15,18 @@ namespace MudTools.OfficeInterop.Word;
 [ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordEnvelope : IDisposable
 {
+    /// <summary>
+    /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取代表 <see cref="IWordEnvelope"/> 对象的父对象。
+    /// </summary>
+    /// <remarks>父对象通常是 TextColumns 集合。</remarks>
+    object? Parent { get; }
+
     #region 信封属性
     /// <summary>
     /// 获取或设置收件人地址 [[3]]。
