@@ -46,7 +46,7 @@ public interface IWordBuildingBlock : IDisposable
     /// 获取或设置构建基块的唯一标识符。
     /// 此ID用于在Word文档中唯一识别该构建基块。
     /// </summary>
-    string ID { get; set; }
+    string ID { get; }
 
     /// <summary>
     /// 获取或设置插入选项。

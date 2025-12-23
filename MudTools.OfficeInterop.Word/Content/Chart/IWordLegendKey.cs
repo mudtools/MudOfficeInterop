@@ -58,7 +58,7 @@ public interface IWordLegendKey : IDisposable
     /// 获取或设置标记前景颜色
     /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
-    int MarkerForegroundColor { get; set; }
+    Color MarkerForegroundColor { get; set; }
 
     /// <summary>
     /// 获取或设置标记前景颜色索引
