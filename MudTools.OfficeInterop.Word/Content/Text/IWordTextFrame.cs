@@ -10,22 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.TextFrame 的接口，用于操作文本框格式。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTextFrame : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
-
-    /// <summary>
-    /// 获取父对象。
-    /// </summary>
-    object Parent { get; }
 
     /// <summary>
     /// 获取文本框的文本范围。
     /// </summary>
-    IWordRange TextRange { get; }
+    IWordRange? TextRange { get; }
 
     /// <summary>
     /// 获取或设置文本框的左边距（磅）。
@@ -50,11 +47,13 @@ public interface IWordTextFrame : IDisposable
     /// <summary>
     /// 获取或设置文本框的水平对齐方式。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoHorizontalAnchor HorizontalAnchor { get; set; }
 
     /// <summary>
     /// 获取或设置文本框的垂直对齐方式。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoVerticalAnchor VerticalAnchor { get; set; }
 
     /// <summary>
@@ -66,126 +65,88 @@ public interface IWordTextFrame : IDisposable
     /// <summary>
     /// 获取或设置文本框的路径格式。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPathFormat PathFormat { get; set; }
-
-    /// <summary>
-    /// 获取文本框的下一文本框。
-    /// </summary>
-    IWordTextFrame? NextFrame { get; }
-
-    /// <summary>
-    /// 获取文本框的上一文本框。
-    /// </summary>
-    IWordTextFrame? PreviousFrame { get; }
-
-    /// <summary>
-    /// 获取文本框的父形状对象。
-    /// </summary>
-    IWordShape? ParentShape { get; }
 
     /// <summary>
     /// 获取或设置文本框的文本方向。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextOrientation Orientation { get; set; }
 
     /// <summary>
-    /// 获取文本框的内部宽度（扣除边距后的宽度）。
+    /// 获取或设置文本框的变形格式，用于控制文本的变形效果（如弯曲、倾斜等）。
     /// </summary>
-    float InternalWidth { get; }
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoWarpFormat WarpFormat { get; set; }
 
     /// <summary>
-    /// 获取文本框的内部高度（扣除边距后的高度）。
+    /// 获取或设置是否禁用文本旋转。
     /// </summary>
-    float InternalHeight { get; }
+    [ComPropertyWrap(NeedConvert = true)]
+    bool NoTextRotation { get; set; }
 
     /// <summary>
-    /// 获取文本框是否包含文本。
+    /// 获取或设置文本框的自动换行设置（1表示启用，0表示禁用）。
     /// </summary>
-    bool HasText { get; }
+    int WordWrap { get; set; }
 
     /// <summary>
-    /// 获取或设置文本框的填充格式。
+    /// 获取文本框中是否包含文本（1表示有文本，0表示无文本）。
     /// </summary>
-    IWordFillFormat? Fill { get; }
+    int HasText { get; }
 
     /// <summary>
-    /// 获取或设置文本框的边框格式。
+    /// 获取文本框是否内容溢出。
     /// </summary>
-    IWordLineFormat? Line { get; }
+    bool Overflowing { get; }
+
 
     /// <summary>
-    /// 连接文本框到下一个文本框。
+    /// 获取文本框的列对象。
     /// </summary>
-    /// <param name="nextTextFrame">要连接的下一个文本框。</param>
-    /// <returns>是否连接成功。</returns>
-    bool ConnectTo(IWordTextFrame nextTextFrame);
+    IOfficeTextColumn2? Column { get; }
 
     /// <summary>
-    /// 断开文本框连接。
+    /// 获取文本框的三维格式对象。
     /// </summary>
-    void BreakLink();
+    IWordThreeDFormat? ThreeD { get; }
 
     /// <summary>
-    /// 设置文本框边距。
+    /// 获取前一个文本框（链接的文本框链中的前一个）。
     /// </summary>
-    /// <param name="left">左边距。</param>
-    /// <param name="right">右边距。</param>
-    /// <param name="top">上边距。</param>
-    /// <param name="bottom">下边距。</param>
-    void SetMargins(float left, float right, float top, float bottom);
+    IWordTextFrame? Previous { get; }
 
     /// <summary>
-    /// 设置文本框对齐方式。
+    /// 获取下一个文本框（链接的文本框链中的下一个）。
     /// </summary>
-    /// <param name="horizontal">水平对齐方式。</param>
-    /// <param name="vertical">垂直对齐方式。</param>
-    void SetAlignment(MsoHorizontalAnchor horizontal, MsoVerticalAnchor vertical);
+    IWordTextFrame? Next { get; }
 
     /// <summary>
-    /// 清除文本框内容。
+    /// 获取包含此文本框的范围对象。
     /// </summary>
-    void ClearText();
+    IWordRange? ContainingRange { get; }
 
     /// <summary>
-    /// 复制文本框格式到另一个文本框。
+    /// 获取此文本框的父级形状对象。
     /// </summary>
-    /// <param name="targetTextFrame">目标文本框。</param>
-    void CopyTo(IWordTextFrame targetTextFrame);
+    IWordShape? Parent { get; }
 
     /// <summary>
-    /// 重置文本框格式为默认值。
+    /// 删除文本框中的所有文本内容。
     /// </summary>
-    void Reset();
+    void DeleteText();
 
     /// <summary>
-    /// 获取文本框的文本内容。
+    /// 验证目标文本框是否可以作为链接目标。
     /// </summary>
-    /// <returns>文本内容。</returns>
-    string GetText();
+    /// <param name="targetTextFrame">目标文本框对象</param>
+    /// <returns>如果可以链接则返回true，否则返回false，null表示无法确定</returns>
+    bool? ValidLinkTarget(IWordTextFrame targetTextFrame);
 
     /// <summary>
-    /// 设置文本框的文本内容。
+    /// 断开到下一个文本框的链接关系。
     /// </summary>
-    /// <param name="text">要设置的文本内容。</param>
-    void SetText(string text);
+    void BreakForwardLink();
 
-    /// <summary>
-    /// 获取文本框的字体格式。
-    /// </summary>
-    IWordFont? Font { get; }
-
-    /// <summary>
-    /// 获取文本框的段落格式。
-    /// </summary>
-    IWordParagraphFormat? ParagraphFormat { get; }
-
-    /// <summary>
-    /// 获取文本框是否为第一个文本框。
-    /// </summary>
-    bool IsFirstFrame { get; }
-
-    /// <summary>
-    /// 获取文本框是否为最后一个文本框。
-    /// </summary>
-    bool IsLastFrame { get; }
 }

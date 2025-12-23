@@ -229,7 +229,7 @@ internal class WordPageSetup : IWordPageSetup
         get => _pageSetup != null ? new WordTextColumns(_pageSetup.TextColumns) : null;
         set
         {
-            if (_pageSetup != null && value != null) _pageSetup.TextColumns = ((WordTextColumns)value)._textColumns;
+            if (_pageSetup != null && value != null) _pageSetup.TextColumns = ((WordTextColumns)value).InternalComObject;
         }
     }
 
