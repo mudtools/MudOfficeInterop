@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -11,6 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示对 Microsoft Word 构建基块集合（BuildingBlockEntries）的封装接口。
 /// 支持按索引或名称访问、添加、查询、遍历等操作。
 /// </summary>
+[ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
 public interface IWordBuildingBlockEntries : IEnumerable<IWordBuildingBlock>, IDisposable
 {
     /// <summary>
@@ -26,26 +27,15 @@ public interface IWordBuildingBlockEntries : IEnumerable<IWordBuildingBlock>, ID
     IWordBuildingBlock? this[int index] { get; }
 
     /// <summary>
-    /// 添加一个新的构建基块。
+    /// 在集合中添加一个新的构建基块。
     /// </summary>
     /// <param name="name">构建基块的名称。</param>
-    /// <param name="type"></param>
-    /// <param name="category">所属类别。</param>
-    /// <param name="value">内容文本。</param>
-    /// <param name="insertOptions"></param>
-    /// <returns>新创建的封装构建基块对象。</returns>
-    /// <exception cref="ArgumentException">当 name 或 category 为空时抛出。</exception>
-    /// <exception cref="InvalidOperationException">当添加失败时抛出。</exception>
-    IWordBuildingBlock Add(string name, WdBuildingBlockTypes type, string category, string value, WdDocPartInsertOptions insertOptions);
+    /// <param name="type">构建基块的类型，来自WdBuildingBlockTypes枚举。</param>
+    /// <param name="category">构建基块所属的类别。</param>
+    /// <param name="range">包含构建基块内容的Word范围对象。</param>
+    /// <param name="description">构建基块的描述信息，可选参数，默认为null。</param>
+    /// <param name="insertOptions">插入选项，指定如何插入构建基块，默认为wdInsertContent。</param>
+    /// <returns>如果成功添加则返回封装后的构建基块对象，否则返回null。</returns>
+    IWordBuildingBlock? Add(string name, WdBuildingBlockTypes type, string category, IWordRange range, string? description = null, WdDocPartInsertOptions insertOptions = WdDocPartInsertOptions.wdInsertContent);
 
-    /// <summary>
-    /// 获取集合中所有构建基块的名称列表。
-    /// </summary>
-    /// <returns>名称字符串列表。</returns>
-    List<string> GetNames();
-
-    /// <summary>
-    /// 删除集合中的所有构建基块。
-    /// </summary>
-    void Clear();
 }
