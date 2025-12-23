@@ -11,8 +11,19 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示对 Microsoft Word 中 Category（类别）对象的封装接口。
 /// 用于表示构建基块或自动图文集中内容的分类，如“常规”、“页眉”等。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordCategory : IDisposable
 {
+    /// <summary>
+    /// 获取该对象关联的Word应用程序实例
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取该对象的父对象
+    /// </summary>
+    object? Parent { get; }
     /// <summary>
     /// 获取类别的名称（例如：“常规”、“自定义类别1”等）。
     /// </summary>
@@ -22,7 +33,7 @@ public interface IWordCategory : IDisposable
     /// 获取类别中的构建基块集合。
     /// 构建基块是可重复使用的内容单元，可以根据类别进行组织和管理。
     /// </summary>
-    IWordBuildingBlocks BuildingBlocks { get; }
+    IWordBuildingBlocks? BuildingBlocks { get; }
 
     /// <summary>
     /// 获取类别在集合中的索引位置。
@@ -34,5 +45,5 @@ public interface IWordCategory : IDisposable
     /// 获取类别关联的构建基块类型。
     /// 表示该类别中包含的构建基块的类型信息。
     /// </summary>
-    IWordBuildingBlockType Type { get; }
+    IWordBuildingBlockType? Type { get; }
 }
