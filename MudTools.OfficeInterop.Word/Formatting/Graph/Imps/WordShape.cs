@@ -15,6 +15,9 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordShape : IWordShape
 {
     private MsWord.Shape _shape;
+
+    internal MsWord.Shape InternalComObject => _shape;
+
     private bool _disposedValue;
 
     /// <summary>

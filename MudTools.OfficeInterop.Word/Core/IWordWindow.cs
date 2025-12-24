@@ -13,14 +13,21 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示一个 Word 文档窗口。
 /// 封装了 Microsoft.Office.Interop.Word.Window 对象。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordWindow : IDisposable
 {
     #region 属性
 
     /// <summary>
-    /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
+    /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置是否显示垂直滚动条。
@@ -94,11 +101,6 @@ public interface IWordWindow : IDisposable
     string Caption { get; set; }
 
     /// <summary>
-    /// 获取代表 <see cref="IWordWindow"/> 对象的父对象。
-    /// </summary>
-    object Parent { get; }
-
-    /// <summary>
     /// 获取窗口的索引号。
     /// </summary>
     int? Index { get; }
@@ -118,7 +120,6 @@ public interface IWordWindow : IDisposable
     /// </summary>
     bool? Visible { get; set; }
 
-
     /// <summary>
     /// 获取窗口的类型。
     /// </summary>
@@ -127,12 +128,102 @@ public interface IWordWindow : IDisposable
     /// <summary>
     /// 获取或设置窗口是否最大化。
     /// </summary>
-    bool? WindowState { get; set; }
+    WdWindowState WindowState { get; set; }
 
     /// <summary>
     /// 获取或设置窗口的分隔位置。
     /// </summary>
     int? SplitVertical { get; set; }
+
+    /// <summary>
+    /// 获取窗口的可用宽度（以磅为单位）。
+    /// </summary>
+    int UsableWidth { get; }
+
+    /// <summary>
+    /// 获取窗口的可用高度（以磅为单位）。
+    /// </summary>
+    int UsableHeight { get; }
+
+    /// <summary>
+    /// 获取或设置信封是否可见。
+    /// </summary>
+    bool EnvelopeVisible { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示右侧标尺。
+    /// </summary>
+    bool DisplayRightRuler { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示左侧滚动条。
+    /// </summary>
+    bool DisplayLeftScrollBar { get; set; }
+
+    /// <summary>
+    /// 获取或设置缩略图是否可见。
+    /// </summary>
+    bool Thumbnails { get; set; }
+
+    /// <summary>
+    /// 获取或设置源文档的显示方式。
+    /// </summary>
+    WdShowSourceDocuments ShowSourceDocuments { get; set; }
+
+    /// <summary>
+    /// 获取当前活动窗格。
+    /// </summary>
+    IWordPane? ActivePane { get; }
+
+    /// <summary>
+    /// 获取当前选择内容。
+    /// </summary>
+    IWordSelection? Selection { get; }
+
+    /// <summary>
+    /// 获取或设置输入法编辑器 (IME) 模式。
+    /// </summary>
+    WdIMEMode IMEMode { get; set; }
+
+    /// <summary>
+    /// 获取窗口编号。
+    /// </summary>
+    int WindowNumber { get; }
+
+    /// <summary>
+    /// 获取或设置文档地图的百分比宽度。
+    /// </summary>
+    int DocumentMapPercentWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置窗口是否已拆分。
+    /// </summary>
+    bool Split { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示标尺。
+    /// </summary>
+    bool DisplayRulers { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示垂直标尺。
+    /// </summary>
+    bool DisplayVerticalRuler { get; set; }
+
+    /// <summary>
+    /// 获取或设置样式区域的宽度。
+    /// </summary>
+    float StyleAreaWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示屏幕提示。
+    /// </summary>
+    bool DisplayScreenTips { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档地图是否可见。
+    /// </summary>
+    bool DocumentMap { get; set; }
 
     #endregion // 属性
 
@@ -154,12 +245,8 @@ public interface IWordWindow : IDisposable
     /// <summary>
     /// 创建一个与指定窗口具有相同文档的新窗口。
     /// </summary>
-    void NewWindow();
+    IWordWindow? NewWindow();
 
-    /// <summary>
-    /// 按照当前页面大小滚动文档内容。
-    /// </summary>
-    void PageScroll();
 
     /// <summary>
     /// 将焦点设置到指定的窗口。
@@ -167,12 +254,22 @@ public interface IWordWindow : IDisposable
     void SetFocus();
 
     /// <summary>
-    /// 返回文档中指定屏幕坐标处的区域对象。
+    /// 返回文档中指定屏幕坐标处的区域<see cref="IWordRange"/>对象。
     /// </summary>
     /// <param name="x">屏幕坐标中的X轴位置（以像素为单位）。</param>
     /// <param name="y">屏幕坐标中的Y轴位置（以像素为单位）。</param>
     /// <returns>返回指定点处的范围对象，如果点不在文档窗口中则返回null。</returns>
+    [ReturnValueConvert, MethodName("RangeFromPoint")]
     IWordRange? RangeFromPoint(int x, int y);
+
+    /// <summary>
+    /// 返回文档中指定屏幕坐标处的区域<see cref="IWordShape"/>对象。
+    /// </summary>
+    /// <param name="x">屏幕坐标中的X轴位置（以像素为单位）。</param>
+    /// <param name="y">屏幕坐标中的Y轴位置（以像素为单位）。</param>
+    /// <returns>返回指定点处的范围对象，如果点不在文档窗口中则返回null。</returns>
+    [ReturnValueConvert, MethodName("RangeFromPoint")]
+    IWordShape? ShapeFromPoint(int x, int y);
 
     /// <summary>
     /// 返回指定对象在屏幕上的位置和大小信息（以像素为单位）。
@@ -195,6 +292,11 @@ public interface IWordWindow : IDisposable
     void ScrollIntoView(IWordRange range, bool? scrollToTopOfRange = null);
 
     /// <summary>
+    /// 将窗口滚动到指定位置。
+    /// </summary>
+    void ScrollIntoView(IWordShape range, bool? scrollToTopOfRange = null);
+
+    /// <summary>
     /// 将窗口滚动到下一页。
     /// </summary>
     void PageScroll(int? pages = null, int? lines = null);
@@ -204,43 +306,56 @@ public interface IWordWindow : IDisposable
     /// </summary>
     void SmallScroll(int? down = null, int? up = null, int? toRight = null, int? toLeft = null);
 
+    /// <summary>
+    /// 切换是否显示所有审阅者批注的可见性
+    /// </summary>
+    void ToggleShowAllReviewers();
 
     /// <summary>
-    /// 打印指定的窗口。
+    /// 切换功能区的可见性
     /// </summary>
-    /// <param name="background">如果为 true，则在后台打印。</param>
-    /// <param name="append">如果为 true，则追加到当前打印作业。</param>
-    /// <param name="range">指定要打印的页面范围。</param>
-    /// <param name="outputFileName">指定输出文件名（如果输出到文件）。</param>
-    /// <param name="from">指定起始页码。</param>
-    /// <param name="to">指定结束页码。</param>
-    /// <param name="item">指定要打印的项目。</param>
-    /// <param name="copies">指定打印份数。</param>
-    /// <param name="pages">指定要打印的页码。</param>
-    /// <param name="activePrinterMacGX">（Macintosh 专用）指定 Macintosh 打印机。</param>
-    /// <param name="manualDuplexPrint">如果为 true，则手动双面打印。</param>
-    /// <param name="printDiskPromptForEachSheet">（Macintosh 专用）如果为 true，则为每个工作表提示打印到磁盘。</param>
-    /// <param name="collate">如果为 true，则逐份打印。</param>
-    /// <param name="fileName">指定要打印的文件名。</param>
-    /// <param name="lineNumbers">如果为 true，则打印行号。</param>
-    /// <param name="numCopies">指定打印份数。</param>
+    void ToggleRibbon();
+
+    /// <summary>
+    /// 打印文档
+    /// </summary>
+    /// <param name="background">如果为 true，则在后台打印文档</param>
+    /// <param name="append">如果为 true，则将文档追加到输出文件末尾</param>
+    /// <param name="range">指定打印范围</param>
+    /// <param name="outputFileName">输出文件的名称</param>
+    /// <param name="from">起始页码</param>
+    /// <param name="to">结束页码</param>
+    /// <param name="item">指定要打印的项目类型</param>
+    /// <param name="copies">打印份数</param>
+    /// <param name="pages">指定要打印的页码范围，例如"1-5, 7, 9-12"</param>
+    /// <param name="pageType">指定打印的页面类型</param>
+    /// <param name="printToFile">如果为 true，则将输出发送到文件</param>
+    /// <param name="collate">如果为 true，则对副本进行排序</param>
+    /// <param name="activePrinterMacGX">在 Macintosh 上使用，如果为 true，则使用活动打印机设置</param>
+    /// <param name="manualDuplexPrint">如果为 true，则手动双面打印</param>
+    /// <param name="printZoomColumn">指定打印时每页的列数</param>
+    /// <param name="printZoomRow">指定打印时每页的行数</param>
+    /// <param name="printZoomPaperWidth">指定打印时的纸张宽度（磅）</param>
+    /// <param name="printZoomPaperHeight">指定打印时的纸张高度（磅）</param>
     void PrintOut(
         bool? background = null,
         bool? append = null,
         WdPrintOutRange? range = null,
-        string outputFileName = null,
-        object from = null, // 使用 object 以允许 null
-        object to = null,   // 使用 object 以允许 null
+        string? outputFileName = null,
+        int? from = null,
+        int? to = null,
         WdPrintOutItem? item = null,
         int? copies = null,
-        WdPrintOutPages? pages = null,
+        string? pages = null,
+        WdPrintOutPages? pageType = null,
+        bool? printToFile = null,
+        bool? collate = null,
         bool? activePrinterMacGX = null,
         bool? manualDuplexPrint = null,
-        bool? printDiskPromptForEachSheet = null,
-        bool? collate = null,
-        string fileName = null,
-        bool? lineNumbers = null,
-        int? numCopies = null);
+        string? printZoomColumn = null,
+        string? printZoomRow = null,
+        double? printZoomPaperWidth = null,
+        double? printZoomPaperHeight = null);
 
     #endregion // 方法
 }
