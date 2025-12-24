@@ -11,8 +11,20 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档页面设置接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordPageSetup : IDisposable
 {
+    /// <summary>
+    /// 获取代表 Microsoft Word 应用程序的 Application 对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
+
     #region 页面尺寸和边距设置
 
     /// <summary>
@@ -48,11 +60,6 @@ public interface IWordPageSetup : IDisposable
     #endregion
 
     #region 页面方向和布局设置
-
-    /// <summary>
-    /// 获取或设置页面纸张大小
-    /// </summary>
-    WdPaperSize PageSize { get; set; }
 
     /// <summary>
     /// 获取或设置页面方向（0=纵向，1=横向）
@@ -104,12 +111,12 @@ public interface IWordPageSetup : IDisposable
     /// 使用此属性可访问和操作文档或节中的文本列设置。
     /// 文本列允许将页面内容分为多个垂直列，类似于报纸的排版方式。
     /// </remarks>
-    IWordTextColumns TextColumns { get; set; }
+    IWordTextColumns? TextColumns { get; set; }
 
     /// <summary>
     /// 获取或设置行号设置
     /// </summary>
-    IWordLineNumbering LineNumbering { get; set; }
+    IWordLineNumbering? LineNumbering { get; set; }
 
     /// <summary>
     /// 获取或设置每行字符数
@@ -217,4 +224,14 @@ public interface IWordPageSetup : IDisposable
     bool ShowGrid { get; set; }
 
     #endregion
+
+    /// <summary>
+    /// 切换页面方向为纵向（如果当前是横向）或横向（如果当前是纵向）
+    /// </summary>
+    void TogglePortrait();
+
+    /// <summary>
+    /// 将当前页面设置应用为模板的默认设置
+    /// </summary>
+    void SetAsTemplateDefault();
 }

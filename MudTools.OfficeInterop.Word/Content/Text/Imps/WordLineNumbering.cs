@@ -12,6 +12,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordLineNumbering : IWordLineNumbering
 {
     internal MsWord.LineNumbering _lineNumbering;
+    internal MsWord.LineNumbering InternalComObject => _lineNumbering;
+
     private bool _disposedValue = false;
 
     /// <summary>
