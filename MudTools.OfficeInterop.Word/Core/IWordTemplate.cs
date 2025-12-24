@@ -4,9 +4,19 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Microsoft Word 模板（.dotx, .dotm 等）的封装接口。
 /// 提供对模板基本属性的访问和修改能力。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTemplate : IDisposable
 {
+    /// <summary>
+    /// 获取与该对象关联的应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取模板的文件全路径（例如：C:\Templates\Normal.dotm）
@@ -43,7 +53,36 @@ public interface IWordTemplate : IDisposable
     /// </summary>
     IWordAutoTextEntries? AutoTextEntries { get; }
 
+    /// <summary>
+    /// 获取模板中的构建基块条目集合
+    /// </summary>
     IWordBuildingBlockEntries? BuildingBlockEntries { get; }
+
+    /// <summary>
+    /// 获取模板中的构建基块类型集合
+    /// </summary>
+    IWordBuildingBlockTypes? BuildingBlockTypes { get; }
+
+    /// <summary>
+    /// 获取模板中的列表模板集合
+    /// </summary>
+    IWordListTemplates? ListTemplates { get; }
+
+    /// <summary>
+    /// 获取模板中的自定义文档属性集合
+    /// </summary>
+    IOfficeDocumentProperties? CustomDocumentProperties { get; }
+
+    /// <summary>
+    /// 获取模板中的内置文档属性集合
+    /// </summary>
+    IOfficeDocumentProperties? BuiltInDocumentProperties { get; }
+
+    /// <summary>
+    /// 获取或设置是否使用算法调整字距
+    /// </summary>
+    bool KerningByAlgorithm { get; set; }
+
 
     /// <summary>
     /// 获取模板的类型
@@ -70,13 +109,12 @@ public interface IWordTemplate : IDisposable
     /// 将模板作为文档打开
     /// </summary>
     /// <returns>打开的文档对象</returns>
-    IWordDocument OpenAsDocument();
+    IWordDocument? OpenAsDocument();
 
     /// <summary>
     /// 获取或设置模板的打开状态（只读属性，通常不可设置）
     /// </summary>
     bool Saved { get; set; }
-
 
     /// <summary>
     /// 保存模板的更改

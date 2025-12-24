@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -9,17 +9,24 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档表格集合接口
 /// </summary>
-public interface IWordTables : IDisposable, IEnumerable<IWordTable>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordTables : IDisposable, IEnumerable<IWordTable?>
 {
     /// <summary>
     /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取表格数量
     /// </summary>
     int Count { get; }
+
+    /// <summary>
+    /// 获取表格的嵌套级别。对于文档中的顶层表格，此值为1；对于嵌套在其他表格中的表格，级别会相应增加。
+    /// </summary>
+    int NestingLevel { get; }
 
     /// <summary>
     /// 根据索引获取表格
@@ -34,10 +41,4 @@ public interface IWordTables : IDisposable, IEnumerable<IWordTable>
     /// <param name="range">插入范围</param>
     /// <returns>表格对象</returns>
     IWordTable? Add(IWordRange range, int rows, int columns);
-
-    /// <summary>
-    /// 删除表格
-    /// </summary>
-    /// <param name="index">表格索引</param>
-    void Delete(int index);
 }
