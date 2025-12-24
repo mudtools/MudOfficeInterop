@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,8 +10,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 窗口集合接口
 /// </summary>
-public interface IWordWindows : IDisposable, IEnumerable<IWordWindow>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordWindows : IDisposable, IEnumerable<IWordWindow?>
 {
+    /// <summary>
+    /// 获取与该对象关联的应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
     /// <summary>
     /// 获取窗口数量
     /// </summary>
@@ -22,62 +29,46 @@ public interface IWordWindows : IDisposable, IEnumerable<IWordWindow>
     /// </summary>
     object Parent { get; }
 
+    bool SyncScrollingSideBySide { get; set; }
+
     /// <summary>
     /// 根据索引获取窗口（从1开始）
     /// </summary>
-    IWordWindow this[int index] { get; }
+    IWordWindow? this[int index] { get; }
 
     /// <summary>
     /// 根据窗口标题获取窗口
     /// </summary>
-    IWordWindow this[string caption] { get; }
+    IWordWindow? this[string caption] { get; }
 
     /// <summary>
-    /// 创建新窗口
+    /// 添加一个新窗口，用于显示当前活动文档
     /// </summary>
-    /// <returns>新创建的窗口对象</returns>
-    IWordWindow NewWindow();
+    /// <param name="window">要添加的窗口对象，如果为null则创建新窗口</param>
+    /// <returns>新添加的IWordWindow对象，如果失败则返回null</returns>
+    IWordWindow? Add(IWordWindow? window = null);
 
     /// <summary>
-    /// 获取活动窗口
+    /// 排列所有打开的文档窗口
     /// </summary>
-    /// <returns>活动窗口对象</returns>
-    IWordWindow GetActiveWindow();
+    /// <param name="arrangeStyle">窗口排列样式，如果为null则使用默认样式</param>
+    void Arrange(WdArrangeStyle? arrangeStyle = null);
 
     /// <summary>
-    /// 根据条件查找窗口
+    /// 将指定文档与当前活动文档进行并排比较
     /// </summary>
-    /// <param name="predicate">查找条件</param>
-    /// <returns>符合条件的窗口列表</returns>
-    IEnumerable<IWordWindow> Find(Func<IWordWindow, bool> predicate);
+    /// <param name="document">要与当前文档进行比较的Word文档，如果为null则使用当前活动文档</param>
+    /// <returns>如果成功启动并排比较则返回true，否则返回false或null</returns>
+    bool? CompareSideBySideWith(IWordDocument? document = null);
 
     /// <summary>
-    /// 按窗口标题排序
+    /// 断开并排比较模式
     /// </summary>
-    /// <param name="ascending">是否升序排列</param>
-    /// <returns>排序后的窗口列表</returns>
-    IEnumerable<IWordWindow> OrderByCaption(bool ascending = true);
+    /// <returns>如果成功断开并排比较则返回true，否则返回false或null</returns>
+    bool? BreakSideBySide();
 
     /// <summary>
-    /// 按窗口索引排序
+    /// 重置并排比较窗口的位置
     /// </summary>
-    /// <param name="ascending">是否升序排列</param>
-    /// <returns>排序后的窗口列表</returns>
-    IEnumerable<IWordWindow> OrderByIndex(bool ascending = true);
-
-    /// <summary>
-    /// 刷新所有窗口
-    /// </summary>
-    void RefreshAll();
-
-    /// <summary>
-    /// 关闭所有窗口（除了指定的窗口）
-    /// </summary>
-    /// <param name="exceptWindow">要保留的窗口</param>
-    void CloseAllExcept(IWordWindow exceptWindow = null);
-
-    /// <summary>
-    /// 激活所有窗口
-    /// </summary>
-    void ActivateAll();
+    void ResetPositionsSideBySide();
 }

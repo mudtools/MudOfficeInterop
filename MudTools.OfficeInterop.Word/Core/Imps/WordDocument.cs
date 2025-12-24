@@ -16,6 +16,7 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordDocument : IWordDocument
 {
     private MsWord.Document? _document;
+    internal MsWord.Document? InternalComObject => _document;
     private bool _disposedValue;
     private DisposableList _disposables = [];
     private IWordWindow? _activeWindow;
