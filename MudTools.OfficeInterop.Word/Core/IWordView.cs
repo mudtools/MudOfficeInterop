@@ -6,21 +6,24 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
 /// 定义对 Microsoft.Office.Interop.Word.View 对象的二次封装接口。
 /// 代表 Word 中文档窗口的视图设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordView : IDisposable
 {
     /// <summary>
-    /// 获取创建 View 对象的应用程序对象。
+    /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
-    /// 获取 View 对象的父对象。
+    /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置视图的类型（例如，普通视图、页面视图）。
@@ -132,7 +135,7 @@ public interface IWordView : IDisposable
     /// <summary>
     /// 获取与视图关联的缩放对象。
     /// </summary>
-    IWordZoom Zoom { get; }
+    IWordZoom? Zoom { get; }
 
     /// <summary>
     /// 获取或设置修订气球的显示位置（边距或内联）。
@@ -144,7 +147,201 @@ public interface IWordView : IDisposable
     /// </summary>
     float RevisionsBalloonWidth { get; set; }
 
-    // --- 方法封装 ---
+    /// <summary>
+    /// 获取或设置页面颜色
+    /// </summary>
+    WdPageColor PageColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置列宽
+    /// </summary>
+    WdColumnWidth ColumnWidth { get; set; }
+
+    /// <summary>
+    /// 获取修订筛选器对象
+    /// </summary>
+    IWordRevisionsFilter? RevisionsFilter { get; }
+
+    /// <summary>
+    /// 获取审阅者对象
+    /// </summary>
+    IWordReviewers? Reviewers { get; }
+
+    /// <summary>
+    /// 获取或设置是否显示其他作者的修订
+    /// </summary>
+    bool ShowOtherAuthors { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用冲突模式
+    /// </summary>
+    bool ConflictMode { get; set; }
+
+    /// <summary>
+    /// 获取或设置修订标记模式
+    /// </summary>
+    WdRevisionsMode MarkupMode { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示裁切标记
+    /// </summary>
+    bool ShowCropMarks { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用平移模式
+    /// </summary>
+    bool Panning { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否高亮显示标记区域
+    /// </summary>
+    bool ShowMarkupAreaHighlight { get; set; }
+
+    /// <summary>
+    /// 获取或设置阅读布局中截断边距的方式
+    /// </summary>
+    WdReadingLayoutMargin ReadingLayoutTruncateMargins { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否在阅读布局中允许编辑
+    /// </summary>
+    bool ReadingLayoutAllowEditing { get; set; }
+
+    /// <summary>
+    /// 获取或设置阅读布局是否允许多页显示
+    /// </summary>
+    bool ReadingLayoutAllowMultiplePages { get; set; }
+
+    /// <summary>
+    /// 获取或设置阅读布局是否使用实际视图
+    /// </summary>
+    bool ReadingLayoutActualView { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示背景
+    /// </summary>
+    bool DisplayBackgrounds { get; set; }
+
+    /// <summary>
+    /// 获取或设置可编辑范围的着色模式
+    /// </summary>
+    int ShadeEditableRanges { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用阅读布局视图
+    /// </summary>
+    bool ReadingLayout { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示修订气球的连接线
+    /// </summary>
+    bool RevisionsBalloonShowConnectingLines { get; set; }
+
+    /// <summary>
+    /// 获取或设置修订气球的边距位置
+    /// </summary>
+    WdRevisionsBalloonMargin RevisionsBalloonSide { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示插入和删除标记
+    /// </summary>
+    bool ShowInsertionsAndDeletions { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示智能标记
+    /// </summary>
+    bool DisplaySmartTags { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示页面边界
+    /// </summary>
+    bool DisplayPageBoundaries { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示可选分页符
+    /// </summary>
+    bool ShowOptionalBreaks { get; set; }
+
+    /// <summary>
+    /// 获取或设置导航到的窗口编号
+    /// </summary>
+    int BrowseToWindow { get; set; }
+
+    /// <summary>
+    /// 获取或设置拆分窗口的特殊窗格
+    /// </summary>
+    WdSpecialPane SplitSpecial { get; set; }
+
+    /// <summary>
+    /// 获取或设置字段阴影显示方式
+    /// </summary>
+    WdFieldShading FieldShading { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示图片占位符
+    /// </summary>
+    bool ShowPicturePlaceHolders { get; set; }
+
+    /// <summary>
+    /// 获取或设置需要放大的最小字体大小
+    /// </summary>
+    int EnlargeFontsLessThan { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示表格网格线
+    /// </summary>
+    bool TableGridlines { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示动画
+    /// </summary>
+    bool ShowAnimation { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否将内容调整到窗口大小
+    /// </summary>
+    bool WrapToWindow { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示绘图对象
+    /// </summary>
+    bool ShowDrawings { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示格式
+    /// </summary>
+    bool ShowFormat { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否只显示首行
+    /// </summary>
+    bool ShowFirstLineOnly { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用放大镜功能
+    /// </summary>
+    bool Magnifier { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否显示邮件合并数据视图
+    /// </summary>
+    bool MailMergeDataView { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用草稿视图
+    /// </summary>
+    bool Draft { get; set; }
+
+    /// <summary>
+    /// 获取或设置是否启用全屏视图
+    /// </summary>
+    bool FullScreen { get; set; }
+
+    /// <summary>
+    /// 在大纲视图中显示指定级别的标题
+    /// </summary>
+    /// <param name="level">要显示的标题级别（1-9）</param>
+    void ShowHeading(int level);
 
     /// <summary>
     /// 展开指定范围的大纲级别
