@@ -9,18 +9,41 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.Style 的接口，用于操作文档样式。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordStyle : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
+    /// <summary>
+    /// 获取或设置表格的样式。
+    /// </summary>
+    [ComPropertyWrap(IsMethod = true, PropertyName = "BaseStyle", NeedConvert = true)]
+    IWordStyle? BaseStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置表格的样式。
+    /// </summary>
+    [ComPropertyWrap(IsMethod = true, PropertyName = "BaseStyle", NeedConvert = true)]
+    string? BaseStyleName { get; set; }
+
+    /// <summary>
+    /// 获取或设置表格的样式。
+    /// </summary>
+    [ComPropertyWrap(IsMethod = true, PropertyName = "BaseStyle", NeedConvert = true)]
+    WdBuiltinStyle? BaseStyleType { get; set; }
+
+    /// <summary>
+    /// 获取一个值，该值指示此样式当前是否正在使用中。
+    /// </summary>
     bool InUse { get; }
 
     /// <summary>
@@ -32,11 +55,6 @@ public interface IWordStyle : IDisposable
     /// 获取或设置样式的类型。
     /// </summary>
     WdStyleType Type { get; }
-
-    /// <summary>
-    /// 获取或设置样式的下一个段落样式名称。
-    /// </summary>
-    string NextParagraphStyle { get; set; }
 
     /// <summary>
     /// 获取或设置是否自动更新样式。
@@ -56,38 +74,20 @@ public interface IWordStyle : IDisposable
     /// <summary>
     /// 获取样式的字体格式封装对象。
     /// </summary>
-    IWordFont Font { get; }
+    IWordFont? Font { get; }
 
     /// <summary>
     /// 获取样式的段落格式封装对象。
     /// </summary>
-    IWordParagraphFormat ParagraphFormat { get; }
+    IWordParagraphFormat? ParagraphFormat { get; }
 
     /// <summary>
     /// 获取样式的编号格式封装对象。
     /// </summary>
-    IWordListTemplate ListTemplate { get; }
+    IWordListTemplate? ListTemplate { get; }
 
     /// <summary>
     /// 删除此样式。
     /// </summary>
     void Delete();
-
-    /// <summary>
-    /// 复制样式到另一个名称。
-    /// </summary>
-    /// <param name="newName">新样式名称。</param>
-    /// <returns>复制的新样式。</returns>
-    IWordStyle Copy(string newName);
-
-    /// <summary>
-    /// 应用样式到指定范围。
-    /// </summary>
-    /// <param name="range">要应用样式的范围。</param>
-    void ApplyTo(IWordRange range);
-
-    /// <summary>
-    /// 检查样式是否为内置样式。
-    /// </summary>
-    bool IsBuiltIn { get; }
 }

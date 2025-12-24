@@ -37,7 +37,7 @@ public interface IWordOMathMat : IDisposable
     /// <summary>
     /// 获取矩阵的单元格对象，用于访问矩阵中的单个单元格
     /// </summary>
-    [IgnoreGenerator]
+    [MethodIndex]
     IWordOMath? Cell(int row, int col);
 
     /// <summary>

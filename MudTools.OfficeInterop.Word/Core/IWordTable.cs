@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中表格的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTable : IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -42,6 +44,7 @@ public interface IWordTable : IDisposable
     /// </summary>
     IWordColumns? Columns { get; }
 
+
     /// <summary>
     /// 获取表格的边框集合。
     /// </summary>
@@ -60,7 +63,20 @@ public interface IWordTable : IDisposable
     /// <summary>
     /// 获取或设置表格的样式。
     /// </summary>
-    object? Style { get; set; }
+    [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
+    IWordStyle? Style { get; set; }
+
+    /// <summary>
+    /// 获取或设置表格的样式。
+    /// </summary>
+    [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
+    string? StyleName { get; set; }
+
+    /// <summary>
+    /// 获取或设置表格的样式。
+    /// </summary>
+    [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
+    WdBuiltinStyle? StyleType { get; set; }
 
     /// <summary>
     /// 获取或设置表格是否允许跨页断行。
@@ -72,10 +88,6 @@ public interface IWordTable : IDisposable
     /// </summary>
     bool AllowAutoFit { get; set; }
 
-    /// <summary>
-    /// 获取或设置表格的样式。
-    /// </summary>
-    object? TableStyle { get; set; }
 
     /// <summary>
     /// 获取或设置表格标题行。

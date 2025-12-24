@@ -15,6 +15,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordTableStyle : IWordTableStyle
 {
     private MsWord.TableStyle _tableStyle;
+
+    public MsWord.TableStyle InternalComObject => _tableStyle;
     private bool _disposedValue;
 
     /// <summary>

@@ -401,7 +401,7 @@ public interface IWordSelection : IDisposable
     /// <param name="count">移动的单位数量，默认为1</param>
     /// <param name="extend">移动类型，wdMove为移动选择区域，wdExtend为扩展选择区域，默认为wdMove</param>
     /// <returns>移动的字符数，如果失败则返回null</returns>
-    int? MoveLeft(WdUnits? unit = WdUnits.wdWord, int? count = 1, WdMovementType? extend = WdMovementType.wdMove);
+    int? MoveLeft(WdUnits? unit = null, int? count = 1, WdMovementType? extend = null);
 
 
     /// <summary>
@@ -411,7 +411,7 @@ public interface IWordSelection : IDisposable
     /// <param name="count">移动的单位数量，默认为1</param>
     /// <param name="extend">移动类型，wdMove为移动选择区域，wdExtend为扩展选择区域，默认为wdMove</param>
     /// <returns>移动的字符数，如果失败则返回null</returns>
-    int? MoveRight(WdUnits? unit = WdUnits.wdWord, int? count = 1, WdMovementType? extend = WdMovementType.wdMove);
+    int? MoveRight(WdUnits? unit = null, int? count = 1, WdMovementType? extend = null);
 
 
     /// <summary>
@@ -421,7 +421,7 @@ public interface IWordSelection : IDisposable
     /// <param name="count">移动的单位数量，默认为1</param>
     /// <param name="extend">移动类型，wdMove为移动选择区域，wdExtend为扩展选择区域，默认为wdMove</param>
     /// <returns>移动的字符数，如果失败则返回null</returns>
-    int? MoveUp(WdUnits? unit = WdUnits.wdWord, int? count = 1, WdMovementType? extend = WdMovementType.wdMove);
+    int? MoveUp(WdUnits? unit = null, int? count = 1, WdMovementType? extend = null);
 
 
     /// <summary>
@@ -431,7 +431,7 @@ public interface IWordSelection : IDisposable
     /// <param name="count">移动的单位数量，默认为1</param>
     /// <param name="extend">移动类型，wdMove为移动选择区域，wdExtend为扩展选择区域，默认为wdMove</param>
     /// <returns>移动的字符数，如果失败则返回null</returns>
-    int? MoveDown(WdUnits? unit = WdUnits.wdWord, int? count = 1, WdMovementType? extend = WdMovementType.wdMove);
+    int? MoveDown(WdUnits? unit = null, int? count = 1, WdMovementType? extend = null);
 
     /// <summary>
     /// 确定当前选择区域是否在指定的范围区域内

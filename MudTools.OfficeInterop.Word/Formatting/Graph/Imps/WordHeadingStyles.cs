@@ -62,7 +62,7 @@ internal class WordHeadingStyles : IWordHeadingStyles
 
         try
         {
-            var comStyle = (style as WordStyle)?._style ?? null;
+            var comStyle = (style as WordStyle)?.InternalComObject ?? null;
 
             var comHeadingStyle = _headingStyles.Add(comStyle, (short)level);
             var wrapper = new WordHeadingStyle(comHeadingStyle);

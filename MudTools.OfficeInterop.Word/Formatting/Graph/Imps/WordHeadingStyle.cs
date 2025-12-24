@@ -45,7 +45,7 @@ internal class WordHeadingStyle : IWordHeadingStyle
         {
             if (_headingStyle != null)
             {
-                var comStyle = (value as WordStyle)?._style ?? null;
+                var comStyle = (value as WordStyle)?.InternalComObject ?? null;
                 _headingStyle.set_Style(comStyle);
             }
         }

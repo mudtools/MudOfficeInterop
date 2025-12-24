@@ -33,4 +33,14 @@ public class ComPropertyWrapAttribute : Attribute
     /// 是否需要释放属性值资源。
     /// </summary>
     public bool NeedDispose { get; set; } = true;
+
+    /// <summary>
+    /// 标记该属性采用get、set方法进行访问。
+    /// </summary>
+    public bool IsMethod { get; set; }
+
+    /// <summary>
+    /// 获取或设置属性名，默认为空（即原始属性名。）
+    /// </summary>
+    public string? PropertyName { get; set; }
 }
