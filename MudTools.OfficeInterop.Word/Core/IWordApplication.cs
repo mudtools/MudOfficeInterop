@@ -738,7 +738,7 @@ public partial interface IWordApplication : IOfficeApplication
         bool docStructureTags = true,
         bool bitmapMissingFonts = true,
         bool useISO19005_1 = false,
-         object fixedFormatExtClassPtr = null);
+        object? fixedFormatExtClassPtr = null);
 
     #endregion
 

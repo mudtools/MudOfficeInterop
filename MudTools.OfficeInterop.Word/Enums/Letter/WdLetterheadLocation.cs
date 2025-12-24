@@ -8,20 +8,27 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定文档部件的插入选项
+/// 指定在由"中文信封向导"创建的信函中放置信头的位置
 /// </summary>
-public enum WdDocPartInsertOptions
+public enum WdLetterheadLocation
 {
     /// <summary>
-    /// 插入内容
+    /// 在信函的顶部
     /// </summary>
-    wdInsertContent,
+    wdLetterTop,
+
     /// <summary>
-    /// 插入段落
+    /// 在信函的底部
     /// </summary>
-    wdInsertParagraph,
+    wdLetterBottom,
+
     /// <summary>
-    /// 插入页面
+    /// 在信函的左侧
     /// </summary>
-    wdInsertPage
+    wdLetterLeft,
+
+    /// <summary>
+    /// 在信函的右侧
+    /// </summary>
+    wdLetterRight
 }

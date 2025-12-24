@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -8,20 +8,22 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定文档部件的插入选项
+/// 指定编号的类型
 /// </summary>
-public enum WdDocPartInsertOptions
+public enum WdNumberType
 {
     /// <summary>
-    /// 插入内容
+    /// 预设编号，可通过在"项目符号和编号"对话框中选择模板添加到段落
     /// </summary>
-    wdInsertContent,
+    wdNumberParagraph = 1,
+
     /// <summary>
-    /// 插入段落
+    /// LISTNUM 域的默认值
     /// </summary>
-    wdInsertParagraph,
+    wdNumberListNum,
+
     /// <summary>
-    /// 插入页面
+    /// 所有其他情况的默认值
     /// </summary>
-    wdInsertPage
+    wdNumberAllNumbers
 }

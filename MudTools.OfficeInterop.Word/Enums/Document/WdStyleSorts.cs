@@ -8,20 +8,32 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定文档部件的插入选项
+/// 指示在"样式"任务窗格中如何排序样式
 /// </summary>
-public enum WdDocPartInsertOptions
+public enum WdStyleSort
 {
     /// <summary>
-    /// 插入内容
+    /// 根据样式名称按字母顺序排序样式
     /// </summary>
-    wdInsertContent,
+    wdStyleSortByName,
+
     /// <summary>
-    /// 插入段落
+    /// 根据是否推荐使用样式来排序样式
     /// </summary>
-    wdInsertParagraph,
+    wdStyleSortRecommended,
+
     /// <summary>
-    /// 插入页面
+    /// 根据所用字体名称排序样式
     /// </summary>
-    wdInsertPage
+    wdStyleSortByFont,
+
+    /// <summary>
+    /// 根据"基于何种样式排序"选项中指示的项目排序样式
+    /// </summary>
+    wdStyleSortByBasedOn,
+
+    /// <summary>
+    /// 根据样式是段落样式还是字符样式来排序样式
+    /// </summary>
+    wdStyleSortByType
 }

@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -8,20 +8,32 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定文档部件的插入选项
+/// 指定 Microsoft Word 在保存为文本文件的文档中如何标记换行符和段落标记
 /// </summary>
-public enum WdDocPartInsertOptions
+public enum WdLineEndingType
 {
     /// <summary>
-    /// 插入内容
+    /// 回车符加换行符
     /// </summary>
-    wdInsertContent,
+    wdCRLF,
+
     /// <summary>
-    /// 插入段落
+    /// 仅回车符
     /// </summary>
-    wdInsertParagraph,
+    wdCROnly,
+
     /// <summary>
-    /// 插入页面
+    /// 仅换行符
     /// </summary>
-    wdInsertPage
+    wdLFOnly,
+
+    /// <summary>
+    /// 换行符加回车符
+    /// </summary>
+    wdLFCR,
+
+    /// <summary>
+    /// 不支持
+    /// </summary>
+    wdLSPS
 }

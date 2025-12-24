@@ -5,7 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using Microsoft.Office.Interop.Word;
 
 namespace MudTools.OfficeInterop.Word;
 
@@ -13,12 +12,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档接口，用于操作 Word 文档
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordDocument : IDisposable
 {
     /// <summary>
-    /// 获取当前文档归属的<see cref="IWordApplication"/>对象。
+    /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取文档名称
@@ -43,31 +49,37 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 获取或设置文档作者
     /// </summary>
+    [IgnoreGenerator]
     string Author { get; set; }
 
     /// <summary>
     /// 获取或设置文档主题
     /// </summary>
+    [IgnoreGenerator]
     string Subject { get; set; }
 
     /// <summary>
     /// 获取或设置文档描述
     /// </summary>
+    [IgnoreGenerator]
     string Description { get; set; }
 
     /// <summary>
     /// 获取或设置文档关键字
     /// </summary>
+    [IgnoreGenerator]
     string Keywords { get; set; }
 
     /// <summary>
     /// 获取或设置文档公司信息
     /// </summary>
+    [IgnoreGenerator]
     string Company { get; set; }
 
     /// <summary>
     /// 获取或设置文档标题
     /// </summary>
+    [IgnoreGenerator]
     string Title { get; set; }
 
     /// <summary>
@@ -313,32 +325,8 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 获取文档页数
     /// </summary>
+    [IgnoreGenerator]
     int PageCount { get; }
-
-    /// <summary>
-    /// 获取文档字数
-    /// </summary>
-    int WordCount { get; }
-
-    /// <summary>
-    /// 获取文档段落数
-    /// </summary>
-    int ParagraphCount { get; }
-
-    /// <summary>
-    /// 获取文档表格数
-    /// </summary>
-    int TableCount { get; }
-
-    /// <summary>
-    /// 获取文档书签数
-    /// </summary>
-    int BookmarkCount { get; }
-
-    /// <summary>
-    /// 获取父对象（通常是 Application）
-    /// </summary>
-    object? Parent { get; }
 
     /// <summary>
     /// 获取文档中的内嵌形状集合。
@@ -356,11 +344,6 @@ public interface IWordDocument : IDisposable
     /// 获取活动窗口
     /// </summary>
     IWordWindow? ActiveWindow { get; }
-
-    /// <summary>
-    /// 获取文档的活动选择区域
-    /// </summary>
-    IWordSelection? Selection { get; }
 
     /// <summary>
     /// 获取文档范围集合
@@ -402,25 +385,164 @@ public interface IWordDocument : IDisposable
     /// </summary>
     IWordVariables? Variables { get; }
 
-    /// <summary>
-    /// 获取文档自定义属性集合
-    /// </summary>
-    IWordCustomProperties? CustomProperties { get; }
 
-    /// <summary>
-    /// 获取或设置文档视图类型
-    /// </summary>
-    WdViewType ViewType { get; set; }
+    IWordOMaths? OMaths { get; }
 
-    /// <summary>
-    /// 获取或设置是否显示段落标记
-    /// </summary>
-    bool ShowParagraphs { get; set; }
+    WdOMathBreakBin OMathBreakBin { get; set; }
 
-    /// <summary>
-    /// 获取或设置是否显示隐藏文字
-    /// </summary>
-    bool ShowHiddenText { get; set; }
+    WdOMathBreakSub OMathBreakSub { get; set; }
+
+    WdOMathJc OMathJc { get; set; }
+
+    float OMathLeftMargin { get; set; }
+
+    float OMathRightMargin { get; set; }
+
+    float OMathWrap { get; set; }
+
+    bool OMathIntSubSupLim { get; set; }
+
+    bool OMathNarySupSubLim { get; set; }
+
+    bool OMathSmallFrac { get; set; }
+
+    string OMathFontName { get; set; }
+
+
+    bool UseMathDefaults { get; set; }
+
+    IWordContentControls? ContentControls { get; }
+
+    IWordBibliography? Bibliography { get; }
+
+
+    IOfficeScripts? Scripts { get; }
+
+    IWordXMLNodes? XMLSchemaViolations { get; }
+
+    IWordXMLNodes? XMLNodes { get; }
+
+    IWordXMLChildNodeSuggestions? ChildNodeSuggestions { get; }
+
+
+    IWordHTMLDivisions? HTMLDivisions { get; }
+
+    IWordSmartTags? SmartTags { get; }
+
+    bool LockTheme { get; set; }
+
+    bool LockQuickStyleSet { get; set; }
+
+    string OriginalDocumentTitle { get; }
+
+    string RevisedDocumentTitle { get; }
+
+    bool FormattingShowNextLevel { get; set; }
+
+    bool FormattingShowUserStyleName { get; set; }
+
+    bool Final { get; set; }
+
+    bool HasVBProject { get; }
+
+    int DocID { get; }
+
+    int CurrentRsid { get; }
+
+    string WordOpenXML { get; }
+
+    int CompatibilityMode { get; }
+
+    bool ChartDataPointTrack { get; set; }
+
+    bool IsInAutosave { get; }
+
+    bool TrackFormatting { get; set; }
+
+    bool TrackMoves { get; set; }
+
+    WdStyleSort StyleSortMethod { get; set; }
+
+    int ReadingLayoutSizeY { get; set; }
+
+    int ReadingLayoutSizeX { get; set; }
+
+    bool RemoveDateAndTime { get; set; }
+
+    bool ReadingModeLayoutFrozen { get; set; }
+
+    string XMLSaveThroughXSLT { get; set; }
+
+    bool XMLUseXSLTWhenSaving { get; set; }
+
+    bool XMLShowAdvancedErrors { get; set; }
+
+    bool XMLHideNamespaces { get; set; }
+
+    bool XMLSaveDataOnly { get; set; }
+
+    bool AutoFormatOverride { get; set; }
+
+    bool EnforceStyle { get; set; }
+
+    WdShowFilter FormattingShowFilter { get; set; }
+
+    bool FormattingShowNumbering { get; set; }
+
+    bool FormattingShowParagraph { get; set; }
+
+    bool FormattingShowClear { get; set; }
+
+    bool FormattingShowFont { get; set; }
+
+    bool EmbedLinguisticData { get; set; }
+
+    bool PasswordEncryptionFileProperties { get; }
+
+    int PasswordEncryptionKeyLength { get; }
+
+    string PasswordEncryptionAlgorithm { get; }
+
+    string PasswordEncryptionProvider { get; }
+
+    object DefaultTableStyle { get; }
+
+    WdLineEndingType TextLineEnding { get; set; }
+
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoEncoding TextEncoding { get; set; }
+
+
+    bool SmartTagsAsXMLProps { get; set; }
+
+    bool EmbedSmartTags { get; set; }
+
+    bool RemovePersonalInformation { get; set; }
+
+    WdDisableFeaturesIntroducedAfter DisableFeaturesIntroducedAfter { get; set; }
+
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoEncoding SaveEncoding { get; set; }
+
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoEncoding OpenEncoding { get; }
+
+    string DefaultTargetFrame { get; set; }
+
+    bool DoNotEmbedSystemFonts { get; set; }
+
+    bool DisableFeatures { get; set; }
+
+    bool VBASigned { get; }
+
+    [ComPropertyWrap(IsMethod = true)]
+    object ClickAndTypeParagraphStyle { get; set; }
+
+    bool LanguageDetected { get; set; }
+
+    string ActiveThemeDisplayName { get; }
+
+    string ActiveTheme { get; }
 
     /// <summary>
     /// 获取或设置文档密码
@@ -443,7 +565,7 @@ public interface IWordDocument : IDisposable
     /// <param name="Statistic">指定要计算的统计信息类型</param>
     /// <param name="IncludeFootnotesAndEndnotes">是否包含脚注和尾注，默认为 null</param>
     /// <returns>指定统计信息的数值</returns>
-    int ComputeStatistics(WdStatistic Statistic, bool? IncludeFootnotesAndEndnotes = null);
+    int? ComputeStatistics(WdStatistic Statistic, bool? IncludeFootnotesAndEndnotes = null);
 
     /// <summary>
     /// 激活文档
@@ -453,39 +575,43 @@ public interface IWordDocument : IDisposable
     /// <summary>
     /// 保存文档
     /// </summary>
-    /// <param name="fileName">文件名（可选）</param>
-    /// <param name="fileFormat">文件格式（可选）</param>
-    void Save(string? fileName = null, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault);
+    void Save();
 
-    /// <summary>
-    /// 另存为文档
-    /// </summary>
-    /// <param name="fileName">要保存到的文件名</param>
-    /// <param name="password">打开文件所需的密码</param>
-    /// <param name="writePassword">修改文件所需的密码</param>
-    /// <param name="fileFormat">文件保存格式，默认为Word默认文档格式</param>
-    /// <param name="readOnlyRecommended">是否建议以只读方式打开，默认为false</param>
-    void SaveAs(string fileName, string password, string writePassword, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault, bool readOnlyRecommended = false);
+    void SaveAs(string? fileName = null, WdSaveFormat? fileFormat = null, bool? lockComments = null,
+                string? password = null, bool? addToRecentFiles = null, string? writePassword = null,
+                bool? readOnlyRecommended = null, bool? embedTrueTypeFonts = null,
+                bool? saveNativePictureFormat = null, bool? saveFormsData = null, bool? saveAsAOCELetter = null,
+                [ComNamespace("MsCore")] MsoEncoding? encoding = null, bool? insertLineBreaks = null, bool? allowSubstitutions = null,
+                WdLineEndingType? lineEnding = null, bool? addBiDiMarks = null);
+
+    void SaveAs2(string fileName, WdSaveFormat? fileFormat = null, bool? lockComments = null,
+                   string? password = null, bool? addToRecentFiles = null, string? writePassword = null,
+                   bool? readOnlyRecommended = null, bool? embedTrueTypeFonts = null,
+                   bool? saveNativePictureFormat = null, bool? saveFormsData = null,
+                   bool? saveAsAOCELetter = null, [ComNamespace("MsCore")] MsoEncoding? encoding = null, bool? insertLineBreaks = null,
+                   bool? allowSubstitutions = null, WdLineEndingType? lineEnding = null,
+                   bool? addBiDiMarks = null, WdCompatibilityMode? compatibilityMode = null);
+
+    void SaveCopyAs(string fileName, WdSaveFormat? fileFormat = null, bool? lockComments = null,
+                    string? password = null, bool? addToRecentFiles = null, bool? writePassword = null, bool? readOnlyRecommended = null,
+                    bool? embedTrueTypeFonts = null, bool? saveNativePictureFormat = null, bool? saveFormsData = null,
+                    bool? saveAsAOCELetter = null, [ComNamespace("MsCore")] MsoEncoding? encoding = null,
+                    bool? insertLineBreaks = null, bool? allowSubstitutions = null,
+                    bool? lineEnding = null, bool? addBiDiMarks = null, WdCompatibilityMode? compatibilityMode = null);
+
+
 
     /// <summary>
     /// 另存为文档
     /// </summary>
     /// <param name="fileName">文件名</param>
     /// <param name="fileFormat">文件格式</param>
-    /// <param name="readOnlyRecommended">是否推荐只读打开</param>
-    void SaveAs(string fileName, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault, bool readOnlyRecommended = false);
-
-    /// <summary>
-    /// 关闭文档
-    /// </summary>
-    /// <param name="saveChanges">是否保存更改</param>
-    void Close(bool saveChanges = true);
+    void SaveAs(string fileName, WdSaveFormat fileFormat = WdSaveFormat.wdFormatDocumentDefault);
 
     /// <summary>
     /// 关闭当前文档
     /// </summary>
-    /// <param name="saveOptions">指定关闭文档时的保存选项</param>
-    void Close(WdSaveOptions saveOptions);
+    void Close(WdSaveOptions? saveOptions = null, WdOriginalFormat? originalFormat = null, bool? routeDocument = null);
 
     /// <summary>
     /// 打印文档
@@ -535,165 +661,6 @@ public interface IWordDocument : IDisposable
     /// <param name="password">密码（可选）</param>
     void Unprotect(string? password = null);
 
-    /// <summary>
-    /// 检查文档保护状态
-    /// </summary>
-    /// <returns>是否受保护</returns>
-    bool IsProtected();
-
-    /// <summary>
-    /// 获取指定范围的文本
-    /// </summary>
-    /// <param name="start">起始位置</param>
-    /// <param name="end">结束位置</param>
-    /// <returns>文本内容</returns>
-    string GetRangeText(int start, int end);
-
-    /// <summary>
-    /// 设置指定范围的文本
-    /// </summary>
-    /// <param name="start">起始位置</param>
-    /// <param name="end">结束位置</param>
-    /// <param name="text">文本内容</param>
-    void SetRangeText(int start, int end, string text);
-
-    /// <summary>
-    /// 插入文本到指定位置
-    /// </summary>
-    /// <param name="position">插入位置</param>
-    /// <param name="text">文本内容</param>
-    void InsertText(int position, string text);
-
-    /// <summary>
-    /// 插入文件内容
-    /// </summary>
-    /// <param name="fileName">文件路径</param>
-    /// <param name="position">插入位置</param>
-    void InsertFile(string fileName, int position = -1);
-
-    /// <summary>
-    /// 查找并替换文本
-    /// </summary>
-    /// <param name="findText">查找文本</param>
-    /// <param name="replaceText">替换文本</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <param name="matchWholeWord">是否匹配整个单词</param>
-    /// <returns>替换次数</returns>
-    int FindAndReplace(string findText, string replaceText, bool matchCase = false, bool matchWholeWord = false);
-
-    /// <summary>
-    /// 添加书签
-    /// </summary>
-    /// <param name="name">书签名称</param>
-    /// <param name="start">起始位置</param>
-    /// <param name="end">结束位置</param>
-    /// <returns>书签对象</returns>
-    IWordBookmark? AddBookmark(string name, int start, int end);
-
-    /// <summary>
-    /// 获取书签
-    /// </summary>
-    /// <param name="name">书签名称</param>
-    /// <returns>书签对象</returns>
-    IWordBookmark? GetBookmark(string name);
-
-    /// <summary>
-    /// 删除书签
-    /// </summary>
-    /// <param name="name">书签名称</param>
-    void DeleteBookmark(string name);
-
-    /// <summary>
-    /// 添加表格
-    /// </summary>
-    /// <param name="rows">行数</param>
-    /// <param name="columns">列数</param>
-    /// <param name="position">插入位置</param>
-    /// <returns>表格对象</returns>
-    IWordTable? AddTable(int rows, int columns, int position = -1);
-
-    /// <summary>
-    /// 添加段落
-    /// </summary>
-    /// <param name="position">插入位置</param>
-    /// <param name="text">段落文本</param>
-    /// <returns>段落对象</returns>
-    IWordParagraph? AddParagraph(int position, string text = "");
-
-    /// <summary>
-    /// 添加分节符
-    /// </summary>
-    /// <param name="position">插入位置</param>
-    /// <param name="type">分节符类型</param>
-    void AddSectionBreak(int position, int type = 2);
-
-    /// <summary>
-    /// 添加分页符
-    /// </summary>
-    /// <param name="position">插入位置</param>
-    void AddPageBreak(int position);
-
-    /// <summary>
-    /// 添加页眉
-    /// </summary>
-    /// <param name="text">页眉文本</param>
-    /// <param name="primary">是否为主页眉</param>
-    void AddHeader(string text, bool primary = true);
-
-    /// <summary>
-    /// 添加页脚
-    /// </summary>
-    /// <param name="text">页脚文本</param>
-    /// <param name="primary">是否为主页脚</param>
-    void AddFooter(string text, bool primary = true);
-
-    /// <summary>
-    /// 设置页边距
-    /// </summary>
-    /// <param name="top">上边距</param>
-    /// <param name="bottom">下边距</param>
-    /// <param name="left">左边距</param>
-    /// <param name="right">右边距</param>
-    void SetMargins(float top, float bottom, float left, float right);
-
-    /// <summary>
-    /// 设置页面方向
-    /// </summary>
-    /// <param name="landscape">是否横向</param>
-    void SetPageOrientation(bool landscape = false);
-
-    /// <summary>
-    /// 设置页面大小
-    /// </summary>
-    /// <param name="width">页面宽度</param>
-    /// <param name="height">页面高度</param>
-    void SetPageSize(float width, float height);
-
-    /// <summary>
-    /// 添加变量
-    /// </summary>
-    /// <param name="name">变量名称</param>
-    /// <param name="value">变量值</param>
-    /// <returns>变量对象</returns>
-    IWordVariable? AddVariable(string name, string value);
-
-    /// <summary>
-    /// 获取变量
-    /// </summary>
-    /// <param name="name">变量名称</param>
-    /// <returns>变量值</returns>
-    string? GetVariable(string name);
-
-    /// <summary>
-    /// 删除变量
-    /// </summary>
-    /// <param name="name">变量名称</param>
-    void DeleteVariable(string name);
-
-    /// <summary>
-    /// 更新所有字段
-    /// </summary>
-    void UpdateAllFields();
 
     /// <summary>
     /// 接受所有修订
@@ -730,17 +697,6 @@ public interface IWordDocument : IDisposable
     void DeleteAllEditableRanges(string? editorID = null);
 
     /// <summary>
-    /// 导出为 PDF
-    /// </summary>
-    /// <param name="fileName">PDF 文件路径</param>
-    void ExportAsPdf(string fileName);
-
-    /// <summary>
-    /// 刷新文档显示
-    /// </summary>
-    void Refresh();
-
-    /// <summary>
     /// 根据索引获取范围
     /// </summary>
     /// <param name="start">范围开始索引</param>
@@ -748,18 +704,185 @@ public interface IWordDocument : IDisposable
     /// <returns>范围对象</returns>
     IWordRange? Range(int? start = null, int? end = null);
 
-    /// <summary>
-    /// 根据索引获取范围
-    /// </summary>
-    /// <param name="start">范围开始索引</param>
-    /// <param name="end">范围结束索引</param>
-    /// <returns>范围对象</returns>
-    IWordRange? this[int start, int end] { get; }
+    void RemoveDocumentInformation(WdRemoveDocInfoType removeDocInfoType);
 
-    /// <summary>
-    /// 根据书签名称获取范围
-    /// </summary>
-    /// <param name="bookmarkName">书签名称</param>
-    /// <returns>范围对象</returns>
-    IWordRange? this[string bookmarkName] { get; }
+    void LockServerFile();
+
+    void CheckInWithVersion(bool saveChanges = true, string? comments = null, bool makePublic = false, string? versionType = null);
+
+    void SaveAsQuickStyleSet(string fileName);
+
+    void ApplyQuickStyleSet(string name);
+
+    void ApplyQuickStyleSet2(object Style);
+
+    void ApplyDocumentTheme(string fileName);
+
+    void ConvertVietDoc(int codePageOrigin);
+
+
+    IWordContentControls? SelectContentControlsByTitle(string title);
+
+    IWordContentControls? SelectContentControlsByTag(string tag);
+
+    void ExportAsFixedFormat(string outputFileName, WdExportFormat exportFormat, bool openAfterExport = false,
+                            WdExportOptimizeFor optimizeFor = WdExportOptimizeFor.wdExportOptimizeForPrint,
+                            WdExportRange range = WdExportRange.wdExportAllDocument, int from = 1, int to = 1,
+                            WdExportItem item = WdExportItem.wdExportDocumentContent, bool includeDocProps = false,
+                            bool keepIRM = true, WdExportCreateBookmarks createBookmarks = WdExportCreateBookmarks.wdExportCreateNoBookmarks,
+                            bool docStructureTags = true, bool bitmapMissingFonts = true, bool useISO19005_1 = false,
+                            object? fixedFormatExtClassPtr = null);
+
+    void FreezeLayout();
+
+    void UnfreezeLayout();
+
+    void DowngradeDocument();
+
+    void Merge(string fileName, WdMergeTarget? mergeTarget = null, bool? detectFormatChanges = null, WdUseFormattingFrom? useFormattingFrom = null, bool? addToRecentFiles = null);
+
+    bool? CanCheckin();
+
+    void CheckIn(bool saveChanges = true, string? comments = null, bool makePublic = false);
+
+
+    void Convert();
+
+    void ConvertAutoHyphens();
+
+    void EndReview();
+
+    int? ReturnToLastReadPosition();
+
+    void ReplyWithChanges(bool? showMessage = null);
+
+    void SendForReview(string? recipients = null, string? subject = null, bool? showMessage = null, bool? includeAttachment = null);
+
+
+    void RemoveLockedStyles();
+
+    void CheckNewSmartTags();
+
+    void RemoveDocumentWorkspaceHeader(string id);
+
+    void RemoveSmartTags();
+
+    void DeleteAllInkAnnotations();
+
+    void RecheckSmartTags();
+
+
+    void AddDocumentWorkspaceHeader(bool richFormat, string url, string title, string description, string id);
+
+
+    void SetCompatibilityMode([ConvertInt] WdCompatibilityMode Mode);
+
+    IWordXMLNodes? SelectNodes(string XPath, string prefixMapping = "", bool fastSearchSkippingTextNodes = true);
+
+    IWordXMLNode? SelectSingleNode(string XPath, string prefixMapping = "", bool fastSearchSkippingTextNodes = true);
+
+    void Compare(string name, string? authorName, WdCompareTarget? compareTarget = null,
+                bool? detectFormatChanges = null, bool? ignoreAllComparisonWarnings = null, bool? addToRecentFiles = null,
+                bool? removePersonalInformation = null, bool? removeDateAndTime = null);
+
+    void TransformDocument(string path, bool dataOnly = true);
+
+    void SendFaxOverInternet(string? recipients = null, string? subject = null, bool? showMessage = null);
+
+    void ResetFormFields();
+
+    void DeleteAllCommentsShown();
+
+    void DeleteAllComments();
+
+    void RejectAllRevisionsShown();
+
+    void AcceptAllRevisionsShown();
+
+    void SetDefaultTableStyle(object Style, bool setInTemplate);
+
+    void SetPasswordEncryptionOptions(string passwordEncryptionProvider, string PasswordEncryptionAlgorithm, int passwordEncryptionKeyLength, bool? PasswordEncryptionFileProperties = null);
+
+    void ReloadAs([ComNamespace("MsCore")] MsoEncoding encoding);
+
+    void WebPagePreview();
+
+    void RemoveTheme();
+
+    void ApplyTheme(string name);
+
+    void DetectLanguage();
+
+
+    void EditionOptions(WdEditionType Type, WdEditionOption Option, string Name, object Format);
+
+    void MakeCompatibilityDefault();
+
+
+    void SendFax(string address, string? subject = null);
+
+    void SendMailer(object fileFormat, object priority);
+
+    void CheckConsistency();
+
+    void ClosePrintPreview();
+
+    void PresentIt();
+
+    void UndoClear();
+
+    void ReplyAll();
+
+    void Reply();
+
+    void ForwardMailer();
+
+    void ViewPropertyBrowser();
+
+
+    bool? Redo(int? times);
+
+    bool? Undo(int? times);
+
+    void ViewCode();
+
+    void AutoFormat();
+
+    object? GetCrossReferenceItems(WdReferenceType referenceType);
+
+    void UpdateSummaryProperties();
+
+    void ToggleFormsDesign();
+
+    void Post();
+
+    void Reload();
+
+    void AddToFavorites();
+
+    void FollowHyperlink(string? address = null, string? subAddress = null, bool? newWindow = null, bool? addHistory = null,
+                         string? extraInfo = null, [ComNamespace("MsCore")] MsoExtraInfoMethod? method = null, string? headerInfo = null);
+
+    void CheckSpelling(IWordDictionary? customDictionary = null, bool? ignoreUppercase = null, bool? alwaysSuggest = null,
+                    IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null, IWordDictionary? customDictionary4 = null,
+                    IWordDictionary? customDictionary5 = null, IWordDictionary? customDictionary6 = null, IWordDictionary? customDictionary7 = null,
+                    IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null, IWordDictionary? customDictionary10 = null);
+
+    void CheckGrammar();
+
+    void UpdateStyles();
+
+    void SetLetterContent(object LetterContent);
+
+    void CopyStylesFromTemplate(string template);
+
+    int? CountNumberedItems(WdNumberType? numberType = null, double? level = null);
+
+    void ConvertNumbersToText(WdNumberType? numberType = null);
+
+    void RemoveNumbers(WdNumberType? numberType = null);
+
+    IWordRange? AutoSummarize(long? length, WdSummaryMode? mode, object? updateProperties);
+
+    IWordRange? GoTo(WdGoToItem? what = null, WdGoToDirection? which = null, int? count = null, string? name = null);
 }

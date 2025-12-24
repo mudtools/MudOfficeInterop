@@ -8,20 +8,27 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定文档部件的插入选项
+/// 指定用于信函的称呼类型
 /// </summary>
-public enum WdDocPartInsertOptions
+public enum WdSalutationType
 {
     /// <summary>
-    /// 插入内容
+    /// 非正式称呼
     /// </summary>
-    wdInsertContent,
+    wdSalutationInformal,
+
     /// <summary>
-    /// 插入段落
+    /// 正式称呼
     /// </summary>
-    wdInsertParagraph,
+    wdSalutationFormal,
+
     /// <summary>
-    /// 插入页面
+    /// 商务称呼
     /// </summary>
-    wdInsertPage
+    wdSalutationBusiness,
+
+    /// <summary>
+    /// 自定义称呼
+    /// </summary>
+    wdSalutationOther
 }

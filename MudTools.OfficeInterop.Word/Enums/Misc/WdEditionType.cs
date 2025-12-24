@@ -8,20 +8,17 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定文档部件的插入选项
+/// 此枚举已弃用，不应使用
 /// </summary>
-public enum WdDocPartInsertOptions
+public enum WdEditionType
 {
     /// <summary>
-    /// 插入内容
+    /// 不支持
     /// </summary>
-    wdInsertContent,
+    wdPublisher,
+
     /// <summary>
-    /// 插入段落
+    /// 不支持
     /// </summary>
-    wdInsertParagraph,
-    /// <summary>
-    /// 插入页面
-    /// </summary>
-    wdInsertPage
+    wdSubscriber
 }

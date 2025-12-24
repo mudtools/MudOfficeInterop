@@ -8,20 +8,22 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 指定文档部件的插入选项
+/// 指定由"中文信封向导"创建的信函的布局
 /// </summary>
-public enum WdDocPartInsertOptions
+public enum WdLetterStyle
 {
     /// <summary>
-    /// 插入内容
+    /// 完全块状布局
     /// </summary>
-    wdInsertContent,
+    wdFullBlock,
+
     /// <summary>
-    /// 插入段落
+    /// 修改块状布局
     /// </summary>
-    wdInsertParagraph,
+    wdModifiedBlock,
+
     /// <summary>
-    /// 插入页面
+    /// 半块状布局
     /// </summary>
-    wdInsertPage
+    wdSemiBlock
 }
