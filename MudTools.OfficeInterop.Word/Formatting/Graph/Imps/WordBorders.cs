@@ -13,6 +13,8 @@ namespace MudTools.OfficeInterop.Word.Imps;
 internal class WordBorders : IWordBorders
 {
     internal MsWord.Borders _borders;
+
+    internal MsWord.Borders InternalComObject => _borders;
     private bool _disposedValue;
     private DisposableList _disposables = [];
 
