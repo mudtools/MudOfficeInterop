@@ -15,12 +15,12 @@ namespace MudTools.OfficeInterop;
 /// 支持集合遍历和资源释放功能
 /// </remarks>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
+public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2?>, IDisposable
 {
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置文本内容
@@ -35,12 +35,12 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// <summary>
     /// 获取段落格式属性
     /// </summary>
-    IOfficeParagraphFormat2 ParagraphFormat { get; }
+    IOfficeParagraphFormat2? ParagraphFormat { get; }
 
     /// <summary>
     /// 获取字体格式属性
     /// </summary>
-    IOfficeFont2 Font { get; }
+    IOfficeFont2? Font { get; }
 
     /// <summary>
     /// 根据索引获取子文本范围
@@ -59,37 +59,37 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// <summary>
     /// 获取段落集合
     /// </summary>
-    IOfficeTextRange2 Paragraphs { get; }
+    IOfficeTextRange2? Paragraphs { get; }
 
     /// <summary>
     /// 获取句子集合
     /// </summary>
-    IOfficeTextRange2 Sentences { get; }
+    IOfficeTextRange2? Sentences { get; }
 
     /// <summary>
     /// 获取单词集合
     /// </summary>
-    IOfficeTextRange2 Words { get; }
+    IOfficeTextRange2? Words { get; }
 
     /// <summary>
     /// 获取字符集合
     /// </summary>
-    IOfficeTextRange2 Characters { get; }
+    IOfficeTextRange2? Characters { get; }
 
     /// <summary>
     /// 获取行集合
     /// </summary>
-    IOfficeTextRange2 Lines { get; }
+    IOfficeTextRange2? Lines { get; }
 
     /// <summary>
     /// 获取运行集合（具有相同字符格式的文本序列）
     /// </summary>
-    IOfficeTextRange2 Runs { get; }
+    IOfficeTextRange2? Runs { get; }
 
     /// <summary>
     /// 获取数学区域集合
     /// </summary>
-    IOfficeTextRange2 MathZones { get; }
+    IOfficeTextRange2? MathZones { get; }
 
     /// <summary>
     /// 获取文本长度
@@ -130,21 +130,21 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// 移除文本前后的空白字符
     /// </summary>
     /// <returns>移除空白字符后的新文本范围</returns>
-    IOfficeTextRange2 TrimText();
+    IOfficeTextRange2? TrimText();
 
     /// <summary>
     /// 在当前文本范围之后插入新文本
     /// </summary>
     /// <param name="newText">要插入的文本，默认为空字符串</param>
     /// <returns>包含插入文本的新文本范围</returns>
-    IOfficeTextRange2 InsertAfter(string newText = "");
+    IOfficeTextRange2? InsertAfter(string newText = "");
 
     /// <summary>
     /// 在当前文本范围之前插入新文本
     /// </summary>
     /// <param name="newText">要插入的文本，默认为空字符串</param>
     /// <returns>包含插入文本的新文本范围</returns>
-    IOfficeTextRange2 InsertBefore(string newText = "");
+    IOfficeTextRange2? InsertBefore(string newText = "");
 
     /// <summary>
     /// 插入符号字符
@@ -153,7 +153,7 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// <param name="charNumber">字符编号</param>
     /// <param name="unicode">是否为 Unicode 字符，默认为 false</param>
     /// <returns>包含插入符号的新文本范围</returns>
-    IOfficeTextRange2 InsertSymbol(string fontName, int charNumber, [ConvertTriState] bool unicode = false);
+    IOfficeTextRange2? InsertSymbol(string fontName, int charNumber, [ConvertTriState] bool unicode = false);
 
     /// <summary>
     /// 选择文本范围
@@ -179,14 +179,14 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// 粘贴剪贴板内容
     /// </summary>
     /// <returns>包含粘贴内容的新文本范围</returns>
-    IOfficeTextRange2 Paste();
+    IOfficeTextRange2? Paste();
 
     /// <summary>
     /// 以特殊格式粘贴剪贴板内容
     /// </summary>
     /// <param name="format">剪贴板格式</param>
     /// <returns>包含粘贴内容的新文本范围</returns>
-    IOfficeTextRange2 PasteSpecial(MsoClipboardFormat format);
+    IOfficeTextRange2? PasteSpecial(MsoClipboardFormat format);
 
     /// <summary>
     /// 更改文本大小写
@@ -212,7 +212,7 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// <param name="MatchCase">是否区分大小写，默认为 false</param>
     /// <param name="wholeWords">是否只匹配整个单词，默认为 false</param>
     /// <returns>找到的文本范围，未找到则返回 null</returns>
-    IOfficeTextRange2 Find(string findWhat, int after = 0, [ConvertTriState] bool MatchCase = false, [ConvertTriState] bool wholeWords = false);
+    IOfficeTextRange2? Find(string findWhat, int after = 0, [ConvertTriState] bool MatchCase = false, [ConvertTriState] bool wholeWords = false);
 
     /// <summary>
     /// 替换指定文本
@@ -223,7 +223,7 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// <param name="matchCase">是否区分大小写，默认为 false</param>
     /// <param name="wholeWords">是否只匹配整个单词，默认为 false</param>
     /// <returns>包含替换文本的新文本范围</returns>
-    IOfficeTextRange2 Replace(string findWhat, string replaceWhat, int after = 0, [ConvertTriState] bool matchCase = false, [ConvertTriState] bool wholeWords = false);
+    IOfficeTextRange2? Replace(string findWhat, string replaceWhat, int after = 0, [ConvertTriState] bool matchCase = false, [ConvertTriState] bool wholeWords = false);
 
     /// <summary>
     /// 将文本运行方向设置为从右到左
@@ -242,5 +242,5 @@ public interface IOfficeTextRange2 : IEnumerable<IOfficeTextRange2>, IDisposable
     /// <param name="formula">公式，默认为空字符串</param>
     /// <param name="position">插入位置，默认为 -1（末尾）</param>
     /// <returns>包含插入图表字段的新文本范围</returns>
-    IOfficeTextRange2 InsertChartField(MsoChartFieldType chartFieldType, string formula = "", int position = -1);
+    IOfficeTextRange2? InsertChartField(MsoChartFieldType chartFieldType, string formula = "", int position = -1);
 }

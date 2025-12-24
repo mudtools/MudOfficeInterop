@@ -16,7 +16,7 @@ public interface IOfficeFont2 : IDisposable
     /// <summary>
     /// 获取字体对象的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置字体名称
@@ -163,35 +163,35 @@ public interface IOfficeFont2 : IDisposable
     /// <summary>
     /// 获取字体的填充格式
     /// </summary>
-    IOfficeFillFormat Fill { get; }
+    IOfficeFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取字体的辉光格式
     /// </summary>
-    IOfficeGlowFormat Glow { get; }
+    IOfficeGlowFormat? Glow { get; }
 
     /// <summary>
     /// 获取字体的倒影格式
     /// </summary>
-    IOfficeReflectionFormat Reflection { get; }
+    IOfficeReflectionFormat? Reflection { get; }
 
     /// <summary>
     /// 获取字体的线条格式
     /// </summary>
-    IOfficeLineFormat Line { get; }
+    IOfficeLineFormat? Line { get; }
 
     /// <summary>
     /// 获取字体的阴影格式
     /// </summary>
-    IOfficeShadowFormat Shadow { get; }
+    IOfficeShadowFormat? Shadow { get; }
 
     /// <summary>
     /// 获取字体的高亮颜色格式
     /// </summary>
-    IOfficeColorFormat Highlight { get; }
+    IOfficeColorFormat? Highlight { get; }
 
     /// <summary>
     /// 获取字体的下划线颜色格式
     /// </summary>
-    IOfficeColorFormat UnderlineColor { get; }
+    IOfficeColorFormat? UnderlineColor { get; }
 }

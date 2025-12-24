@@ -18,22 +18,22 @@ public interface IOfficeDiagramNode : IDisposable
     /// <summary>
     /// 获取与此图表节点关联的形状对象
     /// </summary>
-    IOfficeShape Shape { get; }
+    IOfficeShape? Shape { get; }
 
     /// <summary>
     /// 获取图表节点的根节点
     /// </summary>
-    IOfficeDiagramNode Root { get; }
+    IOfficeDiagramNode? Root { get; }
 
     /// <summary>
     /// 获取图表节点的子节点集合
     /// </summary>
-    IOfficeDiagramNodeChildren Children { get; }
+    IOfficeDiagramNodeChildren? Children { get; }
 
     /// <summary>
     /// 获取此节点所属的图表对象
     /// </summary>
-    IOfficeDiagram Diagram { get; }
+    IOfficeDiagram? Diagram { get; }
 
     /// <summary>
     /// 获取或设置组织结构图的布局类型
@@ -43,7 +43,7 @@ public interface IOfficeDiagramNode : IDisposable
     /// <summary>
     /// 获取与此图表节点关联的文本形状对象
     /// </summary>
-    IOfficeShape TextShape { get; }
+    IOfficeShape? TextShape { get; }
 
     /// <summary>
     /// 在当前节点的指定位置添加一个新节点
@@ -51,7 +51,7 @@ public interface IOfficeDiagramNode : IDisposable
     /// <param name="Pos">新节点相对于当前节点的位置，默认为在当前节点之后</param>
     /// <param name="NodeType">要添加的节点类型，默认为主节点</param>
     /// <returns>新添加的图表节点</returns>
-    IOfficeDiagramNode AddNode(MsoRelativeNodePosition Pos = MsoRelativeNodePosition.msoAfterNode,
+    IOfficeDiagramNode? AddNode(MsoRelativeNodePosition Pos = MsoRelativeNodePosition.msoAfterNode,
                         MsoDiagramNodeType NodeType = MsoDiagramNodeType.msoDiagramNode);
 
     /// <summary>
@@ -65,20 +65,20 @@ public interface IOfficeDiagramNode : IDisposable
     /// <param name="TargetNode">目标节点</param>
     /// <param name="Pos">相对于目标节点的位置</param>
     void MoveNode(IOfficeDiagramNode TargetNode, MsoRelativeNodePosition Pos);
-    
+
     /// <summary>
     /// 用当前节点替换目标节点
     /// </summary>
     /// <param name="TargetNode">要被替换的目标节点</param>
     void ReplaceNode(IOfficeDiagramNode TargetNode);
-    
+
     /// <summary>
     /// 与目标节点交换位置
     /// </summary>
     /// <param name="TargetNode">要交换的目标节点</param>
     /// <param name="SwapChildren">是否同时交换子节点，默认为true</param>
     void SwapNode(IOfficeDiagramNode TargetNode, bool SwapChildren = true);
-    
+
     /// <summary>
     /// 克隆当前节点到目标节点的指定位置
     /// </summary>
@@ -86,23 +86,23 @@ public interface IOfficeDiagramNode : IDisposable
     /// <param name="TargetNode">目标节点</param>
     /// <param name="Pos">相对于目标节点的位置，默认为在目标节点之后</param>
     /// <returns>克隆的新节点</returns>
-    IOfficeDiagramNode CloneNode(bool CopyChildren, IOfficeDiagramNode TargetNode, MsoRelativeNodePosition Pos = MsoRelativeNodePosition.msoAfterNode);
-    
+    IOfficeDiagramNode? CloneNode(bool CopyChildren, IOfficeDiagramNode TargetNode, MsoRelativeNodePosition Pos = MsoRelativeNodePosition.msoAfterNode);
+
     /// <summary>
     /// 将当前节点的子节点转移到接收节点
     /// </summary>
     /// <param name="ReceivingNode">接收子节点的节点</param>
     void TransferChildren(IOfficeDiagramNode ReceivingNode);
-    
+
     /// <summary>
     /// 获取下一个相邻节点
     /// </summary>
     /// <returns>下一个节点，如果没有则返回null</returns>
-    IOfficeDiagramNode NextNode();
-    
+    IOfficeDiagramNode? NextNode();
+
     /// <summary>
     /// 获取上一个相邻节点
     /// </summary>
     /// <returns>上一个节点，如果没有则返回null</returns>
-    IOfficeDiagramNode PrevNode();
+    IOfficeDiagramNode? PrevNode();
 }

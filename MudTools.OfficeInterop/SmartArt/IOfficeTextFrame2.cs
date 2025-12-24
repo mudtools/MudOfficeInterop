@@ -41,17 +41,17 @@ public interface IOfficeTextFrame2 : IDisposable
     /// <summary>
     /// 获取文本框架中的文本范围
     /// </summary>
-    IOfficeTextRange2 TextRange { get; }
+    IOfficeTextRange2? TextRange { get; }
 
     /// <summary>
     /// 获取文本框架中的文本列
     /// </summary>
-    IOfficeTextColumn2 Column { get; }
+    IOfficeTextColumn2? Column { get; }
 
     /// <summary>
     /// 获取文本框架中的标尺
     /// </summary>
-    IOfficeRuler2 Ruler { get; }
+    IOfficeRuler2? Ruler { get; }
 
     /// <summary>
     /// 获取或设置文本方向。
@@ -109,7 +109,7 @@ public interface IOfficeTextFrame2 : IDisposable
     /// <summary>
     /// 获取文本框架的三维格式设置。
     /// </summary>
-    IOfficeThreeDFormat ThreeD { get; }
+    IOfficeThreeDFormat? ThreeD { get; }
 
     /// <summary>
     /// 删除文本框架中的所有文本。

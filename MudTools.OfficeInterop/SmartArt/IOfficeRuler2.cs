@@ -16,15 +16,15 @@ public interface IOfficeRuler2 : IDisposable
     /// <summary>
     /// 获取标尺的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取标尺的级别集合
     /// </summary>
-    IOfficeRulerLevels2 Levels { get; }
+    IOfficeRulerLevels2? Levels { get; }
 
     /// <summary>
     /// 获取标尺的制表符停止点集合
     /// </summary>
-    IOfficeTabStops2 TabStops { get; }
+    IOfficeTabStops2? TabStops { get; }
 }

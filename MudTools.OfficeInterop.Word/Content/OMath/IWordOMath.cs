@@ -27,42 +27,42 @@ public interface IWordOMath : IDisposable
     /// <summary>
     /// 获取与该数学对象关联的文本范围
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 获取该数学对象的父级数学对象
     /// </summary>
-    IWordOMath ParentOMath { get; }
+    IWordOMath? ParentOMath { get; }
 
     /// <summary>
     /// 获取与该数学对象关联的数学函数集合
     /// </summary>
-    IWordOMathFunctions Functions { get; }
+    IWordOMathFunctions? Functions { get; }
 
     /// <summary>
     /// 获取该数学对象所属的父级数学函数
     /// </summary>
-    IWordOMathFunction ParentFunction { get; }
+    IWordOMathFunction? ParentFunction { get; }
 
     /// <summary>
     /// 获取该数学对象所属的矩阵行
     /// </summary>
-    IWordOMathMatRow ParentRow { get; }
+    IWordOMathMatRow? ParentRow { get; }
 
     /// <summary>
     /// 获取该数学对象所属的矩阵列
     /// </summary>
-    IWordOMathMatCol ParentCol { get; }
+    IWordOMathMatCol? ParentCol { get; }
 
     /// <summary>
     /// 获取该数学对象中的换行符集合
     /// </summary>
-    IWordOMathBreaks Breaks { get; }
+    IWordOMathBreaks? Breaks { get; }
 
     /// <summary>
     /// 获取该数学对象的父级参数对象
     /// </summary>
-    IWordOMath ParentArg { get; }
+    IWordOMath? ParentArg { get; }
 
     /// <summary>
     /// 获取参数索引

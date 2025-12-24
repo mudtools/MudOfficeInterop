@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示一个形状集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
+public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape?>, IDisposable
 {
     /// <summary>
     /// 通过索引获取形状
@@ -30,7 +30,7 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <summary>
     /// 获取当前形状集合的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前形状集合中形状的数量
@@ -47,7 +47,7 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">形状宽度</param>
     /// <param name="height">形状高度</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddCallout(MsoCalloutType type, float left, float top, float width, float height);
+    IOfficeShape? AddCallout(MsoCalloutType type, float left, float top, float width, float height);
 
     /// <summary>
     /// 添加一个连接符形状
@@ -58,14 +58,14 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="endX">终点X坐标</param>
     /// <param name="endY">终点Y坐标</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddConnector(MsoConnectorType type, float beginX, float beginY, float endX, float endY);
+    IOfficeShape? AddConnector(MsoConnectorType type, float beginX, float beginY, float endX, float endY);
 
     /// <summary>
     /// 添加一个曲线形状
     /// </summary>
     /// <param name="safeArrayOfPoints">安全数组格式的点坐标</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddCurve(object safeArrayOfPoints);
+    IOfficeShape? AddCurve(object safeArrayOfPoints);
 
     /// <summary>
     /// 添加一个标签形状
@@ -76,7 +76,7 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">形状宽度</param>
     /// <param name="height">形状高度</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddLabel(MsoTextOrientation orientation, float left, float top, float width, float height);
+    IOfficeShape? AddLabel(MsoTextOrientation orientation, float left, float top, float width, float height);
 
     /// <summary>
     /// 添加一条直线形状
@@ -86,7 +86,7 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="endX">终点X坐标</param>
     /// <param name="endY">终点Y坐标</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddLine(float beginX, float beginY, float endX, float endY);
+    IOfficeShape? AddLine(float beginX, float beginY, float endX, float endY);
 
     /// <summary>
     /// 添加一个图片形状
@@ -99,14 +99,14 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">形状宽度，默认为-1</param>
     /// <param name="height">形状高度，默认为-1</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddPicture(string fileName, [ConvertTriState] bool linkToFile, [ConvertTriState] bool saveWithDocument, float left, float top, float width = -1f, float height = -1f);
+    IOfficeShape? AddPicture(string fileName, [ConvertTriState] bool linkToFile, [ConvertTriState] bool saveWithDocument, float left, float top, float width = -1f, float height = -1f);
 
     /// <summary>
     /// 添加一个多段线形状
     /// </summary>
     /// <param name="safeArrayOfPoints">安全数组格式的点坐标</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddPolyline(object safeArrayOfPoints);
+    IOfficeShape? AddPolyline(object safeArrayOfPoints);
 
     /// <summary>
     /// 添加一个自选形状
@@ -117,7 +117,7 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">形状宽度</param>
     /// <param name="height">形状高度</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddShape(MsoAutoShapeType type, float left, float top, float width, float height);
+    IOfficeShape? AddShape(MsoAutoShapeType type, float left, float top, float width, float height);
 
     /// <summary>
     /// 添加一个艺术字形状
@@ -131,7 +131,7 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="left">形状左侧位置</param>
     /// <param name="top">形状顶部位置</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddTextEffect(MsoPresetTextEffect presetTextEffect, string text, string fontName, float fontSize, [ConvertTriState] bool fontBold, [ConvertTriState] bool fontItalic, float left, float top);
+    IOfficeShape? AddTextEffect(MsoPresetTextEffect presetTextEffect, string text, string fontName, float fontSize, [ConvertTriState] bool fontBold, [ConvertTriState] bool fontItalic, float left, float top);
 
     /// <summary>
     /// 添加一个文本框形状
@@ -142,13 +142,13 @@ public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">形状宽度</param>
     /// <param name="height">形状高度</param>
     /// <returns>新添加的形状对象</returns>
-    IOfficeShape AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height);
+    IOfficeShape? AddTextbox(MsoTextOrientation orientation, float left, float top, float width, float height);
 
     /// <summary>
     /// 获取形状范围
     /// </summary>
     /// <param name="index">索引</param>
     /// <returns>形状范围对象</returns>
-    IOfficeShapeRange Range(object index);
+    IOfficeShapeRange? Range(object index);
 
 }

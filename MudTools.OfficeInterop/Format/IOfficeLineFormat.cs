@@ -39,12 +39,12 @@ public interface IOfficeLineFormat : IDisposable
     /// <summary>
     /// 获取线条的前景颜色格式
     /// </summary>
-    IOfficeColorFormat ForeColor { get; }
+    IOfficeColorFormat? ForeColor { get; }
 
     /// <summary>
     /// 获取线条的背景颜色格式（用于图案线条）
     /// </summary>
-    IOfficeColorFormat BackColor { get; }
+    IOfficeColorFormat? BackColor { get; }
 
     /// <summary>
     /// 获取或设置线条的透明度（0-1之间，0为完全不透明，1为完全透明）

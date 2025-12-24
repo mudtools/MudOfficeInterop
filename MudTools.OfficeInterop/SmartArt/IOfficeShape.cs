@@ -26,30 +26,33 @@ public interface IOfficeShape : IDisposable
     /// <summary>
     /// 获取与形状关联的脚本对象
     /// </summary>
-    IOfficeScript Script { get; }
+    IOfficeScript? Script { get; }
 
     /// <summary>
     /// 获取与形状关联的 SmartArt 图表对象
     /// </summary>
-    IOfficeDiagram Diagram { get; }
+    IOfficeDiagram? Diagram { get; }
 
     /// <summary>
     /// 获取与形状关联的 SmartArt 图表节点
     /// </summary>
-    IOfficeDiagramNode DiagramNode { get; }
+    IOfficeDiagramNode? DiagramNode { get; }
 
     /// <summary>
     /// 获取形状的父级组合形状
     /// </summary>
-    IOfficeShape ParentGroup { get; }
+    IOfficeShape? ParentGroup { get; }
 
     /// <summary>
     /// 获取形状的画布子项集合
     /// </summary>
-    IOfficeCanvasShapes CanvasItems { get; }
+    IOfficeCanvasShapes? CanvasItems { get; }
 
 
-    IOfficeTextFrame2 TextFrame2 { get; }
+    /// <summary>
+    /// 获取与形状关联的文本框对象
+    /// </summary>
+    IOfficeTextFrame2? TextFrame2 { get; }
 
     /// <summary>
     /// 获取一个值，该值指示形状是否为子形状

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 封装 Microsoft.Office.Core.EffectParameters 的接口，用于操作效果参数集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeEffectParameters : IEnumerable<IOfficeEffectParameter>, IDisposable
+public interface IOfficeEffectParameters : IEnumerable<IOfficeEffectParameter?>, IDisposable
 {
     /// <summary>
     /// 获取效果参数集合中的参数数量。
@@ -21,10 +21,10 @@ public interface IOfficeEffectParameters : IEnumerable<IOfficeEffectParameter>, 
     /// <summary>
     /// 根据索引获取效果参数（从1开始）。
     /// </summary>
-    IOfficeEffectParameter this[int index] { get; }
+    IOfficeEffectParameter? this[int index] { get; }
 
     /// <summary>
     /// 根据名称获取效果参数。
     /// </summary>
-    IOfficeEffectParameter this[string name] { get; }
+    IOfficeEffectParameter? this[string name] { get; }
 }

@@ -124,7 +124,7 @@ public interface IOfficeThreeDFormat : IDisposable
     /// <summary>
     /// 获取或设置三维效果的轮廓颜色。
     /// </summary>
-    IOfficeColorFormat ExtrusionColor { get; }
+    IOfficeColorFormat? ExtrusionColor { get; }
 
     /// <summary>
     /// 获取或设置三维效果的轮廓颜色类型。
@@ -134,7 +134,7 @@ public interface IOfficeThreeDFormat : IDisposable
     /// <summary>
     /// 获取三维形状的轮廓颜色。
     /// </summary>
-    IOfficeColorFormat ContourColor { get; }
+    IOfficeColorFormat? ContourColor { get; }
 
     /// <summary>
     /// 获取或设置三维形状的轮廓宽度。

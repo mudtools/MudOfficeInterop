@@ -34,12 +34,12 @@ public interface IOfficeSelectedItems : IEnumerable<string>, IDisposable
     /// 获取集合所在的父对象（通常是 FileDialog）
     /// 对应 FileDialogSelectedItems.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合所在的Application对象
     /// 对应 FileDialogSelectedItems.Application 属性
     /// </summary>
-    object Application { get; }
+    object? Application { get; }
     #endregion
 }

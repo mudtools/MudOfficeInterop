@@ -11,12 +11,12 @@ namespace MudTools.OfficeInterop;
 /// 表示制表符停止位集合的接口，提供对制表符停止位的访问和操作功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeTabStops2 : IEnumerable<IOfficeTabStop2>, IDisposable
+public interface IOfficeTabStops2 : IEnumerable<IOfficeTabStop2?>, IDisposable
 {
     /// <summary>
     /// 获取制表符停止位集合的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取制表符停止位的数量
@@ -33,7 +33,7 @@ public interface IOfficeTabStops2 : IEnumerable<IOfficeTabStop2>, IDisposable
     /// </summary>
     /// <param name="index">制表符停止位的索引（从1开始）</param>
     /// <returns>指定索引处的制表符停止位对象</returns>
-    IOfficeTabStop2 this[int index] { get; }
+    IOfficeTabStop2? this[int index] { get; }
 
     /// <summary>
     /// 添加一个新的制表符停止位
@@ -41,5 +41,5 @@ public interface IOfficeTabStops2 : IEnumerable<IOfficeTabStop2>, IDisposable
     /// <param name="type">制表符类型，参考 <see cref="MsoTabStopType"/> 枚举</param>
     /// <param name="position">制表符的位置（以磅为单位）</param>
     /// <returns>新创建的制表符停止位对象</returns>
-    IOfficeTabStop2 Add(MsoTabStopType type, float position);
+    IOfficeTabStop2? Add(MsoTabStopType type, float position);
 }

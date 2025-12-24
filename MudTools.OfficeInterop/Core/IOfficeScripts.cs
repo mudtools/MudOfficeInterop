@@ -48,6 +48,6 @@ public interface IOfficeScripts : IEnumerable<IOfficeScript?>, IDisposable
     /// <param name="extended">脚本的扩展属性，默认为空字符串</param>
     /// <param name="scriptText">要添加的脚本代码文本，默认为空字符串</param>
     /// <returns>新添加的脚本对象</returns>
-    IOfficeScript Add(object anchor, MsoScriptLocation location = MsoScriptLocation.msoScriptLocationInBody, MsoScriptLanguage language = MsoScriptLanguage.msoScriptLanguageVisualBasic, string id = "", string extended = "", string scriptText = "");
+    IOfficeScript? Add(object anchor, MsoScriptLocation location = MsoScriptLocation.msoScriptLocationInBody, MsoScriptLanguage language = MsoScriptLanguage.msoScriptLanguageVisualBasic, string id = "", string extended = "", string scriptText = "");
 
 }

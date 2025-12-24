@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对选取器字段集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePickerFields : IEnumerable<IOfficePickerField>, IDisposable
+public interface IOfficePickerFields : IEnumerable<IOfficePickerField?>, IDisposable
 {
     /// <summary>
     /// 获取选取器字段集合中项的数量。
@@ -24,5 +24,5 @@ public interface IOfficePickerFields : IEnumerable<IOfficePickerField>, IDisposa
     /// </summary>
     /// <param name="index">选取器字段索引。</param>
     /// <returns>选取器字段对象。</returns>
-    IOfficePickerField this[int index] { get; }
+    IOfficePickerField? this[int index] { get; }
 }

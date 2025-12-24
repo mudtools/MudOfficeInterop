@@ -20,7 +20,7 @@ public interface IOfficeRulerLevels2 : IEnumerable<IOfficeRulerLevel2>, IDisposa
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中项的数量
@@ -32,5 +32,5 @@ public interface IOfficeRulerLevels2 : IEnumerable<IOfficeRulerLevel2>, IDisposa
     /// </summary>
     /// <param name="index">要获取的项的从零开始的索引</param>
     /// <returns>指定索引位置的 IOfficeRulerLevel2 对象</returns>
-    IOfficeRulerLevel2 this[int index] { get; }
+    IOfficeRulerLevel2? this[int index] { get; }
 }

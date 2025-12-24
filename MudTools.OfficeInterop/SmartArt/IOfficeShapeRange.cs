@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
 [ItemIndex]
-public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
+public interface IOfficeShapeRange : IEnumerable<IOfficeShape?>, IDisposable
 {
     /// <summary>
     /// 获取形状范围中形状的数量。
@@ -24,14 +24,14 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// </summary>
     /// <param name="index">形状索引。</param>
     /// <returns>对应的形状对象。</returns>
-    IOfficeShape this[int index] { get; }
+    IOfficeShape? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取形状。
     /// </summary>
     /// <param name="name">形状名称。</param>
     /// <returns>对应的形状对象。</returns>
-    IOfficeShape this[string name] { get; }
+    IOfficeShape? this[string name] { get; }
 
     /// <summary>
     /// 获取形状范围的名称。
@@ -66,17 +66,17 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// <summary>
     /// 获取形状范围的填充格式。
     /// </summary>
-    IOfficeFillFormat Fill { get; }
+    IOfficeFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取形状范围的线条格式。
     /// </summary>
-    IOfficeLineFormat Line { get; }
+    IOfficeLineFormat? Line { get; }
 
     /// <summary>
     /// 获取形状范围的阴影格式。
     /// </summary>
-    IOfficeShadowFormat Shadow { get; }
+    IOfficeShadowFormat? Shadow { get; }
 
     /// <summary>
     /// 获取一个值，该值指示形状是否为连接符。
@@ -87,39 +87,39 @@ public interface IOfficeShapeRange : IEnumerable<IOfficeShape>, IDisposable
     /// <summary>
     /// 获取形状的连接符格式。
     /// </summary>
-    IOfficeConnectorFormat ConnectorFormat { get; }
+    IOfficeConnectorFormat? ConnectorFormat { get; }
 
     /// <summary>
     /// 获取形状的三维格式。
     /// </summary>
-    IOfficeThreeDFormat ThreeD { get; }
+    IOfficeThreeDFormat? ThreeD { get; }
 
     /// <summary>
     /// 获取形状的文字效果格式。
     /// </summary>
-    IOfficeTextEffectFormat TextEffect { get; }
+    IOfficeTextEffectFormat? TextEffect { get; }
 
     /// <summary>
     /// 获取形状的图片格式。
     /// </summary>
-    IOfficePictureFormat PictureFormat { get; }
+    IOfficePictureFormat? PictureFormat { get; }
 
     /// <summary>
     /// 获取形状范围的文本框架。
     /// </summary>
-    IOfficeTextFrame TextFrame { get; }
+    IOfficeTextFrame? TextFrame { get; }
 
     /// <summary>
     /// 对形状范围进行分组。
     /// </summary>
     /// <returns>分组后的形状对象。</returns>
-    IOfficeShape Group();
+    IOfficeShape? Group();
 
     /// <summary>
     /// 取消形状范围的分组。
     /// </summary>
     /// <returns>取消分组后的形状范围。</returns>
-    IOfficeShapeRange Ungroup();
+    IOfficeShapeRange? Ungroup();
 
     /// <summary>
     /// 选择形状范围。

@@ -34,7 +34,7 @@ public interface IOfficeFoundFiles : IEnumerable<string>, IDisposable
     /// </summary>
     /// <param name="index">文件的索引号（从 1 开始）。</param>
     /// <returns>指定文件的完整路径名。</returns>
-    string this[int index] { get; }
+    string? this[int index] { get; }
 
     #endregion
 }

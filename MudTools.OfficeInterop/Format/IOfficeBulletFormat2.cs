@@ -65,7 +65,7 @@ public interface IOfficeBulletFormat2 : IDisposable
     /// <summary>
     /// 获取项目符号的字体格式设置。
     /// </summary>
-    IOfficeFont2 Font { get; }
+    IOfficeFont2? Font { get; }
 
     /// <summary>
     /// 获取项目符号的编号值（仅适用于编号项目符号）。

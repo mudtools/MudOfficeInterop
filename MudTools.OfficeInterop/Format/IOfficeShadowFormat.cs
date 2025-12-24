@@ -15,7 +15,7 @@ public interface IOfficeShadowFormat : IDisposable
     /// <summary>
     /// 获取阴影的颜色格式。
     /// </summary>
-    IOfficeColorFormat ForeColor { get; }
+    IOfficeColorFormat? ForeColor { get; }
 
     /// <summary>
     /// 获取或设置阴影的透明度（0.0 到 1.0 之间）。

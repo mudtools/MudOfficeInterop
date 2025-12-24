@@ -21,12 +21,12 @@ public interface IOfficeParagraphFormat2 : IDisposable
     /// <summary>
     /// 获取段落的制表符停止点集合
     /// </summary>
-    IOfficeTabStops2 TabStops { get; }
+    IOfficeTabStops2? TabStops { get; }
 
     /// <summary>
     /// 获取段落的项目符号格式设置
     /// </summary>
-    IOfficeBulletFormat2 Bullet { get; }
+    IOfficeBulletFormat2? Bullet { get; }
 
     /// <summary>
     /// 获取或设置段落的对齐方式

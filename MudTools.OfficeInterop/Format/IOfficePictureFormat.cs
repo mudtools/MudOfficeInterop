@@ -13,7 +13,10 @@ namespace MudTools.OfficeInterop;
 [ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficePictureFormat : IDisposable
 {
-    IOfficeCrop Crop { get; }
+    /// <summary>
+    /// 获取图片的裁剪信息，如果图片未被裁剪则返回null。
+    /// </summary>
+    IOfficeCrop? Crop { get; }
 
     /// <summary>
     /// 获取或设置图片的亮度（-1.0 到 1.0 之间）。

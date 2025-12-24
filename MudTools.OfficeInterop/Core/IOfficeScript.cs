@@ -16,7 +16,7 @@ public interface IOfficeScript : IDisposable
     /// <summary>
     /// 获取脚本对象的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置脚本的扩展属性

@@ -24,7 +24,7 @@ public interface IOfficeFileTypes : IEnumerable<MsoFileType>, IDisposable
     /// </summary>
     /// <param name="index">文件类型索引。</param>
     /// <returns>文件类型枚举值。</returns>
-    MsoFileType this[int index] { get; }
+    MsoFileType? this[int index] { get; }
 
     /// <summary>
     /// 添加文件类型到集合中。

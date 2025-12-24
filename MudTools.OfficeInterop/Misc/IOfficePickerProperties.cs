@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对选取器属性集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePickerProperties : IEnumerable<IOfficePickerProperty>, IDisposable
+public interface IOfficePickerProperties : IEnumerable<IOfficePickerProperty?>, IDisposable
 {
     /// <summary>
     /// 获取选取器属性集合中项的数量。
@@ -23,7 +23,7 @@ public interface IOfficePickerProperties : IEnumerable<IOfficePickerProperty>, I
     /// </summary>
     /// <param name="index">选取器属性索引。</param>
     /// <returns>选取器属性对象。</returns>
-    IOfficePickerProperty this[int index] { get; }
+    IOfficePickerProperty? this[int index] { get; }
 
     /// <summary>
     /// 添加新的选取器属性。
@@ -32,7 +32,7 @@ public interface IOfficePickerProperties : IEnumerable<IOfficePickerProperty>, I
     /// <param name="value">属性值。</param>
     /// <param name="format">属性格式。</param>
     /// <returns>新添加的选取器属性对象。</returns>
-    IOfficePickerProperty Add(string id, string value, MsoPickerField format = MsoPickerField.msoPickerFieldUnknown);
+    IOfficePickerProperty? Add(string id, string value, MsoPickerField format = MsoPickerField.msoPickerFieldUnknown);
 
     /// <summary>
     /// 移除指定索引的选取器属性。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对 SmartArt 布局集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtLayouts : IEnumerable<IOfficeSmartArtLayout>, IDisposable
+public interface IOfficeSmartArtLayouts : IEnumerable<IOfficeSmartArtLayout?>, IDisposable
 {
     /// <summary>
     /// 获取 SmartArt 布局集合中项的数量。
@@ -23,18 +23,18 @@ public interface IOfficeSmartArtLayouts : IEnumerable<IOfficeSmartArtLayout>, ID
     /// </summary>
     /// <param name="index">SmartArt 布局索引。</param>
     /// <returns>SmartArt 布局对象。</returns>
-    IOfficeSmartArtLayout this[int index] { get; }
+    IOfficeSmartArtLayout? this[int index] { get; }
 
     /// <summary>
     /// 通过 ID 获取 SmartArt 布局。
     /// </summary>
     /// <param name="id">SmartArt 布局 ID。</param>
     /// <returns>SmartArt 布局对象。</returns>
-    IOfficeSmartArtLayout this[string id] { get; }
+    IOfficeSmartArtLayout? this[string id] { get; }
 
     /// <summary>
     /// 获取 SmartArt 布局集合的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
 }

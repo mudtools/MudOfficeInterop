@@ -18,7 +18,7 @@ public interface IOfficeFileDialogFilter : IDisposable
     /// 获取文件对话框过滤器对象的父对象 (通常是 FileDialogFilters 集合)
     /// 对应 FileDialogFilter.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取过滤器的描述文本 (例如 "Text Files")

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对 SmartArt 快速样式集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtQuickStyles : IEnumerable<IOfficeSmartArtQuickStyle>, IDisposable
+public interface IOfficeSmartArtQuickStyles : IEnumerable<IOfficeSmartArtQuickStyle?>, IDisposable
 {
     /// <summary>
     /// 获取 SmartArt 快速样式集合中项的数量。
@@ -23,17 +23,17 @@ public interface IOfficeSmartArtQuickStyles : IEnumerable<IOfficeSmartArtQuickSt
     /// </summary>
     /// <param name="index">SmartArt 快速样式索引。</param>
     /// <returns>SmartArt 快速样式对象。</returns>
-    IOfficeSmartArtQuickStyle this[int index] { get; }
+    IOfficeSmartArtQuickStyle? this[int index] { get; }
 
     /// <summary>
     /// 通过 ID 获取 SmartArt 快速样式。
     /// </summary>
     /// <param name="id">SmartArt 快速样式 ID。</param>
     /// <returns>SmartArt 快速样式对象。</returns>
-    IOfficeSmartArtQuickStyle this[string id] { get; }
+    IOfficeSmartArtQuickStyle? this[string id] { get; }
 
     /// <summary>
     /// 获取 SmartArt 快速样式集合的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 }

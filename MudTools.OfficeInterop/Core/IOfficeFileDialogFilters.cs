@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
 [ItemIndex]
-public interface IOfficeFileDialogFilters : IEnumerable<IOfficeFileDialogFilter>, IDisposable
+public interface IOfficeFileDialogFilters : IEnumerable<IOfficeFileDialogFilter?>, IDisposable
 {
     #region 基础属性
     /// <summary>
@@ -27,13 +27,13 @@ public interface IOfficeFileDialogFilters : IEnumerable<IOfficeFileDialogFilter>
     /// </summary>
     /// <param name="index">过滤器索引（从1开始）</param>
     /// <returns>文件对话框过滤器对象</returns>
-    IOfficeFileDialogFilter this[int index] { get; }
+    IOfficeFileDialogFilter? this[int index] { get; }
 
     /// <summary>
     /// 获取过滤器集合所在的父对象（通常是 FileDialog）
     /// 对应 FileDialogFilters.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
     #endregion
 
     #region 创建和添加
@@ -45,7 +45,7 @@ public interface IOfficeFileDialogFilters : IEnumerable<IOfficeFileDialogFilter>
     /// <param name="extensions">过滤器扩展名 (例如 "*.txt" 或 "*.txt;*.csv")</param>
     /// <param name="position">插入位置 (从1开始，默认添加到末尾)</param>
     /// <returns>新创建的文件对话框过滤器对象</returns>
-    IOfficeFileDialogFilter Add(string description, string extensions, int position = -1);
+    IOfficeFileDialogFilter? Add(string description, string extensions, int position = -1);
     #endregion
 
     #region 操作方法

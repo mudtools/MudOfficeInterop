@@ -38,7 +38,7 @@ public interface IOfficeFileSearch : IDisposable
     /// <summary>
     /// 获取或设置文件最后修改日期。
     /// </summary>
-    MsoLastModified? LastModified { get; set; }
+    MsoLastModified LastModified { get; set; }
 
     /// <summary>
     /// 获取或设置文件名。

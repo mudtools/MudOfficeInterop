@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
 [ItemIndex]
-public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
+public interface IOfficeShapes : IEnumerable<IOfficeShape?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的形状数量
@@ -68,7 +68,7 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="left">左侧位置</param>
     /// <param name="top">顶部位置</param>
     /// <returns>新添加的艺术字形状</returns>
-    IOfficeShape AddTextEffect(MsoPresetTextEffect presetTextEffect, string text, string fontName, float fontSize, [ConvertTriState] bool fontBold, [ConvertTriState] bool fontItalic, float left, float top);
+    IOfficeShape? AddTextEffect(MsoPresetTextEffect presetTextEffect, string text, string fontName, float fontSize, [ConvertTriState] bool fontBold, [ConvertTriState] bool fontItalic, float left, float top);
 
 
     /// <summary>
@@ -80,7 +80,7 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新添加的标注形状</returns>
-    IOfficeShape AddCallout(MsoCalloutType type, float left, float top, float width, float height);
+    IOfficeShape? AddCallout(MsoCalloutType type, float left, float top, float width, float height);
 
     /// <summary>
     /// 向集合中添加连接符形状
@@ -91,14 +91,14 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="endX">终点X坐标</param>
     /// <param name="endY">终点Y坐标</param>
     /// <returns>新添加的连接符形状</returns>
-    IOfficeShape AddConnector(MsoConnectorType type, float beginX, float beginY, float endX, float endY);
+    IOfficeShape? AddConnector(MsoConnectorType type, float beginX, float beginY, float endX, float endY);
 
     /// <summary>
     /// 向集合中添加曲线形状
     /// </summary>
     /// <param name="safeArrayOfPoints">点坐标数组</param>
     /// <returns>新添加的曲线形状</returns>
-    IOfficeShape AddCurve(object safeArrayOfPoints);
+    IOfficeShape? AddCurve(object safeArrayOfPoints);
 
     /// <summary>
     /// 向集合中添加标签形状
@@ -109,7 +109,7 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     /// <returns>新添加的标签形状</returns>
-    IOfficeShape AddLabel(MsoTextOrientation orientation, float left, float top, float width, float height);
+    IOfficeShape? AddLabel(MsoTextOrientation orientation, float left, float top, float width, float height);
 
     /// <summary>
     /// 向集合中添加直线形状
@@ -119,7 +119,7 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="endX">终点X坐标</param>
     /// <param name="endY">终点Y坐标</param>
     /// <returns>新添加的直线形状</returns>
-    IOfficeShape AddLine(float beginX, float beginY, float endX, float endY);
+    IOfficeShape? AddLine(float beginX, float beginY, float endX, float endY);
 
     /// <summary>
     /// 向集合中添加图片形状
@@ -132,19 +132,19 @@ public interface IOfficeShapes : IEnumerable<IOfficeShape>, IDisposable
     /// <param name="width">宽度，默认为-1表示自动调整</param>
     /// <param name="height">高度，默认为-1表示自动调整</param>
     /// <returns>新添加的图片形状</returns>
-    IOfficeShape AddPicture(string fileName, [ConvertTriState] bool linkToFile, [ConvertTriState] bool saveWithDocument, float left, float top, float width = -1f, float height = -1f);
+    IOfficeShape? AddPicture(string fileName, [ConvertTriState] bool linkToFile, [ConvertTriState] bool saveWithDocument, float left, float top, float width = -1f, float height = -1f);
 
     /// <summary>
     /// 向集合中添加多段线形状
     /// </summary>
     /// <param name="safeArrayOfPoints">点坐标数组</param>
     /// <returns>新添加的多段线形状</returns>
-    IOfficeShape AddPolyline(object safeArrayOfPoints);
+    IOfficeShape? AddPolyline(object safeArrayOfPoints);
 
     /// <summary>
     /// 获取指定索引的形状范围
     /// </summary>
     /// <param name="index">形状索引</param>
     /// <returns>指定索引的形状范围</returns>
-    IOfficeShapeRange Range(int index);
+    IOfficeShapeRange? Range(int index);
 }

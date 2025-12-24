@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 封装 Microsoft.Office.Interop.Word.PictureEffects 的接口，用于操作图片效果集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePictureEffects : IEnumerable<IOfficePictureEffect>, IDisposable
+public interface IOfficePictureEffects : IEnumerable<IOfficePictureEffect?>, IDisposable
 {
     /// <summary>
     /// 获取图片效果集合中的效果数量。
@@ -21,12 +21,12 @@ public interface IOfficePictureEffects : IEnumerable<IOfficePictureEffect>, IDis
     /// <summary>
     /// 根据索引获取图片效果（从1开始）。
     /// </summary>
-    IOfficePictureEffect this[int index] { get; }
+    IOfficePictureEffect? this[int index] { get; }
 
     /// <summary>
     /// 根据效果类型获取图片效果。
     /// </summary>
-    IOfficePictureEffect this[[ConvertInt] MsoPictureEffectType effectType] { get; }
+    IOfficePictureEffect? this[[ConvertInt] MsoPictureEffectType effectType] { get; }
 
     /// <summary>
     /// 添加新的图片效果。
@@ -34,7 +34,7 @@ public interface IOfficePictureEffects : IEnumerable<IOfficePictureEffect>, IDis
     /// <param name="effectType">效果类型。</param>
     /// <param name="position">效果位置（可选）。</param>
     /// <returns>新添加的图片效果。</returns>
-    IOfficePictureEffect Insert(MsoPictureEffectType effectType, int position = -1);
+    IOfficePictureEffect? Insert(MsoPictureEffectType effectType, int position = -1);
 
     /// <summary>
     /// 删除指定索引的图片效果。

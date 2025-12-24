@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// SmartArtNodes 集合封装接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtNodes : IEnumerable<IOfficeSmartArtNode>, IDisposable
+public interface IOfficeSmartArtNodes : IEnumerable<IOfficeSmartArtNode?>, IDisposable
 {
     /// <summary>
     /// 获取集合中节点总数

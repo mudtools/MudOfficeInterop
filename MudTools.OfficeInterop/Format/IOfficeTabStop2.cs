@@ -16,7 +16,7 @@ public interface IOfficeTabStop2 : IDisposable
     /// <summary>
     /// 获取制表位的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置制表位的位置（以磅为单位）。

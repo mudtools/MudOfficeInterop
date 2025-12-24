@@ -32,7 +32,7 @@ public interface IOfficePictureEffect : IDisposable
     /// <summary>
     /// 获取效果的参数集合。
     /// </summary>
-    IOfficeEffectParameters EffectParameters { get; }
+    IOfficeEffectParameters? EffectParameters { get; }
 
     /// <summary>
     /// 删除此图片效果。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对搜索范围集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeSearchScopes : IEnumerable<IOfficeSearchScope>, IDisposable
+public interface IOfficeSearchScopes : IEnumerable<IOfficeSearchScope?>, IDisposable
 {
     /// <summary>
     /// 获取搜索范围集合中项的数量。
@@ -24,5 +24,5 @@ public interface IOfficeSearchScopes : IEnumerable<IOfficeSearchScope>, IDisposa
     /// </summary>
     /// <param name="index">搜索范围索引。</param>
     /// <returns>搜索范围对象。</returns>
-    IOfficeSearchScope this[int index] { get; }
+    IOfficeSearchScope? this[int index] { get; }
 }

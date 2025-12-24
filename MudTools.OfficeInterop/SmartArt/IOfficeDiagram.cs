@@ -16,7 +16,7 @@ public interface IOfficeDiagram : IDisposable
     /// <summary>
     /// 获取图表中的节点集合
     /// </summary>
-    IOfficeDiagramNodes Nodes { get; }
+    IOfficeDiagramNodes? Nodes { get; }
 
     /// <summary>
     /// 获取图表的类型

@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 DocumentProperty 对象的集合。
 /// 此接口是对 Microsoft.Office.Core.DocumentProperties COM 对象的二次封装。
 /// </summary>
-public interface IOfficeDocumentProperties : IEnumerable<IOfficeDocumentProperty>, IDisposable
+public interface IOfficeDocumentProperties : IEnumerable<IOfficeDocumentProperty?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的文档属性总数。

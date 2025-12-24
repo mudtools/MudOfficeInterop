@@ -26,13 +26,13 @@ public interface IOfficePickerDialog : IDisposable
     /// <summary>
     /// 获取选取器对话框的属性集合。
     /// </summary>
-    IOfficePickerProperties Properties { get; }
+    IOfficePickerProperties? Properties { get; }
 
     /// <summary>
     /// 创建属性集合。
     /// </summary>
     /// <returns>新的属性集合对象。</returns>
-    IOfficePickerResults CreatePickerResults();
+    IOfficePickerResults? CreatePickerResults();
 
     /// <summary>
     /// 显示选取器对话框。
@@ -40,6 +40,6 @@ public interface IOfficePickerDialog : IDisposable
     /// <param name="singleSelect">是否单选模式。</param>
     /// <param name="existingResults">父窗口句柄。</param>
     /// <returns>选取结果集合。</returns>
-    IOfficePickerResults Show(bool singleSelect = true, IOfficePickerResults existingResults = null);
+    IOfficePickerResults? Show(bool singleSelect = true, IOfficePickerResults existingResults = null);
 
 }

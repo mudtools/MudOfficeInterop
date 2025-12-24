@@ -32,17 +32,17 @@ public interface IOfficeSmartArtNode : IDisposable
     /// <value>
     /// 返回一个 IOfficeTextFrame2 对象，用于访问和操作与此 SmartArt 节点关联的文本内容和格式设置
     /// </value>
-    IOfficeTextFrame2 TextFrame2 { get; }
+    IOfficeTextFrame2? TextFrame2 { get; }
 
     /// <summary>
     /// 获取子节点集合
     /// </summary>
-    IOfficeSmartArtNodes Nodes { get; }
+    IOfficeSmartArtNodes? Nodes { get; }
 
     /// <summary>
     /// 获取父节点
     /// </summary>
-    IOfficeSmartArtNode ParentNode { get; }
+    IOfficeSmartArtNode? ParentNode { get; }
 
     /// <summary>
     /// 获取节点的类型

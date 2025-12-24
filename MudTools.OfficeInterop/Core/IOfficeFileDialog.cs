@@ -19,13 +19,13 @@ public interface IOfficeFileDialog : IDisposable
     /// 获取文件对话框的父对象（通常是 Application）
     /// 对应 FileDialog.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取文件对话框所在的Application对象
     /// 对应 FileDialog.Application 属性
     /// </summary>
-    object Application { get; } // 使用 object 作为通用占位符
+    object? Application { get; }
 
     /// <summary>
     /// 获取文件对话框的类型
@@ -72,13 +72,13 @@ public interface IOfficeFileDialog : IDisposable
     /// <summary>
     /// 获取文件对话框的选择项
     /// </summary>
-    IOfficeSelectedItems SelectedItems { get; }
+    IOfficeSelectedItems? SelectedItems { get; }
 
     /// <summary>
     /// 获取文件对话框的过滤器集合
     /// 对应 FileDialog.Filters 属性
     /// </summary>
-    IOfficeFileDialogFilters Filters { get; }
+    IOfficeFileDialogFilters? Filters { get; }
     #endregion
 
     #region 操作方法

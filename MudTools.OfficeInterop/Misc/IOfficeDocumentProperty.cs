@@ -18,7 +18,7 @@ public interface IOfficeDocumentProperty : IDisposable
     /// <summary>
     /// 获取文档属性的应用程序对象。
     /// </summary>
-    object Application { get; }
+    object? Application { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，用于指示创建该对象的应用程序。
