@@ -29,6 +29,12 @@ public interface IWordWindows : IDisposable, IEnumerable<IWordWindow?>
     /// </summary>
     object Parent { get; }
 
+    /// <summary>
+    /// 获取或设置是否启用并排窗口的同步滚动功能
+    /// </summary>
+    /// <value>
+    /// <c>true</c> 启用并排窗口的同步滚动；<c>false</c> 禁用同步滚动
+    /// </value>
     bool SyncScrollingSideBySide { get; set; }
 
     /// <summary>

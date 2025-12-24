@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -11,17 +11,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// ProtectedViewWindow 接口及实现类
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordProtectedViewWindow : IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取受保护的视图窗口的窗口标题。
@@ -59,11 +61,6 @@ public interface IWordProtectedViewWindow : IDisposable
     bool Visible { get; set; }
 
     /// <summary>
-    /// 获取受保护的视图窗口所显示的文档的完整路径。
-    /// </summary>
-    string DocumentFullName { get; }
-
-    /// <summary>
     /// 获取受保护的视图窗口所显示的文档对象。
     /// </summary>
     IWordDocument? Document { get; }
@@ -78,8 +75,14 @@ public interface IWordProtectedViewWindow : IDisposable
     /// </summary>
     bool Active { get; }
 
+    /// <summary>
+    /// 获取受保护视图窗口中打开的文档的源文件名（不包含路径）。
+    /// </summary>
     string SourceName { get; }
 
+    /// <summary>
+    /// 获取受保护视图窗口中打开的文档的源文件完整路径。
+    /// </summary>
     string SourcePath { get; }
 
     /// <summary>
@@ -95,14 +98,16 @@ public interface IWordProtectedViewWindow : IDisposable
     /// <summary>
     /// 编辑受保护的视图窗口中的文档。
     /// </summary>
-    /// <param name="PasswordTemplate">打开模板时所需的密码。</param>
-    /// <param name="WritePasswordDocument">打开文档时所需的写入密码。</param>
-    /// <param name="WritePasswordTemplate">打开模板时所需的写入密码。</param>
+    /// <param name="passwordTemplate">打开模板时所需的密码。</param>
+    /// <param name="writePasswordDocument">打开文档时所需的写入密码。</param>
+    /// <param name="writePasswordTemplate">打开模板时所需的写入密码。</param>
     /// <returns>返回编辑中的文档对象。</returns>
-    IWordDocument? Edit(string PasswordTemplate, string WritePasswordDocument, string WritePasswordTemplate);
+    IWordDocument? Edit(string? passwordTemplate = null, string? writePasswordDocument = null, string? writePasswordTemplate = null);
 
     /// <summary>
     /// 激活受保护的视图窗口。
     /// </summary>
     void Activate();
+
+    void ToggleRibbon();
 }
