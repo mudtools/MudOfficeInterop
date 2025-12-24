@@ -12,24 +12,21 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Document.Sections 属性可返回 Sections 集合。</para>
 /// <para>注：使用 Sections(index)（其中 index 是节的索引号）可返回单个 Section 对象。索引号代表节在文档中的位置，主文档节的索引号为 1。</para>
 /// </summary>
-public interface IWordSections : IEnumerable<IWordSection>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordSections : IEnumerable<IWordSection?>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
-
-    /// <summary>
-    /// 获取一个 32 位整数，它指示在其中创建指定的对象的应用程序。
-    /// </summary>
-    int Creator { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的节数量。
