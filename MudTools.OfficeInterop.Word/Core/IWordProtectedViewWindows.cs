@@ -10,12 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// ProtectedViewWindows 接口及实现类
 /// </summary>
-public interface IWordProtectedViewWindows : IEnumerable<IWordProtectedViewWindow>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordProtectedViewWindows : IEnumerable<IWordProtectedViewWindow?>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中受保护的视图窗口的数量。
@@ -30,18 +37,20 @@ public interface IWordProtectedViewWindows : IEnumerable<IWordProtectedViewWindo
     IWordProtectedViewWindow? this[int index] { get; }
 
     /// <summary>
-    /// 获取一个 32 位整数，该整数指示创建对象的应用程序。
+    /// 返回集合中指定的 <see cref="IWordProtectedViewWindow"/> 对象。
     /// </summary>
-    int Creator { get; }
+    /// <param name="index">要返回的单个对象。可以是代表序号位置的 Number 类型的值。</param>
+    /// <returns>指定索引处的 <see cref="IWordProtectedViewWindow"/> 对象。</returns>
+    IWordProtectedViewWindow? this[string index] { get; }
 
     /// <summary>
     /// 打开一个文档并在新的受保护的视图窗口中显示。
     /// </summary>
-    /// <param name="FileName">要打开的文档的名称。</param>
-    /// <param name="AddToRecentFiles">如果为 True，则将该文件添加到“文件”菜单上的最近使用的文件列表中。</param>
-    /// <param name="PasswordDocument">打开文档所需的密码。</param>
-    /// <param name="Visible">如果为 True，则在可见的受保护视图窗口中打开文档。</param>
-    /// <param name="OpenAndRepair">如果为 True，则修复并打开文档。</param>
+    /// <param name="fileName">要打开的文档的名称。</param>
+    /// <param name="addToRecentFiles">如果为 True，则将该文件添加到“文件”菜单上的最近使用的文件列表中。</param>
+    /// <param name="passwordDocument">打开文档所需的密码。</param>
+    /// <param name="visible">如果为 True，则在可见的受保护视图窗口中打开文档。</param>
+    /// <param name="openAndRepair">如果为 True，则修复并打开文档。</param>
     /// <returns>返回新创建的 <see cref="IWordProtectedViewWindow"/> 对象。</returns>
-    IWordProtectedViewWindow Open(string FileName, ref object AddToRecentFiles, ref object PasswordDocument, ref object Visible, ref object OpenAndRepair);
+    IWordProtectedViewWindow? Open(string fileName, bool? addToRecentFiles, string? passwordDocument, bool? visible, bool? openAndRepair);
 }
