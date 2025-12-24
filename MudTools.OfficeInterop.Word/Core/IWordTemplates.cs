@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示当前可用的所有模板的对象集合。
 /// <para>注：此集合包括打开的模板、附加到打开文档的模板，以及“模板和外接程序”对话框中加载的全局模板。</para>
 /// </summary>
-public interface IWordTemplates : IEnumerable<IWordTemplate>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordTemplates : IEnumerable<IWordTemplate?>, IDisposable
 {
     /// <summary>
-    /// 获取与该对象关联的 Word 应用程序。
+    /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的模板数量。
@@ -32,7 +34,14 @@ public interface IWordTemplates : IEnumerable<IWordTemplate>, IDisposable
     /// </summary>
     /// <param name="index">模板名称（字符串）或索引号（整数）。</param>
     /// <returns>指定的模板对象。</returns>
-    IWordTemplate this[object index] { get; }
+    IWordTemplate? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引（模板名称或索引号）获取单个模板。
+    /// </summary>
+    /// <param name="name">模板名称（字符串）或索引号（整数）。</param>
+    /// <returns>指定的模板对象。</returns>
+    IWordTemplate? this[string name] { get; }
 
     /// <summary>
     /// 将所有模板的构建基块加载到 Microsoft Office Word 中。
