@@ -355,57 +355,6 @@ internal class WordThreeDFormat : IWordThreeDFormat
         }
     }
 
-    /// <inheritdoc/>
-    public void CopyTo(IWordThreeDFormat targetThreeD)
-    {
-        if (_threeDFormat == null || targetThreeD == null)
-            return;
-
-        try
-        {
-            // 基本属性复制
-            targetThreeD.Depth = this.Depth;
-            targetThreeD.FieldOfView = this.FieldOfView;
-            targetThreeD.ExtrusionColorType = this.ExtrusionColorType;
-            targetThreeD.Perspective = this.Perspective;
-            targetThreeD.ProjectText = this.ProjectText;
-            targetThreeD.Visible = this.Visible;
-            targetThreeD.PresetMaterial = this.PresetMaterial;
-            targetThreeD.PresetLighting = this.PresetLighting;
-            targetThreeD.LightAngle = this.LightAngle;
-            targetThreeD.PresetLightingSoftness = this.PresetLightingSoftness;
-            targetThreeD.PresetLightingDirection = this.PresetLightingDirection;
-            targetThreeD.RotationX = this.RotationX;
-            targetThreeD.RotationY = this.RotationY;
-            targetThreeD.RotationZ = this.RotationZ;
-            targetThreeD.PerspectiveEnabled = this.PerspectiveEnabled;
-            targetThreeD.BevelTopType = this.BevelTopType;
-            targetThreeD.BevelBottomType = this.BevelBottomType;
-            targetThreeD.ContourWidth = this.ContourWidth;
-            targetThreeD.Z = this.Z;
-            targetThreeD.BevelTopDepth = this.BevelTopDepth;
-            targetThreeD.BevelTopInset = this.BevelTopInset;
-            targetThreeD.BevelBottomDepth = this.BevelBottomDepth;
-            targetThreeD.BevelBottomInset = this.BevelBottomInset;
-
-            // 复制 extrusion 颜色
-            if (this.ExtrusionColor != null && targetThreeD.ExtrusionColor != null)
-            {
-                targetThreeD.SetExtrusionColor(this.ExtrusionColor.RGB);
-            }
-
-            // 复制轮廓颜色
-            if (this.ContourColor != null && targetThreeD.ContourColor != null)
-            {
-                targetThreeD.ContourColor.RGB = this.ContourColor.RGB;
-            }
-        }
-        catch (COMException ex)
-        {
-            throw new InvalidOperationException("无法复制三维格式。", ex);
-        }
-    }
-
 
     /// <inheritdoc/>
     public void SetExtrusionColor(int color)

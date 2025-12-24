@@ -190,11 +190,6 @@ public interface IWordThreeDFormat : IDisposable
     /// </summary>
     void Clear();
 
-    /// <summary>
-    /// 复制三维格式到另一个对象。
-    /// </summary>
-    /// <param name="targetThreeD">目标三维格式对象。</param>
-    void CopyTo(IWordThreeDFormat targetThreeD);
 
     /// <summary>
     /// 设置 extrusion 颜色。
