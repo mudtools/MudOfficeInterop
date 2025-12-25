@@ -786,13 +786,30 @@ public interface IWordDocument : IDisposable
     /// </summary>
     string WritePassword { set; }
 
+    /// <summary>
+    /// 获取文档的协同编辑功能接口，用于处理多人同时编辑文档的功能
+    /// </summary>
     IWordCoAuthoring? CoAuthoring { get; }
 
+    /// <summary>
+    /// 获取文档的自定义XML部件集合接口，用于处理嵌入在文档中的自定义XML数据
+    /// </summary>
     IOfficeCustomXMLParts? CustomXMLParts { get; }
 
+    /// <summary>
+    /// 获取文档的邮件信封接口，用于处理与邮件发送相关的功能
+    /// </summary>
     IOfficeMsoEnvelope? MailEnvelope { get; }
 
+    /// <summary>
+    /// 获取文档的HTML项目接口，用于处理HTML格式相关的功能
+    /// </summary>
     IOfficeHTMLProject? HTMLProject { get; }
+
+    /// <summary>
+    /// 获取文档的智能文档接口，用于处理智能标签和业务智能功能
+    /// </summary>
+    IOfficeSmartDocument? SmartDocument { get; }
 
     /// <summary>
     /// 获取文档的统计信息，如页数、字数、字符数等
@@ -1535,6 +1552,54 @@ public interface IWordDocument : IDisposable
     /// <returns>摘要范围</returns>
     IWordRange? AutoSummarize(long? length, WdSummaryMode? mode, object? updateProperties);
 
+    /// <summary>
+    /// 获取与当前文档关联的信函内容对象，该对象包含通过"信函向导"创建的信函的所有属性和设置。
+    /// </summary>
+    /// <returns>表示信函内容的对象</returns>
+    IWordLetterContent GetLetterContent();
+
+    /// <summary>
+    /// 运行Word的信函向导，根据指定的信函内容和向导模式创建或修改信函。
+    /// </summary>
+    /// <param name="letterContent">信函内容对象，包含信函的各种属性和设置；如果为null，则使用默认设置</param>
+    /// <param name="wizardMode">指定是否以交互式向导模式运行；如果为null，则使用默认模式</param>
+    void RunLetterWizard(IWordLetterContent? letterContent, bool? wizardMode);
+
+    /// <summary>
+    /// 创建一个新的信函内容对象，用于配置通过"信函向导"生成的信函的各个部分和格式。
+    /// </summary>
+    /// <param name="dateFormat">信函日期的格式</param>
+    /// <param name="includeHeaderFooter">是否在信函中包含页眉和页脚</param>
+    /// <param name="pageDesign">页面设计模板的名称或路径</param>
+    /// <param name="letterStyle">信函的布局样式，如块状布局等</param>
+    /// <param name="letterhead">是否在信函中预留预印信头空间</param>
+    /// <param name="letterheadLocation">预印信头在信函中的位置</param>
+    /// <param name="letterheadSize">预印信头预留的空间大小（以磅为单位）</param>
+    /// <param name="recipientName">收件人姓名</param>
+    /// <param name="recipientAddress">收件人地址</param>
+    /// <param name="salutation">信函的称呼文本</param>
+    /// <param name="salutationType">称呼的类型（如正式、非正式等）</param>
+    /// <param name="recipientReference">收件人参考行（如"回复："）</param>
+    /// <param name="mailingInstructions">邮寄指示文本（如"挂号信"）</param>
+    /// <param name="attentionLine">注意行文本</param>
+    /// <param name="subject">信函主题</param>
+    /// <param name="ccList">抄送（CC）收件人列表</param>
+    /// <param name="returnAddress">寄信人地址</param>
+    /// <param name="senderName">寄信人姓名</param>
+    /// <param name="closing">信函结尾文本（如"此致敬礼"）</param>
+    /// <param name="senderCompany">寄信人公司名称</param>
+    /// <param name="senderJobTitle">寄信人职位</param>
+    /// <param name="senderInitials">寄信人姓名缩写</param>
+    /// <param name="enclosureNumber">附件数量</param>
+    /// <param name="infoBlock">信息块内容（可选）</param>
+    /// <param name="recipientCode">收件人代码（可选）</param>
+    /// <param name="recipientGender">收件人性别（可选）</param>
+    /// <param name="returnAddressShortForm">简写寄信人地址（可选）</param>
+    /// <param name="senderCity">寄信人城市（可选）</param>
+    /// <param name="senderCode">寄信人代码（可选）</param>
+    /// <param name="senderGender">寄信人性别（可选）</param>
+    /// <param name="senderReference">寄信人参考（可选）</param>
+    /// <returns>创建的信函内容对象或null</returns>
     IWordLetterContent? CreateLetterContent(string dateFormat, bool includeHeaderFooter, string pageDesign,
                          WdLetterStyle letterStyle, bool letterhead, WdLetterheadLocation letterheadLocation,
                          float letterheadSize, string recipientName, string recipientAddress,
@@ -1546,8 +1611,18 @@ public interface IWordDocument : IDisposable
                          string? returnAddressShortForm = null, string? senderCity = null, string? senderCode = null,
                          string? senderGender = null, string? senderReference = null);
 
+    /// <summary>
+    /// 根据指定的自定义XML节点选择与之关联的内容控件。
+    /// </summary>
+    /// <param name="node">用于查找关联内容控件的自定义XML节点</param>
+    /// <returns>找到的关联内容控件集合或null</returns>
     IWordContentControls? SelectLinkedControls(IOfficeCustomXMLNode node);
 
+    /// <summary>
+    /// 选择未链接到任何自定义XML节点的内容控件。
+    /// </summary>
+    /// <param name="stream">可选的自定义XML部分，用于指定搜索范围</param>
+    /// <returns>未链接的内容控件集合或null</returns>
     IWordContentControls? SelectUnlinkedControls(IOfficeCustomXMLPart stream = null);
 
     /// <summary>
