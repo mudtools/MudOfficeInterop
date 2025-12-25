@@ -11,14 +11,16 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 KeysBoundTo 属性可返回 KeysBoundTo 集合。</para>
 /// <para>注：使用 KeysBoundTo(index)（其中 index 是索引号）可返回单个 KeyBinding 对象。</para>
 /// </summary>
-public interface IWordKeysBoundTo : IEnumerable<IWordKeyBinding>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordKeysBoundTo : IEnumerable<IWordKeyBinding?>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
@@ -59,7 +61,7 @@ public interface IWordKeysBoundTo : IEnumerable<IWordKeyBinding>, IDisposable
     /// </summary>
     /// <param name="index">索引号（从 1 开始）。</param>
     /// <returns>指定的组合键对象。</returns>
-    IWordKeyBinding this[int index] { get; }
+    IWordKeyBinding? this[int index] { get; }
 
     #endregion
 
@@ -71,7 +73,7 @@ public interface IWordKeysBoundTo : IEnumerable<IWordKeyBinding>, IDisposable
     /// <param name="keyCode">按键代码。</param>
     /// <param name="keyCode2">第二个按键代码。</param>
     /// <returns>表示添加的按键分配的对象。</returns>
-    IWordKeyBinding Key(int keyCode, object keyCode2);
+    IWordKeyBinding? Key([ConvertInt] WdKey keyCode, object keyCode2);
 
     #endregion
 }
