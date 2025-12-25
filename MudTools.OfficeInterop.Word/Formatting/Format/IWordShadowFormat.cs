@@ -10,22 +10,24 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 封装 Microsoft.Office.Core.ShadowFormat 的接口，用于操作阴影格式。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordShadowFormat : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取阴影的前景颜色格式。
     /// </summary>
-    IWordColorFormat ForeColor { get; }
+    IWordColorFormat? ForeColor { get; }
 
     /// <summary>
     /// 获取或设置阴影的透明度（0.0到1.0之间）。
@@ -35,11 +37,13 @@ public interface IWordShadowFormat : IDisposable
     /// <summary>
     /// 获取或设置阴影是否可见。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
     /// 获取或设置阴影的类型。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoShadowType Type { get; set; }
 
     /// <summary>
@@ -55,11 +59,13 @@ public interface IWordShadowFormat : IDisposable
     /// <summary>
     /// 获取或设置阴影是否随形状旋转。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool RotateWithShape { get; set; }
 
     /// <summary>
     /// 获取或设置阴影样式。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoShadowStyle Style { get; set; }
 
     /// <summary>
@@ -73,45 +79,14 @@ public interface IWordShadowFormat : IDisposable
     float OffsetY { get; set; }
 
     /// <summary>
-    /// 设置阴影的偏移量。
+    /// 沿X轴方向增加阴影的偏移量。
     /// </summary>
-    /// <param name="offsetX">X轴上的偏移量</param>
-    /// <param name="offsetY">Y轴上的偏移量</param>
-    void SetOffset(float offsetX, float offsetY);
+    /// <param name="increment">要增加的偏移量值</param>
+    void IncrementOffsetX(float increment);
 
     /// <summary>
-    /// 清除阴影格式设置。
+    /// 沿Y轴方向增加阴影的偏移量。
     /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 将当前阴影格式复制到目标阴影格式对象。
-    /// </summary>
-    /// <param name="targetShadow">目标阴影格式对象</param>
-    void CopyTo(IWordShadowFormat targetShadow);
-
-    /// <summary>
-    /// 重置阴影格式为默认设置。
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 应用外阴影效果。
-    /// </summary>
-    /// <param name="offsetX">X轴上的偏移量</param>
-    /// <param name="offsetY">Y轴上的偏移量</param>
-    /// <param name="blur">模糊度</param>
-    /// <param name="color">阴影颜色</param>
-    /// <param name="transparency">透明度（0.0到1.0之间）</param>
-    void ApplyOuterShadow(float offsetX, float offsetY, float blur, int color, float transparency);
-
-    /// <summary>
-    /// 应用内阴影效果。
-    /// </summary>
-    /// <param name="offsetX">X轴上的偏移量</param>
-    /// <param name="offsetY">Y轴上的偏移量</param>
-    /// <param name="blur">模糊度</param>
-    /// <param name="color">阴影颜色</param>
-    /// <param name="transparency">透明度（0.0到1.0之间）</param>
-    void ApplyInnerShadow(float offsetX, float offsetY, float blur, int color, float transparency);
+    /// <param name="increment">要增加的偏移量值</param>
+    void IncrementOffsetY(float increment);
 }
