@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 定义对 Microsoft.Office.Interop.Word.WrapFormat 对象的二次封装接口。
 /// 代表形状或图片的环绕格式设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordWrapFormat : IDisposable
 {
     /// <summary>
     /// 获取创建 WrapFormat 对象的应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -51,5 +53,5 @@ public interface IWordWrapFormat : IDisposable
     /// <summary>
     /// 返回或设置一个值，指定给定的形状是否可以与其他图形重叠。 可以设置为 True 或 False 。
     /// </summary>
-    bool AllowOverlap { get; set; }
+    int AllowOverlap { get; set; }
 }
