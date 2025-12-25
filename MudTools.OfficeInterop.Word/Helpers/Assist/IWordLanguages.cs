@@ -7,8 +7,20 @@
 
 namespace MudTools.OfficeInterop.Word;
 
-public interface IWordLanguages : IDisposable, IEnumerable<IWordLanguage>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordLanguages : IDisposable, IEnumerable<IWordLanguage?>
 {
+    /// <summary>
+    /// 获取与该对象关联的 Word 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
+
     /// <summary>
     /// 获取语言集合中的语言数量
     /// </summary>
@@ -19,19 +31,12 @@ public interface IWordLanguages : IDisposable, IEnumerable<IWordLanguage>
     /// </summary>
     /// <param name="index">语言索引</param>
     /// <returns>语言对象</returns>
-    IWordLanguage this[int index] { get; }
+    IWordLanguage? this[int index] { get; }
 
     /// <summary>
-    /// 根据语言ID获取语言对象
+    /// 根据索引获取语言对象（索引从1开始）
     /// </summary>
-    /// <param name="languageID">语言ID</param>
+    /// <param name="index">语言索引</param>
     /// <returns>语言对象</returns>
-    IWordLanguage GetLanguageByID(int languageID);
-
-    /// <summary>
-    /// 检查指定语言ID是否存在于集合中
-    /// </summary>
-    /// <param name="languageID">语言ID</param>
-    /// <returns>是否存在</returns>
-    bool Contains(int languageID);
+    IWordLanguage? this[string index] { get; }
 }
