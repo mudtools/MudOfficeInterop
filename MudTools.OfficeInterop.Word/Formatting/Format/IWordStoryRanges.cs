@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档范围集合接口
 /// </summary>
-public interface IWordStoryRanges : IDisposable, IEnumerable<IWordRange>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordStoryRanges : IDisposable, IEnumerable<IWordRange?>
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取范围数量
@@ -30,5 +32,5 @@ public interface IWordStoryRanges : IDisposable, IEnumerable<IWordRange>
     /// <summary>
     /// 根据类型获取范围
     /// </summary>
-    IWordRange this[WdStoryType storyType] { get; }
+    IWordRange? this[WdStoryType storyType] { get; }
 }
