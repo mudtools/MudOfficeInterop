@@ -12,17 +12,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 KeyBindings(index)（其中 index 是索引号）可返回单个 KeyBinding 对象。</para>
 /// <para>注：使用 Add 方法可将 KeyBinding 对象添加到 KeyBindings 集合中。</para>
 /// </summary>
-public interface IWordKeyBindings : IEnumerable<IWordKeyBinding>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordKeyBindings : IEnumerable<IWordKeyBinding?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的自定义键分配数量。
@@ -34,7 +36,7 @@ public interface IWordKeyBindings : IEnumerable<IWordKeyBinding>, IDisposable
     /// </summary>
     /// <param name="index">索引号（从 1 开始）。</param>
     /// <returns>指定的自定义键分配对象。</returns>
-    IWordKeyBinding this[int index] { get; }
+    IWordKeyBinding? this[int index] { get; }
 
     /// <summary>
     /// 获取一个对象，该对象表示指定键绑定的存储位置。此属性可以返回 Document、Template 或 Application 对象。
@@ -50,8 +52,8 @@ public interface IWordKeyBindings : IEnumerable<IWordKeyBinding>, IDisposable
     /// <param name="keyCode2">第二个按键代码。</param>
     /// <param name="commandParameter">命令参数。</param>
     /// <returns>表示添加的按键分配的对象。</returns>
-    IWordKeyBinding Add(WdKeyCategory keyCategory, string command, int keyCode,
-                       object keyCode2, object commandParameter);
+    IWordKeyBinding? Add(WdKeyCategory keyCategory, string command, [ConvertInt] WdKey keyCode,
+                         WdKey? keyCode2 = null, string? commandParameter = null);
 
     /// <summary>
     /// 清除所有的自定义按键分配方案，并恢复原有的 Microsoft Word 快捷键分配方案。
@@ -64,5 +66,5 @@ public interface IWordKeyBindings : IEnumerable<IWordKeyBinding>, IDisposable
     /// <param name="keyCode">按键代码。</param>
     /// <param name="keyCode2">第二个按键代码。</param>
     /// <returns>表示指定组合键的对象，如果不存在则返回 null。</returns>
-    IWordKeyBinding Key(int keyCode, object keyCode2);
+    IWordKeyBinding? Key([ConvertInt] WdKey keyCode, WdKey? keyCode2 = null);
 }

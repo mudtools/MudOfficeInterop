@@ -114,10 +114,15 @@ namespace FindAndReplaceSample
 
                 foreach (var section in document.Sections)
                 {
-                    using var firstPageHeader = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
-                    if (firstPageHeader != null && firstPageHeader.Exists)
+                    foreach (var pageHeaderFooter in section.Headers)
                     {
-                        ReplaceInRange(firstPageHeader.Range, "$$head$$", "123456");
+                        using (pageHeaderFooter)
+                        {
+                            if (pageHeaderFooter != null && pageHeaderFooter.Exists)
+                            {
+                                ReplaceInRange(pageHeaderFooter.Range, "$$head$$", "123456");
+                            }
+                        }
                     }
                 }
 
