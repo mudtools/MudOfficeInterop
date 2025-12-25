@@ -368,10 +368,6 @@ namespace DocumentAutomationProcessingSample
                 string processedFilePath = Path.Combine(tempDirectory, "内容处理后.docx");
                 document.SaveAs(processedFilePath);
 
-                // 分析文档统计信息
-                var statistics = DocumentProcessor.AnalyzeDocumentStatistics(document);
-                string report = DocumentProcessor.GenerateDocumentReport(statistics);
-                Console.WriteLine(report);
 
                 Console.WriteLine("文档内容处理示例演示完成");
             }
@@ -588,9 +584,6 @@ namespace DocumentAutomationProcessingSample
                     var processingResult = DocumentProcessor.ProcessDocumentContent(document, operations);
                     Console.WriteLine($"内容处理结果: 执行了 {processingResult.CompletedOperations.Count} 个操作");
 
-                    // 分析文档统计信息
-                    var statistics = DocumentProcessor.AnalyzeDocumentStatistics(document);
-                    Console.WriteLine($"文档统计: {statistics.WordCount} 字，{statistics.ParagraphCount} 段落");
                 }
                 Console.WriteLine();
 

@@ -199,30 +199,19 @@ namespace GraphicsAndImageOperationsSample
                 // 添加节点文本
                 if (smartArt.AllNodes.Count > 0)
                 {
-                    smartArt.AllNodes[1].TextFrame.TextRange.Text = "步骤1";
+                    smartArt.AllNodes[1].TextFrame2.TextRange.Text = "步骤1";
                 }
 
                 if (smartArt.AllNodes.Count > 1)
                 {
-                    smartArt.AllNodes[2].TextFrame.TextRange.Text = "步骤2";
+                    smartArt.AllNodes[2].TextFrame2.TextRange.Text = "步骤2";
                 }
 
                 if (smartArt.AllNodes.Count > 2)
                 {
-                    smartArt.AllNodes[3].TextFrame.TextRange.Text = "步骤3";
+                    smartArt.AllNodes[3].TextFrame2.TextRange.Text = "步骤3";
                 }
 
-                // 设置SmartArt颜色样式
-                if (smartArt.Parent.SmartArtColors.Count >= 2)
-                {
-                    smartArt.Color = smartArt.Parent.SmartArtColors[2];
-                }
-
-                // 设置SmartArt布局样式
-                if (smartArt.Parent.SmartArtLayouts.Count >= 3)
-                {
-                    smartArt.Layout = smartArt.Parent.SmartArtLayouts[3];
-                }
 
                 Console.WriteLine("SmartArt图形操作完成");
             }

@@ -9,12 +9,14 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中所有超链接的集合。
 /// </summary>
-public interface IWordHyperlinks : IEnumerable<IWordHyperlink>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordHyperlinks : IEnumerable<IWordHyperlink?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中的超链接数量。
@@ -25,7 +27,13 @@ public interface IWordHyperlinks : IEnumerable<IWordHyperlink>, IDisposable
     /// 通过索引获取超链接。
     /// </summary>
     /// <param name="index">从 1 开始的索引。</param>
-    IWordHyperlink this[int index] { get; }
+    IWordHyperlink? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引获取超链接。
+    /// </summary>
+    /// <param name="index">从 1 开始的索引。</param>
+    IWordHyperlink? this[string index] { get; }
 
     /// <summary>
     /// 添加一个新的超链接。
@@ -37,10 +45,5 @@ public interface IWordHyperlinks : IEnumerable<IWordHyperlink>, IDisposable
     /// <param name="textToDisplay">显示文本。</param>
     /// <param name="target">目标框架。</param>
     /// <returns>新创建的超链接。</returns>
-    IWordHyperlink Add(IWordRange anchor, object address, object subAddress, object screenTip, object textToDisplay, object target);
-
-    /// <summary>
-    /// 删除所有超链接。
-    /// </summary>
-    void Delete();
+    IWordHyperlink? Add(IWordRange anchor, string? address = null, string? subAddress = null, string? screenTip = null, string? textToDisplay = null, string? target = null);
 }

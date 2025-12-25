@@ -139,7 +139,7 @@ namespace GraphicsAndImageOperationsSample
                 }
 
                 // 设置阴影属性
-                shape.Shadow.ForeColor.RGB = (int)color;
+                shape.Shadow.ForeColor.RGB = color;
                 shape.Shadow.OffsetX = offsetX;
                 shape.Shadow.OffsetY = offsetY;
                 shape.Shadow.Blur = blur;

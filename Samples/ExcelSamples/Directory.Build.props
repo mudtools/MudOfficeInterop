@@ -14,8 +14,8 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="3.2.0" />
-		<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.2.2" />
-		<PackageReference Include="MudTools.OfficeInterop" Version="1.2.2" />
+		<PackageReference Include="MudTools.OfficeInterop.Excel" Version="2.0.1" />
+		<PackageReference Include="MudTools.OfficeInterop" Version="2.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.ValueTuple" Version="4.6.1" />

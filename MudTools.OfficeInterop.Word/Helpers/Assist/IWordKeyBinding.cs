@@ -6,22 +6,25 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
 /// 表示一个自定义组合键。
 /// <para>注：KeyBinding 对象是 KeyBindings 集合的成员。使用 KeyBindings 集合的 Add 方法可将 KeyBinding 对象添加到 KeyBindings 集合中。</para>
 /// <para>注：使用 KeyBindings(index)（其中 index 是索引号）可返回单个 KeyBinding 对象。</para>
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordKeyBinding : IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，它指示在其中创建指定的对象的应用程序。
@@ -29,6 +32,9 @@ public interface IWordKeyBinding : IDisposable
     int Creator { get; }
 
 
+    /// <summary>
+    /// 获取一个值，该值指示此组合键是否为受保护的组合键。
+    /// </summary>
     bool Protected { get; }
 
     /// <summary>

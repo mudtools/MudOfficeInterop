@@ -51,7 +51,7 @@ namespace DocumentAutomationProcessingSample
                 contentRange.Font.Size = 12;
 
                 // 保存文档
-                document.Save(filePath);
+                document.SaveAs(filePath);
 
                 Console.WriteLine($"示例文档已创建: {filePath}");
                 return true;
@@ -293,53 +293,7 @@ namespace DocumentAutomationProcessingSample
             }
         }
 
-        /// <summary>
-        /// 分析文档统计信息
-        /// </summary>
-        /// <param name="document">Word文档对象</param>
-        /// <returns>文档统计信息</returns>
-        public static DocumentStatistics AnalyzeDocumentStatistics(IWordDocument document)
-        {
-            var statistics = new DocumentStatistics();
 
-            try
-            {
-                // 获取基本统计信息
-                statistics.PageCount = document.Range().Paragraphs.Count > 0 ? document.ComputeStatistics(WdStatistic.wdStatisticPages) : 0;
-                statistics.WordCount = document.Range().Paragraphs.Count > 0 ? document.ComputeStatistics(WdStatistic.wdStatisticWords) : 0;
-                statistics.CharacterCount = document.Range().Paragraphs.Count > 0 ? document.ComputeStatistics(WdStatistic.wdStatisticCharacters) : 0;
-                statistics.ParagraphCount = document.Paragraphs.Count;
-                statistics.TableCount = document.Tables.Count;
-                statistics.ImageFieldCount = document.Shapes.Count + document.InlineShapes.Count;
-
-                // 分析段落格式
-                foreach (var paragraph in document.Paragraphs)
-                {
-                    var format = paragraph.Format;
-                    if (format.Alignment == WdParagraphAlignment.wdAlignParagraphCenter)
-                    {
-                        statistics.CenterAlignedParagraphs++;
-                    }
-                    else if (format.Alignment == WdParagraphAlignment.wdAlignParagraphLeft)
-                    {
-                        statistics.LeftAlignedParagraphs++;
-                    }
-                    else if (format.Alignment == WdParagraphAlignment.wdAlignParagraphRight)
-                    {
-                        statistics.RightAlignedParagraphs++;
-                    }
-                }
-
-                Console.WriteLine("文档统计信息分析完成");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"分析文档统计信息时出错: {ex.Message}");
-                statistics.ErrorMessage = ex.Message;
-            }
-
-            return statistics;
-        }
 
         /// <summary>
         /// 生成文档报告

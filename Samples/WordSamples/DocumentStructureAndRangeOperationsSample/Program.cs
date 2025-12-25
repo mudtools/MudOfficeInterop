@@ -158,7 +158,7 @@ namespace DocumentStructureAndRangeOperationsSample
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "LifecycleDemo.docx");
-                document.Save(filePath);
+                document.SaveAs(filePath);
                 Console.WriteLine($"文档已保存到: {filePath}");
                 Console.WriteLine($"保存状态: {document.Saved}");
 

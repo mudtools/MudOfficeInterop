@@ -7,6 +7,7 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
+using System.Drawing;
 using System.Text;
 
 namespace DocumentAutomationProcessingSample
@@ -314,7 +315,7 @@ namespace DocumentAutomationProcessingSample
                     // 设置水印属性
                     shape.Fill.Visible = true;
                     shape.Fill.Solid();
-                    shape.Fill.ForeColor.RGB = unchecked((int)0x00CCCCCCCC); // 半透明灰色
+                    shape.Fill.ForeColor.RGB = Color.Gray;
                     shape.Line.Visible = false;
                     shape.Rotation = 315; // 斜角
                     shape.WrapFormat.AllowOverlap = true;

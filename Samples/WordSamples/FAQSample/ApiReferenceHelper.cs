@@ -162,7 +162,7 @@ namespace FAQSample
                 firstParagraph.Range.Font.Size = 14;
 
                 // 保存文档
-                document.Save(filePath);
+                document.SaveAs(filePath);
                 return true;
             }
             catch (Exception ex)
@@ -209,7 +209,7 @@ namespace FAQSample
                 // 创建测试文件
                 using (var app = WordFactory.BlankWorkbook())
                 {
-                    app.ActiveDocument.Save(tempPath);
+                    app.ActiveDocument.SaveAs(tempPath);
                 }
 
                 var openTimes = new List<TimeSpan>();

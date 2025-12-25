@@ -108,6 +108,7 @@ namespace FindAndReplaceSample
                 string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.dotx");
                 string file2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.docx");
 
+
                 using var app = WordFactory.Open(file);
                 using var document = app.ActiveDocument;
 

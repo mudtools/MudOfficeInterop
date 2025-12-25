@@ -105,7 +105,7 @@ namespace DocumentAutomationProcessingSample
             var outputFilePath = Path.Combine(outputDirectory, $"{fileName}{extension}");
 
             // 保存为指定格式
-            document.Save(outputFilePath, targetFormat);
+            document.SaveAs(outputFilePath, targetFormat);
 
             Console.WriteLine($"  - 已转换为: {extension}");
         }
