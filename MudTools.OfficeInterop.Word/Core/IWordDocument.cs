@@ -1527,6 +1527,17 @@ public interface IWordDocument : IDisposable
     /// <returns>摘要范围</returns>
     IWordRange? AutoSummarize(long? length, WdSummaryMode? mode, object? updateProperties);
 
+    IWordLetterContent? CreateLetterContent(string dateFormat, bool includeHeaderFooter, string pageDesign,
+                         WdLetterStyle letterStyle, bool letterhead, WdLetterheadLocation letterheadLocation,
+                         float letterheadSize, string recipientName, string recipientAddress,
+                         string salutation, WdSalutationType salutationType, string recipientReference,
+                         string mailingInstructions, string attentionLine, string subject, string ccList,
+                         string returnAddress, string senderName, string closing, string senderCompany,
+                         string senderJobTitle, string senderInitials, int enclosureNumber,
+                         string? infoBlock = null, string? recipientCode = null, string? recipientGender = null,
+                         string? returnAddressShortForm = null, string? senderCity = null, string? senderCode = null,
+                         string? senderGender = null, string? senderReference = null);
+
     /// <summary>
     /// 跳转到指定位置
     /// </summary>
