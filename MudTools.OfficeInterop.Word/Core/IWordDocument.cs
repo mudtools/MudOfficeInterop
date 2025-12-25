@@ -788,6 +788,12 @@ public interface IWordDocument : IDisposable
 
     IWordCoAuthoring? CoAuthoring { get; }
 
+    IOfficeCustomXMLParts? CustomXMLParts { get; }
+
+    IOfficeMsoEnvelope? MailEnvelope { get; }
+
+    IOfficeHTMLProject? HTMLProject { get; }
+
     /// <summary>
     /// 获取文档的统计信息，如页数、字数、字符数等
     /// </summary>
@@ -1539,6 +1545,10 @@ public interface IWordDocument : IDisposable
                          string? infoBlock = null, string? recipientCode = null, string? recipientGender = null,
                          string? returnAddressShortForm = null, string? senderCity = null, string? senderCode = null,
                          string? senderGender = null, string? senderReference = null);
+
+    IWordContentControls? SelectLinkedControls(IOfficeCustomXMLNode node);
+
+    IWordContentControls? SelectUnlinkedControls(IOfficeCustomXMLPart stream = null);
 
     /// <summary>
     /// 跳转到指定位置

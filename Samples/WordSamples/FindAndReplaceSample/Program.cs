@@ -20,6 +20,8 @@ namespace FindAndReplaceSample
             Console.WriteLine("\n=== 示例2: 替换操作 ===");
             ReplaceOperationDemo();
 
+            return;
+
             // 示例1: 查找功能详解
             Console.WriteLine("\n=== 示例1: 查找功能详解 ===");
             FindFunctionDemo();
@@ -106,7 +108,7 @@ namespace FindAndReplaceSample
             try
             {
                 string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.dotx");
-                string file2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.docx");
+                string file2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.doc");
 
 
                 using var app = WordFactory.Open(file);
@@ -157,7 +159,7 @@ namespace FindAndReplaceSample
 
                 Console.WriteLine("替换操作演示完成");
 
-                document.SaveAs(file2);
+                document.SaveAs(file2, WdSaveFormat.wdFormatDocument);
             }
             catch (Exception ex)
             {
