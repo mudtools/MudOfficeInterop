@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示活动电子邮件。
 /// <para>注：使用 Application.MailMessage 属性可返回 MailMessage 对象。</para>
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordMailMessage : IDisposable
 {
     #region 基本属性 (Basic Properties)
@@ -17,54 +18,82 @@ public interface IWordMailMessage : IDisposable
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
-
-    /// <summary>
-    /// 获取一个 32 位整数，它指示在其中创建指定的对象的应用程序。
-    /// </summary>
-    int Creator { get; }
+    object? Parent { get; }
 
     #endregion
 
 
     #region 邮件消息方法 (Mail Message Methods)
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// 检查邮件中的收件人姓名是否有效
+    /// </summary>
     void CheckName();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 删除当前邮件
+    /// </summary>
     void Delete();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 显示移动邮件对话框
+    /// </summary>
     void DisplayMoveDialog();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 显示邮件属性对话框
+    /// </summary>
     void DisplayProperties();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 显示选择收件人名称对话框
+    /// </summary>
     void DisplaySelectNamesDialog();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 转发邮件
+    /// </summary>
     void Forward();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 导航到下一个邮件项目
+    /// </summary>
     void GoToNext();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 导航到上一个邮件项目
+    /// </summary>
     void GoToPrevious();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 回复邮件
+    /// </summary>
     void Reply();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 回复所有收件人
+    /// </summary>
     void ReplyAll();
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    /// 切换邮件头的显示状态
+    /// </summary>
     void ToggleHeader();
 
     #endregion
