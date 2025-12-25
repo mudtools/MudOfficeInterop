@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
 /// 表示当前上下文中的自定义键分配的对象集合。
 /// <para>注：使用 KeyBindings 属性可返回 KeyBindings 集合。</para>
