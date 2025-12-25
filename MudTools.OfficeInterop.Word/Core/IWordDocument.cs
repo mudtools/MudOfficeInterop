@@ -813,6 +813,8 @@ public interface IWordDocument : IDisposable
 
     IOfficeOfficeTheme? DocumentTheme { get; }
 
+    IWordFrameset? Frameset { get; }
+
     /// <summary>
     /// 获取文档的统计信息，如页数、字数、字符数等
     /// </summary>
