@@ -16,13 +16,13 @@ namespace FindAndReplaceSample
         {
             Console.WriteLine("MudTools.OfficeInterop.Word - 查找和替换示例");
 
-            // 示例1: 查找功能详解
-            Console.WriteLine("\n=== 示例1: 查找功能详解 ===");
-            FindFunctionDemo();
-
             // 示例2: 替换操作
             Console.WriteLine("\n=== 示例2: 替换操作 ===");
             ReplaceOperationDemo();
+
+            // 示例1: 查找功能详解
+            Console.WriteLine("\n=== 示例1: 查找功能详解 ===");
+            FindFunctionDemo();
 
             // 示例3: 格式查找和替换
             Console.WriteLine("\n=== 示例3: 格式查找和替换 ===");
@@ -105,11 +105,23 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.dotx");
+                string file2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.docx");
+
+                using var app = WordFactory.Open(file);
                 using var document = app.ActiveDocument;
 
-                // 添加示例内容
-                document.Range().Text = "原文本1\n原文本2\n原文本3\n";
+                foreach (var section in document.Sections)
+                {
+                    using var firstPageHeader = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+                    if (firstPageHeader != null && firstPageHeader.Exists)
+                    {
+                        ReplaceInRange(firstPageHeader.Range, "$$head$$", "123456");
+                    }
+                }
+
+                //// 添加示例内容
+                //document.Range().Text = "原文本1\n原文本2\n原文本3\n";
 
                 // 获取查找和替换对象
                 using var find = document.Range().Find;
@@ -118,13 +130,11 @@ namespace FindAndReplaceSample
                 // 设置查找和替换参数
                 find.ClearFormatting();
                 replace.ClearFormatting();
-                find.Text = "原文本";
-                replace.Text = "新文本";
 
                 // 执行替换（只替换第一个匹配项）
                 find.Execute(
-                    findText: "原文本",
-                    replaceWith: "新文本",
+                    findText: "$$ANFORDNR$$",
+                    replaceWith: "123456",
                     replace: WdReplace.wdReplaceOne
                 );
 
@@ -132,19 +142,47 @@ namespace FindAndReplaceSample
 
                 // 执行全部替换
                 find.Execute(
-                    findText: "原文本",
-                    replaceWith: "新文本",
+                    findText: "$$pubdate$$",
+                    replaceWith: DateTime.Now.ToString(),
                     replace: WdReplace.wdReplaceAll
                 );
 
                 Console.WriteLine("执行全部替换");
 
                 Console.WriteLine("替换操作演示完成");
+
+                document.SaveAs(file2);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"替换操作演示出错: {ex.Message}");
             }
+        }
+
+        private static void ReplaceInRange(IWordRange range, string findText, string replaceText)
+        {
+            // 使用Find对象进行查找替换
+            IWordFind find = range.Find;
+
+            find.ClearFormatting();
+            find.Replacement.ClearFormatting();
+
+            find.Text = findText;
+            find.Replacement.Text = replaceText;
+
+            // 设置查找选项
+            find.Forward = true;
+            find.Wrap = WdFindWrap.wdFindContinue;
+            find.Format = false;
+            find.MatchCase = false;
+            find.MatchWholeWord = false;
+            find.MatchWildcards = false;
+            find.MatchSoundsLike = false;
+            find.MatchAllWordForms = false;
+
+            // 执行替换
+            var b = find.Execute(replace: WdReplace.wdReplaceAll);
+            Console.WriteLine($"替换结果：{b}");
         }
 
         /// <summary>
@@ -156,6 +194,7 @@ namespace FindAndReplaceSample
             {
                 using var app = WordFactory.BlankWorkbook();
                 using var document = app.ActiveDocument;
+
 
                 // 添加示例内容
                 using var range = document.Range();

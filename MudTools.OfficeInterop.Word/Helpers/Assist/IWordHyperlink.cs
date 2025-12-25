@@ -12,17 +12,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中的一个超链接（Hyperlink）的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordHyperlink : IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置超链接的显示文本。
@@ -47,7 +49,7 @@ public interface IWordHyperlink : IDisposable
     /// <summary>
     /// 获取超链接所在的范围。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 获取超链接的类型。
@@ -73,4 +75,20 @@ public interface IWordHyperlink : IDisposable
     /// 跟随此超链接。
     /// </summary>
     void Follow();
+
+    /// <summary>
+    /// 将当前超链接添加到收藏夹中。
+    /// </summary>
+    void AddToFavorites();
+
+    /// <summary>
+    /// 使用指定选项跟随此超链接。
+    /// </summary>
+    /// <param name="newWindow">可选。如果为 true，则在新窗口中打开超链接。</param>
+    /// <param name="addHistory">可选。如果为 true，则将超链接添加到历史记录列表中。</param>
+    /// <param name="extraInfo">可选。要传递给 Web 服务器的附加信息。</param>
+    /// <param name="method">可选。指定将 [extraInfo] 参数发送到 Web 服务器的方法。</param>
+    /// <param name="headerInfo">可选。HTTP 请求头信息。</param>
+    void Follow(bool? newWindow = null, bool? addHistory = null, string? extraInfo = null, [ComNamespace("MsCore")] MsoExtraInfoMethod? method = null, string? headerInfo = null);
+
 }

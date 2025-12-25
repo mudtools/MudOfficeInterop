@@ -6,25 +6,28 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
 /// 表示文档中所有页眉和页脚的对象集合。
 /// <para>注：使用 Section.Headers 或 Section.Footers 属性可返回 HeadersFooters 集合。</para>
 /// <para>注：使用 HeadersFooters(index)（其中 index 是页眉或页脚的索引号）可返回单个 HeaderFooter 对象。</para>
 /// <para>注：索引号 1 代表首页页眉或页脚，索引号 2 代表奇数页页眉或页脚，索引号 3 代表偶数页页眉或页脚。</para>
 /// </summary>
-public interface IWordHeadersFooters : IEnumerable<IWordHeaderFooter>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordHeadersFooters : IEnumerable<IWordHeaderFooter?>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，它指示在其中创建指定的对象的应用程序。
@@ -45,7 +48,7 @@ public interface IWordHeadersFooters : IEnumerable<IWordHeaderFooter>, IDisposab
     /// </summary>
     /// <param name="index">页眉或页脚的索引号（<see cref="MsWord.WdHeaderFooterIndex"/> 常量）。</param>
     /// <returns>指定的页眉或页脚对象。</returns>
-    IWordHeaderFooter this[WdHeaderFooterIndex index] { get; }
+    IWordHeaderFooter? this[WdHeaderFooterIndex index] { get; }
 
     #endregion
 }

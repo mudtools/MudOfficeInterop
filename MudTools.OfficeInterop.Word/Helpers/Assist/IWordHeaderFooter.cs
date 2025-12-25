@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -12,6 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 HeadersFooters(index)（其中 index 是页眉或页脚的索引号）可返回单个 HeaderFooter 对象。</para>
 /// <para>注：索引号 1 代表首页页眉或页脚，索引号 2 代表奇数页页眉或页脚，索引号 3 代表偶数页页眉或页脚。</para>
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordHeaderFooter : IDisposable
 {
     #region 基本属性 (Basic Properties)
@@ -19,17 +20,33 @@ public interface IWordHeaderFooter : IDisposable
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，它指示在其中创建指定的对象的应用程序。
     /// </summary>
     int Creator { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示页眉或页脚是否存在。
+    /// </summary>
+    bool Exists { get; set; }
+
+    /// <summary>
+    /// 获取一个值，该值指示此对象是否为页眉。如果为false，则表示是页脚。
+    /// </summary>
+    bool IsHeader { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，该值指示此页眉或页脚是否与上一节的页眉或页脚链接。
+    /// </summary>
+    bool LinkToPrevious { get; set; }
 
     #endregion
 
