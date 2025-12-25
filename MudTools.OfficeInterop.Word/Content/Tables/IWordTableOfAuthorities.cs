@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中的一个引文目录 (Table of Authorities, TOA) 的二次封装接口。
 /// 此接口提供了对引文目录内容、格式和操作的访问，同时管理底层 COM 对象的生命周期。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTableOfAuthorities : IDisposable
 {
     /// <summary>
     /// 获取此引文目录所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -24,76 +26,72 @@ public interface IWordTableOfAuthorities : IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取此引文目录在文档中所占据的范围 (<see cref="IWordRange"/>)。
-    /// </summary>
-    IWordRange? Range { get; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示引文目录是否在每个条目后显示 "passim"（表示该条目在多页上出现）。
-    /// 此属性对应于 TOA 域的 \p 开关 [[7]]。
+    /// 获取或设置一个值，指示如果同一引文有五个或更多页引用，是否用"Passim"替换。
     /// </summary>
     bool Passim { get; set; }
 
     /// <summary>
-    /// 获取或设置分隔引文目录中各项与其页码的字符（最多五个）。
-    /// 此属性对应于 TOA 域的 \e 开关 [[24]]。
-    /// </summary>
-    string? EntrySeparator { get; set; }
-
-    /// <summary>
-    /// 获取或设置分隔引文目录中页码范围的字符（最多五个）。
-    /// 例如，"12-15" 中的 "-" [[10]]。
-    /// </summary>
-    string? PageRangeSeparator { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个书签的名称。如果设置了此属性，引文目录将仅包含该书签范围内的引文。
-    /// </summary>
-    string? Bookmark { get; set; }
-
-    /// <summary>
-    /// 获取或设置要包含在引文目录中的条目类别。
-    /// 有效值为 1 到 16，对应于“引文目录”对话框中的类别列表 [[22]]。
-    /// </summary>
-    int Category { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示是否保留引文目录中条目的原始格式。
+    /// 获取或设置一个值，指示是否将引文目录条目中的格式应用于指定引文目录中的条目。
     /// </summary>
     bool KeepEntryFormatting { get; set; }
 
     /// <summary>
-    /// 获取或设置在引文目录条目文本和页码之间使用的分隔符。
+    /// 获取或设置要包含在引文目录中的条目类别。
+    /// </summary>
+    int Category { get; set; }
+
+    /// <summary>
+    /// 获取或设置要从中收集引文目录条目的书签名称。
+    /// </summary>
+    string Bookmark { get; set; }
+
+    /// <summary>
+    /// 获取或设置序列号和页码之间的字符（最多五个字符）。
     /// </summary>
     string Separator { get; set; }
 
     /// <summary>
-    /// 获取或设置要包含在引文目录中的序列名称。
+    /// 获取或设置引文目录的序列（SEQ）字段标识符。
     /// </summary>
     string IncludeSequenceName { get; set; }
 
     /// <summary>
-    /// 获取或设置一个值，该值指示是否在引文目录中包含类别标题。
+    /// 获取或设置引文目录条目及其页码之间的字符（最多五个字符）。
+    /// </summary>
+    string EntrySeparator { get; set; }
+
+    /// <summary>
+    /// 获取或设置引文目录中页面范围之间的字符（最多五个字符）。
+    /// </summary>
+    string PageRangeSeparator { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示引文目录中是否显示一组条目的类别名称。
     /// </summary>
     bool IncludeCategoryHeader { get; set; }
 
     /// <summary>
-    /// 获取或设置用于分隔页码的字符。
+    /// 获取或设置引文目录中各个页引用之间的字符（最多五个字符）。
     /// </summary>
     string PageNumberSeparator { get; set; }
 
     /// <summary>
-    /// 获取或设置引文目录中使用的制表符前导符类型。
+    /// 获取或设置引文目录中条目及其页码之间的制表符前导符。
     /// </summary>
     WdTabLeader TabLeader { get; set; }
 
     /// <summary>
-    /// 更新引文目录中的所有条目，包括页码和条目文本。
+    /// 返回表示包含在指定对象中的文档部分的 Range 对象。
     /// </summary>
-    void Update();
+    IWordRange? Range { get; }
 
     /// <summary>
-    /// 从文档中删除此引文目录。
+    /// 删除指定的对象。
     /// </summary>
     void Delete();
+
+    /// <summary>
+    /// 更新指定引文目录中显示的条目。
+    /// </summary>
+    void Update();
 }

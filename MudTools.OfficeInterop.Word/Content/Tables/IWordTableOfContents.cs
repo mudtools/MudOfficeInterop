@@ -11,91 +11,91 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中的一个目录 (Table of Contents, TOC) 的二次封装接口。
 /// 此接口提供了对目录内容、样式和操作的访问，同时管理底层 COM 对象的生命周期。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTableOfContents : IDisposable
 {
     /// <summary>
     /// 获取此目录所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取此目录的父对象（通常是 <see cref="IWordDocument"/>）。
     /// </summary>
     object? Parent { get; }
-
     /// <summary>
-    /// 获取此目录在文档中所占据的范围 (<see cref="IWordRange"/>)。
-    /// </summary>
-    IWordRange? Range { get; }
-
-    /// <summary>
-    /// 获取目录使用的标题样式集合。
-    /// 标题样式集合包含除内置"标题 1-9"外，用于编译目录的其他样式。
-    /// </summary>
-    IWordHeadingStyles? HeadingStyles { get; }
-
-    /// <summary>
-    /// 获取或设置目录的唯一标识符。
-    /// </summary>
-    string TableID { get; set; }
-
-    /// <summary>
-    /// 获取或设置目录中包含的最低（最详细）标题级别。
-    /// </summary>
-    int LowerHeadingLevel { get; set; }
-
-    /// <summary>
-    /// 获取或设置目录中包含的最高（最一般）标题级别。
-    /// </summary>
-    int UpperHeadingLevel { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示目录是否基于字段。
-    /// </summary>
-    bool UseFields { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示目录是否使用标题样式来确定要包含的段落。
+    /// 获取或设置一个值，指示是否使用内置标题样式创建目录。
     /// </summary>
     bool UseHeadingStyles { get; set; }
 
     /// <summary>
-    /// 获取或设置一个值，该值指示页码是否在目录中右对齐。
+    /// 获取或设置一个值，指示是否使用目录条目（TC）字段创建目录。
+    /// </summary>
+    bool UseFields { get; set; }
+
+    /// <summary>
+    /// 获取或设置目录的起始标题级别。
+    /// </summary>
+    int UpperHeadingLevel { get; set; }
+
+    /// <summary>
+    /// 获取或设置目录的结束标题级别。
+    /// </summary>
+    int LowerHeadingLevel { get; set; }
+
+    /// <summary>
+    /// 获取或设置用于从 TOC 字段构建目录的一个字母标识符。
+    /// </summary>
+    string TableID { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示在目录中页码是否右对齐。
     /// </summary>
     bool RightAlignPageNumbers { get; set; }
 
     /// <summary>
-    /// 获取或设置一个值，该值指示在 Web 视图中是否隐藏页码。
-    /// </summary>
-    bool HidePageNumbersInWeb { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示目录是否使用超链接。
-    /// </summary>
-    bool UseHyperlinks { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示目录是否包含页码。
+    /// 获取或设置一个值，指示目录中是否包含页码。
     /// </summary>
     bool IncludePageNumbers { get; set; }
 
     /// <summary>
-    /// 获取或设置目录的右对齐页码分隔符。
+    /// 获取或设置目录中条目及其页码之间的字符。
     /// </summary>
     WdTabLeader TabLeader { get; set; }
 
     /// <summary>
-    /// 更新目录中的所有条目，包括页码和标题文本。
+    /// 获取或设置一个值，指示在发布到 Web 时目录条目是否应格式化为超链接。
     /// </summary>
-    void Update();
+    bool UseHyperlinks { get; set; }
 
     /// <summary>
-    /// 仅更新目录中的页码。
+    /// 获取或设置一个值，指示在发布到 Web 时是否隐藏目录中的页码。
+    /// </summary>
+    bool HidePageNumbersInWeb { get; set; }
+
+    /// <summary>
+    /// 返回表示用于编译目录的附加样式（Heading 1 – Heading 9 样式之外的样式）的 HeadingStyles 对象。
+    /// </summary>
+    IWordHeadingStyles? HeadingStyles { get; }
+
+    /// <summary>
+    /// 返回表示包含在指定对象中的文档部分的 Range 对象。
+    /// </summary>
+    IWordRange? Range { get; }
+
+    /// <summary>
+    /// 删除指定的对象。
+    /// </summary>
+    void Delete();
+
+    /// <summary>
+    /// 更新指定目录中项目的页码。
     /// </summary>
     void UpdatePageNumbers();
 
     /// <summary>
-    /// 从文档中删除此目录。
+    /// 更新指定目录中显示的条目。
     /// </summary>
-    void Delete();
+    void Update();
 }

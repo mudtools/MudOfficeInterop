@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中所有引文目录 (Table of Authorities, TOA) 的集合的二次封装接口。
 /// 此接口允许枚举、访问特定引文目录，并向文档中添加新的引文目录 [[1]]。
 /// </summary>
-public interface IWordTablesOfAuthorities : IEnumerable<IWordTableOfAuthorities>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordTablesOfAuthorities : IEnumerable<IWordTableOfAuthorities?>, IDisposable
 {
     /// <summary>
     /// 获取此引文目录集合所属的 Word 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -47,7 +49,7 @@ public interface IWordTablesOfAuthorities : IEnumerable<IWordTableOfAuthorities>
     /// <returns>新创建的 <see cref="IWordTableOfAuthorities"/> 对象。</returns>
     /// <exception cref="ArgumentNullException">当 <paramref name="range"/> 为 null 时抛出。</exception>
     /// <exception cref="InvalidOperationException">当添加引文目录操作失败时抛出。</exception>
-    IWordTableOfAuthorities Add(
+    IWordTableOfAuthorities? Add(
         IWordRange range,
         int category = 0,
         string? bookmark = null,
@@ -64,7 +66,7 @@ public interface IWordTablesOfAuthorities : IEnumerable<IWordTableOfAuthorities>
     /// <param name="shortCitation">引文条目的短名称（可选）。</param>
     /// <param name="category">条目类别（1-16）（可选）。</param>
     /// <returns>插入的 TA 域对象（封装为 <see cref="IWordField"/>）。</returns>
-    IWordField MarkCitation(
+    IWordField? MarkCitation(
         IWordRange range,
         string entry,
         string? shortCitation = null,
