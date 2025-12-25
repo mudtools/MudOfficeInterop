@@ -10,31 +10,36 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示与艺术字对象关联的文本效果格式。
 /// <para>注：使用 Shape 对象的 TextEffect 属性可返回 TextEffectFormat 对象。</para>
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTextEffectFormat : IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置艺术字的对齐方式。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextEffectAlignment Alignment { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字字体是否为粗体。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool FontBold { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字字体是否为斜体。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool FontItalic { get; set; }
 
     /// <summary>
@@ -50,26 +55,31 @@ public interface IWordTextEffectFormat : IDisposable
     /// <summary>
     /// 获取或设置一个值，该值指示艺术字字符对是否经过字距调整。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool KernedPairs { get; set; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否将艺术字中的所有字符调整为相同高度。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool NormalizedHeight { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字的预设形状。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetTextEffectShape PresetShape { get; set; }
 
     /// <summary>
     /// 获取或设置艺术字的预设文本效果。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetTextEffect PresetTextEffect { get; set; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示艺术字中的字符是否旋转。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool RotatedChars { get; set; }
 
     /// <summary>
