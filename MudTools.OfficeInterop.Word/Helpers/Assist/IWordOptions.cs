@@ -11,8 +11,20 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Microsoft Word 中的应用程序设置。
 /// <para>注：使用 Application.Options 属性可返回 Options 对象。</para>
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordOptions : IDisposable
 {
+    /// <summary>
+    /// 获取与该对象关联的 Word 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
+
     #region 常用属性
 
     /// <summary>
