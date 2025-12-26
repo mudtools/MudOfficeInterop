@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口封装了对Excel数据透视表计算项集合的操作方法和属性
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCalculatedItems : IEnumerable<IExcelPivotItem>, IDisposable
+public interface IExcelCalculatedItems : IOfficeObject<IExcelCalculatedItems>, IEnumerable<IExcelPivotItem?>, IDisposable
 {
 
     /// <summary>
@@ -24,21 +24,21 @@ public interface IExcelCalculatedItems : IEnumerable<IExcelPivotItem>, IDisposab
     /// 获取计算项集合所属的Excel应用程序对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 通过索引获取指定位置的计算项
     /// </summary>
     /// <param name="index">计算项在集合中的索引位置</param>
     /// <returns>指定索引位置的计算项对象</returns>
-    IExcelPivotItem this[int index] { get; }
+    IExcelPivotItem? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取指定的计算项
     /// </summary>
     /// <param name="name">计算项的名称</param>
     /// <returns>具有指定名称的计算项对象</returns>
-    IExcelPivotItem this[string name] { get; }
+    IExcelPivotItem? this[string name] { get; }
 
     /// <summary>
     /// 向计算项集合中添加新的计算项
@@ -47,6 +47,6 @@ public interface IExcelCalculatedItems : IEnumerable<IExcelPivotItem>, IDisposab
     /// <param name="formula">新计算项的公式</param>
     /// <param name="useStandardFormula">是否使用标准公式格式，如果为null则使用默认设置</param>
     /// <returns>新添加的计算项对象</returns>
-    IExcelPivotItem Add(string name, string formula, bool? useStandardFormula);
+    IExcelPivotItem? Add(string name, string formula, bool? useStandardFormula);
 
 }

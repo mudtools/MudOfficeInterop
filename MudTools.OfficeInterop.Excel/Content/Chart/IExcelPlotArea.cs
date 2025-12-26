@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.PlotArea 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPlotArea : IDisposable
+public interface IExcelPlotArea : IOfficeObject<IExcelPlotArea>, IDisposable
 {
     #region 基础属性
     /// <summary>

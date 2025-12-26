@@ -8,7 +8,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置上涨柱（开盘价低于收盘价）的填充、边框、可见性等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelUpBars : IDisposable
+public interface IExcelUpBars : IOfficeObject<IExcelUpBars>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Chart）。

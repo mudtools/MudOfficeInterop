@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Axes 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelAxes : IEnumerable<IExcelAxis>, IDisposable
+public interface IExcelAxes : IEnumerable<IExcelAxis?>,IOfficeObject<IExcelAxes>, IDisposable
 {
 
     /// <summary>
@@ -33,7 +33,7 @@ public interface IExcelAxes : IEnumerable<IExcelAxis>, IDisposable
     /// 获取指定索引的坐标轴对象
     /// </summary>
     /// <returns>坐标轴对象</returns>
-    IExcelAxis this[XlAxisType type, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary] { get; }
+    IExcelAxis? this[XlAxisType type, XlAxisGroup axisGroup = XlAxisGroup.xlPrimary] { get; }
 
     /// <summary> 
     /// 获取指定索引的坐标轴对象
@@ -41,7 +41,7 @@ public interface IExcelAxes : IEnumerable<IExcelAxis>, IDisposable
     /// </summary>
     /// <param name="type">坐标轴类型</param>
     /// <returns>坐标轴对象</returns>
-    IExcelAxis this[XlAxisType type] { get; }
+    IExcelAxis? this[XlAxisType type] { get; }
 
 
 }

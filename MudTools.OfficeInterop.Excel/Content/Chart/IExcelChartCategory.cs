@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口封装了与Excel图表分类相关的属性和行为，允许用户获取和设置分类的相关信息
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartCategory : IDisposable
+public interface IExcelChartCategory : IOfficeObject<IExcelChartCategory>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象

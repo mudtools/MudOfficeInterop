@@ -9,7 +9,7 @@ namespace MudTools.OfficeInterop.Excel;
 
 
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotLines : IEnumerable<IExcelPivotLine>, IDisposable
+public interface IExcelPivotLines : IOfficeObject<IExcelPivotLines>, IEnumerable<IExcelPivotLine>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。

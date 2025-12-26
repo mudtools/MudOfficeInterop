@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.PivotCaches 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotCaches : IEnumerable<IExcelPivotCache>, IDisposable
+public interface IExcelPivotCaches : IOfficeObject<IExcelPivotCaches>, IEnumerable<IExcelPivotCache>, IDisposable
 {
     #region 基础属性
     /// <summary>

@@ -6,7 +6,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口封装了对 Excel 图表引导线对象的操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelLeaderLines : IDisposable
+public interface IExcelLeaderLines : IOfficeObject<IExcelLeaderLines>, IDisposable
 {
     /// <summary>
     /// 获取引导线对象的父对象
@@ -21,12 +21,12 @@ public interface IExcelLeaderLines : IDisposable
     /// <summary>
     /// 获取引导线的边框格式对象，可用于设置引导线的样式、颜色和粗细等属性
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取引导线的图表格式对象，可用于设置引导线的整体格式属性
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
 
     /// <summary>
     /// 删除图表中的引导线

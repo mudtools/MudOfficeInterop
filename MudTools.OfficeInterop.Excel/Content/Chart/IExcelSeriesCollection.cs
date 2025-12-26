@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.SeriesCollection 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelSeriesCollection : IEnumerable<IExcelSeries>, IDisposable
+public interface IExcelSeriesCollection : IOfficeObject<IExcelSeriesCollection>, IEnumerable<IExcelSeries>, IDisposable
 {
     #region 基础属性
     /// <summary>

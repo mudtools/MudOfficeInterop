@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口提供了对 Excel 图表分类集合的访问功能，允许通过索引或名称获取特定的图表分类
 /// </remarks>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex, NoneEnumerable]
-public interface IExcelCategoryCollection : IEnumerable<IExcelChartCategory>, IDisposable
+public interface IExcelCategoryCollection : IOfficeObject<IExcelCategoryCollection>, IEnumerable<IExcelChartCategory?>, IDisposable
 {
     /// <summary>
     /// 获取集合中图表分类的数量
@@ -37,12 +37,12 @@ public interface IExcelCategoryCollection : IEnumerable<IExcelChartCategory>, ID
     /// </summary>
     /// <param name="index">要获取的图表分类的从零开始的索引</param>
     /// <returns>指定索引处的图表分类</returns>
-    IExcelChartCategory this[int index] { get; }
+    IExcelChartCategory? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取图表分类
     /// </summary>
     /// <param name="name">要获取的图表分类的名称</param>
     /// <returns>具有指定名称的图表分类</returns>
-    IExcelChartCategory this[string name] { get; }
+    IExcelChartCategory? this[string name] { get; }
 }

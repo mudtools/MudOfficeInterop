@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel数据透视表值单元格接口，提供对数据透视表中值单元格的访问和操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotValueCell : IDisposable
+public interface IExcelPivotValueCell : IOfficeObject<IExcelPivotValueCell>, IDisposable
 {
 
     /// <summary>

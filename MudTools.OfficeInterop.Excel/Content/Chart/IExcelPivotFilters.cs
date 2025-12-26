@@ -9,7 +9,7 @@ namespace MudTools.OfficeInterop.Excel;
 
 
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotFilters : IEnumerable<IExcelPivotFilter>, IDisposable
+public interface IExcelPivotFilters : IOfficeObject<IExcelPivotFilters>, IEnumerable<IExcelPivotFilter?>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。
@@ -54,14 +54,14 @@ public interface IExcelPivotFilters : IEnumerable<IExcelPivotFilter>, IDisposabl
     /// <param name="MemberPropertyField">成员属性字段</param>
     /// <param name="WholeDayFilter">是否整日过滤</param>
     /// <returns>添加的数据透视表过滤器</returns>
-    IExcelPivotFilter Add2(
+    IExcelPivotFilter? Add2(
         XlPivotFilterType Type,
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)] object DataField,
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Struct)] object Value1,
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Struct)] object Value2,
-        [System.Runtime.InteropServices.Optional] object Order,
-        [System.Runtime.InteropServices.Optional] object Name,
-        [System.Runtime.InteropServices.Optional] object Description,
-        [System.Runtime.InteropServices.Optional] object MemberPropertyField,
-        [System.Runtime.InteropServices.Optional] object WholeDayFilter);
+         object? DataField,
+         object? Value1,
+         object? Value2,
+         object? Order,
+         object? Name,
+         object? Description,
+         object? MemberPropertyField,
+         object? WholeDayFilter);
 }

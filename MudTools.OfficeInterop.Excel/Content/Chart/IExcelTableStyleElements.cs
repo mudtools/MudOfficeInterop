@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示一个TableStyleElements集合对象，提供对表格样式中各个元素的访问功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelTableStyleElements : IEnumerable<IExcelTableStyleElement>, IDisposable
+public interface IExcelTableStyleElements : IOfficeObject<IExcelTableStyleElements>, IEnumerable<IExcelTableStyleElement>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象

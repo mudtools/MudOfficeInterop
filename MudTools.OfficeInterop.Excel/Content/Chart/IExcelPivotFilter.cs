@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel数据透视表筛选器接口，用于操作Excel中的数据透视表筛选器
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotFilter : IDisposable
+public interface IExcelPivotFilter : IOfficeObject<IExcelPivotFilter>, IDisposable
 {
     /// <summary>
     /// 获取图表标题的父对象
@@ -54,22 +54,22 @@ public interface IExcelPivotFilter : IDisposable
     /// <summary>
     /// 获取与筛选器关联的数据透视字段
     /// </summary>
-    IExcelPivotField PivotField { get; }
+    IExcelPivotField? PivotField { get; }
 
     /// <summary>
     /// 获取筛选器的数据字段
     /// </summary>
-    IExcelPivotField DataField { get; }
+    IExcelPivotField? DataField { get; }
 
     /// <summary>
     /// 获取筛选器的数据立方体字段
     /// </summary>
-    IExcelCubeField DataCubeField { get; }
+    IExcelCubeField? DataCubeField { get; }
 
     /// <summary>
     /// 获取成员属性字段
     /// </summary>
-    IExcelPivotField MemberPropertyField { get; }
+    IExcelPivotField? MemberPropertyField { get; }
 
     /// <summary>
     /// 获取筛选器的第一个值

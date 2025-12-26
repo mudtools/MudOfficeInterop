@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 例如，对于百万级别的数据，可以将坐标轴显示为1-50，并使用显示单位标签标明单位为"百万"。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelDisplayUnitLabel : IDisposable
+public interface IExcelDisplayUnitLabel : IOfficeObject<IExcelDisplayUnitLabel>, IDisposable
 {
     /// <summary>
     /// 获取显示单位标签的父对象。

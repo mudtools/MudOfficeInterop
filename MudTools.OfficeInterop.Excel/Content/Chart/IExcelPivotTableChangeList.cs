@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 继承自IEnumerable[IExcelValueChange]和IDisposable接口，支持遍历和资源释放。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotTableChangeList : IEnumerable<IExcelValueChange>, IDisposable
+public interface IExcelPivotTableChangeList : IOfficeObject<IExcelPivotTableChangeList>, IEnumerable<IExcelValueChange>, IDisposable
 {
 
     /// <summary>

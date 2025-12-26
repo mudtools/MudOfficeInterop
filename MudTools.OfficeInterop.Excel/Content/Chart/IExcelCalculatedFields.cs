@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 注意：集合中的每个计算字段实际上是一个 <see cref="IExcelPivotField"/> 对象。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCalculatedFields : IEnumerable<IExcelPivotField>, IDisposable
+public interface IExcelCalculatedFields : IOfficeObject<IExcelCalculatedFields>, IEnumerable<IExcelPivotField?>, IDisposable
 {
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.DataTable 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelDataTable : IDisposable
+public interface IExcelDataTable : IOfficeObject<IExcelDataTable>, IDisposable
 {
     #region 基础属性    
 

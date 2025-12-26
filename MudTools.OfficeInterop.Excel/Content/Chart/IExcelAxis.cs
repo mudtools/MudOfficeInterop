@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 代表图表中的单个坐标轴（如类别轴、数值轴）
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelAxis : IDisposable
+public interface IExcelAxis : IOfficeObject<IExcelAxis>, IDisposable
 {
     #region 基础属性  
 
@@ -29,7 +29,7 @@ public interface IExcelAxis : IDisposable
     /// 对应 Axis.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 坐标轴属性
@@ -116,7 +116,7 @@ public interface IExcelAxis : IDisposable
     /// 获取显示单位标签对象
     /// 对应 Axis.DisplayUnitLabel 属性
     /// </summary>
-    IExcelDisplayUnitLabel DisplayUnitLabel { get; }
+    IExcelDisplayUnitLabel? DisplayUnitLabel { get; }
 
     /// <summary>
     /// 获取坐标轴左边距位置

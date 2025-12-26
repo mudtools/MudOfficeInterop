@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口封装了与 Microsoft Excel 数据透视表公式相关的功能，允许访问和操作数据透视表中的计算字段公式。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotFormulas : IEnumerable<IExcelPivotFormula>, IDisposable
+public interface IExcelPivotFormulas : IOfficeObject<IExcelPivotFormulas>, IEnumerable<IExcelPivotFormula?>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。
@@ -36,14 +36,14 @@ public interface IExcelPivotFormulas : IEnumerable<IExcelPivotFormula>, IDisposa
     /// </summary>
     /// <param name="index">要获取的数据透视表公式在集合中的从1开始的索引位置。</param>
     /// <returns>指定索引位置的数据透视表公式对象。</returns>
-    IExcelPivotFormula this[int index] { get; }
+    IExcelPivotFormula? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取集合中的数据透视表公式项。
     /// </summary>
     /// <param name="name">要获取的数据透视表公式的名称。</param>
     /// <returns>具有指定名称的数据透视表公式对象。</returns>
-    IExcelPivotFormula this[string name] { get; }
+    IExcelPivotFormula? this[string name] { get; }
 
     /// <summary>
     /// 向数据透视表公式集合中添加新的公式。
@@ -51,5 +51,5 @@ public interface IExcelPivotFormulas : IEnumerable<IExcelPivotFormula>, IDisposa
     /// <param name="Formula">要添加到数据透视表中的公式字符串。</param>
     /// <param name="useStandardFormula">可选参数，指示是否使用标准公式格式。如果为 null，则使用默认设置。</param>
     /// <returns>新添加的数据透视表公式对象。</returns>
-    IExcelPivotFormula Add(string Formula, bool? useStandardFormula);
+    IExcelPivotFormula? Add(string Formula, bool? useStandardFormula);
 }

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Series 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSeries : IDisposable
+public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
 {
     #region 基础属性
     /// <summary>

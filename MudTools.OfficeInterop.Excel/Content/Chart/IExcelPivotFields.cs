@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.PivotFields 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelPivotFields : IEnumerable<IExcelPivotField?>, IDisposable
+public interface IExcelPivotFields : IOfficeObject<IExcelPivotFields>, IEnumerable<IExcelPivotField?>, IDisposable
 {
     #region 基础属性
     /// <summary>

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.PivotItem 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotItem : IDisposable
+public interface IExcelPivotItem : IOfficeObject<IExcelPivotItem>, IDisposable
 {
     #region 基础属性
     /// <summary>

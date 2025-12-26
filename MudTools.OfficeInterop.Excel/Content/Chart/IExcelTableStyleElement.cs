@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 继承自IDisposable接口，支持资源释放功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTableStyleElement : IDisposable
+public interface IExcelTableStyleElement : IOfficeObject<IExcelTableStyleElement>, IDisposable
 {
     /// <summary>
     /// 获取父对象

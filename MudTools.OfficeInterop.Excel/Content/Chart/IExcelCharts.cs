@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Charts 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCharts : IEnumerable<IExcelChart>, IDisposable
+public interface IExcelCharts : IOfficeObject<IExcelCharts>, IEnumerable<IExcelChart?>, IDisposable
 {
     #region 基础属性
 
@@ -29,7 +29,7 @@ public interface IExcelCharts : IEnumerable<IExcelChart>, IDisposable
     /// <param name="index">图表索引（从1开始）</param>
     /// <returns>图表对象</returns>
     [ComPropertyWrap(NeedConvert = true)]
-    IExcelChart this[int index] { get; }
+    IExcelChart? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的图表对象
@@ -37,7 +37,7 @@ public interface IExcelCharts : IEnumerable<IExcelChart>, IDisposable
     /// <param name="name">图表名称</param>
     /// <returns>图表对象</returns>
     [ComPropertyWrap(NeedConvert = true)]
-    IExcelChart this[string name] { get; }
+    IExcelChart? this[string name] { get; }
 
     /// <summary>
     /// 获取图表集合所在的父对象（通常是工作表或工作簿）
@@ -50,7 +50,7 @@ public interface IExcelCharts : IEnumerable<IExcelChart>, IDisposable
     /// 对应 Charts.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     #endregion
 
@@ -69,7 +69,7 @@ public interface IExcelCharts : IEnumerable<IExcelChart>, IDisposable
     /// <param name="count">要添加的工作表数。 默认值为 1。</param>
     /// <param name="newLayout">如果 NewLayout 为 True，则使用新的动态格式设置规则插入图表， (标题处于打开状态，并且仅当有多个系列) 时，图例才会打开。</param>
     /// <returns>新创建的图表对象</returns>
-    IExcelChart Add2(IExcelRange? before, IExcelRange? after, int? count = 1, bool? newLayout = null);
+    IExcelChart? Add2(IExcelRange? before, IExcelRange? after, int? count = 1, bool? newLayout = null);
 
     /// <summary>
     /// 将工作表移到工作簿中的其他位置。如果未指定 Before 或 After，Microsoft Excel 将创建包含已移动工作表的新工作簿。
