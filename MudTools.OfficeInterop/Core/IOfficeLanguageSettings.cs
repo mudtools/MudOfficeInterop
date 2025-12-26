@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 提供对 Microsoft.Office.Core.LanguageSettings 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeLanguageSettings : IDisposable
+public interface IOfficeLanguageSettings : IOfficeObject<IOfficeLanguageSettings>, IDisposable
 {
     #region 基础属性
     /// <summary>

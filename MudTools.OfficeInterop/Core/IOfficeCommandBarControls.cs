@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office命令栏控件集合的接口，提供对命令栏上控件的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeCommandBarControls : IDisposable, IEnumerable<IOfficeCommandBarControl?>
+public interface IOfficeCommandBarControls : IOfficeObject<IOfficeCommandBarControls>, IDisposable, IEnumerable<IOfficeCommandBarControl?>
 {
     /// <summary>
     /// 获取控件集合中的控件数量

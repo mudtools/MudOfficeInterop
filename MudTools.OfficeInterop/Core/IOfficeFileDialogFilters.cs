@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
 [ItemIndex]
-public interface IOfficeFileDialogFilters : IEnumerable<IOfficeFileDialogFilter?>, IDisposable
+public interface IOfficeFileDialogFilters : IOfficeObject<IOfficeFileDialogFilters>, IEnumerable<IOfficeFileDialogFilter?>, IDisposable
 {
     #region 基础属性
     /// <summary>

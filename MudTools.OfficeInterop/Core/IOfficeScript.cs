@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 文档中的脚本对象接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeScript : IDisposable
+public interface IOfficeScript : IOfficeObject<IOfficeScript>, IDisposable
 {
     /// <summary>
     /// 获取脚本对象的父对象

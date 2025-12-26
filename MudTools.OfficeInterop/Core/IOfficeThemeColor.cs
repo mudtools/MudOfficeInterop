@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft Office 2007 主题颜色方案中的颜色。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeThemeColor : IDisposable
+public interface IOfficeThemeColor : IOfficeObject<IOfficeThemeColor>, IDisposable
 {
     /// <summary>
     /// 获取 Microsoft.Office.Core.ThemeColor 对象的父对象。只读。

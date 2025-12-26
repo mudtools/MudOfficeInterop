@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 提供对 Microsoft.Office.Core.CustomTaskPane 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore", NoneConstructor = true, NoneDisposed = true)]
-public interface IOfficeCustomTaskPane : IOfficeObject<IOfficeCustomTaskPane>, IDisposable
+public interface IOfficeCustomTaskPane : IDisposable
 {
     #region 事件
     /// <summary>

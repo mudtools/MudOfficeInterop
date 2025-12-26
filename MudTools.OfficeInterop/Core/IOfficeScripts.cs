@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office文档中的脚本集合，提供对集合中脚本的访问、添加和删除操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeScripts : IEnumerable<IOfficeScript?>, IDisposable
+public interface IOfficeScripts : IOfficeObject<IOfficeScripts>, IEnumerable<IOfficeScript?>, IDisposable
 {
     /// <summary>
     /// 获取集合中脚本的数量

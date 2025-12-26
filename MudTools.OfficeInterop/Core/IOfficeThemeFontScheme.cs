@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft Office 2007 主题的字体方案。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeThemeFontScheme : IDisposable
+public interface IOfficeThemeFontScheme : IOfficeObject<IOfficeThemeFontScheme>, IDisposable
 {
     /// <summary>
     /// 获取 Microsoft.Office.Core.ThemeFontScheme 对象的父对象。只读。
