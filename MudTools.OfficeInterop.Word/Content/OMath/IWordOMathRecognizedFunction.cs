@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// OMathRecognizedFunction 接口及实现类
 /// </summary>
-public interface IWordOMathRecognizedFunction : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordOMathRecognizedFunction : IOfficeObject<IWordOMathRecognizedFunction>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数学识别函数的名称。

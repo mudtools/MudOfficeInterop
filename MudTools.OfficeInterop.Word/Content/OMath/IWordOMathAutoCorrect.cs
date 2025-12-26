@@ -10,12 +10,14 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// OMathAutoCorrect 接口及实现类
 /// </summary>
-public interface IWordOMathAutoCorrect : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordOMathAutoCorrect : IOfficeObject<IWordOMathAutoCorrect>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
@@ -35,10 +37,10 @@ public interface IWordOMathAutoCorrect : IDisposable
     /// <summary>
     /// 获取数学自动更正条目的集合。
     /// </summary>
-    IWordOMathAutoCorrectEntries Entries { get; }
+    IWordOMathAutoCorrectEntries? Entries { get; }
 
     /// <summary>
     /// 获取数学识别函数的集合。
     /// </summary>
-    IWordOMathRecognizedFunctions Functions { get; }
+    IWordOMathRecognizedFunctions? Functions { get; }
 }

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口提供了对该域的范围、数据源字段名称以及操作的访问 [[1]]。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordMailMergeField : IDisposable
+public interface IWordMailMergeField : IOfficeObject<IWordMailMergeField>, IDisposable
 {
     /// <summary>
     /// 获取此邮件合并域所属的 Word 应用程序对象。

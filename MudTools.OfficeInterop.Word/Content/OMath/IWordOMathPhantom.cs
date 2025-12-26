@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中数学对象的虚设(Phantom)元素接口，用于控制数学公式中特定元素的显示属性
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathPhantom : IDisposable
+public interface IWordOMathPhantom : IOfficeObject<IWordOMathPhantom>, IDisposable
 {
     /// <summary>
     /// 获取与此数学对象关联的Word应用程序实例

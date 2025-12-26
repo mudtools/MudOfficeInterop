@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 文档节接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordSection : IDisposable
+public interface IWordSection : IOfficeObject<IWordSection>, IDisposable
 {
     /// <summary>
     /// 获取当前文档归属的<see cref="IWordApplication"/>对象。

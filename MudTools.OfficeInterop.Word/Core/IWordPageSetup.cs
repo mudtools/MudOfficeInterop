@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 文档页面设置接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordPageSetup : IDisposable
+public interface IWordPageSetup : IOfficeObject<IWordPageSetup>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。

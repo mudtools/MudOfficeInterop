@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// ProtectedViewWindow 接口及实现类
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordProtectedViewWindow : IDisposable
+public interface IWordProtectedViewWindow : IOfficeObject<IWordProtectedViewWindow>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。

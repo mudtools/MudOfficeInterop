@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的拼写建议接口，提供对Word拼写检查功能的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordSpellingSuggestion : IDisposable
+public interface IWordSpellingSuggestion : IOfficeObject<IWordSpellingSuggestion>, IDisposable
 {
 
     /// <summary>

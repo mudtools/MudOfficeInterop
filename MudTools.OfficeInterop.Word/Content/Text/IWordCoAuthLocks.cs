@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的共同作者锁定集合，用于管理文档中各种范围的锁定状态
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordCoAuthLocks : IEnumerable<IWordCoAuthLock?>, IDisposable
+public interface IWordCoAuthLocks : IEnumerable<IWordCoAuthLock?>, IOfficeObject<IWordCoAuthLocks>, IDisposable
 {
     /// <summary>
     /// 获取与当前锁定集合关联的Word应用程序对象

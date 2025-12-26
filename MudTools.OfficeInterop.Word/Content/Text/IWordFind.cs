@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 查找接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordFind : IDisposable
+public interface IWordFind : IOfficeObject<IWordFind>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

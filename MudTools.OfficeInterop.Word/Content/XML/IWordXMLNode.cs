@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的XML节点，提供对Word XML结构中节点的访问和操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordXMLNode : IDisposable
+public interface IWordXMLNode : IOfficeObject<IWordXMLNode>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

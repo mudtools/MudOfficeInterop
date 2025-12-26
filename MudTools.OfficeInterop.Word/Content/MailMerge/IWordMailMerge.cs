@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口提供了对邮件合并操作的全面控制，包括数据源管理、执行合并和状态查询 [[2]]。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordMailMerge : IDisposable
+public interface IWordMailMerge : IOfficeObject<IWordMailMerge>, IDisposable
 {
     /// <summary>
     /// 获取此邮件合并对象所属的 Word 应用程序对象。

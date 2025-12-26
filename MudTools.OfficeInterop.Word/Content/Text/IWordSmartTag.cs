@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 智能标签是 Word 中识别的术语，如人名、地点、日期等，可以与操作相关联
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordSmartTag : IDisposable
+public interface IWordSmartTag : IOfficeObject<IWordSmartTag>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

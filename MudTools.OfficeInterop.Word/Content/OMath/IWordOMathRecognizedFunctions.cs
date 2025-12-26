@@ -10,12 +10,14 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// OMathRecognizedFunctions 接口及实现类
 /// </summary>
-public interface IWordOMathRecognizedFunctions : IEnumerable<IWordOMathRecognizedFunction>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordOMathRecognizedFunctions : IEnumerable<IWordOMathRecognizedFunction?>, IOfficeObject<IWordOMathRecognizedFunctions>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中数学识别函数的数量。
@@ -39,5 +41,5 @@ public interface IWordOMathRecognizedFunctions : IEnumerable<IWordOMathRecognize
     /// </summary>
     /// <param name="Name">要添加的函数名称。</param>
     /// <returns>返回新添加的 <see cref="IWordOMathRecognizedFunction"/> 对象。</returns>
-    IWordOMathRecognizedFunction Add(string Name);
+    IWordOMathRecognizedFunction? Add(string Name);
 }

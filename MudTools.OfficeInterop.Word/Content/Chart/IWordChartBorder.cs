@@ -6,7 +6,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表边框格式的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordChartBorder : IDisposable
+public interface IWordChartBorder : IOfficeObject<IWordChartBorder>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -40,4 +40,6 @@ public interface IWordChartBorder : IDisposable
     /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
     float Weight { get; set; }
+
+
 }

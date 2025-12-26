@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 文档表格集合接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordTables : IDisposable, IEnumerable<IWordTable?>
+public interface IWordTables : IDisposable, IOfficeObject<IWordTables>, IEnumerable<IWordTable?>
 {
     /// <summary>
     /// 获取当前文档归属的<see cref="IWordApplication"/>对象。

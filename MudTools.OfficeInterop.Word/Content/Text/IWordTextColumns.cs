@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 使用 PageSetup 对象的 TextColumns 属性可返回 TextColumns 集合。
 /// </remarks>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordTextColumns : IEnumerable<IWordTextColumn?>, IDisposable
+public interface IWordTextColumns : IEnumerable<IWordTextColumn?>, IOfficeObject<IWordTextColumns>, IDisposable
 {
     #region 属性
 

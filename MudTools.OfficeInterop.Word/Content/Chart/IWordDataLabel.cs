@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表数据标签的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordDataLabel : IDisposable
+public interface IWordDataLabel : IOfficeObject<IWordDataLabel>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的一个协作者，提供对协作者信息的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordCoAuthor : IDisposable
+public interface IWordCoAuthor : IOfficeObject<IWordCoAuthor>, IDisposable
 {
     /// <summary>
     /// 获取与此协作者关联的Word应用程序实例

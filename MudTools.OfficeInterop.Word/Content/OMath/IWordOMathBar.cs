@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 在数学公式中，bar通常用于表示上划线符号，例如在复数的共轭或变量的平均值表示中
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathBar : IDisposable
+public interface IWordOMathBar : IOfficeObject<IWordOMathBar>, IDisposable
 {
     /// <summary>
     /// 获取与当前数学对象关联的Word应用程序实例

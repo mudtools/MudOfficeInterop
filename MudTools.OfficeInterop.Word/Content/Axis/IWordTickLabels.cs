@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表刻度标签的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTickLabels : IDisposable
+public interface IWordTickLabels : IOfficeObject<IWordTickLabels>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

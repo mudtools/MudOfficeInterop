@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的HTML分节（Division），提供对HTML分节的属性和操作的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordHTMLDivision : IDisposable
+public interface IWordHTMLDivision : IOfficeObject<IWordHTMLDivision>, IDisposable
 {
     /// <summary>
     /// 获取与该HTML分节关联的Word应用程序对象

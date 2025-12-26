@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中数学对象的分组字符功能接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathGroupChar : IDisposable
+public interface IWordOMathGroupChar : IOfficeObject<IWordOMathGroupChar>, IDisposable
 {
     /// <summary>
     /// 获取与当前对象关联的Word应用程序实例

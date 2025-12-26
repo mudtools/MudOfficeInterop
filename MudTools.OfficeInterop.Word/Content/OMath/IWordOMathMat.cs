@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的数学矩阵对象，提供对矩阵行、列和单元格的访问以及矩阵格式设置功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathMat : IDisposable
+public interface IWordOMathMat : IOfficeObject<IWordOMathMat>, IDisposable
 {
     /// <summary>
     /// 获取与此矩阵关联的Word应用程序实例

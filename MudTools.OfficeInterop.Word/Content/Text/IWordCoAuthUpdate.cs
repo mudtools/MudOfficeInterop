@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的协同编辑更新对象，用于处理Word文档中的协作编辑功能相关的操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordCoAuthUpdate : IDisposable
+public interface IWordCoAuthUpdate : IOfficeObject<IWordCoAuthUpdate>, IDisposable
 {
     /// <summary>
     /// 获取与此协同编辑更新对象关联的Word应用程序实例

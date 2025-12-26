@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 上涨柱线是在股票图表或柱形图表中表示数据点之间价格上涨的部分，通常在开盘价低于收盘价时显示。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordUpBars : IDisposable
+public interface IWordUpBars : IOfficeObject<IWordUpBars>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

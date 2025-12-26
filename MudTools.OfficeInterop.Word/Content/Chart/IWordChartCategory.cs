@@ -5,7 +5,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表分类的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordChartCategory : IDisposable
+public interface IWordChartCategory : IOfficeObject<IWordChartCategory>, IDisposable
 {
     /// <summary>
     /// 获取父对象。
@@ -21,4 +21,6 @@ public interface IWordChartCategory : IDisposable
     /// 获取或设置分类的筛选状态。
     /// </summary>
     bool IsFiltered { get; set; }
+
+
 }

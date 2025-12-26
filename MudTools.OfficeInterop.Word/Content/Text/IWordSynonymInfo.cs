@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对Word应用程序中同义词、反义词、相关表达等相关信息的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordSynonymInfo : IDisposable
+public interface IWordSynonymInfo : IOfficeObject<IWordSynonymInfo>, IDisposable
 {
     /// <summary>
     /// 获取与此对象关联的Word应用程序实例

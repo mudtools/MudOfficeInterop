@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口允许设置视图类型、是否包含隐藏文本和域代码等选项，以控制文本检索的行为。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTextRetrievalMode : IDisposable
+public interface IWordTextRetrievalMode : IOfficeObject<IWordTextRetrievalMode>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

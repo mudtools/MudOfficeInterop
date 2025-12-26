@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口用于处理Word文档中的数学公式，特别是带有上下限的数学符号（如积分、求和等）
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathLimUpp : IDisposable
+public interface IWordOMathLimUpp : IOfficeObject<IWordOMathLimUpp>, IDisposable
 {
     /// <summary>
     /// 获取与此数学对象关联的Word应用程序实例

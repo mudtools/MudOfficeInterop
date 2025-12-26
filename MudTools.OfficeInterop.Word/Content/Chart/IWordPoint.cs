@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中图表的一个数据点接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordPoint : IDisposable
+public interface IWordPoint : IOfficeObject<IWordPoint>, IDisposable
 {
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中数学对象的换行符功能接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathBreak : IDisposable
+public interface IWordOMathBreak : IOfficeObject<IWordOMathBreak>, IDisposable
 {
     /// <summary>
     /// 获取与此数学换行符关联的Word应用程序实例

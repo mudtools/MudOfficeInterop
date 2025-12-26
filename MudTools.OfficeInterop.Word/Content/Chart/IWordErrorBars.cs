@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表误差线的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordErrorBars : IDisposable
+public interface IWordErrorBars : IOfficeObject<IWordErrorBars>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

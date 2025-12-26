@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 中的数学公式积分/求和等符号接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathNary : IDisposable
+public interface IWordOMathNary : IOfficeObject<IWordOMathNary>, IDisposable
 {
     /// <summary>
     /// 获取与此对象关联的 Word 应用程序实例

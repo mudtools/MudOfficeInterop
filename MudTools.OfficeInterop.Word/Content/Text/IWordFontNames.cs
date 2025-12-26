@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 FontNames(index)（其中 index 是索引号）可返回单个字体名称。</para>
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordFontNames : IEnumerable<string?>, IDisposable
+public interface IWordFontNames : IEnumerable<string?>, IOfficeObject<IWordFontNames>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

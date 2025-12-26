@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表组集合的封装接口。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordChartGroups : IEnumerable<IWordChartGroup?>, IDisposable
+public interface IWordChartGroups : IEnumerable<IWordChartGroup?>, IOfficeObject<IWordChartGroups>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -38,4 +38,6 @@ public interface IWordChartGroups : IEnumerable<IWordChartGroup?>, IDisposable
     /// 通过索引获取图表组。
     /// </summary>
     IWordChartGroup? this[string name] { get; }
+
+
 }

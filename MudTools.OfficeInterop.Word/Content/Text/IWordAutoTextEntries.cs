@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对模板中所有自动图文集条目的访问、添加和枚举功能。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordAutoTextEntries : IEnumerable<IWordAutoTextEntry?>, IDisposable
+public interface IWordAutoTextEntries : IEnumerable<IWordAutoTextEntry?>, IOfficeObject<IWordAutoTextEntries>, IDisposable
 {
     /// <summary>
     /// 获取此集合所属的 Word 应用程序对象。

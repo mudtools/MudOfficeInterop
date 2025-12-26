@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中表格的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTable : IDisposable
+public interface IWordTable : IOfficeObject<IWordTable>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。

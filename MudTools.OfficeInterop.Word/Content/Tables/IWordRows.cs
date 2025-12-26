@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 表格行集合的封装接口。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordRows : IEnumerable<IWordRow?>, IDisposable
+public interface IWordRows : IEnumerable<IWordRow?>, IOfficeObject<IWordRows>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

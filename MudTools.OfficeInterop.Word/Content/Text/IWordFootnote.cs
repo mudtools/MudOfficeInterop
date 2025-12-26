@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 脚注的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordFootnote : IDisposable
+public interface IWordFootnote : IOfficeObject<IWordFootnote>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

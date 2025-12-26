@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 用于表示构建基块或自动图文集中内容的分类，如“常规”、“页眉”等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordCategory : IDisposable
+public interface IWordCategory : IOfficeObject<IWordCategory>, IDisposable
 {
     /// <summary>
     /// 获取该对象关联的Word应用程序实例

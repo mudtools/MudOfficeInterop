@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 自动图文集条目允许用户通过简短名称快速插入预定义内容（如段落、表格等）。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordAutoTextEntry : IDisposable
+public interface IWordAutoTextEntry : IOfficeObject<IWordAutoTextEntry>, IDisposable
 {
     /// <summary>
     /// 获取此对象所属的 Word 应用程序对象。

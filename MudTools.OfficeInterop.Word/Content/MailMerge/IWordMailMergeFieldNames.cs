@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口允许枚举和访问数据源中的各个字段。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordMailMergeFieldNames : IEnumerable<IWordMailMergeFieldName?>, IDisposable
+public interface IWordMailMergeFieldNames : IEnumerable<IWordMailMergeFieldName?>, IOfficeObject<IWordMailMergeFieldNames>, IDisposable
 {
     /// <summary>
     /// 获取此字段名称集合所属的 Word 应用程序对象。

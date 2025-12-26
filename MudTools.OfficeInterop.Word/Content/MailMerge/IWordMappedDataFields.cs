@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此集合包含了 Word 支持的所有预定义标准字段（如姓名、地址、城市等）的映射 [[1]]。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordMappedDataFields : IEnumerable<IWordMappedDataField?>, IDisposable
+public interface IWordMappedDataFields : IEnumerable<IWordMappedDataField?>, IOfficeObject<IWordMappedDataFields>, IDisposable
 {
     /// <summary>
     /// 获取此映射字段集合所属的 Word 应用程序对象。

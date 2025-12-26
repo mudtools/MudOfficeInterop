@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 代表 Word 中文档窗口的视图设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordView : IDisposable
+public interface IWordView : IOfficeObject<IWordView>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。

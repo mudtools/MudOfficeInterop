@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对Word文档中拼写错误的建议访问
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordSpellingSuggestions : IEnumerable<IWordSpellingSuggestion?>, IDisposable
+public interface IWordSpellingSuggestions : IEnumerable<IWordSpellingSuggestion?>, IOfficeObject<IWordSpellingSuggestions>, IDisposable
 {
 
     /// <summary>

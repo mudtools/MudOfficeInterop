@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装了 Microsoft.Office.Interop.Word.Window 对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordWindow : IDisposable
+public interface IWordWindow : IOfficeObject<IWordWindow>, IDisposable
 {
     #region 属性
 

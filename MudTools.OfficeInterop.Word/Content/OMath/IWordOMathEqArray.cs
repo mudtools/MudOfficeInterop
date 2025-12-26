@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对等式数组各种属性的访问和设置功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathEqArray : IDisposable
+public interface IWordOMathEqArray : IOfficeObject<IWordOMathEqArray>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的Word应用程序实例

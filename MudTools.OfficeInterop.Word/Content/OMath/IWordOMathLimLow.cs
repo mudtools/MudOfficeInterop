@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中下限极限数学对象的接口。此接口提供了对极限下限表达式的访问和操作方法。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathLimLow : IDisposable
+public interface IWordOMathLimLow : IOfficeObject<IWordOMathLimLow>, IDisposable
 {
     /// <summary>
     /// 获取与此对象关联的Word应用程序实例。

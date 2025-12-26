@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Interop.Word.TabStop 的接口，用于操作单个制表符。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTabStop : IDisposable
+public interface IWordTabStop : IOfficeObject<IWordTabStop>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

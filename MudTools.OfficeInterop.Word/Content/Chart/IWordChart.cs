@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordChart : IDisposable
+public interface IWordChart : IOfficeObject<IWordChart>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

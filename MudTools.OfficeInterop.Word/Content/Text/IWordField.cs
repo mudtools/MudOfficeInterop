@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Interop.Word.Field 的接口，用于操作Word域对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordField : IDisposable
+public interface IWordField : IOfficeObject<IWordField>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。

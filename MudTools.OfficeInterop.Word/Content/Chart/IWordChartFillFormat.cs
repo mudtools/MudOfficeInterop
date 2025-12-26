@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表填充格式的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordChartFillFormat : IDisposable
+public interface IWordChartFillFormat : IOfficeObject<IWordChartFillFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

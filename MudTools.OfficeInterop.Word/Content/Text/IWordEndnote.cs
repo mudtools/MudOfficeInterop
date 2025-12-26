@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 尾注的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordEndnote : IDisposable
+public interface IWordEndnote : IOfficeObject<IWordEndnote>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

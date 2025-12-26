@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口封装了图表图例中各个图例项的集合，支持通过索引或名称访问特定图例项。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordLegendEntries : IEnumerable<IWordLegendEntry?>, IDisposable
+public interface IWordLegendEntries : IEnumerable<IWordLegendEntry?>, IOfficeObject<IWordLegendEntries>, IDisposable
 {
     /// <summary>
     /// 获取与图例项集合关联的 Word 应用程序对象。
@@ -44,4 +44,6 @@ public interface IWordLegendEntries : IEnumerable<IWordLegendEntry?>, IDisposabl
     /// <param name="name">要获取的图例项的名称。</param>
     /// <returns>具有指定名称的图例项对象。</returns>
     IWordLegendEntry? this[string name] { get; }
+
+
 }

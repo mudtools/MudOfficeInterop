@@ -19,7 +19,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 图例键是图表中用来标识不同数据系列的视觉标记。
 /// </remarks>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordLegendKey : IDisposable
+public interface IWordLegendKey : IOfficeObject<IWordLegendKey>, IDisposable
 {
 
     /// <summary>

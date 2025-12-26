@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对模板基本属性的访问和修改能力。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTemplate : IDisposable
+public interface IWordTemplate : IOfficeObject<IWordTemplate>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 窗口集合接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordWindows : IDisposable, IEnumerable<IWordWindow?>
+public interface IWordWindows : IDisposable, IOfficeObject<IWordWindows>, IEnumerable<IWordWindow?>
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。

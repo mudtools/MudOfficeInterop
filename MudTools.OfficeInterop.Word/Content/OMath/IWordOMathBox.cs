@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// OMathBox是用于在Office文档中创建和操作数学框的接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathBox : IDisposable
+public interface IWordOMathBox : IOfficeObject<IWordOMathBox>, IDisposable
 {
     /// <summary>
     /// 获取与此OMathBox关联的Word应用程序对象

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的数学分数对象，提供对分数的分子、分母和类型的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathFrac : IDisposable
+public interface IWordOMathFrac : IOfficeObject<IWordOMathFrac>, IDisposable
 {
     /// <summary>
     /// 获取与该数学分数对象关联的Word应用程序实例

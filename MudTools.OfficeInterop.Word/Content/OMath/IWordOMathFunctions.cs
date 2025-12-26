@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的数学函数集合，提供对集合中数学函数的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordOMathFunctions : IEnumerable<IWordOMathFunction?>, IDisposable
+public interface IWordOMathFunctions : IEnumerable<IWordOMathFunction?>, IOfficeObject<IWordOMathFunctions>, IDisposable
 {
     /// <summary>
     /// 获取与当前数学函数集合关联的Word应用程序实例

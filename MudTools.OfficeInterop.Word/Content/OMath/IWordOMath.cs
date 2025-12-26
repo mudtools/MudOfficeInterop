@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中的数学对象，提供对Word文档中数学公式的访问和操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMath : IDisposable
+public interface IWordOMath : IOfficeObject<IWordOMath>, IDisposable
 {
     /// <summary>
     /// 获取与该数学对象关联的Word应用程序实例

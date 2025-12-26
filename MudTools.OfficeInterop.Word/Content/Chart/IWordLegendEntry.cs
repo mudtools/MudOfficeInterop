@@ -16,7 +16,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对图例项位置、格式和相关对象的访问能力。
 /// </remarks>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordLegendEntry : IDisposable
+public interface IWordLegendEntry : IOfficeObject<IWordLegendEntry>, IDisposable
 {
     /// <summary>
     /// 获取与该图例项关联的应用程序对象

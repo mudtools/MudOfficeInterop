@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 该集合包含某一构建基块类型（如页眉、页脚）下的所有类别（Category）。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
-public interface IWordCategories : IEnumerable<IWordCategory?>, IDisposable
+public interface IWordCategories : IEnumerable<IWordCategory?>, IOfficeObject<IWordCategories>, IDisposable
 {
     /// <summary>
     /// 获取该对象关联的Word应用程序实例

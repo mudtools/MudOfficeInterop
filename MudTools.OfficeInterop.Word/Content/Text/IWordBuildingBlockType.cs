@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 用于表示构建基块的类型，例如“页眉”、“页脚”、“自动图文集”等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordBuildingBlockType : IDisposable
+public interface IWordBuildingBlockType : IOfficeObject<IWordBuildingBlockType>, IDisposable
 {
     /// <summary>
     /// 获取该对象关联的Word应用程序实例

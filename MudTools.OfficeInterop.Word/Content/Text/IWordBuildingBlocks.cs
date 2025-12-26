@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 该集合包含某一特定类型（如页眉）和类别（如“常规”）下的所有构建基块条目。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
-public interface IWordBuildingBlocks : IEnumerable<IWordBuildingBlock?>, IDisposable
+public interface IWordBuildingBlocks : IEnumerable<IWordBuildingBlock?>, IOfficeObject<IWordBuildingBlocks>, IDisposable
 {
     /// <summary>
     /// 获取该对象关联的Word应用程序实例

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口用于处理包含基元素、上标和下标的数学表达式
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathScrPre : IDisposable
+public interface IWordOMathScrPre : IOfficeObject<IWordOMathScrPre>, IDisposable
 {
     /// <summary>
     /// 获取与此数学对象关联的 Word 应用程序实例

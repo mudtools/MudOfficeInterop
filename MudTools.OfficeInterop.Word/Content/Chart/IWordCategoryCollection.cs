@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表分类集合的封装接口。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordCategoryCollection : IEnumerable<IWordChartCategory?>, IDisposable
+public interface IWordCategoryCollection : IEnumerable<IWordChartCategory?>, IOfficeObject<IWordCategoryCollection>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -43,4 +43,6 @@ public interface IWordCategoryCollection : IEnumerable<IWordChartCategory?>, IDi
     /// <param name="name">分类的名称。</param>
     /// <returns>具有指定名称的分类对象。</returns>
     IWordChartCategory? this[string name] { get; }
+
+
 }

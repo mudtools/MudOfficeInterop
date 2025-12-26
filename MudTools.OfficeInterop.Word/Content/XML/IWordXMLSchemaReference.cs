@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口提供了访问和管理Word文档中XML架构引用的功能，包括获取架构信息、删除和重新加载架构引用等操作。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordXMLSchemaReference : IDisposable
+public interface IWordXMLSchemaReference : IOfficeObject<IWordXMLSchemaReference>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

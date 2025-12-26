@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中数学矩阵的一列
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathMatCol : IDisposable
+public interface IWordOMathMatCol : IOfficeObject<IWordOMathMatCol>, IDisposable
 {
     /// <summary>
     /// 获取与此矩阵列关联的 Word 应用程序实例

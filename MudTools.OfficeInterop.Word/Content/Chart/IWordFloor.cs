@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表地板的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordFloor : IDisposable
+public interface IWordFloor : IOfficeObject<IWordFloor>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

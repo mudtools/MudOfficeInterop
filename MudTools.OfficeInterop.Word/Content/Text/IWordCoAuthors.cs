@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的共同作者集合，提供对共同作者的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordCoAuthors : IEnumerable<IWordCoAuthor?>, IDisposable
+public interface IWordCoAuthors : IEnumerable<IWordCoAuthor?>, IOfficeObject<IWordCoAuthors>, IDisposable
 {
 
     /// <summary>

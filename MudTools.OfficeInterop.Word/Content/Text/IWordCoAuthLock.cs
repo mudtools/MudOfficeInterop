@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 协同认证锁定用于在多用户协作编辑文档时控制对特定部分的编辑权限
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordCoAuthLock : IDisposable
+public interface IWordCoAuthLock : IOfficeObject<IWordCoAuthLock>, IDisposable
 {
     /// <summary>
     /// 获取与当前协同认证锁定关联的Word应用程序实例

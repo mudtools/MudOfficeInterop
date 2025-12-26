@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中数学对象的换行符集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
-public interface IWordOMathBreaks : IEnumerable<IWordOMathBreak?>, IDisposable
+public interface IWordOMathBreaks : IEnumerable<IWordOMathBreak?>, IOfficeObject<IWordOMathBreaks>, IDisposable
 {
     /// <summary>
     /// 获取与当前数学对象换行符集合关联的Word应用程序实例

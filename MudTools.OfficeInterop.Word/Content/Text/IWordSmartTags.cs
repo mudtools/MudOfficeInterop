@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的智能标记集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordSmartTags : IEnumerable<IWordSmartTag?>, IDisposable
+public interface IWordSmartTags : IEnumerable<IWordSmartTag?>, IOfficeObject<IWordSmartTags>, IDisposable
 {
     /// <summary>
     /// 获取与智能标记集合关联的Word应用程序对象

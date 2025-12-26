@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对名称、内容、类别、类型等属性的访问，并支持删除操作。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordBuildingBlock : IDisposable
+public interface IWordBuildingBlock : IOfficeObject<IWordBuildingBlock>, IDisposable
 {
     /// <summary>
     /// 获取此对象所属的 Word 应用程序对象。

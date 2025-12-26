@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 该接口继承自 IEnumerable[IWordPoint] 和 IDisposable，支持遍历点集合和资源释放操作。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordPoints : IEnumerable<IWordPoint>, IDisposable
+public interface IWordPoints : IEnumerable<IWordPoint>, IOfficeObject<IWordPoints>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -36,4 +36,6 @@ public interface IWordPoints : IEnumerable<IWordPoint>, IDisposable
     /// <param name="index">要获取的点对象在集合中的从零开始的索引。</param>
     /// <returns>指定索引位置的点对象。</returns>
     IWordPoint this[int index] { get; }
+
+
 }

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word协同编辑更新集合，提供对文档中协同编辑更新的访问
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordCoAuthUpdates : IEnumerable<IWordCoAuthUpdate?>, IDisposable
+public interface IWordCoAuthUpdates : IEnumerable<IWordCoAuthUpdate?>, IOfficeObject<IWordCoAuthUpdates>, IDisposable
 {
     /// <summary>
     /// 获取与该协同编辑更新集合关联的Word应用程序对象

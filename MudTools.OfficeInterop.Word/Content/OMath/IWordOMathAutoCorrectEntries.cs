@@ -10,12 +10,14 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// OMathAutoCorrectEntries 接口及实现类
 /// </summary>
-public interface IWordOMathAutoCorrectEntries : IEnumerable<IWordOMathAutoCorrectEntry>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordOMathAutoCorrectEntries : IEnumerable<IWordOMathAutoCorrectEntry?>, IOfficeObject<IWordOMathAutoCorrectEntries>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中数学自动更正条目的数量。
@@ -44,8 +46,8 @@ public interface IWordOMathAutoCorrectEntries : IEnumerable<IWordOMathAutoCorrec
     /// <summary>
     /// 将新的数学自动更正条目添加到集合中。
     /// </summary>
-    /// <param name="Name">新条目的名称（键入的文本）。</param>
-    /// <param name="Value">新条目的值（替换的数学表达式）。</param>
+    /// <param name="name">新条目的名称（键入的文本）。</param>
+    /// <param name="value">新条目的值（替换的数学表达式）。</param>
     /// <returns>返回新添加的 <see cref="IWordOMathAutoCorrectEntry"/> 对象。</returns>
-    IWordOMathAutoCorrectEntry Add(string Name, string Value);
+    IWordOMathAutoCorrectEntry? Add(string name, string value);
 }

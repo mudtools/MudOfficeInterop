@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口提供了对目录内容、样式和操作的访问，同时管理底层 COM 对象的生命周期。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTableOfContents : IDisposable
+public interface IWordTableOfContents : IOfficeObject<IWordTableOfContents>, IDisposable
 {
     /// <summary>
     /// 获取此目录所属的 Word 应用程序对象。

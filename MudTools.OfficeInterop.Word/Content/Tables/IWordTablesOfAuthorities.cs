@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口允许枚举、访问特定引文目录，并向文档中添加新的引文目录 [[1]]。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordTablesOfAuthorities : IEnumerable<IWordTableOfAuthorities?>, IDisposable
+public interface IWordTablesOfAuthorities : IEnumerable<IWordTableOfAuthorities?>, IOfficeObject<IWordTablesOfAuthorities>, IDisposable
 {
     /// <summary>
     /// 获取此引文目录集合所属的 Word 应用程序对象。

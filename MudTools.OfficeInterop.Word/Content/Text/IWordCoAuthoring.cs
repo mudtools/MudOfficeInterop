@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对协同编写对象模型的主要入口点。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordCoAuthoring : IDisposable
+public interface IWordCoAuthoring : IOfficeObject<IWordCoAuthoring>, IDisposable
 {
     /// <summary>
     /// 获取与此协作者关联的Word应用程序实例

@@ -15,7 +15,7 @@ namespace MudTools.OfficeInterop.Word;
 /// TextColumn 对象是 TextColumns 集合的成员。每个 TextColumn 对象代表页面或节中的一列文本。
 /// </remarks>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTextColumn : IDisposable
+public interface IWordTextColumn : IOfficeObject<IWordTextColumn>, IDisposable
 {
     #region 属性
 

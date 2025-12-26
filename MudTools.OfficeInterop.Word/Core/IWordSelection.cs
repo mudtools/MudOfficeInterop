@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word Selection 接口，用于操作 Word 文档中的选择区域
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordSelection : IDisposable
+public interface IWordSelection : IOfficeObject<IWordSelection>, IDisposable
 {
     /// <summary>
     /// 获取当前文档归属的<see cref="IWordApplication"/>对象。

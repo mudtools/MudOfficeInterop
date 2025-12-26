@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中的数学公式中的Accents（重音符号）对象的接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathAcc : IDisposable
+public interface IWordOMathAcc : IOfficeObject<IWordOMathAcc>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的Word应用程序实例

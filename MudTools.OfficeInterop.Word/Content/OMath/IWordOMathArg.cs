@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中数学对象参数(OMath Arguments)的集合接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
-public interface IWordOMathArgs : IEnumerable<IWordOMath?>, IDisposable
+public interface IWordOMathArgs : IEnumerable<IWordOMath?>, IOfficeObject<IWordOMathArgs>, IDisposable
 {
     /// <summary>
     /// 获取与该数学对象参数集合关联的Word应用程序实例

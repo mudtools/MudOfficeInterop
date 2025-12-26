@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中数学矩阵的行集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordOMathMatRows : IEnumerable<IWordOMathMatRow?>, IDisposable
+public interface IWordOMathMatRows : IEnumerable<IWordOMathMatRow?>, IOfficeObject<IWordOMathMatRows>, IDisposable
 {
     /// <summary>
     /// 获取与该矩阵行集合关联的Word应用程序实例

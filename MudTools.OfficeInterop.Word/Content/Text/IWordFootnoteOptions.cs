@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 定义Word文档中脚注选项的接口，提供对脚注位置、编号样式、起始编号等属性的访问和设置功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordFootnoteOptions : IDisposable
+public interface IWordFootnoteOptions : IOfficeObject<IWordFootnoteOptions>, IDisposable
 {
 
     /// <summary>

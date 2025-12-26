@@ -6,7 +6,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口允许枚举、访问特定目录，并向文档中添加新的目录。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordTablesOfContents : IEnumerable<IWordTableOfContents?>, IDisposable
+public interface IWordTablesOfContents : IEnumerable<IWordTableOfContents?>, IOfficeObject<IWordTablesOfContents>, IDisposable
 {
     /// <summary>
     /// 获取此目录集合所属的 Word 应用程序对象。

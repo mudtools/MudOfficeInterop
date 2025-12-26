@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Interop.Word.Fields 的接口，用于操作Word域集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordFields : IEnumerable<IWordField?>, IDisposable
+public interface IWordFields : IEnumerable<IWordField?>, IOfficeObject<IWordFields>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

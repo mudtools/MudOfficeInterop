@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 提供对数学公式分隔符属性的访问和修改功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathDelim : IDisposable
+public interface IWordOMathDelim : IOfficeObject<IWordOMathDelim>, IDisposable
 {
     /// <summary>
     /// 获取与当前对象关联的Word应用程序实例

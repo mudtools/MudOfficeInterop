@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表趋势线的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTrendline : IDisposable
+public interface IWordTrendline : IOfficeObject<IWordTrendline>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

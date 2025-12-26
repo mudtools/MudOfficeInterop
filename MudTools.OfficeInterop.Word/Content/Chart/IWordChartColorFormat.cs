@@ -7,7 +7,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表颜色格式的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordChartColorFormat : IDisposable
+public interface IWordChartColorFormat : IOfficeObject<IWordChartColorFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -37,4 +37,6 @@ public interface IWordChartColorFormat : IDisposable
     /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
     MsoColorType Type { get; }
+
+
 }

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中上标数学对象的接口，用于处理数学公式中的上标元素
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathScrSup : IDisposable
+public interface IWordOMathScrSup : IOfficeObject<IWordOMathScrSup>, IDisposable
 {
     /// <summary>
     /// 获取与此上标对象关联的Word应用程序实例

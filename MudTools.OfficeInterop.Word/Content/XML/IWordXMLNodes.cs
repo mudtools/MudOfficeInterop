@@ -8,7 +8,7 @@
 namespace MudTools.OfficeInterop.Word;
 
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordXMLNodes : IEnumerable<IWordXMLNode>, IDisposable
+public interface IWordXMLNodes : IOfficeObject<IWordXMLNodes>, IEnumerable<IWordXMLNode>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

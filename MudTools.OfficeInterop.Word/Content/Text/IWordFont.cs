@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Interop.Word.Font 的接口，用于操作 Word 文档中文字的字体样式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordFont : IDisposable
+public interface IWordFont : IOfficeObject<IWordFont>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

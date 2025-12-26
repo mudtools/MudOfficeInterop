@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 支持按索引或名称访问、添加、查询、遍历等操作。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
-public interface IWordBuildingBlockEntries : IEnumerable<IWordBuildingBlock?>, IDisposable
+public interface IWordBuildingBlockEntries : IEnumerable<IWordBuildingBlock?>, IOfficeObject<IWordBuildingBlockEntries>, IDisposable
 {
     /// <summary>
     /// 获取该对象关联的Word应用程序实例

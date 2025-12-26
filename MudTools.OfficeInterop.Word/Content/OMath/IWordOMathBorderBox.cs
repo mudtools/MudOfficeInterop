@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中数学对象的边框框，用于控制数学公式周围的边框和删除线显示
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathBorderBox : IDisposable
+public interface IWordOMathBorderBox : IOfficeObject<IWordOMathBorderBox>, IDisposable
 {
     /// <summary>
     /// 获取与此数学对象关联的Word应用程序实例

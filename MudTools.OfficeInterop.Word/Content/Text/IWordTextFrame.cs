@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Interop.Word.TextFrame 的接口，用于操作文本框格式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTextFrame : IDisposable
+public interface IWordTextFrame : IOfficeObject<IWordTextFrame>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

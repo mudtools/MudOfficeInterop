@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口提供了对数据源的连接信息、字段、记录以及记录导航的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordMailMergeDataSource : IDisposable
+public interface IWordMailMergeDataSource : IOfficeObject<IWordMailMergeDataSource>, IDisposable
 {
     /// <summary>
     /// 获取此数据源所属的 Word 应用程序对象。

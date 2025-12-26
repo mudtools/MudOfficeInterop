@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中尾注选项的接口，用于配置和管理尾注的显示位置、编号样式等属性
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordEndnoteOptions : IDisposable
+public interface IWordEndnoteOptions : IOfficeObject<IWordEndnoteOptions>, IDisposable
 {
     /// <summary>
     /// 获取与此尾注选项关联的Word应用程序实例

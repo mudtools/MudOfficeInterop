@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表网格线的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordGridlines : IDisposable
+public interface IWordGridlines : IOfficeObject<IWordGridlines>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口允许获取或设置与预定义标准字段（如“姓氏”）关联的数据源字段名称 [[1]]。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordMappedDataField : IDisposable
+public interface IWordMappedDataField : IOfficeObject<IWordMappedDataField>, IDisposable
 {
     /// <summary>
     /// 获取此映射字段所属的 Word 应用程序对象。

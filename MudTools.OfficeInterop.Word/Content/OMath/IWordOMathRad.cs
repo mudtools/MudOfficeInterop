@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中数学公式中的根式（Radical）对象的接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordOMathRad : IDisposable
+public interface IWordOMathRad : IOfficeObject<IWordOMathRad>, IDisposable
 {
     /// <summary>
     /// 获取与该数学对象关联的Word应用程序实例

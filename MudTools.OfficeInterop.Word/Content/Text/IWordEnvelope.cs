@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 该对象始终可用，无论信封是否已插入到文档中 [[4]]。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordEnvelope : IDisposable
+public interface IWordEnvelope : IOfficeObject<IWordEnvelope>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。

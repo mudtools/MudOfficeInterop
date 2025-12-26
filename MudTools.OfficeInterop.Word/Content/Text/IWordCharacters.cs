@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 字符集合的封装接口。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordCharacters : IEnumerable<IWordRange?>, IDisposable
+public interface IWordCharacters : IEnumerable<IWordRange?>, IOfficeObject<IWordCharacters>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
