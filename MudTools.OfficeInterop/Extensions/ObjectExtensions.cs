@@ -27,7 +27,9 @@ internal static class ObjectExtensions
         var type = typeof(T);
         var impFullName = GetImpTypeName(type);
         // 查找实现类，该类必须是class类型且全名匹配
-        var implementationType = type.Assembly.GetExportedTypes()
+
+        var types = type.Assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract).ToList();
+        var implementationType = types
                         .Where(t => t.IsClass && !t.IsAbstract
                                     && t.FullName.Equals(impFullName, StringComparison.Ordinal))
                         .FirstOrDefault();
@@ -46,7 +48,7 @@ internal static class ObjectExtensions
 
     private static string GetImpTypeName(Type type)
     {
-        return $"{type.Namespace}.Imps.{type.Name}";
+        return $"{type.Namespace}.Imps.{type.Name.TrimStart('I')}";
     }
 
     private static object? CreateInstance(Type type)

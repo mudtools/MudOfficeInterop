@@ -42,8 +42,8 @@ namespace FindAndReplaceSample
                 find.Forward = forward;
                 find.Wrap = wrap;
 
-                bool found = find.Execute();
-                return found;
+                var found = find.Execute();
+                return found == true;
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace FindAndReplaceSample
                 find.Forward = true;
                 find.Wrap = WdFindWrap.wdFindStop;
 
-                while (find.Execute() && range.Start < range.End)
+                while (find.Execute() == true && range.Start < range.End)
                 {
                     positions.Add(new Tuple<int, int>(range.Start, range.End));
                     // 移动到下一个位置
@@ -103,13 +103,13 @@ namespace FindAndReplaceSample
                 find.Replacement.ClearFormatting();
                 find.Replacement.Text = replaceWith;
 
-                bool replaced = find.Execute(
+                var replaced = find.Execute(
                     findText: findText,
                     replaceWith: replaceWith,
                     replace: WdReplace.wdReplaceOne
                 );
 
-                return replaced;
+                return replaced == true;
             }
             catch (Exception ex)
             {
@@ -179,8 +179,8 @@ namespace FindAndReplaceSample
 
                 find.Text = ""; // 只基于格式查找
 
-                bool found = find.Execute();
-                return found;
+                var found = find.Execute();
+                return found == true;
             }
             catch (Exception ex)
             {
@@ -253,8 +253,8 @@ namespace FindAndReplaceSample
                 find.Text = pattern;
                 find.MatchWildcards = true;
 
-                bool found = find.Execute();
-                return found;
+                var found = find.Execute();
+                return found == true;
             }
             catch (Exception ex)
             {
@@ -315,8 +315,8 @@ namespace FindAndReplaceSample
                 find.MatchWholeWord = matchWholeWord;
                 find.MatchFuzzy = matchFuzzy;
 
-                bool found = find.Execute();
-                return found;
+                var found = find.Execute();
+                return found == true;
             }
             catch (Exception ex)
             {

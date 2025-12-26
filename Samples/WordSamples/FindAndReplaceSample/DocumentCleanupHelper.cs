@@ -268,7 +268,7 @@ namespace FindAndReplaceSample
                 find.Forward = true;
                 find.Wrap = WdFindWrap.wdFindStop;
 
-                while (find.Execute() && range.Start < range.End)
+                while (find.Execute() == true && range.Start < range.End)
                 {
                     // 高亮显示找到的文本
                     range.HighlightColorIndex = WdColorIndex.wdYellow;

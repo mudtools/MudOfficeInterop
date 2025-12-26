@@ -109,7 +109,7 @@ namespace FindAndReplaceSample
             {
                 string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.dotx");
                 string file2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.doc");
-
+                string imagefile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icon.png");
 
                 using var app = WordFactory.Open(file);
                 using var document = app.ActiveDocument;
@@ -123,6 +123,7 @@ namespace FindAndReplaceSample
                             if (pageHeaderFooter != null && pageHeaderFooter.Exists)
                             {
                                 ReplaceInRange(pageHeaderFooter.Range, "$$head$$", "123456");
+                                ReplaceImageTags(pageHeaderFooter.Range, imagefile);
                             }
                         }
                     }
@@ -217,7 +218,7 @@ namespace FindAndReplaceSample
             while (find.Execute().Value)
             {
                 // 此时 find.Parent 是包含匹配文本的 Range
-                Range foundRange = find.Parent as Range;
+                var foundRange = WordFactory.Create<IWordRange>(find.Parent);
                 if (foundRange != null)
                 {
                     // 记录位置（因为 AddPicture 会改变文档结构）
@@ -228,15 +229,15 @@ namespace FindAndReplaceSample
                     foundRange.Delete();
 
                     // 在原位置插入图片
-                    InlineShape inlineShape = foundRange.InlineShapes.AddPicture(
-                        FileName: imagePath,
-                        LinkToFile: false,
-                        SaveWithDocument: true
+                    var inlineShape = foundRange.InlineShapes.AddPicture(
+                        fileName: imagePath,
+                        linkToFile: false,
+                        saveWithDocument: true
                     );
 
                     // （可选）设置图片大小
-                    // inlineShape.Width = 300;
-                    // inlineShape.Height = 200;
+                    inlineShape.Width = 50;
+                    inlineShape.Height = 50;
                 }
             }
         }

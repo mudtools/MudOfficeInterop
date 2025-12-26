@@ -75,7 +75,7 @@ namespace FindAndReplaceSample
                 find.Forward = true;
                 find.Wrap = WdFindWrap.wdFindStop;
 
-                while (find.Execute() && range.Start < range.End)
+                while (find.Execute() == true && range.Start < range.End)
                 {
                     var result = new SearchResult
                     {
@@ -174,7 +174,7 @@ namespace FindAndReplaceSample
                 find.Forward = true;
                 find.Wrap = WdFindWrap.wdFindStop;
 
-                while (find.Execute() && range.Start < range.End)
+                while (find.Execute() == true && range.Start < range.End)
                 {
                     var result = new SearchResult
                     {
@@ -230,7 +230,7 @@ namespace FindAndReplaceSample
                 find.Forward = true;
                 find.Wrap = WdFindWrap.wdFindStop;
 
-                while (find.Execute() && range.Start < range.End)
+                while (find.Execute() == true && range.Start < range.End)
                 {
                     var result = new SearchResult
                     {
@@ -384,8 +384,8 @@ namespace FindAndReplaceSample
                 find.MatchFuzzy = options.MatchFuzzy;
                 find.MatchKashida = options.MatchKashida;
 
-                bool found = find.Execute();
-                return found;
+                var found = find.Execute();
+                return found == true;
             }
             catch (Exception ex)
             {
