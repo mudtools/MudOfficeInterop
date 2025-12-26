@@ -109,7 +109,7 @@ public interface IWordTable : IDisposable
     /// 获取或设置指定对象的样式。
     /// </summary>
     [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
-    WdBuiltinStyle? StyleEnum { get; set; }
+    WdBuiltinStyle? StyleType { get; set; }
 
     /// <summary>
     /// 获取或设置指定对象的样式。
