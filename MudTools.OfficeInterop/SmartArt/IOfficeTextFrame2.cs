@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中文本框架的接口封装，提供对文本框的各种属性和操作的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeTextFrame2 : IDisposable
+public interface IOfficeTextFrame2 : IOfficeObject<IOfficeTextFrame2>, IDisposable
 {
     /// <summary>
     /// 获取文本框架的父对象。

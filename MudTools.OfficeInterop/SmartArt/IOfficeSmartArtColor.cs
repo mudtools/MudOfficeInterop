@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对单个 SmartArt 颜色方案属性的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtColor : IDisposable
+public interface IOfficeSmartArtColor : IOfficeObject<IOfficeSmartArtColor>, IDisposable
 {
     /// <summary>
     /// 获取 SmartArt 颜色方案的名称。

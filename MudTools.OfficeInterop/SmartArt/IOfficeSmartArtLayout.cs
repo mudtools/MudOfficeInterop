@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对单个 SmartArt 布局属性的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtLayout : IDisposable
+public interface IOfficeSmartArtLayout : IOfficeObject<IOfficeSmartArtLayout>, IDisposable
 {
     /// <summary>
     /// 获取 SmartArt 布局的名称。

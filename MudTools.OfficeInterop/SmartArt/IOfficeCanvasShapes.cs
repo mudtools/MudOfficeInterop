@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示一个形状集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeCanvasShapes : IEnumerable<IOfficeShape?>, IDisposable
+public interface IOfficeCanvasShapes : IOfficeObject<IOfficeCanvasShapes>, IEnumerable<IOfficeShape?>, IDisposable
 {
     /// <summary>
     /// 通过索引获取形状

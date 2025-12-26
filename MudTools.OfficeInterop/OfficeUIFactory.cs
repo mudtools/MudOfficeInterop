@@ -16,6 +16,12 @@ namespace MudTools.OfficeInterop;
 /// </summary>
 public sealed class OfficeUIFactory
 {
+
+    // public static T Create<T>(this T t, object? officeUI) where T : IOfficeObject<T>
+    // {
+
+    // }
+
     /// <summary>
     /// 创建自定义任务窗格工厂的包装器实例
     /// </summary>

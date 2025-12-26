@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 应用程序中的标尺级别接口，用于控制文本的缩进设置
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeRulerLevel2 : IDisposable
+public interface IOfficeRulerLevel2 : IOfficeObject<IOfficeRulerLevel2>, IDisposable
 {
     /// <summary>
     /// 获取标尺级别的父对象

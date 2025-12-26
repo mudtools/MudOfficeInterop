@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// SmartArtNode 封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtNode : IDisposable
+public interface IOfficeSmartArtNode : IOfficeObject<IOfficeSmartArtNode>, IDisposable
 {
     /// <summary>
     /// 获取节点的父对象

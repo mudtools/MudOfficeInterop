@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中的一个形状对象（如文本框、图片等）的接口封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeShape : IDisposable
+public interface IOfficeShape : IOfficeObject<IOfficeShape>, IDisposable
 {
     /// <summary>
     /// 获取形状的唯一标识符

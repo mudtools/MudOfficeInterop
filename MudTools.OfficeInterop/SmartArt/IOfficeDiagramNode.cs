@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 图表中的一个节点，提供对图表节点的各种操作方法
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeDiagramNode : IDisposable
+public interface IOfficeDiagramNode : IOfficeObject<IOfficeDiagramNode>, IDisposable
 {
 
     /// <summary>

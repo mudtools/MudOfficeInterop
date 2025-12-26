@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中的图表对象接口，用于管理和操作 SmartArt 图形
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore", ComClassName = "IMsoDiagram")]
-public interface IOfficeDiagram : IDisposable
+public interface IOfficeDiagram : IOfficeObject<IOfficeDiagram>, IDisposable
 {
     /// <summary>
     /// 获取图表中的节点集合

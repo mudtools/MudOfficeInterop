@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 继承自 IEnumerable[IOfficeDiagramNode] 和 IDisposable，支持遍历和资源释放
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeDiagramNodes : IEnumerable<IOfficeDiagramNode?>, IDisposable
+public interface IOfficeDiagramNodes : IOfficeObject<IOfficeDiagramNodes>, IEnumerable<IOfficeDiagramNode?>, IDisposable
 {
     /// <summary>
     /// 选择集合中的所有图表节点
