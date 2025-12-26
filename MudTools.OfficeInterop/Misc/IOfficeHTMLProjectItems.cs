@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office HTML项目项的集合接口，提供对集合中项目项的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeHTMLProjectItems : IEnumerable<IOfficeHTMLProjectItem?>, IDisposable
+public interface IOfficeHTMLProjectItems : IOfficeObject<IOfficeHTMLProjectItems>, IEnumerable<IOfficeHTMLProjectItem?>, IDisposable
 {
     /// <summary>
     /// 获取此集合的父对象

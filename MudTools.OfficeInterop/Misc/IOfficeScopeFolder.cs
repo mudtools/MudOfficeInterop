@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对单个搜索范围文件夹属性的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeScopeFolder : IDisposable
+public interface IOfficeScopeFolder : IOfficeObject<IOfficeScopeFolder>, IDisposable
 {
     /// <summary>
     /// 获取搜索范围文件夹的名称。

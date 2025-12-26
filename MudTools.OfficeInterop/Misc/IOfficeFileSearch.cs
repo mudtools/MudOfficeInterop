@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对文件搜索功能的完整访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeFileSearch : IDisposable
+public interface IOfficeFileSearch : IOfficeObject<IOfficeFileSearch>, IDisposable
 {
     /// <summary>
     /// 获取搜索结果文件集合。

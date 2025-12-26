@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中图片裁剪功能的接口封装，用于控制图片在形状中的显示方式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeCrop : IDisposable
+public interface IOfficeCrop : IOfficeObject<IOfficeCrop>, IDisposable
 {
     /// <summary>
     /// 获取或设置图片相对于形状的水平偏移量

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对可搜索文件类型的管理功能。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeFileTypes : IEnumerable<MsoFileType>, IDisposable
+public interface IOfficeFileTypes : IOfficeObject<IOfficeFileTypes>, IEnumerable<MsoFileType>, IDisposable
 {
     /// <summary>
     /// 获取文件类型集合中项的数量。

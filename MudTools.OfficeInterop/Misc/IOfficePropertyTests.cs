@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对属性测试条件集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePropertyTests : IEnumerable<IOfficePropertyTest?>, IDisposable
+public interface IOfficePropertyTests : IOfficeObject<IOfficePropertyTests>, IEnumerable<IOfficePropertyTest?>, IDisposable
 {
     /// <summary>
     /// 获取属性测试条件集合中项的数量。

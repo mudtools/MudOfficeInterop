@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// <para>注：此接口基于对 Office FileSearch 对象模型的理解实现，因为 Word 特定的 FoundFiles SDK 文档有限。</para>
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeFoundFiles : IEnumerable<string>, IDisposable
+public interface IOfficeFoundFiles : IOfficeObject<IOfficeFoundFiles>, IEnumerable<string>, IDisposable
 {
     #region 基本属性 (Basic Properties)
     /// <summary>

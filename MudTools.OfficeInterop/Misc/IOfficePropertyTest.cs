@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对单个属性测试条件属性的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficePropertyTest : IDisposable
+public interface IOfficePropertyTest : IOfficeObject<IOfficePropertyTest>, IDisposable
 {
     /// <summary>
     /// 获取或设置属性测试的名称。

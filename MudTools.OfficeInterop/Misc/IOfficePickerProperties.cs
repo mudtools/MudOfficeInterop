@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对选取器属性集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePickerProperties : IEnumerable<IOfficePickerProperty?>, IDisposable
+public interface IOfficePickerProperties : IOfficeObject<IOfficePickerProperties>, IEnumerable<IOfficePickerProperty?>, IDisposable
 {
     /// <summary>
     /// 获取选取器属性集合中项的数量。

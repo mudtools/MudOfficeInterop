@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop;
 /// 此接口是对 Microsoft.Office.Core.UserPermission COM 对象的封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeUserPermission : IDisposable
+public interface IOfficeUserPermission : IOfficeObject<IOfficeUserPermission>, IDisposable
 {
     /// <summary>
     /// 获取与该权限集关联的用户的电子邮件地址。

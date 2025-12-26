@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft 脚本编辑器中项目资源管理器中的项目项分支的单个项目项。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeHTMLProjectItem : IDisposable
+public interface IOfficeHTMLProjectItem : IOfficeObject<IOfficeHTMLProjectItem>, IDisposable
 {
     /// <summary>
     /// 获取指定对象的父对象。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 提供允许直接从 Microsoft Office 应用程序将文档作为电子邮件发送的功能。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeMsoEnvelope : IDisposable
+public interface IOfficeMsoEnvelope : IOfficeObject<IOfficeMsoEnvelope>, IDisposable
 {
     /// <summary>
     /// 获取指定对象的父对象。
