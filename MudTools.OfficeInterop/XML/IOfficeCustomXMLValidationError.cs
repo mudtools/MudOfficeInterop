@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft.Office.Core.CustomXMLValidationErrors 集合中的单个验证错误。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeCustomXMLValidationError : IDisposable
+public interface IOfficeCustomXMLValidationError : IOfficeObject<IOfficeCustomXMLValidationError>, IDisposable
 {
     /// <summary>
     /// 获取 Microsoft.Office.Core.CustomXMLValidationError 对象的父对象。只读。

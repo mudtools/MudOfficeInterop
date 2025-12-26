@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft.Office.Core.CustomXMLValidationError 对象的集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeCustomXMLValidationErrors : IEnumerable<IOfficeCustomXMLValidationError?>, IDisposable
+public interface IOfficeCustomXMLValidationErrors : IOfficeObject<IOfficeCustomXMLValidationErrors>, IEnumerable<IOfficeCustomXMLValidationError?>, IDisposable
 {
     /// <summary>
     /// 获取一个 32 位整数，指示创建 Microsoft.Office.Core.CustomXMLValidationErrors 对象的应用程序。只读。

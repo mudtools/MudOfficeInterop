@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示文档中所有自定义 XML 部分的集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeCustomXMLParts : IEnumerable<IOfficeCustomXMLPart?>, IDisposable
+public interface IOfficeCustomXMLParts : IOfficeObject<IOfficeCustomXMLParts>, IEnumerable<IOfficeCustomXMLPart?>, IDisposable
 {
 
     /// <summary>

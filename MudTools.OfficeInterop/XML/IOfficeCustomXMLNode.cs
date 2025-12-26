@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft.Office.Core._CustomXMLParts 集合中的单个自定义 XML 部分。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeCustomXMLNode : IDisposable
+public interface IOfficeCustomXMLNode : IOfficeObject<IOfficeCustomXMLNode>, IDisposable
 {
     /// <summary>
     /// 获取父对象。

@@ -14,13 +14,13 @@ namespace MudTools.OfficeInterop;
 /// Office用户界面工厂类，用于创建各种Office UI对象的包装器实例
 /// 提供对CTP工厂、功能区UI和功能区控件等Office核心UI组件的统一创建接口
 /// </summary>
-public sealed class OfficeUIFactory
+public static class OfficeUIFactory
 {
 
-    // public static T Create<T>(this T t, object? officeUI) where T : IOfficeObject<T>
-    // {
-
-    // }
+    public static T? Create<T>(this T t, object comObj) where T : IOfficeObject<T>
+    {
+        return t.LoadFromObject(comObj);
+    }
 
     /// <summary>
     /// 创建自定义任务窗格工厂的包装器实例

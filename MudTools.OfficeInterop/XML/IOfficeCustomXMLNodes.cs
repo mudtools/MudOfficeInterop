@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office自定义XML节点集合的接口，提供了对集合中节点的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeCustomXMLNodes : IEnumerable<IOfficeCustomXMLNode?>, IDisposable
+public interface IOfficeCustomXMLNodes : IOfficeObject<IOfficeCustomXMLNodes>, IEnumerable<IOfficeCustomXMLNode?>, IDisposable
 {
     /// <summary>
     /// 获取父对象。
