@@ -13,12 +13,14 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 FontNames、LandscapeFontNames 或 PortraitFontNames 属性可返回 FontNames 对象。</para>
 /// <para>注：使用 FontNames(index)（其中 index 是索引号）可返回单个字体名称。</para>
 /// </summary>
-public interface IWordFontNames : IEnumerable<string>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordFontNames : IEnumerable<string?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
@@ -35,5 +37,5 @@ public interface IWordFontNames : IEnumerable<string>, IDisposable
     /// </summary>
     /// <param name="index">索引号（从 1 开始）。</param>
     /// <returns>指定的字体名称。</returns>
-    string this[int index] { get; }
+    string? this[int index] { get; }
 }

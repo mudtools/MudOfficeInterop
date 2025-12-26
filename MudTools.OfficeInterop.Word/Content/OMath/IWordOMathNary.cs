@@ -42,7 +42,8 @@ public interface IWordOMathNary : IDisposable
     /// <summary>
     /// 获取或设置积分/求和符号的字符代码
     /// </summary>
-    short Char { get; set; }
+    [IgnoreGenerator]
+    char Char { get; set; }
 
     /// <summary>
     /// 获取或设置是否自动调整符号大小以匹配被积函数大小

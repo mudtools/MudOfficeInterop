@@ -61,7 +61,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -77,9 +77,9 @@ namespace FindAndReplaceSample
                 find.Wrap = WdFindWrap.wdFindContinue;
 
                 // 执行查找
-                bool found = find.Execute();
+                var found = find.Execute();
 
-                if (found)
+                if (found.Value)
                 {
                     Console.WriteLine("找到了文本 '示例'");
                 }
@@ -193,6 +193,54 @@ namespace FindAndReplaceSample
             Console.WriteLine($"替换结果：{b}");
         }
 
+        public static void ReplaceImageTags(IWordRange range, string imagePath)
+        {
+            if (!File.Exists(imagePath))
+                throw new FileNotFoundException("图片文件不存在", imagePath);
+
+            // 创建 Find 对象
+            var find = range.Find;
+            find.ClearFormatting();
+
+            // 设置查找内容
+            find.Text = "$$image$$";
+            find.Forward = true;
+            find.Wrap = WdFindWrap.wdFindStop; // 避免无限循环
+            find.Format = false;
+            find.MatchCase = false;
+            find.MatchWholeWord = false;
+            find.MatchWildcards = false;
+            find.MatchSoundsLike = false;
+            find.MatchAllWordForms = false;
+
+            // 循环查找并替换
+            while (find.Execute().Value)
+            {
+                // 此时 find.Parent 是包含匹配文本的 Range
+                Range foundRange = find.Parent as Range;
+                if (foundRange != null)
+                {
+                    // 记录位置（因为 AddPicture 会改变文档结构）
+                    object start = foundRange.Start;
+                    object end = foundRange.End;
+
+                    // 删除原标签文本
+                    foundRange.Delete();
+
+                    // 在原位置插入图片
+                    InlineShape inlineShape = foundRange.InlineShapes.AddPicture(
+                        FileName: imagePath,
+                        LinkToFile: false,
+                        SaveWithDocument: true
+                    );
+
+                    // （可选）设置图片大小
+                    // inlineShape.Width = 300;
+                    // inlineShape.Height = 200;
+                }
+            }
+        }
+
         /// <summary>
         /// 格式查找和替换示例
         /// </summary>
@@ -200,7 +248,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
 
@@ -223,8 +271,8 @@ namespace FindAndReplaceSample
                 find.Text = ""; // 文本可以为空，只基于格式查找
 
                 // 执行查找
-                bool found = find.Execute();
-                if (found)
+                var found = find.Execute();
+                if (found.Value)
                 {
                     Console.WriteLine("找到了粗体文本");
                 }
@@ -258,7 +306,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -270,8 +318,8 @@ namespace FindAndReplaceSample
                 find.Text = "[0-9]{3}-[0-9]{4}-[0-9]{4}"; // 电话号码模式
                 find.MatchWildcards = true;
 
-                bool found = find.Execute();
-                if (found)
+                var found = find.Execute();
+                if (found.Value)
                 {
                     Console.WriteLine("找到了电话号码");
                 }
@@ -281,7 +329,7 @@ namespace FindAndReplaceSample
                 find.MatchWildcards = true;
 
                 found = find.Execute();
-                if (found)
+                if (found.Value)
                 {
                     Console.WriteLine("找到了邮箱地址");
                 }
@@ -291,7 +339,7 @@ namespace FindAndReplaceSample
                 find.MatchWildcards = true;
 
                 found = find.Execute();
-                if (found)
+                if (found.Value)
                 {
                     Console.WriteLine("找到了日期");
                 }
@@ -311,7 +359,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -323,27 +371,27 @@ namespace FindAndReplaceSample
                 // 大小写敏感查找
                 find.Text = "Word";
                 find.MatchCase = true;
-                bool found1 = find.Execute();
+                var found1 = find.Execute();
                 Console.WriteLine($"大小写敏感查找: {found1}");
 
                 // 全字匹配查找
                 find.Text = "word";
                 find.MatchCase = false;
                 find.MatchWholeWord = true;
-                bool found2 = find.Execute();
+                var found2 = find.Execute();
                 Console.WriteLine($"全字匹配查找: {found2}");
 
                 // 使用同义词库查找
                 find.Text = "car";
                 find.MatchFuzzy = true;
-                bool found3 = find.Execute();
+                var found3 = find.Execute();
                 Console.WriteLine($"同义词查找: {found3}");
 
                 // 向前查找
                 find.Text = "word";
                 find.Forward = true;
                 find.Wrap = WdFindWrap.wdFindStop;
-                bool found4 = find.Execute();
+                var found4 = find.Execute();
                 Console.WriteLine($"向前查找: {found4}");
 
                 Console.WriteLine("高级查找选项演示完成");
@@ -361,7 +409,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -415,7 +463,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
                 using var document = app.ActiveDocument;
@@ -583,7 +631,7 @@ namespace FindAndReplaceSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 隐藏Word窗口
 
                 using var document = app.ActiveDocument;

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 提供对 Office 帮助系统的访问和控制功能。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore", ComClassName = "IAssistance")]
-public interface IOfficeAssistance : IDisposable
+public interface IOfficeAssistance : IOfficeObject<IOfficeAssistance>, IDisposable
 {
     /// <summary>
     /// 搜索帮助内容。

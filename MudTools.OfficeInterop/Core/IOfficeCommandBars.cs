@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office应用程序中的命令栏集合接口，提供对命令栏集合的枚举和资源管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeCommandBars : IEnumerable<IOfficeCommandBar?>, IDisposable
+public interface IOfficeCommandBars : IEnumerable<IOfficeCommandBar?>, IOfficeObject<IOfficeCommandBars>, IDisposable
 {
     /// <summary>
     /// 获取命令栏集合中的命令栏数量

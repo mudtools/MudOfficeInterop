@@ -30,6 +30,7 @@
     <Project Path="Samples/WordSamples/GraphicsAndImageOperationsSample/GraphicsAndImageOperationsSample.csproj" />
     <Project Path="Samples/WordSamples/IntegrationWithWebApplicationsSample/IntegrationWithWebApplicationsSample.csproj" />
     <Project Path="Samples/WordSamples/MailMergeSample/MailMergeSample.csproj" />
+    <Project Path="Samples/WordSamples/MathEquationTypesettingSample/MathEquationTypesettingSample.csproj" />
     <Project Path="Samples/WordSamples/PageLayoutAndPrintingSample/PageLayoutAndPrintingSample.csproj" />
     <Project Path="Samples/WordSamples/ReportGenerationSystemSample/ReportGenerationSystemSample.csproj" />
     <Project Path="Samples/WordSamples/RibbonCustomizationSample/RibbonCustomizationSample.csproj" />

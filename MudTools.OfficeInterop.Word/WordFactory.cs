@@ -35,7 +35,7 @@ public static class WordFactory
     /// <remarks>
     /// 此方法会启动Word应用程序并创建一个空白文档
     /// </remarks>
-    public static IWordApplication BlankWorkbook()
+    public static IWordApplication BlankDocument()
     {
         // 创建WordApplication实例，这会启动Word应用程序
         var word = new WordApplication();

@@ -12,6 +12,40 @@ internal static class StringEx
     static StringEx()
         => _columnNumberStorage = new Dictionary<string, int>();
 
+    /// <summary>
+    /// 将 <see cref="short"/> 值安全地转换为 <see cref="char"/>。
+    /// </summary>
+    /// <param name="value">要转换的 16 位有符号整数。</param>
+    /// <returns>对应的 Unicode 字符。</returns>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// 当 <paramref name="value"/> 小于 0 时抛出，因为 <see cref="char"/> 不能表示负数。
+    /// 注意：<see cref="short"/> 的最大值（32767）小于 <see cref="char"/> 的最大值（65535），
+    /// 因此所有有效的非负 <see cref="short"/> 值均可安全转换为 <see cref="char"/>。
+    /// </exception>
+    public static char ToChar(this short value)
+    {
+        if (value < 0)
+            throw new ArgumentOutOfRangeException(nameof(value), "字符代码不能为负数。");
+        return (char)value;
+    }
+
+    /// <summary>
+    /// 将 <see cref="char"/> 安全地转换为 <see cref="short"/>。
+    /// </summary>
+    /// <param name="value">要转换的 Unicode 字符。</param>
+    /// <returns>对应的 16 位有符号整数（字符的 Unicode 码点）。</returns>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// 当 <paramref name="value"/> 的 Unicode 码点大于 <see cref="short.MaxValue"/>（32767）时抛出，
+    /// 因为 <see cref="short"/> 无法无损表示大于 32767 的字符码点（会导致符号位溢出，变为负数）。
+    /// </exception>
+    public static short ToShort(this char value)
+    {
+        if (value > short.MaxValue) // short.MaxValue = 32767
+            throw new ArgumentOutOfRangeException(nameof(value),
+                $"字符 '{value}' 的 Unicode 码点 ({(int)value}) 超出了 short 类型的最大值 ({short.MaxValue})，转换会导致数据溢出。");
+        return (short)value;
+    }
+
     public static int ToColumnNumber(this string @this)
     {
         if (!@this.IsValidColumnName())

@@ -10,17 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 脚注的封装接口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordFootnote : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取脚注索引。
@@ -30,84 +32,15 @@ public interface IWordFootnote : IDisposable
     /// <summary>
     /// 获取或设置引用文本范围。
     /// </summary>
-    IWordRange Reference { get; }
+    IWordRange? Reference { get; }
 
     /// <summary>
     /// 获取或设置脚注文本范围。
     /// </summary>
-    IWordRange Range { get; }
-
-    /// <summary>
-    /// 获取脚注编号。
-    /// </summary>
-    string Number { get; }
-
-    /// <summary>
-    /// 获取或设置脚注字体。
-    /// </summary>
-    IWordFont Font { get; }
-
-    /// <summary>
-    /// 获取或设置脚注段落格式。
-    /// </summary>
-    IWordParagraphFormat ParagraphFormat { get; }
-
-    /// <summary>
-    /// 选择脚注。
-    /// </summary>
-    void Select();
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 删除脚注。
     /// </summary>
     void Delete();
-
-    /// <summary>
-    /// 复制脚注。
-    /// </summary>
-    /// <returns>复制的脚注。</returns>
-    IWordFootnote Copy();
-
-    /// <summary>
-    /// 更新脚注编号。
-    /// </summary>
-    void Update();
-
-    /// <summary>
-    /// 获取脚注引用位置。
-    /// </summary>
-    /// <returns>引用位置范围。</returns>
-    IWordRange GetReferenceRange();
-
-    /// <summary>
-    /// 获取脚注内容位置。
-    /// </summary>
-    /// <returns>内容位置范围。</returns>
-    IWordRange GetContentRange();
-
-    /// <summary>
-    /// 修改脚注文本内容。
-    /// </summary>
-    /// <param name="newText">新文本内容。</param>
-    void ModifyText(string newText);
-
-    /// <summary>
-    /// 获取脚注文本内容。
-    /// </summary>
-    /// <returns>脚注文本。</returns>
-    string GetText();
-
-    /// <summary>
-    /// 设置脚注文本内容。
-    /// </summary>
-    /// <param name="text">文本内容。</param>
-    void SetText(string text);
-
-    /// <summary>
-    /// 检查脚注是否包含指定文本。
-    /// </summary>
-    /// <param name="text">要检查的文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <returns>是否包含。</returns>
-    bool ContainsText(string text, bool matchCase = false);
 }
