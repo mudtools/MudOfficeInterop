@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.Font 的接口，用于操作 Word 文档中文字的字体样式。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordFont : IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -35,11 +37,13 @@ public interface IWordFont : IDisposable
     /// <summary>
     /// 获取或设置是否为粗体。
     /// </summary>
+    [IgnoreGenerator]
     bool Bold { get; set; }
 
     /// <summary>
     /// 获取或设置是否为斜体。
     /// </summary>
+    [IgnoreGenerator]
     bool Italic { get; set; }
 
     /// <summary>
@@ -55,11 +59,13 @@ public interface IWordFont : IDisposable
     /// <summary>
     /// 获取或设置上标（如数学中的平方）。
     /// </summary>
+    [IgnoreGenerator]
     bool Superscript { get; set; }
 
     /// <summary>
     /// 获取或设置下标（如化学式 H₂O）。
     /// </summary>
+    [IgnoreGenerator]
     bool Subscript { get; set; }
 
     /// <summary>
@@ -95,11 +101,13 @@ public interface IWordFont : IDisposable
     /// <summary>
     /// 获取或设置是否为轮廓字体。
     /// </summary>
+    [IgnoreGenerator]
     bool Outline { get; set; }
 
     /// <summary>
     /// 获取或设置是否具有阴影效果。
     /// </summary>
+    [IgnoreGenerator]
     bool Shadow { get; set; }
 
     /// <summary>
@@ -110,6 +118,7 @@ public interface IWordFont : IDisposable
     /// <summary>
     /// 获取或设置字体是否隐藏。
     /// </summary>
+    [IgnoreGenerator]
     bool Hidden { get; set; }
 
     /// <summary>
