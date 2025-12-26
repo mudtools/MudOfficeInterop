@@ -52,3 +52,6 @@
 /Samples/ExcelSamples/WebApplicationIntegrationSample/obj
 /Samples/ExcelSamples/WorkbookWorksheetOperationsSample/obj
 /bin/Debug
+/Samples/ExcelSamples/BestPracticesSummarySample/obj/Debug/net6.0-windows
+/Samples/ExcelSamples/BestPracticesSummarySample/obj
+/Samples/ExcelSamples/ExcelAutomationIntroductionSample/obj
