@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中艺术字格式的接口封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeTextEffectFormat : IDisposable
+public interface IOfficeTextEffectFormat : IOfficeObject<IOfficeTextEffectFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置艺术字的文本内容。

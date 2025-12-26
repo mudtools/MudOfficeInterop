@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中阴影格式的接口封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeShadowFormat : IDisposable
+public interface IOfficeShadowFormat : IOfficeObject<IOfficeShadowFormat>, IDisposable
 {
     /// <summary>
     /// 获取阴影的颜色格式。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中图片格式的接口封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficePictureFormat : IDisposable
+public interface IOfficePictureFormat : IOfficeObject<IOfficePictureFormat>, IDisposable
 {
     /// <summary>
     /// 获取图片的裁剪信息，如果图片未被裁剪则返回null。

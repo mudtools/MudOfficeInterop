@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop;
 /// 用于控制倒影的透明度、大小、模糊度、偏移等视觉效果。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeReflectionFormat : IDisposable
+public interface IOfficeReflectionFormat : IOfficeObject<IOfficeReflectionFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置倒影的类型（无倒影、预设倒影样式等）。

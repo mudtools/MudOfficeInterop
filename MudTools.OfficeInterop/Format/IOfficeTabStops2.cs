@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示制表符停止位集合的接口，提供对制表符停止位的访问和操作功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeTabStops2 : IEnumerable<IOfficeTabStop2?>, IDisposable
+public interface IOfficeTabStops2 : IOfficeObject<IOfficeTabStops2>, IEnumerable<IOfficeTabStop2?>, IDisposable
 {
     /// <summary>
     /// 获取制表符停止位集合的父对象

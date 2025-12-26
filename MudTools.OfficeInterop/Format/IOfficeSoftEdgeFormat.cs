@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop;
 /// 提供柔化边缘的半径、类型等属性设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSoftEdgeFormat : IDisposable
+public interface IOfficeSoftEdgeFormat : IOfficeObject<IOfficeSoftEdgeFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置柔化边缘的类型。

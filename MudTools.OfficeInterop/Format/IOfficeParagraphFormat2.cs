@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office段落格式的接口，提供对段落各种格式属性的访问和设置功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeParagraphFormat2 : IDisposable
+public interface IOfficeParagraphFormat2 : IOfficeObject<IOfficeParagraphFormat2>, IDisposable
 {
     /// <summary>
     /// 获取段落的父对象

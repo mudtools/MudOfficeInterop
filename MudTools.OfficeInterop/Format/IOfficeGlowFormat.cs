@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对形状发光效果的访问和设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeGlowFormat : IDisposable
+public interface IOfficeGlowFormat : IOfficeObject<IOfficeGlowFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置发光效果的颜色格式。

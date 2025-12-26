@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 封装了Microsoft.Office.Core.ColorFormat COM对象
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeColorFormat : IDisposable
+public interface IOfficeColorFormat : IOfficeObject<IOfficeColorFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置颜色的RGB值

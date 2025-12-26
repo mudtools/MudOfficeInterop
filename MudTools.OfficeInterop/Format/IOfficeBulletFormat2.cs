@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供了对项目符号的各种属性和行为的访问，包括样式、类型、字体、可见性等设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeBulletFormat2 : IDisposable
+public interface IOfficeBulletFormat2 : IOfficeObject<IOfficeBulletFormat2>, IDisposable
 {
     /// <summary>
     /// 获取项目符号格式的父对象。
