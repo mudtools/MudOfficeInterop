@@ -23,6 +23,18 @@ namespace MudTools.OfficeInterop;
 public static class ExcelFactory
 {
     /// <summary>
+    /// 创建Office COM对象的包装器实例
+    /// 此方法通过反射查找与接口T对应的实现类，并将COM对象包装为强类型的接口实例
+    /// </summary>
+    /// <typeparam name="T">Office对象接口类型，必须实现IOfficeObject&lt;T&gt;接口</typeparam>
+    /// <param name="comObj">原始的COM对象，将被包装为接口T的实例</param>
+    /// <returns>接口T的实现实例，如果无法创建则返回默认值(null或类型的默认值)</returns>
+    public static T? Create<T>(object comObj) where T : IOfficeObject<T>
+    {
+        return ObjectExtensions.Create<T>(comObj);
+    }
+
+    /// <summary>
     /// 通过COM对象连接到现有的Excel应用程序实例
     /// </summary>
     /// <param name="comObj">COM对象，应为Excel应用程序实例</param>

@@ -5,10 +5,72 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Collections.Concurrent;
+using System.Linq.Expressions;
+
 namespace MudTools.OfficeInterop;
 
 internal static class ObjectExtensions
 {
+    // 缓存无参构造函数
+    private static readonly ConcurrentDictionary<Type, Func<object>?> _constructorCache = new();
+
+    /// <summary>
+    /// 创建Office UI对象的包装器实例
+    /// 此方法通过反射查找与接口T对应的实现类，并将COM对象包装为强类型的接口实例
+    /// </summary>
+    /// <typeparam name="T">Office对象接口类型，必须实现IOfficeObject&lt;T&gt;接口</typeparam>
+    /// <param name="comObj">原始的COM对象，将被包装为接口T的实例</param>
+    /// <returns>接口T的实现实例，如果无法创建则返回默认值(null或类型的默认值)</returns>
+    public static T? Create<T>(object comObj) where T : IOfficeObject<T>
+    {
+        var type = typeof(T);
+        var impFullName = GetImpTypeName(type);
+        // 查找实现类，该类必须是class类型且全名匹配
+        var implementationType = type.Assembly.GetExportedTypes()
+                        .Where(t => t.IsClass && !t.IsAbstract
+                                    && t.FullName.Equals(impFullName, StringComparison.Ordinal))
+                        .FirstOrDefault();
+
+        if (implementationType == null) return default;
+
+        // 通过反射创建实现类的实例
+        var instance = CreateInstance(implementationType);
+        if (instance == null)
+            return default;
+        // 将实例转换为接口T，并使用传入的COM对象加载数据
+        if (instance is T t)
+            return t.LoadFromObject(comObj);
+        return default;
+    }
+
+    private static string GetImpTypeName(Type type)
+    {
+        return $"{type.Namespace}.Imps.{type.Name}";
+    }
+
+    private static object? CreateInstance(Type type)
+    {
+        return _constructorCache.GetOrAdd(type, t =>
+        {
+            try
+            {
+                var constructor = t.GetConstructor(Type.EmptyTypes);
+                if (constructor == null)
+                    return null;
+
+                return Expression.Lambda<Func<object>>(
+                            Expression.New(constructor))
+                            .Compile();
+            }
+            catch
+            {
+                return null;
+            }
+        })?.Invoke();
+    }
+
+
     /// <summary>
     /// 将枚举值转换为另一种枚举类型（非空到非空）
     /// </summary>
