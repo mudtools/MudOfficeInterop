@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口封装了Microsoft.Office.Interop.Excel.IconCriterion对象，用于定义图标集中每个图标对应的条件
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelIconCriterion : IDisposable
+public interface IExcelIconCriterion : IOfficeObject<IExcelIconCriterion>, IDisposable
 {
 
     /// <summary>

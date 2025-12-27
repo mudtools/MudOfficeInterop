@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel TextFrame 对象的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTextFrame : IDisposable
+public interface IExcelTextFrame : IOfficeObject<IExcelTextFrame>, IDisposable
 {
     /// <summary>
     /// 获取或设置文本方向

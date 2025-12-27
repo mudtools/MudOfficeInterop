@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 本接口语义命名为 GroupObject，用于管理组合形状及其子项。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelGroupObject : IDisposable
+public interface IExcelGroupObject : IOfficeObject<IExcelGroupObject>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Worksheet 或 Shapes 集合）。

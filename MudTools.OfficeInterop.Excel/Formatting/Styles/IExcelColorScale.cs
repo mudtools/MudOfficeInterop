@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置和管理基于数值颜色渐变的条件格式规则
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelColorScale : IDisposable
+public interface IExcelColorScale : IOfficeObject<IExcelColorScale>, IDisposable
 {
     /// <summary>
     /// 获取条件格式规则的父对象

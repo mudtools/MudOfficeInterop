@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// ShapeRange 代表一个或多个形状对象的集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelShapeRange : IEnumerable<IExcelShape?>, IDisposable
+public interface IExcelShapeRange : IOfficeObject<IExcelShapeRange>, IEnumerable<IExcelShape?>, IDisposable
 {
     #region 基础属性
 

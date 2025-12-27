@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示自由形状（Freeform）路径中的一个节点，包含位置、类型和控制点信息。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelShapeNode : IDisposable
+public interface IExcelShapeNode : IOfficeObject<IExcelShapeNode>, IDisposable
 {
     /// <summary>
     /// 获取此节点所属的父对象（通常是 ShapeNodes 集合）。

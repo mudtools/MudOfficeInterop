@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置形状或图表元素的边框线条
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelLine : IDisposable
+public interface IExcelLine : IOfficeObject<IExcelLine>, IDisposable
 {
     #region 基础属性
     /// <summary>

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel工作表中的垂直分页符接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelVPageBreak : IDisposable
+public interface IExcelVPageBreak : IOfficeObject<IExcelVPageBreak>, IDisposable
 {
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Shapes 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelShapes : IEnumerable<IExcelShape?>, IDisposable
+public interface IExcelShapes : IOfficeObject<IExcelShapes>, IEnumerable<IExcelShape?>, IDisposable
 {
     /// <summary>
     /// 获取形状集合中的形状数量

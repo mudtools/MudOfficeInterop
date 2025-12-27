@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Borders 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelBorders : IEnumerable<IExcelBorder>, IDisposable
+public interface IExcelBorders : IOfficeObject<IExcelBorders>, IEnumerable<IExcelBorder>, IDisposable
 {
 
     /// <summary>

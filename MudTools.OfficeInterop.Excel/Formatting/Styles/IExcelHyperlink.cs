@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Hyperlink 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelHyperlink : IDisposable
+public interface IExcelHyperlink : IOfficeObject<IExcelHyperlink>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

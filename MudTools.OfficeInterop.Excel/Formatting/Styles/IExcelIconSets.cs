@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中图标集集合的接口，提供对图标集集合的访问和操作功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelIconSets : IEnumerable<IExcelIconSet?>, IDisposable
+public interface IExcelIconSets : IOfficeObject<IExcelIconSets>, IEnumerable<IExcelIconSet?>, IDisposable
 {
 
     /// <summary>

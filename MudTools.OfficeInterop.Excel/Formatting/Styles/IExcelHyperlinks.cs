@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Hyperlinks 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelHyperlinks : IEnumerable<IExcelHyperlink?>, IDisposable
+public interface IExcelHyperlinks : IOfficeObject<IExcelHyperlinks>, IEnumerable<IExcelHyperlink?>, IDisposable
 {
     /// <summary>
     /// 获取超链接集合中的超链接数量

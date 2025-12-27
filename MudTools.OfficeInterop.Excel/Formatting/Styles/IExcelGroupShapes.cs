@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中组合形状集合的封装接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelGroupShapes : IEnumerable<IExcelShape?>, IDisposable
+public interface IExcelGroupShapes : IOfficeObject<IExcelGroupShapes>, IEnumerable<IExcelShape?>, IDisposable
 {
 
     /// <summary>

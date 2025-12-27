@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.FormatCondition (及 ColorScale, DataBar, IconSetCondition) 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelFormatCondition : IDisposable
+public interface IExcelFormatCondition : IOfficeObject<IExcelFormatCondition>, IDisposable
 {
     #region 基础属性
     /// <summary>

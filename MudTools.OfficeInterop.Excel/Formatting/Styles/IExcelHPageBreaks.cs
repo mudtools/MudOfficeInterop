@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 继承自 IDisposable 和 IEnumerable 接口，支持资源释放和枚举功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelHPageBreaks : IDisposable, IEnumerable<IExcelHPageBreak?>
+public interface IExcelHPageBreaks : IOfficeObject<IExcelHPageBreaks>, IDisposable, IEnumerable<IExcelHPageBreak?>
 {
     /// <summary>
     /// 获取父级工作表
