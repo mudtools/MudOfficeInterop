@@ -11,19 +11,9 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示 Excel 中组合形状集合的封装接口
 /// </summary>
-public interface IExcelGroupShapes : IEnumerable<IExcelShape>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
+public interface IExcelGroupShapes : IEnumerable<IExcelShape?>, IDisposable
 {
-    /// <summary>
-    /// 获取组合形状的数量
-    /// </summary>
-    int Count { get; }
-
-    /// <summary>
-    /// 获取指定索引的形状对象
-    /// </summary>
-    /// <param name="index">形状索引（从1开始）或名称</param>
-    /// <returns>形状对象</returns>
-    IExcelShape this[object index] { get; }
 
     /// <summary>
     /// 获取父对象
@@ -36,7 +26,33 @@ public interface IExcelGroupShapes : IEnumerable<IExcelShape>, IDisposable
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取创建者信息
+    /// 获取组合形状的数量
     /// </summary>
-    int Creator { get; }
+    int Count { get; }
+
+    /// <summary>
+    /// 获取指定索引的形状对象
+    /// </summary>
+    /// <param name="index">形状索引（从1开始）或名称</param>
+    /// <returns>形状对象</returns>
+    IExcelShape? this[int index] { get; }
+
+    /// <summary>
+    /// 获取指定索引的形状对象
+    /// </summary>
+    /// <param name="index">形状索引（从1开始）或名称</param>
+    /// <returns>形状对象</returns>
+    IExcelShape? this[string index] { get; }
+
+    /// <summary>
+    /// 获取组合形状的范围对象
+    /// </summary>
+    [MethodIndex]
+    IExcelShapeRange? Range(int index);
+
+    /// <summary>
+    /// 获取组合形状的范围对象
+    /// </summary>
+    [MethodIndex]
+    IExcelShapeRange? Range(string index);
 }
