@@ -65,7 +65,6 @@ internal partial class ExcelWorksheet : IExcelWorksheet
                 _cells?.Dispose();
                 _circularReference?.Dispose();
                 _sort?.Dispose();
-                _pageSetup?.Dispose();
                 _shapes?.Dispose();
                 _pictures?.Dispose();
                 _hyperlinks?.Dispose();
@@ -128,9 +127,9 @@ internal partial class ExcelWorksheet : IExcelWorksheet
 
     #region 基础属性
 
-    private IExcelPrintPreview? _printPreview;
+    private IExcelPageSetup? _printPreview;
 
-    public IExcelPrintPreview? PrintPreview
+    public IExcelPageSetup? PageSetup
     {
         get
         {
@@ -138,7 +137,7 @@ internal partial class ExcelWorksheet : IExcelWorksheet
                 return null;
             if (_printPreview != null)
                 return _printPreview;
-            _printPreview = new ExcelPrintPreview(_worksheet.PageSetup);
+            _printPreview = new ExcelPageSetup(_worksheet.PageSetup);
             return _printPreview;
         }
     }
@@ -748,27 +747,6 @@ internal partial class ExcelWorksheet : IExcelWorksheet
     }
     #endregion
 
-    #region 页面设置
-
-    /// <summary>
-    /// 页面设置对象缓存
-    /// </summary>
-    private IExcelPageSetup? _pageSetup;
-
-    /// <summary>
-    /// 获取工作表的页面设置对象
-    /// </summary>
-    public IExcelPageSetup? PageSetup
-    {
-        get
-        {
-            if (_worksheet == null) return null;
-            _pageSetup ??= new ExcelPageSetup(_worksheet.PageSetup);
-            return _pageSetup;
-        }
-    }
-
-    #endregion
 
     #region 形状和图表
 
