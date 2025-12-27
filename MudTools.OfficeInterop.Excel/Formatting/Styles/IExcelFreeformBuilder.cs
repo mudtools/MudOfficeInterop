@@ -36,5 +36,5 @@ public interface IExcelFreeformBuilder : IDisposable
     /// 将自由多边形形状构建器转换为实际的形状对象
     /// </summary>
     /// <returns>转换后的Excel形状对象</returns>
-    IExcelShape ConvertToShape();
+    IExcelShape? ConvertToShape();
 }

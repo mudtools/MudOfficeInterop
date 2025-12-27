@@ -10,6 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Gridlines 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Gridlines 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelGridlines : IDisposable
 {
     #region 基础属性
@@ -33,12 +34,12 @@ public interface IExcelGridlines : IDisposable
     /// <summary>
     /// 获取网格线的边框对象
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取绘图区的字体对象
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
     #endregion   
 
     #region 操作方法
