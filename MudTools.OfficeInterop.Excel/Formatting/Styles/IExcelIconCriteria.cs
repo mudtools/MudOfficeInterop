@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口继承自IEnumerable[IExcelIconCriterion]和IDisposable，支持遍历和资源释放
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelIconCriteria : IEnumerable<IExcelIconCriterion>, IDisposable
+public interface IExcelIconCriteria : IEnumerable<IExcelIconCriterion?>, IDisposable
 {
 
     /// <summary>

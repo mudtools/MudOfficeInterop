@@ -7,7 +7,9 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
-
+/// <summary>
+/// 表示一个图标集条件格式规则
+/// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelIconSetCondition : IDisposable
 {

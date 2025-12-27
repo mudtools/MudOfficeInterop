@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ThreeDFormat 对象的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelThreeDFormat : IOfficeObject<IExcelThreeDFormat>, IDisposable
+public interface IExcelThreeDFormat : IOfficeObject<IExcelThreeDFormat?>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape）。
@@ -146,12 +146,12 @@ public interface IExcelThreeDFormat : IOfficeObject<IExcelThreeDFormat>, IDispos
     /// <summary>
     /// 获取轮廓颜色格式
     /// </summary>
-    IExcelColorFormat ContourColor { get; }
+    IExcelColorFormat? ContourColor { get; }
 
     /// <summary>
     /// 获取挤出颜色格式
     /// </summary>
-    IExcelColorFormat ExtrusionColor { get; }
+    IExcelColorFormat? ExtrusionColor { get; }
 
     /// <summary>
     /// 获取或设置是否投影文本

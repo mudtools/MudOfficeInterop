@@ -10,8 +10,21 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示Excel工作表中的垂直分页符集合接口
 /// </summary>
-public interface IExcelVPageBreaks : IDisposable, IEnumerable<IExcelVPageBreak>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelVPageBreaks : IDisposable, IEnumerable<IExcelVPageBreak?>
 {
+    /// <summary>
+    /// 获取样式所在的父对象
+    /// 对应 Style.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取样式所在的Application对象
+    /// 对应 Style.Application 属性
+    /// </summary>
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取垂直分页符集合中的分页符数量
     /// </summary>
@@ -31,45 +44,4 @@ public interface IExcelVPageBreaks : IDisposable, IEnumerable<IExcelVPageBreak>
     /// <returns>新创建的垂直分页符对象</returns>
     IExcelVPageBreak? Add(IExcelRange before);
 
-    /// <summary>
-    /// 根据范围查找垂直分页符
-    /// </summary>
-    /// <param name="range">范围对象</param>
-    /// <returns>垂直分页符对象</returns>
-    IExcelVPageBreak? FindByRange(IExcelRange range);
-
-    /// <summary>
-    /// 根据列号查找垂直分页符
-    /// </summary>
-    /// <param name="column">列号</param>
-    /// <returns>垂直分页符对象</returns>
-    IExcelVPageBreak? FindByColumn(int column);
-
-    /// <summary>
-    /// 移除指定索引的垂直分页符
-    /// </summary>
-    /// <param name="index">分页符索引</param>
-    void RemoveAt(int index);
-
-    /// <summary>
-    /// 移除指定范围的垂直分页符
-    /// </summary>
-    /// <param name="range">范围对象</param>
-    void RemoveByRange(IExcelRange range);
-
-    /// <summary>
-    /// 移除指定列号的垂直分页符
-    /// </summary>
-    /// <param name="column">列号</param>
-    void RemoveByColumn(int column);
-
-    /// <summary>
-    /// 获取父级工作表
-    /// </summary>
-    IExcelWorksheet? Parent { get; }
-
-    /// <summary>
-    /// 获取分页符应用的范围
-    /// </summary>
-    IExcelRange? Range { get; }
 }

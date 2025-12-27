@@ -10,79 +10,46 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示Excel工作表中的垂直分页符接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelVPageBreak : IDisposable
 {
 
     /// <summary>
-    /// 获取或设置垂直分页符的类型
+    /// 返回表示 Microsoft Excel 应用程序的 Application 对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
+    /// <summary>
+    /// 返回指定对象的父工作表。
+    /// </summary>
+    IExcelWorksheet? Parent { get; }
+
+    /// <summary>
+    /// 获取或设置分页符的类型。
     /// </summary>
     XlPageBreak Type { get; set; }
 
     /// <summary>
-    /// 获取或设置垂直分页符的位置范围
+    /// 获取指定分页符的范围类型：全屏或仅在打印区域内。
     /// </summary>
-    IExcelRange Location { get; set; }
+    XlPageBreakExtent Extent { get; }
 
     /// <summary>
-    /// 获取垂直分页符的起始列号
+    /// 获取或设置定义分页符位置的单元格（一个 Range 对象）。
     /// </summary>
-    int StartColumn { get; }
+    IExcelRange? Location { get; set; }
 
     /// <summary>
-    /// 获取垂直分页符的结束列号
-    /// </summary>
-    int EndColumn { get; }
-
-    /// <summary>
-    /// 获取关联的工作表
-    /// </summary>
-    IExcelWorksheet Worksheet { get; }
-
-    /// <summary>
-    /// 获取分页符是否启用
-    /// </summary>
-    bool Enabled { get; set; }
-
-    /// <summary>
-    /// 移除垂直分页符
+    /// 删除对象。
     /// </summary>
     void Delete();
 
     /// <summary>
-    /// 移动分页符到指定列
+    /// 将分页符拖出打印区域。
     /// </summary>
-    /// <param name="column">目标列号</param>
-    void MoveToColumn(int column);
-
-    /// <summary>
-    /// 获取分页符前一列的范围
-    /// </summary>
-    /// <returns>范围对象</returns>
-    IExcelRange GetPreviousColumnRange();
-
-    /// <summary>
-    /// 获取分页符后一列的范围
-    /// </summary>
-    /// <returns>范围对象</returns>
-    IExcelRange GetNextColumnRange();
-
-    /// <summary>
-    /// 获取分页符影响的列数
-    /// </summary>
-    /// <returns>列数</returns>
-    int GetAffectedColumnCount();
-
-    /// <summary>
-    /// 检查分页符是否与指定范围重叠
-    /// </summary>
-    /// <param name="range">范围对象</param>
-    /// <returns>是否重叠</returns>
-    bool OverlapsWith(IExcelRange range);
-
-    /// <summary>
-    /// 验证分页符位置是否有效
-    /// </summary>
-    /// <returns>是否有效</returns>
-    bool Validate();
+    /// <param name="direction">必需 XlDirection。分页符被拖动的方向。</param>
+    /// <param name="regionIndex">必需 Integer。分页符的打印区域索引（如果用户拖动分页符，鼠标指针所在区域的索引）。如果打印区域是连续的，则只有一个打印区域。如果打印区域是不连续的，则有多个打印区域。</param>
+    void DragOff(XlDirection direction, int regionIndex);
 
 }
