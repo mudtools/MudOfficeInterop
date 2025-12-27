@@ -10,30 +10,10 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Style 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Style 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelStyle : IDisposable
 {
     #region 基础属性
-
-    /// <summary>
-    /// 获取本地化样式名称
-    /// 对应 Style.NameLocal 属性
-    /// </summary>
-    public string NameLocal { get; }
-
-    /// <summary>
-    /// 获取样式名称
-    /// 对应 Style.Name 属性
-    /// </summary>
-    string Name { get; }
-
-
-    /// <summary>
-    /// 获取样式是否为内置样式
-    /// 对应 Style.BuiltIn 属性
-    /// </summary>
-    bool BuiltIn { get; }
-
-
     /// <summary>
     /// 获取样式所在的父对象
     /// 对应 Style.Parent 属性
@@ -48,164 +28,139 @@ public interface IExcelStyle : IDisposable
 
     #endregion
 
-    #region 格式属性
-
     /// <summary>
-    /// 获取或设置是否包含数字格式
-    /// </summary>
-    bool IncludeNumber { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否包含字体格式
-    /// </summary>
-    bool IncludeFont { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否包含对齐格式
-    /// </summary>
-    bool IncludeAlignment { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否添加缩进
+    /// 获取或设置一个布尔值，表示当单元格中的文本对齐方式设置为水平或垂直均等分布时，文本是否自动缩进。
     /// </summary>
     bool AddIndent { get; set; }
 
-
     /// <summary>
-    /// 获取样式的字体对象
-    /// 对应 Style.Font 属性
+    /// 获取一个布尔值，表示样式是否为内置样式。
     /// </summary>
-    IExcelFont? Font { get; }
+    bool BuiltIn { get; }
 
     /// <summary>
-    /// 获取样式的边框对象
-    /// 对应 Style.Borders 属性
+    /// 获取表示样式边框的Borders集合。
     /// </summary>
     IExcelBorders? Borders { get; }
 
     /// <summary>
-    /// 获取样式的内部格式对象
-    /// 对应 Style.Interior 属性
+    /// 删除此样式对象。
     /// </summary>
-    IExcelInterior? Interior { get; }
+    /// <returns>操作结果。</returns>
+    object? Delete();
 
     /// <summary>
-    /// 获取样式的本地化数字格式
-    /// 对应 Style.NumberFormatLocal 属性
+    /// 获取表示指定对象字体的Font对象。
     /// </summary>
-    string NumberFormatLocal { get; set; }
+    IExcelFont? Font { get; }
 
     /// <summary>
-    /// 获取样式的数字格式
-    /// 对应 Style.NumberFormat 属性
+    /// 获取或设置一个布尔值，表示在工作表受保护时公式是否隐藏。
     /// </summary>
-    string NumberFormat { get; set; }
+    bool FormulaHidden { get; set; }
 
     /// <summary>
-    /// 获取样式的水平对齐方式
-    /// 对应 Style.HorizontalAlignment 属性
+    /// 获取或设置指定对象的水平对齐方式。
     /// </summary>
     XlHAlign HorizontalAlignment { get; set; }
 
     /// <summary>
-    /// 获取样式的垂直对齐方式
-    /// 对应 Style.VerticalAlignment 属性
+    /// 获取或设置一个布尔值，表示样式是否包含对齐属性（包括AddIndent、HorizontalAlignment、VerticalAlignment、WrapText和Orientation属性）。
     /// </summary>
-    XlVAlign VerticalAlignment { get; set; }
+    bool IncludeAlignment { get; set; }
 
     /// <summary>
-    /// 获取样式是否自动换行
-    /// 对应 Style.WrapText 属性
+    /// 获取或设置一个布尔值，表示样式是否包含边框属性（包括边框的颜色、颜色索引、线型和粗细属性）。
     /// </summary>
-    bool WrapText { get; set; }
+    bool IncludeBorder { get; set; }
 
     /// <summary>
-    /// 获取样式的缩进级别
-    /// 对应 Style.IndentLevel 属性
+    /// 获取或设置一个布尔值，表示样式是否包含字体属性（包括字体的背景、粗体、颜色、颜色索引、字体样式、斜体、名称、轮廓字体、阴影、大小、删除线、下标、上标和下划线属性）。
+    /// </summary>
+    bool IncludeFont { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示样式是否包含数字格式属性（NumberFormat属性）。
+    /// </summary>
+    bool IncludeNumber { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示样式是否包含图案属性（包括内部区域的色彩、颜色索引、负值时反转、图案、图案颜色和图案颜色索引属性）。
+    /// </summary>
+    bool IncludePatterns { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示样式是否包含保护属性（包括FormulaHidden和Locked属性）。
+    /// </summary>
+    bool IncludeProtection { get; set; }
+
+    /// <summary>
+    /// 获取或设置样式的缩进级别。
     /// </summary>
     int IndentLevel { get; set; }
 
     /// <summary>
-    /// 获取样式的阅读顺序
-    /// 对应 Style.ReadingOrder 属性
+    /// 获取表示指定对象内部区域的Interior对象。
     /// </summary>
-    int ReadingOrder { get; set; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
-    /// 获取样式的旋转角度
-    /// 对应 Style.Orientation 属性
-    /// </summary>
-    XlOrientation Orientation { get; set; }
-
-    /// <summary>
-    /// 获取样式是否添加前缀
-    /// 对应 Style.ShrinkToFit 属性
-    /// </summary>
-    bool ShrinkToFit { get; set; }
-
-    /// <summary>
-    /// 获取样式是否合并单元格
-    /// 对应 Style.MergeCells 属性
-    /// </summary>
-    bool MergeCells { get; set; }
-
-    /// <summary>
-    /// 获取样式是否锁定
-    /// 对应 Style.Locked 属性
+    /// 获取或设置一个布尔值，表示对象是否被锁定。当工作表受保护时，如果为true则对象被锁定，如果为false则对象可以被修改。
     /// </summary>
     bool Locked { get; set; }
 
     /// <summary>
-    /// 获取样式是否隐藏公式
-    /// 对应 Style.FormulaHidden 属性
+    /// 获取或设置一个值，表示样式是否包含合并的单元格。
     /// </summary>
-    bool FormulaHidden { get; set; }
-
-    #endregion
-
-    #region 操作方法
+    object MergeCells { get; set; }
 
     /// <summary>
-    /// 删除样式
-    /// 对应 Style.Delete 方法
+    /// 获取样式的名称。
     /// </summary>
-    void Delete();
+    string Name { get; }
 
     /// <summary>
-    /// 复制样式
+    /// 获取以用户语言显示的样式名称。
     /// </summary>
-    /// <param name="newName">新样式名称</param>
-    /// <returns>复制的样式对象</returns>
-    IExcelStyle? Copy(string newName);
+    string NameLocal { get; }
 
     /// <summary>
-    /// 重命名样式
+    /// 获取或设置对象的格式代码。
     /// </summary>
-    /// <param name="newName">新样式名称</param>
-    void Rename(string newName);
+    string NumberFormat { get; set; }
 
     /// <summary>
-    /// 应用样式到指定区域
+    /// 获取或设置以用户语言显示的对象的格式代码。
     /// </summary>
-    /// <param name="range">目标区域</param>
-    /// <param name="includeFont">是否包含字体</param>
-    /// <param name="includeBorder">是否包含边框</param>
-    /// <param name="includeFill">是否包含填充</param>
-    void ApplyTo(IExcelRange range, bool includeFont = true, bool includeBorder = true, bool includeFill = true);
+    string NumberFormatLocal { get; set; }
 
     /// <summary>
-    /// 重置样式为默认值
+    /// 获取或设置文本方向。可以是-90到90度的整数值，或者是XlOrientation枚举的常量之一。
     /// </summary>
-    void Reset();
-
-    #endregion
-
-    #region 高级功能
+    XlOrientation Orientation { get; set; }
 
     /// <summary>
-    /// 克隆样式
+    /// 获取或设置一个布尔值，表示文本是否自动收缩以适应可用的列宽。
     /// </summary>
-    /// <returns>克隆的样式对象</returns>
-    IExcelStyle? Clone();
-    #endregion
+    bool ShrinkToFit { get; set; }
+
+    /// <summary>
+    /// 获取指定样式的名称。
+    /// </summary>
+    string Value { get; }
+
+    /// <summary>
+    /// 获取或设置指定对象的垂直对齐方式。
+    /// </summary>
+    XlVAlign VerticalAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示Excel是否在对象中自动换行文本。
+    /// </summary>
+    bool WrapText { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定对象的阅读顺序。
+    /// </summary>
+    int ReadingOrder { get; set; }
 }
