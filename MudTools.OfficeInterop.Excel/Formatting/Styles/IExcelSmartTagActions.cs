@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel SmartTagActions 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.SmartTagActions 的安全访问和操作
 /// </summary>
-public interface IExcelSmartTagActions : IEnumerable<IExcelSmartTagAction>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelSmartTagActions : IEnumerable<IExcelSmartTagAction?>, IDisposable
 {
     /// <summary>
     /// 获取智能标记动作集合中的动作数量
@@ -24,13 +25,13 @@ public interface IExcelSmartTagActions : IEnumerable<IExcelSmartTagAction>, IDis
     /// </summary>
     /// <param name="index">智能标记动作索引（从1开始）</param>
     /// <returns>智能标记动作对象</returns>
-    IExcelSmartTagAction this[int index] { get; }
+    IExcelSmartTagAction? this[int index] { get; }
 
     /// <summary>
     /// 获取指定名称的智能标记动作对象
     /// </summary>
     /// <param name="name">智能标记动作名称</param>
     /// <returns>智能标记动作对象</returns>
-    IExcelSmartTagAction this[string name] { get; }
+    IExcelSmartTagAction? this[string name] { get; }
 
 }

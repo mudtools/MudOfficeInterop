@@ -10,8 +10,22 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel SmartTags 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.SmartTags 的安全访问和操作
 /// </summary>
-public interface IExcelSmartTags : IEnumerable<IExcelSmartTag>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelSmartTags : IEnumerable<IExcelSmartTag?>, IDisposable
 {
+    /// <summary>
+    /// 获取图例的父对象
+    /// 对应 SmartTag.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取图例所在的 Application 对象
+    /// 对应 SmartTag.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取智能标记集合中的智能标记数量
     /// 对应 SmartTags.Count 属性
@@ -24,14 +38,13 @@ public interface IExcelSmartTags : IEnumerable<IExcelSmartTag>, IDisposable
     /// </summary>
     /// <param name="index">智能标记索引（从1开始）</param>
     /// <returns>智能标记对象</returns>
-    IExcelSmartTag this[int index] { get; }
+    IExcelSmartTag? this[int index] { get; }
 
     /// <summary>
     /// 向集合中添加新的智能标记
     /// </summary>
     /// <param name="smartTagType">智能标记类型</param>
-    /// <param name="text">智能标记文本</param>
     /// <returns>新创建的智能标记对象</returns>
-    IExcelSmartTag Add(string smartTagType, string text);
+    IExcelSmartTag? Add(string smartTagType);
 
 }
