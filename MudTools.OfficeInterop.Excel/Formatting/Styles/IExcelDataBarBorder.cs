@@ -5,12 +5,15 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
 /// Excel DataBarBorder 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.DataBarBorder 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelDataBarBorder : IDisposable
 {
     #region 基础属性
@@ -24,6 +27,7 @@ public interface IExcelDataBarBorder : IDisposable
     /// 获取数据条边框对象所在的Application对象
     /// 对应 DataBarBorder.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
 
@@ -31,7 +35,8 @@ public interface IExcelDataBarBorder : IDisposable
     /// 获取或设置数据条边框的颜色
     /// 对应 DataBarBorder.Color 属性 或 .ColorIndex
     /// </summary>
-    int Color { get; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color Color { get; }
 
     /// <summary>
     /// 获取或设置数据条边框的类型
