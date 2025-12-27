@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel LineFormat 对象的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelLineFormat : IDisposable
+public interface IExcelLineFormat : IOfficeObject<IExcelLineFormat>, IDisposable
 {
     #region 基础属性
     /// <summary>

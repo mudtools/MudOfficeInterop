@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置前景色、背景色、透明度、主题色等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelFormatColor : IDisposable
+public interface IExcelFormatColor : IOfficeObject<IExcelFormatColor>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（如 FillFormat、GlowFormat、ShadowFormat 等）。

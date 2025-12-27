@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于管理控件的列表项、当前值、范围、多选等属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelControlFormat : IDisposable
+public interface IExcelControlFormat : IOfficeObject<IExcelControlFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象。
@@ -97,6 +97,7 @@ public interface IExcelControlFormat : IDisposable
     /// 从控件列表中移除指定索引的项。
     /// </summary>
     /// <param name="index">要删除的项索引（从1开始）。</param>
+    /// <param name="count">要删除的项数，默认为1。</param>
     void RemoveItem(int index, int? count = null);
 
     /// <summary>

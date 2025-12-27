@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于控制艺术字的文字方向、对齐、缩放、路径样式等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTextEffectFormat : IDisposable
+public interface IExcelTextEffectFormat : IOfficeObject<IExcelTextEffectFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape）。

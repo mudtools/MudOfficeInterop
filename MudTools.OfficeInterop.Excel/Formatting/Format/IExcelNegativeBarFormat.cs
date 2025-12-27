@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.NegativeBarFormat 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelNegativeBarFormat : IDisposable
+public interface IExcelNegativeBarFormat : IOfficeObject<IExcelNegativeBarFormat>, IDisposable
 {
     /// <summary>
     /// 获取负值数据条格式对象的父对象 (通常是 DataBar)

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ShadowFormat 对象的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelShadowFormat : IDisposable
+public interface IExcelShadowFormat : IOfficeObject<IExcelShadowFormat>, IDisposable
 {
     /// <summary>
     /// 获取图片格式对象的父对象

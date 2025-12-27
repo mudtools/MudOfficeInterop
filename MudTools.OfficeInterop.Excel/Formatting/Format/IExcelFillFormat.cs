@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel FillFormat 对象的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelFillFormat : IDisposable
+public interface IExcelFillFormat : IOfficeObject<IExcelFillFormat>, IDisposable
 {
     #region 基础属性
     /// <summary>

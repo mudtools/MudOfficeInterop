@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供数据类型、校验、默认值等只读属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelListDataFormat : IDisposable
+public interface IExcelListDataFormat : IOfficeObject<IExcelListDataFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 ListColumn）。

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置形状或图表元素的背景填充
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartFillFormat : IDisposable
+public interface IExcelChartFillFormat : IOfficeObject<IExcelChartFillFormat>, IDisposable
 {
     #region 基础属性
     /// <summary>
@@ -33,13 +33,13 @@ public interface IExcelChartFillFormat : IDisposable
     /// 获取或设置填充的前景色 (RGB 颜色值)
     /// 对应 FillFormat.ForeColor 或 ChartFillFormat.ForeColor
     /// </summary>
-    IExcelChartColorFormat ForeColor { get; }
+    IExcelChartColorFormat? ForeColor { get; }
 
     /// <summary>
     /// 获取或设置填充的背景色 (RGB 颜色值)
     /// 对应 FillFormat.BackColor 或 ChartFillFormat.BackColor
     /// </summary>
-    IExcelChartColorFormat BackColor { get; }
+    IExcelChartColorFormat? BackColor { get; }
 
     /// <summary>
     /// 获取或设置填充类型
