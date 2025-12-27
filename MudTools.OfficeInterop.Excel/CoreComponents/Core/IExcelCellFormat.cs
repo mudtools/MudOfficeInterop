@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.CellFormat 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCellFormat : IDisposable
+public interface IExcelCellFormat : IOfficeObject<IExcelCellFormat>, IDisposable
 {
     /// <summary>
     /// 获取单元格格式对象的父对象（通常是 Application）
