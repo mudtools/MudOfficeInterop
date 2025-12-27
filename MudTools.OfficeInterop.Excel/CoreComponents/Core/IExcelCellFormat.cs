@@ -10,9 +10,9 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel CellFormat 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.CellFormat 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelCellFormat : IDisposable
 {
-    #region 基础属性
     /// <summary>
     /// 获取单元格格式对象的父对象（通常是 Application）
     /// 对应 CellFormat.Parent 属性
@@ -23,100 +23,98 @@ public interface IExcelCellFormat : IDisposable
     /// 获取单元格格式对象所在的Application对象
     /// 对应 CellFormat.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置单元格的数字格式
-    /// 对应 CellFormat.NumberFormat 属性
+    /// 获取或设置基于单元格边框格式的搜索条件。
     /// </summary>
-    object NumberFormat { get; set; }
+    IExcelBorders? Borders { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的水平对齐方式
-    /// 对应 CellFormat.HorizontalAlignment 属性
+    /// 获取或设置基于单元格字体格式的搜索条件。
     /// </summary>
-    XlHAlign HorizontalAlignment { get; set; }
+    IExcelFont? Font { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的垂直对齐方式
-    /// 对应 CellFormat.VerticalAlignment 属性
+    /// 获取或设置基于单元格内部区域格式的搜索条件。
     /// </summary>
-    XlVAlign VerticalAlignment { get; set; }
+    IExcelInterior? Interior { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的缩进量
-    /// 对应 CellFormat.IndentLevel 属性
+    /// 获取或设置单元格的数字格式代码。如果指定范围内的所有单元格没有相同的数字格式，则返回null。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    string NumberFormat { get; set; }
+
+    /// <summary>
+    /// 获取或设置以用户语言显示的单元格数字格式代码。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    string NumberFormatLocal { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，表示当单元格中的文本对齐方式设置为水平或垂直均等分布时，文本是否自动缩进。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool AddIndent { get; set; }
+
+    /// <summary>
+    /// 获取或设置单元格或区域的缩进级别。可以是0到15的整数。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     int IndentLevel { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的方向
-    /// 对应 CellFormat.Orientation 属性
+    /// 获取或设置指定对象的水平对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    XlHAlign HorizontalAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定对象的垂直对齐方式。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    XlVAlign VerticalAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本方向。可以是-90到90度的整数值。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlOrientation Orientation { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格是否自动缩放字体
-    /// 对应 CellFormat.ShrinkToFit 属性
+    /// 获取或设置一个值，表示文本是否自动收缩以适应可用的列宽。如果此属性在指定范围内的所有单元格中未设置为相同的值，则返回null。
     /// </summary>
-    bool? ShrinkToFit { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    bool ShrinkToFit { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格是否自动换行
-    /// 对应 CellFormat.WrapText 属性
+    /// 获取或设置一个值，表示Excel是否在对象中自动换行文本。如果指定范围包含一些自动换行文本的单元格和一些不自动换行文本的单元格，则返回null。
     /// </summary>
-    bool? WrapText { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    bool WrapText { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的合并单元格属性
-    /// 对应 CellFormat.MergeCells 属性
+    /// 获取或设置一个值，表示对象是否被锁定。当工作表受保护时，如果为true则对象被锁定，如果为false则对象可以被修改。如果指定范围同时包含锁定和未锁定的单元格，则返回null。
     /// </summary>
-    bool? MergeCells { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Locked { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的锁定状态
-    /// 对应 CellFormat.Locked 属性
+    /// 获取或设置一个值，表示在工作表受保护时公式是否隐藏。如果指定范围包含一些FormulaHidden为true的单元格和一些FormulaHidden为false的单元格，则返回null。
     /// </summary>
-    bool? Locked { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    bool FormulaHidden { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的公式隐藏状态
-    /// 对应 CellFormat.FormulaHidden 属性
+    /// 获取或设置一个值，表示范围或样式是否包含合并的单元格。
     /// </summary>
-    bool? FormulaHidden { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    bool MergeCells { get; set; }
 
     /// <summary>
-    /// 获取或设置单元格的本地化数字格式代码
-    /// 对应 CellFormat.NumberFormatLocal 属性
-    /// </summary>
-    string NumberFormatLocal { get; set; }
-    #endregion
-
-    #region 格式设置 
-    /// <summary>
-    /// 获取单元格的字体对象
-    /// 对应 CellFormat.Font 属性
-    /// </summary>
-    IExcelFont? Font { get; }
-
-    /// <summary>
-    /// 获取单元格的背景填充对象
-    /// 对应 CellFormat.Interior 属性
-    /// </summary>
-    IExcelInterior? Interior { get; }
-
-    /// <summary>
-    /// 获取单元格的边框对象
-    /// 对应 CellFormat.Borders 属性
-    /// </summary>
-    IExcelBorders? Borders { get; }
-    #endregion
-
-    #region 操作方法
-    /// <summary>
-    /// 清除单元格格式
-    /// 对应 CellFormat.Clear 方法
+    /// 清除在Application.FindFormat和Application.ReplaceFormat属性中设置的搜索条件。
     /// </summary>
     void Clear();
-    #endregion
 }
