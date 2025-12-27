@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 表格（ListObject）中的一列，提供对列属性和操作的封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelListColumn : IDisposable
+public interface IExcelListColumn : IOfficeObject<IExcelListColumn>, IDisposable
 {
     /// <summary>
     /// 获取此列所属的父对象。

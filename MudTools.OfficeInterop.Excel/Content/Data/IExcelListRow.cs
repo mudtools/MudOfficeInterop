@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 表格（ListObject）中的一行数据，提供对行属性和操作的封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelListRow : IDisposable
+public interface IExcelListRow : IOfficeObject<IExcelListRow>, IDisposable
 {
     /// <summary>
     /// 获取此行所属的父对象（通常是 ListObject）。

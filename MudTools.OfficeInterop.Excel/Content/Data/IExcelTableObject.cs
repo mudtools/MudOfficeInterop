@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 支持表头、数据体、汇总行、排序、筛选、列管理等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTableObject : IDisposable
+public interface IExcelTableObject : IOfficeObject<IExcelTableObject>, IDisposable
 {
 
     /// <summary>

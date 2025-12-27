@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中的 XPath 对象，用于处理 XML 数据映射。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelXPath : IDisposable
+public interface IExcelXPath : IOfficeObject<IExcelXPath>, IDisposable
 {
     /// <summary>
     /// 获取所属的父对象。

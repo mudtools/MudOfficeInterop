@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作簿中所有切片器缓存的集合，支持遍历、索引和名称访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerCaches : IEnumerable<IExcelSlicerCache>, IDisposable
+public interface IExcelSlicerCaches : IOfficeObject<IExcelSlicerCaches>, IEnumerable<IExcelSlicerCache>, IDisposable
 {
     /// <summary>
     /// 获取集合中切片器缓存的总数。

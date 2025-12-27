@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 而是通过对其他成员执行计算得到的。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCalculatedMember : IDisposable
+public interface IExcelCalculatedMember : IOfficeObject<IExcelCalculatedMember>, IDisposable
 {
     /// <summary>
     /// 获取所属的父对象。

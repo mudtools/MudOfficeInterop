@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中的XML映射接口，提供对XML数据映射的操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelXmlMap : IDisposable
+public interface IExcelXmlMap : IOfficeObject<IExcelXmlMap>, IDisposable
 {
     /// <summary>
     /// 获取所属的父对象。

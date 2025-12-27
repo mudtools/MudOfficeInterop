@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 
 
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCalculatedMembers : IEnumerable<IExcelCalculatedMember>, IDisposable
+public interface IExcelCalculatedMembers : IOfficeObject<IExcelCalculatedMembers>, IEnumerable<IExcelCalculatedMember>, IDisposable
 {
     /// <summary>
     /// 获取所属的父对象。

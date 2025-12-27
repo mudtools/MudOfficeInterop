@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口继承自 IEnumerable[IExcelXmlSchema] 和 IDisposable，支持遍历集合中的 XML 架构以及资源释放。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelXmlSchemas : IEnumerable<IExcelXmlSchema>, IDisposable
+public interface IExcelXmlSchemas : IOfficeObject<IExcelXmlSchemas>, IEnumerable<IExcelXmlSchema?>, IDisposable
 {
     /// <summary>
     /// 获取所属的父对象。
@@ -36,12 +36,12 @@ public interface IExcelXmlSchemas : IEnumerable<IExcelXmlSchema>, IDisposable
     /// </summary>
     /// <param name="index">XML 架构在集合中的从 1 开始的索引位置。</param>
     /// <returns>指定索引位置的 XML 架构。</returns>
-    IExcelXmlSchema this[int index] { get; }
+    IExcelXmlSchema? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取集合中的 XML 架构。
     /// </summary>
     /// <param name="name">XML 架构的名称。</param>
     /// <returns>具有指定名称的 XML 架构。</returns>
-    IExcelXmlSchema this[string name] { get; }
+    IExcelXmlSchema? this[string name] { get; }
 }

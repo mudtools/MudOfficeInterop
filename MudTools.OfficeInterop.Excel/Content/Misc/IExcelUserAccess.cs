@@ -8,7 +8,7 @@
 namespace MudTools.OfficeInterop.Excel;
 
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelUserAccess : IDisposable
+public interface IExcelUserAccess : IOfficeObject<IExcelUserAccess>, IDisposable
 {
     /// <summary>
     /// 获取用户的名称
