@@ -550,12 +550,12 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取PublishObjects集合，表示工作簿中显示在服务器上的发布对象。
     /// </summary>
-    PublishObjects PublishObjects { get; }
+    IExcelPublishObjects PublishObjects { get; }
 
     /// <summary>
     /// 获取WebOptions集合，包含将文档另存为网页或打开网页时使用的工作簿级属性。
     /// </summary>
-    WebOptions WebOptions { get; }
+    IExcelWebOptions WebOptions { get; }
 
     /// <summary>
     /// 使用指定的文档编码基于HTML文档重新加载工作簿。
@@ -734,14 +734,14 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="overwrite">可选。如果未为Destination参数指定值，则此参数指定是否覆盖映射到ImportMap参数中指定的架构映射的数据。设置为True表示覆盖数据，False表示将新数据附加到现有数据。默认值为True。</param>
     /// <param name="destination">可选。数据将导入到指定范围的新XML列表中。</param>
     /// <returns>XML导入结果。</returns>
-    XlXmlImportResult XmlImport(string url, out XmlMap importMap, object overwrite = null, object destination = null);
+    XlXmlImportResult XmlImport(string url, out IExcelXmlMap importMap, object overwrite = null, object destination = null);
 
     /// <summary>
     /// 导出已映射到指定XML架构映射的数据到XML数据文件。
     /// </summary>
     /// <param name="filename">必需。指示要保存的文件名的字符串。可以包含完整路径；如果不包含，Microsoft Excel将文件保存在当前文件夹中。</param>
     /// <param name="map">必需。应用于数据的架构映射。</param>
-    void SaveAsXMLData(string filename, XmlMap map);
+    void SaveAsXMLData(string filename, IExcelXmlMap map);
 
     /// <summary>
     /// 打开或关闭窗体设计模式。
@@ -800,12 +800,12 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取与工作簿关联的切片器缓存。
     /// </summary>
-    SlicerCaches SlicerCaches { get; }
+    IExcelSlicerCaches? SlicerCaches { get; }
 
     /// <summary>
     /// 获取活动工作簿或指定工作簿中的活动切片器。
     /// </summary>
-    Slicer ActiveSlicer { get; }
+    IExcelSlicer? ActiveSlicer { get; }
 
     /// <summary>
     /// 获取或设置用作切片器默认样式的样式。
@@ -820,7 +820,7 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取数据模型。
     /// </summary>
-    Model Model { get; }
+    IExcelModel? Model { get; }
 
     /// <summary>
     /// 获取或设置一个布尔值，表示是否跟踪图表数据点。
