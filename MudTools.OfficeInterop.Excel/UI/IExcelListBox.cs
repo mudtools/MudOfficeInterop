@@ -7,8 +7,12 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
+/// <summary>
+/// 表示Excel中的列表框控件接口
+/// 继承自IExcelControl接口和IDisposable接口，提供列表框特有的功能
+/// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelListBox : IExcelControl, IDisposable
+public interface IExcelListBox : IOfficeObject<IExcelListBox>, IExcelControl, IDisposable
 {
 
     /// <summary>

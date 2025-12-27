@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中的复选框控件接口，继承自IExcelControl和IDisposable接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCheckBox : IExcelControl, IDisposable
+public interface IExcelCheckBox : IOfficeObject<IExcelCheckBox>, IExcelControl, IDisposable
 {
     /// <summary>
     /// 获取或设置复选框的链接单元格
