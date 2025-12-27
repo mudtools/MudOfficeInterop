@@ -21,6 +21,8 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// </summary>
     internal MsExcel.Workbook _workbook;
 
+    internal MsExcel.Workbook InternalComObject => _workbook;
+
     /// <summary>
     /// 标记对象是否已被释放
     /// </summary>

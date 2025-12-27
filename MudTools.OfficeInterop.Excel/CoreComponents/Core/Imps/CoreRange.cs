@@ -430,7 +430,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
         set
         {
             if (value is ExcelStyle style)
-                InternalRange.Style = style._style;
+                InternalRange.Style = style.InternalComObject;
             else if (value is MsExcel.Style oStyle)
                 InternalRange.Style = oStyle;
             else
