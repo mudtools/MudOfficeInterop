@@ -11,14 +11,10 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel TickLabels 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.TickLabels 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelTickLabels : IDisposable
 {
     #region 基础属性
-    /// <summary>
-    /// 获取坐标轴刻度标签的名称
-    /// </summary>
-    string Name { get; }
-
     /// <summary>
     /// 获取刻度标签的父对象 (通常是 Axis)
     /// </summary>
@@ -27,73 +23,84 @@ public interface IExcelTickLabels : IDisposable
     /// <summary>
     /// 获取刻度标签所在的 Application 对象
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     IExcelApplication? Application { get; }
     #endregion
 
-    #region 格式设置
     /// <summary>
-    /// 获取刻度标签的字体对象 
+    /// 删除刻度线标签对象。
     /// </summary>
-    IExcelFont Font { get; }
+    /// <returns>操作结果。</returns>
+    object? Delete();
 
     /// <summary>
-    /// 获取绘图区的字体对象
+    /// 获取表示指定对象字体的Font对象。
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
-    /// 获取或设置是否自动缩放字体
+    /// 获取刻度线标签的名称。
     /// </summary>
-    bool AutoScaleFont { get; set; }
+    string Name { get; }
 
     /// <summary>
-    /// 获取或设置刻度标签的数字格式
+    /// 获取或设置刻度线标签的数字格式代码。
     /// </summary>
     string NumberFormat { get; set; }
 
     /// <summary>
-    /// 获取或设置刻度标签的数字格式是否为关联格式
+    /// 获取或设置一个布尔值，表示数字格式是否与单元格链接（当单元格中的数字格式更改时，标签中的数字格式也会更改）。
     /// </summary>
     bool NumberFormatLinked { get; set; }
 
     /// <summary>
-    /// 获取或设置刻度标签的本地化数字格式
+    /// 获取或设置以用户语言显示的刻度线标签的数字格式代码。
     /// </summary>
-    string? NumberFormatLocal { get; set; }
+    object NumberFormatLocal { get; set; }
 
     /// <summary>
-    /// 获取或设置刻度标签的方向
+    /// 获取或设置刻度线标签的文本方向。可以是-90到90度的整数值，或者是XlTickLabelOrientation枚举的常量之一。
     /// </summary>
-    int Orientation { get; set; } // 使用 int 代表 XlTickLabelOrientation
-
+    XlTickLabelOrientation Orientation { get; set; }
 
     /// <summary>
-    /// 获取或设置刻度标签的阅读顺序
+    /// 选择刻度线标签对象。
     /// </summary>
-    int ReadingOrder { get; set; } // 使用 int 代表 XlReadingOrder
+    /// <returns>操作结果。</returns>
+    object? Select();
 
     /// <summary>
-    /// 获取或设置刻度标签的偏移量 (0-1000)
+    /// 获取或设置刻度线标签的阅读顺序。
+    /// </summary>
+    int ReadingOrder { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，表示当对象大小更改时，对象中的文本是否自动缩放字体大小。默认值为true。
+    /// </summary>
+    object AutoScaleFont { get; set; }
+
+    /// <summary>
+    /// 获取类别刻度线标签的级别数。
+    /// </summary>
+    int Depth { get; }
+
+    /// <summary>
+    /// 获取或设置标签级别之间的距离，以及第一级别与轴线之间的距离。
     /// </summary>
     int Offset { get; set; }
 
     /// <summary>
-    /// 获取或设置多级标签的层级
+    /// 获取或设置指定刻度线标签的对齐方式。
+    /// </summary>
+    int Alignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示轴是否为多级别轴。
     /// </summary>
     bool MultiLevel { get; set; }
 
-    #endregion
-
-    #region 操作方法
     /// <summary>
-    /// 选择刻度标签
+    /// 获取图表元素的格式设置对象。
     /// </summary>
-    void Select();
-
-    /// <summary>
-    /// 删除刻度标签 (通常意味着重置为默认)
-    /// </summary>
-    void Delete();
-
-    #endregion
+    IExcelChartFormat? Format { get; }
 }
