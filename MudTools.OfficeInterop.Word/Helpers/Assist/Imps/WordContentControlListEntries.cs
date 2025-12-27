@@ -30,7 +30,7 @@ internal class WordContentControlListEntries : IWordContentControlListEntries
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _listEntries != null ? new WordApplication(_listEntries.Application) : null;
+    public IWordApplication? Application => _listEntries != null ? new WordApplication(_listEntries.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _listEntries?.Parent;

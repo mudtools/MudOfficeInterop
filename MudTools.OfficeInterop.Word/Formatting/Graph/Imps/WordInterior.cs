@@ -23,7 +23,7 @@ internal class WordInterior : IWordInterior
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _interior != null ? new WordApplication(_interior.Application as MsWord.Application) : null;
+    public IWordApplication? Application => _interior != null ? new WordApplication(_interior.Application as MsWord.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _interior?.Parent;

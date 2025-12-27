@@ -23,7 +23,7 @@ internal class WordProofreadingErrors : IWordProofreadingErrors
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _proofreadingErrors != null ? new WordApplication(_proofreadingErrors.Application) : null;
+    public IWordApplication? Application => _proofreadingErrors != null ? new WordApplication(_proofreadingErrors.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _proofreadingErrors?.Parent;

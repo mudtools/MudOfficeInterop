@@ -21,7 +21,7 @@ public interface IWordPage : IDisposable
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取页面的宽度（以磅为单位）。

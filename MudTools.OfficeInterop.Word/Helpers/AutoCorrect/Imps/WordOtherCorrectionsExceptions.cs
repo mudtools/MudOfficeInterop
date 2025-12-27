@@ -31,7 +31,7 @@ internal class WordOtherCorrectionsExceptions : IWordOtherCorrectionsExceptions
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _otherCorrectionsExceptions != null ? new WordApplication(_otherCorrectionsExceptions.Application) : null;
+    public IWordApplication? Application => _otherCorrectionsExceptions != null ? new WordApplication(_otherCorrectionsExceptions.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _otherCorrectionsExceptions?.Parent;

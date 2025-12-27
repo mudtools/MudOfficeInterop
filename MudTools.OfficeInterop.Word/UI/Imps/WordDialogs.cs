@@ -28,7 +28,7 @@ internal class WordDialogs : IWordDialogs
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _dialogs != null ? new WordApplication(_dialogs.Application) : null;
+    public IWordApplication? Application => _dialogs != null ? new WordApplication(_dialogs.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _dialogs?.Parent;

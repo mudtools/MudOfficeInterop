@@ -187,7 +187,7 @@ namespace FAQSample
             /// 避免依赖特定语言的菜单项
             /// </summary>
             /// <param name="application">Word应用程序</param>
-            public void AvoidLanguageSpecificCommands(IWordApplication application)
+            public void AvoidLanguageSpecificCommands(IWordApplication? Application)
             {
                 // 正确：使用程序化方式
                 application.ScreenUpdating = false;

@@ -26,7 +26,7 @@ internal class WordPanes : IWordPanes
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _panes?.Application != null ? new WordApplication(_panes.Application) : null;
+    public IWordApplication? Application => _panes?.Application != null ? new WordApplication(_panes.Application) : null;
 
     /// <inheritdoc/>
     public int Count => _panes?.Count ?? 0;

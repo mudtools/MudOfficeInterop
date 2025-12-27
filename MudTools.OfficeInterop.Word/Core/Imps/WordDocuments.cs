@@ -18,7 +18,7 @@ internal class WordDocuments : IWordDocuments
     private readonly MsWord.Documents _documents;
     private bool _disposedValue;
 
-    public IWordApplication Application => _documents != null ? new WordApplication(_documents.Application) : null;
+    public IWordApplication? Application => _documents != null ? new WordApplication(_documents.Application) : null;
 
     public int Count => _documents.Count;
 

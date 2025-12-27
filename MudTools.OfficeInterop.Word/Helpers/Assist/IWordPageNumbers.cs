@@ -18,7 +18,7 @@ public interface IWordPageNumbers : IEnumerable<IWordPageNumber>, IDisposable
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。

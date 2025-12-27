@@ -24,7 +24,7 @@ internal class WordReflectionFormat : IWordReflectionFormat
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _reflectionFormat != null ? new WordApplication(_reflectionFormat.Application) : null;
+    public IWordApplication? Application => _reflectionFormat != null ? new WordApplication(_reflectionFormat.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _reflectionFormat?.Parent;

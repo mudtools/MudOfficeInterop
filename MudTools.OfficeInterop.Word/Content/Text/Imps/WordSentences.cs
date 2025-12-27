@@ -24,7 +24,7 @@ internal class WordSentences : IWordSentences
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _sentences != null ? new WordApplication(_sentences.Application) : null;
+    public IWordApplication? Application => _sentences != null ? new WordApplication(_sentences.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _sentences?.Parent;

@@ -23,7 +23,7 @@ internal class WordReadabilityStatistic : IWordReadabilityStatistic
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _readabilityStatistic != null ? new WordApplication(_readabilityStatistic.Application) : null;
+    public IWordApplication? Application => _readabilityStatistic != null ? new WordApplication(_readabilityStatistic.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _readabilityStatistic?.Parent;

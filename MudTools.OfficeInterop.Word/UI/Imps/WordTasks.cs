@@ -31,7 +31,7 @@ internal class WordTasks : IWordTasks
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _tasks != null ? new WordApplication(_tasks.Application) : null;
+    public IWordApplication? Application => _tasks != null ? new WordApplication(_tasks.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _tasks?.Parent;

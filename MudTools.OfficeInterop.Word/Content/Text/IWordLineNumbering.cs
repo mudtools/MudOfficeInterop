@@ -18,7 +18,7 @@ public interface IWordLineNumbering : IDisposable
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，该整数指示创建指定对象的应用程序。

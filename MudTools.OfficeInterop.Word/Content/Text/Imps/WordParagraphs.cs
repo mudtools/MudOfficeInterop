@@ -24,7 +24,7 @@ internal class WordParagraphs : IWordParagraphs
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _paragraphs != null ? new WordApplication(_paragraphs.Application) : null;
+    public IWordApplication? Application => _paragraphs != null ? new WordApplication(_paragraphs.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _paragraphs?.Parent;

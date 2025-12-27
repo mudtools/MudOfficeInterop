@@ -28,7 +28,7 @@ internal class WordHangulAndAlphabetException : IWordHangulAndAlphabetException
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _hangulAndAlphabetException != null ? new WordApplication(_hangulAndAlphabetException.Application) : null;
+    public IWordApplication? Application => _hangulAndAlphabetException != null ? new WordApplication(_hangulAndAlphabetException.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _hangulAndAlphabetException?.Parent;

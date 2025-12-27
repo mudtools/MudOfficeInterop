@@ -28,7 +28,7 @@ internal class WordEmailOptions : IWordEmailOptions
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _emailOptions != null ? new WordApplication(_emailOptions.Application) : null;
+    public IWordApplication? Application => _emailOptions != null ? new WordApplication(_emailOptions.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _emailOptions?.Parent;

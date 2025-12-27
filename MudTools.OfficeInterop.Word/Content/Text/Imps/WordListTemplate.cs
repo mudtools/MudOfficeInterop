@@ -24,7 +24,7 @@ internal class WordListTemplate : IWordListTemplate
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _listTemplate != null ? new WordApplication(_listTemplate.Application) : null;
+    public IWordApplication? Application => _listTemplate != null ? new WordApplication(_listTemplate.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _listTemplate?.Parent;

@@ -22,7 +22,7 @@ public interface IWordPages : IEnumerable<IWordPage>, IDisposable
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中页面的总数。

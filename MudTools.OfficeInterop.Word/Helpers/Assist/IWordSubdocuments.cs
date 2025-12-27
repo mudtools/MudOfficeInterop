@@ -14,7 +14,7 @@ public interface IWordSubdocuments : IEnumerable<IWordSubdocument>, IDisposable
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。

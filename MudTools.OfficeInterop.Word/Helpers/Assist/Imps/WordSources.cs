@@ -31,7 +31,7 @@ internal class WordSources : IWordSources
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _sources != null ? new WordApplication(_sources.Application) : null;
+    public IWordApplication? Application => _sources != null ? new WordApplication(_sources.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _sources?.Parent;

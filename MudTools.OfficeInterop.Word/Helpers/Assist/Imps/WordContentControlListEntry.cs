@@ -27,7 +27,7 @@ internal class WordContentControlListEntry : IWordContentControlListEntry
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _listEntry != null ? new WordApplication(_listEntry.Application) : null;
+    public IWordApplication? Application => _listEntry != null ? new WordApplication(_listEntry.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _listEntry?.Parent;

@@ -15,7 +15,7 @@ public interface IWordSmartTagActions : IEnumerable<IWordSmartTagAction>, IDispo
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象 [[19]]。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中智能标记操作的数量。

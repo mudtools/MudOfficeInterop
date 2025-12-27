@@ -23,7 +23,7 @@ namespace TaskPanesAndDialogsSample
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
         /// <param name="document">Word文档对象</param>
-        public DialogManager(IWordApplication application, IWordDocument document)
+        public DialogManager(IWordApplication? Application, IWordDocument document)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _document = document ?? throw new ArgumentNullException(nameof(document));

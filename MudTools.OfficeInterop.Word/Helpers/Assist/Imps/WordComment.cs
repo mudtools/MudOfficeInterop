@@ -24,7 +24,7 @@ internal class WordComment : IWordComment
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _comment != null ? new WordApplication(_comment.Application) : null;
+    public IWordApplication? Application => _comment != null ? new WordApplication(_comment.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _comment?.Parent;

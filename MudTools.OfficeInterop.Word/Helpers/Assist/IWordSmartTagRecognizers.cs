@@ -15,7 +15,7 @@ public interface IWordSmartTagRecognizers : IEnumerable<IWordSmartTagRecognizer>
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中智能标记识别程序的数量 [[20]]。

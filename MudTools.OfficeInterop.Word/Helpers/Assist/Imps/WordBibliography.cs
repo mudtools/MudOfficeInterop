@@ -31,7 +31,7 @@ internal class WordBibliography : IWordBibliography
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _bibliography != null ? new WordApplication(_bibliography.Application) : null;
+    public IWordApplication? Application => _bibliography != null ? new WordApplication(_bibliography.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _bibliography?.Parent;

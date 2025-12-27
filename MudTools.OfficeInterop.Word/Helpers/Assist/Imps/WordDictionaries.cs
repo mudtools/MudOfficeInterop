@@ -31,7 +31,7 @@ internal class WordDictionaries : IWordDictionaries
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _dictionaries != null ? new WordApplication(_dictionaries.Application) : null;
+    public IWordApplication? Application => _dictionaries != null ? new WordApplication(_dictionaries.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _dictionaries?.Parent;

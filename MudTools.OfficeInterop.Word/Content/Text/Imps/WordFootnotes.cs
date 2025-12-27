@@ -24,7 +24,7 @@ internal class WordFootnotes : IWordFootnotes
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _footnotes != null ? new WordApplication(_footnotes.Application) : null;
+    public IWordApplication? Application => _footnotes != null ? new WordApplication(_footnotes.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _footnotes?.Parent;

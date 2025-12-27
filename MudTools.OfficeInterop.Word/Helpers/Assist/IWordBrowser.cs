@@ -15,7 +15,7 @@ public interface IWordBrowser : IDisposable
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取代表指定对象的父对象的对象。

@@ -14,7 +14,7 @@ public interface IWordFormFields : IEnumerable<IWordFormField>, IDisposable
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中的表单域数量。

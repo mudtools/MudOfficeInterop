@@ -31,7 +31,7 @@ internal class WordRecentFiles : IWordRecentFiles
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _recentFiles != null ? new WordApplication(_recentFiles.Application) : null;
+    public IWordApplication? Application => _recentFiles != null ? new WordApplication(_recentFiles.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _recentFiles?.Parent;

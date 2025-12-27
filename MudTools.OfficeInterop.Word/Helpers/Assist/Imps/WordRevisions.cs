@@ -24,7 +24,7 @@ internal class WordRevisions : IWordRevisions
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _revisions != null ? new WordApplication(_revisions.Application) : null;
+    public IWordApplication? Application => _revisions != null ? new WordApplication(_revisions.Application) : null;
 
     /// <inheritdoc/>
     public int Count => _revisions?.Count ?? 0;

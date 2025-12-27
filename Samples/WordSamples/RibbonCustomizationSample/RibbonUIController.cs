@@ -23,7 +23,7 @@ namespace RibbonCustomizationSample
         /// 构造函数
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
-        public RibbonUIController(IWordApplication application)
+        public RibbonUIController(IWordApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _ribbonManager = new RibbonManager(application);

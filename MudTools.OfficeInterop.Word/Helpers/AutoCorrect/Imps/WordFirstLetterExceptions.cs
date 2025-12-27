@@ -31,7 +31,7 @@ internal class WordFirstLetterExceptions : IWordFirstLetterExceptions
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _firstLetterExceptions != null ? new WordApplication(_firstLetterExceptions.Application) : null;
+    public IWordApplication? Application => _firstLetterExceptions != null ? new WordApplication(_firstLetterExceptions.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _firstLetterExceptions?.Parent;

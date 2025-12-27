@@ -23,7 +23,7 @@ internal class WordSubdocuments : IWordSubdocuments
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _subdocuments != null ? new WordApplication(_subdocuments.Application) : null;
+    public IWordApplication? Application => _subdocuments != null ? new WordApplication(_subdocuments.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _subdocuments?.Parent;

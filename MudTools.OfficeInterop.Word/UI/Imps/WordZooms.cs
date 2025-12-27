@@ -38,7 +38,7 @@ internal class WordZooms : IWordZooms
 
     /// <inheritdoc/>
     /// <remarks>此属性继承自 _IMsoDispObj。</remarks>
-    public IWordApplication Application => _zooms?.Application != null ? new WordApplication(_zooms.Application) : null;
+    public IWordApplication? Application => _zooms?.Application != null ? new WordApplication(_zooms.Application) : null;
 
     /// <inheritdoc/>
     /// <remarks>此属性继承自 _IMsoDispObj。</remarks>

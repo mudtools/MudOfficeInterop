@@ -24,7 +24,7 @@ internal class WordFrames : IWordFrames
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _frames != null ? new WordApplication(_frames.Application) : null;
+    public IWordApplication? Application => _frames != null ? new WordApplication(_frames.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _frames?.Parent;

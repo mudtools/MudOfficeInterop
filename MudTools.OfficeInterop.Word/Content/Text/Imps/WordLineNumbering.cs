@@ -29,7 +29,7 @@ internal class WordLineNumbering : IWordLineNumbering
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _lineNumbering?.Application != null ? new WordApplication(_lineNumbering.Application) : null;
+    public IWordApplication? Application => _lineNumbering?.Application != null ? new WordApplication(_lineNumbering.Application) : null;
 
     /// <inheritdoc/>
     public int Creator => _lineNumbering?.Creator ?? 0;

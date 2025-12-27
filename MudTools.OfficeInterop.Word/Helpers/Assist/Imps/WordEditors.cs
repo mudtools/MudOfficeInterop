@@ -31,7 +31,7 @@ internal class WordEditors : IWordEditors
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _editors != null ? new WordApplication(_editors.Application) : null;
+    public IWordApplication? Application => _editors != null ? new WordApplication(_editors.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _editors?.Parent;

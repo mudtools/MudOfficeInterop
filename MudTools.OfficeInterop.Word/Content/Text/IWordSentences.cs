@@ -14,7 +14,7 @@ public interface IWordSentences : IEnumerable<IWordRange>, IDisposable
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取父对象。

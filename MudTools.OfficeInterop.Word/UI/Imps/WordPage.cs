@@ -28,7 +28,7 @@ internal class WordPage : IWordPage
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _page?.Application != null ? new WordApplication(_page.Application) : null;
+    public IWordApplication? Application => _page?.Application != null ? new WordApplication(_page.Application) : null;
 
     /// <inheritdoc/>
     public float? Width => _page?.Width;

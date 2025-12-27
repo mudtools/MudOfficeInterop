@@ -31,7 +31,7 @@ internal class WordDialog : IWordDialog
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _dialog != null ? new WordApplication(_dialog.Application) : null;
+    public IWordApplication? Application => _dialog != null ? new WordApplication(_dialog.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _dialog?.Parent;

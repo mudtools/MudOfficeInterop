@@ -23,7 +23,7 @@ internal class WordShapeRange : IWordShapeRange
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _shapeRange != null ? new WordApplication(_shapeRange.Application) : null;
+    public IWordApplication? Application => _shapeRange != null ? new WordApplication(_shapeRange.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _shapeRange?.Parent;

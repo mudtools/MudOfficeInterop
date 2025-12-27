@@ -31,7 +31,7 @@ internal class WordAutoCaptions : IWordAutoCaptions
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _autoCaptions != null ? new WordApplication(_autoCaptions.Application) : null;
+    public IWordApplication? Application => _autoCaptions != null ? new WordApplication(_autoCaptions.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _autoCaptions?.Parent;

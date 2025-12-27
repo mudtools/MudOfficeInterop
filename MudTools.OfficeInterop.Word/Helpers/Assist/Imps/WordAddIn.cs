@@ -28,7 +28,7 @@ internal class WordAddIn : IWordAddIn
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _addIn != null ? new WordApplication(_addIn.Application) : null;
+    public IWordApplication? Application => _addIn != null ? new WordApplication(_addIn.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _addIn?.Parent;

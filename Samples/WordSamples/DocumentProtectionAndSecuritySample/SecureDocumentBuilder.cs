@@ -26,7 +26,7 @@ namespace DocumentProtectionAndSecuritySample
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
         /// <param name="document">Word文档对象</param>
-        public SecureDocumentBuilder(IWordApplication application, IWordDocument document)
+        public SecureDocumentBuilder(IWordApplication? Application, IWordDocument document)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _document = document ?? throw new ArgumentNullException(nameof(document));

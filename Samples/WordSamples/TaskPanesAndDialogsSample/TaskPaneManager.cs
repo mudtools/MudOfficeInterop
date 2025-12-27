@@ -22,7 +22,7 @@ namespace TaskPanesAndDialogsSample
         /// 构造函数
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
-        public TaskPaneManager(IWordApplication application)
+        public TaskPaneManager(IWordApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
         }

@@ -24,7 +24,7 @@ internal class WordListFormat : IWordListFormat
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _listFormat != null ? new WordApplication(_listFormat.Application) : null;
+    public IWordApplication? Application => _listFormat != null ? new WordApplication(_listFormat.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _listFormat?.Parent;

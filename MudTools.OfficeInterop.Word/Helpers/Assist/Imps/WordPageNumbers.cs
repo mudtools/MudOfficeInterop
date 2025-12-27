@@ -30,7 +30,7 @@ internal class WordPageNumbers : IWordPageNumbers
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _pageNumbers != null ? new WordApplication(_pageNumbers.Application) : null;
+    public IWordApplication? Application => _pageNumbers != null ? new WordApplication(_pageNumbers.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _pageNumbers?.Parent;

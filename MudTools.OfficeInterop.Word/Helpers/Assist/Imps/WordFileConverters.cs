@@ -28,7 +28,7 @@ internal class WordFileConverters : IWordFileConverters
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _fileConverters != null ? new WordApplication(_fileConverters.Application) : null;
+    public IWordApplication? Application => _fileConverters != null ? new WordApplication(_fileConverters.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _fileConverters?.Parent;

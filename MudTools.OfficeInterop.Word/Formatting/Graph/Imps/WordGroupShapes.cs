@@ -30,7 +30,7 @@ internal class WordGroupShapes : IWordGroupShapes
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _groupShapes != null ? new WordApplication(_groupShapes.Application) : null;
+    public IWordApplication? Application => _groupShapes != null ? new WordApplication(_groupShapes.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _groupShapes?.Parent;

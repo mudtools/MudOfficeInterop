@@ -28,7 +28,7 @@ internal class WordTaskPanes : IWordTaskPanes
     #region 基本属性实现 (Basic Properties Implementation)
 
     /// <inheritdoc/>
-    public IWordApplication Application => _taskPanes != null ? new WordApplication(_taskPanes.Application) : null;
+    public IWordApplication? Application => _taskPanes != null ? new WordApplication(_taskPanes.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _taskPanes?.Parent;

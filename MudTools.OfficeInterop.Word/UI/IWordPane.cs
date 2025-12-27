@@ -18,7 +18,7 @@ public interface IWordPane : IDisposable
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
-    IWordApplication Application { get; }
+    IWordApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置窗格中文本的垂直滚动位置（以磅为单位）。

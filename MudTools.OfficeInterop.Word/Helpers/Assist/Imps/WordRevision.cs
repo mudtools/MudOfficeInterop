@@ -23,7 +23,7 @@ internal class WordRevision : IWordRevision
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _revision != null ? new WordApplication(_revision.Application) : null;
+    public IWordApplication? Application => _revision != null ? new WordApplication(_revision.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _revision?.Parent;

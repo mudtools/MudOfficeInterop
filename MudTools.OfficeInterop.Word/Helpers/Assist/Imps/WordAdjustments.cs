@@ -24,7 +24,7 @@ internal class WordAdjustments : IWordAdjustments
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _adjustments != null ? new WordApplication(_adjustments.Application) : null;
+    public IWordApplication? Application => _adjustments != null ? new WordApplication(_adjustments.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _adjustments?.Parent;

@@ -27,7 +27,7 @@ internal class WordPane : IWordPane
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _pane?.Application != null ? new WordApplication(_pane.Application) : null;
+    public IWordApplication? Application => _pane?.Application != null ? new WordApplication(_pane.Application) : null;
 
     /// <inheritdoc/>
     public int? VerticalPercentScrolled

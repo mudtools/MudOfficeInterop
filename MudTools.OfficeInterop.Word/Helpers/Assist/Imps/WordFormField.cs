@@ -24,7 +24,7 @@ internal class WordFormField : IWordFormField
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _formField != null ? new WordApplication(_formField.Application) : null;
+    public IWordApplication? Application => _formField != null ? new WordApplication(_formField.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _formField?.Parent;

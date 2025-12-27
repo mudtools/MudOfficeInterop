@@ -21,7 +21,7 @@ namespace ReportGenerationSystemSample
         /// 构造函数
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
-        public ReportTemplateManager(IWordApplication application)
+        public ReportTemplateManager(IWordApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
         }

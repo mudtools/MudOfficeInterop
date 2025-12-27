@@ -28,7 +28,7 @@ internal class WordTwoInitialCapsException : IWordTwoInitialCapsException
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _twoInitialCapsException != null ? new WordApplication(_twoInitialCapsException.Application) : null;
+    public IWordApplication? Application => _twoInitialCapsException != null ? new WordApplication(_twoInitialCapsException.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _twoInitialCapsException?.Parent;

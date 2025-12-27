@@ -28,7 +28,7 @@ internal class WordContentControl : IWordContentControl
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _contentControl != null ? new WordApplication(_contentControl.Application) : null;
+    public IWordApplication? Application => _contentControl != null ? new WordApplication(_contentControl.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _contentControl?.Parent;

@@ -30,7 +30,7 @@ internal class WordListGallery : IWordListGallery
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _listGallery != null ? new WordApplication(_listGallery.Application) : null;
+    public IWordApplication? Application => _listGallery != null ? new WordApplication(_listGallery.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _listGallery?.Parent;

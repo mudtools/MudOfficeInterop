@@ -23,7 +23,7 @@ internal class WordListParagraphs : IWordListParagraphs
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _listParagraphs != null ? new WordApplication(_listParagraphs.Application) : null;
+    public IWordApplication? Application => _listParagraphs != null ? new WordApplication(_listParagraphs.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _listParagraphs?.Parent;

@@ -26,7 +26,7 @@ internal class WordZoom : IWordZoom
     #region 属性实现
 
     /// <inheritdoc/>
-    public IWordApplication Application => _zoom?.Application != null ? new WordApplication(_zoom.Application) : null;
+    public IWordApplication? Application => _zoom?.Application != null ? new WordApplication(_zoom.Application) : null;
 
     /// <inheritdoc/>
     public object? Parent => _zoom?.Parent;
