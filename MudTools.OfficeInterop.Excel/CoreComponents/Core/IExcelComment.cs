@@ -10,12 +10,26 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Comment 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Comment 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelComment : IDisposable
 {
     /// <summary>
+    /// 获取单元格格式对象的父对象（通常是 Application）
+    /// 对应 CellFormat.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取单元格格式对象所在的Application对象
+    /// 对应 CellFormat.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
+    /// <summary>
     /// 获取或设置注释的文本内容
     /// </summary>
-    string Text(string? text = null, int? start = null, bool? overwrite = null);
+    string? Text(string? text = null, int? start = null, bool? overwrite = null);
 
     /// <summary>
     /// 获取注释的作者
@@ -29,21 +43,28 @@ public interface IExcelComment : IDisposable
     /// </summary>
     bool Visible { get; set; }
 
-    /// <summary>
-    /// 获取注释所在的区域对象
-    /// 对应 Comment.Parent 属性
-    /// </summary>
-    IExcelRange Parent { get; }
 
     /// <summary>
     /// 获取注释的形状对象
     /// 对应 Comment.Shape 属性
     /// </summary>
-    IExcelShape Shape { get; }
+    IExcelShape? Shape { get; }
 
     /// <summary>
     /// 删除注释
     /// 对应 Comment.Delete 方法
     /// </summary>
     void Delete();
+
+    /// <summary>
+    /// 获取下一个注释对象
+    /// 对应 Comment.Next 属性
+    /// </summary>
+    IExcelComment? Next();
+
+    /// <summary>
+    /// 获取前一个注释对象
+    /// 对应 Comment.Previous 属性
+    /// </summary>
+    IExcelComment? Previous();
 }
