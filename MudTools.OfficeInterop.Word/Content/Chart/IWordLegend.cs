@@ -110,7 +110,7 @@ public interface IWordLegend : IOfficeObject<IWordLegend>, IDisposable
     /// </summary>
     /// <param name="index">图例项的索引值。</param>
     /// <returns>指定索引的图例项对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordLegendEntry? LegendEntries(int index);
 
     /// <summary>
@@ -118,13 +118,13 @@ public interface IWordLegend : IOfficeObject<IWordLegend>, IDisposable
     /// </summary>
     /// <param name="name">图例项的名称。</param>
     /// <returns>指定名称的图例项对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordLegendEntry? LegendEntries(string name);
 
     /// <summary>
     /// 获取所有图例项集合。
     /// </summary>
     /// <returns>包含所有图例项的集合对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordLegendEntries? LegendEntries();
 }

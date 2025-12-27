@@ -252,7 +252,7 @@ public interface IExcelShapes : IOfficeObject<IExcelShapes>, IEnumerable<IExcelS
     /// </summary>
     /// <param name="index">形状的索引或名称</param>
     /// <returns>形状区域对象</returns>
-    [MethodIndex, ReturnValueConvert]
+    [MethodIndex, ValueConvert]
     IExcelShapeRange? Range(string index);
 
     /// <summary>
@@ -260,7 +260,7 @@ public interface IExcelShapes : IOfficeObject<IExcelShapes>, IEnumerable<IExcelS
     /// </summary>
     /// <param name="index">形状的索引或名称</param>
     /// <returns>形状区域对象</returns>
-    [MethodIndex, ReturnValueConvert]
+    [MethodIndex, ValueConvert]
     IExcelShapeRange? Range(int index);
 
 

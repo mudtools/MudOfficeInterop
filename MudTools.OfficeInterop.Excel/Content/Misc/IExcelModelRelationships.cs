@@ -8,57 +8,45 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示Excel中的字符对象接口，提供对单元格中文本的字符级操作功能
+/// 表示模型关系对象集合
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCharacters : IOfficeObject<IExcelCharacters>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelModelRelationships : IEnumerable<IExcelModelRelationship?>, IOfficeObject<IExcelModelRelationships>, IDisposable
 {
     /// <summary>
-    /// 获取当前COM对象的父对象。
+    /// 获取对象的父对象 
+    /// 对应 IconSet.Parent 属性
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取当前COM对象的Application对象
+    /// 获取对象所在的Application对象
+    /// 对应 IconSet.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取字符数量
+    /// 获取对象数量
     /// </summary>
     int Count { get; }
 
     /// <summary>
-    /// 获取或设置文本内容
+    /// 获取指定索引的列对象
     /// </summary>
-    string Text { get; set; }
+    IExcelModelRelationship? this[int index] { get; }
 
     /// <summary>
-    /// 获取或设置对象的标题
+    /// 获取指定名称的列对象
     /// </summary>
-    string Caption { get; set; }
+    IExcelModelRelationship? this[string name] { get; }
 
     /// <summary>
-    /// 获取或设置对象的拼音文本
+    /// 添加关系
     /// </summary>
-    string PhoneticCharacters { get; set; }
+    /// <param name="foreignKeyColumn"></param>
+    /// <param name="primaryKeyColumn"></param>
+    /// <returns></returns>
+    IExcelModelRelationship? Add(IExcelModelTableColumn foreignKeyColumn, IExcelModelTableColumn primaryKeyColumn);
 
-    /// <summary>
-    /// 获取字符的字体属性
-    /// </summary>
-    IExcelFont? Font { get; }
-
-    /// <summary>
-    /// 删除字符
-    /// </summary>
-    void Delete();
-
-    /// <summary>
-    /// 插入文本到指定位置
-    /// </summary>
-    /// <param name="text">要插入的文本</param>
-    /// <returns>插入后的字符对象</returns>
-    [ValueConvert]
-    IExcelCharacters? Insert(string text);
 }

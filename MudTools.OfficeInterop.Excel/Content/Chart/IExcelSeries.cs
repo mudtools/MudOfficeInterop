@@ -317,7 +317,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// <param name="type">误差线类型，如固定值、百分比、标准偏差等</param>
     /// <param name="amount">正误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
     /// <param name="minusValues">负误差线的值，根据类型不同含义不同，如为null则使用默认值</param>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelErrorBars? ErrorBar(XlErrorBarDirection direction, XlErrorBarInclude include, XlErrorBarType type, object? amount = null, object? minusValues = null);
 
     /// <summary>
@@ -325,7 +325,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// 对应 Series.Trendlines() 方法
     /// </summary>
     /// <returns>趋势线集合 <see cref="IExcelTrendlines"/> 对象，如果获取失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelTrendlines? Trendlines();
 
     /// <summary>
@@ -334,7 +334,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// </summary>
     /// <param name="trendlineType">趋势线类型 <see cref="XlTrendlineType"/></param>
     /// <returns>趋势线对象 <see cref="IExcelTrendline"/>，如果获取失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelTrendline? Trendlines(XlTrendlineType trendlineType);
 
     /// <summary>
@@ -342,7 +342,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// 对应 Series.DataLabels() 方法
     /// </summary>
     /// <returns>数据标签集合 <see cref="IExcelDataLabels"/> 对象，如果获取失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelDataLabels? DataLabels();
 
     /// <summary>
@@ -351,7 +351,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// </summary>
     /// <param name="index">指定要返回的数据标签的索引号或标识</param>
     /// <returns>指定的数据标签 <see cref="IExcelDataLabel"/> 对象，如果获取失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelDataLabel? DataLabels(int index);
 
     /// <summary>
@@ -360,7 +360,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// </summary>
     /// <param name="name">指定要返回的数据标签的索引号或标识</param>
     /// <returns>指定的数据标签 <see cref="IExcelDataLabel"/> 对象，如果获取失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelDataLabel? DataLabels(string name);
 
     /// <summary>
@@ -391,7 +391,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// 获取数据系列中的所有数据点
     /// </summary>
     /// <returns>IExcelPoints 对象，包含系列中的所有数据点</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPoints? Points();
 
     /// <summary>
@@ -399,7 +399,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// </summary>
     /// <param name="name">数据点的名称</param>
     /// <returns>IExcelPoint 对象，表示指定名称的数据点</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPoint? Points(string name);
 
     /// <summary>
@@ -407,7 +407,7 @@ public interface IExcelSeries : IOfficeObject<IExcelSeries>, IDisposable
     /// </summary>
     /// <param name="index">数据点在系列中的索引位置</param>
     /// <returns>IExcelPoint 对象，表示指定索引位置的数据点</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPoint? Points(int index);
     #endregion
 

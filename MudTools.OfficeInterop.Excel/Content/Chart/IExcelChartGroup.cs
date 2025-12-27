@@ -160,21 +160,21 @@ public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup>, IDisposable
     /// 获取图表组中的系列集合。
     /// 返回封装后的 <see cref="IExcelSeriesCollection"/> 接口。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelSeriesCollection? SeriesCollection();
 
     /// <summary>
     /// 获取图表组中的系列集合。
     /// 返回封装后的 <see cref="IExcelSeries"/> 接口。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelSeries? SeriesCollection(int index);
 
     /// <summary>
     /// 获取图表组中的分类集合。
     /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelCategoryCollection CategoryCollection();
 
     /// <summary>
@@ -182,14 +182,14 @@ public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup>, IDisposable
     /// 返回封装后的 <see cref="IExcelChartCategory"/> 接口。
     /// </summary>
     /// <param name="index">要获取的图表分类的索引</param>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelChartCategory CategoryCollection(int index);
 
     /// <summary>
     /// 获取图表组中的完整分类集合。
     /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelCategoryCollection FullCategoryCollection();
 
     /// <summary>
@@ -197,6 +197,6 @@ public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup>, IDisposable
     /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
     /// </summary>
     /// <param name="index">要获取的分类集合的索引</param>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelCategoryCollection FullCategoryCollection(int index);
 }

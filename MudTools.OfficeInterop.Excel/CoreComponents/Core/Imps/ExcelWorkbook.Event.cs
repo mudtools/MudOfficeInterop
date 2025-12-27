@@ -360,4 +360,53 @@ partial class ExcelWorkbook
         add { _workBookSyncEventHandler += value; }
         remove { _workBookSyncEventHandler -= value; }
     }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposedValue) return;
+
+        if (disposing)
+        {
+            if (_workbook != null)
+            {
+                DisConnectEvent();
+                Marshal.ReleaseComObject(_workbook);
+                _workbook = null;
+            }
+            _excelChart_ActiveChart?.Dispose();
+            _excelChart_ActiveChart = null;
+            _excelSheets_Charts?.Dispose();
+            _excelSheets_Charts = null;
+            _officeCommandBars_CommandBars?.Dispose();
+            _officeCommandBars_CommandBars = null;
+            _excelNames_Names?.Dispose();
+            _excelNames_Names = null;
+            _excelSheets_Sheets?.Dispose();
+            _excelSheets_Sheets = null;
+            _excelStyles_Styles?.Dispose();
+            _excelStyles_Styles = null;
+            _excelCustomViews_CustomViews?.Dispose();
+            _excelCustomViews_CustomViews = null;
+            _excelWindows_Windows?.Dispose();
+            _excelWindows_Windows = null;
+            _excelSheets_Worksheets?.Dispose();
+            _excelSheets_Worksheets = null;
+            _excelSheets_Excel4IntlMacroSheets?.Dispose();
+            _excelSheets_Excel4IntlMacroSheets = null;
+            _excelSheets_Excel4MacroSheets?.Dispose();
+            _excelSheets_Excel4MacroSheets = null;
+            _excelPublishObjects_PublishObjects?.Dispose();
+            _excelPublishObjects_PublishObjects = null;
+            _excelWebOptions_WebOptions?.Dispose();
+            _excelWebOptions_WebOptions = null;
+            _excelSlicerCaches_SlicerCaches?.Dispose();
+            _excelSlicerCaches_SlicerCaches = null;
+            _excelSlicer_ActiveSlicer?.Dispose();
+            _excelSlicer_ActiveSlicer = null;
+            _excelModel_Model?.Dispose();
+            _excelModel_Model = null;
+        }
+
+        _disposedValue = true;
+    }
 }

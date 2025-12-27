@@ -513,7 +513,7 @@ public interface IExcelPivotTable : IOfficeObject<IExcelPivotTable>, IDisposable
     /// </summary>
     /// <param name="Index">要获取的字段索引或名称</param>
     /// <returns>对应的数据透视表字段，如果未找到则返回null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPivotField? PivotFields(int Index);
 
     /// <summary>
@@ -521,14 +521,14 @@ public interface IExcelPivotTable : IOfficeObject<IExcelPivotTable>, IDisposable
     /// </summary>
     /// <param name="Index">要获取的字段索引或名称</param>
     /// <returns>对应的数据透视表字段，如果未找到则返回null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPivotField? PivotFields(string Index);
 
     /// <summary>
     /// 获取数据透视表中所有字段的集合
     /// </summary>
     /// <returns>包含所有数据透视表字段的集合，如果出现错误则返回null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPivotFields? PivotFields();
 
     /// <summary>

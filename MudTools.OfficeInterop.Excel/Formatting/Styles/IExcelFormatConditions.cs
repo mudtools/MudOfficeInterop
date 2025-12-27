@@ -91,7 +91,7 @@ public interface IExcelFormatConditions : IOfficeObject<IExcelFormatConditions>,
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlDatabar)
     /// </summary>
     /// <returns>新创建的条件格式规则对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelDatabar? AddDatabar();
 
     /// <summary>
@@ -99,7 +99,7 @@ public interface IExcelFormatConditions : IOfficeObject<IExcelFormatConditions>,
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlIconSet)
     /// </summary>
     /// <returns>新创建的条件格式规则对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelIconSetCondition? AddIconSetCondition();
 
     /// <summary>
@@ -107,7 +107,7 @@ public interface IExcelFormatConditions : IOfficeObject<IExcelFormatConditions>,
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlUniqueValues)
     /// </summary>
     /// <returns>新创建的条件格式规则对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelUniqueValues? AddUniqueValues();
 
     /// <summary>
@@ -115,7 +115,7 @@ public interface IExcelFormatConditions : IOfficeObject<IExcelFormatConditions>,
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlTop10)
     /// </summary>
     /// <returns>新创建的条件格式规则对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelTop10? AddTop10();
 
     /// <summary>
@@ -123,7 +123,7 @@ public interface IExcelFormatConditions : IOfficeObject<IExcelFormatConditions>,
     /// 对应 FormatConditions.Add 方法 (使用 XlFormatConditionType.xlAboveAverage)
     /// </summary>
     /// <returns>新创建的高于平均值条件格式规则对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelAboveAverage AddAboveAverage();
 
     /// <summary>
@@ -132,7 +132,7 @@ public interface IExcelFormatConditions : IOfficeObject<IExcelFormatConditions>,
     /// </summary>
     /// <param name="ColorScaleType">色阶类型</param>
     /// <returns>新创建的色阶条件格式规则对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelColorScale AddColorScale(int ColorScaleType);
 
     /// <summary>

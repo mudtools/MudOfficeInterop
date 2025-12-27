@@ -38,7 +38,7 @@ public interface IExcelHyperlinks : IOfficeObject<IExcelHyperlinks>, IEnumerable
     /// <param name="screenTip">鼠标悬停时显示的提示文本</param>
     /// <param name="textToDisplay">要显示的文本</param>
     /// <returns>新创建的超链接对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelHyperlink? Add(IExcelRange anchor, string address, string? subAddress = null, string? screenTip = null, string? textToDisplay = null);
 
     /// <summary>

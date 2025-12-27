@@ -158,7 +158,7 @@ public interface IExcelGroupObject : IOfficeObject<IExcelGroupObject>, IDisposab
     /// 返回新创建的 Shapes 集合（包含所有拆分后的子项）。
     /// </summary>
     /// <returns>拆分后的子形状集合。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelShapes? Ungroup();
 
     /// <summary>

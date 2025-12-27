@@ -259,7 +259,7 @@ public interface IWordWindow : IOfficeObject<IWordWindow>, IDisposable
     /// <param name="x">屏幕坐标中的X轴位置（以像素为单位）。</param>
     /// <param name="y">屏幕坐标中的Y轴位置（以像素为单位）。</param>
     /// <returns>返回指定点处的范围对象，如果点不在文档窗口中则返回null。</returns>
-    [ReturnValueConvert, MethodName("RangeFromPoint")]
+    [ValueConvert, MethodName("RangeFromPoint")]
     IWordRange? RangeFromPoint(int x, int y);
 
     /// <summary>
@@ -268,7 +268,7 @@ public interface IWordWindow : IOfficeObject<IWordWindow>, IDisposable
     /// <param name="x">屏幕坐标中的X轴位置（以像素为单位）。</param>
     /// <param name="y">屏幕坐标中的Y轴位置（以像素为单位）。</param>
     /// <returns>返回指定点处的范围对象，如果点不在文档窗口中则返回null。</returns>
-    [ReturnValueConvert, MethodName("RangeFromPoint")]
+    [ValueConvert, MethodName("RangeFromPoint")]
     IWordShape? ShapeFromPoint(int x, int y);
 
     /// <summary>

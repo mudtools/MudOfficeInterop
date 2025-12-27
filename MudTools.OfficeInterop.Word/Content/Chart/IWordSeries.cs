@@ -177,37 +177,37 @@ public interface IWordSeries : IOfficeObject<IWordSeries>, IDisposable
     /// <summary>
     /// 获取数据标签集合。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordDataLabels? DataLabels();
 
     /// <summary>
     /// 获取数据标签。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordDataLabel? DataLabels(int index);
 
     /// <summary>
     /// 获取数据标签。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordDataLabel? DataLabels(string name);
 
     /// <summary>
     /// 获取趋势线集合。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordTrendlines? Trendlines();
 
     /// <summary>
     /// 获取趋势线。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordTrendline? Trendlines(int index);
 
     /// <summary>
     /// 获取趋势线。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordTrendline? Trendlines(string name);
 
     /// <summary>
@@ -278,13 +278,13 @@ public interface IWordSeries : IOfficeObject<IWordSeries>, IDisposable
     /// </summary>
     /// <param name="Index">要获取的数据点索引，如果省略则返回所有数据点。</param>
     /// <returns>返回表示数据点或数据点集合的对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordPoint? Points(int Index);
 
     /// <summary>
     /// 获取系列中的特定数据点集合。
     /// </summary>
     /// <returns>返回表示数据点或数据点集合的对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordPoints? Points();
 }

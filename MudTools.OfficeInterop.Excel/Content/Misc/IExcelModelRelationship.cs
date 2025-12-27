@@ -8,57 +8,50 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示Excel中的字符对象接口，提供对单元格中文本的字符级操作功能
+/// 表示模型关系对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCharacters : IOfficeObject<IExcelCharacters>, IDisposable
+public interface IExcelModelRelationship : IOfficeObject<IExcelModelRelationship>, IDisposable
 {
     /// <summary>
-    /// 获取当前COM对象的父对象。
+    /// 获取对象的父对象 
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取当前COM对象的Application对象
+    /// 获取对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
-    /// <summary>
-    /// 获取字符数量
-    /// </summary>
-    int Count { get; }
 
     /// <summary>
-    /// 获取或设置文本内容
+    /// 获取关系中的外键表。
     /// </summary>
-    string Text { get; set; }
+    IExcelModelTable? ForeignKeyTable { get; }
 
     /// <summary>
-    /// 获取或设置对象的标题
+    /// 获取关系中的外键列。
     /// </summary>
-    string Caption { get; set; }
+    IExcelModelTableColumn? ForeignKeyColumn { get; }
 
     /// <summary>
-    /// 获取或设置对象的拼音文本
+    /// 获取关系中的主键表。
     /// </summary>
-    string PhoneticCharacters { get; set; }
+    IExcelModelTable? PrimaryKeyTable { get; }
 
     /// <summary>
-    /// 获取字符的字体属性
+    /// 获取关系中的主键列。
     /// </summary>
-    IExcelFont? Font { get; }
+    IExcelModelTableColumn? PrimaryKeyColumn { get; }
 
     /// <summary>
-    /// 删除字符
+    /// 获取或设置一个布尔值，表示关系是否处于活动状态。
+    /// </summary>
+    bool Active { get; set; }
+
+    /// <summary>
+    /// 删除此关系。
     /// </summary>
     void Delete();
-
-    /// <summary>
-    /// 插入文本到指定位置
-    /// </summary>
-    /// <param name="text">要插入的文本</param>
-    /// <returns>插入后的字符对象</returns>
-    [ValueConvert]
-    IExcelCharacters? Insert(string text);
 }

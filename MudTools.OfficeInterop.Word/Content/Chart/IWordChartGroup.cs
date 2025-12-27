@@ -138,26 +138,26 @@ public interface IWordChartGroup : IOfficeObject<IWordChartGroup>, IDisposable
     /// <summary>
     /// 获取第一个数据系列。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordSeriesCollection? SeriesCollection();
 
     /// <summary>
     /// 获取第一个数据系列。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordSeries? SeriesCollection(int index);
 
     /// <summary>
     /// 获取第一个数据系列。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordSeries? SeriesCollection(string name);
 
     /// <summary>
     /// 获取图表的所有分类集合。
     /// </summary>
     /// <returns>包含所有分类的集合。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordCategoryCollection? CategoryCollection();
 
     /// <summary>
@@ -165,7 +165,7 @@ public interface IWordChartGroup : IOfficeObject<IWordChartGroup>, IDisposable
     /// </summary>
     /// <param name="index">分类的从零开始的索引。</param>
     /// <returns>指定索引处的分类对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordChartCategory? CategoryCollection(int index);
 
     /// <summary>
@@ -173,14 +173,14 @@ public interface IWordChartGroup : IOfficeObject<IWordChartGroup>, IDisposable
     /// </summary>
     /// <param name="name">分类的名称。</param>
     /// <returns>具有指定名称的分类对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordChartCategory? CategoryCollection(string name);
 
     /// <summary>
     /// 获取图表的完整分类集合，包括可见和隐藏的分类。
     /// </summary>
     /// <returns>包含所有分类（包括被过滤掉的分类）的集合。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordCategoryCollection? FullCategoryCollection();
 
     /// <summary>
@@ -188,7 +188,7 @@ public interface IWordChartGroup : IOfficeObject<IWordChartGroup>, IDisposable
     /// </summary>
     /// <param name="index">分类的从零开始的索引。</param>
     /// <returns>指定索引处的分类对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordChartCategory? FullCategoryCollection(int index);
 
     /// <summary>
@@ -196,7 +196,7 @@ public interface IWordChartGroup : IOfficeObject<IWordChartGroup>, IDisposable
     /// </summary>
     /// <param name="name">分类的名称。</param>
     /// <returns>具有指定名称的分类对象。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordChartCategory? FullCategoryCollection(string name);
 
     /// <summary>

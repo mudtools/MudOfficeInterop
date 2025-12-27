@@ -77,7 +77,7 @@ public interface IWordChart : IOfficeObject<IWordChart>, IDisposable
     /// <summary>
     /// 获取系列集合。
     /// </summary>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordSeriesCollection? SeriesCollection();
 
     /// <summary>
@@ -85,7 +85,7 @@ public interface IWordChart : IOfficeObject<IWordChart>, IDisposable
     /// </summary>
     /// <param name="index">要获取的系列集合的从零开始的索引。</param>
     /// <returns>指定索引处的系列集合。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordSeriesCollection? SeriesCollection(int index);
 
     /// <summary>
@@ -93,7 +93,7 @@ public interface IWordChart : IOfficeObject<IWordChart>, IDisposable
     /// </summary>
     /// <param name="name">要获取的系列集合的名称。</param>
     /// <returns>具有指定名称的系列集合。</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IWordSeriesCollection? SeriesCollection(string name);
 
     /// <summary>

@@ -5,7 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using MudTools.OfficeInterop.Vbe;
+
+using System.Drawing;
 
 namespace MudTools.OfficeInterop.Excel;
 
@@ -13,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Workbook 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Workbook 的安全访问和操作
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsExcel", NoneConstructor = true)]
+[ComObjectWrap(ComNamespace = "MsExcel", NoneConstructor = true, NoneDisposed = true)]
 public interface IExcelWorkbook : IDisposable
 {
 
@@ -42,7 +43,7 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取表示活动图表（嵌入图表或图表工作表）的Chart对象。当没有活动图表时，此属性返回null。
     /// </summary>
-    IExcelChart ActiveChart { get; }
+    IExcelChart? ActiveChart { get; }
 
     /// <summary>
     /// 获取活动工作簿或指定窗口或工作簿中的活动工作表（位于顶部的）。如果没有活动工作表，则返回null。
@@ -112,7 +113,9 @@ public interface IExcelWorkbook : IDisposable
     /// 获取或设置工作簿调色板中的颜色。调色板有56个条目，每个条目由RGB值表示。
     /// </summary>
     /// <param name="index">可选。颜色编号（从1到56）。如果未指定此参数，则返回包含调色板所有56种颜色的数组。</param>
-    object Colors { get; set; }
+    [MethodIndex]
+    [ValueConvert]
+    Color? Colors(int index);
 
     /// <summary>
     /// 获取表示Excel命令栏的CommandBars对象。
@@ -164,7 +167,7 @@ public interface IExcelWorkbook : IDisposable
     /// 为当前用户分配对作为共享列表打开的工作簿的独占访问权限。
     /// </summary>
     /// <returns>操作结果。</returns>
-    bool ExclusiveAccess();
+    bool? ExclusiveAccess();
 
     /// <summary>
     /// 获取工作簿的文件格式和/或类型。
@@ -530,7 +533,10 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="extraInfo">可选。指定HTTP用于解析超链接的附加信息的字符串或字节数组。</param>
     /// <param name="method">可选。指定附加ExtraInfo的方式。</param>
     /// <param name="headerInfo">可选。指定HTTP请求的标头信息的字符串。默认值为空字符串。</param>
-    void FollowHyperlink(string address, object subAddress = null, object newWindow = null, object addHistory = null, object extraInfo = null, object method = null, object headerInfo = null);
+    void FollowHyperlink(string address, string? subAddress = null,
+                    bool? newWindow = null, object? addHistory = null,
+                    object? extraInfo = null, object? method = null,
+                    string? headerInfo = null);
 
     /// <summary>
     /// 将快捷方式添加到工作簿或收藏夹的超链接。
@@ -550,18 +556,18 @@ public interface IExcelWorkbook : IDisposable
     /// <summary>
     /// 获取PublishObjects集合，表示工作簿中显示在服务器上的发布对象。
     /// </summary>
-    IExcelPublishObjects PublishObjects { get; }
+    IExcelPublishObjects? PublishObjects { get; }
 
     /// <summary>
     /// 获取WebOptions集合，包含将文档另存为网页或打开网页时使用的工作簿级属性。
     /// </summary>
-    IExcelWebOptions WebOptions { get; }
+    IExcelWebOptions? WebOptions { get; }
 
     /// <summary>
     /// 使用指定的文档编码基于HTML文档重新加载工作簿。
     /// </summary>
     /// <param name="encoding">必需。要应用于工作簿的编码。</param>
-    void ReloadAs(MsoEncoding encoding);
+    void ReloadAs([ComNamespace("MsCore")] MsoEncoding encoding);
 
     /// <summary>
     /// 获取一个布尔值，表示电子邮件撰写标题和信封工具栏是否都可见。
@@ -610,7 +616,13 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="textCodepage">可选。不用于美式英语Excel。</param>
     /// <param name="textVisualLayout">可选。不用于美式英语Excel。</param>
     /// <param name="local">可选。True表示根据Excel的语言（包括控制面板设置）保存文件。False（默认）表示根据VBA的语言（通常是美式英语）保存文件。</param>
-    void SaveAs(object filename = null, object fileFormat = null, object password = null, object writeResPassword = null, object readOnlyRecommended = null, object createBackup = null, XlSaveAsAccessMode accessMode = XlSaveAsAccessMode.xlNoChange, object conflictResolution = null, object addToMru = null, object textCodepage = null, object textVisualLayout = null, object local = null);
+    void SaveAs(string? filename = null, XlFileFormat? fileFormat = null,
+                string? password = null, string? writeResPassword = null,
+                bool? readOnlyRecommended = null, bool? createBackup = null,
+                XlSaveAsAccessMode accessMode = XlSaveAsAccessMode.xlNoChange,
+                object? conflictResolution = null, bool? addToMru = null,
+                object? textCodepage = null, object? textVisualLayout = null,
+                bool? local = null);
 
     /// <summary>
     /// 获取或设置一个布尔值，表示是否定时自动保存所有格式的更改文件。
@@ -633,13 +645,13 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="saveChanges">可选。True保存更改并签入文档。False在不保存修订的情况下将文档返回到已签入状态。</param>
     /// <param name="comments">可选。允许用户为要签入的工作簿修订输入签入注释（仅当SaveChanges等于True时适用）。</param>
     /// <param name="makePublic">可选。True允许用户在签入后发布工作簿。这将提交工作簿进行审批过程，最终可能将工作簿版本发布给具有只读权限的用户（仅当SaveChanges等于True时适用）。</param>
-    void CheckIn(object saveChanges = null, object comments = null, object makePublic = null);
+    void CheckIn(bool? saveChanges = null, string? comments = null, bool? makePublic = null);
 
     /// <summary>
     /// 确定Excel是否可以将指定工作簿签入到服务器。
     /// </summary>
     /// <returns>如果可以签入则为True，否则为False。</returns>
-    bool CanCheckIn();
+    bool? CanCheckIn();
 
     /// <summary>
     /// 将工作簿以电子邮件形式发送给指定收件人进行审阅。
@@ -648,13 +660,14 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="subject">可选。消息主题的字符串。如果留空，主题将是：请审阅"文件名"。</param>
     /// <param name="showMessage">可选。指示执行方法时是否应显示消息的布尔值。默认值为True。</param>
     /// <param name="includeAttachment">可选。指示消息是否应包含附件或指向服务器位置的链接的布尔值。默认值为True。</param>
-    void SendForReview(object recipients = null, object subject = null, object showMessage = null, object includeAttachment = null);
+    void SendForReview(string? recipients = null, string? subject = null,
+                       bool? showMessage = null, bool? includeAttachment = null);
 
     /// <summary>
     /// 向已发送出去进行审阅的工作簿的作者发送电子邮件，通知他们审阅者已完成对工作簿的审阅。
     /// </summary>
     /// <param name="showMessage">可选。False不显示消息。True显示消息。</param>
-    void ReplyWithChanges(object showMessage = null);
+    void ReplyWithChanges(bool? showMessage = null);
 
     /// <summary>
     /// 终止使用SendForReview方法发送出去进行审阅的文件审阅。
@@ -693,7 +706,10 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="passwordEncryptionAlgorithm">可选。算法短名称的区分大小写的字符串（例如"RC4"）。</param>
     /// <param name="passwordEncryptionKeyLength">可选。加密密钥长度，为8的倍数（40或更大）。</param>
     /// <param name="passwordEncryptionFileProperties">可选。True（默认）表示加密文件属性。</param>
-    void SetPasswordEncryptionOptions(object passwordEncryptionProvider = null, object passwordEncryptionAlgorithm = null, object passwordEncryptionKeyLength = null, object passwordEncryptionFileProperties = null);
+    void SetPasswordEncryptionOptions(string? passwordEncryptionProvider = null,
+                                     string? passwordEncryptionAlgorithm = null,
+                                     int? passwordEncryptionKeyLength = null,
+                                     bool? passwordEncryptionFileProperties = null);
 
     /// <summary>
     /// 获取一个布尔值，表示Excel是否为指定的受密码保护的工作簿加密文件属性。
@@ -711,7 +727,7 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="password">可选。指定工作表或工作簿的区分大小写密码的字符串。如果省略此参数，则无需密码即可取消保护工作表或工作簿。否则，必须指定密码才能取消保护工作表或工作簿。</param>
     /// <param name="structure">可选。True表示保护工作簿的结构（工作表的相对位置）。默认值为False。</param>
     /// <param name="windows">可选。True表示保护工作簿窗口。如果省略此参数，则窗口不受保护。</param>
-    void Protect(object password = null, object structure = null, object windows = null);
+    void Protect(string? password = null, bool? structure = null, bool? windows = null);
 
     /// <summary>
     /// 导致发生前台智能标记检查，自动注释以前未注释的数据。
@@ -724,7 +740,7 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="recipients">可选。表示传真号码和电子邮件地址的字符串。多个收件人之间用分号分隔。</param>
     /// <param name="subject">可选。表示传真文档主题行的字符串。</param>
     /// <param name="showMessage">可选。True在发送前显示传真消息。False不显示传真消息直接发送。</param>
-    void SendFaxOverInternet(object recipients = null, object subject = null, object showMessage = null);
+    void SendFaxOverInternet(string? recipients = null, string? subject = null, bool? showMessage = null);
 
     /// <summary>
     /// 导入XML数据文件到当前工作簿。
@@ -734,7 +750,9 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="overwrite">可选。如果未为Destination参数指定值，则此参数指定是否覆盖映射到ImportMap参数中指定的架构映射的数据。设置为True表示覆盖数据，False表示将新数据附加到现有数据。默认值为True。</param>
     /// <param name="destination">可选。数据将导入到指定范围的新XML列表中。</param>
     /// <returns>XML导入结果。</returns>
-    XlXmlImportResult XmlImport(string url, out IExcelXmlMap importMap, object overwrite = null, object destination = null);
+    [ValueConvert]
+    XlXmlImportResult? XmlImport(string url, out IExcelXmlMap importMap,
+                                bool? overwrite = null, object? destination = null);
 
     /// <summary>
     /// 导出已映射到指定XML架构映射的数据到XML数据文件。
@@ -761,7 +779,8 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="comments">要签入的工作簿修订的注释（仅当SaveChanges设置为True时适用）。</param>
     /// <param name="makePublic">True允许用户在签入后发布工作簿。</param>
     /// <param name="versionType">指定工作簿的版本控制信息。</param>
-    void CheckInWithVersion(object saveChanges = null, object comments = null, object makePublic = null, object versionType = null);
+    void CheckInWithVersion(bool? saveChanges = null, string? comments = null,
+                            bool? makePublic = null, object? versionType = null);
 
     /// <summary>
     /// 锁定服务器上的工作簿以防止修改。
@@ -780,7 +799,11 @@ public interface IExcelWorkbook : IDisposable
     /// <param name="to">要发布的最后一页的页码。如果省略此参数，则发布到最后一页。</param>
     /// <param name="openAfterPublish">如果设置为True，发布后在查看器中显示文件。如果设置为False，则发布文件但不显示。</param>
     /// <param name="fixedFormatExtClassPtr">FixedFormatExt类的指针。</param>
-    void ExportAsFixedFormat(XlFixedFormatType type, object filename = null, object quality = null, object includeDocProperties = null, object ignorePrintAreas = null, object from = null, object to = null, object openAfterPublish = null, object fixedFormatExtClassPtr = null);
+    void ExportAsFixedFormat(XlFixedFormatType type, string? filename = null,
+                            XlFixedFormatQuality? quality = null, bool? includeDocProperties = null,
+                            bool? ignorePrintAreas = null, int? from = null,
+                            int? to = null, bool? openAfterPublish = null,
+                            object? fixedFormatExtClassPtr = null);
 
     /// <summary>
     /// 获取或设置Excel在对文档进行加密时使用的算法加密提供程序的名称。

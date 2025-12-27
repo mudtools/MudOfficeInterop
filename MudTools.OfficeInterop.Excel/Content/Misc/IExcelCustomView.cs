@@ -8,57 +8,45 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示Excel中的字符对象接口，提供对单元格中文本的字符级操作功能
+/// 表示自定义工作簿视图。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCharacters : IOfficeObject<IExcelCharacters>, IDisposable
+public interface IExcelCustomView : IOfficeObject<IExcelCustomView>, IDisposable
 {
     /// <summary>
-    /// 获取当前COM对象的父对象。
+    /// 获取对象的父对象 
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取当前COM对象的Application对象
+    /// 获取对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
-    /// <summary>
-    /// 获取字符数量
-    /// </summary>
-    int Count { get; }
 
     /// <summary>
-    /// 获取或设置文本内容
+    /// 获取自定义视图的名称。
     /// </summary>
-    string Text { get; set; }
+    string Name { get; }
 
     /// <summary>
-    /// 获取或设置对象的标题
+    /// 获取一个布尔值，表示自定义视图中是否包含打印设置。
     /// </summary>
-    string Caption { get; set; }
+    bool PrintSettings { get; }
 
     /// <summary>
-    /// 获取或设置对象的拼音文本
+    /// 获取一个布尔值，表示自定义视图中是否包含隐藏行和列的设置（包括筛选信息）。
     /// </summary>
-    string PhoneticCharacters { get; set; }
+    bool RowColSettings { get; }
 
     /// <summary>
-    /// 获取字符的字体属性
+    /// 显示自定义视图。
     /// </summary>
-    IExcelFont? Font { get; }
+    void Show();
 
     /// <summary>
-    /// 删除字符
+    /// 删除自定义视图。
     /// </summary>
     void Delete();
-
-    /// <summary>
-    /// 插入文本到指定位置
-    /// </summary>
-    /// <param name="text">要插入的文本</param>
-    /// <returns>插入后的字符对象</returns>
-    [ValueConvert]
-    IExcelCharacters? Insert(string text);
 }

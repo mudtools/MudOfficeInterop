@@ -176,7 +176,7 @@ public interface IExcelPicture : IOfficeObject<IExcelPicture>, IDisposable
     /// 对应 Picture.Copy 方法
     /// </summary>
     /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPicture? Copy();
 
     /// <summary>
@@ -184,7 +184,7 @@ public interface IExcelPicture : IOfficeObject<IExcelPicture>, IDisposable
     /// 对应 Picture.Duplicate 方法
     /// </summary>
     /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPicture? Duplicate();
 
     /// <summary>
@@ -194,7 +194,7 @@ public interface IExcelPicture : IOfficeObject<IExcelPicture>, IDisposable
     /// <param name="Appearance">指定图片外观类型，如屏幕显示样式或打印机样式</param>
     /// <param name="Format">指定复制的图片格式，如位图或图片格式</param>
     /// <returns>返回复制的图片对象，如果复制失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPicture? CopyPicture(
        XlPictureAppearance Appearance = XlPictureAppearance.xlPrinter,
        XlCopyPictureFormat Format = XlCopyPictureFormat.xlPicture);
@@ -204,7 +204,7 @@ public interface IExcelPicture : IOfficeObject<IExcelPicture>, IDisposable
     /// 对应 Picture.Cut 方法
     /// </summary>
     /// <returns>返回剪切的图片对象，如果剪切失败则返回 null</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPicture? Cut();
 
     #endregion

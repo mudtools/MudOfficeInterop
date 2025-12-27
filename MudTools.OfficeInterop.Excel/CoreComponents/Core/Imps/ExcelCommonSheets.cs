@@ -258,7 +258,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
             MsExcel.Workbook targetWorkbook = null;
             if (options.TargetWorkbook != null)
             {
-                targetWorkbook = (options.TargetWorkbook as ExcelWorkbook)?._workbook;
+                targetWorkbook = (options.TargetWorkbook as ExcelWorkbook)?.InternalComObject;
                 if (targetWorkbook == null)
                     throw new ArgumentException("无效的目标工作簿", nameof(options.TargetWorkbook));
             }

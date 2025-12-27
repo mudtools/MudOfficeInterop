@@ -532,7 +532,7 @@ public interface IExcelPivotField : IOfficeObject<IExcelPivotField>, IDisposable
     /// </summary>
     /// <param name="index">项目索引</param>
     /// <returns>数据透视表项目对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPivotItems? PivotItems(int index);
 
     /// <summary>
@@ -541,7 +541,7 @@ public interface IExcelPivotField : IOfficeObject<IExcelPivotField>, IDisposable
     /// </summary>
     /// <param name="name">项目名称</param>
     /// <returns>数据透视表项目对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPivotItems? PivotItems(string name);
 
     /// <summary>
@@ -549,6 +549,6 @@ public interface IExcelPivotField : IOfficeObject<IExcelPivotField>, IDisposable
     /// 对应 PivotField.PivotItems 方法
     /// </summary>
     /// <returns>数据透视表项目集合对象</returns>
-    [ReturnValueConvert]
+    [ValueConvert]
     IExcelPivotItem? PivotItems();
 }

@@ -8,57 +8,49 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示Excel中的字符对象接口，提供对单元格中文本的字符级操作功能
+/// 表示Excel数据模型中的表。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCharacters : IOfficeObject<IExcelCharacters>, IDisposable
+public interface IExcelModelTable : IOfficeObject<IExcelModelTable>, IDisposable
 {
     /// <summary>
-    /// 获取当前COM对象的父对象。
+    /// 获取对象的父对象 
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取当前COM对象的Application对象
+    /// 获取对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取字符数量
+    /// 获取模型表的名称。
     /// </summary>
-    int Count { get; }
+    string Name { get; }
 
     /// <summary>
-    /// 获取或设置文本内容
+    /// 获取模型表的数据源名称。
     /// </summary>
-    string Text { get; set; }
+    string SourceName { get; }
 
     /// <summary>
-    /// 获取或设置对象的标题
+    /// 获取模型表中的列集合。
     /// </summary>
-    string Caption { get; set; }
+    IExcelModelTableColumns? ModelTableColumns { get; }
 
     /// <summary>
-    /// 获取或设置对象的拼音文本
+    /// 获取与模型表关联的工作簿连接。
     /// </summary>
-    string PhoneticCharacters { get; set; }
+    IExcelWorkbookConnection? SourceWorkbookConnection { get; }
 
     /// <summary>
-    /// 获取字符的字体属性
+    /// 刷新模型表的数据。
     /// </summary>
-    IExcelFont? Font { get; }
+    void Refresh();
 
     /// <summary>
-    /// 删除字符
+    /// 获取模型表中的记录数量。
     /// </summary>
-    void Delete();
-
-    /// <summary>
-    /// 插入文本到指定位置
-    /// </summary>
-    /// <param name="text">要插入的文本</param>
-    /// <returns>插入后的字符对象</returns>
-    [ValueConvert]
-    IExcelCharacters? Insert(string text);
+    int RecordCount { get; }
 }
