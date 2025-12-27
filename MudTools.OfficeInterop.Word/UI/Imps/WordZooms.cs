@@ -46,7 +46,7 @@ internal class WordZooms : IWordZooms
 
     /// <inheritdoc/>
     /// <remarks>对于 Zooms 集合，父对象通常是关联的 View 对象。</remarks>
-    public object Parent => _zooms?.Parent;
+    public object? Parent => _zooms?.Parent;
 
     #endregion // 属性实现
 

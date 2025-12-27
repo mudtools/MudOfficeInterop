@@ -20,7 +20,7 @@ public interface IWordBookmarks : IDisposable, IEnumerable<IWordBookmark>
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取书签数量

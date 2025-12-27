@@ -31,7 +31,7 @@ internal class WordHangulAndAlphabetException : IWordHangulAndAlphabetException
     public IWordApplication Application => _hangulAndAlphabetException != null ? new WordApplication(_hangulAndAlphabetException.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _hangulAndAlphabetException?.Parent;
+    public object? Parent => _hangulAndAlphabetException?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _hangulAndAlphabetException?.Creator ?? 0;

@@ -30,7 +30,7 @@ internal class WordContentControlListEntry : IWordContentControlListEntry
     public IWordApplication Application => _listEntry != null ? new WordApplication(_listEntry.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _listEntry?.Parent;
+    public object? Parent => _listEntry?.Parent;
 
     /// <inheritdoc/>
     public int Index

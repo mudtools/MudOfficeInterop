@@ -20,7 +20,7 @@ public interface IWordStyles : IEnumerable<IWordStyle>, IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取样式集合中的样式数量。

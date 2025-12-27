@@ -22,9 +22,9 @@ internal class ExcelDataBarBorder : IExcelDataBarBorder
     }
 
     #region 基础属性
-    public object Parent => _dataBarBorder.Parent;
+    public object? Parent => _dataBarBorder.Parent;
 
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {

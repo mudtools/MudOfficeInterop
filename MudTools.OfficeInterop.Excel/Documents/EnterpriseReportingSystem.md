@@ -32,7 +32,7 @@ namespace MudTools.OfficeInterop.Excel.Reporting.Templates
         private readonly IExcelApplication _application;
         private readonly Dictionary<string, ReportTemplate> _templates;
         
-        public ReportTemplateManager(IExcelApplication application)
+        public ReportTemplateManager(IExcelApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _templates = new Dictionary<string, ReportTemplate>();
@@ -148,7 +148,7 @@ namespace MudTools.OfficeInterop.Excel.Reporting.Templates
         /// <summary>
         /// 查找模板中的占位符
         /// </summary>
-        private Dictionary<string, string> FindPlaceholders(IExcelApplication application)
+        private Dictionary<string, string> FindPlaceholders(IExcelApplication? Application)
         {
             var placeholders = new Dictionary<string, string>();
             
@@ -305,7 +305,7 @@ public class AdvancedTemplateManager
     /// <summary>
     /// 应用配置到工作簿
     /// </summary>
-    private void ApplyConfiguration(IExcelApplication application, TemplateConfiguration config, 
+    private void ApplyConfiguration(IExcelApplication? Application, TemplateConfiguration config, 
         Dictionary<string, object> data)
     {
         // 应用数据绑定
@@ -336,7 +336,7 @@ public class AdvancedTemplateManager
     /// <summary>
     /// 应用数据绑定
     /// </summary>
-    private void ApplyDataBindings(IExcelApplication application, 
+    private void ApplyDataBindings(IExcelApplication? Application, 
         List<DataBinding> dataBindings, Dictionary<string, object> data)
     {
         foreach (var binding in dataBindings)
@@ -359,7 +359,7 @@ public class AdvancedTemplateManager
     /// <summary>
     /// 应用格式设置
     /// </summary>
-    private void ApplyFormatSettings(IExcelApplication application, 
+    private void ApplyFormatSettings(IExcelApplication? Application, 
         List<FormatSetting> formatSettings)
     {
         foreach (var setting in formatSettings)
@@ -397,7 +397,7 @@ public class AdvancedTemplateManager
     /// <summary>
     /// 应用公式
     /// </summary>
-    private void ApplyFormulas(IExcelApplication application, 
+    private void ApplyFormulas(IExcelApplication? Application, 
         List<FormulaConfiguration> formulas, Dictionary<string, object> data)
     {
         foreach (var formula in formulas)
@@ -438,7 +438,7 @@ public class AdvancedTemplateManager
     /// <summary>
     /// 应用图表配置
     /// </summary>
-    private void ApplyChartConfigurations(IExcelApplication application, 
+    private void ApplyChartConfigurations(IExcelApplication? Application, 
         List<ChartConfiguration> chartConfigs, Dictionary<string, object> data)
     {
         // 图表配置应用逻辑
@@ -818,7 +818,7 @@ public class DataFillingEngine
     /// <summary>
     /// 将数据填充到工作簿
     /// </summary>
-    private void FillDataIntoWorkbook(IExcelApplication application, ReportTemplate template, 
+    private void FillDataIntoWorkbook(IExcelApplication? Application, ReportTemplate template, 
         DataSourceManager.ReportData reportData)
     {
         // 填充简单数据
@@ -834,7 +834,7 @@ public class DataFillingEngine
     /// <summary>
     /// 填充简单数据
     /// </summary>
-    private void FillSimpleData(IExcelApplication application, ReportTemplate template, 
+    private void FillSimpleData(IExcelApplication? Application, ReportTemplate template, 
         Dictionary<string, object> data)
     {
         foreach (var placeholder in template.Placeholders)
@@ -868,7 +868,7 @@ public class DataFillingEngine
     /// <summary>
     /// 填充表格数据
     /// </summary>
-    private void FillTableData(IExcelApplication application, ReportTemplate template, 
+    private void FillTableData(IExcelApplication? Application, ReportTemplate template, 
         List<DataSourceManager.DataTable> tables)
     {
         foreach (var table in tables)
@@ -885,7 +885,7 @@ public class DataFillingEngine
     /// <summary>
     /// 查找表格区域
     /// </summary>
-    private IExcelRange FindTableRange(IExcelApplication application, string tableName)
+    private IExcelRange FindTableRange(IExcelApplication? Application, string tableName)
     {
         // 根据表格名称查找对应的区域
         // 简化实现
@@ -928,7 +928,7 @@ public class DataFillingEngine
     {
         public string TemplateName { get; }
         public bool Success { get; set; }
-        public IExcelApplication Application { get; set; }
+        public IExcelApplication? Application { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public TimeSpan Duration { get; set; }

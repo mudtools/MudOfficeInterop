@@ -35,7 +35,7 @@ internal class WordTableStyle : IWordTableStyle
     public IWordApplication? Application => _tableStyle != null ? new WordApplication(_tableStyle.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _tableStyle?.Parent;
+    public object? Parent => _tableStyle?.Parent;
 
     public WdTableDirection TableDirection
     {

@@ -17,7 +17,7 @@ internal class PowerPointParagraphFormat : IPowerPointParagraphFormat
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _paragraphFormat.Parent;
+    public object? Parent => _paragraphFormat.Parent;
 
     /// <summary>
     /// 获取或设置对齐方式

@@ -16,13 +16,13 @@ public interface IExcelShapeNode : IDisposable
     /// <summary>
     /// 获取此节点所属的父对象（通常是 ShapeNodes 集合）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此节点所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取节点类型（角点或曲线点）。

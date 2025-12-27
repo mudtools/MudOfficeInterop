@@ -16,7 +16,7 @@ public interface IOfficeMsoEnvelope : IOfficeObject<IOfficeMsoEnvelope>, IDispos
     /// <summary>
     /// 获取指定对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置使用 MsoEnvelope 对象发送文档时包含的介绍性文本。介绍性文本包含在电子邮件中文档的顶部。

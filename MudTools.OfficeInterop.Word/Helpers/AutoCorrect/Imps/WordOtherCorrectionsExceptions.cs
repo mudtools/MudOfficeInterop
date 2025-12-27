@@ -34,7 +34,7 @@ internal class WordOtherCorrectionsExceptions : IWordOtherCorrectionsExceptions
     public IWordApplication Application => _otherCorrectionsExceptions != null ? new WordApplication(_otherCorrectionsExceptions.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _otherCorrectionsExceptions?.Parent;
+    public object? Parent => _otherCorrectionsExceptions?.Parent;
 
     /// <inheritdoc/>
     public int Count => _otherCorrectionsExceptions?.Count ?? 0;

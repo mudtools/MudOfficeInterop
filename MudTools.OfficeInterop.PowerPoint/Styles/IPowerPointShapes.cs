@@ -19,7 +19,7 @@ public interface IPowerPointShapes : IEnumerable<IPowerPointShape>, IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 根据索引获取形状

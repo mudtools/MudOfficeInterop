@@ -32,7 +32,7 @@ public interface IWordPages : IEnumerable<IWordPage>, IDisposable
     /// <summary>
     /// 获取代表 <see cref="IWordPages"/> 对象的父对象（通常是 Range 对象）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 通过索引（从 1 开始）获取集合中的单个页面。

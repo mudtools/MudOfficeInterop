@@ -71,7 +71,7 @@ internal class PowerPointSlideShowTransition : IPowerPointSlideShowTransition
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _transition?.Parent;
+    public object? Parent => _transition?.Parent;
 
     /// <summary>
     /// 获取或设置声音效果

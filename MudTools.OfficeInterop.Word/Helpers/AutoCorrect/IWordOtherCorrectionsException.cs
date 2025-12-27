@@ -22,7 +22,7 @@ public interface IWordOtherCorrectionsException : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，它指示在其中创建指定的对象的应用程序。

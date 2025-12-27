@@ -17,7 +17,7 @@ public interface IExcelAxes : IEnumerable<IExcelAxis?>, IOfficeObject<IExcelAxes
     /// <summary>
     /// 获取坐标轴集合所在的父对象（通常是 Chart）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取坐标轴集合所在的 Application 对象

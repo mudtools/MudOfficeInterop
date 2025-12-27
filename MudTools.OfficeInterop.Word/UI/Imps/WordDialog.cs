@@ -34,7 +34,7 @@ internal class WordDialog : IWordDialog
     public IWordApplication Application => _dialog != null ? new WordApplication(_dialog.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _dialog?.Parent;
+    public object? Parent => _dialog?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _dialog?.Creator ?? 0;

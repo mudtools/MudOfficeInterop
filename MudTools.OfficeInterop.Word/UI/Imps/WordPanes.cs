@@ -32,7 +32,7 @@ internal class WordPanes : IWordPanes
     public int Count => _panes?.Count ?? 0;
 
     /// <inheritdoc/>
-    public object Parent => _panes?.Parent;
+    public object? Parent => _panes?.Parent;
 
     /// <inheritdoc/>
     public IWordPane this[int index]

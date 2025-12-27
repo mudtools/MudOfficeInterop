@@ -18,7 +18,7 @@ public interface IPowerPointSelection : IDisposable
     /// 获取 Selection 对象的父对象（通常是 Application 或 Window）
     /// 对应 Selection.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 Selection 对象所在的 Application 对象

@@ -28,7 +28,7 @@ internal class WordSmartTagAction : IWordSmartTagAction
     /// <summary>
     /// 获取代表指定对象的父对象的对象 [[18]]。
     /// </summary>
-    public object Parent => _action?.Parent;
+    public object? Parent => _action?.Parent;
 
     /// <summary>
     /// 获取智能标记操作的名称。

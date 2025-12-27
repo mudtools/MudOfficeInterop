@@ -22,7 +22,7 @@ internal class WordBookmarks : IWordBookmarks
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _bookmarks?.Parent;
+    public object? Parent => _bookmarks?.Parent;
 
     /// <summary>
     /// 获取书签数量

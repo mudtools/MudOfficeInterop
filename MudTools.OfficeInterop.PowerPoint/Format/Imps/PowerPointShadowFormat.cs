@@ -18,7 +18,7 @@ internal class PowerPointShadowFormat : IPowerPointShadowFormat
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _shadowFormat?.Parent;
+    public object? Parent => _shadowFormat?.Parent;
 
     /// <summary>
     /// 获取或设置可见性

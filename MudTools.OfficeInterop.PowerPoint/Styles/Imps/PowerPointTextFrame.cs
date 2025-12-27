@@ -41,7 +41,7 @@ internal class PowerPointTextFrame : IPowerPointTextFrame
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _textFrame.Parent;
+    public object? Parent => _textFrame.Parent;
 
     /// <summary>
     /// 获取文本范围

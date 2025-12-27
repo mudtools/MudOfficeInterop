@@ -22,7 +22,7 @@ internal class VbeCodeModule : IVbeCodeModule
     }
 
     #region 基础属性
-    public object Parent => _codeModule.Parent;
+    public object? Parent => _codeModule.Parent;
 
     public IVbeApplication Application => _codeModule.VBE != null ? new VbeApplication(_codeModule.VBE) : null;
 

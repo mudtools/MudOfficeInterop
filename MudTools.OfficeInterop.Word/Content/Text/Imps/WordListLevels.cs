@@ -29,7 +29,7 @@ internal class WordListLevels : IWordListLevels
     public IWordApplication? Application => _listLevels != null ? new WordApplication(_listLevels.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _listLevels?.Parent;
+    public object? Parent => _listLevels?.Parent;
 
 
     /// <summary>

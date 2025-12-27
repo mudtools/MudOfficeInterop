@@ -26,7 +26,7 @@ internal class WordReadabilityStatistic : IWordReadabilityStatistic
     public IWordApplication Application => _readabilityStatistic != null ? new WordApplication(_readabilityStatistic.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _readabilityStatistic?.Parent;
+    public object? Parent => _readabilityStatistic?.Parent;
 
     /// <inheritdoc/>
     public string Name => _readabilityStatistic?.Name ?? string.Empty;

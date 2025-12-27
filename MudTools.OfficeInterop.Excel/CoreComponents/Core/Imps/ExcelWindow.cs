@@ -88,7 +88,7 @@ internal class ExcelWindow : IExcelWindow
     /// <summary>
     /// 获取坐标轴所在的 Application 对象
     /// </summary>
-    public IExcelApplication Application => new ExcelApplication(_window.Application);
+    public IExcelApplication? Application => new ExcelApplication(_window.Application);
 
     public XlWindowState WindowState
     {

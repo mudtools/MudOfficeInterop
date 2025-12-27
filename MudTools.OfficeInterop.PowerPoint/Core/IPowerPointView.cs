@@ -20,7 +20,7 @@ public interface IPowerPointView : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
 
     /// <summary>

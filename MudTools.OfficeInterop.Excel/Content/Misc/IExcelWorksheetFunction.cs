@@ -18,14 +18,14 @@ public interface IExcelWorksheetFunction : IOfficeObject<IExcelWorksheetFunction
     /// 获取 WorksheetFunction 对象的父对象（通常是 Application）
     /// 对应 WorksheetFunction.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 WorksheetFunction 对象所在的Application对象
     /// 对应 WorksheetFunction.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 数学和三角函数 

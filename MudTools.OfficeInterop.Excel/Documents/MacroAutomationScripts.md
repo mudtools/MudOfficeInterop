@@ -45,7 +45,7 @@ namespace MudTools.OfficeInterop.Excel.AdvancedFeatures.Macro
         private readonly IExcelApplication _application;
         private readonly Dictionary<string, MacroInfo> _macros;
         
-        public MacroExecutionManager(IExcelApplication application)
+        public MacroExecutionManager(IExcelApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _macros = new Dictionary<string, MacroInfo>();
@@ -1094,7 +1094,7 @@ public class MacroPerformanceOptimizer
     private readonly IExcelApplication _application;
     private readonly Dictionary<string, PerformanceMetrics> _performanceMetrics;
     
-    public MacroPerformanceOptimizer(IExcelApplication application)
+    public MacroPerformanceOptimizer(IExcelApplication? Application)
     {
         _application = application;
         _performanceMetrics = new Dictionary<string, PerformanceMetrics>();
@@ -1283,7 +1283,7 @@ public class MacroErrorHandler
     private readonly IExcelApplication _application;
     private readonly List<MacroError> _errors;
     
-    public MacroErrorHandler(IExcelApplication application)
+    public MacroErrorHandler(IExcelApplication? Application)
     {
         _application = application;
         _errors = new List<MacroError>();
@@ -1453,7 +1453,7 @@ public class SalesDataAutomationSystem
     private readonly MacroPerformanceOptimizer _performanceOptimizer;
     private readonly MacroErrorHandler _errorHandler;
     
-    public SalesDataAutomationSystem(IExcelApplication application)
+    public SalesDataAutomationSystem(IExcelApplication? Application)
     {
         _macroManager = new MacroExecutionManager(application);
         _vbaManager = new VbaMacroManager(_macroManager);

@@ -33,7 +33,7 @@ internal class WordGroupShapes : IWordGroupShapes
     public IWordApplication Application => _groupShapes != null ? new WordApplication(_groupShapes.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _groupShapes?.Parent;
+    public object? Parent => _groupShapes?.Parent;
 
     /// <inheritdoc/>
     public int Count => _groupShapes?.Count ?? 0;

@@ -25,7 +25,7 @@ internal class PowerPointSelection : IPowerPointSelection
     }
 
     #region 基础属性
-    public object Parent => _selection.Parent;
+    public object? Parent => _selection.Parent;
 
     public IPowerPointApplication Application => _selection.Application != null ? new PowerPointApplication(_selection.Application) : null;
 

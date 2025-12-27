@@ -127,7 +127,7 @@ internal class ExcelWorkbooks : IExcelWorkbooks
     /// <summary>
     /// 获取工作簿集合所在的父对象
     /// </summary>
-    public object Parent => _workbooks?.Parent;
+    public object? Parent => _workbooks?.Parent;
 
     /// <summary>
     /// 获取工作簿集合所在的Application对象

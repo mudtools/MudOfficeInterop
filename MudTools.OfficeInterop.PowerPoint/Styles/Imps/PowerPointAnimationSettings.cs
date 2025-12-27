@@ -102,7 +102,7 @@ internal class PowerPointAnimationSettings : IPowerPointAnimationSettings
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _animationSettings?.Parent;
+    public object? Parent => _animationSettings?.Parent;
 
 
     /// <summary>

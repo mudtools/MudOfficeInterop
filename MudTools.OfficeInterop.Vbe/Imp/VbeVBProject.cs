@@ -29,7 +29,7 @@ internal class VbeVBProject : IVbeVBProject
 
     public vbext_ProjectType Type => (vbext_ProjectType)_vbProject.Type;
 
-    public object Parent => _vbProject.Parent;
+    public object? Parent => _vbProject.Parent;
 
     public IVbeApplication Application => _vbProject.Application != null ? new VbeApplication(_vbProject.VBE) : null;
 

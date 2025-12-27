@@ -29,7 +29,7 @@ public interface IVbeVBProject : IDisposable
     /// 获取 VB 项目的父对象（通常是 VBProjects 集合）
     /// 对应 VBProject.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 VB 项目所在的Application对象（VBE 对象）

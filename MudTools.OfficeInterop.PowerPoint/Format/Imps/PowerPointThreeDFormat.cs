@@ -17,7 +17,7 @@ internal class PowerPointThreeDFormat : IPowerPointThreeDFormat
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _threeDFormat?.Parent;
+    public object? Parent => _threeDFormat?.Parent;
 
     /// <summary>
     /// 获取或设置深度

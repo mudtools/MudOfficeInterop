@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示切片器中所有可筛选项的集合，支持遍历、索引和名称访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerItems : IOfficeObject<IExcelSlicerItems>, IEnumerable<IExcelSlicerItem>, IDisposable
+public interface IExcelSlicerItems : IOfficeObject<IExcelSlicerItems>, IEnumerable<IExcelSlicerItem?>, IDisposable
 {
     /// <summary>
     /// 获取集合中切片器项的总数。
@@ -23,23 +23,23 @@ public interface IExcelSlicerItems : IOfficeObject<IExcelSlicerItems>, IEnumerab
     /// </summary>
     /// <param name="index">项索引（int）</param>
     /// <returns>对应的切片器项对象</returns>
-    IExcelSlicerItem this[int index] { get; }
+    IExcelSlicerItem? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取指定的切片器项。
     /// </summary>
     /// <param name="name">名称（string）</param>
     /// <returns>对应的切片器项对象</returns>
-    IExcelSlicerItem this[string name] { get; }
+    IExcelSlicerItem? this[string name] { get; }
 
     /// <summary>
     /// 获取此集合所属的父对象（通常是 Slicer 或 SlicerCache）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 }

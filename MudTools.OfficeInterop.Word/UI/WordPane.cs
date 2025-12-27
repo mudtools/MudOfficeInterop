@@ -53,7 +53,7 @@ internal class WordPane : IWordPane
     public IWordView? View => _pane?.View != null ? new WordView(_pane.View) : null;
 
     /// <inheritdoc/>
-    public object Parent => _pane?.Parent;
+    public object? Parent => _pane?.Parent;
 
     /// <inheritdoc/>
     public IWordSelection? Selection => _pane?.Selection != null ? new WordSelection(_pane.Selection) : null;

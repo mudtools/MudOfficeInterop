@@ -12,19 +12,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.RecentFiles 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelRecentFiles : IEnumerable<IExcelRecentFile>, IDisposable
+public interface IExcelRecentFiles : IOfficeObject<IExcelRecentFiles>, IEnumerable<IExcelRecentFile?>, IDisposable
 {
     #region 基础属性
     /// <summary>
     /// 获取最近使用的文件集合所在的父对象（通常是 Application）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取最近使用的文件集合所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取最近使用的文件集合中的文件数量
@@ -38,7 +38,7 @@ public interface IExcelRecentFiles : IEnumerable<IExcelRecentFile>, IDisposable
     /// </summary>
     /// <param name="index">文件索引（从1开始）</param>
     /// <returns>最近使用文件对象</returns>
-    IExcelRecentFile this[int index] { get; }
+    IExcelRecentFile? this[int index] { get; }
 
 
     /// <summary>

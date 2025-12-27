@@ -23,7 +23,7 @@ public interface IExcelSlicerItem : IOfficeObject<IExcelSlicerItem>, IDisposable
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取切片器项的名称（显示在切片器 UI 上的文本）。

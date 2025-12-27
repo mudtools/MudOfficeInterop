@@ -32,13 +32,13 @@ public interface IExcelAreas : IEnumerable<IExcelRange>, IDisposable
     /// 获取区域集合所在的父对象（通常是 Range）
     /// 对应 Areas.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取区域集合所在的Application对象
     /// 对应 Areas.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 查找和筛选

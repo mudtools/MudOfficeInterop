@@ -43,7 +43,7 @@ internal class WordPage : IWordPage
     public float? Top => _page?.Top;
 
     /// <inheritdoc/>
-    public object Parent => _page?.Parent;
+    public object? Parent => _page?.Parent;
     #endregion
 
     #region IDisposable 实现

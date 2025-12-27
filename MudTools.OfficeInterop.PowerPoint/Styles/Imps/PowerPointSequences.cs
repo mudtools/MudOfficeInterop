@@ -37,7 +37,7 @@ internal class PowerPointSequences : IPowerPointSequences
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _timeLine?.Parent;
+    public object? Parent => _timeLine?.Parent;
 
     /// <summary>
     /// 根据索引获取序列

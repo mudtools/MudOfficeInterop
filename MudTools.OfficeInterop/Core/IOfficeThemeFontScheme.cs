@@ -17,7 +17,7 @@ public interface IOfficeThemeFontScheme : IOfficeObject<IOfficeThemeFontScheme>,
     /// 获取 Microsoft.Office.Core.ThemeFontScheme 对象的父对象。只读。
     /// </summary>
     /// <returns>Object</returns>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取文档"标题"的字体设置。只读。

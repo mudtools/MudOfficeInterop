@@ -34,7 +34,7 @@ internal class WordHangulAndAlphabetExceptions : IWordHangulAndAlphabetException
     public IWordApplication Application => _hangulAndAlphabetExceptions != null ? new WordApplication(_hangulAndAlphabetExceptions.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _hangulAndAlphabetExceptions?.Parent;
+    public object? Parent => _hangulAndAlphabetExceptions?.Parent;
 
     /// <inheritdoc/>
     public int Count => _hangulAndAlphabetExceptions?.Count ?? 0;

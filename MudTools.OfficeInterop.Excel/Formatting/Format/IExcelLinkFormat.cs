@@ -18,13 +18,13 @@ public interface IExcelLinkFormat : IDisposable
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape 或 OLEObject）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置链接是否自动更新。

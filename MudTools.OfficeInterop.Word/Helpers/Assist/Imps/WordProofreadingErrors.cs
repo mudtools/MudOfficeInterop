@@ -26,7 +26,7 @@ internal class WordProofreadingErrors : IWordProofreadingErrors
     public IWordApplication Application => _proofreadingErrors != null ? new WordApplication(_proofreadingErrors.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _proofreadingErrors?.Parent;
+    public object? Parent => _proofreadingErrors?.Parent;
 
     /// <inheritdoc/>
     public int Count => _proofreadingErrors?.Count ?? 0;

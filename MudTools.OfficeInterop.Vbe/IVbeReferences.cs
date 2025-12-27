@@ -31,7 +31,7 @@ public interface IVbeReferences : IEnumerable<IVbeReference>, IDisposable
     /// 获取引用集合所在的父对象（通常是 VBProject）
     /// 对应 References.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取引用集合所在的Application对象（VBE 对象）

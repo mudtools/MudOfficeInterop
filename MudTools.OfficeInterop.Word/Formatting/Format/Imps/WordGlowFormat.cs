@@ -27,7 +27,7 @@ internal class WordGlowFormat : IWordGlowFormat
     public IWordApplication? Application => _glowFormat != null ? new WordApplication(_glowFormat.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _glowFormat?.Parent;
+    public object? Parent => _glowFormat?.Parent;
 
     /// <inheritdoc/>
     public IWordColorFormat? Color

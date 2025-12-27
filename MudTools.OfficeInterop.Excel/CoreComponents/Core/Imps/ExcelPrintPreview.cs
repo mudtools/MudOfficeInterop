@@ -64,7 +64,7 @@ internal class ExcelPrintPreview : IExcelPrintPreview
     /// <summary>
     /// 获取打印预览窗口的父对象
     /// </summary>
-    public object Parent => _pageSetup.Parent;
+    public object? Parent => _pageSetup.Parent;
     #endregion
 
     #region 显示设置

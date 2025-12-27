@@ -16,7 +16,7 @@ public interface IOfficeTextFrame2 : IOfficeObject<IOfficeTextFrame2>, IDisposab
     /// <summary>
     /// 获取文本框架的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置文本框架底部边距。

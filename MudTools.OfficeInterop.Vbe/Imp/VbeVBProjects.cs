@@ -25,7 +25,7 @@ internal class VbeVBProjects : IVbeVBProjects
 
     public IVbeVBProject this[int index] => new VbeVBProject(_vbProjects.Item(index));
 
-    public object Parent => _vbProjects.Parent;
+    public object? Parent => _vbProjects.Parent;
 
     public IVbeApplication Application => _vbProjects.VBE != null ? new VbeApplication(_vbProjects.VBE) : null;
     #endregion

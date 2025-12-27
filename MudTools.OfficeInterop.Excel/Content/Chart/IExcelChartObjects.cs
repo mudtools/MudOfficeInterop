@@ -37,7 +37,7 @@ public interface IExcelChartObjects : IExcelComGraphObjects, IEnumerable<IExcelC
     /// 获取图表对象集合所在的父对象（通常是工作表）
     /// 对应 ChartObjects.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     #endregion
 

@@ -14,7 +14,7 @@ public interface IPowerPointSlideShowView : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前幻灯片

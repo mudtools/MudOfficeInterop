@@ -358,7 +358,7 @@ public class UnitTestManager
     /// </summary>
     public abstract class ExcelTestBase : IDisposable
     {
-        protected IExcelApplication Application { get; private set; }
+        protected IExcelApplication? Application { get; private set; }
         protected IExcelWorkbook Workbook { get; private set; }
         protected IExcelWorksheet Worksheet { get; private set; }
         

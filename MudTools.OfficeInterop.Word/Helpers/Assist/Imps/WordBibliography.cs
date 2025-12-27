@@ -34,7 +34,7 @@ internal class WordBibliography : IWordBibliography
     public IWordApplication Application => _bibliography != null ? new WordApplication(_bibliography.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _bibliography?.Parent;
+    public object? Parent => _bibliography?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _bibliography?.Creator ?? 0;

@@ -22,7 +22,7 @@ public interface IWordOMathAutoCorrect : IOfficeObject<IWordOMathAutoCorrect>, I
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，该整数指示创建对象的应用程序。

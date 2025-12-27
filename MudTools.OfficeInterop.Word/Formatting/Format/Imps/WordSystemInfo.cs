@@ -19,7 +19,7 @@ public class WordSystemInfo : IWordSystemInfo
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent { get; set; }
+    public object? Parent { get; set; }
 
     /// <summary>
     /// 获取操作系统版本

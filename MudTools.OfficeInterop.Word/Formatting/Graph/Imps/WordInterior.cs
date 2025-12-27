@@ -26,7 +26,7 @@ internal class WordInterior : IWordInterior
     public IWordApplication Application => _interior != null ? new WordApplication(_interior.Application as MsWord.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _interior?.Parent;
+    public object? Parent => _interior?.Parent;
 
     /// <inheritdoc/>
     public object Color

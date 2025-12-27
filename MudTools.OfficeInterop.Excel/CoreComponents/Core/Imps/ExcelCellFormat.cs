@@ -22,9 +22,9 @@ internal class ExcelCellFormat : IExcelCellFormat
     }
 
     #region 基础属性
-    public object Parent => _cellFormat.Parent;
+    public object? Parent => _cellFormat.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_cellFormat.Application);
+    public IExcelApplication? Application => new ExcelApplication(_cellFormat.Application);
 
     public object NumberFormat
     {

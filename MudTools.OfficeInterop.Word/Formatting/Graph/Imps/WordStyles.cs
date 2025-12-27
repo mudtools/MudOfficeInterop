@@ -31,7 +31,7 @@ internal class WordStyles : IWordStyles
     public IWordApplication? Application => _styles != null ? new WordApplication(_styles.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _styles?.Parent;
+    public object? Parent => _styles?.Parent;
 
     /// <inheritdoc/>
     public int Count => _styles?.Count ?? 0;

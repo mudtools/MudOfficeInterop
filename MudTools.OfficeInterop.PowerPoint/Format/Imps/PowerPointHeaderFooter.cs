@@ -72,7 +72,7 @@ internal class PowerPointHeaderFooter : IPowerPointHeaderFooter
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _headerFooter?.Parent;
+    public object? Parent => _headerFooter?.Parent;
 
 
     /// <summary>

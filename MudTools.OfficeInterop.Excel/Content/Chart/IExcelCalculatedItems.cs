@@ -18,7 +18,7 @@ public interface IExcelCalculatedItems : IOfficeObject<IExcelCalculatedItems>, I
     /// <summary>
     /// 获取计算项集合的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取计算项集合所属的Excel应用程序对象

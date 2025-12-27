@@ -31,7 +31,7 @@ internal class WordShading : IWordShading
     public IWordApplication? Application => _shading != null ? new WordApplication(_shading.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _shading?.Parent;
+    public object? Parent => _shading?.Parent;
 
     /// <inheritdoc/>
     public WdColor BackgroundPatternColor

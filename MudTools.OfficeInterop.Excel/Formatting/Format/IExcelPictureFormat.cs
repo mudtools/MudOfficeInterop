@@ -16,13 +16,13 @@ public interface IExcelPictureFormat : IDisposable
     /// <summary>
     /// 获取图片格式对象的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取与该图片格式相关联的Excel应用程序对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置图片的亮度值

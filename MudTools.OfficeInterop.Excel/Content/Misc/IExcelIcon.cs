@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口封装了与 Excel 图标相关的操作和属性
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelIcon : IDisposable
+public interface IExcelIcon : IOfficeObject<IExcelIcon>, IDisposable
 {
     /// <summary>
     /// 获取父级排序字段集合

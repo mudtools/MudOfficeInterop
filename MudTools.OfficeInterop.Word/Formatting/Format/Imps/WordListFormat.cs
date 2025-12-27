@@ -27,7 +27,7 @@ internal class WordListFormat : IWordListFormat
     public IWordApplication Application => _listFormat != null ? new WordApplication(_listFormat.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _listFormat?.Parent;
+    public object? Parent => _listFormat?.Parent;
 
     /// <inheritdoc/>
     public int ListLevelNumber

@@ -108,7 +108,7 @@ internal class ExcelComments : IExcelComments
     /// <summary>
     /// 获取评论集合所在的父对象
     /// </summary>
-    public object Parent => _comments?.Parent;
+    public object? Parent => _comments?.Parent;
 
     #endregion
 

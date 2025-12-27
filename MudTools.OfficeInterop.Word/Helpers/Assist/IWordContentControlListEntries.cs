@@ -21,7 +21,7 @@ public interface IWordContentControlListEntries : IEnumerable<IWordContentContro
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的列表项数量。

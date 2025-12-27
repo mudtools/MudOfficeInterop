@@ -57,7 +57,7 @@ internal class PowerPointPlaySettings : IPowerPointPlaySettings
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _playSettings?.Parent;
+    public object? Parent => _playSettings?.Parent;
 
 
     /// <summary>

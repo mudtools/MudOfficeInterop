@@ -19,7 +19,7 @@ public interface IWordReadabilityStatistics : IEnumerable<IWordReadabilityStatis
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的可读性统计项目数量。

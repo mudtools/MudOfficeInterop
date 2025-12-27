@@ -26,7 +26,7 @@ internal class WordRevision : IWordRevision
     public IWordApplication Application => _revision != null ? new WordApplication(_revision.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _revision?.Parent;
+    public object? Parent => _revision?.Parent;
 
     /// <inheritdoc/>
     public string Author => _revision?.Author ?? string.Empty;

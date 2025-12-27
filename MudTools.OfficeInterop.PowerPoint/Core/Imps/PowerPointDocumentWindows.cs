@@ -30,7 +30,7 @@ internal class PowerPointDocumentWindows : IPowerPointDocumentWindows
 
     public IPowerPointDocumentWindow this[int index] => new PowerPointDocumentWindow(_windows[index]);
 
-    public object Parent => _windows.Parent;
+    public object? Parent => _windows.Parent;
 
     public IPowerPointApplication Application => _windows.Application != null ? new PowerPointApplication(_windows.Application) : null;
     #endregion

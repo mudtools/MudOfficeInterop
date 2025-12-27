@@ -45,7 +45,7 @@ public interface IExcelPicture : IDisposable
     /// 获取图片所在的父对象
     /// 对应 Picture.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取图片的底层形状对象

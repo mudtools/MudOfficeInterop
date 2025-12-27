@@ -22,7 +22,7 @@ internal class PowerPointFont : IPowerPointFont
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _font.Parent;
+    public object? Parent => _font.Parent;
 
     /// <summary>
     /// 获取或设置字体名称

@@ -16,12 +16,12 @@ public interface IExcelQueryTable : IDisposable
     /// <summary>
     /// 获取此对象的父对象（通常是 Worksheet）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置查询表的名称。

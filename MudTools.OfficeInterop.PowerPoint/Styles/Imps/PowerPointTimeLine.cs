@@ -33,7 +33,7 @@ internal class PowerPointTimeLine : IPowerPointTimeLine
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _timeLine?.Parent;
+    public object? Parent => _timeLine?.Parent;
 
     /// <summary>
     /// 获取或设置是否启用动画

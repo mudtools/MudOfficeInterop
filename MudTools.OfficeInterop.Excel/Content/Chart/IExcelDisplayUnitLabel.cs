@@ -18,13 +18,13 @@ public interface IExcelDisplayUnitLabel : IOfficeObject<IExcelDisplayUnitLabel>,
     /// <summary>
     /// 获取显示单位标签的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取与此显示单位标签关联的Excel应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取显示单位标签的边框格式。

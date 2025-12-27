@@ -24,9 +24,9 @@ internal class ExcelTickLabels : IExcelTickLabels
     #region 基础属性
     public string Name => _tickLabels.Name;
 
-    public object Parent => _tickLabels.Parent;
+    public object? Parent => _tickLabels.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_tickLabels.Application);
+    public IExcelApplication? Application => new ExcelApplication(_tickLabels.Application);
     #endregion
 
     #region 格式设置

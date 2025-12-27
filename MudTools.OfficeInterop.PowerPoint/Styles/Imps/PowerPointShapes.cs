@@ -22,7 +22,7 @@ internal class PowerPointShapes : IPowerPointShapes
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _shapes.Parent;
+    public object? Parent => _shapes.Parent;
 
     /// <summary>
     /// 根据索引获取形状

@@ -34,7 +34,7 @@ public interface IPowerPointSlideShowWindow : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取幻灯片放映视图

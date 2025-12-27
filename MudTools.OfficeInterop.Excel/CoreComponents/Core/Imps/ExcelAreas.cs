@@ -26,9 +26,9 @@ internal class ExcelAreas : IExcelAreas
 
     public IExcelRange this[int index] => new ExcelRange((MsExcel.Range)_areas[index]);
 
-    public object Parent => _areas.Parent;
+    public object? Parent => _areas.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_areas.Application);
+    public IExcelApplication? Application => new ExcelApplication(_areas.Application);
     #endregion
 
     #region 查找和筛选

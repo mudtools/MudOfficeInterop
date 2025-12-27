@@ -31,7 +31,7 @@ internal class WordTask : IWordTask
     public IWordApplication Application => _task != null ? new WordApplication(_task.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _task?.Parent;
+    public object? Parent => _task?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _task?.Creator ?? 0;

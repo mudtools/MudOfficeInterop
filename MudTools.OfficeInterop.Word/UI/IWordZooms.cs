@@ -34,7 +34,7 @@ public interface IWordZooms : IDisposable
     /// 获取代表 <see cref="IWordZooms"/> 对象的父对象。
     /// </summary>
     /// <remarks>对于 Zooms 集合，父对象通常是关联的 View 对象。</remarks>
-    object Parent { get; }
+    object? Parent { get; }
 
     #endregion // 属性
 

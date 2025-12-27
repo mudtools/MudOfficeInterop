@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 定义Excel页面集合的接口，提供对多个Excel页面的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPages : IDisposable, IEnumerable<IExcelPage>
+public interface IExcelPages : IOfficeObject<IExcelPages>, IDisposable, IEnumerable<IExcelPage?>
 {
     /// <summary>
     /// 获取页面集合中的页面数量

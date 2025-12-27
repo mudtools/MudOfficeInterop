@@ -21,7 +21,7 @@ internal class PowerPointOLEFormat : IPowerPointOLEFormat
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _oleFormat.Parent;
+    public object? Parent => _oleFormat.Parent;
 
     /// <summary>
     /// 获取应用程序对象

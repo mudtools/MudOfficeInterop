@@ -15,7 +15,7 @@ public interface IExcelWindow : IExcelCommonWindow, IDisposable
     /// <summary>
     /// 获取所在的 Application 对象
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取当前活动单元格

@@ -17,13 +17,13 @@ public interface IExcelTextFrame2 : IOfficeObject<IExcelTextFrame2>, IDisposable
     /// <summary>
     /// 获取对象的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取对象所在的 Application 对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置文本框底部边距
@@ -108,12 +108,12 @@ public interface IExcelTextFrame2 : IOfficeObject<IExcelTextFrame2>, IDisposable
     /// <summary>
     /// 获取三维格式设置对象
     /// </summary>
-    IExcelThreeDFormat ThreeD { get; }
+    IExcelThreeDFormat? ThreeD { get; }
 
     /// <summary>
     /// 获取文本范围对象
     /// </summary>
-    IOfficeTextRange2 TextRange { get; }
+    IOfficeTextRange2? TextRange { get; }
 
     /// <summary>
     /// 删除文本框中的所有文本

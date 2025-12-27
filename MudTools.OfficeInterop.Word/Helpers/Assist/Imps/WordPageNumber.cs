@@ -30,7 +30,7 @@ internal class WordPageNumber : IWordPageNumber
     public IWordApplication Application => _pageNumber != null ? new WordApplication(_pageNumber.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _pageNumber?.Parent;
+    public object? Parent => _pageNumber?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _pageNumber?.Creator ?? 0;

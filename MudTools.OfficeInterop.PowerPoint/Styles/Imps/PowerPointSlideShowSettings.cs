@@ -18,7 +18,7 @@ internal class PowerPointSlideShowSettings : IPowerPointSlideShowSettings
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _slideShowSettings.Parent;
+    public object? Parent => _slideShowSettings.Parent;
 
     /// <summary>
     /// 获取或设置起始幻灯片索引

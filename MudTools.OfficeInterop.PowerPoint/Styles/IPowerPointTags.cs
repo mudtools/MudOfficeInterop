@@ -21,7 +21,7 @@ public interface IPowerPointTags : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 根据索引获取标签值

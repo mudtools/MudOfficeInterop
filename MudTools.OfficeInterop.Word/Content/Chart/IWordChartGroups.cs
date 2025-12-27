@@ -22,7 +22,7 @@ public interface IWordChartGroups : IEnumerable<IWordChartGroup?>, IOfficeObject
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取图表组数量。

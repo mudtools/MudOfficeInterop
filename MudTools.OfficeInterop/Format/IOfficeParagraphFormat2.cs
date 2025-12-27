@@ -16,7 +16,7 @@ public interface IOfficeParagraphFormat2 : IOfficeObject<IOfficeParagraphFormat2
     /// <summary>
     /// 获取段落的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取段落的制表符停止点集合

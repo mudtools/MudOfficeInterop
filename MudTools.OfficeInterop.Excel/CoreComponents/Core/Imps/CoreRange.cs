@@ -78,7 +78,7 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
 
 
     #region 基本属性
-    public IExcelApplication Application => new ExcelApplication(_range.Application);
+    public IExcelApplication? Application => new ExcelApplication(_range.Application);
 
     /// <summary>
     /// 获取或设置单元格的值

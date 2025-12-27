@@ -23,7 +23,7 @@ public interface IExcelPlotArea : IOfficeObject<IExcelPlotArea>, IDisposable
     /// <summary>
     /// 获取绘图区的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取绘图区所在的 Application 对象

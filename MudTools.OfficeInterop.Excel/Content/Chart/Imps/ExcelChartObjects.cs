@@ -63,7 +63,7 @@ internal class ExcelChartObjects : IExcelChartObjects
 
     #region 基础属性
 
-    public IExcelApplication Application => new ExcelApplication(_chartObjects.Application);
+    public IExcelApplication? Application => new ExcelApplication(_chartObjects.Application);
 
     /// <summary>
     /// 获取图表对象集合中的图表数量
@@ -220,7 +220,7 @@ internal class ExcelChartObjects : IExcelChartObjects
     /// <summary>
     /// 获取图表对象集合所在的父对象
     /// </summary>
-    public object Parent => _chartObjects?.Parent;
+    public object? Parent => _chartObjects?.Parent;
 
     #endregion
 

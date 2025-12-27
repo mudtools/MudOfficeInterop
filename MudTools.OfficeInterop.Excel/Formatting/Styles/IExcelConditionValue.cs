@@ -20,7 +20,7 @@ public interface IExcelConditionValue : IDisposable
     /// 获取条件值对象的父对象 (通常是 ColorScaleCriterion 或 DataBar)
     /// 对应 ConditionValue.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取条件值对象所在的Application对象

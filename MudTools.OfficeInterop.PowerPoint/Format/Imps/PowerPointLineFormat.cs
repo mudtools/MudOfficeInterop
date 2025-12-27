@@ -17,7 +17,7 @@ internal class PowerPointLineFormat : IPowerPointLineFormat
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _lineFormat?.Parent;
+    public object? Parent => _lineFormat?.Parent;
 
     /// <summary>
     /// 获取或设置线条样式

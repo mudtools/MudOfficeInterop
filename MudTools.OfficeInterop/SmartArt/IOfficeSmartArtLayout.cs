@@ -36,5 +36,5 @@ public interface IOfficeSmartArtLayout : IOfficeObject<IOfficeSmartArtLayout>, I
     /// <summary>
     /// 获取 SmartArt 布局的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 }

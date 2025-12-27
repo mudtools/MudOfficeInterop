@@ -16,13 +16,13 @@ public interface IExcelLineFormat : IDisposable
     /// <summary>
     /// 获取线条所在的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取线条对象所在的 Application 对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     // 颜色相关

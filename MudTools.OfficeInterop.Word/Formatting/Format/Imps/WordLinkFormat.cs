@@ -31,7 +31,7 @@ internal class WordLinkFormat : IWordLinkFormat
     public IWordApplication? Application => _linkFormat != null ? new WordApplication(_linkFormat.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _linkFormat?.Parent;
+    public object? Parent => _linkFormat?.Parent;
 
     /// <inheritdoc/>
     public string SourceFullName

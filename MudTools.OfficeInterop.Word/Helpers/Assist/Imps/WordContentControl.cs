@@ -31,7 +31,7 @@ internal class WordContentControl : IWordContentControl
     public IWordApplication Application => _contentControl != null ? new WordApplication(_contentControl.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _contentControl?.Parent;
+    public object? Parent => _contentControl?.Parent;
 
     /// <inheritdoc/>
     public string Title

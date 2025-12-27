@@ -34,7 +34,7 @@ public interface IPowerPointSlide : IDisposable
     /// <summary>
     /// 获取父对象（通常是 Slides 集合）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取幻灯片的形状集合

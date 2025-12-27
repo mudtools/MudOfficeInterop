@@ -19,7 +19,7 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     /// 获取图表集合所在的Application对象
     /// 对应 Rang.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置单元格的值。可以是字符串、数字、布尔值、错误值或空值。

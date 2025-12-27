@@ -19,7 +19,7 @@ public interface IWordShapeRange : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取形状范围中的形状数量。

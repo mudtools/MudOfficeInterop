@@ -22,7 +22,7 @@ public interface IExcelAxis : IOfficeObject<IExcelAxis>, IDisposable
     /// 获取坐标轴的父对象（通常是 Axes 集合）
     /// 对应 Axis.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取坐标轴所在的 Application 对象

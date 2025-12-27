@@ -19,7 +19,7 @@ public interface IWordSmartTagAction : IDisposable
     /// <summary>
     /// 获取代表指定对象的父对象的对象 [[18]]。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取智能标记操作的名称。

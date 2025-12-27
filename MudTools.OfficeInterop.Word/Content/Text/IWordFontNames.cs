@@ -25,7 +25,7 @@ public interface IWordFontNames : IEnumerable<string?>, IOfficeObject<IWordFontN
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的字体名称数量。

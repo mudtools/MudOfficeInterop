@@ -25,7 +25,7 @@ internal class VbeReferences : IVbeReferences
 
     public IVbeReference this[int index] => new VbeReference((MsVb.Reference)_references.Item(index));
 
-    public object Parent => _references.Parent;
+    public object? Parent => _references.Parent;
 
     public IVbeApplication Application => _references.VBE != null ? new VbeApplication(_references.VBE) : null;
     #endregion

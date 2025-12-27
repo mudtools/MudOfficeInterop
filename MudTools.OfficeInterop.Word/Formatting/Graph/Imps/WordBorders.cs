@@ -34,7 +34,7 @@ internal class WordBorders : IWordBorders
     public IWordApplication? Application => _borders != null ? new WordApplication(_borders.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _borders?.Parent;
+    public object? Parent => _borders?.Parent;
 
     /// <inheritdoc/>
     public int Count => _borders?.Count ?? 0;

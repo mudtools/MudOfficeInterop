@@ -14,18 +14,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口继承自IEnumerable&lt;float&gt;和IDisposable，支持迭代访问和资源释放
 /// </remarks>
 [ComCollectionWrap(ComNamespace = "MsExcel"), NoneEnumerable]
-public interface IExcelAdjustments : IEnumerable<float>, IDisposable
+public interface IExcelAdjustments : IOfficeObject<IExcelAdjustments>, IEnumerable<float?>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取集合中元素的数量
@@ -37,5 +37,5 @@ public interface IExcelAdjustments : IEnumerable<float>, IDisposable
     /// </summary>
     /// <param name="index">要获取或设置的元素从零开始的索引</param>
     /// <returns>指定索引处的浮点调整值</returns>
-    float this[int index] { get; set; }
+    float? this[int index] { get; set; }
 }

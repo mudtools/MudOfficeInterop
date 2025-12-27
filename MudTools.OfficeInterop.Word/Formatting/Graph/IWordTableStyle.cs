@@ -22,7 +22,7 @@ public interface IWordTableStyle : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     WdTableDirection TableDirection { get; set; }
     /// <summary>

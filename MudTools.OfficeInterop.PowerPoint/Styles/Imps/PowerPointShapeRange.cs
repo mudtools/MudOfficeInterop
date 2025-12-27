@@ -29,7 +29,7 @@ internal class PowerPointShapeRange : IPowerPointShapeRange
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _shapeRange.Parent;
+    public object? Parent => _shapeRange.Parent;
 
     /// <summary>
     /// 获取或设置形状范围名称

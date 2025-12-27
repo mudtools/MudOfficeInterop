@@ -22,7 +22,7 @@ internal class WordVariables : IWordVariables
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _variables?.Parent;
+    public object? Parent => _variables?.Parent;
 
     /// <summary>
     /// 获取变量数量

@@ -40,7 +40,7 @@ internal partial class WordApplication : IWordApplication
     /// 获取父对象。对于 Application 对象，通常返回 null。
     /// </summary>
     /// <inheritdoc/>
-    public object Parent => _application?.Parent;
+    public object? Parent => _application?.Parent;
 
     /// <summary>
     /// 获取一个 32 位整数，它指示在其中创建指定的对象的应用程序。

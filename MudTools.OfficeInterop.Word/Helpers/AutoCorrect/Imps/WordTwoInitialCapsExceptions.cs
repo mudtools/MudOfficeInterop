@@ -34,7 +34,7 @@ internal class WordTwoInitialCapsExceptions : IWordTwoInitialCapsExceptions
     public IWordApplication Application => _twoInitialCapsExceptions != null ? new WordApplication(_twoInitialCapsExceptions.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _twoInitialCapsExceptions?.Parent;
+    public object? Parent => _twoInitialCapsExceptions?.Parent;
 
     /// <inheritdoc/>
     public int Count => _twoInitialCapsExceptions?.Count ?? 0;

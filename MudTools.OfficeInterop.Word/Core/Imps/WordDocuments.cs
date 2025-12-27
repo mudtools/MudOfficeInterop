@@ -22,7 +22,7 @@ internal class WordDocuments : IWordDocuments
 
     public int Count => _documents.Count;
 
-    public object Parent => _documents.Parent;
+    public object? Parent => _documents.Parent;
 
 
     internal WordDocuments(MsWord.Documents documents)

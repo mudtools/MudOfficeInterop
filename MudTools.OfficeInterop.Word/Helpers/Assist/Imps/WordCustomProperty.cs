@@ -66,7 +66,7 @@ internal class WordCustomProperty : IWordCustomProperty
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent
+    public object? Parent
     {
         get
         {

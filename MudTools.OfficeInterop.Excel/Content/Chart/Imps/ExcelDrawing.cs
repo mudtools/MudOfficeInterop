@@ -15,7 +15,7 @@ internal class ExcelDrawing : IExcelDrawing
     /// <summary>
     /// 获取图表所在的 Excel Application 对象
     /// </summary>
-    public IExcelApplication Application => new ExcelApplication(_drawing.Application);
+    public IExcelApplication? Application => new ExcelApplication(_drawing.Application);
 
     /// <summary>
     /// 获取图表对象所在的父对象

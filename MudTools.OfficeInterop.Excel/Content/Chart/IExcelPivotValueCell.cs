@@ -17,7 +17,7 @@ public interface IExcelPivotValueCell : IOfficeObject<IExcelPivotValueCell>, IDi
     /// <summary>
     /// 获取该对象的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
 
     /// <summary>

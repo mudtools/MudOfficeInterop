@@ -31,7 +31,7 @@ internal class WordDialogs : IWordDialogs
     public IWordApplication Application => _dialogs != null ? new WordApplication(_dialogs.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _dialogs?.Parent;
+    public object? Parent => _dialogs?.Parent;
 
     /// <inheritdoc/>
     public int Count => _dialogs?.Count ?? 0;

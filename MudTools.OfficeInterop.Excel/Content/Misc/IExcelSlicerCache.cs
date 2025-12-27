@@ -12,18 +12,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// 一个切片器缓存可以被多个切片器控件共享，实现联动筛选。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerCache : IDisposable
+public interface IExcelSlicerCache : IOfficeObject<IExcelSlicerCache>, IDisposable
 {
     /// <summary>
     /// 获取此缓存所属的父对象（通常是 SlicerCaches 集合）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此缓存所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置此缓存的名称（全局唯一，用于绑定多个切片器）。
@@ -40,32 +40,32 @@ public interface IExcelSlicerCache : IDisposable
     /// <summary>
     /// 获取与此缓存关联的所有数据透视表集合。
     /// </summary>
-    ISlicerPivotTables PivotTables { get; }
+    ISlicerPivotTables? PivotTables { get; }
 
     /// <summary>
     /// 获取与此缓存关联的所有切片器控件集合。
     /// </summary>
-    IExcelSlicers Slicers { get; }
+    IExcelSlicers? Slicers { get; }
 
     /// <summary>
     /// 获取此缓存中所有切片器项（包括隐藏和显示的）。
     /// </summary>
-    IExcelSlicerItems SlicerItems { get; }
+    IExcelSlicerItems? SlicerItems { get; }
 
     /// <summary>
     /// 获取当前可见（未被筛选掉）的切片器项集合。
     /// </summary>
-    IExcelSlicerItems VisibleSlicerItems { get; }
+    IExcelSlicerItems? VisibleSlicerItems { get; }
 
     /// <summary>
     /// 获取此缓存关联的列表对象（如 Excel 表格）。
     /// </summary>
-    IExcelListObject ListObject { get; }
+    IExcelListObject? ListObject { get; }
 
     /// <summary>
     /// 获取此缓存的层级结构（用于多级切片器）。
     /// </summary>
-    IExcelSlicerCacheLevels SlicerCacheLevels { get; }
+    IExcelSlicerCacheLevels? SlicerCacheLevels { get; }
 
     /// <summary>
     /// 获取或设置切片器之间的交叉筛选类型。

@@ -66,13 +66,13 @@ internal class ExcelQueryTable : IExcelQueryTable
     /// <summary>
     /// 获取此对象的父对象（通常是 Worksheet）。
     /// </summary>
-    public object Parent => _queryTable?.Parent;
+    public object? Parent => _queryTable?.Parent;
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// 返回封装后的 <see cref="IExcelApplication"/> 接口实例。
     /// </summary>
-    public IExcelApplication Application =>
+    public IExcelApplication? Application =>
         _queryTable?.Application != null
             ? new ExcelApplication(_queryTable.Application as MsExcel.Application)
             : null;

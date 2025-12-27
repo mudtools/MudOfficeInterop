@@ -18,13 +18,13 @@ public interface IExcelListDataFormat : IDisposable
     /// <summary>
     /// 获取此对象的父对象（通常是 ListColumn）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取该列数据的默认值（如果未设置则返回 null）。

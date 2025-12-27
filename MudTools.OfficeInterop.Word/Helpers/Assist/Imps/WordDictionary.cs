@@ -33,7 +33,7 @@ internal class WordDictionary : IWordDictionary
     public IWordApplication Application => _dictionary != null ? new WordApplication(_dictionary.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _dictionary?.Parent;
+    public object? Parent => _dictionary?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _dictionary?.Creator ?? 0;

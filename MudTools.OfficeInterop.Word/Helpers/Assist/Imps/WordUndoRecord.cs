@@ -28,7 +28,7 @@ internal class WordUndoRecord : IWordUndoRecord
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    public object Parent => _undoRecord?.Parent;
+    public object? Parent => _undoRecord?.Parent;
 
     /// <summary>
     /// 获取一个 32 位整数，该整数指示创建对象的应用程序。

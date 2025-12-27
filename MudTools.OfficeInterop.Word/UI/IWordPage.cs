@@ -46,7 +46,7 @@ public interface IWordPage : IDisposable
     /// <summary>
     /// 获取代表 <see cref="IWordPage"/> 对象的父对象（通常是 Pages 集合）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
     #endregion
 
 }

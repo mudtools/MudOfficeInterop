@@ -27,7 +27,7 @@ public interface IExcelPivotCache : IOfficeObject<IExcelPivotCache>, IDisposable
     /// 获取数据透视表缓存的父对象 (通常是 Workbook)
     /// 对应 PivotCache.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据透视表缓存所在的Application对象

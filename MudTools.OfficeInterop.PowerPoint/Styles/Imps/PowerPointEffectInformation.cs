@@ -40,7 +40,7 @@ internal class PowerPointEffectInformation : IPowerPointEffectInformation
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _effect?.Parent;
+    public object? Parent => _effect?.Parent;
 
 
 

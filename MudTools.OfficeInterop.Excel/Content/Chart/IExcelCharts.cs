@@ -43,7 +43,7 @@ public interface IExcelCharts : IOfficeObject<IExcelCharts>, IEnumerable<IExcelC
     /// 获取图表集合所在的父对象（通常是工作表或工作簿）
     /// 对应 Charts.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取图表集合所在的Application对象

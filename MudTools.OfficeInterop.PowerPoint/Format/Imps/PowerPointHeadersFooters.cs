@@ -83,7 +83,7 @@ internal class PowerPointHeadersFooters : IPowerPointHeadersFooters
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _headersFooters?.Parent;
+    public object? Parent => _headersFooters?.Parent;
 
     /// <summary>
     /// 获取或设置是否显示幻灯片编号

@@ -12,19 +12,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.RecentFile 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelRecentFile : IDisposable
+public interface IExcelRecentFile : IOfficeObject<IExcelRecentFile>, IDisposable
 {
     #region 基础属性
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取最近使用文件的名称 (通常包含路径)
@@ -51,7 +51,7 @@ public interface IExcelRecentFile : IDisposable
     /// 对应 RecentFile.Open 方法
     /// </summary>
     /// <returns>打开的工作簿对象</returns>
-    IExcelWorkbook Open();
+    IExcelWorkbook? Open();
 
     /// <summary>
     /// 删除此最近使用文件记录 (从 RecentFiles 集合中移除)

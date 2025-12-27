@@ -50,7 +50,7 @@ public interface IPowerPointPictureFormat : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 裁剪图片

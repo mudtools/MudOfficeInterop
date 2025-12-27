@@ -29,7 +29,7 @@ public interface IWordVariable : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 删除变量

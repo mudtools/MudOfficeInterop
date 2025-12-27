@@ -37,7 +37,7 @@ internal class WordVariable : IWordVariable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _variable.Parent;
+    public object? Parent => _variable.Parent;
 
     /// <summary>
     /// 构造函数

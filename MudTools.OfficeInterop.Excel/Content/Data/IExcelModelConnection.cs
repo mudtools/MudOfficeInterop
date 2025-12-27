@@ -16,13 +16,13 @@ public interface IExcelModelConnection : IOfficeObject<IExcelModelConnection>, I
     /// <summary>
     /// 获取所属的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取连接的命令文本

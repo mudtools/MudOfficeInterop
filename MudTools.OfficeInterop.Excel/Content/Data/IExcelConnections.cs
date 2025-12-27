@@ -18,7 +18,7 @@ public interface IExcelConnections : IOfficeObject<IExcelConnections>, IDisposab
     /// <summary>
     /// 获取父级工作簿
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前对象所在的Application对象

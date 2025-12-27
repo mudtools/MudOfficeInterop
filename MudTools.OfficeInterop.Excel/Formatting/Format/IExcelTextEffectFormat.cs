@@ -17,13 +17,13 @@ public interface IExcelTextEffectFormat : IDisposable
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置艺术字的对齐方式（左对齐、居中、右对齐等）。

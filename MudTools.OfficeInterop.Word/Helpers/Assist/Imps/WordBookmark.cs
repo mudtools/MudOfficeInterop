@@ -34,7 +34,7 @@ internal class WordBookmark : IWordBookmark
         }
     }
 
-    public object Parent => _bookmark.Parent;
+    public object? Parent => _bookmark.Parent;
 
     internal WordBookmark(MsWord.Bookmark bookmark)
     {

@@ -35,7 +35,7 @@ internal class WordListGalleries : IWordListGalleries
     public IWordApplication Application => _listGalleries != null ? new WordApplication(_listGalleries.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _listGalleries?.Parent;
+    public object? Parent => _listGalleries?.Parent;
 
     /// <inheritdoc/>
     public int Count => _listGalleries?.Count ?? 0;

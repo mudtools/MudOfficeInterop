@@ -32,7 +32,7 @@ public interface IPowerPointSlideRange : IEnumerable<IPowerPointSlide>, IDisposa
     /// 获取幻灯片范围所在的父对象（通常是 Slides 集合）
     /// 对应 SlideRange.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取幻灯片范围所在的Application对象

@@ -26,7 +26,7 @@ internal class WordShapeRange : IWordShapeRange
     public IWordApplication Application => _shapeRange != null ? new WordApplication(_shapeRange.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _shapeRange?.Parent;
+    public object? Parent => _shapeRange?.Parent;
 
     /// <inheritdoc/>
     public int Count => _shapeRange?.Count ?? 0;

@@ -20,14 +20,14 @@ public interface IExcelNegativeBarFormat : IDisposable
     /// 获取负值数据条格式对象的父对象 (通常是 DataBar)
     /// 对应 NegativeBarFormat.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取负值数据条格式对象所在的Application对象
     /// 对应 NegativeBarFormat.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置负值数据条的颜色类型

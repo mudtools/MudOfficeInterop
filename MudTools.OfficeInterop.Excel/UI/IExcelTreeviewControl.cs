@@ -16,13 +16,13 @@ public interface IExcelTreeviewControl : IDisposable
     /// <summary>
     /// 获取所在的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 设置多维数据集字段的分级成员选择控件中多维数据集字段成员的“drilled”（展开或可见）状态。

@@ -27,7 +27,7 @@ internal class WordReflectionFormat : IWordReflectionFormat
     public IWordApplication Application => _reflectionFormat != null ? new WordApplication(_reflectionFormat.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _reflectionFormat?.Parent;
+    public object? Parent => _reflectionFormat?.Parent;
 
     /// <inheritdoc/>
     public MsoReflectionType Type

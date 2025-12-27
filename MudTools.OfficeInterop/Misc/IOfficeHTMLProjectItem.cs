@@ -16,7 +16,7 @@ public interface IOfficeHTMLProjectItem : IOfficeObject<IOfficeHTMLProjectItem>,
     /// <summary>
     /// 获取指定对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 返回指定对象的名称。

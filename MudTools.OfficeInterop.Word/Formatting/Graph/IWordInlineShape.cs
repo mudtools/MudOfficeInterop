@@ -32,7 +32,7 @@ public interface IWordInlineShape : IDisposable
     /// <summary>
     /// 获取内联形状的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置内联形状的宽度（磅）。

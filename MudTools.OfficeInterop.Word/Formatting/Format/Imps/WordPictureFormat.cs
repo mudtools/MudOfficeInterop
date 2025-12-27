@@ -179,7 +179,7 @@ internal class WordPictureFormat : IWordPictureFormat
     }
 
     /// <inheritdoc/>
-    public object Parent => _pictureFormat?.Parent;
+    public object? Parent => _pictureFormat?.Parent;
 
     /// <inheritdoc/>
     public IWordSoftEdgeFormat? SoftEdge =>

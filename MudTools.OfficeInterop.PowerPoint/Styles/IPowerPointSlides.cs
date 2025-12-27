@@ -19,7 +19,7 @@ public interface IPowerPointSlides : IDisposable, IEnumerable<IPowerPointSlide>
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 根据索引获取幻灯片（从1开始）

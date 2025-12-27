@@ -31,7 +31,7 @@ internal class WordAddIn : IWordAddIn
     public IWordApplication Application => _addIn != null ? new WordApplication(_addIn.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _addIn?.Parent;
+    public object? Parent => _addIn?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _addIn?.Creator ?? 0;

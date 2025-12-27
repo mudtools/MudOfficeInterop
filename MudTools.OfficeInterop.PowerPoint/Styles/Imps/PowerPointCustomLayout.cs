@@ -80,7 +80,7 @@ internal class PowerPointCustomLayout : IPowerPointCustomLayout
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _customLayout?.Parent;
+    public object? Parent => _customLayout?.Parent;
 
     /// <summary>
     /// 获取或设置是否包含主题

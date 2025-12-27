@@ -11,19 +11,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中注音符号集合的封装接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPhonetics : IEnumerable<IExcelPhonetic>, IDisposable
+public interface IExcelPhonetics : IOfficeObject<IExcelPhonetics>, IEnumerable<IExcelPhonetic?>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// 对应 RecentFile.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取注音符号的数量

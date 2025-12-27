@@ -19,13 +19,13 @@ public interface IExcelChartFormat : IDisposable
     /// 获取 ChartFormat 对象的父对象
     /// 父对象通常是 ChartArea, PlotArea, Series 等图表元素
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 ChartFormat 对象所在的 Application 对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 格式设置

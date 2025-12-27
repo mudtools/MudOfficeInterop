@@ -56,7 +56,7 @@ internal class PowerPointSlideShowWindow : IPowerPointSlideShowWindow
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _slideShowWindow.Parent;
+    public object? Parent => _slideShowWindow.Parent;
 
     /// <summary>
     /// 获取幻灯片放映视图

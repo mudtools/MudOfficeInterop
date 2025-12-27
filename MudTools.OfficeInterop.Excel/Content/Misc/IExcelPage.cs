@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel工作表页面的页眉和页脚设置接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPage : IDisposable
+public interface IExcelPage : IOfficeObject<IExcelPage>, IDisposable
 {
     /// <summary>
     /// 获取左页眉设置

@@ -13,18 +13,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于处理多维数据（如年→季度→月）的层级筛选。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerCacheLevel : IDisposable
+public interface IExcelSlicerCacheLevel : IOfficeObject<IExcelSlicerCacheLevel>, IDisposable
 {
     /// <summary>
     /// 获取此层级所属的父对象（通常是 SlicerCacheLevels 集合）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此层级所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取此层级在其父集合中的序号位置（从 1 开始计数）。
@@ -54,5 +54,5 @@ public interface IExcelSlicerCacheLevel : IDisposable
     /// <summary>
     /// 获取此层级中所有切片器项的集合（仅在 OLAP 模式下可用）。
     /// </summary>
-    IExcelSlicerItems SlicerItems { get; }
+    IExcelSlicerItems? SlicerItems { get; }
 }

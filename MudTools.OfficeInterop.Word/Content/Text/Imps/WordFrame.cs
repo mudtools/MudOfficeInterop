@@ -31,7 +31,7 @@ internal class WordFrame : IWordFrame
     public IWordApplication? Application => _frame != null ? new WordApplication(_frame.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _frame?.Parent;
+    public object? Parent => _frame?.Parent;
 
     /// <inheritdoc/>
     public IWordRange? Range =>

@@ -49,7 +49,7 @@ internal class PowerPointBackground : IPowerPointBackground
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _background?.Parent;
+    public object? Parent => _background?.Parent;
 
     /// <summary>
     /// 获取或设置背景样式

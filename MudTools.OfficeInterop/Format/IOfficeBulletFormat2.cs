@@ -17,7 +17,7 @@ public interface IOfficeBulletFormat2 : IOfficeObject<IOfficeBulletFormat2>, IDi
     /// <summary>
     /// 获取项目符号格式的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置项目符号相对于文本的大小比例。

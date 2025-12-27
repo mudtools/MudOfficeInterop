@@ -12,35 +12,35 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.IconSet 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelIconSet : IEnumerable<IExcelIcon>, IDisposable
+public interface IExcelIconSet : IOfficeObject<IExcelIconSet>, IEnumerable<IExcelIcon?>, IDisposable
 {
     #region 基础属性
     /// <summary>
     /// 获取图标集对象的父对象 
     /// 对应 IconSet.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取图标集对象所在的Application对象
     /// 对应 IconSet.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 通过索引获取图标集中的特定图标
     /// </summary>
     /// <param name="index">图标的从零开始的索引</param>
     /// <returns>指定索引处的Excel图标</returns>
-    IExcelIcon this[int index] { get; }
+    IExcelIcon? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取图标集中的特定图标
     /// </summary>
     /// <param name="name">图标的名称</param>
     /// <returns>具有指定名称的Excel图标</returns>
-    IExcelIcon this[string name] { get; }
+    IExcelIcon? this[string name] { get; }
 
     /// <summary>
     /// 获取图标集中图标的数量

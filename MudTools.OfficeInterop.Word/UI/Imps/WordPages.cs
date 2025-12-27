@@ -34,7 +34,7 @@ internal class WordPages : IWordPages
     public int Count => _pages?.Count ?? 0;
 
     /// <inheritdoc/>
-    public object Parent => _pages?.Parent;
+    public object? Parent => _pages?.Parent;
 
     /// <inheritdoc/>
     public IWordPage this[int index]

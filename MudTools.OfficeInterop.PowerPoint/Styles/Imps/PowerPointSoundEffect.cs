@@ -30,7 +30,7 @@ internal class PowerPointSoundEffect : IPowerPointSoundEffect
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _soundEffect?.Parent;
+    public object? Parent => _soundEffect?.Parent;
 
 
     /// <summary>

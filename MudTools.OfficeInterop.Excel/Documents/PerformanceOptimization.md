@@ -30,7 +30,7 @@ namespace MudTools.OfficeInterop.Excel.Performance.MemoryManagement
         private bool _disposed = false;
         private long _peakMemoryUsage = 0;
         
-        public MemoryMonitorManager(IExcelApplication application, int monitoringIntervalMs = 1000)
+        public MemoryMonitorManager(IExcelApplication? Application, int monitoringIntervalMs = 1000)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _memoryRecords = new List<MemoryUsageRecord>();
@@ -382,7 +382,7 @@ public class MemoryOptimizationStrategyManager
     private readonly IExcelApplication _application;
     private readonly MemoryMonitorManager _memoryMonitor;
     
-    public MemoryOptimizationStrategyManager(IExcelApplication application)
+    public MemoryOptimizationStrategyManager(IExcelApplication? Application)
     {
         _application = application ?? throw new ArgumentNullException(nameof(application));
         _memoryMonitor = new MemoryMonitorManager(application);
@@ -667,7 +667,7 @@ namespace MudTools.OfficeInterop.Excel.Performance.BatchOperations
         private readonly IExcelApplication _application;
         private readonly PerformanceOptimizationSettings _settings;
         
-        public BatchOperationManager(IExcelApplication application, PerformanceOptimizationSettings settings = null)
+        public BatchOperationManager(IExcelApplication? Application, PerformanceOptimizationSettings settings = null)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _settings = settings ?? new PerformanceOptimizationSettings();
@@ -1203,7 +1203,7 @@ namespace MudTools.OfficeInterop.Excel.Performance.AsyncOperations
         private readonly List<AsyncOperation> _activeOperations;
         private bool _disposed = false;
         
-        public AsyncOperationManager(IExcelApplication application)
+        public AsyncOperationManager(IExcelApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _cancellationTokenSource = new CancellationTokenSource();
@@ -1566,7 +1566,7 @@ namespace MudTools.OfficeInterop.Excel.Performance.ErrorRecovery
         private readonly IExcelApplication _application;
         private readonly string _backupDirectory;
         
-        public ErrorRecoveryManager(IExcelApplication application, string backupDirectory = null)
+        public ErrorRecoveryManager(IExcelApplication? Application, string backupDirectory = null)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _backupDirectory = backupDirectory ?? Path.Combine(Path.GetTempPath(), "ExcelBackup");

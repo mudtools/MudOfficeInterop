@@ -19,14 +19,14 @@ public interface IExcelColorFormat : IDisposable
     /// <summary>
     /// 获取颜色格式的父级对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
 
     /// <summary>
     /// 获取或设置颜色的应用程序版本
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置颜色类型

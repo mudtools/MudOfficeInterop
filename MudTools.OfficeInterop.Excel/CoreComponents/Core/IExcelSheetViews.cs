@@ -17,13 +17,13 @@ public interface IExcelSheetViews : IDisposable, IEnumerable<object>
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取工作表视图集合中的视图数量

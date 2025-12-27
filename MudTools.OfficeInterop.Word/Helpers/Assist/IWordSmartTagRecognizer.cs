@@ -20,7 +20,7 @@ public interface IWordSmartTagRecognizer : IDisposable
     /// <summary>
     /// 获取代表指定对象的父对象的对象 [[10]]。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取标识指定智能标记识别程序的标签 [[4]]。

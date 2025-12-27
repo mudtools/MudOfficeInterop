@@ -32,7 +32,7 @@ public interface IExcelPivotCaches : IOfficeObject<IExcelPivotCaches>, IEnumerab
     /// 获取数据透视表缓存集合所在的父对象（通常是 Workbook）
     /// 对应 PivotCaches.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据透视表缓存集合所在的Application对象

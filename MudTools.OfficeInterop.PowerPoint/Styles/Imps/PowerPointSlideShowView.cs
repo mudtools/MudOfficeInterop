@@ -20,7 +20,7 @@ internal class PowerPointSlideShowView : IPowerPointSlideShowView
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _slideShowView.Parent;
+    public object? Parent => _slideShowView.Parent;
 
     /// <summary>
     /// 获取当前幻灯片

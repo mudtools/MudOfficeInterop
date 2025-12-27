@@ -96,11 +96,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     }
 
 
-    public override object Parent => _worksheets.Parent;
+    public override object? Parent => _worksheets.Parent;
 
     protected override object NativeSheets => _worksheets;
 
-    public override IExcelApplication Application => new ExcelApplication(_worksheets.Application);
+    public override IExcelApplication? Application => new ExcelApplication(_worksheets.Application);
     #endregion
 
     #region 创建和添加

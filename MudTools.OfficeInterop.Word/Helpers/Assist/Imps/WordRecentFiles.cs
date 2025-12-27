@@ -34,7 +34,7 @@ internal class WordRecentFiles : IWordRecentFiles
     public IWordApplication Application => _recentFiles != null ? new WordApplication(_recentFiles.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _recentFiles?.Parent;
+    public object? Parent => _recentFiles?.Parent;
 
     /// <inheritdoc/>
     public int Count => _recentFiles?.Count ?? 0;

@@ -28,7 +28,7 @@ public interface IWordLineNumbering : IDisposable
     /// <summary>
     /// 获取代表 <see cref="IWordLineNumbering"/> 对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置行号的起始值。

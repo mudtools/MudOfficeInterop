@@ -30,7 +30,7 @@ internal class WordSource : IWordSource
     public IWordApplication Application => _source != null ? new WordApplication(_source.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _source?.Parent;
+    public object? Parent => _source?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _source?.Creator ?? 0;

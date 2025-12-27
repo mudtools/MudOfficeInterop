@@ -21,7 +21,7 @@ public interface IPowerPointDocumentWindow : IDisposable
     /// 获取 Window 对象的父对象（通常是 Application）
     /// 对应 DocumentWindow.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 Window 对象所在的 Application 对象

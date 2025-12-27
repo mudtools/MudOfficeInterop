@@ -20,7 +20,7 @@ public interface IWordInlineShapes : IEnumerable<IWordInlineShape>, IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取内嵌形状的数量

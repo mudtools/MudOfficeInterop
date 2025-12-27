@@ -13,7 +13,7 @@ internal class ExcelDrawingObjects : IExcelDrawingObjects
     private bool _disposedValue;
 
 
-    public IExcelApplication Application => new ExcelApplication(_drawingObjects.Application as MsExcel.Application);
+    public IExcelApplication? Application => new ExcelApplication(_drawingObjects.Application as MsExcel.Application);
 
     public int Count => _drawingObjects.Count;
 

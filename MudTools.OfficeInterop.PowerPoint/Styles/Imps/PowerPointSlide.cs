@@ -66,7 +66,7 @@ internal class PowerPointSlide : IPowerPointSlide
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _slide.Parent;
+    public object? Parent => _slide.Parent;
 
 
     /// <summary>

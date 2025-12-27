@@ -13,18 +13,18 @@ using System;
 /// Excel Errors COM组件二次封装
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelErrors : IDisposable
+public interface IExcelErrors : IOfficeObject<IExcelErrors>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 通过索引获取错误

@@ -35,7 +35,7 @@ internal class WordLineNumbering : IWordLineNumbering
     public int Creator => _lineNumbering?.Creator ?? 0;
 
     /// <inheritdoc/>
-    public object Parent => _lineNumbering?.Parent;
+    public object? Parent => _lineNumbering?.Parent;
 
     /// <inheritdoc/>
     public int? StartingNumber

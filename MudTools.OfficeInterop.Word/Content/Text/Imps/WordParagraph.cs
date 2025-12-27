@@ -30,7 +30,7 @@ internal class WordParagraph : IWordParagraph
     public IWordApplication Application => _paragraph != null ? new WordApplication(_paragraph.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _paragraph?.Parent;
+    public object? Parent => _paragraph?.Parent;
 
 
     /// <inheritdoc/>

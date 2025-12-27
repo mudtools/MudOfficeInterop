@@ -25,7 +25,7 @@ internal class PowerPointView : IPowerPointView
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _view.Parent;
+    public object? Parent => _view.Parent;
 
 
     /// <summary>

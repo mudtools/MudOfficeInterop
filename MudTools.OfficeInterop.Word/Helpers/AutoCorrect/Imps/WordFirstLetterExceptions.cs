@@ -34,7 +34,7 @@ internal class WordFirstLetterExceptions : IWordFirstLetterExceptions
     public IWordApplication Application => _firstLetterExceptions != null ? new WordApplication(_firstLetterExceptions.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _firstLetterExceptions?.Parent;
+    public object? Parent => _firstLetterExceptions?.Parent;
 
     /// <inheritdoc/>
     public int Count => _firstLetterExceptions?.Count ?? 0;

@@ -48,7 +48,7 @@ public interface IExcelPivotItems : IOfficeObject<IExcelPivotItems>, IEnumerable
     /// 对应 PivotItems.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     void Add(string name);

@@ -31,7 +31,7 @@ public interface IPowerPointDocumentWindows : IEnumerable<IPowerPointDocumentWin
     /// 获取窗口集合所在的父对象（通常是 Application）
     /// 对应 DocumentWindows.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取窗口集合所在的Application对象

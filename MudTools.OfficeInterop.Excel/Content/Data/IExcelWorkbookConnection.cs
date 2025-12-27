@@ -17,13 +17,13 @@ public interface IExcelWorkbookConnection : IOfficeObject<IExcelWorkbookConnecti
     /// <summary>
     /// 获取父级连接集合
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 WorksheetFunction 对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置连接名称

@@ -31,7 +31,7 @@ internal class WordTaskPane : IWordTaskPane
     public IWordApplication Application => _taskPane != null ? new WordApplication(_taskPane.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _taskPane?.Parent;
+    public object? Parent => _taskPane?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _taskPane?.Creator ?? 0;

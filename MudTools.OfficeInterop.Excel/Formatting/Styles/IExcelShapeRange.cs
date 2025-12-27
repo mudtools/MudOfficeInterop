@@ -50,7 +50,7 @@ public interface IExcelShapeRange : IEnumerable<IExcelShape?>, IDisposable
     /// 获取形状区域所在的父对象（通常是工作表）
     /// 对应 ShapeRange.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取形状区域的ID

@@ -24,7 +24,7 @@ public interface IExcelPivotField : IOfficeObject<IExcelPivotField>, IDisposable
     /// 获取数据透视表字段的父对象 (通常是 PivotTable)
     /// 对应 PivotField.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据透视表字段所在的Application对象
@@ -240,7 +240,7 @@ public interface IExcelPivotField : IOfficeObject<IExcelPivotField>, IDisposable
     /// 获取父项集合
     /// 对应 PivotField.ParentItems 属性
     /// </summary>
-    object ParentItems { get; }
+    object? ParentItems { get; }
 
     /// <summary>
     /// 获取或设置可见项列表

@@ -19,7 +19,7 @@ public interface IExcelLine : IDisposable
     /// <summary>
     /// 获取线条所在的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取线条对象所在的 Application 对象

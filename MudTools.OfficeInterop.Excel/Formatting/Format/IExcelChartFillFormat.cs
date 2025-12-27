@@ -19,13 +19,13 @@ public interface IExcelChartFillFormat : IDisposable
     /// <summary>
     /// 获取填充所在的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取填充对象所在的 Application 对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 填充属性

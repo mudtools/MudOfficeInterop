@@ -31,7 +31,7 @@ internal class WordFileConverter : IWordFileConverter
     public IWordApplication Application => _fileConverter != null ? new WordApplication(_fileConverter.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _fileConverter?.Parent;
+    public object? Parent => _fileConverter?.Parent;
 
     /// <inheritdoc/>
     public bool CanOpen => _fileConverter?.CanOpen ?? false;

@@ -69,7 +69,7 @@ internal class PowerPointHyperlink : IPowerPointHyperlink
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _hyperlink?.Parent;
+    public object? Parent => _hyperlink?.Parent;
 
     /// <summary>
     /// 获取超链接类型

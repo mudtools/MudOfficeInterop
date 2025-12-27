@@ -80,7 +80,7 @@ internal class PowerPointActionSetting : IPowerPointActionSetting
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _actionSetting?.Parent;
+    public object? Parent => _actionSetting?.Parent;
 
 
     /// <summary>

@@ -22,7 +22,7 @@ internal class PowerPointSlides : IPowerPointSlides
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _slides?.Parent;
+    public object? Parent => _slides?.Parent;
 
     /// <summary>
     /// 根据索引获取幻灯片（从1开始）

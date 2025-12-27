@@ -17,7 +17,7 @@ public interface IOfficeCustomXMLValidationError : IOfficeObject<IOfficeCustomXM
     /// 获取 Microsoft.Office.Core.CustomXMLValidationError 对象的父对象。只读。
     /// </summary>
     /// <returns>Object</returns>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 Microsoft.Office.Core.CustomXMLValidationError 对象中错误的名称。如果不存在错误，该属性返回 Nothing。只读。

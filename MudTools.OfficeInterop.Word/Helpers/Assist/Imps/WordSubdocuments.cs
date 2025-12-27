@@ -26,7 +26,7 @@ internal class WordSubdocuments : IWordSubdocuments
     public IWordApplication Application => _subdocuments != null ? new WordApplication(_subdocuments.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _subdocuments?.Parent;
+    public object? Parent => _subdocuments?.Parent;
 
     /// <inheritdoc/>
     public int Count => _subdocuments?.Count ?? 0;

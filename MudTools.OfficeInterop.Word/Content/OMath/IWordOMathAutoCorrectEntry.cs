@@ -22,7 +22,7 @@ public interface IWordOMathAutoCorrectEntry : IOfficeObject<IWordOMathAutoCorrec
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置数学自动更正条目的名称（即键入的文本）。

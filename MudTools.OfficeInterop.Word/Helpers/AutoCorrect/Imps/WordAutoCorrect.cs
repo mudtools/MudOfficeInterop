@@ -31,7 +31,7 @@ internal class WordAutoCorrect : IWordAutoCorrect
     public IWordApplication Application => _autoCorrect != null ? new WordApplication(_autoCorrect.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _autoCorrect?.Parent;
+    public object? Parent => _autoCorrect?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _autoCorrect?.Creator ?? 0;

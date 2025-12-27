@@ -34,7 +34,7 @@ internal class WordAutoCaptions : IWordAutoCaptions
     public IWordApplication Application => _autoCaptions != null ? new WordApplication(_autoCaptions.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _autoCaptions?.Parent;
+    public object? Parent => _autoCaptions?.Parent;
 
     /// <inheritdoc/>
     public int Count => _autoCaptions?.Count ?? 0;

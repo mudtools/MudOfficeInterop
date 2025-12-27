@@ -20,7 +20,7 @@ public interface IWordFrame : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取框架所在的范围。

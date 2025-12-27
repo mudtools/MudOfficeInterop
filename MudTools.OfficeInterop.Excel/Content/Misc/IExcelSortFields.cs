@@ -11,18 +11,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel排序字段集合的接口，用于定义和操作Excel中的排序规则
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSortFields : IOfficeObject<IExcelSortFields>, IDisposable, IEnumerable<IExcelSortField>
+public interface IExcelSortFields : IOfficeObject<IExcelSortFields>, IDisposable, IEnumerable<IExcelSortField?>
 {
     /// <summary>
     /// 获取父级排序对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取条件值对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取排序字段集合中的字段数量
@@ -34,14 +34,14 @@ public interface IExcelSortFields : IOfficeObject<IExcelSortFields>, IDisposable
     /// </summary>
     /// <param name="index">排序字段索引</param>
     /// <returns>排序字段对象</returns>
-    IExcelSortField this[int index] { get; }
+    IExcelSortField? this[int index] { get; }
 
     /// <summary>
     /// 根据名称获取排序字段
     /// </summary>
     /// <param name="name">排序字段名称</param>
     /// <returns>排序字段对象</returns>
-    IExcelSortField this[string name] { get; }
+    IExcelSortField? this[string name] { get; }
 
     /// <summary>
     /// 添加新的排序字段

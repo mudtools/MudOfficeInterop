@@ -18,13 +18,13 @@ public interface IExcelControlFormat : IDisposable
     /// <summary>
     /// 获取此对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置控件的当前选中项索引（从 1 开始）。

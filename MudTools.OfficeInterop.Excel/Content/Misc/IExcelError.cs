@@ -11,18 +11,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Error COM组件二次封装
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelError : IDisposable
+public interface IExcelError : IOfficeObject<IExcelError>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
 
     /// <summary>

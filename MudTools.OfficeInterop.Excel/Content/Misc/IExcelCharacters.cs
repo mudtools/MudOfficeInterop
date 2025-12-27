@@ -11,18 +11,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中的字符对象接口，提供对单元格中文本的字符级操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCharacters : IDisposable
+public interface IExcelCharacters : IOfficeObject<IExcelCharacters>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取字符数量

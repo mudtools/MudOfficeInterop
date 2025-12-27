@@ -39,14 +39,14 @@ public interface IExcelSeriesCollection : IOfficeObject<IExcelSeriesCollection>,
     /// 获取系列集合所在的父对象（通常是 Chart）
     /// 对应 SeriesCollection.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取系列集合所在的 Application 对象
     /// 对应 SeriesCollection.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     /// <summary>

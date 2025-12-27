@@ -26,7 +26,7 @@ internal class WordListParagraphs : IWordListParagraphs
     public IWordApplication Application => _listParagraphs != null ? new WordApplication(_listParagraphs.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _listParagraphs?.Parent;
+    public object? Parent => _listParagraphs?.Parent;
 
     /// <inheritdoc/>
     public int Count => _listParagraphs?.Count ?? 0;

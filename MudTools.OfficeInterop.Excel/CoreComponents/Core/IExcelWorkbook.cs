@@ -169,7 +169,7 @@ public interface IExcelWorkbook : IDisposable
     /// 获取工作簿所在的Application对象
     /// 对应 Workbook.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取工作簿的编码名称

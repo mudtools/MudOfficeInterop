@@ -17,7 +17,7 @@ public interface IVbeCodeModule : IDisposable
     /// 获取代码模块的父对象（通常是 VBComponent）
     /// 对应 CodeModule.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取代码模块所在的Application对象（VBE 对象）

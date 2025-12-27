@@ -43,7 +43,7 @@ internal class PowerPointTags : IPowerPointTags
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent
+    public object? Parent
     {
         get
         {

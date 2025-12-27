@@ -28,7 +28,7 @@ public interface IWordPanes : IEnumerable<IWordPane>, IDisposable
     /// <summary>
     /// 获取代表 <see cref="IWordPanes"/> 对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 通过索引（从 1 开始）获取集合中的单个窗格。

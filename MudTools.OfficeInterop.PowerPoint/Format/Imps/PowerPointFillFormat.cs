@@ -19,7 +19,7 @@ internal class PowerPointFillFormat : IPowerPointFillFormat
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _fillFormat?.Parent;
+    public object? Parent => _fillFormat?.Parent;
 
     /// <summary>
     /// 获取或设置前景色

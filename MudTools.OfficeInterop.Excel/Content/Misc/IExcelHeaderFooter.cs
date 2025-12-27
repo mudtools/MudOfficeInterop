@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel工作表页眉或页脚的接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelHeaderFooter : IDisposable
+public interface IExcelHeaderFooter : IOfficeObject<IExcelHeaderFooter>, IDisposable
 {
     /// <summary>
     /// 获取或设置页眉/页脚的文本内容

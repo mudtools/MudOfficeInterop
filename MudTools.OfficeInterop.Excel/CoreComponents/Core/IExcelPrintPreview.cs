@@ -18,7 +18,7 @@ public interface IExcelPrintPreview : IDisposable
     /// <summary>
     /// 获取打印预览窗口的父对象（通常是工作表或工作簿）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     #endregion
 

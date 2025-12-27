@@ -27,7 +27,7 @@ internal class WordFormField : IWordFormField
     public IWordApplication Application => _formField != null ? new WordApplication(_formField.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _formField?.Parent;
+    public object? Parent => _formField?.Parent;
 
     /// <inheritdoc/>
     public string Name

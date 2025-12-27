@@ -28,7 +28,7 @@ internal class WordSmartTagType : IWordSmartTagType
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    public object Parent => _smartTagType?.Parent;
+    public object? Parent => _smartTagType?.Parent;
 
     /// <summary>
     /// 获取智能标记类型的名称。

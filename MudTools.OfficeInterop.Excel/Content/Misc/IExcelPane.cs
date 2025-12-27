@@ -11,18 +11,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// Microsoft.Office.Interop.Excel.Pane 实现的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPane : IDisposable
+public interface IExcelPane : IOfficeObject<IExcelPane>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     /// <summary>
     /// 获取窗格索引
     /// </summary>
@@ -31,7 +31,7 @@ public interface IExcelPane : IDisposable
     /// <summary>
     /// 获取窗格的可视区域范围
     /// </summary>
-    IExcelRange VisibleRange { get; }
+    IExcelRange? VisibleRange { get; }
 
     /// <summary>
     /// 获取窗格的滚动列位置

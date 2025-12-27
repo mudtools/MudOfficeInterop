@@ -27,7 +27,7 @@ internal class WordSentences : IWordSentences
     public IWordApplication Application => _sentences != null ? new WordApplication(_sentences.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _sentences?.Parent;
+    public object? Parent => _sentences?.Parent;
 
     /// <inheritdoc/>
     public int Count => _sentences?.Count ?? 0;

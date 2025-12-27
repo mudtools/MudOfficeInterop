@@ -27,7 +27,7 @@ internal class WordFrames : IWordFrames
     public IWordApplication Application => _frames != null ? new WordApplication(_frames.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _frames?.Parent;
+    public object? Parent => _frames?.Parent;
 
     /// <inheritdoc/>
     public int Count => _frames?.Count ?? 0;

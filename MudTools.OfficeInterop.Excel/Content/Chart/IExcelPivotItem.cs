@@ -25,14 +25,14 @@ public interface IExcelPivotItem : IOfficeObject<IExcelPivotItem>, IDisposable
     /// 获取数据透视表项目的父对象 (通常是 PivotField)
     /// 对应 PivotItem.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据透视表项目所在的Application对象
     /// 对应 PivotItem.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置数据透视表项目是否可见

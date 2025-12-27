@@ -19,14 +19,14 @@ public interface IExcelName : IOfficeObject<IExcelName>, IDisposable
     /// 获取名称所在的父对象
     /// 对应 Name.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取名称所在的Application对象
     /// 对应 Name.Application 属性
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置名称的值

@@ -30,7 +30,7 @@ internal class PowerPointSlideRange : IPowerPointSlideRange
 
     public IPowerPointSlide this[int index] => new PowerPointSlide(_slideRange[index]);
 
-    public object Parent => _slideRange.Parent;
+    public object? Parent => _slideRange.Parent;
 
     public IPowerPointApplication Application => _slideRange.Application != null ? new PowerPointApplication(_slideRange.Application) : null;
 

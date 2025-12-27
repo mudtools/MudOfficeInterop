@@ -38,7 +38,7 @@ internal class PowerPointTextRange : IPowerPointTextRange
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _textRange.Parent;
+    public object? Parent => _textRange.Parent;
 
     /// <summary>
     /// 获取字体设置

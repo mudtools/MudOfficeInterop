@@ -34,7 +34,7 @@ internal class WordDictionaries : IWordDictionaries
     public IWordApplication Application => _dictionaries != null ? new WordApplication(_dictionaries.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _dictionaries?.Parent;
+    public object? Parent => _dictionaries?.Parent;
 
     /// <inheritdoc/>
     public int Count => _dictionaries?.Count ?? 0;

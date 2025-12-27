@@ -66,13 +66,13 @@ public interface IExcelAddIn : IDisposable
     /// 获取加载项的父对象（通常是 AddIns 集合）
     /// 对应 AddIn.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取加载项所在的Application对象
     /// 对应 AddIn.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取加载项的程序标识符 (ProgID)

@@ -34,7 +34,7 @@ internal class WordEditors : IWordEditors
     public IWordApplication Application => _editors != null ? new WordApplication(_editors.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _editors?.Parent;
+    public object? Parent => _editors?.Parent;
 
     /// <inheritdoc/>
     public int Count => _editors?.Count ?? 0;

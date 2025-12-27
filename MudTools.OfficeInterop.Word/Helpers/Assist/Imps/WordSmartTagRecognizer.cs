@@ -28,7 +28,7 @@ internal class WordSmartTagRecognizer : IWordSmartTagRecognizer
     /// <summary>
     /// 获取代表指定对象的父对象的对象 [[10]]。
     /// </summary>
-    public object Parent => _recognizer?.Parent;
+    public object? Parent => _recognizer?.Parent;
 
     /// <summary>
     /// 获取标识指定智能标记识别程序的标签 [[4]]。

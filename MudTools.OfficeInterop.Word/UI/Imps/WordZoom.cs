@@ -29,7 +29,7 @@ internal class WordZoom : IWordZoom
     public IWordApplication Application => _zoom?.Application != null ? new WordApplication(_zoom.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _zoom?.Parent;
+    public object? Parent => _zoom?.Parent;
 
     /// <inheritdoc/>
     /// <remarks>

@@ -420,7 +420,7 @@ internal partial class ExcelWorkbook : IExcelWorkbook
     /// <summary>
     /// 获取工作簿所在的Application对象
     /// </summary>
-    public IExcelApplication Application
+    public IExcelApplication? Application
     {
         get
         {

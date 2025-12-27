@@ -18,13 +18,13 @@ public interface IExcelDataBarBorder : IDisposable
     /// 获取数据条边框对象的父对象 (通常是 DataBar)
     /// 对应 DataBarBorder.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据条边框对象所在的Application对象
     /// 对应 DataBarBorder.Application 属性
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
 
     /// <summary>

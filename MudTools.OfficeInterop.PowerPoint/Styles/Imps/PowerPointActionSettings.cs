@@ -24,7 +24,7 @@ internal class PowerPointActionSettings : IPowerPointActionSettings
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _actionSettings?.Parent;
+    public object? Parent => _actionSettings?.Parent;
 
     /// <summary>
     /// 根据索引获取动作设置

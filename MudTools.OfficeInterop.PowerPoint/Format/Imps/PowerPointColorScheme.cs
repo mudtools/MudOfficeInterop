@@ -25,7 +25,7 @@ internal class PowerPointColorScheme : IPowerPointColorScheme
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _colorScheme?.Parent;
+    public object? Parent => _colorScheme?.Parent;
 
     /// <summary>
     /// 获取或设置指定索引的颜色

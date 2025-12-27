@@ -17,7 +17,7 @@ public interface IOfficeThemeColorScheme : IOfficeObject<IOfficeThemeColorScheme
     /// 获取 Microsoft.Office.Core.ThemeColorScheme 对象的父对象。只读。
     /// </summary>
     /// <returns>Object</returns>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取 Microsoft.Office.Core.ThemeColorScheme 集合中的项数。只读。

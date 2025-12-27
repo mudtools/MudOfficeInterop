@@ -21,7 +21,7 @@ public interface IPowerPointColorScheme : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置指定索引的颜色

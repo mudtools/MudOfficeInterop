@@ -30,7 +30,7 @@ internal class WordListLevel : IWordListLevel
     public IWordApplication? Application => _listLevel != null ? new WordApplication(_listLevel.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _listLevel?.Parent;
+    public object? Parent => _listLevel?.Parent;
 
     /// <summary>
     /// 获取或设置编号格式

@@ -12,7 +12,7 @@ internal class ExcelAddIns : IExcelAddIns
     private MsExcel.AddIns _addIns;
     private bool _disposedValue;
 
-    public object Parent => _addIns.Parent;
+    public object? Parent => _addIns.Parent;
 
     public int Count => _addIns.Count;
 

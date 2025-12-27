@@ -26,7 +26,7 @@ internal class PowerPointDocumentWindow : IPowerPointDocumentWindow
 
     #region 基础属性
     public int? Hwnd => _window.HWND;
-    public object Parent => _window.Parent;
+    public object? Parent => _window.Parent;
 
     public IPowerPointApplication Application => _window.Application != null ? new PowerPointApplication(_window.Application) : null;
 

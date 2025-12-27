@@ -27,7 +27,7 @@ internal class WordAdjustments : IWordAdjustments
     public IWordApplication Application => _adjustments != null ? new WordApplication(_adjustments.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _adjustments?.Parent;
+    public object? Parent => _adjustments?.Parent;
 
     /// <inheritdoc/>
     public int Count => _adjustments?.Count ?? 0;

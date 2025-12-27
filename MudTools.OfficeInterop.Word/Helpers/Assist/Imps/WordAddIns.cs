@@ -34,7 +34,7 @@ internal class WordAddIns : IWordAddIns
     public IWordApplication Application => _addIns != null ? new WordApplication(_addIns.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _addIns?.Parent;
+    public object? Parent => _addIns?.Parent;
 
     /// <inheritdoc/>
     public int Count => _addIns?.Count ?? 0;

@@ -30,7 +30,7 @@ namespace MudTools.OfficeInterop.Excel.Analysis.Statistics
     {
         private readonly IExcelApplication _application;
         
-        public StatisticalAnalysisManager(IExcelApplication application)
+        public StatisticalAnalysisManager(IExcelApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
         }
@@ -632,7 +632,7 @@ namespace MudTools.OfficeInterop.Excel.Visualization.Charts
     {
         private readonly IExcelApplication _application;
         
-        public ChartCreationManager(IExcelApplication application)
+        public ChartCreationManager(IExcelApplication? Application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
         }
@@ -1161,7 +1161,7 @@ public class SalesDataAnalysisTool
     private readonly ChartCreationManager _chartManager;
     private readonly AdvancedVisualizationManager _advancedVizManager;
     
-    public SalesDataAnalysisTool(IExcelApplication application)
+    public SalesDataAnalysisTool(IExcelApplication? Application)
     {
         _statsManager = new StatisticalAnalysisManager(application);
         _chartManager = new ChartCreationManager(application);

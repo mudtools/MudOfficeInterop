@@ -20,12 +20,12 @@ MudTools.OfficeInterop.Excel项目就像是专业的"数据整理大师"，它�
 // 核心排序接口概览
 public interface IExcelSort : IDisposable
 {
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     IExcelRange? Range { get; }
     XlYesNoGuess Header { get; set; }
     XlSortMethod SortMethod { get; set; }
     IExcelSortFields? SortFields { get; }
-    object Parent { get; }
+    object? Parent { get; }
     
     void SetRange(IExcelRange range);
     void Apply();
@@ -163,7 +163,7 @@ public class SortFieldManager
         XlSortDataOption DataOption { get; set; }
         object CustomOrder { get; set; }
         int Priority { get; set; }
-        object Parent { get; }
+        object? Parent { get; }
         
         void Delete();
         void Modify(XlSortOn sortOn, XlSortOrder order, 

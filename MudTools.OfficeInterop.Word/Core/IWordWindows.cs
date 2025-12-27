@@ -27,7 +27,7 @@ public interface IWordWindows : IDisposable, IOfficeObject<IWordWindows>, IEnume
     /// <summary>
     /// 获取父对象（通常是 Application）
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置是否启用并排窗口的同步滚动功能

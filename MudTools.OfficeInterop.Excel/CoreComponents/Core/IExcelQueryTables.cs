@@ -29,7 +29,7 @@ public interface IExcelQueryTables : IEnumerable<IExcelQueryTable>, IDisposable
     /// <summary>
     /// 获取此集合所属的父对象（通常是 Worksheet）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作簿中所有切片器缓存的集合，支持遍历、索引和名称访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerCaches : IOfficeObject<IExcelSlicerCaches>, IEnumerable<IExcelSlicerCache>, IDisposable
+public interface IExcelSlicerCaches : IOfficeObject<IExcelSlicerCaches>, IEnumerable<IExcelSlicerCache?>, IDisposable
 {
     /// <summary>
     /// 获取集合中切片器缓存的总数。
@@ -23,25 +23,25 @@ public interface IExcelSlicerCaches : IOfficeObject<IExcelSlicerCaches>, IEnumer
     /// </summary>
     /// <param name="index">缓存索引</param>
     /// <returns>对应的切片器缓存对象</returns>
-    IExcelSlicerCache this[int index] { get; }
+    IExcelSlicerCache? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取指定的切片器缓存。
     /// </summary>
     /// <param name="name">缓存名称</param>
     /// <returns>对应的切片器缓存对象</returns>
-    IExcelSlicerCache this[string name] { get; }
+    IExcelSlicerCache? this[string name] { get; }
 
     /// <summary>
     /// 获取此集合所属的父对象（通常是 Workbook）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 创建一个新的切片器缓存并添加到集合中。
@@ -50,7 +50,7 @@ public interface IExcelSlicerCaches : IOfficeObject<IExcelSlicerCaches>, IEnumer
     /// <param name="field">字段名称（透视表字段或表格列名）</param>
     /// <param name="name">缓存名称（可选，如不提供则自动生成）</param>
     /// <returns>新创建的切片器缓存对象</returns>
-    IExcelSlicerCache Add(string source, string field, string? name = null);
+    IExcelSlicerCache? Add(string source, string field, string? name = null);
 
     /// <summary>
     /// 创建一个新的切片器缓存并添加到集合中，支持指定切片器缓存类型。
@@ -60,5 +60,5 @@ public interface IExcelSlicerCaches : IOfficeObject<IExcelSlicerCaches>, IEnumer
     /// <param name="name">缓存名称（可选，如不提供则自动生成）</param>
     /// <param name="slicerCacheType">切片器缓存类型（可选，默认为标准切片器）</param>
     /// <returns>新创建的切片器缓存对象</returns>
-    IExcelSlicerCache Add2(string source, string sourceField, string? name = null, XlSlicerCacheType? slicerCacheType = null);
+    IExcelSlicerCache? Add2(string source, string sourceField, string? name = null, XlSlicerCacheType? slicerCacheType = null);
 }

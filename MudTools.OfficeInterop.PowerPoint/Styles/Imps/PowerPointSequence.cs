@@ -22,7 +22,7 @@ internal class PowerPointSequence : IPowerPointSequence
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _sequence?.Parent;
+    public object? Parent => _sequence?.Parent;
 
     /// <summary>
     /// 根据索引获取效果

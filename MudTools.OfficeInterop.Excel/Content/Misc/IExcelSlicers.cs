@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作表中所有切片器的集合，支持遍历和索引访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicers : IOfficeObject<IExcelSlicers>, IEnumerable<IExcelSlicer>, IDisposable
+public interface IExcelSlicers : IOfficeObject<IExcelSlicers>, IEnumerable<IExcelSlicer?>, IDisposable
 {
     /// <summary>
     /// 获取集合中切片器的总数。
@@ -23,25 +23,25 @@ public interface IExcelSlicers : IOfficeObject<IExcelSlicers>, IEnumerable<IExce
     /// </summary>
     /// <param name="index">切片器索引（int）</param>
     /// <returns>对应的切片器对象</returns>
-    IExcelSlicer this[int index] { get; }
+    IExcelSlicer? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取指定的切片器。
     /// </summary>
     /// <param name="name">切片器名称（string）</param>
     /// <returns>对应的切片器对象</returns>
-    IExcelSlicer this[string name] { get; }
+    IExcelSlicer? this[string name] { get; }
 
     /// <summary>
     /// 获取此集合所属的父对象（通常是 Worksheet）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 创建新的切片器并返回 <see cref="IExcelSlicer"/> 对象。
@@ -55,6 +55,6 @@ public interface IExcelSlicers : IOfficeObject<IExcelSlicers>, IEnumerable<IExce
     /// <param name="width">切片器控件的初始宽度（以磅为单位）。</param>
     /// <param name="height">切片器控件的初始高度（以磅为单位）。</param>
     /// <returns></returns>
-    IExcelSlicer Add(string slicerDestination, string? level = null, string? name = null, string? caption = null,
+    IExcelSlicer? Add(string slicerDestination, string? level = null, string? name = null, string? caption = null,
         double? top = null, double? left = null, double? width = null, double? height = null);
 }

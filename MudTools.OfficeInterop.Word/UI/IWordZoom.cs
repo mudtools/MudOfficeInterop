@@ -21,7 +21,7 @@ public interface IWordZoom : IDisposable
     /// <summary>
     /// 获取代表 <see cref="IWordZoom"/> 对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置文档窗口或面板的百分比缩放。可以是 10% 到 500% 之间的任意整数。

@@ -57,7 +57,7 @@ internal class WordInlineShape : IWordInlineShape
 
 
     /// <inheritdoc/>
-    public object Parent => _inlineShape?.Parent;
+    public object? Parent => _inlineShape?.Parent;
 
 
     /// <inheritdoc/>

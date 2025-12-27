@@ -39,7 +39,7 @@ public interface IVbeVBComponents : IEnumerable<IVbeVBComponent>, IDisposable
     /// 获取 VB 组件集合所在的父对象（通常是 VBProject）
     /// 对应 VBComponents.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     #endregion
 

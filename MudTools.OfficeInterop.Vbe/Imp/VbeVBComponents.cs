@@ -30,7 +30,7 @@ internal class VbeVBComponents : IVbeVBComponents
 
     public IVbeVBComponent this[string name] => new VbeVBComponent(_vbComponents.Item(name));
 
-    public object Parent => _vbComponents.Parent;
+    public object? Parent => _vbComponents.Parent;
     #endregion
 
     #region 创建和添加

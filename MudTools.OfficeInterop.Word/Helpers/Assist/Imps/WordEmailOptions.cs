@@ -31,7 +31,7 @@ internal class WordEmailOptions : IWordEmailOptions
     public IWordApplication Application => _emailOptions != null ? new WordApplication(_emailOptions.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _emailOptions?.Parent;
+    public object? Parent => _emailOptions?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _emailOptions?.Creator ?? 0;

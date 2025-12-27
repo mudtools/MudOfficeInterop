@@ -16,7 +16,7 @@ public interface IOfficeRulerLevel2 : IOfficeObject<IOfficeRulerLevel2>, IDispos
     /// <summary>
     /// 获取标尺级别的父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置首行缩进值

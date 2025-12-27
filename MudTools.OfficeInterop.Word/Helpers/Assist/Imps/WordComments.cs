@@ -27,7 +27,7 @@ internal class WordComments : IWordComments
     public IWordApplication Application => _comments != null ? new WordApplication(_comments.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _comments?.Parent;
+    public object? Parent => _comments?.Parent;
 
     /// <inheritdoc/>
     public int Count => _comments?.Count ?? 0;

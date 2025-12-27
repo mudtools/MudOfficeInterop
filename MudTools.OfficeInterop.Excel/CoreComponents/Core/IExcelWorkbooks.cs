@@ -40,7 +40,7 @@ public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook>, IDisposable
     /// 获取工作簿集合所在的父对象（通常是Application）
     /// 对应 Workbooks.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取工作簿集合所在的Application对象

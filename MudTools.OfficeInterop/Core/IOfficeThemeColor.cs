@@ -17,7 +17,7 @@ public interface IOfficeThemeColor : IOfficeObject<IOfficeThemeColor>, IDisposab
     /// 获取 Microsoft.Office.Core.ThemeColor 对象的父对象。只读。
     /// </summary>
     /// <returns>Object</returns>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置 Microsoft Office 主题颜色方案中颜色的值。可读写。

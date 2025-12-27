@@ -39,7 +39,7 @@ public interface IExcelPivotTables : IOfficeObject<IExcelPivotTables>, IEnumerab
     /// 获取数据透视表集合所在的父对象（通常是 Worksheet）
     /// 对应 PivotTables.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取数据透视表集合所在的Application对象

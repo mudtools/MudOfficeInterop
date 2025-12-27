@@ -20,7 +20,7 @@ public interface IPowerPointSoundEffect : IDisposable
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 从文件导入声音

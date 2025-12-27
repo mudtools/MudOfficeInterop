@@ -32,9 +32,9 @@ internal class ExcelAddIn : IExcelAddIn
     public string Subject => _addIn.Subject;
     public string Path => _addIn.Path;
 
-    public object Parent => _addIn.Parent;
+    public object? Parent => _addIn.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_addIn.Application);
+    public IExcelApplication? Application => new ExcelApplication(_addIn.Application);
 
     public string ProgId => _addIn.progID;
 

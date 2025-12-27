@@ -24,7 +24,7 @@ public interface IWordLegendEntries : IEnumerable<IWordLegendEntry?>, IOfficeObj
     /// <summary>
     /// 获取图例项集合的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取图例项集合中的图例项数量。

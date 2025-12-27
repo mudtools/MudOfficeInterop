@@ -24,7 +24,7 @@ public interface IWordDocuments : IDisposable, IEnumerable<IWordDocument>
     /// <summary>
     /// 获取父对象
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
 
     /// <summary>

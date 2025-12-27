@@ -80,7 +80,7 @@ internal class PowerPointMaster : IPowerPointMaster
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _master?.Parent;
+    public object? Parent => _master?.Parent;
 
     /// <summary>
     /// 获取自定义布局集合

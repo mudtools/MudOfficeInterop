@@ -35,7 +35,7 @@ internal class WordInlineShapes : IWordInlineShapes
     /// <summary>
     /// 获取集合的父对象（伪代码）
     /// </summary>
-    public object Parent => _inlineShapes.Parent;
+    public object? Parent => _inlineShapes.Parent;
 
     #endregion
 

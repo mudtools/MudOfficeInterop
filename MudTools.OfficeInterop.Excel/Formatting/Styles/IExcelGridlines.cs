@@ -21,12 +21,12 @@ public interface IExcelGridlines : IDisposable
     /// <summary>
     /// 获取网格线对象的父对象 (通常是 Axis)
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取网格线对象所在的 Application 对象
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
     #endregion
 
     #region 格式设置

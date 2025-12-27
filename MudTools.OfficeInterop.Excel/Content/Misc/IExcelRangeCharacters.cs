@@ -11,5 +11,5 @@ public interface IExcelRangeCharacters : IExcelCharacters
     /// <param name="start">起始位置（从1开始）</param>
     /// <param name="length">要获取的字符长度</param>
     /// <returns>表示指定范围内字符的IExcelCharacters对象</returns>
-    IExcelCharacters this[int start, int length] { get; }
+    IExcelCharacters? this[int start, int length] { get; }
 }

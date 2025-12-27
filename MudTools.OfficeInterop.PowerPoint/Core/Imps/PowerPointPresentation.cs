@@ -42,7 +42,7 @@ internal class PowerPointPresentation : IPowerPointPresentation
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _presentation?.Parent;
+    public object? Parent => _presentation?.Parent;
 
     /// <summary>
     /// 获取幻灯片集合

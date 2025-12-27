@@ -27,7 +27,7 @@ internal class WordListTemplate : IWordListTemplate
     public IWordApplication Application => _listTemplate != null ? new WordApplication(_listTemplate.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _listTemplate?.Parent;
+    public object? Parent => _listTemplate?.Parent;
 
     /// <inheritdoc/>
     public string Name => _listTemplate?.Name ?? string.Empty;

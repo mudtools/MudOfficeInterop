@@ -31,7 +31,7 @@ internal class WordLineFormat : IWordLineFormat
     public IWordApplication? Application => _lineFormat != null ? new WordApplication(_lineFormat.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _lineFormat?.Parent;
+    public object? Parent => _lineFormat?.Parent;
 
     /// <inheritdoc/>
     public IWordColorFormat ForeColor

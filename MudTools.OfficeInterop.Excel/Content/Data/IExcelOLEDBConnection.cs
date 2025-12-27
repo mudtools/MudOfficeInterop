@@ -18,13 +18,13 @@ public interface IExcelOLEDBConnection : IOfficeObject<IExcelOLEDBConnection>, I
     /// <summary>
     /// 获取连接的父级工作簿连接
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取条件值对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置连接的命令文本

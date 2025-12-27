@@ -11,18 +11,18 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中的一个切片器对象，用于对数据透视表或表格进行可视化筛选。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicer : IDisposable
+public interface IExcelSlicer : IOfficeObject<IExcelSlicer>, IDisposable
 {
     /// <summary>
     /// 获取此切片器所属的父对象（通常是 Slicers 集合）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此切片器所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置切片器的名称。

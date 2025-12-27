@@ -24,9 +24,9 @@ internal class ExcelGridlines : IExcelGridlines
     public string Name => _gridlines.Name;
 
 
-    public object Parent => _gridlines.Parent;
+    public object? Parent => _gridlines.Parent;
 
-    public IExcelApplication Application => new ExcelApplication(_gridlines.Application);
+    public IExcelApplication? Application => new ExcelApplication(_gridlines.Application);
     #endregion
 
     #region 格式设置

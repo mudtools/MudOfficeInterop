@@ -40,7 +40,7 @@ internal class PowerPointShape : IPowerPointShape
     /// <summary>
     /// 获取父对象
     /// </summary>
-    public object Parent => _shape?.Parent;
+    public object? Parent => _shape?.Parent;
 
     /// <summary>
     /// 获取形状类型

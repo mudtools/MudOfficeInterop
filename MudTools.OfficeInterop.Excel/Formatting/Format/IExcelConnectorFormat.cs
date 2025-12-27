@@ -18,13 +18,13 @@ public interface IExcelConnectorFormat : IDisposable
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape）。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取此对象所属的 Excel 应用程序对象。
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取或设置连接符的类型（直线、曲线、直角等）。

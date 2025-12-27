@@ -29,7 +29,7 @@ internal class PowerPointPresentations : IPowerPointPresentations
 
     public IPowerPointPresentation this[int index] => new PowerPointPresentation(_presentations[index]);
 
-    public object Parent => _presentations.Parent;
+    public object? Parent => _presentations.Parent;
 
     public IPowerPointApplication Application => _presentations.Application != null ? new PowerPointApplication(_presentations.Application) : null;
     #endregion

@@ -20,7 +20,7 @@ public interface IWordListLevels : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取指定索引的列表级别

@@ -22,7 +22,7 @@ public interface IWordFileConverter : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取一个值，该值指示指定的文件转换器是否设计为打开文件。

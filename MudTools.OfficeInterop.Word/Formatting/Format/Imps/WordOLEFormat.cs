@@ -18,7 +18,7 @@ internal class WordOLEFormat : IWordOLEFormat
     public IWordApplication? Application => _oleFormat != null ? new WordApplication(_oleFormat.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _oleFormat?.Parent;
+    public object? Parent => _oleFormat?.Parent;
 
     /// <summary>
     /// 获取 OLE 对象的类名

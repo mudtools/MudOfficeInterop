@@ -27,7 +27,7 @@ internal class WordFootnotes : IWordFootnotes
     public IWordApplication Application => _footnotes != null ? new WordApplication(_footnotes.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _footnotes?.Parent;
+    public object? Parent => _footnotes?.Parent;
 
     /// <inheritdoc/>
     public int Count => _footnotes?.Count ?? 0;

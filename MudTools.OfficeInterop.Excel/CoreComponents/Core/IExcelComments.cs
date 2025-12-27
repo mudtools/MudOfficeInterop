@@ -32,7 +32,7 @@ public interface IExcelComments : IEnumerable<IExcelComment>, IDisposable
     /// 获取评论集合所在的父对象（通常是工作表）
     /// 对应 Comments.Parent 属性
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     #endregion
 

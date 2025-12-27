@@ -22,7 +22,7 @@ public interface IWordFirstLetterExceptions : IEnumerable<IWordFirstLetterExcept
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取集合中的首字母大写异常数量。

@@ -15,7 +15,7 @@ public interface IExcelComGraphObjects : IDisposable
     /// <summary>
     /// 获取或设置颜色的应用程序版本
     /// </summary>
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取控件的边框属性

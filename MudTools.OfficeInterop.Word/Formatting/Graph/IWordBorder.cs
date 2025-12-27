@@ -20,7 +20,7 @@ public interface IWordBorder : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置边框是否可见。

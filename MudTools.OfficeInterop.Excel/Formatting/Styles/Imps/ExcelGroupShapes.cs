@@ -45,7 +45,7 @@ internal class ExcelGroupShapes : IExcelGroupShapes
     /// <summary>
     /// 获取父对象（伪代码）
     /// </summary>
-    public object Parent => _groupShapes.Parent;
+    public object? Parent => _groupShapes.Parent;
 
 
     /// <summary>

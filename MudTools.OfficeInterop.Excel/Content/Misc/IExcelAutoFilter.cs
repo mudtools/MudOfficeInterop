@@ -11,19 +11,19 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel工作表中的自动筛选功能接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelAutoFilter : IDisposable
+public interface IExcelAutoFilter : IOfficeObject<IExcelAutoFilter>, IDisposable
 {
 
     /// <summary>
     /// 获取当前COM对象的父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取当前COM对象的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication Application { get; }
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取一个值，该值指示是否已应用自动筛选

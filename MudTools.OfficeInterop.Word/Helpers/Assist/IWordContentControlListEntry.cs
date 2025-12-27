@@ -21,7 +21,7 @@ public interface IWordContentControlListEntry : IDisposable
     /// <summary>
     /// 获取父对象。
     /// </summary>
-    object Parent { get; }
+    object? Parent { get; }
 
     /// <summary>
     /// 获取或设置内容控件列表项在列表项集合中的序号位置。

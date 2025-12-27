@@ -31,7 +31,7 @@ internal class WordAutoCaption : IWordAutoCaption
     public IWordApplication Application => _autoCaption != null ? new WordApplication(_autoCaption.Application) : null;
 
     /// <inheritdoc/>
-    public object Parent => _autoCaption?.Parent;
+    public object? Parent => _autoCaption?.Parent;
 
     /// <inheritdoc/>
     public int Creator => _autoCaption?.Creator ?? 0;

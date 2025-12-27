@@ -28,7 +28,7 @@ internal class WordBrowser : IWordBrowser
     /// <summary>
     /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    public object Parent => _browser?.Parent;
+    public object? Parent => _browser?.Parent;
 
     /// <summary>
     /// 获取或设置浏览器的搜索类型。
