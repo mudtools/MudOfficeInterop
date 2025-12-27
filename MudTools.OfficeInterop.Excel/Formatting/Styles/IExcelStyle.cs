@@ -24,6 +24,7 @@ public interface IExcelStyle : IDisposable
     /// 获取样式所在的Application对象
     /// 对应 Style.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     #endregion

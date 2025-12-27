@@ -9,11 +9,13 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// Excel TextFrame 对象的二次封装接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelTextFrame : IDisposable
 {
     /// <summary>
     /// 获取或设置文本方向
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextOrientation Orientation { get; set; }
 
     /// <summary>

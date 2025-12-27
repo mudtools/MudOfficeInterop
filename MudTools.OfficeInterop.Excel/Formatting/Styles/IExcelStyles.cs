@@ -27,6 +27,7 @@ public interface IExcelStyles : IEnumerable<IExcelStyle?>, IDisposable
     /// 获取样式集合所在的Application对象
     /// 对应 Styles.Application 属性
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
