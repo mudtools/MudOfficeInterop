@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示自由形状中所有路径节点的集合，支持遍历、索引访问和节点操作。
 /// </summary>
-public interface IExcelShapeNodes : IEnumerable<IExcelShapeNode>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
+public interface IExcelShapeNodes : IEnumerable<IExcelShapeNode?>, IDisposable
 {
     /// <summary>
     /// 获取集合中节点的总数。
@@ -22,6 +23,7 @@ public interface IExcelShapeNodes : IEnumerable<IExcelShapeNode>, IDisposable
     /// </summary>
     /// <param name="index">节点索引（1-based）</param>
     /// <returns>对应的节点对象</returns>
+    [ComPropertyWrap(NeedConvert = true)]
     IExcelShapeNode? this[int index] { get; }
 
     /// <summary>
@@ -32,6 +34,7 @@ public interface IExcelShapeNodes : IEnumerable<IExcelShapeNode>, IDisposable
     /// <summary>
     /// 获取此集合所属的 Excel 应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = true, NeedConvert = true)]
     IExcelApplication? Application { get; }
 
     /// <summary>
@@ -49,7 +52,9 @@ public interface IExcelShapeNodes : IEnumerable<IExcelShapeNode>, IDisposable
     /// <returns>新创建的节点对象</returns>
     void Insert(
        int index,
+       [ComNamespace("MsCore")]
        MsoSegmentType segmentType,
+       [ComNamespace("MsCore")]
        MsoEditingType editingType,
        float x1, float y1,
        float x2 = 0, float y2 = 0,

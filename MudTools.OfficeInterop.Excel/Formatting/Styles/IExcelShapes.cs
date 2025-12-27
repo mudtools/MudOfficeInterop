@@ -193,7 +193,7 @@ public interface IExcelShapes : IEnumerable<IExcelShape?>, IDisposable
     /// <param name="x1">起始点的X坐标</param>
     /// <param name="y1">起始点的Y坐标</param>
     /// <returns>自由形状构建器实例</returns>
-    IExcelFreeformBuilder BuildFreeform([ComNamespace("MsCore")] MsoEditingType editingType, float x1, float y1);
+    IExcelFreeformBuilder? BuildFreeform([ComNamespace("MsCore")] MsoEditingType editingType, float x1, float y1);
 
 
     /// <summary>
@@ -252,8 +252,16 @@ public interface IExcelShapes : IEnumerable<IExcelShape?>, IDisposable
     /// </summary>
     /// <param name="index">形状的索引或名称</param>
     /// <returns>形状区域对象</returns>
-    [IgnoreGenerator]
-    IExcelShapeRange? Range(object index);
+    [MethodIndex, ReturnValueConvert]
+    IExcelShapeRange? Range(string index);
+
+    /// <summary>
+    /// 获取指定索引或名称的形状区域对象
+    /// </summary>
+    /// <param name="index">形状的索引或名称</param>
+    /// <returns>形状区域对象</returns>
+    [MethodIndex, ReturnValueConvert]
+    IExcelShapeRange? Range(int index);
 
 
     /// <summary>

@@ -176,6 +176,9 @@ public interface IExcelShape : IDisposable
     /// </summary>
     XlFormControl FormControlType { get; }
 
+    /// <summary>
+    /// 获取或设置形状是否已垂直翻转
+    /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
     bool VerticalFlip { get; }
 
@@ -266,33 +269,37 @@ public interface IExcelShape : IDisposable
     /// 获取形状的填充格式对象
     /// 对应 Shape.Fill 属性，用于设置形状的填充颜色、渐变、图案等外观特性
     /// </summary>
-    IExcelFillFormat Fill { get; }
+    IExcelFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取形状的线条格式对象
     /// 对应 Shape.Line 属性，用于设置形状轮廓线的颜色、粗细、样式等外观特性
     /// </summary>
-    IExcelLineFormat Line { get; }
+    IExcelLineFormat? Line { get; }
 
     /// <summary>
     /// 获取形状的文本框架对象
     /// 对应 Shape.TextFrame 属性，用于控制文本的边距、方向、自动调整等布局属性
     /// </summary>
-    IExcelTextFrame TextFrame { get; }
+    IExcelTextFrame? TextFrame { get; }
 
-    IExcelTextFrame2 TextFrame2 { get; }
+    /// <summary>
+    /// 获取形状的文本框架对象
+    /// 对应 Shape.TextFrame2 属性，用于控制文本的边距、方向、自动调整等布局属性
+    /// </summary>
+    IExcelTextFrame2? TextFrame2 { get; }
 
     /// <summary>
     /// 获取形状的阴影格式对象
     /// 对应 Shape.Shadow 属性，用于设置形状阴影的颜色、偏移量、模糊度等视觉效果
     /// </summary>
-    IExcelShadowFormat Shadow { get; }
+    IExcelShadowFormat? Shadow { get; }
 
     /// <summary>
     /// 获取形状的三维格式对象
     /// 对应 Shape.ThreeD 属性，用于设置形状的深度、透视、表面材质等三维效果
     /// </summary>
-    IExcelThreeDFormat ThreeD { get; }
+    IExcelThreeDFormat? ThreeD { get; }
     #endregion
 
 
@@ -427,6 +434,10 @@ public interface IExcelShape : IDisposable
     /// </summary>
     void PickUp();
 
+    /// <summary>
+    /// 将形状设置为默认属性
+    /// 对应 Shape.SetShapesDefaultProperties 方法
+    /// </summary>
     void SetShapesDefaultProperties();
 
     #endregion

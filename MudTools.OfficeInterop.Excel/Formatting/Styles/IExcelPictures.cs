@@ -10,9 +10,9 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Pictures 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Pictures 的安全访问和操作
 /// </summary>
-public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
+public interface IExcelPictures : IEnumerable<IExcelPicture?>, IDisposable
 {
-    #region 基础属性
     /// <summary>
     /// 获取当前图片集合中包含的图片总数。
     /// 若底层对象已被释放或无效，返回 0。
@@ -25,6 +25,7 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     /// </summary>
     /// <param name="index">图片索引，从 1 开始</param>
     /// <returns>对应的图片对象，或 null</returns>
+    [ComPropertyWrap(NeedConvert = true)]
     IExcelPicture? this[int index] { get; }
 
     /// <summary>
@@ -33,6 +34,7 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     /// </summary>
     /// <param name="name">图片名称</param>
     /// <returns>对应的图片对象，或 null</returns>
+    [ComPropertyWrap(NeedConvert = true)]
     IExcelPicture? this[string name] { get; }
 
     /// <summary>
@@ -42,244 +44,164 @@ public interface IExcelPictures : IEnumerable<IExcelPicture>, IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置图片集合是否启用（可交互）。
-    /// 若底层对象无效或值为 null，不执行设置操作。
+    /// 将图片集合中的所有图片置于所有其他对象的前面。
     /// </summary>
-    bool? Enabled { get; set; }
+    /// <returns>操作结果对象。</returns>
+    object? BringToFront();
 
     /// <summary>
-    /// 获取或设置图片集合是否可见。
-    /// 若底层对象无效或值为 null，不执行设置操作。
+    /// 复制图片集合中的所有图片。
     /// </summary>
-    bool? Visible { get; set; }
+    /// <returns>操作结果对象。</returns>
+    object? Copy();
 
     /// <summary>
-    /// 获取图片集合在 Z 轴上的层叠顺序（只读）。
-    /// 若底层对象无效，返回 null。
+    /// 将图片集合中的所有图片作为图片复制到剪贴板。
     /// </summary>
-    int? ZOrder { get; }
+    /// <param name="Appearance">指定图片的外观。</param>
+    /// <param name="Format">指定图片的格式。</param>
+    /// <returns>操作结果对象。</returns>
+    object? CopyPicture(XlPictureAppearance Appearance = XlPictureAppearance.xlPrinter, XlCopyPictureFormat Format = XlCopyPictureFormat.xlPicture);
 
     /// <summary>
-    /// 获取或设置图片集合是否锁定（防止用户修改）。
-    /// 若底层对象无效或值为 null，不执行设置操作。
+    /// 剪切图片集合中的所有图片。
     /// </summary>
-    bool? Locked { get; set; }
+    /// <returns>操作结果对象。</returns>
+    object? Cut();
 
     /// <summary>
-    /// 获取或设置图片集合是否显示阴影效果。
-    /// 若底层对象无效或值为 null，不执行设置操作。
+    /// 删除图片集合中的所有图片。
     /// </summary>
-    bool? Shadow { get; set; }
+    /// <returns>操作结果对象。</returns>
+    object? Delete();
 
     /// <summary>
-    /// 获取或设置图片集合是否随工作表打印。
-    /// 若底层对象无效或值为 null，不执行设置操作。
+    /// 复制图片集合中的所有图片并返回新对象。
     /// </summary>
-    bool? PrintObject { get; set; }
+    /// <returns>复制的对象。</returns>
+    object? Duplicate();
 
     /// <summary>
-    /// 获取或设置点击图片时执行的宏名称。
-    /// 若底层对象无效，不执行设置操作。
+    /// 获取或设置图片集合是否可用。
     /// </summary>
-    string? OnAction { get; set; }
+    bool Enabled { get; set; }
 
     /// <summary>
-    /// 获取或设置图片关联的公式（如链接到单元格）。
-    /// 若底层对象无效，不执行设置操作。
-    /// </summary>
-    string? Formula { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片相对于单元格的定位方式（自由浮动、随单元格移动等）。
-    /// 若底层对象无效，不执行设置操作。
-    /// </summary>
-    XlPlacement Placeholder { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片高度（单位：磅）。
-    /// 若底层对象无效，不执行设置操作；获取时若无效返回 0。
+    /// 获取或设置图片集合的高度（以磅为单位）。
     /// </summary>
     double Height { get; set; }
 
     /// <summary>
-    /// 获取或设置图片宽度（单位：磅）。
-    /// 若底层对象无效，不执行设置操作；获取时若无效返回 0。
-    /// </summary>
-    double Width { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片左边缘位置（单位：磅）。
-    /// 若底层对象无效，不执行设置操作；获取时若无效返回 0。
+    /// 获取或设置图片集合左边缘到其父对象左边缘的距离（以磅为单位）。
     /// </summary>
     double Left { get; set; }
 
     /// <summary>
-    /// 获取或设置图片上边缘位置（单位：磅）。
-    /// 若底层对象无效，不执行设置操作；获取时若无效返回 0。
+    /// 获取或设置图片集合是否被锁定。
+    /// </summary>
+    bool Locked { get; set; }
+
+    /// <summary>
+    /// 获取或设置当用户单击图片集合时要运行的过程的名称。
+    /// </summary>
+    string OnAction { get; set; }
+
+    /// <summary>
+    /// 获取或设置图片集合附加到其下方单元格的方式。
+    /// </summary>
+    object Placement { get; set; }
+
+    /// <summary>
+    /// 获取或设置打印包含图片集合的工作表时是否打印该集合。
+    /// </summary>
+    bool PrintObject { get; set; }
+
+    /// <summary>
+    /// 选择图片集合。
+    /// </summary>
+    /// <param name="replace">如果为True，则用当前选择替换当前选择；如果为False，则将当前选择扩展到包括以前选择的对象。</param>
+    /// <returns>操作结果对象。</returns>
+    object? Select(bool? replace = null);
+
+    /// <summary>
+    /// 将图片集合中的所有图片置于所有其他对象的后面。
+    /// </summary>
+    /// <returns>操作结果对象。</returns>
+    object? SendToBack();
+
+    /// <summary>
+    /// 获取或设置图片集合上边缘到其父对象上边缘的距离（以磅为单位）。
     /// </summary>
     double Top { get; set; }
 
     /// <summary>
-    /// 获取图片集合对应的 ShapeRange 对象（用于批量操作形状）。
-    /// 若底层对象无效，返回 null。
+    /// 获取或设置图片集合是否可见。
+    /// </summary>
+    bool Visible { get; set; }
+
+    /// <summary>
+    /// 获取或设置图片集合的宽度（以磅为单位）。
+    /// </summary>
+    double Width { get; set; }
+
+    /// <summary>
+    /// 获取图片集合在z-order中的位置。
+    /// </summary>
+    int ZOrder { get; }
+
+    /// <summary>
+    /// 获取表示图片集合中所有图片的形状范围。
     /// </summary>
     IExcelShapeRange? ShapeRange { get; }
 
     /// <summary>
-    /// 获取图片集合的边框样式对象。
-    /// 若底层对象无效，返回 null。
+    /// 获取图片集合的边框。
     /// </summary>
     IExcelBorder? Border { get; }
 
     /// <summary>
-    /// 获取图片集合的内部填充样式对象。
-    /// 若底层对象无效，返回 null。
+    /// 获取图片集合的内部区域。
     /// </summary>
     IExcelInterior? Interior { get; }
-    #endregion
-
-    #region 创建和添加
 
     /// <summary>
-    /// 从指定文件路径插入一张新图片。
-    /// 文件不存在或插入失败时返回 null，不抛出异常。
+    /// 获取或设置图片集合是否有阴影。
     /// </summary>
-    /// <param name="filename">图片文件的完整路径</param>
-    /// <param name="Converter">保留参数，通常传 null</param>
-    /// <returns>新创建的图片对象，或 null</returns>
-    IExcelPicture? Insert(string filename, object Converter);
+    bool Shadow { get; set; }
 
     /// <summary>
-    /// 在指定位置添加一个空图片占位符。
+    /// 获取或设置图片集合的公式。
     /// </summary>
-    /// <param name="Left">左边缘位置（单位：磅）</param>
-    /// <param name="Top">上边缘位置（单位：磅）</param>
-    /// <param name="Width">宽度（单位：磅）</param>
-    /// <param name="Height">高度（单位：磅）</param>
-    /// <returns>新创建的图片对象，或 null</returns>
+    string Formula { get; set; }
+
+    /// <summary>
+    /// 向集合中添加一张图片。
+    /// </summary>
+    /// <param name="Left">新图片的左边缘位置（以磅为单位）。</param>
+    /// <param name="Top">新图片的上边缘位置（以磅为单位）。</param>
+    /// <param name="Width">新图片的宽度（以磅为单位）。</param>
+    /// <param name="Height">新图片的高度（以磅为单位）。</param>
+    /// <returns>新添加的图片对象。</returns>
     IExcelPicture? Add(double Left, double Top, double Width, double Height);
 
     /// <summary>
-    /// 将当前图片集合中的所有图片组合成一个组对象。
+    /// 将图片集合中的所有图片组合成一个组。
     /// </summary>
-    /// <returns>组合后的组对象，或 null</returns>
+    /// <returns>表示组合对象的新对象。</returns>
     IExcelGroupObject? Group();
 
     /// <summary>
-    /// 从字节数组插入图片（支持内存中图片数据）。
-    /// 自动创建并清理临时文件，失败时返回 null，不抛出异常。
+    /// 从文件中插入一张图片。
     /// </summary>
-    /// <param name="imageBytes">图片的字节数组</param>
-    /// <param name="imageFormat">图片格式扩展名，如 "png"、"jpg"（默认 "png"）</param>
-    /// <param name="left">左边缘位置（单位：磅，默认 0）</param>
-    /// <param name="top">上边缘位置（单位：磅，默认 0）</param>
-    /// <param name="width">宽度（单位：磅，默认 -1 表示原始尺寸）</param>
-    /// <param name="height">高度（单位：磅，默认 -1 表示原始尺寸）</param>
-    /// <returns>新创建的图片对象，或 null</returns>
-    IExcelPicture? AddFromBytes(byte[] imageBytes, string imageFormat = "png",
-                              double left = 0, double top = 0, double width = -1, double height = -1);
-
-    #endregion
-
-    #region 查找和筛选
+    /// <param name="Filename">要插入的图片的文件名。</param>
+    /// <param name="Converter">用于转换图片的转换器。</param>
+    /// <returns>新插入的图片对象。</returns>
+    IExcelPicture? Insert(string Filename, object? Converter = null);
 
     /// <summary>
-    /// 根据名称模糊匹配查找图片（支持包含关系）。
+    /// 从剪贴板粘贴一张图片。
     /// </summary>
-    /// <param name="name">要匹配的名称片段</param>
-    /// <returns>匹配的图片数组，无匹配时返回空数组</returns>
-    IExcelPicture[] FindByName(string name);
-
-    /// <summary>
-    /// 根据位置查找图片（支持容差）。
-    /// </summary>
-    /// <param name="left">目标左边缘位置</param>
-    /// <param name="top">目标上边缘位置</param>
-    /// <param name="tolerance">允许的位置误差（默认 10 磅）</param>
-    /// <returns>匹配的图片数组，无匹配时返回空数组</returns>
-    IExcelPicture[] FindByPosition(double left, double top, double tolerance = 10);
-
-    /// <summary>
-    /// 根据尺寸查找图片（支持容差）。
-    /// </summary>
-    /// <param name="width">目标宽度</param>
-    /// <param name="height">目标高度</param>
-    /// <param name="tolerance">允许的尺寸误差（默认 10 磅）</param>
-    /// <returns>匹配的图片数组，无匹配时返回空数组</returns>
-    IExcelPicture[] FindBySize(double width, double height, double tolerance = 10);
-
-    /// <summary>
-    /// 获取所有当前可见的图片。
-    /// </summary>
-    /// <returns>可见图片数组，无可见图片时返回空数组</returns>
-    IExcelPicture[] GetVisiblePictures();
-
-    #endregion
-
-    #region 操作方法
-
-    /// <summary>
-    /// 删除集合中所有图片（从后往前删除，避免索引错乱）。
-    /// 删除过程中发生异常会被记录但不中断流程。
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 删除指定索引位置的图片。
-    /// 索引无效或删除失败时静默忽略，不抛出异常。
-    /// </summary>
-    /// <param name="index">要删除的图片索引（从 1 开始）</param>
-    void Delete(int index);
-
-    /// <summary>
-    /// 删除指定的图片对象（当前实现可能存在问题，建议使用索引或名称删除）。
-    /// </summary>
-    /// <param name="picture">要删除的图片对象</param>
-    void Delete(IExcelPicture picture);
-
-    /// <summary>
-    /// 批量删除多个指定索引的图片（按降序删除避免索引漂移）。
-    /// </summary>
-    /// <param name="indices">要删除的图片索引数组</param>
-    void DeleteRange(int[] indices);
-
-    /// <summary>
-    /// 将所有图片置于最上层（Z-Order 最前）。
-    /// 操作失败时记录警告，不抛出异常。
-    /// </summary>
-    void BringToFront();
-
-    /// <summary>
-    /// 将所有图片置于最下层（Z-Order 最后）。
-    /// 操作失败时记录警告，不抛出异常。
-    /// </summary>
-    void SendToBack();
-
-    /// <summary>
-    /// 复制当前选中的图片到剪贴板。
-    /// 操作失败时记录警告，不抛出异常。
-    /// </summary>
-    void Copy();
-
-    /// <summary>
-    /// 剪切当前选中的图片到剪贴板。
-    /// 操作失败时记录警告，不抛出异常。
-    /// </summary>
-    void Cut();
-
-    /// <summary>
-    /// 以指定外观和格式复制图片到剪贴板（常用于粘贴为图片而非对象）。
-    /// </summary>
-    /// <param name="Appearance">复制时的显示外观（默认打印机效果）</param>
-    /// <param name="Format">复制格式（默认位图图片）</param>
-    void CopyPicture(XlPictureAppearance Appearance = XlPictureAppearance.xlPrinter,
-                     XlCopyPictureFormat Format = XlCopyPictureFormat.xlPicture);
-
-    /// <summary>
-    /// 复制当前图片并粘贴到同一位置（创建副本）。
-    /// 操作失败时记录警告，不抛出异常。
-    /// </summary>
-    void Duplicate();
-
-    #endregion
+    /// <param name="Link">如果为True，则图片将链接到其源文件。</param>
+    /// <returns>新粘贴的图片对象。</returns>
+    IExcelPicture? Paste(bool? Link = null);
 }
