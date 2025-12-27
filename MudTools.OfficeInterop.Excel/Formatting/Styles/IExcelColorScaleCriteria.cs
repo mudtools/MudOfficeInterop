@@ -11,8 +11,10 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ColorScaleCriteria 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.ColorScaleCriteria 的安全访问和操作
 /// </summary>
-public interface IExcelColorScaleCriteria : IEnumerable<IExcelColorScaleCriterion>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelColorScaleCriteria : IEnumerable<IExcelColorScaleCriterion?>, IDisposable
 {
+
     #region 基础属性
     /// <summary>
     /// 获取颜色刻度条件集合中的条件数量
@@ -27,5 +29,13 @@ public interface IExcelColorScaleCriteria : IEnumerable<IExcelColorScaleCriterio
     /// <param name="index">条件索引（从1开始）</param>
     /// <returns>颜色刻度条件对象</returns>
     IExcelColorScaleCriterion? this[int index] { get; }
+
+    /// <summary>
+    /// 获取指定索引的颜色刻度条件对象
+    /// 索引从1开始
+    /// </summary>
+    /// <param name="index">条件索引（从1开始）</param>
+    /// <returns>颜色刻度条件对象</returns>
+    IExcelColorScaleCriterion? this[string index] { get; }
     #endregion
 }

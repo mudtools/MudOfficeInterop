@@ -38,6 +38,6 @@ public interface IExcelColorScaleCriterion : IDisposable
     /// 获取或设置颜色刻度条件对应的颜色
     /// 对应 ColorScaleCriterion.FormatColor 属性 或相关颜色属性
     /// </summary>
-    IExcelFormatColor FormatColor { get; }
+    IExcelFormatColor? FormatColor { get; }
     #endregion
 }
