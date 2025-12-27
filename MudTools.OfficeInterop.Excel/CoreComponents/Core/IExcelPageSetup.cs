@@ -11,356 +11,246 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel PageSetup 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.PageSetup 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelPageSetup : IDisposable
 {
-    #region 页面设置
-
     /// <summary>
-    /// 获取工作表中所有页面的集合
+    /// 获取表示Excel应用程序的Application对象。
     /// </summary>
-    IExcelPages? Pages { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取文档的偶数页设置
+    /// 获取指定对象的父对象。
     /// </summary>
-    IExcelPage? EvenPage { get; }
+    object? Parent { get; }
 
     /// <summary>
-    /// 获取文档的首页设置
-    /// </summary>
-    IExcelPage? FirstPage { get; }
-
-
-    /// <summary>
-    /// 获取页面页眉中部的图片对象
-    /// 对应 PageSetup.CenterHeaderPicture 属性
-    /// </summary>
-    IExcelGraphic? CenterHeaderPicture { get; }
-
-    /// <summary>
-    /// 获取页面页脚中部的图片对象
-    /// 对应 PageSetup.CenterFooterPicture 属性
-    /// </summary>
-    IExcelGraphic CenterFooterPicture { get; }
-
-    /// <summary>
-    /// 获取页面页眉左侧的图片对象
-    /// 对应 PageSetup.LeftHeaderPicture 属性
-    /// </summary>
-    IExcelGraphic LeftHeaderPicture { get; }
-
-    /// <summary>
-    /// 获取页面页脚左侧的图片对象
-    /// 对应 PageSetup.LeftFooterPicture 属性
-    /// </summary>
-    IExcelGraphic LeftFooterPicture { get; }
-
-    /// <summary>
-    /// 获取页面页眉右侧的图片对象
-    /// 对应 PageSetup.RightHeaderPicture 属性
-    /// </summary>
-    IExcelGraphic RightHeaderPicture { get; }
-
-    /// <summary>
-    /// 获取页面页脚右侧的图片对象
-    /// 对应 PageSetup.RightFooterPicture 属性
-    /// </summary>
-    IExcelGraphic RightFooterPicture { get; }
-
-    /// <summary>
-    /// 获取或设置页面方向（纵向或横向）
-    /// 对应 PageSetup.Orientation 属性
-    /// </summary>
-    XlPageOrientation Orientation { get; set; }
-
-    /// <summary>
-    /// 获取或设置纸张大小
-    /// 对应 PageSetup.PaperSize 属性
-    /// </summary>
-    XlPaperSize PaperSize { get; set; }
-
-    /// <summary>
-    /// 获取或设置页面缩放比例（10-400）
-    /// 对应 PageSetup.Zoom 属性
-    /// </summary>
-    int Zoom { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否适合页面宽度
-    /// 对应 PageSetup.FitToPagesWide 属性
-    /// </summary>
-    int FitToPagesWide { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否适合页面高度
-    /// 对应 PageSetup.FitToPagesTall 属性
-    /// </summary>
-    int FitToPagesTall { get; set; }
-
-
-    /// <summary>
-    /// 获取或设置是否为黑白打印
-    /// 对应 PageSetup.BlackAndWhite 属性
+    /// 获取或设置一个布尔值，表示文档元素是否以黑白方式打印。
     /// </summary>
     bool BlackAndWhite { get; set; }
 
     /// <summary>
-    /// 获取或设置是否为单色打印
-    /// 对应 PageSetup.PrintComments 属性
-    /// </summary>
-    XlPrintLocation PrintComments { get; set; }
-
-    /// <summary>
-    /// 获取或设置打印错误处理方式
-    /// 对应 PageSetup.PrintErrors 属性
-    /// </summary>
-    XlPrintErrors PrintErrors { get; set; }
-
-    #endregion
-
-    #region 页边距设置
-
-    /// <summary>
-    /// 获取或设置左边距（英寸）
-    /// 对应 PageSetup.LeftMargin 属性
-    /// </summary>
-    double LeftMargin { get; set; }
-
-    /// <summary>
-    /// 获取或设置右边距（英寸）
-    /// 对应 PageSetup.RightMargin 属性
-    /// </summary>
-    double RightMargin { get; set; }
-
-    /// <summary>
-    /// 获取或设置上边距（英寸）
-    /// 对应 PageSetup.TopMargin 属性
-    /// </summary>
-    double TopMargin { get; set; }
-
-    /// <summary>
-    /// 获取或设置下边距（英寸）
-    /// 对应 PageSetup.BottomMargin 属性
+    /// 获取或设置底边距的大小（以磅为单位）。
     /// </summary>
     double BottomMargin { get; set; }
 
     /// <summary>
-    /// 获取或设置页眉边距（英寸）
-    /// 对应 PageSetup.HeaderMargin 属性
+    /// 获取或设置页脚的中间部分。
     /// </summary>
-    double HeaderMargin { get; set; }
+    string CenterFooter { get; set; }
 
     /// <summary>
-    /// 获取或设置页脚边距（英寸）
-    /// 对应 PageSetup.FooterMargin 属性
+    /// 获取或设置页眉的中间部分。
     /// </summary>
-    double FooterMargin { get; set; }
+    string CenterHeader { get; set; }
 
     /// <summary>
-    /// 获取或设置居中方式（水平居中）
-    /// 对应 PageSetup.CenterHorizontally 属性
+    /// 获取或设置一个布尔值，表示打印时工作表是否在页面上水平居中。
     /// </summary>
     bool CenterHorizontally { get; set; }
 
     /// <summary>
-    /// 获取或设置居中方式（垂直居中）
-    /// 对应 PageSetup.CenterVertically 属性
+    /// 获取或设置一个布尔值，表示打印时工作表是否在页面上垂直居中。
     /// </summary>
     bool CenterVertically { get; set; }
 
-    #endregion
-
-    #region 页眉页脚设置
-
     /// <summary>
-    /// 获取或设置左页眉内容
-    /// 对应 PageSetup.LeftHeader 属性
+    /// 获取或设置图表缩放以适应页面的方式。
     /// </summary>
-    string? LeftHeader { get; set; }
+    XlObjectSize ChartSize { get; set; }
 
     /// <summary>
-    /// 获取或设置中页眉内容
-    /// 对应 PageSetup.CenterHeader 属性
-    /// </summary>
-    string? CenterHeader { get; set; }
-
-    /// <summary>
-    /// 获取或设置右页眉内容
-    /// 对应 PageSetup.RightHeader 属性
-    /// </summary>
-    string? RightHeader { get; set; }
-
-    /// <summary>
-    /// 获取或设置左页脚内容
-    /// 对应 PageSetup.LeftFooter 属性
-    /// </summary>
-    string? LeftFooter { get; set; }
-
-    /// <summary>
-    /// 获取或设置中页脚内容
-    /// 对应 PageSetup.CenterFooter 属性
-    /// </summary>
-    string? CenterFooter { get; set; }
-
-    /// <summary>
-    /// 获取或设置右页脚内容
-    /// 对应 PageSetup.RightFooter 属性
-    /// </summary>
-    string? RightFooter { get; set; }
-
-    #endregion
-
-    #region 打印选项
-    /// <summary>
-    /// 获取或设置一个值，该值指示是否为奇数页和偶数页使用不同的页眉和页脚
-    /// 对应 PageSetup.OddAndEvenPagesHeaderFooter 属性
-    /// </summary>
-    bool OddAndEvenPagesHeaderFooter { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示页眉和页脚是否随文档缩放
-    /// 对应 PageSetup.ScaleWithDocHeaderFooter 属性
-    /// </summary>
-    bool ScaleWithDocHeaderFooter { get; set; }
-
-    /// <summary>
-    /// 获取或设置一个值，该值指示页眉和页脚是否与页边距对齐
-    /// 对应 PageSetup.AlignMarginsHeaderFooter 属性
-    /// </summary>
-    bool AlignMarginsHeaderFooter { get; set; }
-
-    /// <summary>
-    /// 获取或设置打印顺序
-    /// 对应 PageSetup.Order 属性
-    /// </summary>
-    XlOrder Order { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否以草稿模式打印
-    /// 对应 PageSetup.Draft 属性
+    /// 获取或设置一个布尔值，表示工作表是否在没有图形的情况下打印。
     /// </summary>
     bool Draft { get; set; }
-    /// <summary>
-    /// 获取或设置打印质量
-    /// </summary>
-    object? PrintQuality { get; set; }
 
     /// <summary>
-    /// 获取或设置是否打印网格线
-    /// 对应 PageSetup.PrintGridlines 属性
-    /// </summary>
-    bool PrintGridlines { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否打印行列标题
-    /// 对应 PageSetup.PrintHeadings 属性
-    /// </summary>
-    bool PrintHeadings { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否打印注释
-    /// 对应 PageSetup.PrintNotes 属性
-    /// </summary>
-    bool PrintNotes { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否打印标题行
-    /// 对应 PageSetup.PrintTitleRows 属性
-    /// </summary>
-    string PrintTitleRows { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否打印标题列
-    /// 对应 PageSetup.PrintTitleColumns 属性
-    /// </summary>
-    string PrintTitleColumns { get; set; }
-
-    /// <summary>
-    /// 获取或设置打印区域
-    /// 对应 PageSetup.PrintArea 属性
-    /// </summary>
-    string PrintArea { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否从第一页开始编号
-    /// 对应 PageSetup.FirstPageNumber 属性
+    /// 获取或设置打印此工作表时使用的起始页码。如果为xlAutomatic，则Excel自动选择起始页码。默认为xlAutomatic。
     /// </summary>
     int FirstPageNumber { get; set; }
 
     /// <summary>
-    /// 获取或设置是否不同奇偶页页眉页脚
-    /// 对应 PageSetup.DifferentFirstPageHeaderFooter 属性
+    /// 获取或设置打印时工作表缩放的高度页数。仅适用于工作表。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    int FitToPagesTall { get; set; }
+
+    /// <summary>
+    /// 获取或设置打印时工作表缩放的宽度页数。仅适用于工作表。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    int FitToPagesWide { get; set; }
+
+    /// <summary>
+    /// 获取或设置从页面底部到页脚的距离（以磅为单位）。
+    /// </summary>
+    double FooterMargin { get; set; }
+
+    /// <summary>
+    /// 获取或设置从页面顶部到页眉的距离（以磅为单位）。
+    /// </summary>
+    double HeaderMargin { get; set; }
+
+    /// <summary>
+    /// 获取或设置页脚的左侧部分。
+    /// </summary>
+    string LeftFooter { get; set; }
+
+    /// <summary>
+    /// 获取或设置页眉的左侧部分。
+    /// </summary>
+    string LeftHeader { get; set; }
+
+    /// <summary>
+    /// 获取或设置左边距的大小（以磅为单位）。
+    /// </summary>
+    double LeftMargin { get; set; }
+
+    /// <summary>
+    /// 获取或设置打印大型工作表时Excel使用的页码顺序。
+    /// </summary>
+    XlOrder Order { get; set; }
+
+    /// <summary>
+    /// 获取或设置打印方向：纵向或横向。
+    /// </summary>
+    XlPageOrientation Orientation { get; set; }
+
+    /// <summary>
+    /// 获取或设置纸张大小。
+    /// </summary>
+    XlPaperSize PaperSize { get; set; }
+
+    /// <summary>
+    /// 获取或设置要打印的区域，使用宏语言中的A1样式引用字符串表示。
+    /// </summary>
+    string PrintArea { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示是否在页面上打印单元格网格线。仅适用于工作表。
+    /// </summary>
+    bool PrintGridlines { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示是否在打印时包含行号和列标。仅适用于工作表。
+    /// </summary>
+    bool PrintHeadings { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示是否将单元格批注作为尾注与工作表一起打印。仅适用于工作表。
+    /// </summary>
+    bool PrintNotes { get; set; }
+
+    /// <summary>
+    /// 获取或设置要在每页左侧重复的单元格所在的列，使用宏语言中的A1样式表示法字符串。
+    /// </summary>
+    string PrintTitleColumns { get; set; }
+
+    /// <summary>
+    /// 获取或设置要在每页顶部重复的单元格所在的行，使用宏语言中的A1样式表示法字符串。
+    /// </summary>
+    string PrintTitleRows { get; set; }
+
+    /// <summary>
+    /// 获取或设置页脚的右侧部分。
+    /// </summary>
+    string RightFooter { get; set; }
+
+    /// <summary>
+    /// 获取或设置页眉的右侧部分。
+    /// </summary>
+    string RightHeader { get; set; }
+
+    /// <summary>
+    /// 获取或设置右边距的大小（以磅为单位）。
+    /// </summary>
+    double RightMargin { get; set; }
+
+    /// <summary>
+    /// 获取或设置上边距的大小（以磅为单位）。
+    /// </summary>
+    double TopMargin { get; set; }
+
+    /// <summary>
+    /// 获取或设置Excel缩放工作表以进行打印的百分比（介于10%到400%之间）。仅适用于工作表。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    int Zoom { get; set; }
+
+    /// <summary>
+    /// 获取或设置批注与工作表一起打印的方式。
+    /// </summary>
+    XlPrintLocation PrintComments { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个XlPrintErrors常量，指定显示的打印错误类型。此功能允许用户在打印工作表时抑制错误值的显示。
+    /// </summary>
+    XlPrintErrors PrintErrors { get; set; }
+
+    /// <summary>
+    /// 获取表示页眉中间部分图片的Graphic对象。用于设置图片属性。
+    /// </summary>
+    IExcelGraphic? CenterHeaderPicture { get; }
+
+    /// <summary>
+    /// 获取表示页脚中间部分图片的Graphic对象。用于设置图片属性。
+    /// </summary>
+    IExcelGraphic? CenterFooterPicture { get; }
+
+    /// <summary>
+    /// 获取表示页眉左侧部分图片的Graphic对象。用于设置图片属性。
+    /// </summary>
+    IExcelGraphic? LeftHeaderPicture { get; }
+
+    /// <summary>
+    /// 获取表示页脚左侧部分图片的Graphic对象。用于设置图片属性。
+    /// </summary>
+    IExcelGraphic? LeftFooterPicture { get; }
+
+    /// <summary>
+    /// 获取表示页眉右侧部分图片的Graphic对象。用于设置图片属性。
+    /// </summary>
+    IExcelGraphic? RightHeaderPicture { get; }
+
+    /// <summary>
+    /// 获取表示页脚右侧部分图片的Graphic对象。用于设置图片属性。
+    /// </summary>
+    IExcelGraphic? RightFooterPicture { get; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示指定的PageSetup对象是否为奇数页和偶数页使用不同的页眉和页脚。
+    /// </summary>
+    bool OddAndEvenPagesHeaderFooter { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个布尔值，表示第一页是否使用不同的页眉或页脚。
     /// </summary>
     bool DifferentFirstPageHeaderFooter { get; set; }
 
-    #endregion
-
-    #region 页面编号和日期
+    /// <summary>
+    /// 获取或设置一个布尔值，表示当文档大小更改时，页眉和页脚是否应随文档缩放。
+    /// </summary>
+    bool ScaleWithDocHeaderFooter { get; set; }
 
     /// <summary>
-    /// 获取或设置是否显示页码
+    /// 获取或设置一个布尔值，表示Excel是否将页眉和页脚与页面设置选项中设置的边距对齐。
     /// </summary>
-    bool ShowPageNumbers { get; set; }
+    bool AlignMarginsHeaderFooter { get; set; }
 
     /// <summary>
-    /// 获取或设置是否显示日期
+    /// 获取或设置Pages集合中的页面计数或项目编号。
     /// </summary>
-    bool ShowDate { get; set; }
+    IExcelPages? Pages { get; }
 
     /// <summary>
-    /// 获取或设置是否显示时间
+    /// 获取或设置工作簿或节中偶数页的文本对齐方式。
     /// </summary>
-    bool ShowTime { get; set; }
+    IExcelPage? EvenPage { get; }
 
     /// <summary>
-    /// 获取或设置是否显示文件名
+    /// 获取或设置工作簿或节中第一页的文本对齐方式。
     /// </summary>
-    bool ShowFileName { get; set; }
+    IExcelPage? FirstPage { get; }
 
-    /// <summary>
-    /// 获取或设置是否显示工作表名
-    /// </summary>
-    bool ShowSheetName { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否显示路径
-    /// </summary>
-    bool ShowPath { get; set; }
-
-    #endregion
-
-    #region 操作方法
-
-    /// <summary>
-    /// 应用页面设置
-    /// </summary>
-    void Apply();
-
-    /// <summary>
-    /// 重置页面设置为默认值
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 复制页面设置
-    /// </summary>
-    /// <param name="source">源页面设置对象</param>
-    void Copy(IExcelPageSetup source);
-
-    /// <summary>
-    /// 获取标准页眉页脚代码
-    /// </summary>
-    /// <param name="type">页眉页脚类型</param>
-    /// <returns>标准代码</returns>
-    string GetStandardHeaderFooterCode(int type);
-
-    /// <summary>
-    /// 设置自定义页眉页脚
-    /// </summary>
-    /// <param name="section">区域（左、中、右）</param>
-    /// <param name="position">位置（页眉、页脚）</param>
-    /// <param name="text">文本内容</param>
-    void SetCustomHeaderFooter(int section, int position, string text);
-
-    #endregion
 }
