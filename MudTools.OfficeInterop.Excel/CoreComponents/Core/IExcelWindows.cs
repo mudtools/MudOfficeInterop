@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel 窗口集合接口，用于操作 Excel 窗口集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelWindows : IDisposable, IEnumerable<IExcelWindow>
+public interface IExcelWindows : IDisposable, IOfficeObject<IExcelWindows>, IEnumerable<IExcelWindow>
 {
     /// <summary>
     /// 获取窗口数量
