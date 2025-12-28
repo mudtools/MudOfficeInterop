@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示Excel受保护视图窗口的接口，提供对受保护视图窗口的各种操作和属性访问
 /// </summary>
-public interface IExcelProtectedViewWindow : IExcelCommonWindow, IDisposable
+[ComObjectWrap(ComNamespace = "MsExcel")]
+public interface IExcelProtectedViewWindow : IOfficeObject<IExcelProtectedViewWindow>, IExcelCommonWindow, IDisposable
 {
     /// <summary>
     /// 获取与受保护视图窗口关联的工作簿对象
@@ -36,34 +37,5 @@ public interface IExcelProtectedViewWindow : IExcelCommonWindow, IDisposable
     /// 编辑受保护视图中的工作簿
     /// </summary>
     /// <returns>编辑后的工作簿对象</returns>
-    IExcelWorkbook Edit();
-
-    /// <summary>
-    /// 最大化受保护视图窗口
-    /// </summary>
-    void Maximize();
-
-    /// <summary>
-    /// 最小化受保护视图窗口
-    /// </summary>
-    void Minimize();
-
-    /// <summary>
-    /// 恢复受保护视图窗口到正常大小
-    /// </summary>
-    void Restore();
-
-    /// <summary>
-    /// 移动受保护视图窗口到指定位置
-    /// </summary>
-    /// <param name="left">新左侧位置</param>
-    /// <param name="top">新顶部位置</param>
-    void Move(int left, int top);
-
-    /// <summary>
-    /// 调整受保护视图窗口大小
-    /// </summary>
-    /// <param name="width">新宽度</param>
-    /// <param name="height">新高度</param>
-    void Resize(int width, int height);
+    IExcelWorkbook? Edit(string? writeResPassword = null, object? UpdateLinks = null);
 }

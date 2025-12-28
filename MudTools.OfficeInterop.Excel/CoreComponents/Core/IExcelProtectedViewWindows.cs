@@ -12,8 +12,20 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel受保护视图窗口集合的接口
 /// 继承自IDisposable和IEnumerable接口，支持对受保护视图窗口进行枚举和资源释放
 /// </summary>
-public interface IExcelProtectedViewWindows : IDisposable, IEnumerable<IExcelProtectedViewWindow>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelProtectedViewWindows : IDisposable, IOfficeObject<IExcelProtectedViewWindows>, IEnumerable<IExcelProtectedViewWindow?>
 {
+    /// <summary>
+    /// 获取对象的父对象（通常是 Application）
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取对象所在的Application对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取受保护视图窗口集合中的窗口数量
     /// </summary>
@@ -38,56 +50,11 @@ public interface IExcelProtectedViewWindows : IDisposable, IEnumerable<IExcelPro
     /// </summary>
     /// <param name="filename">文件路径</param>
     /// <param name="password">密码</param>
-    /// <param name="readOnlyRecommended">是否推荐只读</param>
-    /// <param name="editable">是否可编辑</param>
+    /// <param name="addToMru"></param>
+    /// <param name="repairMode"></param>
     /// <returns>受保护视图窗口对象</returns>
     IExcelProtectedViewWindow? Open(string filename, string? password = null,
-                                  bool readOnlyRecommended = false, bool editable = false);
-
-    /// <summary>
-    /// 根据文件名查找受保护视图窗口
-    /// </summary>
-    /// <param name="filename">文件路径</param>
-    /// <returns>受保护视图窗口对象</returns>
-    IExcelProtectedViewWindow? FindByFilename(string filename);
-
-    /// <summary>
-    /// 根据窗口标题查找受保护视图窗口
-    /// </summary>
-    /// <param name="caption">窗口标题</param>
-    /// <returns>受保护视图窗口对象</returns>
-    IExcelProtectedViewWindow? FindByCaption(string caption);
+                                  bool? addToMru = false, bool? repairMode = false);
 
 
-    /// <summary>
-    /// 获取父级应用程序
-    /// </summary>
-    IExcelApplication? Parent { get; }
-
-    /// <summary>
-    /// 获取活动的受保护视图窗口
-    /// </summary>
-    IExcelProtectedViewWindow? ActiveProtectedViewWindow { get; }
-
-    /// <summary>
-    /// 获取可见的受保护视图窗口
-    /// </summary>
-    IEnumerable<IExcelProtectedViewWindow> VisibleWindows { get; }
-
-    /// <summary>
-    /// 获取最大化状态的受保护视图窗口
-    /// </summary>
-    IEnumerable<IExcelProtectedViewWindow> MaximizedWindows { get; }
-
-    /// <summary>
-    /// 获取最小化状态的受保护视图窗口
-    /// </summary>
-    IEnumerable<IExcelProtectedViewWindow> MinimizedWindows { get; }
-
-    /// <summary>
-    /// 获取指定状态的窗口
-    /// </summary>
-    /// <param name="state">窗口状态</param>
-    /// <returns>受保护视图窗口枚举</returns>
-    IEnumerable<IExcelProtectedViewWindow> GetWindowsByState(XlProtectedViewWindowState state);
 }

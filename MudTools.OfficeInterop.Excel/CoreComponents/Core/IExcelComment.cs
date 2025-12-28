@@ -14,14 +14,12 @@ namespace MudTools.OfficeInterop.Excel;
 public interface IExcelComment : IDisposable
 {
     /// <summary>
-    /// 获取单元格格式对象的父对象（通常是 Application）
-    /// 对应 CellFormat.Parent 属性
+    /// 获取对象的父对象（通常是 Application）
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取单元格格式对象所在的Application对象
-    /// 对应 CellFormat.Application 属性
+    /// 获取对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
