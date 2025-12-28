@@ -6,13 +6,12 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel;
-// =============================================
-// 接口定义：查询表集合（QueryTables）
-// =============================================
+
 /// <summary>
 /// 表示工作表中所有查询表的集合，支持遍历和索引访问。
 /// </summary>
-public interface IExcelQueryTables : IEnumerable<IExcelQueryTable>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelQueryTables : IEnumerable<IExcelQueryTable?>, IOfficeObject<IExcelQueryTables>, IDisposable
 {
     /// <summary>
     /// 获取集合中查询表的总数。
@@ -43,5 +42,5 @@ public interface IExcelQueryTables : IEnumerable<IExcelQueryTable>, IDisposable
     /// <param name="destination">目标范围（数据导入位置）</param>
     /// <param name="sql">可选 SQL 查询语句</param>
     /// <returns>新创建的查询表对象</returns>
-    IExcelQueryTable? Add(object connection, IExcelRange destination, object sql = null);
+    IExcelQueryTable? Add(object connection, IExcelRange destination, string? sql = null);
 }
