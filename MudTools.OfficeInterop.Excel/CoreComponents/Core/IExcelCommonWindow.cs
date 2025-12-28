@@ -15,6 +15,7 @@ public interface IExcelCommonWindow
     /// <summary>
     /// 获取窗口标题
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string Caption { get; set; }
 
     /// <summary>
