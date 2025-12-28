@@ -418,10 +418,6 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
     /// <inheritdoc/>
     public abstract void Calculate();
 
-
-    /// <inheritdoc/>
-    public abstract void RefreshAll();
-
     public abstract IExcelWorksheet? AddSheet(IExcelComSheet? before = null, IExcelComSheet? after = null, int? count = 1);
 
     /// <inheritdoc/>

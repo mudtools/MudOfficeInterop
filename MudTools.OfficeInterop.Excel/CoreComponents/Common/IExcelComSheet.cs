@@ -15,6 +15,7 @@ public interface IExcelComSheet : IDisposable
     /// <summary>
     /// 获取图表所在的 Excel Application 对象
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
@@ -45,6 +46,7 @@ public interface IExcelComSheet : IDisposable
     /// <summary>
     ///  获取工作表所在的父对象名字。
     /// </summary>
+    [IgnoreGenerator]
     string? ParentName { get; }
 
 
@@ -52,11 +54,13 @@ public interface IExcelComSheet : IDisposable
     /// 获取工作表所在的父对象（通常是工作簿）
     /// 对应 Worksheet.Parent 属性
     /// </summary>
+    [IgnoreGenerator]
     IExcelWorkbook? ParentWorkbook { get; }
 
     /// <summary>
     /// 获取图表是否被保护
     /// </summary>
+    [IgnoreGenerator]
     bool IsProtected { get; }
 
 
@@ -68,6 +72,7 @@ public interface IExcelComSheet : IDisposable
     /// <summary>
     /// 获取或设置工作表是否可见
     /// </summary>
+    [IgnoreGenerator]
     bool IsVisible { get; set; }
 
     /// <summary>
@@ -124,19 +129,19 @@ public interface IExcelComSheet : IDisposable
     void Copy();
 
     /// <summary>
-    /// 复制工作表
-    /// 对应 Worksheet.Copy 方法
+    /// 将工作表复制到工作簿中的另一个位置。
     /// </summary>
-    /// <param name="before">复制到指定工作表之前</param>
-    /// <param name="after">复制到指定工作表之后</param>
+    /// <param name="before">可选项。放置复制工作表之前的工作表。如果指定了 after 参数，则不能指定此参数。</param>
+    /// <param name="after">可选项。放置复制工作表之后的工作表。如果指定了 before 参数，则不能指定此参数。</param>
+    [IgnoreGenerator]
     void Copy(IExcelComSheet? before = null, IExcelComSheet? after = null);
 
     /// <summary>
-    /// 移动工作表
-    /// 对应 Worksheet.Move 方法
+    /// 将工作表移动到工作簿中的另一个位置。
     /// </summary>
-    /// <param name="before">移动到指定工作表之前</param>
-    /// <param name="after">移动到指定工作表之后</param>
+    /// <param name="before">可选项。放置移动工作表之前的工作表。如果指定了 after 参数，则不能指定此参数。</param>
+    /// <param name="after">可选项。放置移动工作表之后的工作表。如果指定了 before 参数，则不能指定此参数。</param>
+    [IgnoreGenerator]
     void Move(IExcelComSheet? before = null, IExcelComSheet? after = null);
 
     /// <summary>
@@ -147,28 +152,10 @@ public interface IExcelComSheet : IDisposable
     object? OLEObjects(int? index = null);
 
     /// <summary>
-    /// 清除图表内容
+    /// 取消对工作表或工作簿的保护。如果工作表或工作簿未受保护，则此方法无效。
     /// </summary>
-    void Clear();
-
-
-    /// <summary>
-    /// 清除工作表内容和格式
-    /// </summary>
-    void ClearAll();
-
-
-    /// <summary>
-    /// 清除工作表内容
-    /// </summary>
-    void ClearContents();
-
-    /// <summary>
-    /// 取消保护工作表
-    /// 对应 Worksheet.Unprotect 方法
-    /// </summary>
-    /// <param name="password">保护密码</param>
-    void Unprotect(string password = "");
+    /// <param name="password">可选项。区分大小写的字符串，用于取消保护工作表或工作簿的密码。如果工作表或工作簿未使用密码保护，则忽略此参数。</param>
+    void Unprotect(string? password = null);
 
     /// <summary>
     /// 保护工作表

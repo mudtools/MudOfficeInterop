@@ -673,33 +673,6 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
     }
 
     /// <summary>
-    /// 刷新所有工作表
-    /// </summary>
-    public override void RefreshAll()
-    {
-        if (_worksheets == null) return;
-
-        foreach (var sheet in this)
-        {
-            if (sheet is IExcelWorksheet ws)
-            {
-                try
-                {
-                    ws.Recalculate();
-                }
-                catch (COMException comEx)
-                {
-                    log.Warn($"Failed to refresh sheet '{ws.Name}': {comEx.Message}");
-                }
-                catch (Exception ex)
-                {
-                    log.Warn($"Failed to refresh sheet '{ws.Name}': {ex.Message}");
-                }
-            }
-        }
-    }
-
-    /// <summary>
     /// 获取活动工作表
     /// </summary>
     /// <returns>活动工作表对象</returns>

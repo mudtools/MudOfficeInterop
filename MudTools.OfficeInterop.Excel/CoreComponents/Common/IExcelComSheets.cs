@@ -221,11 +221,6 @@ public interface IExcelComSheets : IDisposable
     void Calculate();
 
     /// <summary>
-    /// 刷新所有工作表
-    /// </summary>
-    void RefreshAll();
-
-    /// <summary>
     /// 保护所有工作表
     /// </summary>
     /// <param name="password">保护密码</param>

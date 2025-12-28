@@ -597,28 +597,6 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     }
 
     /// <summary>
-    /// 刷新所有工作表
-    /// </summary>
-    public override void RefreshAll()
-    {
-        if (_worksheets == null) return;
-
-        try
-        {
-            for (int i = 1; i <= Count; i++)
-            {
-                if (this[i] is IExcelWorksheet worksheet)
-                    worksheet.Recalculate();
-            }
-        }
-        catch (Exception ex)
-        {
-            log.Warn($"Failed to get active sheet: {ex.Message}");
-            return;
-        }
-    }
-
-    /// <summary>
     /// 隐藏所有工作表
     /// </summary>
     public void HideAll()

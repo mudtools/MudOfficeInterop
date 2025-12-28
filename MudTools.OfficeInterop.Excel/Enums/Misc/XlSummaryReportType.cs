@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,22 +8,17 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示用户访问权限/// </summary>
-[ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelUserAccess : IOfficeObject<IExcelUserAccess>, IDisposable
+/// 指定要为方案创建的摘要类型
+/// </summary>
+public enum XlSummaryReportType
 {
     /// <summary>
-    /// 获取用户的名称
+    /// 在数据透视表中显示方案
     /// </summary>
-    string Name { get; }
+    xlSummaryPivotTable = -4148,
 
     /// <summary>
-    /// 获取或设置用户是否允许编辑
+    /// 并排列出方案
     /// </summary>
-    bool AllowEdit { get; set; }
-
-    /// <summary>
-    /// 删除用户访问权限
-    /// </summary>
-    void Delete();
+    xlStandardSummary = 1
 }

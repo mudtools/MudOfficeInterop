@@ -9,9 +9,102 @@ namespace MudTools.OfficeInterop.Excel.Imps;
 
 partial class ExcelWorksheet
 {
-    private MsExcel.DocEvents_Event _docEvents_Event;
+    /// <summary>
+    /// 初始化 ExcelWorksheet 实例
+    /// </summary>
+    /// <param name="worksheet">底层的 COM Worksheet 对象</param>
+    internal ExcelWorksheet(MsExcel.Worksheet worksheet)
+    {
+        _worksheet = worksheet ?? throw new ArgumentNullException(nameof(worksheet));
+        _docEvents_Event = worksheet;
+        InitializeEvents();
+        _disposedValue = false;
+    }
+
+    public string? ParentName
+    {
+        get
+        {
+            if (_worksheet?.Parent == null)
+            {
+                return null;
+            }
+            if (_worksheet.Parent is MsExcel.Workbook workbook)
+            {
+                return workbook.Name;
+            }
+            if (_worksheet.Parent is MsExcel.Worksheet worksheet)
+            {
+                return worksheet.Name;
+            }
+            return null;
+        }
+    }
+
+    public IExcelWorkbook? ParentWorkbook
+    {
+        get
+        {
+            if (_worksheet?.Parent == null)
+            {
+                return null;
+            }
+            if (_worksheet.Parent is MsExcel.Workbook workbook)
+            {
+                return new ExcelWorkbook(workbook);
+            }
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 获取工作表是否被保护
+    /// </summary>
+    public bool IsProtected => _worksheet != null && _worksheet.ProtectContents;
+
+    public bool IsVisible
+    {
+        get => _worksheet != null && _worksheet.Visible == MsExcel.XlSheetVisibility.xlSheetVisible;
+        set
+        {
+            if (_worksheet != null)
+                _worksheet.Visible = value ? (MsExcel.XlSheetVisibility.xlSheetVisible) : (MsExcel.XlSheetVisibility.xlSheetHidden);
+        }
+    }
+
+    /// <summary>
+    /// 复制工作表
+    /// </summary>
+    /// <param name="before">复制到指定工作表之前</param>
+    /// <param name="after">复制到指定工作表之后</param>
+    public void Copy(IExcelComSheet? before = null, IExcelComSheet? after = null)
+    {
+        if (_worksheet == null) return;
+
+        _worksheet.Copy(
+            before is ExcelWorksheet beforeSheet ? beforeSheet._worksheet : System.Type.Missing,
+            after is ExcelWorksheet afterSheet ? afterSheet._worksheet : System.Type.Missing
+        );
+    }
+
+    /// <summary>
+    /// 移动工作表
+    /// </summary>
+    /// <param name="before">移动到指定工作表之前</param>
+    /// <param name="after">移动到指定工作表之后</param>
+    public void Move(IExcelComSheet? before = null, IExcelComSheet? after = null)
+    {
+        if (_worksheet == null) return;
+
+        _worksheet.Move(
+            before is ExcelWorksheet beforeSheet ? beforeSheet._worksheet : System.Type.Missing,
+            after is ExcelWorksheet afterSheet ? afterSheet._worksheet : System.Type.Missing
+        );
+    }
 
     #region 事件字段
+
+    private MsExcel.DocEvents_Event _docEvents_Event;
 
     /// <summary>
     /// Change事件
@@ -69,8 +162,6 @@ partial class ExcelWorksheet
         _docEvents_Event.Deactivate += _docEvents_Event_Deactivate;
         _docEvents_Event.SelectionChange += _docEvents_Event_SelectionChange;
     }
-
-
 
     private void DisConnectEvent()
     {
@@ -215,4 +306,71 @@ partial class ExcelWorksheet
         remove { _sheetPivotTableChangeSync -= value; }
     }
     #endregion
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposedValue) return;
+
+        if (disposing)
+        {
+            DisConnectEvent();
+
+            if (_worksheet != null)
+            {
+                Marshal.ReleaseComObject(_worksheet);
+                _worksheet = null;
+            }
+            _excelChart_NextChart?.Dispose();
+            _excelChart_NextChart = null;
+            _excelRange_NextRange?.Dispose();
+            _excelRange_NextRange = null;
+            _excelWorksheet_NextWorksheet?.Dispose();
+            _excelWorksheet_NextWorksheet = null;
+            _excelChart_PreviousChart?.Dispose();
+            _excelChart_PreviousChart = null;
+            _excelRange_PreviousRange?.Dispose();
+            _excelRange_PreviousRange = null;
+            _excelWorksheet_PreviousWorksheet?.Dispose();
+            _excelWorksheet_PreviousWorksheet = null;
+            _excelRange_Cells?.Dispose();
+            _excelRange_Cells = null;
+            _excelRange_CircularReference?.Dispose();
+            _excelRange_CircularReference = null;
+            _excelRange_Columns?.Dispose();
+            _excelRange_Columns = null;
+            _excelNames_Names?.Dispose();
+            _excelNames_Names = null;
+            _excelOutline_Outline?.Dispose();
+            _excelOutline_Outline = null;
+            _excelRange_Rows?.Dispose();
+            _excelRange_Rows = null;
+            _excelRange_UsedRange?.Dispose();
+            _excelRange_UsedRange = null;
+            _excelHPageBreaks_HPageBreaks?.Dispose();
+            _excelHPageBreaks_HPageBreaks = null;
+            _excelVPageBreaks_VPageBreaks?.Dispose();
+            _excelVPageBreaks_VPageBreaks = null;
+            _excelQueryTables_QueryTables?.Dispose();
+            _excelQueryTables_QueryTables = null;
+            _excelComments_Comments?.Dispose();
+            _excelComments_Comments = null;
+            _excelAutoFilter_AutoFilter?.Dispose();
+            _excelAutoFilter_AutoFilter = null;
+            _excelTab_Tab?.Dispose();
+            _excelTab_Tab = null;
+            _officeMsoEnvelope_MailEnvelope?.Dispose();
+            _officeMsoEnvelope_MailEnvelope = null;
+            _excelCustomProperties_CustomProperties?.Dispose();
+            _excelCustomProperties_CustomProperties = null;
+            _excelProtection_Protection?.Dispose();
+            _excelProtection_Protection = null;
+            _excelListObjects_ListObjects?.Dispose();
+            _excelListObjects_ListObjects = null;
+            _excelSort_Sort?.Dispose();
+            _excelSort_Sort = null;
+        }
+
+        _disposedValue = true;
+    }
+
 }
