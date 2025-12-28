@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示 Excel 工作表中一个单元格区域的包装器接口，提供对单元格区域的各种操作和属性访问功能。
 /// </summary>
-public interface IExcelRange : ICoreRange<IExcelRange>, IDisposable
+public interface IExcelRange : ICoreRange<IExcelRange>, IOfficeObject<IExcelRange>, IDisposable
 {
     /// <summary>
     /// 获取工作表中指定行列的单元格对象
@@ -43,8 +43,6 @@ public interface IExcelRange : ICoreRange<IExcelRange>, IDisposable
     /// <returns>单元格对象</returns>
     IExcelRange? this[int row] { get; }
 
-
-
     /// <summary>
     /// 从DataTable复制数据到Excel工作表
     /// </summary>
@@ -53,7 +51,6 @@ public interface IExcelRange : ICoreRange<IExcelRange>, IDisposable
     /// <param name="fieldNames">是否包含字段名</param>
     /// <returns>是否操作成功</returns>
     bool CopyFromDataTable(DataTable dataTable, string startCell = "A1", bool fieldNames = true);
-
 
     /// <summary>
     /// 在区域中替换指定内容
@@ -80,27 +77,4 @@ public interface IExcelRange : ICoreRange<IExcelRange>, IDisposable
     /// <param name="summaryBelowData">汇总行位置</param>
     void Subtotal(int groupBy, XlConsolidationFunction function, object totalList, bool replace, bool pageBreaks, XlSummaryRow summaryBelowData);
 
-}
-
-
-/// <summary>
-/// 获取地址的参数选项
-/// </summary>
-public class AddressOptions
-{
-    public bool? RowAbsolute { get; set; }
-    public bool? ColumnAbsolute { get; set; }
-    public XlReferenceStyle ReferenceStyle { get; set; } = XlReferenceStyle.xlA1;
-    public bool? External { get; set; }
-    public bool? RelativeTo { get; set; }
-
-    public AddressOptions()
-    {
-    }
-
-    public AddressOptions(bool absolute)
-    {
-        RowAbsolute = absolute;
-        ColumnAbsolute = absolute;
-    }
 }

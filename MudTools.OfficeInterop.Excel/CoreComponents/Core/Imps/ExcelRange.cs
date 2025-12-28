@@ -24,6 +24,14 @@ internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRa
     {
 
     }
+
+    public IExcelRange? LoadFromObject(object comObject)
+    {
+        if (comObject == null) return null;
+        if (comObject is MsExcel.Range comInstance)
+            return new ExcelRange(comInstance);
+        return null;
+    }
     #endregion
 
     /// <summary>
