@@ -11,8 +11,22 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel AddIn 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.AddIn 的安全访问和操作
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelAddIn : IDisposable
 {
+    /// <summary>
+    /// 获取加载项的父对象（通常是 AddIns 集合）
+    /// 对应 AddIn.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取加载项所在的Application对象
+    /// 对应 AddIn.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     #region 基础属性
     /// <summary>
     /// 获取或设置加载项的名称
@@ -31,19 +45,19 @@ public interface IExcelAddIn : IDisposable
     /// 对应文档的标题属性
     /// </summary>
     string Title { get; }
-    
+
     /// <summary>
     /// 获取加载项的文档主题
     /// 对应文档的 Subject 属性
     /// </summary>
     string Subject { get; }
-    
+
     /// <summary>
     /// 获取加载项的路径
     /// 对应文档的 Path 属性
     /// </summary>
     string Path { get; }
-    
+
     /// <summary>
     /// 获取加载项的注释信息
     /// 对应文档的 Comments 属性
@@ -62,23 +76,12 @@ public interface IExcelAddIn : IDisposable
     /// </summary>
     string Keywords { get; }
 
-    /// <summary>
-    /// 获取加载项的父对象（通常是 AddIns 集合）
-    /// 对应 AddIn.Parent 属性
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取加载项所在的Application对象
-    /// 对应 AddIn.Application 属性
-    /// </summary>
-    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 获取加载项的程序标识符 (ProgID)
     /// 对应 AddIn.ProgId 属性
     /// </summary>
-    string ProgId { get; }
+    string progID { get; }
 
     /// <summary>
     /// 获取加载项的 CLSID

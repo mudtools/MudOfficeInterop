@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.PageSetup 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPageSetup : IDisposable
+public interface IExcelPageSetup : IOfficeObject<IExcelPageSetup>, IDisposable
 {
     /// <summary>
     /// 获取表示Excel应用程序的Application对象。
