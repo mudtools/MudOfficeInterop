@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel AddIns 对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.AddIns 的安全访问和操作
 /// </summary>
-public interface IExcelAddIns : IDisposable, IEnumerable<IExcelAddIn>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelAddIns : IDisposable, IOfficeObject<IExcelAddIns>, IEnumerable<IExcelAddIn?>
 {
     /// <summary>
     /// 获取父对象
@@ -22,18 +23,19 @@ public interface IExcelAddIns : IDisposable, IEnumerable<IExcelAddIn>
     /// 获取加载项集合中的加载项数量
     /// </summary>
     int Count { get; }
-
     /// <summary>
-    /// 获取应用程序对象
+    /// 获取加载项所在的Application对象
+    /// 对应 AddIn.Application 属性
     /// </summary>
-    object Application { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
 
     /// <summary>
     /// 通过索引获取加载项
     /// </summary>
     /// <param name="index">加载项索引</param>
     /// <returns>加载项对象</returns>
-    IExcelAddIn this[object index] { get; }
+    IExcelAddIn? this[object index] { get; }
 
     /// <summary>
     /// 向集合中添加新加载项
@@ -41,5 +43,5 @@ public interface IExcelAddIns : IDisposable, IEnumerable<IExcelAddIn>
     /// <param name="filename">加载项文件名</param>
     /// <param name="copyFile">是否复制文件</param>
     /// <returns>新创建的加载项对象</returns>
-    IExcelAddIn Add(string filename, object copyFile);
+    IExcelAddIn? Add(string filename, bool? copyFile);
 }
