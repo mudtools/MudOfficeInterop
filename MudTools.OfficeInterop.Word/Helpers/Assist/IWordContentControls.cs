@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示文档中内容控件的集合。
 /// <para>注：使用 <see cref="Add(WdContentControlType, object)"/> 方法可向文档中添加新的内容控件。</para>
 /// </summary>
-public interface IWordContentControls : IEnumerable<IWordContentControl>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordContentControls : IEnumerable<IWordContentControl?>, IOfficeObject<IWordContentControls>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
