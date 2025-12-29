@@ -11,11 +11,12 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示下拉列表或组合框内容控件中列表项的集合。
 /// <para>注：使用 <see cref="Add(string, string, int)"/> 方法向此集合添加新项。</para>
 /// </summary>
-public interface IWordContentControlListEntries : IEnumerable<IWordContentControlListEntry>, IDisposable
+public interface IWordContentControlListEntries : IEnumerable<IWordContentControlListEntry?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
