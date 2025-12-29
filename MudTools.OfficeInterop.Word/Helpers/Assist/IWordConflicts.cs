@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示文档中冲突的集合。
 /// <para>注：使用 <see cref="AcceptAll"/> 方法接受所有冲突并将其合并到文档中，或使用 <see cref="RejectAll"/> 方法拒绝所有冲突更改。</para>
 /// </summary>
-public interface IWordConflicts : IEnumerable<IWordConflict>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordConflicts : IEnumerable<IWordConflict?>, IOfficeObject<IWordConflicts>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
