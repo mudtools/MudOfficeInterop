@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示广播功能，用于管理文档或演示文稿的广播会话。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordBroadcast : IDisposable
+public interface IWordBroadcast : IOfficeObject<IWordBroadcast>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
