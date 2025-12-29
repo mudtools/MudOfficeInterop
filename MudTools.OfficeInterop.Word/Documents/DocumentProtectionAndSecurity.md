@@ -7,7 +7,7 @@
 密码保护是最基本的文档安全措施，可以防止未授权用户打开或修改文档。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容
@@ -51,7 +51,7 @@ Console.WriteLine("文档已使用密码保护");
 编辑限制可以控制用户对文档特定部分的编辑权限，而不需要完全加密文档。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容
@@ -99,7 +99,7 @@ Console.WriteLine("编辑限制已应用");
 内容保护可以保护文档的特定部分，如表单字段、书签区域等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 创建表单文档
@@ -161,7 +161,7 @@ Console.WriteLine("内容保护已应用");
 数字签名可以确保文档的完整性和来源可信性。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加文档内容
@@ -211,7 +211,7 @@ catch (Exception ex)
 可以通过权限管理设置更细粒度的访问控制。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加文档内容
@@ -270,7 +270,7 @@ class SecureDocumentSystem
 {
     public static void CreateSecureContract()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

@@ -29,7 +29,7 @@ namespace FAQSample
             /// </summary>
             public HighPerformanceDocumentProcessor()
             {
-                _application = WordFactory.BlankWorkbook();
+                _application = WordFactory.BlankDocument();
                 OptimizeForPerformance();
             }
 
@@ -133,7 +133,7 @@ namespace FAQSample
         /// <returns>优化的Word应用程序</returns>
         public static IWordApplication CreateOptimizedWordApplication()
         {
-            var app = WordFactory.BlankWorkbook();
+            var app = WordFactory.BlankDocument();
             app.Visible = false;
             app.ScreenUpdating = false;
             app.DisplayAlerts = WdAlertLevel.wdAlertsNone;
@@ -183,7 +183,7 @@ namespace FAQSample
             {
                 var batch = documentPaths.Skip(i).Take(batchSize).ToList();
 
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false;
                 app.ScreenUpdating = false;
                 app.DisplayAlerts = WdAlertLevel.wdAlertsNone;

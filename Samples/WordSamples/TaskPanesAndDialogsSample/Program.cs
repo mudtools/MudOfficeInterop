@@ -47,7 +47,7 @@ namespace TaskPanesAndDialogsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var taskPaneManager = new TaskPaneManager(app);
 
                 // 获取任务窗格信息
@@ -98,7 +98,7 @@ namespace TaskPanesAndDialogsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
                 var dialogManager = new DialogManager(app, document);
 
@@ -145,7 +145,7 @@ namespace TaskPanesAndDialogsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
                 var interactionHandler = new UserInteractionHandler(app, document);
 
@@ -208,7 +208,7 @@ namespace TaskPanesAndDialogsSample
                     Directory.CreateDirectory(tempDirectory);
                 }
 
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 步骤1: 创建支持任务窗格和对话框的文档
@@ -329,7 +329,7 @@ namespace TaskPanesAndDialogsSample
                     Directory.CreateDirectory(tempDirectory);
                 }
 
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 1. 任务窗格管理

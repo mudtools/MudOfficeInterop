@@ -14,7 +14,7 @@ class ReportTemplateDesigner
 {
     public static void CreateSalesReportTemplate()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         var document = app.ActiveDocument;
         
         try

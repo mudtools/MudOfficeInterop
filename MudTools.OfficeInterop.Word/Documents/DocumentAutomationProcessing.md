@@ -609,7 +609,7 @@ class DocumentAutomationSystem
         }
         
         // 创建示例文档1
-        using (var app = WordFactory.BlankWorkbook())
+        using (var app = WordFactory.BlankDocument())
         {
             var document = app.ActiveDocument;
             
@@ -627,7 +627,7 @@ class DocumentAutomationSystem
         }
         
         // 创建示例文档2
-        using (var app = WordFactory.BlankWorkbook())
+        using (var app = WordFactory.BlankDocument())
         {
             var document = app.ActiveDocument;
             

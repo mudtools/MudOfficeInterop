@@ -59,7 +59,7 @@ namespace SelectionOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var selection = app.Selection;
 
                 if (selection != null)
@@ -93,7 +93,7 @@ namespace SelectionOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var selection = app.Selection;
 
                 if (selection != null)
@@ -121,7 +121,7 @@ namespace SelectionOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
                 var selection = app.Selection;
 
@@ -170,7 +170,7 @@ namespace SelectionOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
                 var selection = app.Selection;
 
@@ -214,7 +214,7 @@ namespace SelectionOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
                 var selection = app.Selection;
 
@@ -254,7 +254,7 @@ namespace SelectionOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
                 var selection = app.Selection;
 
@@ -294,7 +294,7 @@ namespace SelectionOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
                 var selection = app.Selection;
 
@@ -424,7 +424,7 @@ namespace SelectionOperationsSample
         /// <returns>文本选择结果</returns>
         public TextSelectionResult PerformTextSelection()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
             var selection = app.Selection;
 
@@ -452,7 +452,7 @@ namespace SelectionOperationsSample
         /// <returns>格式化操作结果</returns>
         public FormattingResult PerformFormattingOperations()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
             var selection = app.Selection;
 
@@ -484,7 +484,7 @@ namespace SelectionOperationsSample
         /// <returns>高级选择操作结果</returns>
         public AdvancedSelectionResult PerformAdvancedSelection()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
             var selection = app.Selection;
 

@@ -92,7 +92,7 @@ namespace FAQSample
 
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var version = app.Version;
                 result.DetectedVersion = version;
 
@@ -207,7 +207,7 @@ namespace FAQSample
 
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 测试基本功能

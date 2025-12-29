@@ -7,7 +7,7 @@
 查找功能允许在文档中定位特定内容，可以基于文本、格式或其他属性进行查找。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容
@@ -62,7 +62,7 @@ while (find.Execute())
 替换功能可以在查找到内容后进行替换操作，支持简单的文本替换和复杂的格式替换。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容
@@ -116,7 +116,7 @@ find.Execute(
 除了文本查找，还可以基于格式进行查找和替换。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容
@@ -177,7 +177,7 @@ find.Execute(
 Word的查找功能支持类似正则表达式的通配符模式。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容
@@ -241,7 +241,7 @@ if (found)
 查找功能支持多种高级选项，如大小写敏感、全字匹配等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容
@@ -296,7 +296,7 @@ Console.WriteLine($"向前查找: {found4}");
 结合查找和替换功能，可以实现复杂的批量文本处理。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加示例内容

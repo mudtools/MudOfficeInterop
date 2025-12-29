@@ -79,7 +79,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 获取文档范围
@@ -116,7 +116,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加标题
@@ -155,7 +155,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 应用内置样式
@@ -197,7 +197,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 创建项目符号列表
@@ -230,7 +230,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加文本
@@ -262,7 +262,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 设置制表符
@@ -289,7 +289,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加文本
@@ -317,7 +317,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加文本
@@ -350,7 +350,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加文本
@@ -380,7 +380,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加文本
@@ -407,7 +407,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加多级标题
@@ -458,7 +458,7 @@ namespace TextFormattingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
                 using var document = app.ActiveDocument;
@@ -713,7 +713,7 @@ namespace TextFormattingSample
         /// <returns>文档创建结果</returns>
         public DocumentResult CreateFormattedDocument()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加标题
@@ -745,7 +745,7 @@ namespace TextFormattingSample
         /// <returns>字体格式结果</returns>
         public FontFormattingResult ApplyFontFormatting()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加文本
@@ -774,7 +774,7 @@ namespace TextFormattingSample
         /// <returns>段落格式结果</returns>
         public ParagraphFormattingResult ApplyParagraphFormatting()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加文本
@@ -800,7 +800,7 @@ namespace TextFormattingSample
         /// <returns>高级格式化结果</returns>
         public AdvancedFormattingResult ApplyAdvancedFormatting()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加文本
@@ -836,7 +836,7 @@ namespace TextFormattingSample
         /// <returns>结构化文档结果</returns>
         public StructuredDocumentResult CreateStructuredDocument()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加多级标题

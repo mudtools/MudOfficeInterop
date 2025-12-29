@@ -40,7 +40,7 @@ namespace WordFactorySample
             try
             {
                 // 创建 Word 应用程序实例和空白文档
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = true;
 
                 // 获取活动文档
@@ -128,7 +128,7 @@ namespace WordFactorySample
         /// <param name="templatePath">模板文件路径</param>
         static void CreateSampleTemplate(string templatePath)
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
 
             // 添加模板内容
@@ -148,7 +148,7 @@ namespace WordFactorySample
         /// <param name="docPath">文档文件路径</param>
         static void CreateSampleDocument(string docPath)
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
 
             // 添加文档内容

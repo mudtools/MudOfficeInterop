@@ -55,7 +55,7 @@ namespace MailMergeSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 设置文档为邮件合并主文档
@@ -84,7 +84,7 @@ namespace MailMergeSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
                 using var mailMerge = document.MailMerge;
 
@@ -141,7 +141,7 @@ namespace MailMergeSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
                 using var mailMerge = document.MailMerge;
 
@@ -259,7 +259,7 @@ namespace MailMergeSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
                 using var mailMerge = document.MailMerge;
 
@@ -301,7 +301,7 @@ namespace MailMergeSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
                 using var document = app.ActiveDocument;
@@ -407,7 +407,7 @@ namespace MailMergeSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 隐藏Word窗口
 
                 using var document = app.ActiveDocument;

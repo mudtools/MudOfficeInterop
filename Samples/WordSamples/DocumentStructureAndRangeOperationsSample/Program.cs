@@ -63,7 +63,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 设置文档内容
@@ -107,7 +107,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -149,7 +149,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 编辑文档内容
@@ -177,7 +177,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 获取整个文档的范围
@@ -207,7 +207,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 获取整个文档范围并填充示例文本
@@ -239,7 +239,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
                 var range = document.Range();
 
@@ -277,7 +277,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加内容
@@ -322,7 +322,7 @@ namespace DocumentStructureAndRangeOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 创建复杂文档结构
@@ -479,7 +479,7 @@ namespace DocumentStructureAndRangeOperationsSample
         /// <returns>文档分析结果</returns>
         public DocumentAnalysisResult CreateAndAnalyzeDocument()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加示例内容
@@ -504,7 +504,7 @@ namespace DocumentStructureAndRangeOperationsSample
         /// <returns>范围操作结果</returns>
         public RangeOperationsResult PerformRangeOperations()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加初始内容
@@ -531,7 +531,7 @@ namespace DocumentStructureAndRangeOperationsSample
         /// <returns>查找替换操作结果</returns>
         public FindReplaceResult PerformFindReplaceOperations()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加初始内容

@@ -221,7 +221,7 @@ app.Quit();
 
 ```csharp
 // 创建 Word 应用程序实例
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 app.Visible = true;
 
 // 获取活动文档
@@ -259,7 +259,7 @@ app.Quit();
 #### Word 文档格式化
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加标题

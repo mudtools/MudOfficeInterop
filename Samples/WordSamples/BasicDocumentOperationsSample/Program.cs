@@ -51,7 +51,7 @@ namespace BasicDocumentOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
 
                 // 设置应用程序窗口标题
                 app.Caption = "我的文档编辑器 - 基础属性示例";
@@ -93,7 +93,7 @@ namespace BasicDocumentOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
 
                 // 获取文档集合
                 using var documents = app.Documents;
@@ -137,7 +137,7 @@ namespace BasicDocumentOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
 
                 // 创建多个文档
                 using var doc1 = app.Documents.Add();
@@ -175,7 +175,7 @@ namespace BasicDocumentOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
 
                 // 设置显示警告级别
                 app.DisplayAlerts = WdAlertLevel.wdAlertsNone;
@@ -220,7 +220,7 @@ namespace BasicDocumentOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加文档内容
@@ -309,7 +309,7 @@ namespace BasicDocumentOperationsSample
         /// <returns>文档路径</returns>
         public string CreateNewDocument(string content)
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             using var document = app.ActiveDocument;
 
             // 添加内容
@@ -376,7 +376,7 @@ namespace BasicDocumentOperationsSample
 
             for (int i = 1; i <= count; i++)
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加内容

@@ -66,7 +66,7 @@ namespace IntegrationWithWebApplicationsSample
                 }
 
                 // 使用WordFactory创建文档
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加内容到文档

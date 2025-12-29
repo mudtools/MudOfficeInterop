@@ -55,7 +55,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 获取内嵌图形集合
@@ -91,7 +91,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 添加说明文字
@@ -127,7 +127,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 添加说明文字
@@ -180,7 +180,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 添加说明文字
@@ -228,7 +228,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 添加说明文字
@@ -279,7 +279,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
                 var document = app.ActiveDocument;
@@ -309,7 +309,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 隐藏Word窗口
 
                 var document = app.ActiveDocument;

@@ -30,7 +30,7 @@ public class WordDocumentService
         try
         {
             // 设置线程为STA模式（如果在新线程中运行）
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
             
             // 添加内容
@@ -189,7 +189,7 @@ public class ResourceManagedWordService : IDisposable
             {
                 try
                 {
-                    _wordApp = (WordApplication)WordFactory.BlankWorkbook();
+                    _wordApp = (WordApplication)WordFactory.BlankDocument();
                     _wordApp.Visible = false; // Web环境中隐藏界面
                     _wordApp.DisplayAlerts = WdAlertLevel.None; // 禁用警告对话框
                 }
@@ -423,7 +423,7 @@ public class DocumentGenerationService
 ```csharp
     private DocumentResult GenerateDocumentInternal(DocumentRequest request)
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = false;
         app.DisplayAlerts = WdAlertLevel.None;
         

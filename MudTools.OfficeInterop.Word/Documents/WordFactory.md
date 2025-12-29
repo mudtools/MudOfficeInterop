@@ -18,7 +18,7 @@ using MudTools.OfficeInterop;
 
 ```csharp
 // 创建 Word 应用程序实例
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 ```
 
 这行代码执行了以下操作：
@@ -148,7 +148,7 @@ if (app != null)
 
 ```csharp
 // 完整示例：创建文档并添加内容
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 ```
 
 始终使用`using`语句确保COM资源得到正确释放。

@@ -51,7 +51,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 获取页面设置对象
@@ -102,7 +102,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 获取页眉和页脚范围
@@ -145,7 +145,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加内容
@@ -194,7 +194,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 打印预览
@@ -229,7 +229,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
                 using var document = app.ActiveDocument;
@@ -387,7 +387,7 @@ namespace PageLayoutAndPrintingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 隐藏Word窗口
 
                 using var document = app.ActiveDocument;

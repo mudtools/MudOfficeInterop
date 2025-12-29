@@ -7,7 +7,7 @@
 IWordDocument接口代表一个Word文档，提供了访问文档属性和内容的方法。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 ```
 
@@ -83,7 +83,7 @@ document.SaveSubsetFonts = true;
 正确管理文档的生命周期对于资源管理和数据完整性非常重要：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 try
@@ -117,7 +117,7 @@ finally
 IWordRange接口代表文档中的一个连续区域，是操作文档内容的基础。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 获取整个文档的范围
@@ -145,7 +145,7 @@ Duplicate属性创建当前范围的副本，可用于独立操作。
 范围由起始和结束位置定义，可以通过多种方式操作：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 获取整个文档范围
@@ -185,7 +185,7 @@ Console.WriteLine($"新范围文本: {range.Text}");
 范围提供了丰富的文本操作功能：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var range = document.Range();
 
@@ -223,7 +223,7 @@ range.Text = range.Text.Replace("Hello", "Hi");
 可以复制和移动范围内容：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加内容
@@ -276,7 +276,7 @@ class DocumentProcessor
 {
     public static void ProcessDocument()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

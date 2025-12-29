@@ -42,7 +42,7 @@ namespace IntegrationWithWebApplicationsSample
                 {
                     try
                     {
-                        _wordApp = WordFactory.BlankWorkbook();
+                        _wordApp = WordFactory.BlankDocument();
                         _wordApp.Visible = false; // Web环境中隐藏界面
                         _wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone; // 禁用警告对话框
                     }

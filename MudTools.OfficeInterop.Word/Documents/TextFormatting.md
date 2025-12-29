@@ -7,7 +7,7 @@
 字体格式化是文本格式化的基础，包括字体类型、大小、颜色、粗体、斜体等属性。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 获取文档范围
@@ -52,7 +52,7 @@ contentRange.Font.Italic = 0;
 段落格式化涉及对齐方式、缩进、行距、段前段后间距等属性。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加标题
@@ -93,7 +93,7 @@ justifyPara.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJus
 样式是格式化的快捷方式，可以一次性应用一组预定义的格式设置。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 应用内置样式
@@ -144,7 +144,7 @@ customRange.Style = "我的自定义样式";
 列表和编号可以有效组织文档内容，提升可读性。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 创建项目符号列表
@@ -184,7 +184,7 @@ multiLevelList.ListFormat.ApplyOutlineNumberDefault();
 边框和底纹可以突出显示重要内容或分隔不同部分。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加文本
@@ -215,7 +215,7 @@ range.Shading.BackgroundPatternColor = WdColor.wdColorLightYellow;
 制表符用于对齐文本，创建表格效果。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 设置制表符
@@ -247,7 +247,7 @@ class DocumentFormattingDemo
 {
     public static void CreateFormattedDocument()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

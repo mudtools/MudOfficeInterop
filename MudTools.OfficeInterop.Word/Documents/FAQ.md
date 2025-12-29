@@ -45,12 +45,12 @@ A: 始终使用`using`语句或手动调用`Dispose()`方法来释放COM对象�
 
 ```csharp
 // 正确的做法
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 // 使用app进行操作
 // 自动释放资源
 
 // 或者手动释放
-var app = WordFactory.BlankWorkbook();
+var app = WordFactory.BlankDocument();
 try
 {
     // 使用app进行操作
@@ -70,7 +70,7 @@ finally
 A: 默认情况下，通过代码创建的Word应用程序实例是不可见的。如果需要显示界面，可以设置[Visibility](../Core/IWordApplication.cs#L56-L59)属性：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 app.Visibility = WordAppVisibility.Visible; // 显示Word窗口
 ```
 
@@ -102,7 +102,7 @@ A: 性能优化建议：
 4. 使用异步编程模型
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 app.Visibility = WordAppVisibility.Hidden;
 app.ScreenUpdating = false; // 禁用屏幕更新
 app.DisplayAlerts = WdAlertLevel.None; // 禁用警告
@@ -200,7 +200,7 @@ public async Task ProcessLargeDocumentsAsync(List<string> documentPaths)
     {
         var batch = documentPaths.Skip(i).Take(batchSize).ToList();
         
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.ScreenUpdating = false;
         app.DisplayAlerts = WdAlertLevel.None;
 ```
@@ -250,7 +250,7 @@ public class WordInstanceManager
         {
             if (_sharedInstance == null)
             {
-                _sharedInstance = (WordApplication)WordFactory.BlankWorkbook();
+                _sharedInstance = (WordApplication)WordFactory.BlankDocument();
                 _sharedInstance.Visibility = WordAppVisibility.Hidden;
             }
             return _sharedInstance;

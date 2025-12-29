@@ -148,7 +148,7 @@ namespace FAQSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -188,7 +188,7 @@ namespace FAQSample
                 var startTime = DateTime.Now;
                 try
                 {
-                    using var app = WordFactory.BlankWorkbook();
+                    using var app = WordFactory.BlankDocument();
                     // 简单操作
                     var _ = app.ActiveDocument.Paragraphs.Count;
                 }
@@ -207,7 +207,7 @@ namespace FAQSample
             try
             {
                 // 创建测试文件
-                using (var app = WordFactory.BlankWorkbook())
+                using (var app = WordFactory.BlankDocument())
                 {
                     app.ActiveDocument.SaveAs(tempPath);
                 }
@@ -281,7 +281,7 @@ namespace FAQSample
             report.AppendLine();
             report.AppendLine("3. 资源管理最佳实践:");
             report.AppendLine("   // 使用using语句确保资源释放");
-            report.AppendLine("   using var app = WordFactory.BlankWorkbook();");
+            report.AppendLine("   using var app = WordFactory.BlankDocument();");
             report.AppendLine("   // 使用app进行操作");
             report.AppendLine("   // 自动释放资源");
             report.AppendLine();
