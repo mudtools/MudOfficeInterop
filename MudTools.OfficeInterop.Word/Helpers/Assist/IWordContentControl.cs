@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示文档中的一个内容控件。
 /// <para>内容控件是文档中绑定的、可能添加标签的区域，它们充当特定类型内容（如日期、列表或格式化文本段落）的容器。</para>
 /// </summary>
-public interface IWordContentControl : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordContentControl : IOfficeObject<IWordContentControl>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -40,12 +42,12 @@ public interface IWordContentControl : IDisposable
     /// <summary>
     /// 获取内容控件的范围。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 获取或设置内容控件的默认文本。
     /// </summary>
-    IWordBuildingBlock PlaceholderText { get; }
+    IWordBuildingBlock? PlaceholderText { get; }
 
     /// <summary>
     /// 获取或设置内容控件是否被锁定，禁止用户编辑其内容。
@@ -63,14 +65,9 @@ public interface IWordContentControl : IDisposable
     bool Temporary { get; set; }
 
     /// <summary>
-    /// 获取或设置内容控件的显示文本。
-    /// </summary>
-    string Text { get; set; }
-
-    /// <summary>
     /// 获取或设置内容控件的 XML 映射。
     /// </summary>
-    //IWordXMLMapping XMLMapping { get; }
+    IWordXMLMapping? XMLMapping { get; }
 
     /// <summary>
     /// 获取内容控件的下拉列表条目（适用于 ComboBox 和 DropdownList 类型）。
@@ -110,7 +107,7 @@ public interface IWordContentControl : IDisposable
     /// <summary>
     /// 获取内容控件的父内容控件（如果存在）。
     /// </summary>
-    IWordContentControl ParentContentControl { get; }
+    IWordContentControl? ParentContentControl { get; }
 
     /// <summary>
     /// 删除此内容控件及其内容。
@@ -123,8 +120,15 @@ public interface IWordContentControl : IDisposable
     /// </summary>
     void Copy();
 
+    /// <summary>
+    /// 设置内容控件的已选中符号。
+    /// </summary>
     void SetUncheckedSymbol(int characterNumber, string font = "");
 
-
+    /// <summary>
+    /// 设置内容控件的未选中符号。
+    /// </summary>
+    /// <param name="characterNumber"></param>
+    /// <param name="font"></param>
     void SetCheckedSymbol(int characterNumber, string font = "");
 }
