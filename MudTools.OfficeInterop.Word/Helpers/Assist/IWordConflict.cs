@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：通常在启用共同创作的文档中，当多位作者同时编辑同一区域时会发生冲突。
 /// Word 会为第一个保存更改的作者保留其版本，而后续保存的作者则会遇到冲突，需要解决这些冲突。</para>
 /// </summary>
-public interface IWordConflict : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordConflict : IOfficeObject<IWordConflict>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
