@@ -9,11 +9,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中形状调整点的封装接口。
 /// </summary>
-public interface IWordAdjustments : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord"), NoneEnumerable]
+public interface IWordAdjustments : IOfficeObject<IWordAdjustments>, IEnumerable<float?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -30,5 +32,5 @@ public interface IWordAdjustments : IDisposable
     /// 通过索引获取或设置调整点的值。
     /// </summary>
     /// <param name="index">调整点索引（从 1 开始）。</param>
-    float this[int index] { get; set; }
+    float? this[int index] { get; set; }
 }
