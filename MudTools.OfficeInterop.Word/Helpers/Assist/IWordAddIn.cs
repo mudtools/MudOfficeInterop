@@ -14,11 +14,12 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：AddIns 集合包括显示在“模板和外接程序”对话框中的全局模板或 Word 外接程序库 (WWL)。</para>
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordAddIn : IDisposable
+public interface IWordAddIn : IOfficeObject<IWordAddIn>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

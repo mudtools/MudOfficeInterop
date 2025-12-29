@@ -12,11 +12,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 AddIns 属性可返回 AddIns 集合。</para>
 /// <para>注：使用 AddIns(index)（其中 index 是外接程序名称或索引号）可返回单个 AddIn 对象。</para>
 /// </summary>
-public interface IWordAddIns : IEnumerable<IWordAddIn>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordAddIns : IOfficeObject<IWordAddIns>, IEnumerable<IWordAddIn?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -34,7 +36,7 @@ public interface IWordAddIns : IEnumerable<IWordAddIn>, IDisposable
     /// </summary>
     /// <param name="index">加载项名称（字符串）或索引号（整数）。</param>
     /// <returns>指定的加载项对象。</returns>
-    IWordAddIn this[object index] { get; }
+    IWordAddIn? this[object index] { get; }
 
     /// <summary>
     /// 将指定的文件添加到可用加载项列表中。
@@ -42,7 +44,7 @@ public interface IWordAddIns : IEnumerable<IWordAddIn>, IDisposable
     /// <param name="fileName">要添加的加载项的完整路径和文件名。</param>
     /// <param name="install">如果为 true，则安装加载项；如果为 false，则仅将其添加到列表中但不安装。</param>
     /// <returns>表示添加的加载项的对象。</returns>
-    IWordAddIn Add(string fileName, object install);
+    IWordAddIn? Add(string fileName, bool? install);
 
     /// <summary>
     /// 卸载所有已加载的加载项，并可选择性地将它们从 AddIns 集合中删除。
