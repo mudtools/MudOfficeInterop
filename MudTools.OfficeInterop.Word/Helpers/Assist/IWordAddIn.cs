@@ -13,6 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：AddIns 集合包含 Microsoft Word 可用的所有加载项，无论它们当前是否已加载。</para>
 /// <para>注：AddIns 集合包括显示在“模板和外接程序”对话框中的全局模板或 Word 外接程序库 (WWL)。</para>
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordAddIn : IDisposable
 {
     /// <summary>
