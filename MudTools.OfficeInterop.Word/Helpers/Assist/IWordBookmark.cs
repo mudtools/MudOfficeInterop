@@ -9,35 +9,64 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 书签接口
 /// </summary>
-public interface IWordBookmark : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordBookmark : IOfficeObject<IWordBookmark>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
-    /// 获取书签名称
+    /// 获取指定书签对象的名称。
     /// </summary>
     string Name { get; }
 
     /// <summary>
-    /// 获取书签范围
+    /// 获取表示指定书签对象中包含的文档部分的 Range 对象。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取一个值，该值指示指定书签是否为空。
     /// </summary>
-    object? Parent { get; }
+    bool Empty { get; }
 
     /// <summary>
-    /// 删除书签
+    /// 获取或设置书签的起始字符位置。
+    /// </summary>
+    int Start { get; set; }
+
+    /// <summary>
+    /// 获取或设置书签的结束字符位置。
+    /// </summary>
+    int End { get; set; }
+
+    /// <summary>
+    /// 获取一个值，该值指示指定书签是否为表格列。
+    /// </summary>
+    bool Column { get; }
+
+    /// <summary>
+    /// 获取指定书签的故事类型。
+    /// </summary>
+    WdStoryType StoryType { get; }
+
+    /// <summary>
+    /// 选择指定的书签对象。
+    /// </summary>
+    void Select();
+
+    /// <summary>
+    /// 删除指定的书签对象。
     /// </summary>
     void Delete();
 
     /// <summary>
-    /// 选择书签
+    /// 将标识为 Name 参数的新书签设置为由指定书签对象标记的位置。
     /// </summary>
-    void Select();
+    /// <param name="name">新书签的名称。</param>
+    /// <returns>复制的新书签对象。</returns>
+    IWordBookmark? Copy(string name);
 }
