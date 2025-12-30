@@ -10,115 +10,70 @@ namespace MudTools.OfficeInterop.Vbe;
 /// VBE VBComponent 对象的二次封装接口
 /// 提供对 Microsoft.Vbe.Interop.VBComponent 的安全访问和操作
 /// </summary>
-public interface IVbeVBComponent : IDisposable
+[ComObjectWrap(ComNamespace = "MsVb")]
+public interface IVbeVBComponent : IOfficeObject<IVbeVBComponent>, IDisposable
 {
-    #region 基础属性
     /// <summary>
-    /// 获取 VB 组件的名称
-    /// 对应 VBComponent.Name 属性
+    /// 获取一个值，指示组件是否已保存。
+    /// </summary>
+    bool Saved { get; }
+
+    /// <summary>
+    /// 获取或设置组件的名称。
     /// </summary>
     string Name { get; set; }
 
     /// <summary>
-    /// 获取 VB 组件的类型
-    /// 对应 VBComponent.Type 属性
+    /// 获取组件的设计器对象。
+    /// </summary>
+    object Designer { get; }
+
+    /// <summary>
+    /// 获取组件的代码模块。
+    /// </summary>
+    IVbeCodeModule? CodeModule { get; }
+
+    /// <summary>
+    /// 获取组件的类型（如标准模块、类模块、窗体等）。
     /// </summary>
     vbext_ComponentType Type { get; }
 
     /// <summary>
-    /// 获取 VB 组件所在的Application对象（VBE 对象）
-    /// 对应 VBComponent.Application 属性
+    /// 将组件导出到指定文件。
     /// </summary>
-    IVbeApplication Application { get; }
+    /// <param name="fileName">导出文件的路径和名称。</param>
+    void Export(string fileName);
 
     /// <summary>
-    /// 获取 VB 组件的代码模块对象
-    /// 对应 VBComponent.CodeModule 属性
+    /// 获取表示 VBA 编辑器环境的 VBE 对象。
     /// </summary>
-    IVbeCodeModule CodeModule { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IVbeApplication? VBE { get; }
 
     /// <summary>
-    /// 获取 VB 组件的设计时对象（例如，UserForm 的设计器）
-    /// 对应 VBComponent.Designer 属性
+    /// 获取包含此组件的组件集合。
     /// </summary>
-    object Designer { get; } // 使用 object 作为通用占位符
+    IVbeVBComponents? Collection { get; }
 
     /// <summary>
-    /// 获取 VB 组件的设计器数据（特定于设计器的二进制数据）
-    /// 对应 VBComponent.DesignerID 属性 (概念上接近)
+    /// 获取一个值，指示组件是否有打开的设计器窗口。
     /// </summary>
-    string DesignerID { get; }
+    bool HasOpenDesigner { get; }
 
     /// <summary>
-    /// 获取 VB 组件是否已保存
+    /// 获取组件设计器窗口。
     /// </summary>
-    bool IsSaved { get; }
-    #endregion
+    /// <returns>设计器窗口对象。</returns>
+    IVbeWindow? DesignerWindow();
 
-    #region 操作方法
     /// <summary>
-    /// 选择 VB 组件
-    /// 对应 VBComponent.Activate 方法
+    /// 激活组件（使其成为活动组件）。
     /// </summary>
     void Activate();
 
     /// <summary>
-    /// 导出 VB 组件到文件
-    /// 对应 VBComponent.Export 方法
+    /// 获取组件设计器的标识符。
     /// </summary>
-    /// <param name="fileName">导出文件路径</param>
-    void Export(string fileName);
-
-    #endregion
-
-    #region 代码操作   
-
-    /// <summary>
-    /// 清除 VB 组件中的所有代码
-    /// </summary>
-    void ClearCode();
-    #endregion
-
-    #region 格式设置
-    /// <summary>
-    /// 设置 VB 组件属性
-    /// </summary>
-    /// <param name="propertyName">属性名称</param>
-    /// <param name="value">属性值</param>
-    void SetProperty(string propertyName, object value);
-
-    /// <summary>
-    /// 获取 VB 组件属性
-    /// </summary>
-    /// <param name="propertyName">属性名称</param>
-    /// <returns>属性值</returns>
-    object GetProperty(string propertyName);
-    #endregion
-
-    #region 导出和转换
-    /// <summary>
-    /// 获取 VB 组件的代码文本
-    /// </summary>
-    /// <returns>代码文本</returns>
-    string GetCodeText();
-
-    /// <summary>
-    /// 设置 VB 组件的代码文本
-    /// </summary>
-    /// <param name="codeText">新的代码文本</param>
-    void SetCodeText(string codeText);
-
-    /// <summary>
-    /// 将 VB 组件转换为字符串表示（例如，包含名称和代码）
-    /// </summary>
-    /// <returns>字符串表示</returns>
-    string ToString();
-
-    /// <summary>
-    /// 获取 VB 组件的字节数据（如果适用，例如二进制形式）
-    /// </summary>
-    /// <returns>字节数组</returns>
-    byte[] GetBytes();
-    #endregion
+    string DesignerID { get; }
 
 }

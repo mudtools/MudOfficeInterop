@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Vbe;
 /// VBE VBProject 对象的二次封装接口
 /// 提供对 Microsoft.Vbe.Interop.VBProject 的安全访问和操作
 /// </summary>
-public interface IVbeVBProject : IDisposable
+[ComObjectWrap(ComNamespace = "MsVb")]
+public interface IVbeVBProject : IOfficeObject<IVbeVBProject>, IDisposable
 {
     #region 基础属性
     /// <summary>
@@ -32,16 +33,28 @@ public interface IVbeVBProject : IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取 VB 项目所在的Application对象（VBE 对象）
-    /// 对应 VBProject.Application 属性
-    /// </summary>
-    IVbeApplication Application { get; }
-
-    /// <summary>
     /// 获取 VB 项目的完整路径（如果已保存）
     /// 对应 VBProject.FileName 属性
     /// </summary>
     string FileName { get; }
+
+    /// <summary>
+    /// 获取 VB 项目的构建文件名
+    /// 对应 VBProject.BuildFileName 属性
+    /// </summary>
+    string BuildFileName { get; set; }
+
+    /// <summary>
+    /// 获取 VB 项目的 VBE 对象
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IVbeApplication? VBE { get; }
+
+    /// <summary>
+    /// 获取 VB 项目的集合对象
+    /// 对应 VBProject.Collection 属性
+    /// </summary>
+    IVbeVBProjects? Collection { get; }
 
     /// <summary>
     /// 获取 VB 项目的描述
@@ -54,6 +67,12 @@ public interface IVbeVBProject : IDisposable
     /// 对应 VBProject.HelpFile 属性
     /// </summary>
     string HelpFile { get; set; }
+
+    /// <summary>
+    /// 获取 VB 项目的保存状态
+    /// 对应 VBProject.Saved 属性
+    /// </summary>
+    bool Saved { get; }
 
     /// <summary>
     /// 获取 VB 项目的帮助上下文 ID
@@ -74,50 +93,21 @@ public interface IVbeVBProject : IDisposable
     vbext_ProjectProtection Protection { get; }
     #endregion
 
-    #region 状态属性
-    /// <summary>
-    /// 获取 VB 项目是否已保存
-    /// </summary>
-    bool IsSaved { get; }
-
-    /// <summary>
-    /// 获取 VB 项目是否被保护
-    /// </summary>
-    bool IsProtected { get; }
-    #endregion
-
     #region 核心对象集合
     /// <summary>
     /// 获取 VB 项目的组件集合
     /// 对应 VBProject.VBComponents 属性
     /// </summary>
-    IVbeVBComponents VBComponents { get; }
+    IVbeVBComponents? VBComponents { get; }
 
     /// <summary>
     /// 获取 VB 项目的引用集合
     /// 对应 VBProject.References 属性
     /// </summary>
-    IVbeReferences References { get; }
+    IVbeReferences? References { get; }
     #endregion
 
-    #region 操作方法
-    /// <summary>
-    /// 选择 VB 项目
-    /// </summary>
-    /// <param name="replace">是否替换当前选择</param>
-    void Select(bool replace = true);
-
-    /// <summary>
-    /// 删除 VB 项目（从其父 VBProjects 集合中移除）
-    /// 对应 VBProjects.Remove 方法 (间接)
-    /// </summary>
-    void Delete();
-
-    /// <summary>
-    /// 保存 VB 项目
-    /// </summary>
-    void Save();
-
+    #region 操作方法 
     /// <summary>
     /// 另存 VB 项目为
     /// 对应 VBProject.SaveAs 方法
@@ -126,49 +116,9 @@ public interface IVbeVBProject : IDisposable
     void SaveAs(string fileName);
 
     /// <summary>
-    /// 刷新 VB 项目显示
+    /// 生成编译文件
+    /// 对应 VBProject.MakeCompiledFile 方法
     /// </summary>
-    void Refresh();
+    void MakeCompiledFile();
     #endregion
-
-    #region 项目操作
-    /// <summary>
-    /// 编译 VB 项目
-    /// </summary>
-    void Compile();
-
-    /// <summary>
-    /// 运行 VB 项目中的启动对象（如果定义）
-    /// </summary>
-    void Run();
-    #endregion
-
-    #region 引用管理
-    /// <summary>
-    /// 添加引用到 VB 项目
-    /// 对应 References.AddFromGuid 或 AddFromFile 方法
-    /// </summary>
-    /// <param name="reference">引用对象 (GUID/文件路径/类型库)</param>
-    /// <param name="guid">类型库 GUID (可选)</param>
-    /// <param name="major">版本号 (可选)</param>
-    /// <param name="minor">描述 (可选)</param>
-    /// <returns>新添加的引用对象</returns>
-    IVbeReference AddReference(object reference, string guid, int major, int minor);
-
-    /// <summary>
-    /// 移除 VB 项目中的引用
-    /// 对应 References.Remove 方法
-    /// </summary>
-    /// <param name="reference">要移除的引用对象</param>
-    void RemoveReference(IVbeReference reference);
-    #endregion
-
-    #region 导出和转换
-    /// <summary>
-    /// 获取 VB 项目的代码文本
-    /// </summary>
-    /// <returns>项目所有代码的文本</returns>
-    string GetCodeText();
-    #endregion
-
 }

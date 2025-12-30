@@ -10,92 +10,61 @@ namespace MudTools.OfficeInterop.Vbe;
 /// VBE Application 对象的二次封装接口
 /// 提供对 Microsoft.Vbe.Interop.Application (通过 VBE 对象访问) 的安全访问和操作
 /// </summary>
-public interface IVbeApplication : IDisposable
+[ComObjectWrap(ComNamespace = "MsVb", ComClassName = "VBE")]
+public interface IVbeApplication : IOfficeObject<IVbeApplication>, IDisposable
 {
-    #region 基础属性
     /// <summary>
-    /// 获取 VBE 应用程序的版本号
-    /// 对应 Application.Version 属性 (通过 VBE)
+    /// 获取 VBE 的版本号。
     /// </summary>
     string Version { get; }
-    #endregion
-
-    #region 状态属性
-    /// <summary>
-    /// 获取 VBE 应用程序是否可见
-    /// 对应 VBE.MainWindow.Visible 属性
-    /// </summary>
-    bool Visible { get; set; }
-
-    #endregion
-
-    #region 核心对象集合和属性
-    /// <summary>
-    /// 获取 VB 项目集合
-    /// 对应 VBE.VBProjects 属性
-    /// </summary>
-    IVbeVBProjects VBProjects { get; }
 
     /// <summary>
-    /// 获取当前活动的 VB 项目
-    /// 对应 VBE.ActiveVBProject 属性
+    /// 获取 VBE 中的 VBProjects 集合，包含所有 VB 项目。
     /// </summary>
-    object ActiveVBProject { get; } // 使用 object 作为通用占位符
+    IVbeVBProjects? VBProjects { get; }
 
     /// <summary>
-    /// 获取当前活动的 VB 组件
-    /// 对应 VBE.SelectedVBComponent 属性
+    /// 获取 VBE 中的命令栏集合。
     /// </summary>
-    IVbeVBComponent ActiveVBComponent { get; }
+    IOfficeCommandBars? CommandBars { get; }
 
     /// <summary>
-    /// 获取当前活动的代码窗格
-    /// 对应 VBE.ActiveCodePane 属性
+    /// 获取 VBE 中的代码窗格集合。
     /// </summary>
-    object ActiveCodePane { get; } // 使用 object 作为通用占位符
-    #endregion
-
-    #region 环境和设置
-    /// <summary>
-    /// 获取或设置 VBE 主窗口的窗口状态（正常、最小化、最大化）
-    /// 对应 VBE.MainWindow.WindowState 属性
-    /// </summary>
-    vbext_WindowState WindowState { get; set; }
+    IVbeCodePanes? CodePanes { get; }
 
     /// <summary>
-    /// 获取或设置 VBE 主窗口的左边距
-    /// 对应 VBE.MainWindow.Left 属性
+    /// 获取 VBE 中的窗口集合。
     /// </summary>
-    int Left { get; set; }
+    IVbeWindows? Windows { get; }
 
     /// <summary>
-    /// 获取或设置 VBE 主窗口的顶边距
-    /// 对应 VBE.MainWindow.Top 属性
+    /// 获取或设置当前活动的 VB 项目。
     /// </summary>
-    int Top { get; set; }
+    IVbeVBProject? ActiveVBProject { get; set; }
 
     /// <summary>
-    /// 获取或设置 VBE 主窗口的宽度
-    /// 对应 VBE.MainWindow.Width 属性
+    /// 获取当前选定的 VB 组件。
     /// </summary>
-    int Width { get; set; }
+    IVbeVBComponent? SelectedVBComponent { get; }
 
     /// <summary>
-    /// 获取或设置 VBE 主窗口的高度
-    /// 对应 VBE.MainWindow.Height 属性
+    /// 获取 VBE 的主窗口。
     /// </summary>
-    int Height { get; set; }
-    #endregion
-
-    #region 操作方法
-    /// <summary>
-    /// 退出 VBE 应用程序 (通常通过关闭宿主应用程序实现)
-    /// </summary>
-    void Quit();
+    IVbeWindow? MainWindow { get; }
 
     /// <summary>
-    /// 保存所有打开的 VB 项目
+    /// 获取当前活动的窗口。
     /// </summary>
-    void SaveAll();
-    #endregion 
+    IVbeWindow? ActiveWindow { get; }
+
+    /// <summary>
+    /// 获取或设置当前活动的代码窗格。
+    /// </summary>
+    IVbeCodePane? ActiveCodePane { get; set; }
+
+    /// <summary>
+    /// 获取 VBE 中的加载项集合。
+    /// </summary>
+    IVbeAddins? Addins { get; }
 }

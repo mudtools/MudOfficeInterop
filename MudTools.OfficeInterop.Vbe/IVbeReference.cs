@@ -10,8 +10,10 @@ namespace MudTools.OfficeInterop.Vbe;
 /// VBE Reference 对象的二次封装接口
 /// 提供对 Microsoft.Vbe.Interop.Reference 的安全访问和操作
 /// </summary>
-public interface IVbeReference : IDisposable
+[ComObjectWrap(ComNamespace = "MsVb")]
+public interface IVbeReference : IOfficeObject<IVbeReference>, IDisposable
 {
+
     #region 基础属性
     /// <summary>
     /// 获取引用的名称
@@ -48,19 +50,14 @@ public interface IVbeReference : IDisposable
     /// 对应 Reference.Description 属性
     /// </summary>
     string Description { get; }
-
-    /// <summary>
-    /// 获取引用所在的Application对象（VBE 对象）
-    /// 对应 Reference.Application 属性
-    /// </summary>
-    IVbeApplication Application { get; }
     #endregion
 
     #region 状态属性
     /// <summary>
-    /// 获取引用是否为内置引用
+    ///  获取引用的是否内置
     /// </summary>
-    bool IsBuiltIn { get; }
+    bool BuiltIn { get; }
+
 
     /// <summary>
     /// 获取引用是否已破损
@@ -69,8 +66,9 @@ public interface IVbeReference : IDisposable
     bool IsBroken { get; }
 
     /// <summary>
-    /// 获取引用是否被保护
+    /// 获取引用的类型
+    /// 对应 Reference.Type 枚举
     /// </summary>
-    bool IsProtected { get; }
+    vbext_RefKind Type { get; }
     #endregion
 }
