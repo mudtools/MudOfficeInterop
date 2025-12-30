@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// HangulHanjaConversionDictionaries 接口及实现类
 /// </summary>
-public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDictionary>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDictionary?>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
@@ -24,11 +25,24 @@ public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDicti
     int Count { get; }
 
     /// <summary>
-    /// 返回集合中指定的 <see cref="IWordDictionary"/> 对象。
+    /// 通过索引（字典名称或索引号）获取单个活动自定义词典。
     /// </summary>
-    /// <param name="index">要返回的单个对象。可以是代表序号位置的 Number 类型的值。</param>
-    /// <returns>指定索引处的 <see cref="IWordDictionary"/> 对象。</returns>
+    /// <param name="index">字典名称（字符串）或索引号（整数）。</param>
+    /// <returns>指定的活动自定义词典对象。</returns>
     IWordDictionary? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引（字典名称或索引号）获取单个活动自定义词典。
+    /// </summary>
+    /// <param name="name">字典名称（字符串）或索引号（整数）。</param>
+    /// <returns>指定的活动自定义词典对象。</returns>
+    IWordDictionary? this[string name] { get; }
+
+    /// <summary>
+    /// 获取允许的自定义或转换词典的最大数量。
+    /// <para>注：对于 Microsoft Word，此最大值为 10。</para>
+    /// </summary>
+    int Maximum { get; }
 
     /// <summary>
     /// 获取一个 32 位整数，该整数指示创建对象的应用程序。
@@ -50,5 +64,5 @@ public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDicti
     /// </summary>
     /// <param name="FileName">新自定义词典的完整路径和文件名。</param>
     /// <returns>返回新添加的 <see cref="IWordDictionary"/> 对象。</returns>
-    IWordDictionary Add(string FileName);
+    IWordDictionary? Add(string FileName);
 }

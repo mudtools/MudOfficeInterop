@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示包含活动自定义拼写词典的对象集合。
 /// <para>注：使用 CustomDictionaries 属性可返回当前活动的自定义字典的集合。</para>
 /// </summary>
-public interface IWordDictionaries : IEnumerable<IWordDictionary>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordDictionaries : IEnumerable<IWordDictionary?>, IOfficeObject<IWordDictionaries>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -33,12 +34,19 @@ public interface IWordDictionaries : IEnumerable<IWordDictionary>, IDisposable
     /// </summary>
     /// <param name="index">字典名称（字符串）或索引号（整数）。</param>
     /// <returns>指定的活动自定义词典对象。</returns>
-    IWordDictionary this[object index] { get; }
+    IWordDictionary? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引（字典名称或索引号）获取单个活动自定义词典。
+    /// </summary>
+    /// <param name="name">字典名称（字符串）或索引号（整数）。</param>
+    /// <returns>指定的活动自定义词典对象。</returns>
+    IWordDictionary? this[string name] { get; }
 
     /// <summary>
     /// 获取或设置一个 Dictionary 对象，该对象代表将向其添加单词的自定义词典。
     /// </summary>
-    IWordDictionary ActiveCustomDictionary { get; set; }
+    IWordDictionary? ActiveCustomDictionary { get; set; }
 
     /// <summary>
     /// 获取允许的自定义或转换词典的最大数量。
@@ -52,7 +60,7 @@ public interface IWordDictionaries : IEnumerable<IWordDictionary>, IDisposable
     /// </summary>
     /// <param name="fileName">要添加的词典的完整路径和文件名。</param>
     /// <returns>表示添加的自定义词典的对象。</returns>
-    IWordDictionary Add(string fileName);
+    IWordDictionary? Add(string fileName);
 
     /// <summary>
     /// 卸载所有的自定义或转换词典。
