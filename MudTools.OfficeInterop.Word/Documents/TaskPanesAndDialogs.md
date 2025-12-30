@@ -10,7 +10,7 @@
 // 注意：自定义任务窗格通常需要在VSTO插件环境中实现
 // 以下代码展示了核心概念和使用方法
 
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 
 // 访问任务窗格集合
 var taskPanes = app.TaskPanes;
@@ -82,7 +82,7 @@ VSTO插件中创建自定义任务窗格的示例代码。
 Word提供了多种内置对话框，可以通过代码打开和操作这些对话框。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 访问对话框集合
@@ -138,7 +138,7 @@ if (findResult == 1)
 可以通过代码处理用户在对话框中的输入和选择。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 创建自定义对话框交互示例
@@ -454,7 +454,7 @@ public void ShowCustomDocumentProperties()
     // 使用MudTools.OfficeInterop.Word创建支持任务窗格和对话框的文档
     public static void CreateDialogSupportingDocument()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

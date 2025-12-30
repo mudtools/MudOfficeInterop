@@ -11,7 +11,7 @@ IWordApplication接口是MudTools.OfficeInterop.Word库中最重要的接口之�
 IWordApplication接口提供了许多属性来控制和获取Word应用程序的状态：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 ```
 
 首先创建一个Word应用程序实例。
@@ -57,7 +57,7 @@ app.Visibility = WordAppVisibility.Visible;
 通过[Documents](../Core/IWordApplication.cs#L74-L78)属性，我们可以访问所有打开的文档：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 
 // 获取文档集合
 var documents = app.Documents;
@@ -102,7 +102,7 @@ for (int i = 1; i <= count; i++)
 在任何时候，Word应用程序中都有一个活动文档和活动窗口：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 
 // 获取活动文档
 var activeDoc = app.ActiveDocument;
@@ -140,7 +140,7 @@ if (activeWindow != null)
 可以通过IWordApplication接口控制应用程序的各种设置：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 
 // 设置显示警告级别
 app.DisplayAlerts = WdAlertLevel.None;
@@ -188,7 +188,7 @@ ScreenUpdating属性控制是否打开屏幕更新。在批量操作时设置为
 可以精确控制Word应用程序窗口的状态和显示方式：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 
 // 设置窗口状态（正常、最小化、最大化）
 app.WordWindowState = WdWindowState.Maximize;
@@ -223,7 +223,7 @@ class Program
     static void Main()
     {
         // 创建Word应用程序实例
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         
         try
         {
@@ -261,7 +261,7 @@ class Program
 
 ```csharp
 // 创建Word应用程序实例
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 ```
 
 使用BlankWorkbook方法创建一个新的Word应用程序实例。

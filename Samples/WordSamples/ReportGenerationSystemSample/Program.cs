@@ -58,7 +58,7 @@ namespace ReportGenerationSystemSample
                     Directory.CreateDirectory(tempDirectory);
                 }
 
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var templateManager = new ReportTemplateManager(app);
 
                 // 创建销售报表模板
@@ -106,7 +106,7 @@ namespace ReportGenerationSystemSample
                 string templatePath = Path.Combine(tempDirectory, "SalesReportTemplate.dotx");
                 if (!File.Exists(templatePath))
                 {
-                    using var app = WordFactory.BlankWorkbook();
+                    using var app = WordFactory.BlankDocument();
                     var templateManager = new ReportTemplateManager(app);
                     templateManager.CreateSalesReportTemplate(templatePath);
                 }
@@ -122,7 +122,7 @@ namespace ReportGenerationSystemSample
                 string financialTemplatePath = Path.Combine(tempDirectory, "FinancialReportTemplate.dotx");
                 if (!File.Exists(financialTemplatePath))
                 {
-                    using var app = WordFactory.BlankWorkbook();
+                    using var app = WordFactory.BlankDocument();
                     var templateManager = new ReportTemplateManager(app);
                     templateManager.CreateFinancialReportTemplate(financialTemplatePath);
                 }
@@ -135,7 +135,7 @@ namespace ReportGenerationSystemSample
                 string projectTemplatePath = Path.Combine(tempDirectory, "ProjectProgressReportTemplate.dotx");
                 if (!File.Exists(projectTemplatePath))
                 {
-                    using var app = WordFactory.BlankWorkbook();
+                    using var app = WordFactory.BlankDocument();
                     var templateManager = new ReportTemplateManager(app);
                     templateManager.CreateProjectProgressReportTemplate(projectTemplatePath);
                 }
@@ -173,7 +173,7 @@ namespace ReportGenerationSystemSample
                     string templatePath = Path.Combine(tempDirectory, "SalesReportTemplate.dotx");
                     if (!File.Exists(templatePath))
                     {
-                        using var appb = WordFactory.BlankWorkbook();
+                        using var appb = WordFactory.BlankDocument();
                         var templateManager = new ReportTemplateManager(appb);
                         templateManager.CreateSalesReportTemplate(templatePath);
                     }
@@ -239,7 +239,7 @@ namespace ReportGenerationSystemSample
                 string templatePath = Path.Combine(tempDirectory, "SalesReportTemplate.dotx");
                 if (!File.Exists(templatePath))
                 {
-                    using var app = WordFactory.BlankWorkbook();
+                    using var app = WordFactory.BlankDocument();
                     var templateManager1 = new ReportTemplateManager(app);
                     templateManager1.CreateSalesReportTemplate(templatePath);
                 }
@@ -314,7 +314,7 @@ namespace ReportGenerationSystemSample
 
                 // 步骤1: 创建模板
                 Console.WriteLine("步骤1: 创建报表模板");
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var templateManager = new ReportTemplateManager(app);
                 string templatePath = Path.Combine(tempDirectory, "SalesReportTemplate.dotx");
                 templateManager.CreateSalesReportTemplate(templatePath);
@@ -367,7 +367,7 @@ namespace ReportGenerationSystemSample
                 }
 
                 // 创建各个管理器
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var templateManager = new ReportTemplateManager(app);
                 var dataFiller = new ReportDataFiller();
                 var formatter = new ReportFormatter();

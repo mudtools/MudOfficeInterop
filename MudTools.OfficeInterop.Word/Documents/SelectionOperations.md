@@ -7,7 +7,7 @@
 IWordSelection接口封装了Word中选择区域的所有功能，允许开发者像用户一样操作文档。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var selection = app.Selection;
 ```
 
@@ -34,7 +34,7 @@ if (selection != null)
 选择区域是Word中一个动态的概念，它可以是一个插入点(光标位置)或选中的文本区域。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var selection = app.Selection;
 
 // 检查选择区域状态
@@ -64,7 +64,7 @@ if (selection != null)
 选择区域有不同的类型，每种类型有不同的操作特点：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var selection = app.Selection;
 
@@ -111,7 +111,7 @@ if (selection != null)
 选择区域提供了丰富的文本操作功能：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var selection = app.Selection;
 
@@ -152,7 +152,7 @@ if (selection != null)
 可以动态扩展或收缩选择区域：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var selection = app.Selection;
 
@@ -189,7 +189,7 @@ if (selection != null)
 选择区域还支持更复杂的操作：
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var selection = app.Selection;
 
@@ -233,7 +233,7 @@ class SelectionDemo
 {
     public static void DemonstrateSelectionOperations()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

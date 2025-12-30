@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示下拉列表或组合框内容控件中列表项的集合。
 /// <para>注：使用 <see cref="Add(string, string, int)"/> 方法向此集合添加新项。</para>
 /// </summary>
-public interface IWordContentControlListEntries : IEnumerable<IWordContentControlListEntry>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordContentControlListEntries : IEnumerable<IWordContentControlListEntry?>, IOfficeObject<IWordContentControlListEntries>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -33,7 +35,7 @@ public interface IWordContentControlListEntries : IEnumerable<IWordContentContro
     /// </summary>
     /// <param name="index">索引（从 1 开始）。</param>
     /// <returns>指定的列表项对象。</returns>
-    IWordContentControlListEntry this[int index] { get; }
+    IWordContentControlListEntry? this[int index] { get; }
 
     /// <summary>
     /// 向下拉列表或组合框内容控件添加新列表项。
@@ -42,7 +44,7 @@ public interface IWordContentControlListEntries : IEnumerable<IWordContentContro
     /// <param name="value">与列表项关联的编程值。</param>
     /// <param name="index">插入位置（从 1 开始）。如果省略或为 0，则添加到末尾。</param>
     /// <returns>新创建的列表项对象。</returns>
-    IWordContentControlListEntry Add(string displayText, string value, int index = 0);
+    IWordContentControlListEntry? Add(string displayText, string value, int index = 0);
 
     /// <summary>
     /// 从下拉列表或组合框内容控件中清除所有项。

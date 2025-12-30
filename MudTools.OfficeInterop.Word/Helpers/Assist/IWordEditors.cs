@@ -9,13 +9,15 @@ namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 表示有权编辑文档特定部分的用户或用户组的集合。
-/// <para>注：使用 <see cref="Add(object)"/> 方法可授予指定用户或组修改文档中的范围或所选内容的权限。</para>
+/// <para>注：使用 <see cref="Add(WdEditorType?)"/> 方法可授予指定用户或组修改文档中的范围或所选内容的权限。</para>
 /// </summary>
-public interface IWordEditors : IEnumerable<IWordEditor>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
+public interface IWordEditors : IEnumerable<IWordEditor?>, IOfficeObject<IWordEditors>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -33,7 +35,14 @@ public interface IWordEditors : IEnumerable<IWordEditor>, IDisposable
     /// </summary>
     /// <param name="index">索引（从1开始）或编辑者的ID。</param>
     /// <returns>指定的编辑者对象。</returns>
-    IWordEditor this[object index] { get; }
+    IWordEditor? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引或编辑者ID获取单个编辑者。
+    /// </summary>
+    /// <param name="id">索引（从1开始）或编辑者的ID。</param>
+    /// <returns>指定的编辑者对象。</returns>
+    IWordEditor? this[string id] { get; }
 
     /// <summary>
     /// 添加一个新的编辑者权限。

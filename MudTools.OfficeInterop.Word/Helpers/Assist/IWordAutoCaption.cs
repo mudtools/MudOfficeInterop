@@ -12,13 +12,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：AutoCaption 对象是 AutoCaptions 集合的成员。</para>
 /// <para>注：使用 AutoCaptions(index) 可返回单个 AutoCaption 对象，其中 index 是类名或索引号。</para>
 /// </summary>
-public interface IWordAutoCaption : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordAutoCaption : IOfficeObject<IWordAutoCaption>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -48,6 +50,7 @@ public interface IWordAutoCaption : IDisposable
     /// <summary>
     /// 获取或设置一个值，该值指示在自动插入的题注中使用的题注标签。
     /// </summary>
+    [ComPropertyWrap(IsMethod = true, NeedConvert = true)]
     string CaptionLabel { get; set; }
 
     /// <summary>

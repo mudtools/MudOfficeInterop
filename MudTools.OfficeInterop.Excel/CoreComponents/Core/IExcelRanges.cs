@@ -11,8 +11,22 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel范围集合的接口，继承自IDisposable和IEnumerable&lt;IExcelRange&gt;接口
 /// 用于管理和操作多个Excel范围对象的集合
 /// </summary>
-public interface IExcelRanges : IDisposable, IEnumerable<IExcelRange>
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelRanges : IDisposable, IOfficeObject<IExcelRanges>, IEnumerable<IExcelRange?>
 {
+    /// <summary>
+    /// 获取工作簿集合所在的父对象（通常是Application）
+    /// 对应 Workbooks.Parent 属性
+    /// </summary>
+    object? Parent { get; }
+
+    /// <summary>
+    /// 获取工作簿集合所在的Application对象
+    /// 对应 Workbooks.Application 属性
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IExcelApplication? Application { get; }
+
     /// <summary>
     /// 获取范围集合中的范围数量
     /// </summary>
@@ -23,34 +37,14 @@ public interface IExcelRanges : IDisposable, IEnumerable<IExcelRange>
     /// </summary>
     /// <param name="index">范围索引</param>
     /// <returns>范围对象</returns>
-    IExcelRange this[int index] { get; }
+    IExcelRange? this[int index] { get; }
 
     /// <summary>
     /// 根据名称获取范围
     /// </summary>
     /// <param name="name">范围名称</param>
     /// <returns>范围对象</returns>
-    IExcelRange this[string name] { get; }
+    IExcelRange? this[string name] { get; }
 
-    /// <summary>
-    /// 根据索引或名称获取范围
-    /// </summary>
-    /// <param name="index">范围索引或名称</param>
-    /// <returns>范围对象</returns>
-    IExcelRange GetItem(object index);
-
-    /// <summary>
-    /// 根据地址获取范围
-    /// </summary>
-    /// <param name="address">范围地址</param>
-    /// <param name="referenceStyle">引用样式</param>
-    /// <param name="external">是否为外部引用</param>
-    /// <returns>范围对象</returns>
-    IExcelRange GetRange(string address, XlReferenceStyle referenceStyle = XlReferenceStyle.xlA1, bool external = false);
-
-    /// <summary>
-    /// 获取父级工作簿
-    /// </summary>
-    IExcelWorksheet Parent { get; }
 
 }

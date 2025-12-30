@@ -1,4 +1,4 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -8,37 +8,43 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// Browser 接口及实现类
+/// Word 文档自定义属性集合接口
 /// </summary>
-public interface IWordBrowser : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordCustomProperties : IDisposable, IOfficeObject<IWordCustomProperties>, IEnumerable<IWordCustomProperty?>
 {
     /// <summary>
-    /// 获取代表 Microsoft Word 应用程序的 Application 对象。
+    /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
-    /// 获取代表指定对象的父对象的对象。
+    /// 获取父对象。
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置浏览器的搜索类型。
+    /// 获取自定义属性数量
     /// </summary>
-    WdBrowseTarget Target { get; set; }
+    int Count { get; }
 
     /// <summary>
-    /// 获取一个 32 位整数，该整数指示创建对象的应用程序。
+    /// 根据索引获取自定义属性
     /// </summary>
-    int Creator { get; }
+    IWordCustomProperty? this[int index] { get; }
 
     /// <summary>
-    /// 将插入点移至前一个指定项。
+    /// 根据名称获取自定义属性
     /// </summary>
-    void Previous();
+    IWordCustomProperty? this[string name] { get; }
+
 
     /// <summary>
-    /// 将插入点移至下一个指定项。
+    /// 添加自定义属性
     /// </summary>
-    void Next();
+    /// <param name="name">属性名称</param>
+    /// <param name="value">属性值</param>
+    /// <returns>新添加的自定义属性</returns>
+    IWordCustomProperty? Add(string name, string value);
 }

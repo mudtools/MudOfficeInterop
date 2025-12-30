@@ -87,7 +87,7 @@ app.Quit();
 ### Word 文档格式化
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加标题

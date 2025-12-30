@@ -162,7 +162,7 @@ namespace RibbonCustomizationSample
             try
             {
                 // 模拟使用MudTools.OfficeInterop.Word创建支持Ribbon定制的文档
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = true;
 
                 try
@@ -221,7 +221,7 @@ namespace RibbonCustomizationSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 隐藏Word窗口
 
                 // 创建Ribbon管理器

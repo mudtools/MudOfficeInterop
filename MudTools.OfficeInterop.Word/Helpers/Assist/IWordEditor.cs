@@ -8,14 +8,15 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// 表示有权编辑文档特定部分的单个用户或用户组。
-/// <para>注：可授予权限的用户包括单独的参与者以及为"文档工作区"站点定义的用户组。分配给区域和选定内容的权限仅在文档受到保护之后生效。</para>
+/// 表示已被授予特定权限以编辑文档部分的单个用户。
 /// </summary>
-public interface IWordEditor : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordEditor : IOfficeObject<IWordEditor>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -44,17 +45,17 @@ public interface IWordEditor : IDisposable
     IWordRange? NextRange { get; }
 
     /// <summary>
-    /// 删除此编辑者权限。
+    /// 删除指定的对象。
     /// </summary>
     void Delete();
 
     /// <summary>
-    /// 删除所有编辑者的权限。
+    /// 删除文档中特定用户的所有编辑权限。
     /// </summary>
     void DeleteAll();
 
     /// <summary>
-    /// 选择所有编辑者的范围。
+    /// 选择主故事、画布或文档页眉页脚中的所有形状。
     /// </summary>
     void SelectAll();
 }

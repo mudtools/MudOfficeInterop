@@ -10,7 +10,7 @@ Ribbon控件包括按钮、下拉列表、编辑框等多种UI元素，可以通
 // 注意：Ribbon定制通常需要通过XML文件和回调函数实现
 // 以下代码展示了如何通过代码访问Ribbon对象
 
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 // 获取Ribbon对象（需要VSTO或COM扩展支持）
 // var ribbon = app.Ribbon; // 这在纯COM互操作中通常不可用
 
@@ -323,7 +323,7 @@ public void RefreshRibbon()
     // 模拟使用MudTools.OfficeInterop.Word创建支持Ribbon定制的文档
     public static void CreateRibbonSupportingDocument()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

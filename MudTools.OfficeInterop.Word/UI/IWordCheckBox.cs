@@ -4,8 +4,20 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示Word文档中的一个复选框窗体域（Check Box Form Field）的封装接口。
 /// </summary>
-public interface IWordCheckBox : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordCheckBox : IOfficeObject<IWordCheckBox>, IDisposable
 {
+    /// <summary>
+    /// 获取代表 Microsoft Word 应用程序的 Application 对象。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取代表指定对象的父对象的对象。
+    /// </summary>
+    object? Parent { get; }
+
     /// <summary>
     /// 获取或设置复选框是否被选中。
     /// </summary>

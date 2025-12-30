@@ -51,7 +51,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -84,7 +84,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 添加示例内容
@@ -124,7 +124,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 创建表单文档
@@ -180,7 +180,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 var document = app.ActiveDocument;
 
                 // 添加文档内容
@@ -230,7 +230,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = true;
 
                 try
@@ -363,7 +363,7 @@ namespace DocumentProtectionAndSecuritySample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 隐藏Word窗口
 
                 var document = app.ActiveDocument;

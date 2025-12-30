@@ -25,7 +25,7 @@ namespace FAQSample
             try
             {
                 // 尝试创建Word应用程序实例来检查Office是否安装
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 return app != null;
             }
             catch (COMException)
@@ -149,7 +149,7 @@ namespace FAQSample
                 {
                     if (_sharedInstance == null)
                     {
-                        _sharedInstance = WordFactory.BlankWorkbook();
+                        _sharedInstance = WordFactory.BlankDocument();
                         _sharedInstance.Visible = false;
                     }
                     return _sharedInstance;
@@ -202,7 +202,7 @@ namespace FAQSample
             {
                 var batch = documentPaths.Skip(i).Take(batchSize).ToList();
 
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false;
                 app.ScreenUpdating = false;
                 app.DisplayAlerts = WdAlertLevel.wdAlertsNone;

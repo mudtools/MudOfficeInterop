@@ -7,7 +7,7 @@
 IWordTable接口代表单个表格，而IWordTables接口代表文档中所有表格的集合。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 获取表格集合
@@ -39,7 +39,7 @@ if (tableCount > 0)
 可以通过多种方式创建表格，也可以根据需要删除表格。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 方法1：在文档末尾添加表格
@@ -80,7 +80,7 @@ table1.Descr = "这是一个示例表格";
 表格格式化包括边框、底纹、对齐方式、尺寸等设置。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 创建表格
@@ -135,7 +135,7 @@ table.Columns[3].Width = 200;
 单元格是表格的基本组成单位，可以对单元格进行各种操作。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 创建表格
@@ -192,7 +192,7 @@ cell.Shading.BackgroundPatternColor = WdColor.wdColorLightBlue;
 可以对表格中的数据进行各种处理操作。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 创建表格并填充数据
@@ -265,7 +265,7 @@ for (int row = 2; row <= 4; row++)
 表格还支持一些高级操作，如排序、公式计算等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 创建带数据的表格
@@ -333,7 +333,7 @@ class TableReportDemo
 {
     public static void CreateTableReport()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

@@ -402,7 +402,7 @@ namespace RibbonCustomizationSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = true;
 
                 var document = app.ActiveDocument;

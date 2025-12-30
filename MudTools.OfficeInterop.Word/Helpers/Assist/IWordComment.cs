@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 批注的封装接口。
 /// </summary>
-public interface IWordComment : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordComment : IOfficeObject<IWordComment>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -23,110 +25,82 @@ public interface IWordComment : IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取批注索引。
+    /// 获取表示指定对象中包含的文档部分的 Range 对象。
+    /// </summary>
+    IWordRange? Range { get; }
+
+    /// <summary>
+    /// 获取表示脚注、尾注或批注引用标记的 Range 对象。
+    /// </summary>
+    IWordRange? Reference { get; }
+
+    /// <summary>
+    /// 获取表示指定批注标记的文本范围的 Range 对象。
+    /// </summary>
+    IWordRange? Scope { get; }
+
+    /// <summary>
+    /// 获取表示集合中项目位置的整数。
     /// </summary>
     int Index { get; }
 
     /// <summary>
-    /// 获取或设置批注作者。
+    /// 获取或设置批注的作者名称。
     /// </summary>
     string Author { get; set; }
 
     /// <summary>
-    /// 获取或设置批注初始。
+    /// 获取或设置与特定批注关联的用户缩写。
     /// </summary>
     string Initial { get; set; }
 
     /// <summary>
-    /// 获取批注范围。
+    /// 获取或设置一个值，该值指示与批注关联的文本是否在屏幕提示中显示。
     /// </summary>
-    IWordRange Range { get; }
+    bool ShowTip { get; set; }
 
     /// <summary>
-    /// 获取批注文本范围。
-    /// </summary>
-    IWordRange CommentRange { get; }
-
-    /// <summary>
-    /// 获取批注日期时间。
-    /// </summary>
-    DateTime Date { get; }
-
-    /// <summary>
-    /// 获取批注字符数。
-    /// </summary>
-    int CharactersCount { get; }
-
-    /// <summary>
-    /// 获取批注单词数。
-    /// </summary>
-    int WordsCount { get; }
-
-    /// <summary>
-    /// 获取批注句子数。
-    /// </summary>
-    int SentencesCount { get; }
-
-    /// <summary>
-    /// 选择批注。
-    /// </summary>
-    void Select();
-
-    /// <summary>
-    /// 删除批注。
+    /// 删除指定的对象。
     /// </summary>
     void Delete();
 
     /// <summary>
-    /// 复制批注。
+    /// 打开指定的批注进行编辑。
     /// </summary>
-    void Copy();
+    void Edit();
 
     /// <summary>
-    /// 获取批注文本内容。
+    /// 获取输入批注的日期和时间。
     /// </summary>
-    /// <returns>批注文本。</returns>
-    string GetText();
+    DateTime Date { get; }
 
     /// <summary>
-    /// 设置批注文本内容。
+    /// 获取一个布尔值，该值表示批注是否为手写批注。
     /// </summary>
-    /// <param name="text">文本内容。</param>
-    void SetText(string text);
+    bool IsInk { get; }
 
     /// <summary>
-    /// 追加文本到批注末尾。
+    /// 获取或设置一个值，该值指示批注是否已完成。
     /// </summary>
-    /// <param name="text">要追加的文本。</param>
-    void AppendText(string text);
+    bool Done { get; set; }
 
     /// <summary>
-    /// 检查批注是否包含指定文本。
+    /// 获取此批注的祖先批注。
     /// </summary>
-    /// <param name="text">要检查的文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <returns>是否包含。</returns>
-    bool ContainsText(string text, bool matchCase = false);
+    IWordComment? Ancestor { get; }
 
     /// <summary>
-    /// 查找并替换批注中的文本。
+    /// 获取与此批注关联的共同作者联系人。
     /// </summary>
-    /// <param name="findText">要查找的文本。</param>
-    /// <param name="replaceText">替换文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <param name="matchWholeWord">是否匹配整个单词。</param>
-    /// <returns>替换次数。</returns>
-    int ReplaceText(string findText, string replaceText, bool matchCase = false, bool matchWholeWord = false);
+    IWordCoAuthor? Contact { get; }
 
     /// <summary>
-    /// 获取批注引用文本。
+    /// 递归删除此批注及其所有回复。
     /// </summary>
-    /// <returns>引用文本。</returns>
-    string GetReferenceText();
+    void DeleteRecursively();
 
     /// <summary>
-    /// 获取批注引用范围。
+    /// 获取此批注的所有回复的集合。
     /// </summary>
-    /// <returns>引用范围。</returns>
-    IWordRange GetReferenceRange();
+    IWordComments? Replies { get; }
 }

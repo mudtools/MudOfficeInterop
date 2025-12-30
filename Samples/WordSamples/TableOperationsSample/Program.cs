@@ -63,7 +63,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 获取表格集合
@@ -103,7 +103,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 方法1：在文档末尾添加表格
@@ -136,7 +136,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 创建表格
@@ -180,7 +180,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 创建表格
@@ -217,7 +217,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 创建表格
@@ -279,7 +279,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 创建带数据的表格
@@ -334,7 +334,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 app.Visible = false; // 在实际应用示例中隐藏Word窗口
 
                 using var document = app.ActiveDocument;
@@ -450,7 +450,7 @@ namespace TableOperationsSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 创建表格
@@ -579,7 +579,7 @@ namespace TableOperationsSample
         /// <returns>简单表格结果</returns>
         public SimpleTableResult CreateSimpleTable()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
 
             // 创建表格
@@ -599,7 +599,7 @@ namespace TableOperationsSample
         /// <returns>数据表格结果</returns>
         public DataTableResult CreateDataTable()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
 
             // 创建表格
@@ -643,7 +643,7 @@ namespace TableOperationsSample
         /// <returns>格式化表格结果</returns>
         public FormattedTableResult CreateFormattedTable()
         {
-            using var app = WordFactory.BlankWorkbook();
+            using var app = WordFactory.BlankDocument();
             var document = app.ActiveDocument;
 
             // 创建表格

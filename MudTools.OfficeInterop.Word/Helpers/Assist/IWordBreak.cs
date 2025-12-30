@@ -8,28 +8,29 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// Word 文档自定义属性接口
+///  表示一个 Word 文档中的分页符。
 /// </summary>
-public interface IWordCustomProperty : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordBreak : IOfficeObject<IWordBreak>, IDisposable
 {
-
     /// <summary>
-    /// 获取属性名称
+    /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
-    string Name { get; }
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置属性值
-    /// </summary>
-    object Value { get; set; }
-
-    /// <summary>
-    /// 获取父对象
+    /// 获取代表对象的父对象。
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 删除自定义属性
+    /// 获取或设置对象所代表的 Word 文档。
     /// </summary>
-    void Delete();
+    IWordRange? Range { get; }
+
+    /// <summary>
+    /// 获取当前页的索引。
+    /// </summary>
+    int PageIndex { get; }
 }

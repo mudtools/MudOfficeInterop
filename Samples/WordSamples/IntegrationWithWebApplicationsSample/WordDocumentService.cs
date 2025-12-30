@@ -34,7 +34,7 @@ namespace IntegrationWithWebApplicationsSample
             try
             {
                 // 设置线程为STA模式（如果在新线程中运行）
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 添加内容

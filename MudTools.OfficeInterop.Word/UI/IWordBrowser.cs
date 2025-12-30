@@ -8,26 +8,26 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// HangulHanjaConversionDictionaries 接口及实现类
+/// Browser 接口及实现类
 /// </summary>
-public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDictionary>, IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordBrowser : IOfficeObject<IWordBrowser>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
-    /// 获取集合中自定义词典的数量。
+    /// 获取代表指定对象的父对象的对象。
     /// </summary>
-    int Count { get; }
+    object? Parent { get; }
 
     /// <summary>
-    /// 返回集合中指定的 <see cref="IWordDictionary"/> 对象。
+    /// 获取或设置浏览器的搜索类型。
     /// </summary>
-    /// <param name="index">要返回的单个对象。可以是代表序号位置的 Number 类型的值。</param>
-    /// <returns>指定索引处的 <see cref="IWordDictionary"/> 对象。</returns>
-    IWordDictionary? this[int index] { get; }
+    WdBrowseTarget Target { get; set; }
 
     /// <summary>
     /// 获取一个 32 位整数，该整数指示创建对象的应用程序。
@@ -35,19 +35,12 @@ public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDicti
     int Creator { get; }
 
     /// <summary>
-    /// 获取或设置活动的自定义词典。
+    /// 将插入点移至前一个指定项。
     /// </summary>
-    IWordDictionary? ActiveCustomDictionary { get; set; }
+    void Previous();
 
     /// <summary>
-    /// 获取内置的韩文/汉字转换词典。
+    /// 将插入点移至下一个指定项。
     /// </summary>
-    IWordDictionary? BuiltinDictionary { get; }
-
-    /// <summary>
-    /// 将新的自定义词典添加到集合中。
-    /// </summary>
-    /// <param name="FileName">新自定义词典的完整路径和文件名。</param>
-    /// <returns>返回新添加的 <see cref="IWordDictionary"/> 对象。</returns>
-    IWordDictionary Add(string FileName);
+    void Next();
 }

@@ -8,31 +8,17 @@
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
-/// Word 文档自定义属性集合接口
+/// 指定在"书签"对话框中显示的书签名称的排序选项
 /// </summary>
-public interface IWordCustomProperties : IDisposable, IEnumerable<IWordCustomProperty>
+public enum WdBookmarkSortBy
 {
+    /// <summary>
+    /// 按书签名称排序
+    /// </summary>
+    wdSortByName,
 
     /// <summary>
-    /// 获取自定义属性数量
+    /// 按文档中的位置排序
     /// </summary>
-    int Count { get; }
-
-    /// <summary>
-    /// 根据索引获取自定义属性
-    /// </summary>
-    IWordCustomProperty Item(int index);
-
-    /// <summary>
-    /// 根据名称获取自定义属性
-    /// </summary>
-    IWordCustomProperty Item(string name);
-
-    /// <summary>
-    /// 添加自定义属性
-    /// </summary>
-    /// <param name="name">属性名称</param>
-    /// <param name="value">属性值</param>
-    /// <returns>新添加的自定义属性</returns>
-    IWordCustomProperty Add(string name, object value);
+    wdSortByLocation
 }

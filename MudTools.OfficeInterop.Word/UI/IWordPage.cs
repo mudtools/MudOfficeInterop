@@ -10,18 +10,20 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中的一个页面布局信息。
 /// 封装了 Microsoft.Office.Interop.Word.Page 对象。
 /// </summary>
-/// <remarks>
-/// Page 对象代表文档页面的布局信息，通常在打印或页面布局视图中生成。
-/// 它提供对页面尺寸、边界和内容范围的访问。
-/// </remarks>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordPage : IDisposable
 {
-    #region 属性
 
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取代表 <see cref="IWordPage"/> 对象的父对象（通常是 Pages 集合）。
+    /// </summary>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取页面的宽度（以磅为单位）。
@@ -44,9 +46,19 @@ public interface IWordPage : IDisposable
     float? Top { get; }
 
     /// <summary>
-    /// 获取代表 <see cref="IWordPage"/> 对象的父对象（通常是 Pages 集合）。
+    /// 获取页面矩形集合。
     /// </summary>
-    object? Parent { get; }
-    #endregion
+    IWordRectangles? Rectangles { get; }
+
+    /// <summary>
+    /// 获取页面分页符。
+    /// </summary>
+    IWordBreaks? Breaks { get; }
+
+    /// <summary>
+    /// 保存为PNG文件
+    /// </summary>
+    /// <param name="fileName"></param>
+    void SaveAsPNG(string fileName);
 
 }

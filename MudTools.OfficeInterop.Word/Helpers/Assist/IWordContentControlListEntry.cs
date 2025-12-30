@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示下拉列表或组合框内容控件中的一个列表项。
 /// <para>注：ContentControlListEntry 对象是 ContentControlListEntries 集合的成员。</para>
 /// </summary>
-public interface IWordContentControlListEntry : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordContentControlListEntry : IOfficeObject<IWordContentControlListEntry>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

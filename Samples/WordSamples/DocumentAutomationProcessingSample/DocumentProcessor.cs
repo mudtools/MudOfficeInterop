@@ -27,7 +27,7 @@ namespace DocumentAutomationProcessingSample
         {
             try
             {
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 using var document = app.ActiveDocument;
 
                 // 设置文档标题

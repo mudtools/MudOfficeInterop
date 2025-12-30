@@ -7,7 +7,7 @@
 Word中的图形对象包括图片、形状、艺术字、SmartArt等。这些对象可以通过InlineShapes和Shapes集合进行管理。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 获取内嵌图形集合
@@ -39,7 +39,7 @@ Console.WriteLine($"浮动图形数量: {shapeCount}");
 插入图片是文档处理中最常用的操作之一，可以通过多种方式插入并调整图片。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 在文档末尾插入图片
@@ -99,7 +99,7 @@ shape.WrapFormat.Type = WdWrapType.wdWrapSquare;
 Word支持多种形状，包括基本形状、箭头、流程图元素等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加矩形形状
@@ -168,7 +168,7 @@ shape3.Fill.ForeColor.RGB = (int)WdColor.wdColorGreen;
 SmartArt是Word中用于创建专业图表的工具，可以快速创建各种类型的图形。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加SmartArt图形
@@ -228,7 +228,7 @@ smartArt.Layout = smartArt.Parent.SmartArtLayouts[3];
 可以为图形添加各种视觉效果，如阴影、发光、反射等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加形状
@@ -302,7 +302,7 @@ class GraphicsDemo
 {
     public static void CreateGraphicsDocument()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

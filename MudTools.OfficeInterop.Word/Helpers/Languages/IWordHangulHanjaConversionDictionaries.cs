@@ -6,24 +6,21 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
-/// 表示包含活动自定义拼写词典的对象集合。
-/// <para>注：使用 CustomDictionaries 属性可返回当前活动的自定义字典的集合。</para>
+/// HangulHanjaConversionDictionaries 接口及实现类
 /// </summary>
-public interface IWordDictionaries : IEnumerable<IWordDictionary>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDictionary?>, IDisposable
 {
     /// <summary>
-    /// 获取与该对象关联的 Word 应用程序。
+    /// 获取代表 Microsoft Word 应用程序的 Application 对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
-    /// 获取父对象。
-    /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 获取集合中的活动自定义词典数量。
+    /// 获取集合中自定义词典的数量。
     /// </summary>
     int Count { get; }
 
@@ -32,12 +29,14 @@ public interface IWordDictionaries : IEnumerable<IWordDictionary>, IDisposable
     /// </summary>
     /// <param name="index">字典名称（字符串）或索引号（整数）。</param>
     /// <returns>指定的活动自定义词典对象。</returns>
-    IWordDictionary this[object index] { get; }
+    IWordDictionary? this[int index] { get; }
 
     /// <summary>
-    /// 获取或设置一个 Dictionary 对象，该对象代表将向其添加单词的自定义词典。
+    /// 通过索引（字典名称或索引号）获取单个活动自定义词典。
     /// </summary>
-    IWordDictionary ActiveCustomDictionary { get; set; }
+    /// <param name="name">字典名称（字符串）或索引号（整数）。</param>
+    /// <returns>指定的活动自定义词典对象。</returns>
+    IWordDictionary? this[string name] { get; }
 
     /// <summary>
     /// 获取允许的自定义或转换词典的最大数量。
@@ -46,16 +45,24 @@ public interface IWordDictionaries : IEnumerable<IWordDictionary>, IDisposable
     int Maximum { get; }
 
     /// <summary>
-    /// 将新的自定义词典添加到活动自定义词典的集合。
-    /// <para>注：如果没有由 FileName 指定名称的文件，Word 会创建该文件。</para>
+    /// 获取一个 32 位整数，该整数指示创建对象的应用程序。
     /// </summary>
-    /// <param name="fileName">要添加的词典的完整路径和文件名。</param>
-    /// <returns>表示添加的自定义词典的对象。</returns>
-    IWordDictionary Add(string fileName);
+    int Creator { get; }
 
     /// <summary>
-    /// 卸载所有的自定义或转换词典。
-    /// <para>注：此方法并不删除词典文件，只是将它们从活动集合中移除。</para>
+    /// 获取或设置活动的自定义词典。
     /// </summary>
-    void ClearAll();
+    IWordDictionary? ActiveCustomDictionary { get; set; }
+
+    /// <summary>
+    /// 获取内置的韩文/汉字转换词典。
+    /// </summary>
+    IWordDictionary? BuiltinDictionary { get; }
+
+    /// <summary>
+    /// 将新的自定义词典添加到集合中。
+    /// </summary>
+    /// <param name="FileName">新自定义词典的完整路径和文件名。</param>
+    /// <returns>返回新添加的 <see cref="IWordDictionary"/> 对象。</returns>
+    IWordDictionary? Add(string FileName);
 }

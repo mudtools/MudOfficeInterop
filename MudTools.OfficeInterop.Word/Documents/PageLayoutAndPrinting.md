@@ -7,7 +7,7 @@
 页面设置是文档布局的基础，包括纸张大小、方向、边距等属性。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 获取页面设置对象
@@ -80,7 +80,7 @@ pageSetup.LineNumbering.RestartMode = WdNumberingRule.wdRestartContinuous;
 页眉和页脚是文档中重复出现的内容，通常包含页码、文档标题、日期等信息。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 获取页眉和页脚范围
@@ -142,7 +142,7 @@ document.Sections[1].PageSetup.OddAndEvenPagesHeaderFooter = 1;
 分节符和分页符用于控制文档的结构和布局。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 添加内容
@@ -199,7 +199,7 @@ section3.PageSetup.Orientation = WdOrientation.wdOrientPortrait;
 打印选项控制文档的打印行为，包括打印范围、份数、双面打印等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 打印预览
@@ -248,7 +248,7 @@ class PageLayoutDemo
 {
     public static void CreateProfessionalDocument()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         app.Visible = true;
         
         try

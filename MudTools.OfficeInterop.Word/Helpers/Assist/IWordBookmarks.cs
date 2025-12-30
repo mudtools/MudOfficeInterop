@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档书签集合接口
 /// </summary>
-public interface IWordBookmarks : IDisposable, IEnumerable<IWordBookmark>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordBookmarks : IDisposable, IOfficeObject<IWordBookmarks>, IEnumerable<IWordBookmark?>
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -28,20 +30,32 @@ public interface IWordBookmarks : IDisposable, IEnumerable<IWordBookmark>
     int Count { get; }
 
     /// <summary>
+    /// 获取或设置默认排序方式
+    /// </summary>
+    WdBookmarkSortBy DefaultSorting { get; set; }
+
+    /// <summary>
     /// 添加书签
     /// </summary>
     /// <param name="name">书签名称</param>
     /// <param name="range">书签范围</param>
     /// <returns>新添加的书签</returns>
-    IWordBookmark Add(string name, IWordRange range);
+    IWordBookmark? Add(string name, IWordRange range);
+
+    /// <summary>
+    /// 判断指定名称的书签是否存在
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    bool? Exists(string name);
 
     /// <summary>
     /// 根据索引获取书签
     /// </summary>
-    IWordBookmark this[int index] { get; }
+    IWordBookmark? this[int index] { get; }
 
     /// <summary>
     /// 根据名称获取书签
     /// </summary>
-    IWordBookmark this[string name] { get; }
+    IWordBookmark? this[string name] { get; }
 }

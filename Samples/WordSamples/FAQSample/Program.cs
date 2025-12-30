@@ -77,12 +77,12 @@ namespace FAQSample
                 Console.WriteLine("使用using语句或try-finally块确保COM对象正确释放:");
 
                 // 演示正确的资源释放
-                using (var app = WordFactory.BlankWorkbook())
+                using (var app = WordFactory.BlankDocument())
                 {
                     Console.WriteLine("  - 使用using语句自动释放Word应用程序");
                 }
 
-                var app2 = WordFactory.BlankWorkbook();
+                var app2 = WordFactory.BlankDocument();
                 try
                 {
                     Console.WriteLine("  - 使用try-finally手动释放Word应用程序");
@@ -109,7 +109,7 @@ namespace FAQSample
             {
                 // 控制Word窗口可见性
                 Console.WriteLine("1. 控制Word窗口可见性");
-                using var app = WordFactory.BlankWorkbook();
+                using var app = WordFactory.BlankDocument();
                 Console.WriteLine($"默认可见性: {app.Visible}");
                 app.Visible = true; // 显示Word窗口
                 Console.WriteLine("已设置Word窗口为可见");
@@ -168,7 +168,7 @@ namespace FAQSample
 
                 // 创建有效文档
                 string validDocumentPath = Path.Combine(tempDirectory, "ValidDocument.docx");
-                using (var app = WordFactory.BlankWorkbook())
+                using (var app = WordFactory.BlankDocument())
                 {
                     app.ActiveDocument.SaveAs(validDocumentPath);
                 }
@@ -210,7 +210,7 @@ namespace FAQSample
                 for (int i = 1; i <= 5; i++)
                 {
                     string docPath = Path.Combine(tempDirectory, $"TestDocument{i}.docx");
-                    using var app = WordFactory.BlankWorkbook();
+                    using var app = WordFactory.BlankDocument();
                     app.ActiveDocument.Range().Text = $"这是测试文档 {i}";
                     app.ActiveDocument.SaveAs(docPath);
                     testDocuments.Add(docPath);

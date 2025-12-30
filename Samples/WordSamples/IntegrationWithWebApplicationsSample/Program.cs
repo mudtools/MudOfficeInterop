@@ -75,7 +75,7 @@ namespace IntegrationWithWebApplicationsSample
                 string templatePath = Path.Combine(tempDirectory, "Template.docx");
 
                 // 创建一个简单的模板文档
-                using (var app = WordFactory.BlankWorkbook())
+                using (var app = WordFactory.BlankDocument())
                 {
                     using var document = app.ActiveDocument;
                     document.Range().Text = "员工信息\n\n" +
@@ -136,7 +136,7 @@ namespace IntegrationWithWebApplicationsSample
 
                 // 创建模板
                 string templatePath = Path.Combine(tempDirectory, "ThreadSafeTemplate.docx");
-                using (var app = WordFactory.BlankWorkbook())
+                using (var app = WordFactory.BlankDocument())
                 {
                     using var document = app.ActiveDocument;
                     document.Range().Text = "线程安全文档模板\n\n" +
@@ -226,7 +226,7 @@ namespace IntegrationWithWebApplicationsSample
 
                     // 创建模板
                     string templatePath = Path.Combine(tempDirectory, "ResourceTemplate.docx");
-                    using (var app = WordFactory.BlankWorkbook())
+                    using (var app = WordFactory.BlankDocument())
                     {
                         using var document = app.ActiveDocument;
                         document.Range().Text = "资源管理模板\n\n" +
@@ -332,7 +332,7 @@ namespace IntegrationWithWebApplicationsSample
                 // 步骤3: 创建模板并从模板生成文档
                 Console.WriteLine("\n步骤3: 从模板生成文档");
                 string templatePath = Path.Combine(tempDirectory, "WebAppTemplate.docx");
-                using (var app = WordFactory.BlankWorkbook())
+                using (var app = WordFactory.BlankDocument())
                 {
                     var document = app.ActiveDocument;
                     document.Range().Text = "项目报告\n\n" +
@@ -445,7 +445,7 @@ namespace IntegrationWithWebApplicationsSample
 
                 // 创建模板
                 string templatePath = Path.Combine(tempDirectory, "CompleteExampleTemplate.docx");
-                using (var app = WordFactory.BlankWorkbook())
+                using (var app = WordFactory.BlankDocument())
                 {
                     var document = app.ActiveDocument;
                     document.Range().Text = "完整示例模板\n\n" +

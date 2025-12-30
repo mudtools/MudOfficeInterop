@@ -6,18 +6,21 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
 /// 表示与 Word 文档关联的书目引用功能。
 /// <para>注：使用 Application.Bibliography 属性可返回 Bibliography 对象。</para>
 /// <para>注：此接口基于对 Word 2007 及更高版本中引文和书目功能的理解实现，因为官方 SDK 文档信息有限。</para>
 /// </summary>
-public interface IWordBibliography : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordBibliography : IOfficeObject<IWordBibliography>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -37,8 +40,12 @@ public interface IWordBibliography : IDisposable
     /// <summary>
     /// 获取表示文档中所有书目源的对象的集合。
     /// </summary>
-    IWordSources Sources { get; }
+    IWordSources? Sources { get; }
 
+    /// <summary>
+    /// 获取或设置书目源的显示顺序。
+    /// </summary>
+    string BibliographyStyle { get; set; }
     #endregion
 
     #region 书目方法 (Bibliography Methods)
@@ -47,6 +54,6 @@ public interface IWordBibliography : IDisposable
     /// 生成一个书目。
     /// </summary>
     /// <returns>表示生成的书目的 XML 字符串。</returns>
-    string GenerateUniqueTag();
+    string? GenerateUniqueTag();
     #endregion
 }

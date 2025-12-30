@@ -7,7 +7,7 @@
 邮件合并涉及三个主要组件：主文档（包含合并字段的模板）、数据源（包含实际数据）和合并结果（生成的个性化文档）。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 
 // 设置文档为邮件合并主文档
@@ -45,7 +45,7 @@ mailMerge.MainDocumentType = WdMailMergeMainDocType.wdFormLetters; // 信函
 邮件合并需要连接到数据源，可以是数据库、Excel文件、文本文件等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var mailMerge = document.MailMerge;
 
@@ -102,7 +102,7 @@ catch (Exception ex)
 合并字段是邮件合并的核心，它们在主文档中作为占位符，会被数据源中的实际数据替换。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var mailMerge = document.MailMerge;
 
@@ -222,7 +222,7 @@ catch (Exception ex)
 邮件合并支持一些高级功能，如条件合并、计算字段等。
 
 ```csharp
-using var app = WordFactory.BlankWorkbook();
+using var app = WordFactory.BlankDocument();
 var document = app.ActiveDocument;
 var mailMerge = document.MailMerge;
 
@@ -309,7 +309,7 @@ class MailMergeSystem
     
     private static void CreateMailMergeTemplate()
     {
-        using var app = WordFactory.BlankWorkbook();
+        using var app = WordFactory.BlankDocument();
         var document = app.ActiveDocument;
         var mailMerge = document.MailMerge;
         
