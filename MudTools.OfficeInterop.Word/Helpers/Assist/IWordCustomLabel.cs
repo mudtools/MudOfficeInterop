@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Application.MailingLabel 属性可返回 MailingLabel 对象。</para>
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordCustomLabel : IDisposable
+public interface IWordCustomLabel : IOfficeObject<IWordCustomLabel>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

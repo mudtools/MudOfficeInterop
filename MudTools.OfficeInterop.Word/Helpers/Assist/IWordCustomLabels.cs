@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word中的自定义标签集合，提供对Word自定义标签的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordCustomLabels : IEnumerable<IWordCustomLabel?>, IDisposable
+public interface IWordCustomLabels : IEnumerable<IWordCustomLabel?>, IOfficeObject<IWordCustomLabels>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
