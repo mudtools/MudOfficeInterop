@@ -10,8 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档自定义属性接口
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordCustomProperty : IDisposable
 {
+    /// <summary>
+    /// 获取与该对象关联的 Word 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取属性名称
@@ -22,11 +33,6 @@ public interface IWordCustomProperty : IDisposable
     /// 获取或设置属性值
     /// </summary>
     object Value { get; set; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
-    object? Parent { get; }
 
     /// <summary>
     /// 删除自定义属性
