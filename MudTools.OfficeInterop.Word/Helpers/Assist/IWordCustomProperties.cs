@@ -10,8 +10,19 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档自定义属性集合接口
 /// </summary>
-public interface IWordCustomProperties : IDisposable, IEnumerable<IWordCustomProperty>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordCustomProperties : IDisposable, IEnumerable<IWordCustomProperty?>
 {
+    /// <summary>
+    /// 获取与该对象关联的 Word 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
 
     /// <summary>
     /// 获取自定义属性数量
@@ -21,12 +32,13 @@ public interface IWordCustomProperties : IDisposable, IEnumerable<IWordCustomPro
     /// <summary>
     /// 根据索引获取自定义属性
     /// </summary>
-    IWordCustomProperty Item(int index);
+    IWordCustomProperty? this[int index] { get; }
 
     /// <summary>
     /// 根据名称获取自定义属性
     /// </summary>
-    IWordCustomProperty Item(string name);
+    IWordCustomProperty? this[string name] { get; }
+
 
     /// <summary>
     /// 添加自定义属性
@@ -34,5 +46,5 @@ public interface IWordCustomProperties : IDisposable, IEnumerable<IWordCustomPro
     /// <param name="name">属性名称</param>
     /// <param name="value">属性值</param>
     /// <returns>新添加的自定义属性</returns>
-    IWordCustomProperty Add(string name, object value);
+    IWordCustomProperty? Add(string name, string value);
 }
