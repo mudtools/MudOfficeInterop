@@ -99,11 +99,11 @@ MudTools.OfficeInterop 适用于以下场景：
 该项目依赖于 Microsoft Office COM 组件，使用前需要确保系统中已安装相应版本的 Microsoft Office。
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.8" />
+<PackageReference Include="MudTools.OfficeInterop" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Word" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="2.0.1" />
 ```
 
 ## 工厂类使用说明

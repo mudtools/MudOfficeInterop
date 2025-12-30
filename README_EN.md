@@ -99,11 +99,11 @@ This project follows these design principles:
 This project depends on Microsoft Office COM components. Before using, ensure that the appropriate version of Microsoft Office is installed on the system.
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.Word" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="1.1.8" />
-<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="1.1.8" />
+<PackageReference Include="MudTools.OfficeInterop" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Word" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="2.0.1" />
 ```
 
 ## Factory Classes Usage
