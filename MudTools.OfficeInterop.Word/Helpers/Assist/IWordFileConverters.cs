@@ -6,13 +6,15 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
 /// 表示可用于打开和保存文件的所有文件转换器的集合。
 /// <para>注：使用 Item[Object] 方法或 FileConverters(index) 可返回单个 FileConverter 对象。
 /// 索引号代表文件转换器在 FileConverters 集合中的位置。</para>
 /// <para>注：Add 方法不适用于 FileConverters 集合。FileConverter 对象是在安装 Microsoft Office 或附加文件转换器时添加的。</para>
 /// </summary>
-public interface IWordFileConverters : IEnumerable<IWordFileConverter>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordFileConverters : IEnumerable<IWordFileConverter?>, IOfficeObject<IWordFileConverters>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -35,7 +37,14 @@ public interface IWordFileConverters : IEnumerable<IWordFileConverter>, IDisposa
     /// </summary>
     /// <param name="index">类名（字符串）或索引号（整数）。</param>
     /// <returns>指定的文件转换器对象。</returns>
-    IWordFileConverter this[object index] { get; }
+    IWordFileConverter? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引（类名或索引号）获取单个文件转换器。
+    /// </summary>
+    /// <param name="name">类名（字符串）或索引号（整数）。</param>
+    /// <returns>指定的文件转换器对象。</returns>
+    IWordFileConverter? this[string name] { get; }
 
     /// <summary>
     /// 获取或设置一个值，该值控制是否将 Microsoft Word 6.0/95/97 中的 V 型字符 (??) 转换为 Microsoft Word 中的引号标记。

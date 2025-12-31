@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：不能创建新的文件转换器，也不能向 FileConverters 集合中添加新的文件转换器。
 /// FileConverter 对象是在安装 Microsoft Office 或附加文件转换器时添加的。</para>
 /// </summary>
-public interface IWordFileConverter : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordFileConverter : IOfficeObject<IWordFileConverter>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
