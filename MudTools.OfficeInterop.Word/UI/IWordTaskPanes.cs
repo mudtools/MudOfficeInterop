@@ -12,13 +12,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 TaskPanes(index)（其中 index 是任务窗格类型或索引号）可返回单个 TaskPane 对象。</para>
 /// <para>注：此接口基于对 Word 对象模型和 Office 应用程序中 TaskPanes 的普遍理解实现，因为官方 SDK 文档信息有限。</para>
 /// </summary>
-public interface IWordTaskPanes : IEnumerable<IWordTaskPane>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordTaskPanes : IEnumerable<IWordTaskPane?>, IOfficeObject<IWordTaskPanes>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -40,7 +42,7 @@ public interface IWordTaskPanes : IEnumerable<IWordTaskPane>, IDisposable
     /// </summary>
     /// <param name="index">任务窗格类型 (<see cref="WdTaskPanes"/>) 或索引号（整数）。</param>
     /// <returns>指定的任务窗格对象。</returns>
-    IWordTaskPane this[WdTaskPanes index] { get; }
+    IWordTaskPane? this[WdTaskPanes index] { get; }
 
     #endregion
 }

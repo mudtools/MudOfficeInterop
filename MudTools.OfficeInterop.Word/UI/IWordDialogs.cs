@@ -12,13 +12,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Dialogs 属性可返回 Dialogs 集合。</para>
 /// <para>注：使用 Dialogs(index)（其中 index 是 WdWordDialog 常量之一）可返回单个 Dialog 对象。</para>
 /// </summary>
-public interface IWordDialogs : IEnumerable<IWordDialog>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordDialogs : IEnumerable<IWordDialog?>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -40,7 +42,7 @@ public interface IWordDialogs : IEnumerable<IWordDialog>, IDisposable
     /// </summary>
     /// <param name="index">标识对话框的 WdWordDialog 常量。</param>
     /// <returns>指定的 Dialog 对象。</returns>
-    IWordDialog this[WdWordDialog index] { get; }
+    IWordDialog? this[WdWordDialog index] { get; }
 
     #endregion
 }

@@ -10,14 +10,15 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 中与视图关联的缩放设置集合。
 /// 封装了 Microsoft.Office.Interop.Word.Zooms 对象。
 /// </summary>
-public interface IWordZooms : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord"), ItemIndex, NoneEnumerable]
+public interface IWordZooms : IEnumerable<IWordZoom?>, IOfficeObject<IWordZooms>, IDisposable
 {
-    #region 属性 (继承自基接口 _IMsoDispObj)
 
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
     /// <remarks>此属性继承自 _IMsoDispObj。</remarks>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -26,17 +27,22 @@ public interface IWordZooms : IDisposable
     /// <remarks>此属性继承自 _IMsoDispObj。</remarks>
     int Creator { get; }
 
-    #endregion // 属性
-
-    #region 属性 (特定于 Zooms)
-
     /// <summary>
     /// 获取代表 <see cref="IWordZooms"/> 对象的父对象。
     /// </summary>
     /// <remarks>对于 Zooms 集合，父对象通常是关联的 View 对象。</remarks>
     object? Parent { get; }
 
-    #endregion // 属性
+    /// <summary>
+    /// 获取指定视图缩放设置对象。
+    /// </summary>
+    [IgnoreGenerator]
+    int Count { get; }
 
-    IWordZoom Item(WdViewType Index);
+    /// <summary>
+    /// 获取指定视图缩放设置对象。
+    /// </summary>
+    /// <param name="Index"></param>
+    /// <returns></returns>
+    IWordZoom? this[WdViewType Index] { get; }
 }

@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档窗口中窗格的集合。
 /// 封装了 Microsoft.Office.Interop.Word.Panes 对象。
 /// </summary>
-public interface IWordPanes : IEnumerable<IWordPane>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordPanes : IEnumerable<IWordPane?>, IOfficeObject<IWordPanes>, IDisposable
 {
     #region 属性
 
@@ -35,7 +36,14 @@ public interface IWordPanes : IEnumerable<IWordPane>, IDisposable
     /// </summary>
     /// <param name="index">窗格的索引号。</param>
     /// <returns>指定索引处的 <see cref="IWordPane"/> 对象。</returns>
-    IWordPane this[int index] { get; }
+    IWordPane? this[int index] { get; }
 
-    #endregion // 属性
+    #endregion
+
+    /// <summary>
+    /// 添加一个窗格。
+    /// </summary>
+    /// <param name="splitVertical"></param>
+    /// <returns></returns>
+    IWordPane? Add(int? splitVertical);
 }

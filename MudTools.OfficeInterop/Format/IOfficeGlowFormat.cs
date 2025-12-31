@@ -17,7 +17,7 @@ public interface IOfficeGlowFormat : IOfficeObject<IOfficeGlowFormat>, IDisposab
     /// <summary>
     /// 获取或设置发光效果的颜色格式。
     /// </summary>
-    IOfficeColorFormat Color { get; }
+    IOfficeColorFormat? Color { get; }
 
     /// <summary>
     /// 获取或设置发光效果的半径大小（单位：磅）。

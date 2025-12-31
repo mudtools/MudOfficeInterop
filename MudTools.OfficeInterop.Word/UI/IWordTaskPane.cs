@@ -12,13 +12,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 TaskPanes(index) 可返回单个 TaskPane 对象，其中 index 是索引号。</para>
 /// <para>注：此接口基于对 Word 对象模型和 Office 应用程序中 TaskPane 的普遍理解实现，因为官方 SDK 文档信息有限。</para>
 /// </summary>
-public interface IWordTaskPane : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordTaskPane : IOfficeObject<IWordTaskPane>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

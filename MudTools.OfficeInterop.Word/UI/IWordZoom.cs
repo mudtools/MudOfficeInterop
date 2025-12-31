@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档视图的缩放设置。
 /// 封装了 Microsoft.Office.Interop.Word.Zoom 对象。
 /// </summary>
-public interface IWordZoom : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordZoom : IOfficeObject<IWordZoom>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

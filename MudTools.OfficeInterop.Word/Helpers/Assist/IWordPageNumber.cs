@@ -11,13 +11,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：PageNumber 对象是 PageNumbers 集合的成员。</para>
 /// <para>注：使用 PageNumbers(index)（其中 index 是索引号）可返回单个 PageNumber 对象。</para>
 /// </summary>
-public interface IWordPageNumber : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordPageNumber : IOfficeObject<IWordPageNumber>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

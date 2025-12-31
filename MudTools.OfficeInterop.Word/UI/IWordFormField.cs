@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中的一个表单域（FormField）的封装接口。
 /// </summary>
-public interface IWordFormField : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordFormField : IOfficeObject<IWordFormField>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
@@ -67,25 +68,6 @@ public interface IWordFormField : IDisposable
     /// </summary>
     IWordRange? Range { get; }
 
-    /// <summary>
-    /// 获取或设置复选框表单域的状态（仅适用于 CheckBox 类型）。
-    /// </summary>
-    bool CheckBox_Checked { get; set; }
-
-    /// <summary>
-    /// 获取或设置文本表单域的默认值（仅适用于 TextInput 类型）。
-    /// </summary>
-    string TextInput_Default { get; set; }
-
-    /// <summary>
-    /// 获取或设置下拉表单域的默认项索引（仅适用于 DropDown 类型）。
-    /// </summary>
-    int DropDown_Default { get; set; }
-
-    /// <summary>
-    /// 获取或设置下拉表单域的选项列表（仅适用于 DropDown 类型）。
-    /// </summary>
-    List<string> DropDown_ListEntries { get; }
 
     /// <summary>
     /// 将表单域复制到剪贴板。

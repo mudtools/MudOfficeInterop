@@ -11,13 +11,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Headers 或 Footers 对象的 PageNumbers 属性可返回 PageNumbers 集合。</para>
 /// <para>注：使用 PageNumbers(index)（其中 index 是索引号）可返回单个 PageNumber 对象。</para>
 /// </summary>
-public interface IWordPageNumbers : IEnumerable<IWordPageNumber>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordPageNumbers : IEnumerable<IWordPageNumber?>, IOfficeObject<IWordPageNumbers>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -31,45 +33,65 @@ public interface IWordPageNumbers : IEnumerable<IWordPageNumber>, IDisposable
     int Creator { get; }
 
     /// <summary>
-    /// 获取集合中的页码数量。
+    /// 获取指定集合中的项目数。
     /// </summary>
     int Count { get; }
 
     #endregion
 
-    #region 集合索引器 (Collection Indexer)
 
     /// <summary>
-    /// 通过索引号获取单个页码。
+    /// 获取或设置 PageNumbers 对象的数字样式。
     /// </summary>
-    /// <param name="index">页码的索引号（从 1 开始）。</param>
-    /// <returns>指定的页码对象。</returns>
-    IWordPageNumber this[int index] { get; }
+    WdPageNumberStyle NumberStyle { get; set; }
 
-    #endregion
-
-    #region 页码集合属性 (Page Numbers Collection Properties)
     /// <summary>
-    /// 获取或设置一个值，该值指示是否在首页显示页码。
+    /// 获取或设置一个值，指示页码或题注标签是否包含章节号。
+    /// </summary>
+    bool IncludeChapterNumber { get; set; }
+
+    /// <summary>
+    /// 获取或设置应用于文档章节标题的标题级别样式。可以是 0 到 8 之间的数字，对应标题级别 1 到 9。
+    /// </summary>
+    int HeadingLevelForChapter { get; set; }
+
+    /// <summary>
+    /// 获取或设置用于分隔章节号和页码的分隔符字符。可以是 WdSeparatorType 常量之一。
+    /// </summary>
+    WdSeparatorType ChapterPageSeparator { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示在指定节的开头是否重新从 1 开始页码编号。
+    /// </summary>
+    bool RestartNumberingAtSection { get; set; }
+
+    /// <summary>
+    /// 获取或设置起始注释编号、行号或页码。
+    /// </summary>
+    int StartingNumber { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示页码是否出现在节的第一页上。
     /// </summary>
     bool ShowFirstPageNumber { get; set; }
 
     /// <summary>
-    /// 获取或设置页码的起始编号。
+    /// 返回集合中的单个对象。
     /// </summary>
-    int StartingNumber { get; set; }
-
-    #endregion
-
-    #region 页码集合方法 (Page Numbers Collection Methods)
+    /// <param name="index">指示单个对象序数位置的整数。</param>
+    /// <returns>指定索引处的 PageNumber 对象。</returns>
+    IWordPageNumber? this[int index] { get; }
 
     /// <summary>
-    /// 将新的页码添加到集合中。
+    /// 返回表示添加到节中页眉或页脚的页码的 PageNumber 对象。
     /// </summary>
-    /// <param name="alignment">页码的对齐方式。</param>
-    /// <param name="pageNumbers">页码对象。</param>
-    /// <returns>表示添加的页码的对象。</returns>
-    IWordPageNumber Add(WdPageNumberAlignment alignment, int pageNumbers);
+    /// <param name="pageNumberAlignment">可选项。可以是任何 WdPageNumberAlignment 常量。</param>
+    /// <param name="firstPage">可选项。False 表示使首页页眉和首页页脚与文档中所有后续页的页眉和页脚不同。如果 FirstPage 设置为 False，则不向第一页添加页码。如果省略此参数，则设置由 PageSetup.DifferentFirstPageHeaderFooter 属性控制。</param>
+    /// <returns>新创建的 PageNumber 对象。</returns>
+    IWordPageNumber? Add(WdPageNumberAlignment? pageNumberAlignment = null, bool? firstPage = null);
 
-    #endregion
+    /// <summary>
+    /// 获取或设置一个值，指示 Microsoft Word 是否将指定的 PageNumbers 对象用双引号（"）括起来。
+    /// </summary>
+    bool DoubleQuote { get; set; }
 }
