@@ -11,13 +11,15 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：Dialog 对象是 Dialogs 集合的成员。Dialogs 集合包含 Microsoft Word 中的所有内置对话框。</para>
 /// <para>注：无法创建新的内置对话框，或添加到 Dialogs 集合。</para>
 /// </summary>
-public interface IWordDialog : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordDialog : IOfficeObject<IWordDialog>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -63,7 +65,8 @@ public interface IWordDialog : IDisposable
     /// </summary>
     /// <param name="timeout">指定对话框显示的秒数。达到超时值后，对话框自动关闭。</param>
     /// <returns>如果用户单击“确定”则返回 true，如果用户单击“取消”则返回 false。</returns>
-    bool Display(float? timeout = null);
+    [ValueConvert]
+    bool? Display(float? timeout = null);
 
     /// <summary>
     /// 应用 Microsoft Word 对话框的当前设置。
@@ -75,7 +78,8 @@ public interface IWordDialog : IDisposable
     /// </summary>
     /// <param name="timeout">指定对话框显示的秒数。达到超时值后，对话框自动关闭。</param>
     /// <returns>如果用户单击“确定”则返回 true，如果用户单击“取消”则返回 false。</returns>
-    bool Show(float? timeout = null);
+    [ValueConvert]
+    bool? Show(float? timeout = null);
 
     /// <summary>
     /// 更新内置 Microsoft Word 对话框中显示的值。
