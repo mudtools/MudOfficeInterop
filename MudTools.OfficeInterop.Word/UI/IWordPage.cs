@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装了 Microsoft.Office.Interop.Word.Page 对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordPage : IDisposable
+public interface IWordPage : IOfficeObject<IWordPage>, IDisposable
 {
 
     /// <summary>

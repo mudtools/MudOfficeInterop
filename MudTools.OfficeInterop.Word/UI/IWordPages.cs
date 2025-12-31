@@ -15,7 +15,8 @@ namespace MudTools.OfficeInterop.Word;
 /// Pages 集合包含文档中每个页面的 Page 对象。
 /// 此集合通常在文档处于页面布局视图或打印预览时可用。
 /// </remarks>
-public interface IWordPages : IEnumerable<IWordPage>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordPages : IEnumerable<IWordPage?>, IOfficeObject<IWordPages>, IDisposable
 {
     #region 属性
 
@@ -41,7 +42,7 @@ public interface IWordPages : IEnumerable<IWordPage>, IDisposable
     /// <param name="index">页面的索引号。</param>
     /// <returns>指定索引处的 <see cref="IWordPage"/> 对象。</returns>
     /// <exception cref="ArgumentOutOfRangeException">如果索引超出范围。</exception>
-    IWordPage this[int index] { get; }
+    IWordPage? this[int index] { get; }
     #endregion 
 
 }
