@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Tasks 属性可返回 Tasks 集合。</para>
 /// <para>注：使用 Tasks(index) 可返回单个 Task 对象，其中 index 是应用程序名称或索引号。</para>
 /// </summary>
-public interface IWordTasks : IEnumerable<IWordTask>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordTasks : IEnumerable<IWordTask?>, IOfficeObject<IWordTasks>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -33,14 +35,21 @@ public interface IWordTasks : IEnumerable<IWordTask>, IDisposable
     /// </summary>
     /// <param name="index">应用程序名称（字符串）或索引号（整数）。</param>
     /// <returns>指定的任务对象。</returns>
-    IWordTask this[object index] { get; }
+    IWordTask? this[int index] { get; }
+
+    /// <summary>
+    /// 通过应用程序名称或索引号获取单个任务。
+    /// </summary>
+    /// <param name="name">应用程序名称（字符串）或索引号（整数）。</param>
+    /// <returns>指定的任务对象。</returns>
+    IWordTask? this[string name] { get; }
 
     /// <summary>
     /// 确定指定的任务是否存在。
     /// </summary>
     /// <param name="name">要检查的任务名称。</param>
     /// <returns>如果任务存在则返回 true，否则返回 false。</returns>
-    bool Exists(string name);
+    bool? Exists(string name);
 
     /// <summary>
     /// 关闭所有打开的应用程序，退出 Microsoft Windows，注销当前用户。

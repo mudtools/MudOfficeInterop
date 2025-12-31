@@ -11,13 +11,15 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档窗口中的一个窗格。
 /// 封装了 Microsoft.Office.Interop.Word.Pane 对象。
 /// </summary>
-public interface IWordPane : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordPane : IOfficeObject<IWordPane>, IDisposable
 {
     #region 属性
 
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

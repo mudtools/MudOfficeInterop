@@ -19,6 +19,7 @@ public interface IWordPageNumbers : IEnumerable<IWordPageNumber?>, IOfficeObject
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

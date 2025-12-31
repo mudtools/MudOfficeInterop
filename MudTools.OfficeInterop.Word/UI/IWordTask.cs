@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：Task 对象是 Tasks 集合的成员。</para>
 /// <para>注：使用 Tasks(index) 可返回单个 Task 对象，其中 index 是应用程序名称或索引号。</para>
 /// </summary>
-public interface IWordTask : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordTask : IOfficeObject<IWordTask>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -63,11 +65,26 @@ public interface IWordTask : IDisposable
     /// </summary>
     void Activate();
 
+    /// <summary>
+    /// 移动指定的任务。 对应于“窗口”菜单底部的命令（在任务列表中）。
+    /// </summary>
+    /// <param name="Left"></param>
+    /// <param name="Top"></param>
     void Move(int Left, int Top);
 
+    /// <summary>
+    /// 调整指定的任务。 对应于“窗口”菜单底部的命令（在任务列表中）。
+    /// </summary>
+    /// <param name="Width"></param>
+    /// <param name="Height"></param>
     void Resize(int Width, int Height);
 
-
+    /// <summary>
+    /// 发送窗口消息。
+    /// </summary>
+    /// <param name="Message"></param>
+    /// <param name="wParam"></param>
+    /// <param name="lParam"></param>
     void SendWindowMessage(int Message, int wParam, int lParam);
 
     /// <summary>
