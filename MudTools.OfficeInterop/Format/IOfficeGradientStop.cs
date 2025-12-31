@@ -7,24 +7,24 @@
 
 namespace MudTools.OfficeInterop;
 
-/// &lt;summary&gt;
+/// <summary>
 /// 表示渐变停止点的接口，用于定义渐变中的颜色、位置和透明度属性
-/// &lt;/summary&gt;
+/// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
 public interface IOfficeGradientStop : IOfficeObject<IOfficeGradientStop>, IDisposable
 {
-    /// &lt;summary&gt;
+    /// <summary>
     /// 获取或设置渐变停止点的颜色
-    /// &lt;/summary&gt;
-    IOfficeColorFormat Color { get; }
+    /// </summary>
+    IOfficeColorFormat? Color { get; }
 
-    /// &lt;summary&gt;
+    /// <summary>
     /// 获取或设置渐变停止点的位置，通常以0.0到1.0之间的浮点数表示
-    /// &lt;/summary&gt;
+    /// </summary>
     float Position { get; set; }
-    
-    /// &lt;summary&gt;
+
+    /// <summary>
     /// 获取或设置渐变停止点的透明度，通常以0.0到1.0之间的浮点数表示，其中0.0为完全不透明，1.0为完全透明
-    /// &lt;/summary&gt;
+    /// </summary>
     float Transparency { get; set; }
 }

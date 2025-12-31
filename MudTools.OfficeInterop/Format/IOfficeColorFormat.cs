@@ -5,6 +5,8 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop;
 
 /// <summary>
@@ -17,12 +19,18 @@ public interface IOfficeColorFormat : IOfficeObject<IOfficeColorFormat>, IDispos
     /// <summary>
     /// 获取或设置颜色的RGB值
     /// </summary>
-    int RGB { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color RGB { get; set; }
 
     /// <summary>
     /// 获取或设置颜色的亮度（-1到1之间）
     /// </summary>
     float Brightness { get; set; }
+
+    /// <summary>
+    ///  获取或设置颜色调色
+    /// </summary>
+    float TintAndShade { get; set; }
 
     /// <summary>
     /// 获取或设置主题颜色索引
@@ -37,5 +45,6 @@ public interface IOfficeColorFormat : IOfficeObject<IOfficeColorFormat>, IDispos
     /// <summary>
     /// 获取或设置方案颜色索引（用于向后兼容）
     /// </summary>
-    int SchemeColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color SchemeColor { get; set; }
 }
