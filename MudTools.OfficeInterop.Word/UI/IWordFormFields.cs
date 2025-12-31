@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中所有表单域的集合。
 /// </summary>
-public interface IWordFormFields : IEnumerable<IWordFormField>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordFormFields : IEnumerable<IWordFormField?>, IOfficeObject<IWordFormFields>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
@@ -26,13 +27,13 @@ public interface IWordFormFields : IEnumerable<IWordFormField>, IDisposable
     /// 通过索引获取表单域。
     /// </summary>
     /// <param name="index">从 1 开始的索引。</param>
-    IWordFormField this[int index] { get; }
+    IWordFormField? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取表单域。
     /// </summary>
     /// <param name="name">表单域名称。</param>
-    IWordFormField this[string name] { get; }
+    IWordFormField? this[string name] { get; }
 
     /// <summary>
     /// 添加一个新的表单域。
@@ -40,17 +41,5 @@ public interface IWordFormFields : IEnumerable<IWordFormField>, IDisposable
     /// <param name="range">插入位置的范围。</param>
     /// <param name="type">表单域类型。</param>
     /// <returns>新创建的表单域。</returns>
-    IWordFormField Add(IWordRange range, WdFieldType type);
-
-    /// <summary>
-    /// 判断是否包含指定名称的表单域。
-    /// </summary>
-    /// <param name="name">表单域名称。</param>
-    /// <returns>是否存在。</returns>
-    bool Contains(string name);
-
-    /// <summary>
-    /// 清除所有表单域的内容。
-    /// </summary>
-    void Clear();
+    IWordFormField? Add(IWordRange range, WdFieldType type);
 }
