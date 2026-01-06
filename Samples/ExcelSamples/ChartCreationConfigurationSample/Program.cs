@@ -592,7 +592,7 @@ namespace ChartCreationConfigurationSample
 
                 // 修改第三个系列为折线图（利润率）
                 var series3 = chart.SeriesCollection()[3];
-                series3.ChartType = MsoChartType.xlLine;
+                series3.ChartType = MudTools.OfficeInterop.Excel.XlChartType.xlLine;
 
                 // 设置次坐标轴
                 series3.AxisGroup = XlAxisGroup.xlSecondary;

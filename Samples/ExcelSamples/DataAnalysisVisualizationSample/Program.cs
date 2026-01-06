@@ -675,7 +675,7 @@ namespace DataAnalysisVisualizationSample
 
                 // 修改增长率系列为折线图
                 var growthSeries = comboChart.SeriesCollection()[3];
-                growthSeries.ChartType = MsoChartType.xlLine;
+                growthSeries.ChartType = MudTools.OfficeInterop.Excel.XlChartType.xlLine;
 
                 // 设置次坐标轴
                 growthSeries.AxisGroup = XlAxisGroup.xlSecondary;

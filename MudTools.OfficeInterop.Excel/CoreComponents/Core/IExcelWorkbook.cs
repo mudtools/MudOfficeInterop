@@ -7,6 +7,7 @@
 
 
 using System.Drawing;
+using MudTools.OfficeInterop.Vbe;
 
 namespace MudTools.OfficeInterop.Excel;
 
@@ -46,14 +47,37 @@ public interface IExcelWorkbook : IDisposable
     IExcelChart? ActiveChart { get; }
 
     /// <summary>
+    /// 获取当前工作簿的<see cref="IVbeVBProject"/>对象。
+    /// </summary>
+    IVbeVBProject? VBProject { get; }
+
+    /// <summary>
     /// 获取活动工作簿或指定窗口或工作簿中的活动工作表（位于顶部的）。如果没有活动工作表，则返回null。
     /// </summary>
-    object ActiveSheet { get; }
+
+    [IgnoreGenerator]
+    IExcelComSheet? ActiveSheet { get; }
+
+    /// <summary>
+    /// 获取或设置活动工作簿或指定窗口或工作簿中的活动工作表（位于顶部的）。如果没有活动工作表，则返回null。
+    /// </summary>
+    [IgnoreGenerator]
+    IExcelWorksheet? ActiveSheetWrap { get; }
 
     /// <summary>
     /// 获取或设置作者的名称。
     /// </summary>
     string Author { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档的关键字信息。
+    /// </summary>
+    string Keywords { get; set; }
+
+    /// <summary>
+    /// 获取或设置文档的主题信息。
+    /// </summary>
+    string Subject { get; set; }
 
     /// <summary>
     /// 获取或设置共享工作簿自动更新之间的分钟数。

@@ -323,7 +323,7 @@ namespace WorkbookWorksheetOperationsSample
                 }
 
                 // 复制工作表
-                worksheets.Copy(sheet1, after: sheet3);
+                worksheets.CopyTo(sheet1, sheet3);
                 var copiedSheet = worksheets[worksheets.Count]; // 获取刚刚复制的工作表
                 copiedSheet.Name = "源数据副本";
 

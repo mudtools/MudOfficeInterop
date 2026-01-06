@@ -326,28 +326,33 @@ public interface IExcelWorksheet : IExcelComSheet, IDisposable
                                     bool? readData = null, string? connection = null);
 
     /// <summary>
-    /// 获取表示单元格或单元格区域的 Range 对象。
+    /// 获取工作表中指定范围的区域对象
     /// </summary>
-    [MethodIndex]
-    IExcelRange? Range(IExcelRange cell1, IExcelRange? cell2);
+    /// <param name="cell1">起始单元格</param>
+    /// <param name="cell2">结束单元格（可选）</param>
+    /// <returns>区域对象</returns>
+    [IgnoreGenerator]
+    IExcelRange? Range(object? cell1, object? cell2 = null);
 
     /// <summary>
-    /// 获取表示单元格或单元格区域的 Range 对象。
+    /// 获取工作表中指定行列的单元格对象
     /// </summary>
-    [MethodIndex]
-    IExcelRange? Range(IExcelRange cell1, string? cell2);
+    [IgnoreGenerator]
+    IExcelRange? this[string address] { get; }
+    /// <summary>
+    /// 获取工作表中指定行列的单元格对象
+    /// </summary>
+    /// <param name="row">行号</param>
+    /// <param name="column">列号</param>
+    /// <returns>单元格对象</returns>
+    [IgnoreGenerator]
+    IExcelRange? this[int row, int column] { get; }
 
     /// <summary>
-    /// 获取表示单元格或单元格区域的 Range 对象。
+    /// 获取工作表中指定行列的单元格对象
     /// </summary>
-    [MethodIndex]
-    IExcelRange? Range(string cell1, IExcelRange? cell2);
-
-    /// <summary>
-    /// 获取表示单元格或单元格区域的 Range 对象。
-    /// </summary>
-    [MethodIndex]
-    IExcelRange? Range(string cell1, string? cell2);
+    [IgnoreGenerator]
+    IExcelRange? this[string begin, string end] { get; }
 
     /// <summary>
     /// 获取表示指定工作表中所有行的 Range 对象。只读 Range 对象。

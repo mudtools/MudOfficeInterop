@@ -53,6 +53,18 @@ public interface IExcelPivotTable : IOfficeObject<IExcelPivotTable>, IDisposable
     #endregion
 
     #region 数据和字段
+
+    /// <summary>
+    /// 获取数据透视表的完整范围（包括标题和数据区域）
+    /// 对应 PivotTable.TableRange1 属性
+    /// </summary>
+    IExcelRange? TableRange1 { get; }
+
+    /// <summary>
+    /// 获取数据透视表的数据区域范围（不包括字段标题）
+    /// 对应 PivotTable.TableRange2 属性
+    /// </summary>
+    IExcelRange? TableRange2 { get; }
     /// <summary>
     /// 获取数据透视表的列范围
     /// </summary>

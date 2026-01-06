@@ -379,13 +379,13 @@ namespace ChartAdvancedFeaturesSample
                 chart.Legend.Position = XlLegendPosition.xlLegendPositionBottom;
 
                 // 设置图表区格式
-                chart.ChartArea.Format.Fill.ForeColor.RGB = Color.FromArgb(240, 240, 240).ToArgb();
+                chart.ChartArea.Format.Fill.ForeColor.RGB = Color.FromArgb(240, 240, 240);
                 chart.ChartArea.Format.Fill.Transparency = 0.2f;
 
                 // 设置绘图区格式
-                chart.PlotArea.Format.Fill.ForeColor.RGB = Color.White.ToArgb();
+                chart.PlotArea.Format.Fill.ForeColor.RGB = Color.White;
                 chart.PlotArea.Format.Line.Visible = true;
-                chart.PlotArea.Format.Line.ForeColor.RGB = Color.Black.ToArgb();
+                chart.PlotArea.Format.Line.ForeColor.RGB = Color.Black;
                 chart.PlotArea.Format.Line.Weight = 1;
 
                 // 设置坐标轴格式
@@ -399,7 +399,7 @@ namespace ChartAdvancedFeaturesSample
                 valueAxis.AxisTitle.Text = "销售额";
                 valueAxis.TickLabels.Font.Size = 10;
                 valueAxis.MajorGridlines.Format.Line.Visible = true;
-                valueAxis.MajorGridlines.Format.Line.ForeColor.RGB = Color.LightGray.ToArgb();
+                valueAxis.MajorGridlines.Format.Line.ForeColor.RGB = Color.LightGray;
 
                 // 设置数据系列格式
                 var seriesCollection = chart.SeriesCollection();
@@ -575,7 +575,7 @@ namespace ChartAdvancedFeaturesSample
 
                 // 修改增长率系列为折线图
                 var growthSeries = chart.SeriesCollection()[3];
-                growthSeries.ChartType = MsoChartType.xlLine;
+                growthSeries.ChartType = MudTools.OfficeInterop.Excel.XlChartType.xlLine;
 
                 // 设置次坐标轴
                 growthSeries.AxisGroup = XlAxisGroup.xlSecondary;
@@ -607,8 +607,8 @@ namespace ChartAdvancedFeaturesSample
                 chart.Axes(XlAxisType.xlValue, XlAxisGroup.xlSecondary).TickLabels.NumberFormat = "0.00%";
 
                 // 设置图表区和绘图区格式
-                chart.ChartArea.Format.Fill.ForeColor.RGB = Color.White.ToArgb();
-                chart.PlotArea.Format.Fill.ForeColor.RGB = Color.FromArgb(250, 250, 250).ToArgb();
+                chart.ChartArea.Format.Fill.ForeColor.RGB = Color.White;
+                chart.PlotArea.Format.Fill.ForeColor.RGB = Color.FromArgb(250, 250, 250);
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

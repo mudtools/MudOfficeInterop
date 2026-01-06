@@ -96,7 +96,7 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "基础透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:E13"));
+                var pivotCache = workbook.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:E13"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "BasicPivotTable");
@@ -185,7 +185,7 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "销售透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:H16"));
+                var pivotCache = workbook.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:H16"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "SalesPivotTable");
@@ -290,7 +290,7 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "多维透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:F16"));
+                var pivotCache = workbook.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:F16"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "MultiDimensionalPivotTable");
@@ -381,7 +381,7 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "计算字段透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:D10"));
+                var pivotCache = workbook.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:D10"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "CalculatedFieldPivotTable");
@@ -478,10 +478,10 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "格式透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:D10"));
+                var pivotCache = workbook.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:D10"));
 
                 // 创建数据透视表
-                var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "FormattingPivotTable");
+                var pivotTable = pivotWorksheet.PivotTables()?.Add(pivotCache, pivotWorksheet.Range("A1"), "FormattingPivotTable");
 
                 // 配置字段
                 // 添加行字段 - 产品类别
@@ -575,7 +575,7 @@ namespace PivotTableApplicationSample
                 pivotWorksheet.Name = "筛选透视表";
 
                 // 创建数据透视表缓存
-                var pivotCache = pivotWorksheet.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:F13"));
+                var pivotCache = workbook.PivotCaches().Create(XlPivotTableSourceType.xlConsolidation, sourceWorksheet.Range("A1:F13"));
 
                 // 创建数据透视表
                 var pivotTable = pivotWorksheet.PivotTables().Add(pivotCache, pivotWorksheet.Range("A1"), "FilterPivotTable");

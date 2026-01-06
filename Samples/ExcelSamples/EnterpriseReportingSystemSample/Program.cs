@@ -724,7 +724,7 @@ namespace EnterpriseReportingSystemSample
                 // 添加数据验证规则
                 var validation = worksheet.Range("C5").Validation;
                 validation.Add(XlDVType.xlValidateWholeNumber, XlDVAlertStyle.xlValidAlertStop,
-                    XlFormatConditionOperator.xlBetween, 10000, 50000);
+                    XlFormatConditionOperator.xlBetween);
                 validation.InputTitle = "销售额输入";
                 validation.InputMessage = "请输入10000-50000之间的数值";
                 validation.ErrorTitle = "输入错误";

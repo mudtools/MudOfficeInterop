@@ -104,7 +104,7 @@ namespace AdvancedChartFeaturesSample
 
                 // 修改利润率系列为折线图
                 var profitSeries = chart.SeriesCollection()[3];
-                profitSeries.ChartType = MsoChartType.xlLine;
+                profitSeries.ChartType = MudTools.OfficeInterop.Excel.XlChartType.xlLine;
 
                 // 设置次坐标轴
                 profitSeries.AxisGroup = XlAxisGroup.xlSecondary;
@@ -349,7 +349,7 @@ namespace AdvancedChartFeaturesSample
                 dataRange.Value = salesData;
 
                 // 创建数据透视表
-                var pivotCache = worksheet.PivotCaches().Create(XlPivotTableSourceType.xlPivotTable, dataRange);
+                var pivotCache = workbook.PivotCaches().Create(XlPivotTableSourceType.xlPivotTable, dataRange);
                 var pivotTable = worksheet.PivotTables().Add(pivotCache, worksheet.Range("E1"), "SalesPivotTable");
 
                 // 配置数据透视表字段
@@ -467,7 +467,7 @@ namespace AdvancedChartFeaturesSample
 
                 // 设置数据系列格式
                 series.Format.Fill.Solid();
-                series.Format.Fill.ForeColor.RGB = Color.Blue.ToArgb();
+                series.Format.Fill.ForeColor.RGB = Color.Blue;
 
                 // 自动调整列宽
                 worksheet.Columns.AutoFit();

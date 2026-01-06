@@ -1,4 +1,4 @@
-﻿//
+//
 // 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
@@ -45,16 +45,36 @@ public interface IVbeVBComponents : IEnumerable<IVbeVBComponent?>, IOfficeObject
     #endregion
 
     /// <summary>
+    /// 从 VB 组件集合中移除指定的组件
+    /// </summary>
+    /// <param name="vbComponent">要移除的 VB 组件对象</param>
+    void Remove(IVbeVBComponent vbComponent);
+
+    /// <summary>
+    /// 添加指定类型的 VB 组件到集合中
+    /// </summary>
+    /// <param name="componentType">组件类型，可选值包括：vbext_ct_StdModule(标准模块)、vbext_ct_ClassModule(类模块)、vbext_ct_MSForm(MS表单)、vbext_ct_ActiveXDesigner(ActiveX设计器)、vbext_ct_Document(文档)</param>
+    /// <returns>新添加的 VB 组件对象，如果添加失败则返回 null</returns>
+    IVbeVBComponent? Add(vbext_ComponentType componentType);
+
+    /// <summary>
+    /// 导入指定文件到 VB 组件集合中
+    /// </summary>
+    /// <param name="fileName">要导入的文件路径</param>
+    /// <returns>导入的 VB 组件对象，如果导入失败则返回 null</returns>
+    IVbeVBComponent? Import(string fileName);
+
+    /// <summary>
     /// 添加自定义组件
     /// </summary>
-    /// <param name="progId"></param>
-    /// <returns></returns>
+    /// <param name="progId">组件的 ProgID</param>
+    /// <returns>新添加的 VB 组件对象，如果添加失败则返回 null</returns>
     IVbeVBComponent? AddCustom(string progId);
 
     /// <summary>
     /// 添加 MS Forms 设计器组件
     /// </summary>
-    /// <param name="index"></param>
-    /// <returns></returns>
+    /// <param name="index">组件索引</param>
+    /// <returns>新添加的 VB 组件对象，如果添加失败则返回 null</returns>
     IVbeVBComponent? AddMTDesigner(int index = 0);
 }
