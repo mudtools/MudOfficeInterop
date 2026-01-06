@@ -10,8 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// UndoRecord 接口及实现类
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordUndoRecord : IOfficeObject<IWordUndoRecord>, IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordUndoRecord : IOfficeObject<IWordUndoRecord, MsWord.UndoRecord>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。

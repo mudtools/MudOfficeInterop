@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示图标集条件格式中的单个条件标准接口
 /// 该接口封装了Microsoft.Office.Interop.Excel.IconCriterion对象，用于定义图标集中每个图标对应的条件
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsExcel")]
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelIconCriterion : IOfficeObject<IExcelIconCriterion>, IDisposable
 {
 

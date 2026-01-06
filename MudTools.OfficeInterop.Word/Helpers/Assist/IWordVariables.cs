@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 文档变量集合接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordVariables : IDisposable, IOfficeObject<IWordVariables>, IEnumerable<IWordVariable?>
+public interface IWordVariables : IDisposable, IOfficeObject<IWordVariables, MsWord.Variables>, IEnumerable<IWordVariable?>
 {
     /// <summary>
     /// 获取应用程序对象。

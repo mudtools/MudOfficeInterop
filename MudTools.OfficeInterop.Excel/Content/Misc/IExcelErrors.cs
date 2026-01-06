@@ -12,7 +12,7 @@ using System;
 /// <summary>
 /// Excel Errors COM组件二次封装
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsExcel")]
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelErrors : IOfficeObject<IExcelErrors>, IDisposable
 {
     /// <summary>

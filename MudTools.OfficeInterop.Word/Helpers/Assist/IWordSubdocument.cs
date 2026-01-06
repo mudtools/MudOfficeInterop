@@ -9,7 +9,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中的一个子文档（Subdocument）的封装接口。
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsWord")]
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordSubdocument : IOfficeObject<IWordSubdocument>, IDisposable
 {
     /// <summary>

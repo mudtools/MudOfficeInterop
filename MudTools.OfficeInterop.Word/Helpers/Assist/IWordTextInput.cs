@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中的文本输入框表单域 [[7]]。
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsWord")]
+[ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordTextInput : IOfficeObject<IWordTextInput>, IDisposable
 {
     /// <summary>

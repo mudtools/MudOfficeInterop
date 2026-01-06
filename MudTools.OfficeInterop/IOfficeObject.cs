@@ -20,3 +20,17 @@ public interface IOfficeObject<T> where T : IOfficeObject<T>
     /// <returns>转换后的Office对象实例，如果转换失败则返回null</returns>
     T? LoadFromObject(object comObject);
 }
+
+/// <summary>
+/// 定义Office对象的通用接口，用于将COM对象加载为托管对象
+/// </summary>
+/// <typeparam name="T">实现此接口的类型，遵循自我引用的泛型模式</typeparam>
+/// <typeparam name="COM">COM对象类型</typeparam>
+public interface IOfficeObject<T, COM> : IOfficeObject<T> where T : IOfficeObject<T>
+{
+    /// <summary>
+    /// 当前封装对象的内部COM对象
+    /// </summary>
+    [IgnoreGenerator]
+    COM? InternalComObject { get; }
+}

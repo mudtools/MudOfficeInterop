@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中Top10条件格式规则的接口
 /// 该接口用于定义和操作Excel中的Top10条件格式规则，可以设置显示前N个或后N个值的格式
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsExcel")]
+[ComObjectWrap(ComNamespace = "MsExcel")]
 public interface IExcelTop10 : IOfficeObject<IExcelTop10>, IDisposable
 {
     /// <summary>
