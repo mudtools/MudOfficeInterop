@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档变量集合接口
 /// </summary>
-public interface IWordVariables : IDisposable, IEnumerable<IWordVariable>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordVariables : IDisposable, IOfficeObject<IWordVariables>, IEnumerable<IWordVariable?>
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -30,12 +31,12 @@ public interface IWordVariables : IDisposable, IEnumerable<IWordVariable>
     /// <summary>
     /// 根据索引获取变量
     /// </summary>
-    IWordVariable Item(int index);
+    IWordVariable? this[int index] { get; }
 
     /// <summary>
     /// 根据名称获取变量
     /// </summary>
-    IWordVariable Item(string name);
+    IWordVariable? this[string name] { get; }
 
     /// <summary>
     /// 添加变量
@@ -43,5 +44,5 @@ public interface IWordVariables : IDisposable, IEnumerable<IWordVariable>
     /// <param name="name">变量名称</param>
     /// <param name="value">变量值</param>
     /// <returns>新添加的变量</returns>
-    IWordVariable Add(string name, string value);
+    IWordVariable? Add(string name, object? value);
 }
