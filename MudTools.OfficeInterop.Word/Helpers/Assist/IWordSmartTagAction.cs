@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// SmartTagAction 接口及实现类
 /// </summary>
-public interface IWordSmartTagAction : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordSmartTagAction : IOfficeObject<IWordSmartTagAction>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象 [[9]]。

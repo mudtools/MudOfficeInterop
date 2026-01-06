@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word修订过滤器的接口，用于控制Word文档中修订的显示方式
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordRevisionsFilter : IDisposable
+public interface IWordRevisionsFilter : IOfficeObject<IWordRevisionsFilter>, IDisposable
 {
     /// <summary>
     /// 获取或设置修订视图，用于控制文档中显示的修订类型
