@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Microsoft Word 中的自动更正功能。
 /// <para>注：使用 Application.AutoCorrect 或 Application.AutoCorrectEmail 属性可返回 AutoCorrect 对象。</para>
 /// </summary>
-public interface IWordAutoCorrect : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordAutoCorrect : IOfficeObject<IWordAutoCorrect, MsWord.AutoCorrect>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -123,7 +124,7 @@ public interface IWordAutoCorrect : IDisposable
     /// <summary>
     /// 获取表示 Microsoft Word 不会自动更正的包含混合大写的术语列表的集合。
     /// </summary>
-    MsWord.TwoInitialCapsExceptions TwoInitialCapsExceptions { get; }
+    IWordTwoInitialCapsExceptions? TwoInitialCapsExceptions { get; }
 
     #endregion
 }
