@@ -36,7 +36,7 @@ public interface IWordHangulAndAlphabetExceptions : IEnumerable<IWordHangulAndAl
     /// </summary>
     /// <param name="index">索引号（整数）或异常名称（字符串）。</param>
     /// <returns>指定的朝鲜文和字母自动更正异常对象。</returns>
-    IWordHangulAndAlphabetException? this[object index] { get; }
+    IWordHangulAndAlphabetException? this[int index] { get; }
 
     /// <summary>
     /// 通过索引号或异常名称获取单个朝鲜文和字母自动更正异常。

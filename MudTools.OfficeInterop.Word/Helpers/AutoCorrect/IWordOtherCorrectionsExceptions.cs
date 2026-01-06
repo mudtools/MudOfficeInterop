@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 OtherCorrectionsExceptions 属性可返回 OtherCorrectionsExceptions 集合。</para>
 /// <para>注：使用 OtherCorrectionsExceptions(index)（其中 index 是名称或索引号）可返回单个 OtherCorrectionsException 对象。</para>
 /// </summary>
-public interface IWordOtherCorrectionsExceptions : IEnumerable<IWordOtherCorrectionsException>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordOtherCorrectionsExceptions : IEnumerable<IWordOtherCorrectionsException?>, IOfficeObject<IWordOtherCorrectionsExceptions, MsWord.OtherCorrectionsExceptions>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -35,12 +36,19 @@ public interface IWordOtherCorrectionsExceptions : IEnumerable<IWordOtherCorrect
     /// </summary>
     /// <param name="index">索引号（整数）或异常名称（字符串）。</param>
     /// <returns>指定的“其他更正”自动更正异常对象。</returns>
-    IWordOtherCorrectionsException this[object index] { get; }
+    IWordOtherCorrectionsException? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引号或异常名称获取单个“其他更正”自动更正异常。
+    /// </summary>
+    /// <param name="name">索引号（整数）或异常名称（字符串）。</param>
+    /// <returns>指定的“其他更正”自动更正异常对象。</returns>
+    IWordOtherCorrectionsException? this[string name] { get; }
 
     /// <summary>
     /// 将项添加到“其他更正”自动更正异常列表中。
     /// </summary>
     /// <param name="name">要添加的异常名称。</param>
     /// <returns>表示添加的异常的对象。</returns>
-    IWordOtherCorrectionsException Add(string name);
+    IWordOtherCorrectionsException? Add(string name);
 }
