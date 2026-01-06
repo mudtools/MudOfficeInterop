@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：每个形状由 Shape 对象表示。使用 Item[Object] 方法可在组中处理单个形状，而无需取消组合它们。</para>
 /// <para>使用 GroupItems 属性可返回 GroupShapes 集合。</para>
 /// </summary>
-public interface IWordGroupShapes : IEnumerable<IWordShape>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordGroupShapes : IEnumerable<IWordShape?>, IOfficeObject<IWordGroupShapes, MsWord.GroupShapes>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -33,12 +35,19 @@ public interface IWordGroupShapes : IEnumerable<IWordShape>, IDisposable
     /// </summary>
     /// <param name="index">形状的索引（从 1 开始）或名称。</param>
     /// <returns>指定的形状对象。</returns>
-    IWordShape this[object index] { get; }
+    IWordShape? this[object index] { get; }
 
     /// <summary>
     /// 返回一个 ShapeRange 对象，该对象代表 GroupShapes 集合中的指定子集。
     /// </summary>
     /// <param name="index">Variant 类型，指定要包含在范围内的单个对象或包含对象的数组。</param>
     /// <returns>指定的形状范围。</returns>
-    IWordShapeRange Range(object index);
+    IWordShapeRange? Range(int index);
+
+    /// <summary>
+    /// 返回一个 ShapeRange 对象，该对象代表 GroupShapes 集合中的指定子集。
+    /// </summary>
+    /// <param name="name">Variant 类型，指定要包含在范围内的单个对象或包含对象的数组。</param>
+    /// <returns>指定的形状范围。</returns>
+    IWordShapeRange? Range(string name);
 }
