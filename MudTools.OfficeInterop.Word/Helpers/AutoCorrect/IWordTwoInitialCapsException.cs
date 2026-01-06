@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：TwoInitialCapsException 对象是 TwoInitialCapsExceptions 集合的成员。</para>
 /// <para>注：TwoInitialCapsExceptions 集合对应于“自动更正例外项”对话框中“INitial CAps”选项卡上列出的所有项。</para>
 /// </summary>
-public interface IWordTwoInitialCapsException : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordTwoInitialCapsException : IOfficeObject<IWordTwoInitialCapsException, MsWord.TwoInitialCapsException>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

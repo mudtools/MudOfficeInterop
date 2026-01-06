@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 TwoInitialCapsExceptions 属性可返回 TwoInitialCapsExceptions 集合。</para>
 /// <para>注：使用 TwoInitialCapsExceptions(index)（其中 index 是初始大写字母名称或索引号）可返回单个 TwoInitialCapsException 对象。</para>
 /// </summary>
-public interface IWordTwoInitialCapsExceptions : IEnumerable<IWordTwoInitialCapsException>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordTwoInitialCapsExceptions : IEnumerable<IWordTwoInitialCapsException?>, IOfficeObject<IWordTwoInitialCapsExceptions, MsWord.TwoInitialCapsExceptions>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -35,12 +36,19 @@ public interface IWordTwoInitialCapsExceptions : IEnumerable<IWordTwoInitialCaps
     /// </summary>
     /// <param name="index">索引号（整数）或异常名称（字符串）。</param>
     /// <returns>指定的初始大写自动更正异常对象。</returns>
-    IWordTwoInitialCapsException this[object index] { get; }
+    IWordTwoInitialCapsException? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引号或异常名称获取单个初始大写自动更正异常。
+    /// </summary>
+    /// <param name="name">索引号（整数）或异常名称（字符串）。</param>
+    /// <returns>指定的初始大写自动更正异常对象。</returns>
+    IWordTwoInitialCapsException? this[string name] { get; }
 
     /// <summary>
     /// 将项添加到初始大写自动更正异常列表中。
     /// </summary>
     /// <param name="name">要添加的异常名称。</param>
     /// <returns>表示添加的异常的对象。</returns>
-    IWordTwoInitialCapsException Add(string name);
+    IWordTwoInitialCapsException? Add(string name);
 }
