@@ -6,35 +6,29 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Word;
+
 /// <summary>
-/// Word 文档变量接口
+/// 指定在使用 Word 比较功能比较两个文档时如何显示源文档
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordVariable : IOfficeObject<IWordVariable, MsWord.Variable>, IDisposable
+public enum WdShowSourceDocuments
 {
     /// <summary>
-    /// 获取应用程序对象。
+    /// 不显示用于比较功能的源文档的原始文档或修订文档
     /// </summary>
-    [ComPropertyWrap(NeedDispose = false)]
-    IWordApplication? Application { get; }
+    wdShowSourceDocumentsNone,
 
     /// <summary>
-    /// 获取变量名称
+    /// 仅显示原始文档
     /// </summary>
-    string Name { get; }
+    wdShowSourceDocumentsOriginal,
 
     /// <summary>
-    /// 获取或设置变量值
+    /// 仅显示修订文档
     /// </summary>
-    string Value { get; set; }
+    wdShowSourceDocumentsRevised,
 
     /// <summary>
-    /// 获取父对象
+    /// 同时显示原始和修订文档
     /// </summary>
-    object? Parent { get; }
-
-    /// <summary>
-    /// 删除变量
-    /// </summary>
-    void Delete();
+    wdShowSourceDocumentsBoth
 }

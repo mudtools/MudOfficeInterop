@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：此集合包括打开的模板、附加到打开文档的模板，以及“模板和外接程序”对话框中加载的全局模板。</para>
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordTemplates : IEnumerable<IWordTemplate?>, IOfficeObject<IWordTemplates>, IDisposable
+public interface IWordTemplates : IEnumerable<IWordTemplate?>, IOfficeObject<IWordTemplates, MsWord.Templates>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。

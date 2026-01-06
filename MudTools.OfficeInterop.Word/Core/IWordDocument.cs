@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 文档接口，用于操作 Word 文档
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordDocument : IOfficeObject<IWordDocument>, IDisposable
+public interface IWordDocument : IOfficeObject<IWordDocument, MsWord.Document>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。

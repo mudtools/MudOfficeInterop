@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Sections(index)（其中 index 是节的索引号）可返回单个 Section 对象。索引号代表节在文档中的位置，主文档节的索引号为 1。</para>
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordSections : IEnumerable<IWordSection?>, IOfficeObject<IWordSections>, IDisposable
+public interface IWordSections : IEnumerable<IWordSection?>, IOfficeObject<IWordSections, MsWord.Sections>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 

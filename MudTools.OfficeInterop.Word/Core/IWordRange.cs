@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：此接口封装了 Microsoft.Office.Interop.Word.Range 的主要属性和方法。</para>
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordRange : IOfficeObject<IWordRange>, IDisposable
+public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
