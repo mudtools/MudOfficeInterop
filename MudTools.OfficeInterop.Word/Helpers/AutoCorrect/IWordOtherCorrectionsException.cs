@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：OtherCorrectionsExceptions 集合包含 Microsoft Word 将不进行自动更正的所有单词。
 /// 此列表对应于“自动更正异常”对话框中“其他更正”选项卡上的“自动更正”异常列表（“自动更正”命令、“工具”菜单）。</para>
 /// </summary>
-public interface IWordOtherCorrectionsException : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordOtherCorrectionsException : IOfficeObject<IWordOtherCorrectionsException, MsWord.OtherCorrectionsException>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
