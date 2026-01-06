@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中的一个子文档（Subdocument）的封装接口。
 /// </summary>
-public interface IWordSubdocument : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordSubdocument : IOfficeObject<IWordSubdocument>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
@@ -35,7 +36,7 @@ public interface IWordSubdocument : IDisposable
     /// <summary>
     /// 获取子文档所在的范围。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 获取子文档是否已锁定。
@@ -51,7 +52,7 @@ public interface IWordSubdocument : IDisposable
     /// 打开子文档进行编辑。
     /// </summary>
     /// <returns>打开的文档对象。</returns>
-    IWordDocument Open();
+    IWordDocument? Open();
 
     /// <summary>
     /// 删除此子文档。
