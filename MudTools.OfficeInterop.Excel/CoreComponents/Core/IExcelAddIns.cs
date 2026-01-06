@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.AddIns 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelAddIns : IDisposable, IOfficeObject<IExcelAddIns>, IEnumerable<IExcelAddIn?>
+public interface IExcelAddIns : IDisposable, IOfficeObject<IExcelAddIns, MsExcel.AddIns>, IEnumerable<IExcelAddIn?>
 {
     /// <summary>
     /// 获取父对象

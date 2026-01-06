@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作表中所有查询表的集合，支持遍历和索引访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelQueryTables : IEnumerable<IExcelQueryTable?>, IOfficeObject<IExcelQueryTables>, IDisposable
+public interface IExcelQueryTables : IEnumerable<IExcelQueryTable?>, IOfficeObject<IExcelQueryTables, MsExcel.QueryTables>, IDisposable
 {
     /// <summary>
     /// 获取集合中查询表的总数。

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel 窗口接口，用于操作 Excel 窗口实例
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelWindow : IExcelCommonWindow, IOfficeObject<IExcelWindow>, IDisposable
+public interface IExcelWindow : IExcelCommonWindow, IOfficeObject<IExcelWindow, MsExcel.Window>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Worksheet）。

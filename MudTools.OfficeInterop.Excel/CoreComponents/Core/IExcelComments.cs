@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Comments 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelComments : IEnumerable<IExcelComment?>, IOfficeObject<IExcelComments>, IDisposable
+public interface IExcelComments : IEnumerable<IExcelComment?>, IOfficeObject<IExcelComments, MsExcel.Comments>, IDisposable
 {
     #region 基础属性
 

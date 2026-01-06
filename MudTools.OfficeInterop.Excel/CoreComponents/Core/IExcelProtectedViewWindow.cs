@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel受保护视图窗口的接口，提供对受保护视图窗口的各种操作和属性访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelProtectedViewWindow : IOfficeObject<IExcelProtectedViewWindow>, IExcelCommonWindow, IDisposable
+public interface IExcelProtectedViewWindow : IOfficeObject<IExcelProtectedViewWindow, MsExcel.ProtectedViewWindow>, IExcelCommonWindow, IDisposable
 {
     /// <summary>
     /// 获取与受保护视图窗口关联的工作簿对象

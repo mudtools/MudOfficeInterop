@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作表的各种保护选项。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelProtection : IOfficeObject<IExcelProtection>, IDisposable
+public interface IExcelProtection : IOfficeObject<IExcelProtection, MsExcel.Protection>, IDisposable
 {
     /// <summary>
     /// 获取一个值，该值指示在受保护的工作表上是否允许设置单元格格式。

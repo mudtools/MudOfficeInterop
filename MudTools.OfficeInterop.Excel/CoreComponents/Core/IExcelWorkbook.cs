@@ -16,7 +16,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Workbook 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel", NoneConstructor = true, NoneDisposed = true)]
-public interface IExcelWorkbook : IDisposable
+public interface IExcelWorkbook : IOfficeObject<IExcelWorkbook, MsExcel.Workbook>, IDisposable
 {
 
     /// <summary>

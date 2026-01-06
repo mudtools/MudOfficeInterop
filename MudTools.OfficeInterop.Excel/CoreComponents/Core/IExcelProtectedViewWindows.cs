@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 继承自IDisposable和IEnumerable接口，支持对受保护视图窗口进行枚举和资源释放
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelProtectedViewWindows : IDisposable, IOfficeObject<IExcelProtectedViewWindows>, IEnumerable<IExcelProtectedViewWindow?>
+public interface IExcelProtectedViewWindows : IDisposable, IOfficeObject<IExcelProtectedViewWindows, MsExcel.ProtectedViewWindows>, IEnumerable<IExcelProtectedViewWindow?>
 {
     /// <summary>
     /// 获取对象的父对象（通常是 Application）

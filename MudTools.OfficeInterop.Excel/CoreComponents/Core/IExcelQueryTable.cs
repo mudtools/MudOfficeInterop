@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于管理从外部数据源（如数据库、Web、文本）导入的数据表。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelQueryTable : IDisposable
+public interface IExcelQueryTable : IOfficeObject<IExcelQueryTable, MsExcel.QueryTable>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Worksheet）。
