@@ -11,11 +11,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档中一组边框（Borders）的封装接口。
 /// <para>注：Borders 集合的成员数量是有限的，并且取决于父对象的类型。</para>
 /// </summary>
-public interface IWordBorders : IEnumerable<IWordBorder>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordBorders : IEnumerable<IWordBorder?>, IOfficeObject<IWordBorders, MsWord.Borders>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -38,17 +40,8 @@ public interface IWordBorders : IEnumerable<IWordBorder>, IDisposable
     /// <summary>
     /// 获取或设置一个值，该值指示是否启用所有边框的格式。
     /// </summary>
-    bool Enable { get; set; }
+    int Enable { get; set; }
 
-    /// <summary>
-    /// 获取或设置边框线条的样式。
-    /// </summary>
-    WdLineStyle LineStyle { get; set; }
-
-    /// <summary>
-    /// 获取或设置边框线条的宽度。
-    /// </summary>
-    WdLineWidth LineWidth { get; set; }
 
     /// <summary>
     /// 获取或设置一个值，该值指示是否删除段落和表格边缘的垂直边框，以便水平边框可以连接到页面边框。
