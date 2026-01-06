@@ -9,11 +9,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中校对错误集合的封装接口。
 /// </summary>
-public interface IWordProofreadingErrors : IEnumerable<IWordRange>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordProofreadingErrors : IEnumerable<IWordRange?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -30,7 +32,7 @@ public interface IWordProofreadingErrors : IEnumerable<IWordRange>, IDisposable
     /// 通过索引获取校对错误的范围。
     /// </summary>
     /// <param name="index">从 1 开始的索引。</param>
-    IWordRange this[int index] { get; }
+    IWordRange? this[int index] { get; }
 
     /// <summary>
     /// 获取校对错误的类型。
