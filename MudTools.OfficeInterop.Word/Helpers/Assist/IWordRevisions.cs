@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中所有修订的集合。
 /// </summary>
-public interface IWordRevisions : IEnumerable<IWordRevision>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordRevisions : IEnumerable<IWordRevision?>, IOfficeObject<IWordRevisions>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
@@ -27,7 +28,7 @@ public interface IWordRevisions : IEnumerable<IWordRevision>, IDisposable
     /// 通过索引获取修订。
     /// </summary>
     /// <param name="index">从 1 开始的索引。</param>
-    IWordRevision this[int index] { get; }
+    IWordRevision? this[int index] { get; }
 
     /// <summary>
     /// 接受所有修订。

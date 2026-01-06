@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的审阅者对象，用于处理与Word审阅相关的操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordReviewer : IDisposable
+public interface IWordReviewer : IOfficeObject<IWordReviewer>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。

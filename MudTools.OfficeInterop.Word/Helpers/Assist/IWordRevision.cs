@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中的一个修订（Revision）的封装接口。
 /// </summary>
-public interface IWordRevision : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordRevision : IOfficeObject<IWordRevision>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
@@ -40,7 +41,7 @@ public interface IWordRevision : IDisposable
     /// <summary>
     /// 获取修订的范围。
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 获取或设置修订的格式描述。
@@ -55,17 +56,17 @@ public interface IWordRevision : IDisposable
     /// <summary>
     /// 获取修订的样式。
     /// </summary>
-    IWordStyle Style { get; }
-
-    /// <summary>
-    /// 获取修订的文本内容。
-    /// </summary>
-    string RangeText { get; }
+    IWordStyle? Style { get; }
 
     /// <summary>
     /// 获取移动修订的原始范围。
     /// </summary>
-    IWordRange MovedRange { get; }
+    IWordRange? MovedRange { get; }
+
+    /// <summary>
+    /// 获取修改的表格。
+    /// </summary>
+    IWordCells? Cells { get; }
 
     /// <summary>
     /// 接受此修订。

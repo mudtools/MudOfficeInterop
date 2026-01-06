@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的审阅者集合，提供对文档中各个审阅者的访问和管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordReviewers : IEnumerable<IWordReviewer?>, IDisposable
+public interface IWordReviewers : IEnumerable<IWordReviewer?>, IOfficeObject<IWordReviewers>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
