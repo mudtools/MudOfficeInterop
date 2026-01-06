@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 FirstLetterExceptions 属性可返回 FirstLetterExceptions 集合。</para>
 /// <para>注：使用 FirstLetterExceptions(index)（其中 index 是缩写或索引号）可返回单个 FirstLetterException 对象。</para>
 /// </summary>
-public interface IWordFirstLetterExceptions : IEnumerable<IWordFirstLetterException>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordFirstLetterExceptions : IEnumerable<IWordFirstLetterException?>, IOfficeObject<IWordFirstLetterExceptions, MsWord.FirstLetterExceptions>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -35,12 +36,19 @@ public interface IWordFirstLetterExceptions : IEnumerable<IWordFirstLetterExcept
     /// </summary>
     /// <param name="index">索引号（整数）或缩写名称（字符串）。</param>
     /// <returns>指定的首字母大写异常对象。</returns>
-    IWordFirstLetterException this[object index] { get; }
+    IWordFirstLetterException? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引号或缩写名称获取单个首字母大写异常。
+    /// </summary>
+    /// <param name="name">索引号（整数）或缩写名称（字符串）。</param>
+    /// <returns>指定的首字母大写异常对象。</returns>
+    IWordFirstLetterException? this[string name] { get; }
 
     /// <summary>
     /// 将缩写添加到首字母大写异常列表中。
     /// </summary>
     /// <param name="name">要添加的缩写。</param>
     /// <returns>表示添加的首字母大写异常的对象。</returns>
-    IWordFirstLetterException Add(string name);
+    IWordFirstLetterException? Add(string name);
 }
