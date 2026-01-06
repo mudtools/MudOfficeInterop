@@ -10,24 +10,14 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.InlineShape 的接口，用于操作内联形状对象。
 /// </summary>
-public interface IWordInlineShape : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordInlineShape : IOfficeObject<IWordInlineShape, MsWord.InlineShape>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
-
-    /// <summary>
-    /// 获取内联形状的类型。
-    /// </summary>
-    WdInlineShapeType Type { get; }
-
-    /// <summary>
-    /// 获取内联形状所在的范围。
-    /// </summary>
-    IWordRange Range { get; }
-
-    IWordTextEffectFormat? TextEffect { get; }
 
     /// <summary>
     /// 获取内联形状的父对象。
@@ -35,170 +25,181 @@ public interface IWordInlineShape : IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置内联形状的宽度（磅）。
+    /// 获取或设置表示指定对象的所有边框的 Borders 集合。
     /// </summary>
-    float Width { get; set; }
+    IWordBorders? Borders { get; set; }
 
     /// <summary>
-    /// 获取或设置内联形状的高度（磅）。
+    /// 获取表示指定对象中包含的文档部分的 Range 对象。
     /// </summary>
-    float Height { get; set; }
+    IWordRange? Range { get; }
 
     /// <summary>
-    /// 获取或设置内联形状是否锁定纵横比。
-    /// </summary>
-    bool LockAspectRatio { get; set; }
-
-    /// <summary>
-    /// 获取内联形状的OLE格式。
-    /// </summary>
-    IWordOLEFormat? OLEFormat { get; }
-
-    /// <summary>
-    /// 获取内联形状的链接格式。
+    /// 获取表示链接到文件的指定内嵌形状的链接选项的 LinkFormat 对象。
     /// </summary>
     IWordLinkFormat? LinkFormat { get; }
 
     /// <summary>
-    /// 获取内联形状的字段对象。
+    /// 获取表示与指定形状关联的字段的 Field 对象。
     /// </summary>
     IWordField? Field { get; }
 
     /// <summary>
-    /// 获取内联形状的线条格式。
+    /// 获取表示指定内嵌形状的 OLE 特性（链接除外）的 OLEFormat 对象。
+    /// </summary>
+    IWordOLEFormat? OLEFormat { get; }
+
+    /// <summary>
+    /// 获取内嵌形状的类型。
+    /// </summary>
+    WdInlineShapeType Type { get; }
+
+    /// <summary>
+    /// 获取表示与指定内嵌形状对象关联的超链接的 Hyperlink 对象。
+    /// </summary>
+    IWordHyperlink? Hyperlink { get; }
+
+    /// <summary>
+    /// 获取或设置指定内嵌形状的高度。
+    /// </summary>
+    float Height { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定对象的宽度（以磅为单位）。
+    /// </summary>
+    float Width { get; set; }
+
+    /// <summary>
+    /// 相对于原始大小缩放指定内嵌形状的高度。
+    /// </summary>
+    float ScaleHeight { get; set; }
+
+    /// <summary>
+    /// 相对于原始大小缩放指定内嵌形状的宽度。
+    /// </summary>
+    float ScaleWidth { get; set; }
+
+    /// <summary>
+    /// 确定调整大小时指定形状是否保持其原始比例。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool LockAspectRatio { get; set; }
+
+    /// <summary>
+    /// 获取包含指定形状的线条格式属性的 LineFormat 对象。
     /// </summary>
     IWordLineFormat? Line { get; }
 
     /// <summary>
-    /// 获取内联形状的填充格式。
+    /// 获取包含指定形状的填充格式属性的 FillFormat 对象。
     /// </summary>
     IWordFillFormat? Fill { get; }
 
-    IWordShadowFormat? Shadow { get; }
-
-
     /// <summary>
-    /// 获取内联形状的图表对象。
+    /// 获取或设置包含指定对象的图片格式属性的 PictureFormat 对象。
     /// </summary>
-    IWordChart? Chart { get; }
+    IWordPictureFormat? PictureFormat { get; set; }
 
     /// <summary>
-    /// 获取内联形状的SmartArt对象。
+    /// 获取包含指定内嵌形状对象的水平线格式的 HorizontalLineFormat 对象。
     /// </summary>
-    //IWordSmartArt SmartArt { get; }
+    IWordHorizontalLineFormat? HorizontalLineFormat { get; }
 
     /// <summary>
-    /// 获取内联形状的图片格式。
+    /// 获取表示指定网页上的脚本或代码块的 Script 对象。
     /// </summary>
-    IWordPictureFormat? PictureFormat { get; }
+    IOfficeScript? Script { get; }
 
     /// <summary>
-    /// 获取内联形状的图形对象。
+    /// 获取包含指定形状的文本效果格式属性的 TextEffectFormat 对象。
     /// </summary>
-    IWordGroupShapes? GroupItems { get; }
+    IWordTextEffectFormat? TextEffect { get; set; }
 
     /// <summary>
-    /// 获取内联形状是否为图片类型。
-    /// </summary>
-    bool IsPicture { get; }
-
-    /// <summary>
-    /// 获取内联形状是否为OLE对象。
-    /// </summary>
-    bool IsOLEObject { get; }
-
-    /// <summary>
-    /// 获取内联形状是否为图表。
-    /// </summary>
-    bool IsChart { get; }
-
-    /// <summary>
-    /// 获取内联形状是否为第一个形状。
-    /// </summary>
-    bool IsFirst { get; }
-
-    /// <summary>
-    /// 获取内联形状是否为最后一个形状。
-    /// </summary>
-    bool IsLast { get; }
-
-    /// <summary>
-    /// 删除内联形状。
-    /// </summary>
-    void Delete();
-
-    /// <summary>
-    /// 选择内联形状。
-    /// </summary>
-    void Select();
-
-    /// <summary>
-    /// 复制内联形状。
-    /// </summary>
-    void Copy();
-
-    /// <summary>
-    /// 剪切内联形状。
-    /// </summary>
-    void Cut();
-
-    /// <summary>
-    /// 调整内联形状大小。
-    /// </summary>
-    /// <param name="width">新宽度。</param>
-    /// <param name="height">新高度。</param>
-    /// <param name="scale">是否按比例缩放。</param>
-    void ScaleSize(float width, float height, bool scale = true);
-
-    /// <summary>
-    /// 将内联形状转换为浮动形状。
-    /// </summary>
-    /// <returns>转换后的浮动形状。</returns>
-    IWordShape? ConvertToShape();
-
-    /// <summary>
-    /// 设置内联形状大小。
-    /// </summary>
-    /// <param name="width">宽度。</param>
-    /// <param name="height">高度。</param>
-    void SetSize(float width, float height);
-
-    /// <summary>
-    /// 重置内联形状大小为原始大小。
-    /// </summary>
-    void ResetSize();
-
-    /// <summary>
-    /// 复制内联形状格式到另一个内联形状。
-    /// </summary>
-    /// <param name="targetInlineShape">目标内联形状。</param>
-    void CopyTo(IWordInlineShape targetInlineShape);
-
-    /// <summary>
-    /// 重置内联形状格式为默认值。
-    /// </summary>
-    void Reset();
-
-
-    /// <summary>
-    /// 更新链接的内联形状。
-    /// </summary>
-    /// <returns>是否更新成功。</returns>
-    bool Update();
-
-    /// <summary>
-    /// 断开链接的内联形状。
-    /// </summary>
-    /// <returns>是否断开成功。</returns>
-    bool BreakLink();
-
-    /// <summary>
-    /// 获取内联形状的替代文本。
+    /// 获取或设置与网页中形状关联的替代文本。
     /// </summary>
     string AlternativeText { get; set; }
 
     /// <summary>
-    /// 获取内联形状的标题。
+    /// 确定内嵌形状对象是否为图片项目符号。
+    /// </summary>
+    bool IsPictureBullet { get; }
+
+    /// <summary>
+    /// 获取内嵌形状中分组在一起的形状集合。只读。
+    /// </summary>
+    IWordGroupShapes? GroupItems { get; }
+
+    /// <summary>
+    /// 获取一个值，指示指定的形状是否为图表。只读。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasChart { get; }
+
+    /// <summary>
+    /// 获取文档中内嵌形状集合内的图表。只读。
+    /// </summary>
+    IWordChart? Chart { get; }
+
+    /// <summary>
+    /// 获取形状的柔化边缘格式。只读。
+    /// </summary>
+    IWordSoftEdgeFormat? SoftEdge { get; }
+
+    /// <summary>
+    /// 获取发光效果的格式属性。只读。
+    /// </summary>
+    IWordGlowFormat? Glow { get; }
+
+    /// <summary>
+    /// 获取形状的反射格式。只读。
+    /// </summary>
+    IWordReflectionFormat? Reflection { get; }
+
+    /// <summary>
+    /// 获取指定形状的阴影格式。只读。
+    /// </summary>
+    IWordShadowFormat? Shadow { get; }
+
+    /// <summary>
+    /// 获取一个值，指示形状上是否存在 SmartArt 图表。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasSmartArt { get; }
+
+    /// <summary>
+    /// 获取提供与指定内嵌形状关联的 SmartArt 一起工作的方式的 SmartArt 对象。
+    /// </summary>
+    IOfficeSmartArt? SmartArt { get; }
+
+    /// <summary>
+    /// 获取或设置包含指定内嵌形状的标题的值。
     /// </summary>
     string Title { get; set; }
+
+    /// <summary>
+    /// 激活指定的对象。
+    /// </summary>
+    void Activate();
+
+    /// <summary>
+    /// 删除对内嵌形状所做的更改。
+    /// </summary>
+    void Reset();
+
+    /// <summary>
+    /// 删除指定的对象。
+    /// </summary>
+    void Delete();
+
+    /// <summary>
+    /// 选择指定的对象。
+    /// </summary>
+    void Select();
+
+    /// <summary>
+    /// 将内嵌形状转换为自由浮动的形状，并返回表示新形状的 Shape 对象。
+    /// </summary>
+    /// <returns>表示新形状的 Shape 对象。</returns>
+    IWordShape? ConvertToShape();
 }
