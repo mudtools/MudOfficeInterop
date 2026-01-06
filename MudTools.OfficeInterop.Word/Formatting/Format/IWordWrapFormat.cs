@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 代表形状或图片的环绕格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordWrapFormat : IDisposable
+public interface IWordWrapFormat : IOfficeObject<IWordWrapFormat, MsWord.WrapFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建 WrapFormat 对象的应用程序对象。

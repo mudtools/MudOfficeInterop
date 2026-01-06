@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Interop.Word.ThreeDFormat 的接口，用于操作三维格式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordThreeDFormat : IDisposable
+public interface IWordThreeDFormat : IOfficeObject<IWordThreeDFormat, MsWord.ThreeDFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

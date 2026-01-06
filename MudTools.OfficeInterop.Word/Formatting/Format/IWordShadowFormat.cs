@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Core.ShadowFormat 的接口，用于操作阴影格式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordShadowFormat : IDisposable
+public interface IWordShadowFormat : IOfficeObject<IWordShadowFormat, MsWord.ShadowFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

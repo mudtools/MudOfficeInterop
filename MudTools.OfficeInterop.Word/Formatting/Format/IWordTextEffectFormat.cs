@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Shape 对象的 TextEffect 属性可返回 TextEffectFormat 对象。</para>
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordTextEffectFormat : IDisposable
+public interface IWordTextEffectFormat : IOfficeObject<IWordTextEffectFormat, MsWord.TextEffectFormat>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

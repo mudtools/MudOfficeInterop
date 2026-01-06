@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 倒影效果格式的封装接口。
 /// </summary>
-public interface IWordReflectionFormat : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordReflectionFormat : IOfficeObject<IWordReflectionFormat, MsWord.ReflectionFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -27,6 +28,7 @@ public interface IWordReflectionFormat : IDisposable
     /// <summary>
     /// 获取或设置倒影类型。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoReflectionType Type { get; set; }
 
     /// <summary>

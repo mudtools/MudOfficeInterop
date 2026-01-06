@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Core.SoftEdgeFormat 的接口，用于操作柔化边缘格式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordSoftEdgeFormat : IDisposable
+public interface IWordSoftEdgeFormat : IOfficeObject<IWordSoftEdgeFormat, MsWord.SoftEdgeFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

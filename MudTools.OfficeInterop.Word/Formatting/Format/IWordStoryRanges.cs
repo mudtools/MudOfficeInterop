@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 文档范围集合接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordStoryRanges : IDisposable, IEnumerable<IWordRange?>
+public interface IWordStoryRanges : IDisposable, IOfficeObject<IWordStoryRanges, MsWord.StoryRanges>, IEnumerable<IWordRange?>
 {
     /// <summary>
     /// 获取应用程序对象。
