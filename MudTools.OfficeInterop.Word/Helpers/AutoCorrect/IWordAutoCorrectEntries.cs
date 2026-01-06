@@ -15,6 +15,18 @@ namespace MudTools.OfficeInterop.Word;
 public interface IWordAutoCorrectEntries : IEnumerable<IWordAutoCorrectEntry?>, IOfficeObject<IWordAutoCorrectEntries, MsWord.AutoCorrectEntries>, IDisposable
 {
     /// <summary>
+    /// 获取与该对象关联的 Word 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
+
+
+    /// <summary>
     /// 获取自动更正条目的总数。
     /// </summary>
     int Count { get; }

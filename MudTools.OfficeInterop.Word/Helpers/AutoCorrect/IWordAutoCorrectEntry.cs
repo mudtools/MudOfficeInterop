@@ -11,8 +11,21 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示对 Microsoft Word AutoCorrectEntry 对象的封装接口。
 /// 用于定义“键入时自动替换”行为，例如将 'teh' 替换为 'the'。
 /// </summary>
-public interface IWordAutoCorrectEntry : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordAutoCorrectEntry : IOfficeObject<IWordAutoCorrectEntry, MsWord.AutoCorrectEntry>, IDisposable
 {
+    /// <summary>
+    /// 获取与该对象关联的 Word 应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
+
+
     /// <summary>
     /// 获取自动更正条目的名称（即触发词，如 "teh"）。
     /// </summary>
@@ -29,5 +42,9 @@ public interface IWordAutoCorrectEntry : IDisposable
     /// </summary>
     void Delete();
 
+    /// <summary>
+    /// 将当前自动更正条目应用到指定的文本范围。
+    /// </summary>
+    /// <param name="range">要应用自动更正的文本范围。</param>
     void Apply(IWordRange range);
 }
