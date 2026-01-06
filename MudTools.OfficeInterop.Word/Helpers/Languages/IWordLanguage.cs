@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 包括语言的 ID、名称、拼写检查、语法检查、词典等功能的访问接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordLanguage : IDisposable
+public interface IWordLanguage : IOfficeObject<IWordLanguage, MsWord.Language>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

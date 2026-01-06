@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：其他 Dictionary 对象由 Language 对象的属性返回；这些对象包括 ActiveSpellingDictionary、ActiveGrammarDictionary、ActiveThesaurusDictionary 和 ActiveHyphenationDictionary 属性。</para>
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordDictionary : IOfficeObject<IWordDictionary>, IDisposable
+public interface IWordDictionary : IOfficeObject<IWordDictionary, MsWord.Dictionary>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

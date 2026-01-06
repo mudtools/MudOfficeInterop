@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 CustomDictionaries 属性可返回当前活动的自定义字典的集合。</para>
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordDictionaries : IEnumerable<IWordDictionary?>, IOfficeObject<IWordDictionaries>, IDisposable
+public interface IWordDictionaries : IEnumerable<IWordDictionary?>, IOfficeObject<IWordDictionaries, MsWord.Dictionaries>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

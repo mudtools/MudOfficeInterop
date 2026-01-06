@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// HangulHanjaConversionDictionaries 接口及实现类
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDictionary?>, IDisposable
+public interface IWordHangulHanjaConversionDictionaries : IEnumerable<IWordDictionary?>, IOfficeObject<IWordHangulHanjaConversionDictionaries, MsWord.HangulHanjaConversionDictionaries>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。

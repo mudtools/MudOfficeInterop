@@ -6,7 +6,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装 Microsoft.Office.Interop.Word.ColorFormat 的接口，用于操作颜色格式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordColorFormat : IDisposable
+public interface IWordColorFormat : IOfficeObject<IWordColorFormat, MsWord.ColorFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

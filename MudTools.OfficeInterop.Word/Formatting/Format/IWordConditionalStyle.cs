@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 条件样式用于定义表格中特定部分（如标题行、奇数行等）的格式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordConditionalStyle : IDisposable
+public interface IWordConditionalStyle : IOfficeObject<IWordConditionalStyle, MsWord.ConditionalStyle>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。

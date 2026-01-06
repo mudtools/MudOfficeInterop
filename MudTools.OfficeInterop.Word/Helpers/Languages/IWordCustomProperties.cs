@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// Word 文档自定义属性集合接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordCustomProperties : IDisposable, IOfficeObject<IWordCustomProperties>, IEnumerable<IWordCustomProperty?>
+public interface IWordCustomProperties : IDisposable, IOfficeObject<IWordCustomProperties, MsWord.CustomProperties>, IEnumerable<IWordCustomProperty?>
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

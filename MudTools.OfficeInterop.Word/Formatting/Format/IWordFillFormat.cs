@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 封装了 Microsoft.Office.Interop.Word.FillFormat 的常用功能，便于测试和解耦。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordFillFormat : IDisposable
+public interface IWordFillFormat : IOfficeObject<IWordFillFormat, MsWord.FillFormat>, IDisposable
 {
     #region 属性
 

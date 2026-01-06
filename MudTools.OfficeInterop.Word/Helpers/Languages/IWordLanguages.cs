@@ -7,8 +7,11 @@
 
 namespace MudTools.OfficeInterop.Word;
 
+/// <summary>
+/// 语言集合
+/// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordLanguages : IDisposable, IEnumerable<IWordLanguage?>
+public interface IWordLanguages : IDisposable, IOfficeObject<IWordLanguages, MsWord.Languages>, IEnumerable<IWordLanguage?>
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
