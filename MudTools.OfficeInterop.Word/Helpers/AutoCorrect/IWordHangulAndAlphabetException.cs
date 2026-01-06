@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：HangulAndAlphabetException 对象是 HangulAndAlphabetExceptions 集合的成员。</para>
 /// <para>注：HangulAndAlphabetExceptions 集合包括所有朝鲜文和字母表自动更正异常，并对应于“自动更正例外项”对话框 (“自动更正”命令、“工具”菜单) 的“朝鲜语”选项卡上列出的项目。</para>
 /// </summary>
-public interface IWordHangulAndAlphabetException : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordHangulAndAlphabetException : IOfficeObject<IWordHangulAndAlphabetException, MsWord.HangulAndAlphabetException>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
