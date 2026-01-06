@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Workbooks 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook?>, IOfficeObject<IExcelWorkbooks>, IDisposable
+public interface IExcelWorkbooks : IEnumerable<IExcelWorkbook?>, IOfficeObject<IExcelWorkbooks, MsExcel.Workbooks>, IDisposable
 {
     #region 基础属性
     /// <summary>
