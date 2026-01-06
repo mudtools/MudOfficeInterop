@@ -10,8 +10,20 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中的文本输入框表单域 [[7]]。
 /// </summary>
-public interface IWordTextInput : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordTextInput : IOfficeObject<IWordTextInput>, IDisposable
 {
+    /// <summary>
+    /// 获取与该对象关联的应用程序。
+    /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
+    IWordApplication? Application { get; }
+
+    /// <summary>
+    /// 获取父对象。
+    /// </summary>
+    object? Parent { get; }
+
     /// <summary>
     /// 获取或设置文本输入框的默认内容 [[1]]。
     /// </summary>
@@ -27,7 +39,22 @@ public interface IWordTextInput : IDisposable
     /// </summary>
     string Format { get; }
 
+    /// <summary>
+    /// 获取文本输入框是否有效。
+    /// </summary>
+    bool Valid { get; }
+
+    /// <summary>
+    /// 清除文本输入框。
+    /// </summary>
     void Clear();
 
-    void EditType(WdTextFormFieldType type, string? @default = null, string? format = null, bool? enabled = null);
+    /// <summary>
+    /// 修改文本输入框的类型。
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="defaultStr"></param>
+    /// <param name="format"></param>
+    /// <param name="enabled"></param>
+    void EditType(WdTextFormFieldType type, string? defaultStr = null, string? format = null, bool? enabled = null);
 }
