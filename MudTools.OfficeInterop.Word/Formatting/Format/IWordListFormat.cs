@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 列表格式的封装接口。
 /// </summary>
-public interface IWordListFormat : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordListFormat : IOfficeObject<IWordListFormat, MsWord.ListFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -28,7 +29,20 @@ public interface IWordListFormat : IDisposable
     /// </summary>
     int ListLevelNumber { get; set; }
 
+    /// <summary>
+    /// 获取列表模板。
+    /// </summary>
     IWordListTemplate? ListTemplate { get; }
+
+    /// <summary>
+    /// 获取列表图形项目符号。
+    /// </summary>
+    IWordInlineShape? ListPictureBullet { get; }
+
+    /// <summary>
+    /// 获取列表。
+    /// </summary>
+    IWordList? List { get; }
 
     /// <summary>
     /// 获取或设置列表类型。
@@ -75,8 +89,8 @@ public interface IWordListFormat : IDisposable
     /// <param name="continuePreviousList">是否继续前一个列表。</param>
     /// <param name="applyTo">应用到的范围。</param>
     /// <param name="defaultListBehavior">默认列表行为。</param>
-    void ApplyListTemplateWithLevel(IWordListTemplate listTemplate, bool continuePreviousList,
-                                  WdListApplyTo applyTo, WdDefaultListBehavior defaultListBehavior);
+    void ApplyListTemplateWithLevel(IWordListTemplate listTemplate, bool? continuePreviousList = null,
+                                  WdListApplyTo? applyTo = null, WdDefaultListBehavior? defaultListBehavior = null);
 
 
     /// <summary>
@@ -86,19 +100,32 @@ public interface IWordListFormat : IDisposable
     /// <param name="continuePreviousList">是否继续前一个列表。</param>
     /// <param name="applyTo">应用到的范围。</param>
     /// <param name="defaultListBehavior">默认列表行为。</param>
-    void ApplyListTemplate(IWordListTemplate listTemplate, bool continuePreviousList,
-                                  WdListApplyTo applyTo, WdDefaultListBehavior defaultListBehavior);
+    void ApplyListTemplate(IWordListTemplate listTemplate, bool? continuePreviousList = null,
+                           WdListApplyTo? applyTo = null, WdDefaultListBehavior? defaultListBehavior = null);
 
     /// <summary>
     /// 移除列表格式。
     /// </summary>
-    void RemoveNumbers();
+    void RemoveNumbers(WdNumberType? numberType = null);
 
     /// <summary>
     /// 检查是否可以列表还原。
     /// </summary>
     /// <returns>是否可以还原。</returns>
-    WdContinue CanContinuePreviousList(IWordListTemplate listTemplate);
+    WdContinue? CanContinuePreviousList(IWordListTemplate listTemplate);
+
+    /// <summary>
+    /// 获取指定类型的列表项数。
+    /// </summary>
+    /// <param name="numberType">列表类型。</param>
+    /// <param name="level">列表级别。</param>
+    /// <returns>列表项数。</returns>
+    int? CountNumberedItems(WdNumberType? numberType = null, int? level = null);
+
+    /// <summary>
+    /// 将数字转换为文本。
+    /// </summary>
+    void ConvertNumbersToText(WdNumberType? numberType = null);
 
     /// <summary>
     /// 列表降级。

@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档列表模板接口
 /// </summary>
-public interface IWordListTemplate : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordListTemplate : IOfficeObject<IWordListTemplate, MsWord.ListTemplate>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -30,23 +32,18 @@ public interface IWordListTemplate : IDisposable
     /// <summary>
     /// 获取列表级别集合。
     /// </summary>
-    IWordListLevels ListLevels { get; }
+    IWordListLevels? ListLevels { get; }
 
+    /// <summary>
+    /// 获取或设置是否为大纲编号。
+    /// </summary>
     bool OutlineNumbered { get; set; }
 
-    IWordListTemplate Convert(IWordListLevel listLevel);
-
-
     /// <summary>
-    /// 获取指定级别的列表级别对象。
+    /// 将列表模板转换为指定级别的列表模板。
     /// </summary>
-    /// <param name="level">级别数（1-9）。</param>
-    /// <returns>列表级别对象。</returns>
-    IWordListLevel GetListLevel(int level);
+    /// <param name="listLevel">要转换的列表级别对象。</param>
+    /// <returns>转换后的列表模板对象。</returns>
+    IWordListTemplate? Convert(IWordListLevel listLevel);
 
-    /// <summary>
-    /// 设置所有级别的编号格式。
-    /// </summary>
-    /// <param name="formats">编号格式数组。</param>
-    void SetAllLevelNumberFormats(string[] formats);
 }
