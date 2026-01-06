@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// SmartTagActions 接口及实现类
 /// </summary>
-public interface IWordSmartTagActions : IEnumerable<IWordSmartTagAction>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordSmartTagActions : IEnumerable<IWordSmartTagAction?>, IOfficeObject<IWordSmartTagActions>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象 [[19]]。
@@ -29,4 +30,16 @@ public interface IWordSmartTagActions : IEnumerable<IWordSmartTagAction>, IDispo
     /// <param name="index">要返回的单个对象。可以是代表序号位置的 Number 类型的值。</param>
     /// <returns>指定索引处的 <see cref="IWordSmartTagAction"/> 对象。</returns>
     IWordSmartTagAction? this[int index] { get; }
+
+    /// <summary>
+    /// 返回集合中指定的 <see cref="IWordSmartTagAction"/> 对象 [[12]]。
+    /// </summary>
+    /// <param name="name">要返回的单个对象。可以是代表序号位置的 Number 类型的值。</param>
+    /// <returns>指定索引处的 <see cref="IWordSmartTagAction"/> 对象。</returns>
+    IWordSmartTagAction? this[string name] { get; }
+
+    /// <summary>
+    /// 刷新智能标记操作。
+    /// </summary>
+    void ReloadActions();
 }
