@@ -12,7 +12,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：FirstLetterExceptions 集合包括所有排除的缩写。当 CorrectSentenceCaps 属性设置为 true 时，句点后面的第一个字符会自动大写。</para>
 /// <para>注：在 FirstLetterExceptions 集合中的项后键入的字符不会大写。</para>
 /// </summary>
-public interface IWordFirstLetterException : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordFirstLetterException : IOfficeObject<IWordFirstLetterException, MsWord.FirstLetterException>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
