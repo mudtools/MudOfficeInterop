@@ -12,11 +12,13 @@ using System;
 /// <summary>
 /// 表示 Word 发光效果格式的封装接口。
 /// </summary>
-public interface IWordGlowFormat : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordGlowFormat : IOfficeObject<IWordGlowFormat, MsWord.GlowFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -34,6 +36,8 @@ public interface IWordGlowFormat : IDisposable
     /// </summary>
     float Radius { get; set; }
 
-
+    /// <summary>
+    /// 获取或设置发光透明度。
+    /// </summary>
     float Transparency { get; set; }
 }
