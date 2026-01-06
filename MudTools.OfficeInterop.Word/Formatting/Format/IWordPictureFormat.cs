@@ -5,12 +5,15 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.PictureFormat 的接口，用于操作图片格式。
 /// </summary>
-public interface IWordPictureFormat : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordPictureFormat : IOfficeObject<IWordPictureFormat, MsWord.PictureFormat>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -23,138 +26,68 @@ public interface IWordPictureFormat : IDisposable
     /// </summary>
     object? Parent { get; }
 
-    IWordCrop? Crop { get; }
     /// <summary>
-    /// 获取或设置图片的亮度（-1.0到1.0之间）。
+    /// 获取或设置指定图片或 OLE 对象的亮度。此属性的值必须是 0.0（最暗）到 1.0（最亮）之间的数字。
     /// </summary>
     float Brightness { get; set; }
 
     /// <summary>
-    /// 获取或设置图片的对比度（0.0到1.0之间）。
+    /// 获取或设置应用于指定图片或 OLE 对象的颜色变换类型。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoPictureColorType ColorType { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定图片或 OLE 对象的对比度。此属性的值必须是 0.0（最小对比度）到 1.0（最大对比度）之间的数字。
     /// </summary>
     float Contrast { get; set; }
 
     /// <summary>
-    /// 获取或设置图片的颜色类型。
-    /// </summary>
-    MsoPictureColorType ColorType { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片的裁剪左边缘（磅）。
-    /// </summary>
-    float CropLeft { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片的裁剪右边缘（磅）。
-    /// </summary>
-    float CropRight { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片的裁剪上边缘（磅）。
-    /// </summary>
-    float CropTop { get; set; }
-
-    /// <summary>
-    /// 获取或设置图片的裁剪下边缘（磅）。
+    /// 获取或设置从指定图片或 OLE 对象底部裁剪的点数。
     /// </summary>
     float CropBottom { get; set; }
 
     /// <summary>
-    /// 获取或设置图片的透明色。
+    /// 获取或设置从指定图片或 OLE 对象左侧裁剪的点数。
     /// </summary>
-    int TransparencyColor { get; set; }
+    float CropLeft { get; set; }
 
     /// <summary>
-    /// 获取或设置图片是否透明。
+    /// 获取或设置从指定图片或 OLE 对象右侧裁剪的点数。
     /// </summary>
+    float CropRight { get; set; }
+
+    /// <summary>
+    /// 获取或设置从指定图片或 OLE 对象顶部裁剪的点数。
+    /// </summary>
+    float CropTop { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定图片的透明颜色作为 RGB 值。仅适用于位图。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    Color TransparencyColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示使用透明颜色定义的图片部分是否实际显示为透明。仅适用于位图。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     bool TransparentBackground { get; set; }
 
     /// <summary>
-    /// 获取或设置图片的柔化边缘格式。
+    /// 按指定增量更改图片的亮度。使用 Brightness 属性设置图片的绝对亮度。
     /// </summary>
-    IWordSoftEdgeFormat? SoftEdge { get; }
+    /// <param name="increment">必需。指定要更改图片亮度属性值的量。正值使图片更亮；负值使图片更暗。</param>
+    void IncrementBrightness(float increment);
 
     /// <summary>
-    /// 获取或设置图片的光泽格式。
+    /// 按指定增量更改图片的对比度。使用 Contrast 属性设置图片的绝对对比度。
     /// </summary>
-    IWordReflectionFormat? Reflection { get; }
+    /// <param name="increment">必需。指定要更改图片对比度属性值的量。正值增加对比度；负值减少对比度。</param>
+    void IncrementContrast(float increment);
 
     /// <summary>
-    /// 获取或设置图片的反射格式。
+    /// 获取或设置表示图像裁剪的 Crop 对象。
     /// </summary>
-    IWordGlowFormat? Glow { get; }
-
-    /// <summary>
-    /// 获取图片是否为链接图片。
-    /// </summary>
-    bool IsLinked { get; }
-
-    /// <summary>
-    /// 获取图片的文件名。
-    /// </summary>
-    string Filename { get; }
-
-    /// <summary>
-    /// 获取图片的文件大小（字节）。
-    /// </summary>
-    long FileSize { get; }
-
-    /// <summary>
-    /// 调整图片亮度。
-    /// </summary>
-    /// <param name="brightness">亮度值（-1.0到1.0）。</param>
-    void AdjustBrightness(float brightness);
-
-    /// <summary>
-    /// 调整图片对比度。
-    /// </summary>
-    /// <param name="contrast">对比度值（0.0到1.0）。</param>
-    void AdjustContrast(float contrast);
-
-    /// <summary>
-    /// 重置图片格式为原始状态。
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 设置透明色。
-    /// </summary>
-    /// <param name="rgb">RGB颜色值。</param>
-    void SetTransparentColor(int rgb);
-
-    /// <summary>
-    /// 复制图片格式到另一个对象。
-    /// </summary>
-    /// <param name="targetPicture">目标图片格式对象。</param>
-    void CopyTo(IWordPictureFormat targetPicture);
-
-    /// <summary>
-    /// 更新链接的图片。
-    /// </summary>
-    /// <returns>是否更新成功。</returns>
-    bool Update();
-
-    /// <summary>
-    /// 断开图片链接。
-    /// </summary>
-    /// <returns>是否断开成功。</returns>
-    bool BreakLink();
-
-    /// <summary>
-    /// 验证图片参数是否有效。
-    /// </summary>
-    /// <param name="brightness">亮度值。</param>
-    /// <param name="contrast">对比度值。</param>
-    /// <returns>参数是否有效。</returns>
-    bool ValidateParameters(float brightness, float contrast);
-
-    /// <summary>
-    /// 获取图片是否为透明图片。
-    /// </summary>
-    bool HasTransparency { get; }
-
-    /// <summary>
-    /// 获取图片是否为灰度模式。
-    /// </summary>
-    bool IsGrayscale { get; }
+    IOfficeCrop? Crop { get; set; }
 }
