@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中所有子文档的集合。
 /// </summary>
-public interface IWordSubdocuments : IEnumerable<IWordSubdocument>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordSubdocuments : IEnumerable<IWordSubdocument?>, IOfficeObject<IWordSubdocuments>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
@@ -31,7 +32,7 @@ public interface IWordSubdocuments : IEnumerable<IWordSubdocument>, IDisposable
     /// 通过索引获取子文档。
     /// </summary>
     /// <param name="index">从 1 开始的索引。</param>
-    IWordSubdocument this[int index] { get; }
+    IWordSubdocument? this[int index] { get; }
 
     /// <summary>
     /// 添加一个新的子文档。
@@ -45,10 +46,19 @@ public interface IWordSubdocuments : IEnumerable<IWordSubdocument>, IDisposable
     /// <param name="writePasswordDocument">写入密码。</param>
     /// <param name="writePasswordTemplate">写入模板密码。</param>
     /// <returns>新创建的子文档。</returns>
-    IWordSubdocument AddFromFile(string name, bool confirmConversions, bool readOnly, object passwordDocument,
-                        string passwordTemplate, bool revert, string writePasswordDocument, string writePasswordTemplate);
+    IWordSubdocument? AddFromFile(string name, bool? confirmConversions = null, bool? readOnly = null, IWordSubdocument? passwordDocument = null,
+                        string? passwordTemplate = null, bool? revert = null, string? writePasswordDocument = null,
+                        string? writePasswordTemplate = null);
 
-    IWordSubdocument AddFromRange(IWordRange range);
+    /// <summary>
+    /// 添加一个新的子文档。
+    /// </summary>
+    IWordSubdocument? AddFromRange(IWordRange range);
+
+    /// <summary>
+    /// 合并子文档。
+    /// </summary>
+    void Merge(IWordSubdocument? firstSubdocument = null, IWordSubdocument? lastSubdocument = null);
 
     /// <summary>
     /// 删除所有子文档。
