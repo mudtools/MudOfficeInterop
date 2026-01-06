@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// SmartTagRecognizer 接口及实现类
 /// </summary>
-public interface IWordSmartTagRecognizer : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordSmartTagRecognizer : IOfficeObject<IWordSmartTagRecognizer>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
@@ -19,24 +20,27 @@ public interface IWordSmartTagRecognizer : IDisposable
     IWordApplication? Application { get; }
 
     /// <summary>
-    /// 获取代表指定对象的父对象的对象 [[10]]。
+    /// 获取代表指定对象的父对象的对象。
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取标识指定智能标记识别程序的标签 [[4]]。
+    /// 获取标识指定智能标记识别程序的标签 。
     /// </summary>
     string Caption { get; }
 
     /// <summary>
-    /// 获取智能标记识别程序的完整名称，包括路径 [[9]]。
+    /// 获取智能标记识别程序的完整名称，包括路径 。
     /// </summary>
     string FullName { get; }
 
+    /// <summary>
+    /// 获取智能标记识别程序的 ProgID 。
+    /// </summary>
     string ProgID { get; }
 
     /// <summary>
-    /// 获取或设置一个 Boolean 类型的值，该值确定是否启用指定的智能标记识别程序 [[7]]。
+    /// 获取或设置一个 Boolean 类型的值，该值确定是否启用指定的智能标记识别程序。
     /// </summary>
     bool Enabled { get; set; }
 

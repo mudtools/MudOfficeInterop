@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// SmartTagRecognizers 接口及实现类
 /// </summary>
-public interface IWordSmartTagRecognizers : IEnumerable<IWordSmartTagRecognizer>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordSmartTagRecognizers : IEnumerable<IWordSmartTagRecognizer?>, IOfficeObject<IWordSmartTagRecognizers>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
@@ -31,7 +32,19 @@ public interface IWordSmartTagRecognizers : IEnumerable<IWordSmartTagRecognizer>
     IWordSmartTagRecognizer? this[int index] { get; }
 
     /// <summary>
+    /// 返回集合中指定的 <see cref="IWordSmartTagRecognizer"/> 对象。
+    /// </summary>
+    /// <param name="name">要返回的单个对象。可以是代表序号位置的 Number 类型的值。</param>
+    /// <returns>指定索引处的 <see cref="IWordSmartTagRecognizer"/> 对象。</returns>
+    IWordSmartTagRecognizer? this[string name] { get; }
+
+    /// <summary>
     /// 获取一个 32 位整数，该整数指示创建对象的应用程序。
     /// </summary>
     int Creator { get; }
+
+    /// <summary>
+    /// 刷新智能标记识别程序。
+    /// </summary>
+    void ReloadRecognizers();
 }
