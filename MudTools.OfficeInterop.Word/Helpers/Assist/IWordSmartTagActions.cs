@@ -15,6 +15,7 @@ public interface IWordSmartTagActions : IEnumerable<IWordSmartTagAction>, IDispo
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象 [[19]]。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

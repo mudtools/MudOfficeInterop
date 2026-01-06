@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示最近使用的文件。
 /// <para>注：RecentFile 对象是 RecentFiles 集合的成员。RecentFiles 集合中的各项包含最近使用的所有文件。集合中的各项显示在“文件”菜单的底部。</para>
 /// </summary>
-public interface IWordRecentFile : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordRecentFile : IOfficeObject<IWordRecentFile>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -56,5 +58,5 @@ public interface IWordRecentFile : IDisposable
     /// 打开指定的最近使用文件。
     /// </summary>
     /// <returns>表示打开的文档的对象。</returns>
-    IWordDocument Open();
+    IWordDocument? Open();
 }
