@@ -5,16 +5,20 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.Border 的接口，用于操作单个边框样式。
 /// </summary>
-public interface IWordBorder : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordBorder : IOfficeObject<IWordBorder, MsWord.Border>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -23,43 +27,42 @@ public interface IWordBorder : IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置边框是否可见。
+    /// 获取或设置一个值，指示指定的 Border 对象是否可见。
     /// </summary>
     bool Visible { get; set; }
 
     /// <summary>
-    /// 获取或设置边框线条样式。
+    /// 获取或设置指定边框对象的颜色。
+    /// </summary>
+    WdColorIndex ColorIndex { get; set; }
+
+    /// <summary>
+    /// 获取一个值，指示是否可作为内部边框应用于指定对象。
+    /// </summary>
+    bool Inside { get; }
+
+    /// <summary>
+    /// 获取或设置指定对象的边框线样式。
     /// </summary>
     WdLineStyle LineStyle { get; set; }
 
     /// <summary>
-    /// 获取或设置边框线条粗细。
+    /// 获取或设置对象边框的线宽。
     /// </summary>
     WdLineWidth LineWidth { get; set; }
 
     /// <summary>
-    /// 获取或设置边框颜色（RGB值）。
-    /// </summary>
-    WdColor Color { get; set; }
-
-    /// <summary>
-    /// 获取或设置边框颜色索引。
-    /// </summary>
-    WdColorIndex ColorIndex { get; set; }
-
-
-    /// <summary>
-    /// 获取或设置是否应用艺术边框样式。
+    /// 获取或设置文档的图形页面边框设计。
     /// </summary>
     WdPageBorderArt ArtStyle { get; set; }
 
     /// <summary>
-    /// 获取或设置艺术边框的长度。
+    /// 获取或设置指定图形页面边框的宽度（以磅为单位）。
     /// </summary>
     int ArtWidth { get; set; }
 
     /// <summary>
-    /// 获取边框是否为内置样式。
+    /// 获取或设置指定 Border 对象的 24 位颜色。
     /// </summary>
-    bool Inside { get; }
+    WdColor Color { get; set; }
 }
