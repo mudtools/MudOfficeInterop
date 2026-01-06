@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// SmartTagType 接口及实现类
 /// </summary>
-public interface IWordSmartTagType : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordSmartTagType : IOfficeObject<IWordSmartTagType>, IDisposable
 {
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 Application 对象。
@@ -34,9 +35,18 @@ public interface IWordSmartTagType : IDisposable
     /// </summary>
     int Creator { get; }
 
+    /// <summary>
+    /// 获取智能标记类型的友好名称。
+    /// </summary>
     string FriendlyName { get; }
 
+    /// <summary>
+    /// 获取智能标记类型所使用的智能标记识别程序。
+    /// </summary>
     IWordSmartTagRecognizers? SmartTagRecognizers { get; }
 
+    /// <summary>
+    /// 获取智能标记类型所使用的智能标记操作。
+    /// </summary>
     IWordSmartTagActions? SmartTagActions { get; }
 }

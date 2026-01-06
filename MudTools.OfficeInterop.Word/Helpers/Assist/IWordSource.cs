@@ -13,7 +13,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 Sources(index) 可返回单个 Source 对象，其中 index 是源的索引号（从 1 开始）或 Tag 值（字符串）。</para>
 /// <para>注：此接口基于对 Word 2007 及更高版本中引文和书目功能的理解实现，因为官方 SDK 文档信息有限。</para>
 /// </summary>
-public interface IWordSource : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordSource : IOfficeObject<IWordSource>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 
