@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中可读性统计信息的封装接口。
 /// </summary>
-public interface IWordReadabilityStatistic : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordReadabilityStatistic : IOfficeObject<IWordReadabilityStatistic>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>

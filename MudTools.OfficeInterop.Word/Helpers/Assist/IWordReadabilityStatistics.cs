@@ -9,11 +9,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中所有可读性统计信息的集合。
 /// </summary>
-public interface IWordReadabilityStatistics : IEnumerable<IWordReadabilityStatistic>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordReadabilityStatistics : IEnumerable<IWordReadabilityStatistic?>, IOfficeObject<IWordReadabilityStatistics>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -30,11 +32,11 @@ public interface IWordReadabilityStatistics : IEnumerable<IWordReadabilityStatis
     /// 通过索引获取可读性统计项目。
     /// </summary>
     /// <param name="index">从 1 开始的索引。</param>
-    IWordReadabilityStatistic this[int index] { get; }
+    IWordReadabilityStatistic? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取可读性统计项目。
     /// </summary>
     /// <param name="name">统计项目名称。</param>
-    IWordReadabilityStatistic this[string name] { get; }
+    IWordReadabilityStatistic? this[string name] { get; }
 }

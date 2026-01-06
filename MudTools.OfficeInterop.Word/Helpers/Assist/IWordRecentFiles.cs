@@ -11,7 +11,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：使用 RecentFiles 属性可返回 RecentFiles 集合。</para>
 /// <para>注：使用 RecentFiles(index)（其中 index 是索引号）可返回单个 RecentFile 对象。索引序号代表该文件在“文件”菜单上的位置。</para>
 /// </summary>
-public interface IWordRecentFiles : IEnumerable<IWordRecentFile>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordRecentFiles : IEnumerable<IWordRecentFile?>, IOfficeObject<IWordRecentFiles>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -30,11 +31,16 @@ public interface IWordRecentFiles : IEnumerable<IWordRecentFile>, IDisposable
     int Count { get; }
 
     /// <summary>
+    /// 获取或设置最近使用的文件列表中的最大文件数。
+    /// </summary>
+    int Maximum { get; }
+
+    /// <summary>
     /// 通过索引号获取单个最近使用文件。
     /// </summary>
     /// <param name="index">索引号（从 1 开始）。</param>
     /// <returns>指定的最近使用文件对象。</returns>
-    IWordRecentFile this[int index] { get; }
+    IWordRecentFile? this[int index] { get; }
 
     /// <summary>
     /// 将文件添加到最近使用的文件列表中。
@@ -42,5 +48,5 @@ public interface IWordRecentFiles : IEnumerable<IWordRecentFile>, IDisposable
     /// <param name="fileName">要添加的文件的名称。</param>
     /// <param name="readOnly">如果为 true，则以只读方式打开文件。</param>
     /// <returns>表示添加的最近使用文件的对象。</returns>
-    IWordRecentFile Add(string fileName, object readOnly);
+    IWordRecentFile? Add(string fileName, object readOnly);
 }
