@@ -21,6 +21,7 @@
 
 
 	<ItemGroup>
+	  <ProjectReference Include="..\MudTools.OfficeInterop.Vbe\MudTools.OfficeInterop.Vbe.csproj" />
 	  <ProjectReference Include="..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
 	</ItemGroup>
 	

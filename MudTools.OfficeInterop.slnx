@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/samples/" />
   <Folder Name="/samples/ExcelSample/">
+    <File Path="Samples/ExcelSamples/Directory.Build.props" />
     <Project Path="Samples/ExcelSamples/AdvancedChartFeaturesSample/AdvancedChartFeaturesSample.csproj" />
     <Project Path="Samples/ExcelSamples/AdvancedDataOperationsSample/AdvancedDataOperationsSample.csproj" />
     <Project Path="Samples/ExcelSamples/AdvancedFormattingSample/AdvancedFormattingSample.csproj" />
@@ -22,6 +23,7 @@
     <Project Path="Samples/ExcelSamples/WorkbookWorksheetOperationsSample/WorkbookWorksheetOperationsSample.csproj" />
   </Folder>
   <Folder Name="/samples/WordSample/">
+    <File Path="Samples/WordSamples/Directory.Build.props" />
     <Project Path="Samples/WordSamples/BasicDocumentOperationsSample/BasicDocumentOperationsSample.csproj" />
     <Project Path="Samples/WordSamples/DocumentAutomationProcessingSample/DocumentAutomationProcessingSample.csproj" />
     <Project Path="Samples/WordSamples/DocumentProtectionAndSecuritySample/DocumentProtectionAndSecuritySample.csproj" />
