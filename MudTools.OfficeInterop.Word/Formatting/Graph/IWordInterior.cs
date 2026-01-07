@@ -5,16 +5,20 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Drawing;
+
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 表示 Word 图表内部区域格式的封装接口。
 /// </summary>
-public interface IWordInterior : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordInterior : IOfficeObject<IWordInterior, MsWord.Interior>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -23,9 +27,16 @@ public interface IWordInterior : IDisposable
     object? Parent { get; }
 
     /// <summary>
+    /// 获取或设置内部区域是否反转。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool InvertIfNegative { get; set; }
+
+    /// <summary>
     /// 获取或设置内部区域颜色。
     /// </summary>
-    object Color { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color Color { get; set; }
 
     /// <summary>
     /// 获取或设置内部区域颜色索引。
@@ -40,7 +51,8 @@ public interface IWordInterior : IDisposable
     /// <summary>
     /// 获取或设置内部区域图案颜色。
     /// </summary>
-    object PatternColor { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    Color PatternColor { get; set; }
 
     /// <summary>
     /// 获取或设置内部区域图案颜色索引。
