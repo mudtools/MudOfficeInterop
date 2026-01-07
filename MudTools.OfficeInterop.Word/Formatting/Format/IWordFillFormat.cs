@@ -144,6 +144,9 @@ public interface IWordFillFormat : IOfficeObject<IWordFillFormat, MsWord.FillFor
     /// </summary>
     IOfficePictureEffects? PictureEffects { get; }
 
+    /// <summary>
+    /// 获取或设置填充的图片效果集合。
+    /// </summary>
     IOfficeGradientStops? GradientStops { get; }
 
 
