@@ -9,11 +9,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中形状范围（ShapeRange）的封装接口。
 /// </summary>
-public interface IWordShapeRange : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordShapeRange : IEnumerable<IWordShapeRange?>, IOfficeObject<IWordShapeRange, MsWord.ShapeRange>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -27,152 +29,427 @@ public interface IWordShapeRange : IDisposable
     int Count { get; }
 
     /// <summary>
-    /// 通过索引获取形状。
+    /// 通过索引获取指定的形状。
     /// </summary>
-    /// <param name="index">索引（从 1 开始）。</param>
-    IWordShape this[object index] { get; }
+    /// <param name="index">形状的序号位置或表示形状名称的字符串。</param>
+    /// <returns>指定索引处的形状对象。</returns>
+    IWordShape? this[int index] { get; }
 
     /// <summary>
-    /// 获取或设置形状范围的名称。
+    /// 通过索引获取指定的形状。
     /// </summary>
-    string Name { get; set; }
+    /// <param name="name">形状的序号位置或表示形状名称的字符串。</param>
+    /// <returns>指定索引处的形状对象。</returns>
+    IWordShape? this[string name] { get; }
+
 
     /// <summary>
-    /// 获取形状范围的左边缘位置（相对于文档左边缘）。
-    /// </summary>
-    float Left { get; set; }
-
-    /// <summary>
-    /// 获取形状范围的上边缘位置（相对于文档上边缘）。
-    /// </summary>
-    float Top { get; set; }
-
-    /// <summary>
-    /// 获取形状范围的宽度。
-    /// </summary>
-    float Width { get; set; }
-
-    /// <summary>
-    /// 获取形状范围的高度。
-    /// </summary>
-    float Height { get; set; }
-
-    /// <summary>
-    /// 获取或设置形状范围的水平对齐方式。
-    /// </summary>
-    WdShapePosition HorizontalFlip { get; }
-
-    /// <summary>
-    /// 获取或设置形状范围的垂直对齐方式。
-    /// </summary>
-    WdShapePosition VerticalFlip { get; }
-
-    /// <summary>
-    /// 获取形状范围的 Z 轴顺序。
-    /// </summary>
-    int ZOrderPosition { get; }
-
-    /// <summary>
-    /// 获取形状范围的文本框架。
-    /// </summary>
-    IWordTextFrame? TextFrame { get; }
-
-    /// <summary>
-    /// 获取形状范围的填充格式。
-    /// </summary>
-    IWordFillFormat? Fill { get; }
-
-    /// <summary>
-    /// 获取形状范围的线条格式。
-    /// </summary>
-    IWordLineFormat? Line { get; }
-
-    /// <summary>
-    /// 获取形状范围的阴影格式。
-    /// </summary>
-    IWordShadowFormat? Shadow { get; }
-
-    /// <summary>
-    /// 获取形状范围的三维格式。
-    /// </summary>
-    IWordThreeDFormat? ThreeD { get; }
-
-    /// <summary>
-    /// 获取形状范围的调整选项。
+    /// 获取包含自选图形或艺术字所有调整值的 Adjustments 对象。
     /// </summary>
     IWordAdjustments? Adjustments { get; }
 
     /// <summary>
-    /// 获取形状范围的自动调整设置。
+    /// 获取或设置指定自选图形的形状类型（不能是线条或自由曲线）。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoAutoShapeType AutoShapeType { get; set; }
 
     /// <summary>
-    /// 获取形状范围的锁定锚点。
+    /// 获取包含图形标注格式属性的 CalloutFormat 对象。
     /// </summary>
-    IWordRange Anchor { get; }
+    IWordCalloutFormat? Callout { get; }
 
     /// <summary>
-    /// 获取形状范围的水平对齐相对于页面的设置。
+    /// 获取包含图形填充格式属性的 FillFormat 对象。
+    /// </summary>
+    IWordFillFormat? Fill { get; }
+
+    /// <summary>
+    /// 获取表示组中各个图形的 GroupShapes 对象。
+    /// </summary>
+    IWordGroupShapes? GroupItems { get; }
+
+    /// <summary>
+    /// 获取或设置形状的高度（以磅为单位）。
+    /// </summary>
+    float Height { get; set; }
+
+    /// <summary>
+    /// 获取一个值，指示图形是否已水平翻转。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HorizontalFlip { get; }
+
+    /// <summary>
+    /// 获取或设置形状的水平位置（以磅为单位）。
+    /// </summary>
+    float Left { get; set; }
+
+    /// <summary>
+    /// 获取包含图形线条格式属性的 LineFormat 对象。
+    /// </summary>
+    IWordLineFormat? Line { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示调整图形大小时是否保持原始比例。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool LockAspectRatio { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状的名称。
+    /// </summary>
+    string Name { get; set; }
+
+    /// <summary>
+    /// 获取表示图形几何描述的 ShapeNodes 集合。
+    /// </summary>
+    IWordShapeNodes? Nodes { get; }
+
+    /// <summary>
+    /// 获取或设置图形围绕 Z 轴旋转的度数。正值表示顺时针旋转，负值表示逆时针旋转。
+    /// </summary>
+    float Rotation { get; set; }
+
+    /// <summary>
+    /// 获取包含图形图片格式属性的 PictureFormat 对象。
+    /// </summary>
+    IWordPictureFormat? PictureFormat { get; }
+
+    /// <summary>
+    /// 获取表示图形阴影格式的 ShadowFormat 对象。
+    /// </summary>
+    IWordShadowFormat? Shadow { get; }
+
+    /// <summary>
+    /// 获取包含图形文本效果格式属性的 TextEffectFormat 对象。
+    /// </summary>
+    IWordTextEffectFormat? TextEffect { get; }
+
+    /// <summary>
+    /// 获取包含图形文本的 TextFrame 对象。
+    /// </summary>
+    IWordTextFrame? TextFrame { get; }
+
+    /// <summary>
+    /// 获取包含图形三维效果格式属性的 ThreeDFormat 对象。
+    /// </summary>
+    IWordThreeDFormat? ThreeD { get; }
+
+    /// <summary>
+    /// 获取或设置形状的垂直位置（以磅为单位）。
+    /// </summary>
+    float Top { get; set; }
+
+    /// <summary>
+    /// 获取形状的类型。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoShapeType Type { get; }
+
+    /// <summary>
+    /// 获取一个值，指示图形是否已垂直翻转。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool VerticalFlip { get; }
+
+    /// <summary>
+    /// 获取自由曲线的顶点坐标（以及贝塞尔曲线的控制点坐标）。
+    /// </summary>
+    object Vertices { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示图形或应用于它的格式是否可见。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Visible { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状的宽度（以磅为单位）。
+    /// </summary>
+    float Width { get; set; }
+
+    /// <summary>
+    /// 获取图形在 Z 轴顺序中的位置。
+    /// </summary>
+    int ZOrderPosition { get; }
+
+    /// <summary>
+    /// 获取与形状关联的超链接。
+    /// </summary>
+    IWordHyperlink? Hyperlink { get; }
+
+    /// <summary>
+    /// 获取或设置形状水平位置的相对参照物。
     /// </summary>
     WdRelativeHorizontalPosition RelativeHorizontalPosition { get; set; }
 
     /// <summary>
-    /// 获取形状范围的垂直对齐相对于页面的设置。
+    /// 获取或设置形状垂直位置的相对参照物。
     /// </summary>
     WdRelativeVerticalPosition RelativeVerticalPosition { get; set; }
 
     /// <summary>
-    /// 获取形状范围的布局方式。
+    /// 获取或设置一个值，指示形状的定位点是否锁定到定位范围。
+    /// </summary>
+    int LockAnchor { get; set; }
+
+    /// <summary>
+    /// 获取包含形状文本环绕属性的 WrapFormat 对象。
+    /// </summary>
+    IWordWrapFormat? WrapFormat { get; }
+
+    /// <summary>
+    /// 获取表示形状定位范围的 Range 对象。
+    /// </summary>
+    IWordRange? Anchor { get; }
+
+    /// <summary>
+    /// 获取或设置与网页中形状关联的替代文本。
+    /// </summary>
+    string AlternativeText { get; set; }
+
+    /// <summary>
+    /// 获取一个值，指示形状范围中的所有形状是否都是同一父形状的子形状。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Child { get; }
+
+    /// <summary>
+    /// 获取表示子形状范围的公共父形状的 Shape 对象。
+    /// </summary>
+    IWordShape? ParentGroup { get; }
+
+    /// <summary>
+    /// 获取表示绘图画布中形状集合的 CanvasShapes 对象。
+    /// </summary>
+    IWordCanvasShapes? CanvasItems { get; }
+
+    /// <summary>
+    /// 获取指定对象的类型 ID。
+    /// </summary>
+    int ID { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示表格中的形状是否在表格内部显示。
+    /// True 表示指定图片在表格内显示，False 表示指定图片在表格外显示。
     /// </summary>
     int LayoutInCell { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状范围的相对水平位置。
+    /// </summary>
+    float LeftRelative { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状范围的相对垂直位置。
+    /// </summary>
+    float TopRelative { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状范围的相对宽度。
+    /// </summary>
+    float WidthRelative { get; set; }
+
+    /// <summary>
+    /// 获取或设置形状范围相对于目标形状大小的百分比。
+    /// </summary>
+    float HeightRelative { get; set; }
+
+    /// <summary>
+    /// 获取或设置表示形状范围相对水平大小的常量。
+    /// </summary>
+    WdRelativeHorizontalSize RelativeHorizontalSize { get; set; }
+
+    /// <summary>
+    /// 获取或设置表示形状范围相对垂直大小的常量。
+    /// </summary>
+    WdRelativeVerticalSize RelativeVerticalSize { get; set; }
+
+    /// <summary>
+    /// 获取表示形状范围柔化边缘格式的 SoftEdgeFormat 对象。
+    /// </summary>
+    IWordSoftEdgeFormat? SoftEdge { get; }
+
+    /// <summary>
+    /// 获取表示形状范围发光格式的 GlowFormat 对象。
+    /// </summary>
+    IWordGlowFormat? Glow { get; }
+
+    /// <summary>
+    /// 获取表示形状范围反射格式的 ReflectionFormat 对象。
+    /// </summary>
+    IWordReflectionFormat? Reflection { get; }
+
+    /// <summary>
+    /// 获取包含形状范围文本的 TextFrame2 对象。
+    /// </summary>
+    IOfficeTextFrame2? TextFrame2 { get; }
+
+    /// <summary>
+    /// 获取或设置指定形状范围的形状样式。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoShapeStyleIndex ShapeStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定形状范围的背景样式。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoBackgroundStyleIndex BackgroundStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置包含指定形状范围标题的字符串。
+    /// </summary>
+    string Title { get; set; }
+
+    /// <summary>
+    /// 对齐指定范围内的形状。
+    /// </summary>
+    /// <param name="align">指定形状范围内形状的对齐方式。
+    /// 可以是以下常量之一：msoAlignCenters、msoAlignMiddles、msoAlignTops、
+    /// msoAlignBottoms、msoAlignLefts、msoAlignRights。</param>
+    /// <param name="relativeTo">True 表示相对于文档边缘对齐形状，False 表示相对于彼此对齐形状。</param>
+    void Align([ComNamespace("MsCore")] MsoAlignCmd align, int relativeTo);
+
+    /// <summary>
+    /// 应用已使用 PickUp 方法复制的指定形状格式。
+    /// </summary>
+    void Apply();
 
     /// <summary>
     /// 删除形状范围中的所有形状。
     /// </summary>
     void Delete();
 
-    void Align(MsoAlignCmd alignCmd, int relativeTo);
+    /// <summary>
+    /// 均匀分布指定范围内的形状。
+    /// </summary>
+    /// <param name="distribute">分布方式。
+    /// 可以是以下常量之一：msoDistributeHorizontally、msoDistributeVertically。</param>
+    /// <param name="relativeTo">True 表示在页面的整个水平或垂直空间上均匀分布形状，
+    /// False 表示在形状范围最初占据的水平或垂直空间内分布形状。</param>
+    void Distribute([ComNamespace("MsCore")] MsoDistributeCmd distribute, int relativeTo);
 
-    void Apply();
-
+    /// <summary>
+    /// 复制指定的形状范围，将新形状添加到形状集合中，并返回新形状范围。
+    /// </summary>
+    /// <returns>复制后的新形状范围对象。</returns>
     IWordShapeRange? Duplicate();
+
+    /// <summary>
+    /// 水平或垂直翻转形状范围。
+    /// </summary>
+    /// <param name="flipCmd">翻转方向。
+    /// 可以是以下常量之一：msoFlipHorizontal、msoFlipVertical。</param>
+    void Flip([ComNamespace("MsCore")] MsoFlipCmd flipCmd);
+
+    /// <summary>
+    /// 将形状范围水平移动指定距离。
+    /// </summary>
+    /// <param name="increment">形状水平移动的距离（以磅为单位）。正值向右移动，负值向左移动。</param>
+    void IncrementLeft(float increment);
+
+    /// <summary>
+    /// 将形状范围围绕 Z 轴旋转指定度数。
+    /// </summary>
+    /// <param name="increment">形状水平旋转的度数。正值顺时针旋转，负值逆时针旋转。</param>
+    void IncrementRotation(float increment);
+
+    /// <summary>
+    /// 将形状范围垂直移动指定距离。
+    /// </summary>
+    /// <param name="increment">形状垂直移动的距离（以磅为单位）。正值向下移动，负值向上移动。</param>
+    void IncrementTop(float increment);
+
+    /// <summary>
+    /// 将指定范围内的形状组合为一个组。返回组合后的形状作为单个 Shape 对象。
+    /// </summary>
+    /// <returns>组合后的形状对象。</returns>
+    IWordShape? Group();
+
+    /// <summary>
+    /// 复制指定形状的格式。
+    /// </summary>
+    void PickUp();
+
+    /// <summary>
+    /// 按指定因子缩放形状范围的高度。
+    /// </summary>
+    /// <param name="factor">缩放后高度与当前或原始高度的比率。例如，要使矩形高度增加50%，请指定1.5。</param>
+    /// <param name="relativeToOriginalSize">True 表示相对于原始大小缩放，False 表示相对于当前大小缩放。仅当形状为图片或 OLE 对象时才能指定 True。</param>
+    /// <param name="scale">缩放时保持位置不变的形状部分。</param>
+    void ScaleHeight(float factor, [ConvertTriState] bool relativeToOriginalSize, [ComNamespace("MsCore")] MsoScaleFrom scale = MsoScaleFrom.msoScaleFromTopLeft);
+
+    /// <summary>
+    /// 按指定因子缩放形状范围的宽度。
+    /// </summary>
+    /// <param name="factor">缩放后宽度与当前或原始宽度的比率。例如，要使矩形宽度增加50%，请指定1.5。</param>
+    /// <param name="relativeToOriginalSize">True 表示相对于原始大小缩放，False 表示相对于当前大小缩放。仅当形状为图片或 OLE 对象时才能指定 True。</param>
+    /// <param name="scale">缩放时保持位置不变的形状部分。</param>
+    void ScaleWidth(float factor, [ConvertTriState] bool relativeToOriginalSize, [ComNamespace("MsCore")] MsoScaleFrom scale = MsoScaleFrom.msoScaleFromTopLeft);
 
     /// <summary>
     /// 选择形状范围。
     /// </summary>
-    void Select();
+    /// <param name="replace">如果添加形状，True 替换当前选择，False 将新形状添加到选择中。</param>
+    void Select(bool? replace = null);
 
     /// <summary>
-    /// 将形状范围移动到指定的 Z 轴顺序位置。
+    /// 将指定形状的格式应用到该文档的默认形状。新形状从其默认形状继承许多属性。
     /// </summary>
-    /// <param name="zOrderCmd">Z 轴顺序命令。</param>
-    void ZOrder(MsoZOrderCmd zOrderCmd);
+    void SetShapesDefaultProperties();
 
     /// <summary>
-    /// 组合形状范围中的形状。
+    /// 取消指定形状或形状范围中的任何已分组形状。
+    /// 分解形状范围内的图片和 OLE 对象。
+    /// 返回取消分组后的形状作为单个 ShapeRange 对象。
     /// </summary>
-    /// <returns>组合后的形状。</returns>
-    IWordShape? Group();
-
-    /// <summary>
-    /// 取消组合形状范围中的形状。
-    /// </summary>
-    /// <returns>取消组合后的形状范围。</returns>
+    /// <returns>取消分组后的形状范围对象。</returns>
     IWordShapeRange? Ungroup();
 
     /// <summary>
-    /// 重新排列形状范围中的形状。
+    /// 将指定形状移到其他形状的前面或后面（即更改形状在 Z 轴顺序中的位置）。
     /// </summary>
-    void Distribute(MsoDistributeCmd distributeCmd, int relativeTo);
+    /// <param name="zOrderCmd">指定将形状相对于其他形状移动到的位置。
+    /// 可以是以下常量之一：msoBringForward、msoBringInFrontOfText、msoBringToFront、
+    /// msoSendBackward、msoSendBehindText、msoSendToBack。</param>
+    void ZOrder([ComNamespace("MsCore")] MsoZOrderCmd zOrderCmd);
 
     /// <summary>
-    /// 转换为图片。
+    /// 将指定形状转换为框架。返回表示新框架的 Frame 对象。
     /// </summary>
-    void ConvertToInlineShape();
+    /// <returns>转换后的框架对象。</returns>
+    IWordFrame? ConvertToFrame();
 
     /// <summary>
-    /// 转换为浮动形状。
+    /// 将文档绘图层中的指定形状转换为文本层中的内嵌形状。
+    /// 返回表示图片或 OLE 对象的 InlineShape 对象。
     /// </summary>
-    void ConvertToFrame();
+    /// <returns>转换后的内嵌形状对象。</returns>
+    IWordInlineShape? ConvertToInlineShape();
+
+    /// <summary>
+    /// 从绘图画布的左侧裁剪指定百分比宽度。
+    /// </summary>
+    /// <param name="increment">裁剪后剩余的画布宽度百分比。例如，输入0.9表示从左侧裁剪10%宽度，输入0.1表示从左侧裁剪90%宽度。</param>
+    void CanvasCropLeft(float increment);
+
+    /// <summary>
+    /// 从绘图画布的顶部裁剪指定百分比高度。
+    /// </summary>
+    /// <param name="increment">裁剪后剩余的画布高度百分比。例如，输入0.9表示从顶部裁剪10%高度，输入0.1表示从顶部裁剪90%高度。</param>
+    void CanvasCropTop(float increment);
+
+    /// <summary>
+    /// 从绘图画布的右侧裁剪指定百分比宽度。
+    /// </summary>
+    /// <param name="increment">裁剪后剩余的画布宽度百分比。例如，输入0.9表示从右侧裁剪10%宽度，输入0.1表示从右侧裁剪90%宽度。</param>
+    void CanvasCropRight(float increment);
+
+    /// <summary>
+    /// 从绘图画布的底部裁剪指定百分比高度。
+    /// </summary>
+    /// <param name="increment">裁剪后剩余的画布高度百分比。例如，输入0.9表示从底部裁剪10%高度，输入0.1表示从底部裁剪90%高度。</param>
+    void CanvasCropBottom(float increment);
 }
