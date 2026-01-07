@@ -5,18 +5,19 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using Microsoft.Office.Interop.Word;
 
 namespace MudTools.OfficeInterop.Word;
 
 /// <summary>
 /// 封装 Microsoft.Office.Interop.Word.TableStyle 的接口，用于操作表格样式。
 /// </summary>
-public interface IWordTableStyle : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordTableStyle : IOfficeObject<IWordTableStyle, MsWord.TableStyle>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -24,84 +25,80 @@ public interface IWordTableStyle : IDisposable
     /// </summary>
     object? Parent { get; }
 
-    WdTableDirection TableDirection { get; set; }
     /// <summary>
-    /// 获取或设置表格左边框样式。
-    /// </summary>
-    IWordBorder? LeftBorder { get; }
-
-    /// <summary>
-    /// 获取或设置表格右边框样式。
-    /// </summary>
-    IWordBorder? RightBorder { get; }
-
-    /// <summary>
-    /// 获取或设置表格上边框样式。
-    /// </summary>
-    IWordBorder? TopBorder { get; }
-
-    /// <summary>
-    /// 获取或设置表格下边框样式。
-    /// </summary>
-    IWordBorder? BottomBorder { get; }
-
-    /// <summary>
-    /// 获取或设置表格水平边框样式。
-    /// </summary>
-    IWordBorder? HorizontalBorder { get; }
-
-    /// <summary>
-    /// 获取或设置表格垂直边框样式。
-    /// </summary>
-    IWordBorder? VerticalBorder { get; }
-
-    bool AllowBreakAcrossPage { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否允许跨页断行。
+    /// 获取或设置一个值，指示是否允许 Microsoft Word 将指定表格跨页拆分。
     /// </summary>
     bool AllowPageBreaks { get; set; }
 
     /// <summary>
-    /// 获取或设置表格行的底纹。
+    /// 获取或设置表示指定对象所有边框的 Borders 集合。
     /// </summary>
-    IWordShading Shading { get; }
+    IWordBorders? Borders { get; set; }
 
     /// <summary>
-    /// 获取或设置表格的对齐方式。
+    /// 获取或设置表格样式中所有单元格内容下方添加的间距（以磅为单位）。
     /// </summary>
-    WdRowAlignment Alignment { get; set; }
-
-    int ColumnStripe { get; set; }
-
-    int RowStripe { get; set; }
+    float BottomPadding { get; set; }
 
     /// <summary>
-    /// 获取或设置表格缩进距离。
-    /// </summary>
-    float LeftIndent { get; set; }
-
-    /// <summary>
-    /// 获取或设置表格左边距。
+    /// 获取或设置表格样式中所有单元格内容左侧添加的间距（以磅为单位）。
     /// </summary>
     float LeftPadding { get; set; }
 
     /// <summary>
-    /// 获取或设置表格右边距。
-    /// </summary>
-    float RightPadding { get; set; }
-
-    /// <summary>
-    /// 获取或设置表格上边距。
+    /// 获取或设置表格样式中所有单元格内容上方添加的间距（以磅为单位）。
     /// </summary>
     float TopPadding { get; set; }
 
     /// <summary>
-    /// 获取或设置表格下边距。
+    /// 获取或设置表格样式中所有单元格内容右侧添加的间距（以磅为单位）。
     /// </summary>
-    float BottomPadding { get; set; }
+    float RightPadding { get; set; }
 
+    /// <summary>
+    /// 获取或设置表示指定行对齐方式的常量。
+    /// </summary>
+    WdRowAlignment Alignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置表格样式中单元格之间的间距（以磅为单位）。
+    /// </summary>
     float Spacing { get; set; }
 
-    IWordConditionalStyle Condition(WdConditionCode conditionCode);
+    /// <summary>
+    /// 获取或设置表示指定表格样式方向的常量。
+    /// </summary>
+    WdTableDirection TableDirection { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示使用指定样式格式化的表格行是否允许跨页换行。
+    /// </summary>
+    int AllowBreakAcrossPage { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定表格样式的左缩进值（以磅为单位）。
+    /// </summary>
+    float LeftIndent { get; set; }
+
+    /// <summary>
+    /// 获取表示指定对象底纹格式设置的 Shading 对象。
+    /// </summary>
+    IWordShading? Shading { get; }
+
+    /// <summary>
+    /// 获取或设置一个整数值，表示在样式指定奇数或偶数行条纹时包含在条纹中的行数。
+    /// </summary>
+    int RowStripe { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个整数值，表示在样式指定奇数或偶数列条纹时包含在条纹中的列数。
+    /// </summary>
+    int ColumnStripe { get; set; }
+
+    /// <summary>
+    /// 返回表示表格部分特殊样式格式化的 ConditionalStyle 对象。
+    /// </summary>
+    /// <param name="conditionCode">要应用格式化的表格区域。</param>
+    /// <returns>指定表格区域的条件样式对象。</returns>
+    IWordConditionalStyle? Condition(WdConditionCode conditionCode);
 }
