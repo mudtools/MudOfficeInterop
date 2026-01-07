@@ -85,6 +85,15 @@ internal abstract class CoreRange<T, TR> : ICoreRange<TR>
     /// </summary>
     public object Value
     {
+        get => InternalRange.Value;
+        set => InternalRange.Value = value;
+    }
+
+    /// <summary>
+    /// 获取或设置单元格的值
+    /// </summary>
+    public object Value2
+    {
         get => InternalRange.Value2;
         set => InternalRange.Value2 = value;
     }

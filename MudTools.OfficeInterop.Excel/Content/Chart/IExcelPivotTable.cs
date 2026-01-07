@@ -531,10 +531,10 @@ public interface IExcelPivotTable : IOfficeObject<IExcelPivotTable>, IDisposable
     /// <summary>
     /// 获取数据透视表中的特定字段
     /// </summary>
-    /// <param name="Index">要获取的字段索引或名称</param>
+    /// <param name="name">要获取的字段索引或名称</param>
     /// <returns>对应的数据透视表字段，如果未找到则返回null</returns>
     [ValueConvert]
-    IExcelPivotField? PivotFields(string Index);
+    IExcelPivotField? PivotFields(string name);
 
     /// <summary>
     /// 获取数据透视表中所有字段的集合

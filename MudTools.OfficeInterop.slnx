@@ -17,6 +17,7 @@
     <Project Path="Samples/ExcelSamples/PageLayoutPrintingSample/PageLayoutPrintingSample.csproj" />
     <Project Path="Samples/ExcelSamples/PerformanceOptimizationSample/PerformanceOptimizationSample.csproj" />
     <Project Path="Samples/ExcelSamples/PivotTableApplicationSample/PivotTableApplicationSample.csproj" />
+    <Project Path="Samples/ExcelSamples/SalesReportPivotTableSample/SalesReportPivotTableSample.csproj" />
     <Project Path="Samples/ExcelSamples/WebApplicationIntegrationSample/WebApplicationIntegrationSample.csproj" />
     <Project Path="Samples/ExcelSamples/WorkbookWorksheetOperationsSample/WorkbookWorksheetOperationsSample.csproj" />
   </Folder>

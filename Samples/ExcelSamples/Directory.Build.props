@@ -14,13 +14,13 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="3.2.0" />
-		<PackageReference Include="MudTools.OfficeInterop.Excel" Version="2.0.4" />
-		<PackageReference Include="MudTools.OfficeInterop" Version="2.0.4" />
+		<!-- <PackageReference Include="MudTools.OfficeInterop.Excel" Version="2.0.4" />
+		<PackageReference Include="MudTools.OfficeInterop" Version="2.0.4" /> -->
 	</ItemGroup>
-    <!-- <ItemGroup>
+    <ItemGroup>
 		<ProjectReference Include="..\..\..\MudTools.OfficeInterop.Excel\MudTools.OfficeInterop.Excel.csproj" />
 		<ProjectReference Include="..\..\..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
-	</ItemGroup> -->
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.ValueTuple" Version="4.6.1" />
 	</ItemGroup>

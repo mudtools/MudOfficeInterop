@@ -30,7 +30,7 @@ partial class ExcelWorksheet
             cell1 ??= System.Type.Missing;
             cell2 ??= System.Type.Missing;
 
-            var range = _worksheet.Range[cell1, cell2]; ;
+            var range = _worksheet.Range[cell1, cell2];
             return range != null ? new ExcelRange(range) : null;
         }
         catch

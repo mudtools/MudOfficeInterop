@@ -27,6 +27,11 @@ public interface ICoreRange<T> : IEnumerable<T>, IDisposable
     object Value { get; set; }
 
     /// <summary>
+    /// 获取或设置单元格的值。可以是字符串、数字、布尔值、错误值或空值。
+    /// </summary>
+    object Value2 { get; set; }
+
+    /// <summary>
     /// 获取或设置单元格的数组值。。
     /// </summary>
     object[,] ArrayValue { get; set; }
