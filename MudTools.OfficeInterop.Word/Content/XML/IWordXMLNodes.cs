@@ -7,8 +7,11 @@
 
 namespace MudTools.OfficeInterop.Word;
 
+/// <summary>
+/// XML节点集合接口。
+/// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordXMLNodes : IOfficeObject<IWordXMLNodes>, IEnumerable<IWordXMLNode>, IDisposable
+public interface IWordXMLNodes : IOfficeObject<IWordXMLNodes, MsWord.XMLNodes>, IEnumerable<IWordXMLNode>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -41,6 +44,6 @@ public interface IWordXMLNodes : IOfficeObject<IWordXMLNodes>, IEnumerable<IWord
     /// <param name="namespaces">XML节点使用的命名空间。</param>
     /// <param name="range">XML节点关联的Word范围对象，可为null。</param>
     /// <returns>新添加的XML节点；如果添加失败，则返回null。</returns>
-    IWordXMLNode? Add(string name, string namespaces, IWordRange? range);
+    IWordXMLNode? Add(string name, string namespaces, IWordRange? range = null);
 
 }

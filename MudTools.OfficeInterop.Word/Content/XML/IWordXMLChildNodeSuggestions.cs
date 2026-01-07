@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 此接口提供了对Word文档中XML子节点建议的访问和管理功能
 /// </remarks>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordXMLChildNodeSuggestions : IOfficeObject<IWordXMLChildNodeSuggestions>, IEnumerable<IWordXMLChildNodeSuggestion?>, IDisposable
+public interface IWordXMLChildNodeSuggestions : IOfficeObject<IWordXMLChildNodeSuggestions, MsWord.XMLChildNodeSuggestions>, IEnumerable<IWordXMLChildNodeSuggestion?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// <para>注：索引号 1 代表首页页眉或页脚，索引号 2 代表奇数页页眉或页脚，索引号 3 代表偶数页页眉或页脚。</para>
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordHeaderFooter : IDisposable
+public interface IWordHeaderFooter : IOfficeObject<IWordHeaderFooter, MsWord.HeaderFooter>, IDisposable
 {
     #region 基本属性 (Basic Properties)
 

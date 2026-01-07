@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示Word文档中的XML节点，提供对Word XML结构中节点的访问和操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordXMLNode : IOfficeObject<IWordXMLNode>, IDisposable
+public interface IWordXMLNode : IOfficeObject<IWordXMLNode, MsWord.XMLNode>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -47,57 +47,57 @@ public interface IWordXMLNode : IOfficeObject<IWordXMLNode>, IDisposable
     /// <summary>
     /// 获取与节点关联的Word范围
     /// </summary>
-    IWordRange Range { get; }
+    IWordRange? Range { get; }
 
     /// <summary>
     /// 获取下一个同级节点
     /// </summary>
-    IWordXMLNode NextSibling { get; }
+    IWordXMLNode? NextSibling { get; }
 
     /// <summary>
     /// 获取上一个同级节点
     /// </summary>
-    IWordXMLNode PreviousSibling { get; }
+    IWordXMLNode? PreviousSibling { get; }
 
     /// <summary>
     /// 获取父节点
     /// </summary>
-    IWordXMLNode ParentNode { get; }
+    IWordXMLNode? ParentNode { get; }
 
     /// <summary>
     /// 获取第一个子节点
     /// </summary>
-    IWordXMLNode FirstChild { get; }
+    IWordXMLNode? FirstChild { get; }
 
     /// <summary>
     /// 获取最后一个子节点
     /// </summary>
-    IWordXMLNode LastChild { get; }
+    IWordXMLNode? LastChild { get; }
 
     /// <summary>
     /// 获取拥有此节点的文档
     /// </summary>
-    IWordDocument OwnerDocument { get; }
+    IWordDocument? OwnerDocument { get; }
 
     /// <summary>
     /// 获取子节点集合
     /// </summary>
-    IWordXMLNodes ChildNodes { get; }
+    IWordXMLNodes? ChildNodes { get; }
 
     /// <summary>
     /// 获取节点的属性集合
     /// </summary>
-    IWordXMLNodes Attributes { get; }
+    IWordXMLNodes? Attributes { get; }
 
     /// <summary>
     /// 获取子节点建议集合，用于智能标记和内容控件
     /// </summary>
-    IWordXMLChildNodeSuggestions ChildNodeSuggestions { get; }
+    IWordXMLChildNodeSuggestions? ChildNodeSuggestions { get; }
 
     /// <summary>
     /// 获取与节点关联的智能标记
     /// </summary>
-    IWordSmartTag SmartTag { get; }
+    IWordSmartTag? SmartTag { get; }
 
     /// <summary>
     /// 获取或设置节点的文本内容

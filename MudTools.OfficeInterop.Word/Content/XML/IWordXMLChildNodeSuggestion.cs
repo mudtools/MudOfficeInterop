@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 该接口封装了 COM 对象，提供对 Word XML 节点建议功能的访问和操作能力
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordXMLChildNodeSuggestion : IOfficeObject<IWordXMLChildNodeSuggestion>, IDisposable
+public interface IWordXMLChildNodeSuggestion : IOfficeObject<IWordXMLChildNodeSuggestion, MsWord.XMLChildNodeSuggestion>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

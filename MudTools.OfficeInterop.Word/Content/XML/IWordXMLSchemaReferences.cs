@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示附加到文档的唯一命名空间的 Microsoft.Office.Interop.Word.XMLSchemaReference 对象集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsWord")]
-public interface IWordXMLSchemaReferences : IOfficeObject<IWordXMLSchemaReferences>, IEnumerable<IWordXMLSchemaReference?>, IDisposable
+public interface IWordXMLSchemaReferences : IOfficeObject<IWordXMLSchemaReferences, MsWord.XMLSchemaReferences>, IEnumerable<IWordXMLSchemaReference?>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。

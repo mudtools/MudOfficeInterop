@@ -811,12 +811,24 @@ public interface IWordDocument : IOfficeObject<IWordDocument, MsWord.Document>, 
     /// </summary>
     IOfficeSmartDocument? SmartDocument { get; }
 
+    /// <summary>
+    /// 获取文档的文档主题接口，用于处理文档的样式和主题
+    /// </summary>
     IOfficeOfficeTheme? DocumentTheme { get; }
 
+    /// <summary>
+    /// 获取文档的框架接口，用于处理文档的框架布局和分页功能
+    /// </summary>
     IWordFrameset? Frameset { get; }
 
+    /// <summary>
+    /// 获取文档的广播接口，用于处理广播功能
+    /// </summary>
     IWordBroadcast? Broadcast { get; }
 
+    /// <summary>
+    /// 获取文档的XML架构引用接口，用于处理XML架构和数据验证功能
+    /// </summary>
     IWordXMLSchemaReferences? XMLSchemaReferences { get; }
 
     /// <summary>

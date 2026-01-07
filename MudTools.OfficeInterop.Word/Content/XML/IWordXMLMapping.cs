@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Word;
 /// XML 映射是内容控件中的文本与文档的自定义 XML 数据存储中的 XML 元素之间的链接。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordXMLMapping : IOfficeObject<IWordXMLMapping>, IDisposable
+public interface IWordXMLMapping : IOfficeObject<IWordXMLMapping, MsWord.XMLMapping>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
