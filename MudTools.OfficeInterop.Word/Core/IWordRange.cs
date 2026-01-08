@@ -15,8 +15,6 @@ namespace MudTools.OfficeInterop.Word;
 [ComObjectWrap(ComNamespace = "MsWord")]
 public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposable
 {
-    #region 基本属性 (Basic Properties)
-
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
     /// </summary>
@@ -29,29 +27,170 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置区域的起始字符位置。
-    /// </summary>
-    int Start { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的结束字符位置。
-    /// </summary>
-    int End { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域中的文本。
+    /// 获取或设置指定范围内的文本。
     /// </summary>
     string Text { get; set; }
 
     /// <summary>
-    /// 获取区域的副本。
+    /// 获取或设置一个Range对象，表示指定范围内格式化文本。
+    /// </summary>
+    IWordRange? FormattedText { get; set; }
+
+    /// <summary>
+    /// 获取或设置范围的起始字符位置。
+    /// </summary>
+    int Start { get; set; }
+
+    /// <summary>
+    /// 获取或设置范围的结束字符位置。
+    /// </summary>
+    int End { get; set; }
+
+    /// <summary>
+    /// 获取或设置表示指定对象字符格式设置的Font对象。
+    /// </summary>
+    IWordFont? Font { get; set; }
+
+    /// <summary>
+    /// 获取表示指定范围所有属性的Range对象。
     /// </summary>
     IWordRange? Duplicate { get; }
 
     /// <summary>
-    /// 获取区域所属的文档。
+    /// 获取指定范围的文章类型。
     /// </summary>
-    IWordDocument? Document { get; }
+    WdStoryType StoryType { get; }
+
+    /// <summary>
+    /// 获取表示指定范围内所有表格的Tables集合。
+    /// </summary>
+    IWordTables? Tables { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有单词的Words集合。
+    /// </summary>
+    IWordWords? Words { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有句子的Sentences集合。
+    /// </summary>
+    IWordSentences? Sentences { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有字符的Characters集合。
+    /// </summary>
+    IWordCharacters? Characters { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有脚注的Footnotes集合。
+    /// </summary>
+    IWordFootnotes? Footnotes { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有尾注的Endnotes集合。
+    /// </summary>
+    IWordEndnotes? Endnotes { get; }
+
+    /// <summary>
+    /// 获取表示指定范围内所有批注的Comments集合。
+    /// </summary>
+    IWordComments? Comments { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有表格单元格的Cells集合。
+    /// </summary>
+    IWordCells? Cells { get; }
+
+    /// <summary>
+    /// 获取表示指定范围内所有节的Sections集合。
+    /// </summary>
+    IWordSections? Sections { get; }
+
+    /// <summary>
+    /// 获取表示指定范围内所有段落的Paragraphs集合。
+    /// </summary>
+    IWordParagraphs? Paragraphs { get; }
+
+    /// <summary>
+    /// 获取或设置表示指定对象所有边框的Borders集合。
+    /// </summary>
+    IWordBorders? Borders { get; set; }
+
+    /// <summary>
+    /// 获取表示指定对象底纹格式设置的Shading对象。
+    /// </summary>
+    IWordShading? Shading { get; }
+
+    /// <summary>
+    /// 获取或设置控制如何从指定范围检索文本的TextRetrievalMode对象。
+    /// </summary>
+    IWordTextRetrievalMode? TextRetrievalMode { get; set; }
+
+    /// <summary>
+    /// 获取表示范围内所有字段的只读Fields集合。
+    /// </summary>
+    IWordFields? Fields { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有表单字段的FormFields集合。
+    /// </summary>
+    IWordFormFields? FormFields { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有框架的Frames集合。
+    /// </summary>
+    IWordFrames? Frames { get; }
+
+    /// <summary>
+    /// 获取或设置表示指定范围段落设置的ParagraphFormat对象。
+    /// </summary>
+    IWordParagraphFormat? ParagraphFormat { get; set; }
+
+    /// <summary>
+    /// 获取表示范围所有列表格式特征的ListFormat对象。
+    /// </summary>
+    IWordListFormat? ListFormat { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有书签的Bookmarks集合。
+    /// </summary>
+    IWordBookmarks? Bookmarks { get; }
+
+    /// <summary>
+    /// 获取一个32位整数，指示创建指定对象的应用程序。
+    /// </summary>
+    int Creator { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示字体或范围是否格式化为粗体。
+    /// </summary>
+    int Bold { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示范围是否格式化为斜体。
+    /// </summary>
+    int Italic { get; set; }
+
+    /// <summary>
+    /// 获取或设置应用于范围的下划线类型。
+    /// </summary>
+    WdUnderline Underline { get; set; }
+
+    /// <summary>
+    /// 获取或设置字符或指定字符串的强调标记。
+    /// </summary>
+    WdEmphasisMark EmphasisMark { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示Microsoft Word是否为范围忽略每行的字符数。
+    /// </summary>
+    bool DisableCharacterSpaceGrid { get; set; }
+
+    /// <summary>
+    /// 获取表示范围内跟踪更改的Revisions集合。
+    /// </summary>
+    IWordRevisions? Revisions { get; }
+
 
     /// <summary>
     /// 获取或设置指定对象的样式。
@@ -63,7 +202,7 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     /// 获取或设置指定对象的样式。
     /// </summary>
     [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
-    WdBuiltinStyle? StyleType { get; set; }
+    WdBuiltinStyle StyleType { get; set; }
 
     /// <summary>
     /// 获取或设置指定对象的样式。
@@ -72,548 +211,385 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     string? StyleName { get; set; }
 
     /// <summary>
-    /// 获取区域的文章类型。
-    /// </summary>
-    WdStoryType? StoryType { get; }
-
-    /// <summary>
-    /// 获取区域的文章长度。
+    /// 获取包含指定范围的文章中的字符数。
     /// </summary>
     int StoryLength { get; }
 
     /// <summary>
-    /// 获取区域中的下一文章范围。
-    /// </summary>
-    IWordRange? NextStoryRange { get; }
-
-    /// <summary>
-    /// 获取区域中的单元格集合。
-    /// </summary>
-    IWordCells? Cells { get; }
-
-    /// <summary>
-    /// 获取区域中的节集合。
-    /// </summary>
-    IWordSections? Sections { get; }
-
-    /// <summary>
-    /// 获取文本检索模式对象，用于控制文本的检索方式。
-    /// </summary>
-    IWordTextRetrievalMode? TextRetrievalMode { get; }
-
-    /// <summary>
-    /// 获取区域中的框架集合。
-    /// </summary>
-    IWordFrames? Frames { get; }
-
-    /// <summary>
-    /// 获取与区域关联的同义词信息对象。
-    /// </summary>
-    IWordSynonymInfo? SynonymInfo { get; }
-
-    /// <summary>
-    /// 获取区域中的列集合。
-    /// </summary>
-    IWordColumns? Columns { get; }
-
-    /// <summary>
-    /// 获取区域中的行集合。
-    /// </summary>
-    IWordRows? Rows { get; }
-
-    /// <summary>
-    /// 获取一个值，指示是否可以编辑此区域。
-    /// </summary>
-    int CanEdit { get; }
-
-    /// <summary>
-    /// 获取一个值，指示是否可以在此区域粘贴内容。
-    /// </summary>
-    int CanPaste { get; }
-
-    /// <summary>
-    /// 获取一个值，指示此区域是否位于行尾标记处。
-    /// </summary>
-    bool IsEndOfRowMark { get; }
-
-    /// <summary>
-    /// 获取区域的书签ID（如果有）。
-    /// </summary>
-    int BookmarkID { get; }
-
-    /// <summary>
-    /// 获取前一个书签的ID。
-    /// </summary>
-    int PreviousBookmarkID { get; }
-
-
-    //WdInformation Information { get; }
-
-    #endregion
-
-    #region 格式化属性 (Formatting Properties - 字体和段落)
-
-    /// <summary>
-    /// 获取或设置区域的字体格式。
-    /// </summary>
-    IWordFont? Font { get; }
-
-    /// <summary>
-    /// 获取或设置区域的段落格式。
-    /// </summary>
-    IWordParagraphFormat? ParagraphFormat { get; }
-
-    /// <summary>
-    /// 获取或设置区域的粗体格式 (0=False, 1=True, 9999999=Undefined)。
-    /// </summary>
-    int Bold { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的斜体格式 (0=False, 1=True, 9999999=Undefined)。
-    /// </summary>
-    int Italic { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的下划线格式。
-    /// </summary>
-    WdUnderline Underline { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的突出显示颜色。
-    /// </summary>
-    WdColorIndex HighlightColorIndex { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的字符大小写。
-    /// </summary>
-    WdCharacterCase Case { get; set; }
-
-    /// <summary>
-    /// 获取区域的底纹格式。
-    /// </summary>
-    IWordShading? Shading { get; }
-
-    /// <summary>
-    /// 获取区域中的列表格式。
-    /// </summary>
-    IWordListFormat? ListFormat { get; }
-
-    /// <summary>
-    /// 获取或设置区域的页面设置。
-    /// </summary>
-    IWordPageSetup? PageSetup { get; set; }
-
-    #endregion
-
-    #region 集合属性 (Collection Properties - 第一部分)
-
-    /// <summary>
-    /// 获取区域中的所有段落。
-    /// </summary>
-    IWordParagraphs? Paragraphs { get; }
-
-    /// <summary>
-    /// 获取区域中的所有句子。
-    /// </summary>
-    IWordSentences? Sentences { get; }
-
-    /// <summary>
-    /// 获取区域中的所有单词。
-    /// </summary>
-    IWordWords? Words { get; }
-
-    /// <summary>
-    /// 获取区域中的所有字符。
-    /// </summary>
-    IWordCharacters? Characters { get; }
-
-    /// <summary>
-    /// 获取区域中的所有表格。
-    /// </summary>
-    IWordTables? Tables { get; }
-
-    /// <summary>
-    /// 获取区域中的所有书签。
-    /// </summary>
-    IWordBookmarks? Bookmarks { get; }
-
-    /// <summary>
-    /// 获取区域中的所有字段。
-    /// </summary>
-    IWordFields? Fields { get; }
-
-    /// <summary>
-    /// 获取区域中的所有超链接。
-    /// </summary>
-    IWordHyperlinks? Hyperlinks { get; }
-
-    /// <summary>
-    /// 获取区域中的所有窗体字段。
-    /// </summary>
-    IWordFormFields? FormFields { get; }
-
-    /// <summary>
-    /// 获取区域中的所有修订。
-    /// </summary>
-    IWordRevisions? Revisions { get; }
-
-    /// <summary>
-    /// 获取区域中的所有注释。
-    /// </summary>
-    IWordComments? Comments { get; }
-
-    /// <summary>
-    /// 获取区域中的所有脚注。
-    /// </summary>
-    IWordFootnotes? Footnotes { get; }
-
-    /// <summary>
-    /// 获取区域中的所有尾注。
-    /// </summary>
-    IWordEndnotes? Endnotes { get; }
-
-
-    #endregion
-
-    #region 状态和工具属性 (State & Utility Properties)
-
-    /// <summary>
-    /// 获取或设置区域是否已进行拼写检查。
-    /// </summary>
-    bool SpellingChecked { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域是否已进行语法检查。
-    /// </summary>
-    bool GrammarChecked { get; set; }
-
-    /// <summary>
-    /// 获取或设置拼写和语法检查器是否忽略指定的文本。
-    /// </summary>
-    int NoProofing { get; set; }
-
-    /// <summary>
-    /// 获取 Find 对象，用于查找操作。
-    /// </summary>
-    IWordFind? Find { get; }
-
-    /// <summary>
-    /// 获取或设置 FormattedText 对象，包含带格式的文本。
-    /// </summary>
-    IWordRange? FormattedText { get; set; }
-
-    #endregion
-
-    #region 基本方法 (Basic Methods)
-
-    /// <summary>
-    /// 选中此区域。
-    /// </summary>
-    void Select();
-
-    /// <summary>
-    /// 设置区域的起始和结束位置。
-    /// </summary>
-    /// <param name="start">起始位置。</param>
-    /// <param name="end">结束位置。</param>
-    void SetRange(int start, int end);
-
-    /// <summary>
-    /// 在当前范围之后插入指定文本。
-    /// </summary>
-    /// <param name="text">要插入的文本内容。</param>
-    void InsertAfter(string text);
-
-    /// <summary>
-    /// 在当前范围之前插入指定文本。
-    /// </summary>
-    /// <param name="text">要插入的文本内容。</param>
-    void InsertBefore(string text);
-
-    /// <summary>
-    /// 将范围折叠到指定方向。
-    /// </summary>
-    /// <param name="Direction">折叠方向，wdCollapseStart表示折叠到范围开始位置，wdCollapseEnd表示折叠到范围结束位置。</param>
-    void Collapse(WdCollapseDirection Direction);
-
-    /// <summary>
-    /// 将范围折叠到默认方向（开始位置）。
-    /// </summary>
-    void Collapse();
-
-    /// <summary>
-    /// 在当前区域位置插入分隔符。
-    /// <para>如果未指定分隔符类型，则默认插入分页符。</para>
-    /// </summary>
-    /// <param name="type">要插入的分隔符类型，参考 <see cref="WdBreakType"/> 枚举。</param>
-    void InsertBreak(WdBreakType? type = null);
-
-    /// <summary>
-    /// 将当前范围的内容剪切到剪贴板。
-    /// </summary>
-    void Cut();
-
-    /// <summary>
-    /// 将指定范围的内容复制到剪贴板。
-    /// </summary>
-    void Copy();
-
-    /// <summary>
-    /// 将剪贴板的内容粘贴到区域中。
-    /// </summary>
-    void Paste();
-
-    /// <summary>
-    /// 删除区域中的内容。
-    /// </summary>
-    void Delete();
-
-
-    #endregion
-
-    #region 更多集合属性 (More Collection Properties)
-
-    /// <summary>
-    /// 获取区域中的所有形状范围。
-    /// </summary>
-    IWordShapeRange? ShapeRange { get; }
-
-    /// <summary>
-    /// 获取区域中的所有内嵌形状。
-    /// </summary>
-    IWordInlineShapes? InlineShapes { get; }
-
-    /// <summary>
-    /// 获取区域中的所有边框。
-    /// </summary>
-    IWordBorders? Borders { get; }
-
-    /// <summary>
-    /// 获取区域中的所有列表段落。
-    /// </summary>
-    IWordListParagraphs? ListParagraphs { get; }
-
-    /// <summary>
-    /// 获取区域中的可读性统计信息。
-    /// </summary>
-    IWordReadabilityStatistics? ReadabilityStatistics { get; }
-
-    /// <summary>
-    /// 获取区域中的拼写错误。
-    /// </summary>
-    IWordProofreadingErrors? SpellingErrors { get; }
-
-    /// <summary>
-    /// 获取区域中的语法错误。
-    /// </summary>
-    IWordProofreadingErrors? GrammaticalErrors { get; }
-
-    /// <summary>
-    /// 获取区域中的所有子文档。
-    /// </summary>
-    IWordSubdocuments? Subdocuments { get; }
-
-    /// <summary>
-    /// 获取区域中的内容控件。
-    /// </summary>
-    IWordContentControls? ContentControls { get; }
-
-    /// <summary>
-    /// 获取区域中的冲突。
-    /// </summary>
-    IWordConflicts? Conflicts { get; }
-
-    /// <summary>
-    /// 获取区域中的编辑者。
-    /// </summary>
-    IWordEditors? Editors { get; }
-
-    #endregion
-
-    #region 更多格式化属性 (More Formatting Properties)
-
-    /// <summary>
-    /// 获取或设置区域的双向粗体格式 (用于东亚语言)。
-    /// </summary>
-    int BoldBi { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的双向斜体格式 (用于东亚语言)。
-    /// </summary>
-    int ItalicBi { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的着重号。
-    /// </summary>
-    WdEmphasisMark EmphasisMark { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的字符宽度 (用于东亚语言)。
-    /// </summary>
-    WdCharacterWidth CharacterWidth { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的水平垂直文本格式 (用于东亚语言)。
-    /// </summary>
-    WdHorizontalInVerticalType HorizontalInVertical { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的文字方向。
-    /// </summary>
-    WdTextOrientation Orientation { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的两行合一格式。
-    /// </summary>
-    WdTwoLinesInOneType TwoLinesInOne { get; set; }
-
-    /// <summary>
-    /// 获取或设置区域的语言ID。
+    /// 获取或设置指定对象的语言。
     /// </summary>
     WdLanguageID LanguageID { get; set; }
 
     /// <summary>
-    /// 获取或设置区域的东亚语言ID。
+    /// 获取包含指定单词或短语同义词、反义词或相关单词信息的SynonymInfo对象。
+    /// </summary>
+    IWordSynonymInfo? SynonymInfo { get; }
+
+    /// <summary>
+    /// 获取表示指定范围内所有超链接的Hyperlinks集合。
+    /// </summary>
+    IWordHyperlinks? Hyperlinks { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有编号段落的ListParagraphs集合。
+    /// </summary>
+    IWordListParagraphs? ListParagraphs { get; }
+
+    /// <summary>
+    /// 获取表示指定范围内所有子文档的Subdocuments集合。
+    /// </summary>
+    IWordSubdocuments? Subdocuments { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否已对指定范围进行语法检查。
+    /// </summary>
+    bool GrammarChecked { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否已对指定范围进行拼写检查。
+    /// </summary>
+    bool SpellingChecked { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定范围的突出显示颜色。
+    /// </summary>
+    WdColorIndex HighlightColorIndex { get; set; }
+
+    /// <summary>
+    /// 获取表示范围内所有表格列的Columns集合。
+    /// </summary>
+    IWordColumns? Columns { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有表格行的Rows集合。
+    /// </summary>
+    IWordRows? Rows { get; }
+
+    /// <summary>
+    /// 获取一个值，指示指定范围是否折叠并位于表格的行尾标记处。
+    /// </summary>
+    bool IsEndOfRowMark { get; }
+
+    /// <summary>
+    /// 获取包含指定选择或范围开头的书签编号；如果没有对应的书签，则返回0。
+    /// </summary>
+    int BookmarkID { get; }
+
+    /// <summary>
+    /// 获取在指定范围之前或同一位置开始的最后一个书签的编号。
+    /// </summary>
+    int PreviousBookmarkID { get; }
+
+    /// <summary>
+    /// 获取包含查找操作条件的Find对象。
+    /// </summary>
+    IWordFind? Find { get; }
+
+    /// <summary>
+    /// 获取或设置与指定范围关联的PageSetup对象。
+    /// </summary>
+    IWordPageSetup? PageSetup { get; set; }
+
+    /// <summary>
+    /// 获取表示指定范围内所有Shape对象的ShapeRange集合。
+    /// </summary>
+    IWordShapeRange? ShapeRange { get; }
+
+    /// <summary>
+    /// 获取或设置表示指定范围文本大小写的WdCharacterCase常量。
+    /// </summary>
+    WdCharacterCase Case { get; set; }
+
+    /// <summary>
+    /// 获取表示指定范围可读性统计信息的ReadabilityStatistics集合。
+    /// </summary>
+    IWordReadabilityStatistics? ReadabilityStatistics { get; }
+
+    /// <summary>
+    /// 获取表示范围内语法检查失败的句子的ProofreadingErrors集合。
+    /// </summary>
+    IWordProofreadingErrors? GrammaticalErrors { get; }
+
+    /// <summary>
+    /// 获取表示范围内被标识为拼写错误的单词的ProofreadingErrors集合。
+    /// </summary>
+    IWordProofreadingErrors? SpellingErrors { get; }
+
+    /// <summary>
+    /// 获取或设置启用文本方向功能时范围中文本的方向。
+    /// </summary>
+    WdTextOrientation Orientation { get; set; }
+
+    /// <summary>
+    /// 获取表示文档、范围或选择中所有InlineShape对象的InlineShapes集合。
+    /// </summary>
+    IWordInlineShapes? InlineShapes { get; }
+
+    /// <summary>
+    /// 获取引用下一个故事的范围对象。
+    /// </summary>
+    IWordRange? NextStoryRange { get; }
+
+    /// <summary>
+    /// 获取或设置指定对象的东亚语言。
     /// </summary>
     WdLanguageID LanguageIDFarEast { get; set; }
 
     /// <summary>
-    /// 获取或设置区域的其他语言ID。
+    /// 获取或设置指定对象的其他语言。
     /// </summary>
     WdLanguageID LanguageIDOther { get; set; }
 
     /// <summary>
-    /// 获取或设置是否已检测到区域的语言。
+    /// 获取或设置指定范围的字符宽度。
+    /// </summary>
+    WdCharacterWidth CharacterWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否将水平文本设置在垂直文本内。
+    /// </summary>
+    WdHorizontalInVerticalType HorizontalInVertical { get; set; }
+
+    /// <summary>
+    /// 获取或设置Microsoft Word是否在一行中设置两行文本，并指定包围文本的字符（如果有）。
+    /// </summary>
+    WdTwoLinesInOneType TwoLinesInOne { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示指定范围是否包含组合字符。
+    /// </summary>
+    bool CombineCharacters { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示Microsoft Word是否已检测到指定文本的语言。
     /// </summary>
     bool LanguageDetected { get; set; }
 
     /// <summary>
-    /// 获取或设置是否禁用字符网格。
+    /// 获取或设置Microsoft Word在当前范围中适应文本的宽度（以当前度量单位表示）。
     /// </summary>
-    bool DisableCharacterSpaceGrid { get; set; }
+    float FitTextWidth { get; set; }
 
     /// <summary>
-    /// 获取或设置区域的ID (用于Web页)。
+    /// 获取或设置一个值，指示拼写和语法检查器是否忽略指定文本。
     /// </summary>
-    string ID { get; set; }
-
-    #endregion
-
-    #region 更多方法 (More Methods)
+    int NoProofing { get; set; }
 
     /// <summary>
-    /// 执行拼写检查。
+    /// 获取表示最外层嵌套级别表格的Tables集合。
     /// </summary>
-    void CheckSpelling();
+    IWordTables? TopLevelTables { get; }
 
     /// <summary>
-    /// 执行语法检查。
+    /// 获取表示指定对象中HTML脚本集合的Scripts集合。
     /// </summary>
-    void CheckGrammar();
-
-    #endregion
+    IOfficeScripts? Scripts { get; }
 
     /// <summary>
-    /// 将范围折叠到指定方向（开始或结束位置）。
+    /// 获取或设置一个值，指示是否显示所有非打印字符。
     /// </summary>
-    /// <param name="direction">折叠方向，默认为wdCollapseStart（折叠到开始位置）。</param>
+    bool ShowAll { get; set; }
+
+    /// <summary>
+    /// 获取与指定范围关联的Document对象。
+    /// </summary>
+    IWordDocument? Document { get; }
+
+    /// <summary>
+    /// 获取表示范围内脚注选项的FootnoteOptions对象。
+    /// </summary>
+    IWordFootnoteOptions? FootnoteOptions { get; }
+
+    /// <summary>
+    /// 获取表示范围内尾注选项的EndnoteOptions对象。
+    /// </summary>
+    IWordEndnoteOptions? EndnoteOptions { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有数学对象的OMaths集合。
+    /// </summary>
+    IWordOMaths? OMaths { get; }
+
+    /// <summary>
+    /// 获取表示用于格式化一个或多个字符的样式的对象。
+    /// </summary>
+    object CharacterStyle { get; }
+
+    /// <summary>
+    /// 获取表示用于格式化段落的样式的对象。
+    /// </summary>
+    object ParagraphStyle { get; }
+
+    /// <summary>
+    /// 获取表示用于格式化项目符号列表或编号列表的样式的对象。
+    /// </summary>
+    object ListStyle { get; }
+
+    /// <summary>
+    /// 获取表示用于格式化表格的样式的对象。
+    /// </summary>
+    object TableStyle { get; }
+
+    /// <summary>
+    /// 获取表示范围内包含的所有内容控件的ContentControls集合。
+    /// </summary>
+    IWordContentControls? ContentControls { get; }
+
+    /// <summary>
+    /// 获取以Microsoft Office Word开放XML格式表示的范围内包含的XML字符串。
+    /// </summary>
+    string WordOpenXML { get; }
+
+    /// <summary>
+    /// 获取表示范围内父内容控件的ContentControl对象。
+    /// </summary>
+    IWordContentControl? ParentContentControl { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有锁定的CoAuthLocks集合。
+    /// </summary>
+    IWordCoAuthLocks? Locks { get; }
+
+    /// <summary>
+    /// 获取表示范围内所有可用更新的CoAuthUpdates集合。
+    /// </summary>
+    IWordCoAuthUpdates? Updates { get; }
+
+    /// <summary>
+    /// 获取包含范围内所有冲突对象的Conflicts集合。
+    /// </summary>
+    IWordConflicts? Conflicts { get; }
+
+    /// <summary>
+    /// 获取一个值，指示屏幕上可见的文本数量。
+    /// </summary>
+    int TextVisibleOnScreen { get; }
+
+    /// <summary>
+    /// 选择指定的对象。
+    /// </summary>
+    void Select();
+
+    /// <summary>
+    /// 设置范围的起始和结束字符位置。
+    /// </summary>
+    /// <param name="start">范围或选择的起始字符位置。</param>
+    /// <param name="end">范围或选择的结束字符位置。</param>
+    void SetRange(int start, int end);
+
+    /// <summary>
+    /// 将范围折叠到起始或结束位置。
+    /// </summary>
+    /// <param name="direction">折叠范围或选择的方向。可以是wdCollapseEnd或wdCollapseStart。默认值为wdCollapseStart。</param>
     void Collapse(WdCollapseDirection? direction = null);
 
     /// <summary>
-    /// 获取指定单位的下一个区域范围。
+    /// 在指定范围之前插入指定文本。
     /// </summary>
-    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
-    /// <param name="count">移动的单位数量，默认为1。</param>
-    /// <returns>返回一个新的范围对象，表示移动后的位置；如果操作失败，则返回null。</returns>
+    /// <param name="text">要插入的文本。</param>
+    void InsertBefore(string text);
+
+    /// <summary>
+    /// 在范围或选择的末尾插入指定文本。
+    /// </summary>
+    /// <param name="text">要插入的文本。</param>
+    void InsertAfter(string text);
+
+    /// <summary>
+    /// 返回表示相对于指定范围的指定单位的新范围对象。
+    /// </summary>
+    /// <param name="unit">要计数的单位类型。可以是任何WdUnits常量。</param>
+    /// <param name="count">要向前移动的单位数。默认值为1。</param>
+    /// <returns>新的范围对象。</returns>
     IWordRange? Next(WdUnits? unit = null, int? count = null);
 
     /// <summary>
-    /// 获取指定单位的上一个区域范围。
+    /// 返回相对于指定选择或范围的Range对象。
     /// </summary>
-    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
-    /// <param name="count">移动的单位数量，默认为1。</param>
-    /// <returns>返回一个新的范围对象，表示移动后的位置；如果操作失败，则返回null。</returns>
+    /// <param name="unit">单位类型。</param>
+    /// <param name="count">要向后移动的单位数。默认值为1。</param>
+    /// <returns>前一个范围对象。</returns>
     IWordRange? Previous(WdUnits? unit = null, int? count = null);
 
     /// <summary>
-    /// 将范围的起始位置移动到指定单元的开始位置。
+    /// 将指定范围或选择的起始位置移动或扩展到最近指定文本单位的开头。
     /// </summary>
-    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
-    /// <param name="extend">指定移动方式，wdMove表示移动范围边界，wdExtend表示扩展范围；默认为wdMove。</param>
-    /// <returns>返回移动的字符数；如果操作失败，则返回null。</returns>
+    /// <param name="unit">要移动指定范围或选择起始位置的单位。</param>
+    /// <param name="extend">移动类型。</param>
+    /// <returns>操作后的字符位置。</returns>
     int? StartOf(WdUnits? unit = null, WdMovementType? extend = null);
 
     /// <summary>
-    /// 将范围的结束位置移动到指定单元的结束位置。
+    /// 将范围或选择的结束字符位置移动或扩展到最近指定文本单位的末尾。
     /// </summary>
-    /// <param name="unit">移动单位，默认为wdWord（单词）。</param>
-    /// <param name="extend">指定移动方式，wdMove表示移动范围边界，wdExtend表示扩展范围；默认为wdMove。</param>
-    /// <returns>返回移动的字符数；如果操作失败，则返回null。</returns>
+    /// <param name="unit">要移动结束字符位置的单位。</param>
+    /// <param name="extend">移动类型。</param>
+    /// <returns>操作后的字符位置。</returns>
     int? EndOf(WdUnits? unit = null, WdMovementType? extend = null);
 
     /// <summary>
-    /// 将范围移动指定的单位和数量。
+    /// 将指定的范围或选择折叠到其起始或结束位置，然后将折叠的对象移动指定数量的单位。
     /// </summary>
-    /// <param name="unit">移动单位，默认为wdCharacter（字符）。</param>
-    /// <param name="count">移动的单位数量，默认为1。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    /// <param name="unit">折叠范围或选择要移动的单位。</param>
+    /// <param name="count">要移动的单元数。</param>
+    /// <returns>移动的距离。</returns>
     int? Move(WdUnits? unit = null, int? count = null);
 
     /// <summary>
-    /// 移动范围的起始边界指定的单位和数量。
+    /// 移动指定范围的起始位置。
     /// </summary>
-    /// <param name="unit">移动单位，默认为wdCharacter（字符）。</param>
-    /// <param name="count">移动的单位数量，默认为1。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    /// <param name="unit">要移动指定范围或选择起始位置的单位。</param>
+    /// <param name="count">要移动的最大单位数。</param>
+    /// <returns>移动的距离。</returns>
     int? MoveStart(WdUnits? unit = null, int? count = null);
 
     /// <summary>
-    /// 移动范围的结束边界指定的单位和数量。
+    /// 移动范围的结束字符位置。
     /// </summary>
-    /// <param name="unit">移动单位，默认为wdCharacter（字符）。</param>
-    /// <param name="count">移动的单位数量，默认为1。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
+    /// <param name="unit">要移动结束字符位置的单位。</param>
+    /// <param name="count">要移动的单元数。</param>
+    /// <returns>移动的距离。</returns>
     int? MoveEnd(WdUnits? unit = null, int? count = null);
 
     /// <summary>
-    /// 将范围移动，直到遇到不在指定字符集中的字符为止，或移动指定次数。
+    /// 在文档中找到任何指定字符时移动指定范围。
     /// </summary>
-    /// <param name="cset">要移动的字符集（字符串）。</param>
-    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
-    int? MoveWhile(string cset, int? count = null);
+    /// <param name="characters">一个或多个字符。此参数区分大小写。</param>
+    /// <param name="count">要移动的最大字符数。</param>
+    /// <returns>移动的距离。</returns>
+    int? MoveWhile(string characters, int? count = null);
 
     /// <summary>
-    /// 移动范围的起始边界，直到遇到不在指定字符集中的字符为止，或移动指定次数。
+    /// 在文档中找到任何指定字符时移动指定范围的起始位置。
     /// </summary>
-    /// <param name="cset">要移动的字符集（字符串）。</param>
-    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
-    int? MoveStartWhile(string cset, int? count = null);
+    /// <param name="characters">一个或多个字符。此参数区分大小写。</param>
+    /// <param name="count">要移动的最大字符数。</param>
+    /// <returns>移动的距离。</returns>
+    int? MoveStartWhile(string characters, int? count = null);
 
     /// <summary>
-    /// 移动范围的结束边界，直到遇到不在指定字符集中的字符为止，或移动指定次数。
+    /// 在文档中找到任何指定字符时移动范围的结束字符位置。
     /// </summary>
-    /// <param name="cset">要移动的字符集（字符串）。</param>
-    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
-    int? MoveEndWhile(string cset, int? count = null);
+    /// <param name="characters">一个或多个字符。此参数区分大小写。</param>
+    /// <param name="count">要移动的最大字符数。</param>
+    /// <returns>移动的距离。</returns>
+    int? MoveEndWhile(string characters, int? count = null);
 
     /// <summary>
-    /// 将范围移动，直到遇到指定字符集中的字符为止，或移动指定次数。
+    /// 移动指定范围，直到在文档中找到指定的字符之一。
     /// </summary>
-    /// <param name="cset">要查找的字符集（字符串）。</param>
-    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
-    int? MoveUntil(string cset, int? count = null);
+    /// <param name="characters">一个或多个字符。</param>
+    /// <param name="count">要移动的最大字符数。</param>
+    /// <returns>移动的距离。</returns>
+    int? MoveUntil(string characters, int? count = null);
 
     /// <summary>
-    /// 移动范围的起始边界，直到遇到指定字符集中的字符为止，或移动指定次数。
+    /// 移动指定范围或选择的起始位置，直到在文档中找到指定的字符之一。
     /// </summary>
-    /// <param name="cset">要查找的字符集（字符串）。</param>
-    /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
-    /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
-    int? MoveStartUntil(string cset, int? count = null);
+    /// <param name="characters">一个或多个字符。此参数区分大小写。</param>
+    /// <param name="count">要移动的最大字符数。</param>
+    /// <returns>移动的距离。</returns>
+    int? MoveStartUntil(string characters, int? count = null);
 
     /// <summary>
     /// 移动范围的结束边界，直到遇到指定字符集中的字符为止，或移动指定次数。
@@ -622,6 +598,27 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     /// <param name="count">移动的单位数量，默认为wdForward（向前移动）。</param>
     /// <returns>返回实际移动的字符数；如果操作失败，则返回null。</returns>
     int? MoveEndUntil(string cset, int? count = null);
+
+    /// <summary>
+    /// 从文档中剪切指定的对象并将其放置在剪贴板上。
+    /// </summary>
+    void Cut();
+
+    /// <summary>
+    /// 将指定对象复制到剪贴板。
+    /// </summary>
+    void Copy();
+
+    /// <summary>
+    /// 将剪贴板的内容粘贴到指定范围。
+    /// </summary>
+    void Paste();
+
+    /// <summary>
+    /// 插入分页符、分栏符或分节符。
+    /// </summary>
+    /// <param name="type">要插入的断点类型。可以是WdBreakType常量之一。</param>
+    void InsertBreak(WdBreakType? type = null);
 
     /// <summary>
     /// 在当前范围中插入一个外部文件的内容。
@@ -634,48 +631,53 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     void InsertFile(string fileName, object? range = null, bool? confirmConversions = null, bool? link = null, bool? attachment = null);
 
     /// <summary>
-    /// 检查指定范围是否在当前范围的同一篇文章中。
+    /// 确定应用此方法的选择或范围是否与指定范围在同一故事中。
     /// </summary>
-    /// <param name="Range">要检查的范围。</param>
-    /// <returns>如果指定范围在当前范围的同一篇文章中则返回true，否则返回false或null。</returns>
-    bool? InStory(IWordRange Range);
+    /// <param name="range">要比较其故事的范围对象。</param>
+    /// <returns>如果在同一故事中，则为true；否则为false。</returns>
+    bool? InStory(IWordRange range);
 
     /// <summary>
-    /// 检查指定范围是否在当前范围内。
+    /// 确定应用此方法的范围是否包含在指定范围内。
     /// </summary>
-    /// <param name="Range">要检查的范围。</param>
-    /// <returns>如果指定范围在当前范围内则返回true，否则返回false或null。</returns>
-    bool? InRange(IWordRange Range);
+    /// <param name="range">要比较的范围对象。</param>
+    /// <returns>如果包含在指定范围内，则为true；否则为false。</returns>
+    bool? InRange(IWordRange range);
 
     /// <summary>
-    /// 删除当前范围或指定单位的内容。
+    /// 删除指定数量的字符或单词。
     /// </summary>
-    /// <param name="unit">要删除的单位（如字符、单词、段落等），如果为null则删除当前范围的内容。</param>
-    /// <param name="count">要删除的单位数量，默认为1。</param>
-    /// <returns>返回实际删除的字符数，如果操作失败则返回null。</returns>
+    /// <param name="unit">要删除的单位。可以是wdCharacter或wdWord。</param>
+    /// <param name="count">要删除的单位数。</param>
+    /// <returns>删除的数量。</returns>
     int? Delete(WdUnits? unit = null, int? count = null);
 
     /// <summary>
-    /// 选择整个文档的内容。
+    /// 展开范围以包含整个故事。
     /// </summary>
     void WholeStory();
 
     /// <summary>
-    /// 扩展当前范围以包含指定单位的整个内容。
+    /// 展开指定的范围。
     /// </summary>
-    /// <param name="unit">要扩展到的单位（如字符、单词、段落等），如果为null则使用默认单位。</param>
-    /// <returns>返回扩展的字符数，如果操作失败则返回null。</returns>
+    /// <param name="unit">要展开范围的单位。可以是WdUnits常量之一。</param>
+    /// <returns>扩展后的大小。</returns>
     int? Expand(WdUnits? unit = null);
 
     /// <summary>
-    /// 在当前范围的开始处插入一个段落标记。
+    /// 将指定范围替换为新段落。
     /// </summary>
     void InsertParagraph();
 
     /// <summary>
-    /// 在当前范围的末尾插入一个段落标记。
+    /// 在范围后插入段落标记。
     /// </summary>
     void InsertParagraphAfter();
+
+    /// <summary>
+    /// 在范围前插入段落标记。
+    /// </summary>
+    void InsertParagraphBefore();
 
     /// <summary>
     /// 在当前范围插入一个特殊符号。
@@ -687,31 +689,31 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     void InsertSymbol(int characterNumber, string? font = null, bool? Unicode = null, WdFontBias? Bias = null);
 
     /// <summary>
-    /// 将当前范围的内容复制为图片格式到剪贴板。
+    /// 将选定内容作为图片复制。
     /// </summary>
     void CopyAsPicture();
 
     /// <summary>
-    /// 对当前范围的内容进行升序排序。
+    /// 按升序字母数字顺序对段落或表格行进行排序。
     /// </summary>
     void SortAscending();
 
     /// <summary>
-    /// 对当前范围的内容进行降序排序。
+    /// 按降序字母数字顺序对段落或表格行进行排序。
     /// </summary>
     void SortDescending();
 
     /// <summary>
-    /// 检查指定范围是否与当前范围相等。
+    /// 确定应用此方法的范围是否等于指定范围。
     /// </summary>
-    /// <param name="range">要比较的范围。</param>
-    /// <returns>如果两个范围相等则返回true，否则返回false或null。</returns>
+    /// <param name="range">要比较的范围对象。</param>
+    /// <returns>如果相等，则为true；否则为false。</returns>
     bool? IsEqual(IWordRange range);
 
     /// <summary>
-    /// 计算当前范围中文本表示的数学表达式。
+    /// 计算范围内的数学表达式。
     /// </summary>
-    /// <returns>返回计算结果，如果无法计算则返回null。</returns>
+    /// <returns>计算结果。</returns>
     float? Calculate();
 
     /// <summary>
@@ -725,17 +727,17 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     IWordRange? GoTo(WdGoToItem? what = null, WdGoToDirection? which = null, int? count = null, string? name = null);
 
     /// <summary>
-    /// 跳转到下一个指定类型的项目
+    /// 返回引用What参数指定的下一个项目或位置起始位置的Range对象。
     /// </summary>
-    /// <param name="what">要查找的项目类型</param>
-    /// <returns>表示下一个项目位置的Word范围对象，如果未找到则返回null</returns>
+    /// <param name="what">项目类型。</param>
+    /// <returns>新的范围对象。</returns>
     IWordRange? GoToNext(WdGoToItem what);
 
     /// <summary>
-    /// 跳转到上一个指定类型的项目
+    /// 返回引用What参数指定的前一个项目或位置起始位置的Range对象。
     /// </summary>
-    /// <param name="what">要查找的项目类型</param>
-    /// <returns>表示上一个项目位置的Word范围对象，如果未找到则返回null</returns>
+    /// <param name="what">项目类型。</param>
+    /// <returns>新的范围对象。</returns>
     IWordRange? GoToPrevious(WdGoToItem what);
 
     /// <summary>
@@ -752,111 +754,33 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
                     bool? displayAsIcon = null, WdPasteDataType? dataType = null,
                     string? iconFileName = null, string? IconLabel = null);
 
-
     /// <summary>
-    /// 查找并显示名称属性信息
+    /// 在全局通讯簿列表中查找名称并显示属性对话框。
     /// </summary>
     void LookupNameProperties();
 
     /// <summary>
-    /// 计算文档的统计信息
+    /// 返回基于指定范围内容的统计信息。
     /// </summary>
-    /// <param name="Statistic">要计算的统计类型</param>
-    /// <returns>计算得到的统计值，如果无法计算则返回null</returns>
-    int? ComputeStatistics(WdStatistic Statistic);
+    /// <param name="statistic">统计类型。</param>
+    /// <returns>统计值。</returns>
+    int? ComputeStatistics(WdStatistic statistic);
 
     /// <summary>
-    /// 重新定位当前范围
+    /// 在大纲视图中，将指定范围内的段落移动到下一个可见段落之后或上一个可见段落之前。
     /// </summary>
-    /// <param name="direction">重新定位的方向</param>
-    void Relocate([ConvertInt] WdRelocate direction);
+    /// <param name="direction">移动的方向。</param>
+    void Relocate(int direction);
 
     /// <summary>
-    /// 检查所选文本的同义词
+    /// 显示同义词库对话框，列出指定范围文本的替代单词选择或同义词。
     /// </summary>
     void CheckSynonyms();
 
     /// <summary>
-    /// 插入自动图文集条目
+    /// 尝试将指定范围中的文本或范围周围的文本与现有的自动图文集条目名称匹配。
     /// </summary>
     void InsertAutoText();
-
-    /// <summary>
-    /// 自动格式化当前范围的内容
-    /// </summary>
-    void AutoFormat();
-
-    /// <summary>
-    /// 在当前位置前插入一个段落标记
-    /// </summary>
-    void InsertParagraphBefore();
-
-    /// <summary>
-    /// 移动到下一个子文档
-    /// </summary>
-    void NextSubdocument();
-
-    /// <summary>
-    /// 移动到上一个子文档
-    /// </summary>
-    void PreviousSubdocument();
-
-    /// <summary>
-    /// 将剪贴板内容作为嵌套表格粘贴
-    /// </summary>
-    void PasteAsNestedTable();
-
-
-    /// <summary>
-    /// 检测当前范围的语言
-    /// </summary>
-    void DetectLanguage();
-
-    /// <summary>
-    /// 执行拼写检查。
-    /// </summary>
-    /// <param name="customDictionary">自定义词典，用于扩展默认词典进行拼写检查</param>
-    /// <param name="ignoreUppercase">是否忽略大写单词</param>
-    /// <param name="alwaysSuggest">是否始终提供建议</param>
-    /// <param name="customDictionary2">附加自定义词典2</param>
-    /// <param name="customDictionary3">附加自定义词典3</param>
-    /// <param name="customDictionary4">附加自定义词典4</param>
-    /// <param name="customDictionary5">附加自定义词典5</param>
-    /// <param name="customDictionary6">附加自定义词典6</param>
-    /// <param name="customDictionary7">附加自定义词典7</param>
-    /// <param name="customDictionary8">附加自定义词典8</param>
-    /// <param name="customDictionary9">附加自定义词典9</param>
-    /// <param name="customDictionary10">附加自定义词典10</param>
-    void CheckSpelling(IWordDictionary? customDictionary = null, bool? ignoreUppercase = null, bool? alwaysSuggest = null,
-                        IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
-                        IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
-                        IWordDictionary? customDictionary6 = null, IWordDictionary? customDictionary7 = null,
-                        IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
-                        IWordDictionary? customDictionary10 = null);
-
-    /// <summary>
-    /// 获取拼写建议。
-    /// </summary>
-    /// <param name="CustomDictionary">自定义词典，用于扩展默认词典</param>
-    /// <param name="ignoreUppercase">是否忽略大写单词</param>
-    /// <param name="MainDictionary">主词典</param>
-    /// <param name="SuggestionMode">建议模式，指定如何生成建议</param>
-    /// <param name="customDictionary2">附加自定义词典2</param>
-    /// <param name="customDictionary3">附加自定义词典3</param>
-    /// <param name="customDictionary4">附加自定义词典4</param>
-    /// <param name="customDictionary5">附加自定义词典5</param>
-    /// <param name="customDictionary6">附加自定义词典6</param>
-    /// <param name="customDictionary7">附加自定义词典7</param>
-    /// <param name="customDictionary8">附加自定义词典8</param>
-    /// <param name="customDictionary9">附加自定义词典9</param>
-    /// <param name="customDictionary10">附加自定义词典10</param>
-    /// <returns>返回拼写建议列表，如果没有找到建议则返回null</returns>
-    IWordSpellingSuggestions? GetSpellingSuggestions(IWordDictionary? CustomDictionary = null, bool? ignoreUppercase = null, IWordDictionary? MainDictionary = null,
-                        WdSpellingWordType? SuggestionMode = null, IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
-                        IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
-                        IWordDictionary? customDictionary6 = null, IWordDictionary? customDictionary7 = null,
-                        IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
-                        IWordDictionary? customDictionary10 = null);
 
     /// <summary>
     /// 插入数据库内容。
@@ -881,6 +805,70 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
                         string? writePasswordTemplate = null, string? dataSource = null, int? from = null, int? to = null, bool? includeFields = null);
 
     /// <summary>
+    /// 自动格式化范围。
+    /// </summary>
+    void AutoFormat();
+
+    /// <summary>
+    /// 开始对指定范围进行拼写和语法检查。
+    /// </summary>
+    void CheckGrammar();
+
+    /// <summary>
+    /// 执行拼写检查。
+    /// </summary>
+    /// <param name="customDictionary">自定义词典，用于扩展默认词典进行拼写检查</param>
+    /// <param name="ignoreUppercase">是否忽略大写单词</param>
+    /// <param name="alwaysSuggest">是否始终提供建议</param>
+    /// <param name="customDictionary2">附加自定义词典2</param>
+    /// <param name="customDictionary3">附加自定义词典3</param>
+    /// <param name="customDictionary4">附加自定义词典4</param>
+    /// <param name="customDictionary5">附加自定义词典5</param>
+    /// <param name="customDictionary6">附加自定义词典6</param>
+    /// <param name="customDictionary7">附加自定义词典7</param>
+    /// <param name="customDictionary8">附加自定义词典8</param>
+    /// <param name="customDictionary9">附加自定义词典9</param>
+    /// <param name="customDictionary10">附加自定义词典10</param>
+    void CheckSpelling(IWordDictionary? customDictionary = null, bool? ignoreUppercase = null, bool? alwaysSuggest = null,
+                        IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
+                        IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
+                        IWordDictionary? customDictionary6 = null, IWordDictionary? customDictionary7 = null,
+                        IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
+                        IWordDictionary? customDictionary10 = null);
+    /// <summary>
+    /// 获取拼写建议。
+    /// </summary>
+    /// <param name="CustomDictionary">自定义词典，用于扩展默认词典</param>
+    /// <param name="ignoreUppercase">是否忽略大写单词</param>
+    /// <param name="MainDictionary">主词典</param>
+    /// <param name="SuggestionMode">建议模式，指定如何生成建议</param>
+    /// <param name="customDictionary2">附加自定义词典2</param>
+    /// <param name="customDictionary3">附加自定义词典3</param>
+    /// <param name="customDictionary4">附加自定义词典4</param>
+    /// <param name="customDictionary5">附加自定义词典5</param>
+    /// <param name="customDictionary6">附加自定义词典6</param>
+    /// <param name="customDictionary7">附加自定义词典7</param>
+    /// <param name="customDictionary8">附加自定义词典8</param>
+    /// <param name="customDictionary9">附加自定义词典9</param>
+    /// <param name="customDictionary10">附加自定义词典10</param>
+    /// <returns>返回拼写建议列表，如果没有找到建议则返回null</returns>
+    IWordSpellingSuggestions? GetSpellingSuggestions(IWordDictionary? CustomDictionary = null, bool? ignoreUppercase = null, IWordDictionary? MainDictionary = null,
+                        WdSpellingWordType? SuggestionMode = null, IWordDictionary? customDictionary2 = null, IWordDictionary? customDictionary3 = null,
+                        IWordDictionary? customDictionary4 = null, IWordDictionary? customDictionary5 = null,
+                        IWordDictionary? customDictionary6 = null, IWordDictionary? customDictionary7 = null,
+                        IWordDictionary? customDictionary8 = null, IWordDictionary? customDictionary9 = null,
+                        IWordDictionary? customDictionary10 = null);
+    /// <summary>
+    /// 将范围移动到下一个子文档。
+    /// </summary>
+    void NextSubdocument();
+
+    /// <summary>
+    /// 将范围或选择移动到上一个子文档。
+    /// </summary>
+    void PreviousSubdocument();
+
+    /// <summary>
     /// 转换韩文和汉字。
     /// </summary>
     /// <param name="conversionsMode">转换模式</param>
@@ -890,6 +878,10 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     /// <param name="customDictionary">自定义词典</param>
     void ConvertHangulAndHanja(WdMultipleWordConversionsMode conversionsMode, bool? fastConversion, bool? checkHangulEnding,
                                bool? enableRecentOrdering, IWordDictionary? customDictionary);
+    /// <summary>
+    /// 将单元格或单元格组作为嵌套表格粘贴到选定范围中。
+    /// </summary>
+    void PasteAsNestedTable();
 
     /// <summary>
     /// 修改封装样式。
@@ -900,15 +892,14 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     void ModifyEnclosure(WdEncloseStyle? style, WdEnclosureType symbol, string? enclosedText = null);
 
     /// <summary>
-    /// 添加拼音指南。
+    /// 为指定范围添加拼音指南。
     /// </summary>
-    /// <param name="Text">要添加拼音的文本</param>
-    /// <param name="alignment">对齐方式</param>
-    /// <param name="raise">拼音提升高度</param>
-    /// <param name="fontSize">拼音字体大小</param>
-    /// <param name="fontName">拼音字体名称</param>
-    void PhoneticGuide(string Text, WdPhoneticGuideAlignmentType alignment = WdPhoneticGuideAlignmentType.wdPhoneticGuideAlignmentLeft,
-                       int raise = 0, int fontSize = 0, string fontName = "");
+    /// <param name="text">要添加的拼音文本。</param>
+    /// <param name="alignment">添加拼音文本的对齐方式。</param>
+    /// <param name="raise">从指定范围文本顶部到拼音文本顶部的距离。</param>
+    /// <param name="fontSize">拼音文本使用的字体大小。</param>
+    /// <param name="fontName">拼音文本使用的字体名称。</param>
+    void PhoneticGuide(string text, WdPhoneticGuideAlignmentType alignment = WdPhoneticGuideAlignmentType.wdPhoneticGuideAlignmentCenter, int raise = 0, int fontSize = 0, string fontName = "");
 
     /// <summary>
     /// 插入日期和时间。
@@ -920,7 +911,6 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     /// <param name="calendarType">日历类型</param>
     void InsertDateTime(string? dateTimeFormat = null, bool? insertAsField = null, bool? insertAsFullWidth = null,
                         WdDateLanguage? dateLanguage = null, WdCalendarTypeBi? calendarType = null);
-
     /// <summary>
     /// 对范围内的内容进行排序。
     /// </summary>
@@ -950,24 +940,10 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
             bool? caseSensitive = null, bool? bidiSort = null, bool? ignoreThe = null,
             bool? ignoreKashida = null, bool? ignoreDiacritics = null, bool? ignoreHe = null,
             WdLanguageID? languageID = null);
-
     /// <summary>
-    /// 对范围内的内容按标题进行排序。
+    /// 分析指定文本以确定其编写的语言。
     /// </summary>
-    /// <param name="sortFieldType">排序字段类型</param>
-    /// <param name="sortOrder">排序顺序</param>
-    /// <param name="caseSensitive">是否区分大小写</param>
-    /// <param name="bidiSort">是否双向排序</param>
-    /// <param name="ignoreThe">是否忽略英文"the"</param>
-    /// <param name="ignoreKashida">是否忽略阿拉伯语kashida</param>
-    /// <param name="ignoreDiacritics">是否忽略变音符号</param>
-    /// <param name="ignoreHe">是否忽略希伯来语he</param>
-    /// <param name="languageID">语言ID</param>
-    void SortByHeadings(WdSortFieldType? sortFieldType, WdSortOrder? sortOrder,
-                        bool? caseSensitive, bool? bidiSort,
-                        bool? ignoreThe, bool? ignoreKashida, bool? ignoreDiacritics,
-                        bool? ignoreHe, WdLanguageID? languageID);
-
+    void DetectLanguage();
 
     /// <summary>
     /// 将当前范围转换为表格
@@ -995,32 +971,30 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
                                 bool? applyHeadingRows = null, bool? applyLastRow = null, bool? applyFirstColumn = null,
                                 bool? applyLastColumn = null, bool? autoFit = null, WdAutoFitBehavior? autoFitBehavior = null,
                                 WdDefaultTableBehavior? defaultTableBehavior = null);
+    /// <summary>
+    /// 将指定范围从繁体中文转换为简体中文，反之亦然。
+    /// </summary>
+    /// <param name="direction">转换方向。</param>
+    /// <param name="commonTerms">是否将常用表达作为一个整体转换，而不是逐个字符转换。</param>
+    /// <param name="useVariants">从简体中文转换为繁体中文时是否使用台湾、香港和澳门的字符变体。</param>
+    void TCSCConverter(WdTCSCConverterDirection direction = WdTCSCConverterDirection.wdTCSCConverterDirectionAuto, bool commonTerms = false, bool useVariants = false);
 
     /// <summary>
-    /// 执行TCSC（繁简转换）转换
+    /// 按指定方式粘贴选定的表格单元格并设置其格式。
     /// </summary>
-    /// <param name="WdTCSCConverterDirection">转换方向，默认为自动</param>
-    /// <param name="commonTerms">是否转换常用词，默认为false</param>
-    /// <param name="useVariants">是否使用变体，默认为false</param>
-    void TCSCConverter(WdTCSCConverterDirection WdTCSCConverterDirection = WdTCSCConverterDirection.wdTCSCConverterDirectionAuto, bool commonTerms = false, bool useVariants = false);
-
-
-    /// <summary>
-    /// 粘贴并格式化内容
-    /// </summary>
-    /// <param name="type">恢复类型</param>
+    /// <param name="type">粘贴选定表格单元格时要使用的格式化类型。</param>
     void PasteAndFormat(WdRecoveryType type);
 
     /// <summary>
-    /// 粘贴Excel表格
+    /// 粘贴并格式化Excel表格。
     /// </summary>
-    /// <param name="linkedToExcel">是否链接到Excel</param>
-    /// <param name="wordFormatting">是否使用Word格式</param>
-    /// <param name="RTF">是否使用RTF格式</param>
-    void PasteExcelTable(bool linkedToExcel, bool wordFormatting, bool RTF);
+    /// <param name="linkedToExcel">是否将粘贴的表格链接到原始Excel文件。</param>
+    /// <param name="wordFormatting">是否使用Word文档中的格式设置表格。</param>
+    /// <param name="rtf">是否使用RTF格式粘贴Excel表格。</param>
+    void PasteExcelTable(bool linkedToExcel, bool wordFormatting, bool rtf);
 
     /// <summary>
-    /// 粘贴并追加表格
+    /// 通过将粘贴的行插入到选定行之间，将粘贴的单元格合并到现有表格中。
     /// </summary>
     void PasteAppendTable();
 
@@ -1075,32 +1049,31 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     void InsertCrossReference(WdReferenceType referenceType, WdReferenceKind referenceKind,
                                 string? referenceItem = null, bool? insertAsHyperlink = null, bool? includePosition = null,
                                 bool? separateNumbers = null, string? separatorString = null);
-
     /// <summary>
-    /// 导出文档片段到指定格式的文件
+    /// 将选定范围导出为文档片段以供使用。
     /// </summary>
-    /// <param name="fileName">输出文件名</param>
-    /// <param name="format">保存格式</param>
+    /// <param name="fileName">保存文档片段文件的路径和文件名。</param>
+    /// <param name="format">文档片段文件的文件格式。</param>
     void ExportFragment(string fileName, WdSaveFormat format);
 
     /// <summary>
-    /// 设置列表级别
+    /// 为编号列表中的一个或多个项目设置列表级别。
     /// </summary>
-    /// <param name="level">列表级别</param>
+    /// <param name="level">指示新列表级别的数字。</param>
     void SetListLevel(short level);
 
     /// <summary>
-    /// 插入对齐制表符
+    /// 插入一个绝对制表符，始终位于相对于页边距或缩进的相同位置。
     /// </summary>
-    /// <param name="alignment">对齐方式</param>
-    /// <param name="relativeTo">相对于的位置，默认为0</param>
-    void InsertAlignmentTab([ConvertInt] WdAlignmentTabAlignment alignment, int relativeTo = 0);
+    /// <param name="alignment">制表符的对齐类型。</param>
+    /// <param name="relativeTo">制表符是相对于页边距还是段落缩进。</param>
+    void InsertAlignmentTab(int alignment, int relativeTo = 0);
 
     /// <summary>
-    /// 导入文档片段
+    /// 将文档片段导入到文档中的指定范围。
     /// </summary>
-    /// <param name="fileName">要导入的文件名</param>
-    /// <param name="matchDestination">是否匹配目标格式，默认为false</param>
+    /// <param name="fileName">存储文档片段的路径和文件名。</param>
+    /// <param name="matchDestination">是否匹配目标格式。</param>
     void ImportFragment(string fileName, bool matchDestination = false);
 
     /// <summary>
@@ -1126,119 +1099,21 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
                                WdExportCreateBookmarks createBookmarks = WdExportCreateBookmarks.wdExportCreateNoBookmarks,
                                bool docStructureTags = true, bool bitmapMissingFonts = true,
                                bool useISO19005_1 = false, object? fixedFormatExtClassPtr = null);
-
     /// <summary>
-    /// 获取或设置适合文本的宽度（以磅为单位）
+    /// 对范围内的内容按标题进行排序。
     /// </summary>
-    float FitTextWidth { get; set; }
+    /// <param name="sortFieldType">排序字段类型</param>
+    /// <param name="sortOrder">排序顺序</param>
+    /// <param name="caseSensitive">是否区分大小写</param>
+    /// <param name="bidiSort">是否双向排序</param>
+    /// <param name="ignoreThe">是否忽略英文"the"</param>
+    /// <param name="ignoreKashida">是否忽略阿拉伯语kashida</param>
+    /// <param name="ignoreDiacritics">是否忽略变音符号</param>
+    /// <param name="ignoreHe">是否忽略希伯来语he</param>
+    /// <param name="languageID">语言ID</param>
+    void SortByHeadings(WdSortFieldType? sortFieldType, WdSortOrder? sortOrder,
+                        bool? caseSensitive, bool? bidiSort,
+                        bool? ignoreThe, bool? ignoreKashida, bool? ignoreDiacritics,
+                        bool? ignoreHe, WdLanguageID? languageID);
 
-    /// <summary>
-    /// 获取或设置是否合并字符
-    /// </summary>
-    bool CombineCharacters { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否显示所有内容（包括隐藏内容）
-    /// </summary>
-    bool ShowAll { get; set; }
-
-    /// <summary>
-    /// 获取顶级表格集合
-    /// </summary>
-    IWordTables? TopLevelTables { get; }
-
-    /// <summary>
-    /// 获取HTML分隔集合
-    /// </summary>
-    IWordHTMLDivisions? HTMLDivisions { get; }
-
-    /// <summary>
-    /// 获取Office脚本集合
-    /// </summary>
-    IOfficeScripts? Scripts { get; }
-
-    /// <summary>
-    /// 获取智能标签集合
-    /// </summary>
-    IWordSmartTags? SmartTags { get; }
-
-    /// <summary>
-    /// 获取脚注选项
-    /// </summary>
-    IWordFootnoteOptions? FootnoteOptions { get; }
-
-    /// <summary>
-    /// 获取尾注选项
-    /// </summary>
-    IWordEndnoteOptions? EndnoteOptions { get; }
-
-    /// <summary>
-    /// 获取XML节点集合
-    /// </summary>
-    IWordXMLNodes? XMLNodes { get; }
-
-    /// <summary>
-    /// 获取XML父节点
-    /// </summary>
-    IWordXMLNode? XMLParentNode { get; }
-
-    /// <summary>
-    /// 获取数学对象集合
-    /// </summary>
-    IWordOMaths? OMaths { get; }
-
-    /// <summary>
-    /// 获取协作锁定集合
-    /// </summary>
-    IWordCoAuthLocks? Locks { get; }
-
-    /// <summary>
-    /// 获取协作更新集合
-    /// </summary>
-    IWordCoAuthUpdates? Updates { get; }
-
-    /// <summary>
-    /// 获取屏幕上可见文本的数量
-    /// </summary>
-    int TextVisibleOnScreen { get; }
-
-    /// <summary>
-    /// 获取父内容控件
-    /// </summary>
-    IWordContentControl ParentContentControl { get; }
-
-    /// <summary>
-    /// 获取范围的XML表示
-    /// </summary>
-    string XML { get; }
-
-    /// <summary>
-    /// 获取范围的Word Open XML表示
-    /// </summary>
-    string WordOpenXML { get; }
-
-    /// <summary>
-    /// 获取增强图元文件位
-    /// </summary>
-    object EnhMetaFileBits { get; }
-
-    /// <summary>
-    /// 获取或设置字符样式
-    /// </summary>
-    object CharacterStyle { get; }
-
-    /// <summary>
-    /// 获取或设置段落样式
-    /// </summary>
-    object ParagraphStyle { get; }
-
-    /// <summary>
-    /// 获取或设置列表样式
-    /// </summary>
-    object ListStyle { get; }
-
-    /// <summary>
-    /// 获取或设置表格样式
-    /// </summary>
-    object TableStyle { get; }
 }
