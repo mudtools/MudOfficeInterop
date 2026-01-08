@@ -10,11 +10,12 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 段落集合的封装接口。
 /// </summary>
-public interface IWordParagraphs : IEnumerable<IWordParagraph>, IDisposable
+public interface IWordParagraphs : IEnumerable<IWordParagraph?>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
