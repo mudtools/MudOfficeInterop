@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 框架集合的封装接口。
 /// </summary>
-public interface IWordFrames : IEnumerable<IWordFrame>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordFrames : IEnumerable<IWordFrame?>, IOfficeObject<IWordFrames, MsWord.Frames>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -30,94 +32,18 @@ public interface IWordFrames : IEnumerable<IWordFrame>, IDisposable
     /// <summary>
     /// 通过索引获取框架。
     /// </summary>
-    IWordFrame this[int index] { get; }
-
-    /// <summary>
-    /// 获取第一个框架。
-    /// </summary>
-    IWordFrame First { get; }
-
-    /// <summary>
-    /// 获取最后一个框架。
-    /// </summary>
-    IWordFrame Last { get; }
+    IWordFrame? this[int index] { get; }
 
     /// <summary>
     /// 添加新的框架。
     /// </summary>
     /// <param name="range">框架范围。</param>
     /// <returns>新创建的框架。</returns>
-    IWordFrame Add(IWordRange range);
+    IWordFrame? Add(IWordRange range);
 
     /// <summary>
     /// 删除指定索引的框架。
     /// </summary>
-    /// <param name="index">框架索引。</param>
-    void Delete(int index);
+    void Delete();
 
-    /// <summary>
-    /// 删除指定范围的框架。
-    /// </summary>
-    /// <param name="startIndex">开始索引。</param>
-    /// <param name="count">删除数量。</param>
-    void DeleteRange(int startIndex, int count);
-
-    /// <summary>
-    /// 删除所有框架。
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 获取所有框架索引列表。
-    /// </summary>
-    /// <returns>框架索引列表。</returns>
-    List<int> GetIndexes();
-
-    /// <summary>
-    /// 获取指定范围的框架。
-    /// </summary>
-    /// <param name="startIndex">开始索引。</param>
-    /// <param name="endIndex">结束索引。</param>
-    /// <returns>框架列表。</returns>
-    List<IWordFrame> GetRange(int startIndex, int endIndex);
-
-    /// <summary>
-    /// 选择所有框架。
-    /// </summary>
-    void Select();
-
-    /// <summary>
-    /// 复制所有框架。
-    /// </summary>
-    void Copy();
-
-    /// <summary>
-    /// 剪切所有框架。
-    /// </summary>
-    void Cut();
-
-    /// <summary>
-    /// 粘贴内容到所有框架。
-    /// </summary>
-    void Paste();
-
-    /// <summary>
-    /// 设置所有框架边框。
-    /// </summary>
-    /// <param name="lineStyle">线条样式。</param>
-    /// <param name="lineWidth">线条宽度。</param>
-    /// <param name="color">颜色。</param>
-    void SetBordersForAll(WdLineStyle lineStyle = WdLineStyle.wdLineStyleSingle,
-                          WdLineWidth lineWidth = WdLineWidth.wdLineWidth100pt,
-                          WdColor color = WdColor.wdColorAutomatic);
-
-    /// <summary>
-    /// 设置所有框架底纹。
-    /// </summary>
-    /// <param name="pattern">图案。</param>
-    /// <param name="foregroundColor">前景色。</param>
-    /// <param name="backgroundColor">背景色。</param>
-    void SetShadingForAll(WdTextureIndex pattern = WdTextureIndex.wdTextureNone,
-                          WdColor foregroundColor = WdColor.wdColorAutomatic,
-                          WdColor backgroundColor = WdColor.wdColorWhite);
 }
