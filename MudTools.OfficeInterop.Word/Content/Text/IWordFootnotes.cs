@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 脚注集合的封装接口。
 /// </summary>
-public interface IWordFootnotes : IEnumerable<IWordFootnote>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordFootnotes : IEnumerable<IWordFootnote?>, IOfficeObject<IWordFootnotes, MsWord.Footnotes>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -28,101 +30,78 @@ public interface IWordFootnotes : IEnumerable<IWordFootnote>, IDisposable
     int Count { get; }
 
     /// <summary>
-    /// 通过索引获取脚注。
-    /// </summary>
-    IWordFootnote this[int index] { get; }
-
-    /// <summary>
-    /// 获取第一个脚注。
-    /// </summary>
-    IWordFootnote? First { get; }
-
-    /// <summary>
-    /// 获取最后一个脚注。
-    /// </summary>
-    IWordFootnote? Last { get; }
-
-    /// <summary>
-    /// 获取脚注分隔符范围。
-    /// 这是位于页面底部脚注区域与正文之间的分隔线或符号。
-    /// </summary>
-    IWordRange? Separator { get; }
-
-    /// <summary>
-    /// 获取脚注延续分隔符范围。
-    /// 当脚注文本延续到下一页时，用于分隔的符号或线条。
-    /// </summary>
-    IWordRange? ContinuationSeparator { get; }
-
-    /// <summary>
-    /// 获取脚注延续注释范围。
-    /// 当脚注延续到下一页时显示的通知文本。
-    /// </summary>
-    IWordRange? ContinuationNotice { get; }
-
-    /// <summary>
-    /// 获取或设置脚注编号方式。
-    /// </summary>
-    WdNoteNumberStyle NumberStyle { get; set; }
-
-    /// <summary>
-    /// 获取或设置脚注起始编号。
-    /// </summary>
-    int StartingNumber { get; set; }
-
-    /// <summary>
-    /// 获取或设置脚注编号格式。
-    /// </summary>
-    WdNumberingRule NumberingRule { get; set; }
-
-    /// <summary>
-    /// 获取或设置脚注位置。
+    /// 获取或设置所有脚注的位置。
     /// </summary>
     WdFootnoteLocation Location { get; set; }
 
     /// <summary>
-    /// 添加新的脚注。
+    /// 获取或设置选择范围、范围或文档中脚注的编号样式。
     /// </summary>
-    /// <param name="range">添加脚注的范围。</param>
-    /// <param name="referenceText">引用文本。</param>
-    /// <param name="noteText">脚注文本。</param>
-    /// <returns>新创建的脚注。</returns>
-    IWordFootnote Add(IWordRange range, string referenceText = null, string noteText = null);
+    WdNoteNumberStyle NumberStyle { get; set; }
 
     /// <summary>
-    /// 删除指定索引的脚注。
+    /// 获取或设置起始注释编号。
     /// </summary>
-    /// <param name="index">脚注索引。</param>
-    void Delete(int index);
+    int StartingNumber { get; set; }
 
     /// <summary>
-    /// 删除所有脚注。
+    /// 获取或设置在分页符或分节符后脚注的编号方式。
     /// </summary>
-    void Clear();
+    WdNumberingRule NumberingRule { get; set; }
 
     /// <summary>
-    /// 获取所有脚注索引列表。
+    /// 获取表示脚注分隔符的范围对象。
     /// </summary>
-    /// <returns>脚注索引列表。</returns>
-    List<int> GetIndexes();
+    IWordRange? Separator { get; }
 
     /// <summary>
-    /// 重新编号所有脚注。
+    /// 获取表示脚注续行分隔符的范围对象。
     /// </summary>
-    void Renumber();
+    IWordRange? ContinuationSeparator { get; }
 
     /// <summary>
-    /// 获取指定范围内的脚注数量。
+    /// 获取表示脚注续行通知的范围对象。
     /// </summary>
-    /// <param name="range">范围对象。</param>
-    /// <returns>脚注数量。</returns>
-    int CountInRange(IWordRange range);
+    IWordRange? ContinuationNotice { get; }
 
     /// <summary>
-    /// 查找包含指定文本的脚注。
+    /// 通过索引获取集合中的单个脚注对象。
     /// </summary>
-    /// <param name="text">要查找的文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <returns>脚注列表。</returns>
-    List<IWordFootnote> FindByText(string text, bool matchCase = false);
+    /// <param name="index">指示单个对象在集合中位置的整数索引。</param>
+    /// <returns>指定索引处的脚注对象。</returns>
+    IWordFootnote? this[int index] { get; }
+
+    /// <summary>
+    /// 向范围添加脚注，并返回表示该脚注的Footnote对象。
+    /// </summary>
+    /// <param name="range">标记为尾注或脚注的范围。可以是折叠的范围。</param>
+    /// <param name="reference">自定义引用标记的文本。如果省略此参数，Microsoft Word将插入自动编号的引用标记。</param>
+    /// <param name="text">尾注或脚注的文本。</param>
+    /// <returns>新添加的脚注对象。</returns>
+    IWordFootnote? Add(IWordRange range, string? reference = null, string? text = null);
+
+    /// <summary>
+    /// 将脚注转换为尾注。
+    /// </summary>
+    void Convert();
+
+    /// <summary>
+    /// 将文档中的所有脚注转换为尾注，反之亦然。
+    /// </summary>
+    void SwapWithEndnotes();
+
+    /// <summary>
+    /// 将脚注分隔符重置为默认分隔符。默认分隔符是一条短水平线，用于分隔文档文本和注释。
+    /// </summary>
+    void ResetSeparator();
+
+    /// <summary>
+    /// 将脚注续行分隔符重置为默认分隔符。默认分隔符是一条长水平线，用于分隔文档文本和从前一页继续的注释。
+    /// </summary>
+    void ResetContinuationSeparator();
+
+    /// <summary>
+    /// 将脚注续行通知重置为默认通知。默认通知为空白（无文本）。
+    /// </summary>
+    void ResetContinuationNotice();
 }
