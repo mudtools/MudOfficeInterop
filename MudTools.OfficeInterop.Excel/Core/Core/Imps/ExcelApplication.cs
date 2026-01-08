@@ -5,9 +5,7 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using log4net;
 using MudTools.OfficeInterop.Imps;
-using System.Drawing;
 using System.Globalization;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
@@ -1361,7 +1359,7 @@ internal partial class ExcelApplication : IExcelApplication
     /// <summary>
     /// 获取或设置窗口状态
     /// </summary>
-    public int WindowState
+    public int WindowStateValue
     {
         get => _application != null ? Convert.ToInt32(_application.WindowState) : 0;
         set
@@ -1374,9 +1372,9 @@ internal partial class ExcelApplication : IExcelApplication
     /// <summary>
     /// 获取或设置应用程序的高度
     /// </summary>
-    public float Height
+    public int Height
     {
-        get => Convert.ToSingle(_application?.Height);
+        get => Convert.ToInt32(_application?.Height);
         set
         {
             if (_application != null)
@@ -1387,9 +1385,9 @@ internal partial class ExcelApplication : IExcelApplication
     /// <summary>
     /// 获取或设置应用程序的宽度
     /// </summary>
-    public float Width
+    public int Width
     {
-        get => Convert.ToSingle(_application?.Width);
+        get => Convert.ToInt32(_application?.Width);
         set
         {
             if (_application != null)
@@ -1400,9 +1398,9 @@ internal partial class ExcelApplication : IExcelApplication
     /// <summary>
     /// 获取或设置应用程序的左边距
     /// </summary>
-    public float Left
+    public int Left
     {
-        get => Convert.ToSingle(_application?.Left);
+        get => Convert.ToInt32(_application?.Left);
         set
         {
             if (_application != null)
@@ -1413,7 +1411,7 @@ internal partial class ExcelApplication : IExcelApplication
     /// <summary>
     /// 获取或设置应用程序的顶边距
     /// </summary>
-    public float Top
+    public int Top
     {
         get => Convert.ToSingle(_application?.Top);
         set

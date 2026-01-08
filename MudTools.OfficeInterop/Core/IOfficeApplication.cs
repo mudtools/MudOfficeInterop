@@ -45,27 +45,28 @@ public interface IOfficeApplication : IDisposable
     /// <summary>
     /// 获取或设置窗口状态（正常、最小化、最大化）
     /// </summary>
-    int WindowState { get; set; }
+    [IgnoreGenerator]
+    int WindowStateValue { get; set; }
 
     /// <summary>
     /// 获取或设置应用程序窗口的左边距
     /// </summary>
-    float Left { get; set; }
+    int Left { get; set; }
 
     /// <summary>
     /// 获取或设置应用程序窗口的顶边距
     /// </summary>
-    float Top { get; set; }
+    int Top { get; set; }
 
     /// <summary>
     /// 获取或设置应用程序窗口的宽度
     /// </summary>
-    float Width { get; set; }
+    int Width { get; set; }
 
     /// <summary>
     /// 获取或设置应用程序窗口的高度
     /// </summary>
-    float Height { get; set; }
+    int Height { get; set; }
 
     #endregion
 
@@ -116,6 +117,7 @@ public interface IOfficeApplication : IDisposable
     /// </summary>
     /// <param name="fileDialogType">对话框类型</param>
     /// <returns>文件对话框对象</returns>
+    [IgnoreGenerator]
     IOfficeFileDialog CreateFileDialog(MsoFileDialogType fileDialogType);
 
     #endregion

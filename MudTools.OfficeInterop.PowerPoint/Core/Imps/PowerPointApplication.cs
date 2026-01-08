@@ -95,7 +95,7 @@ internal class PowerPointApplication : IPowerPointApplication
     /// <summary>
     /// 获取或设置窗口状态
     /// </summary>
-    public int WindowState
+    public int WindowStateValue
     {
         get => _application != null ? Convert.ToInt32(_application.WindowState) : 0;
         set
@@ -148,27 +148,27 @@ internal class PowerPointApplication : IPowerPointApplication
 
     public IOfficeCommandBars CommandBars => new OfficeCommandBars(_application.CommandBars);
 
-    public float Left
+    public int Left
     {
-        get => _application.Left;
+        get => _application.Left.ConvertToInt();
         set => _application.Left = value;
     }
 
-    public float Top
+    public int Top
     {
-        get => _application.Top;
+        get => _application.Top.ConvertToInt();
         set => _application.Top = value;
     }
 
-    public float Width
+    public int Width
     {
-        get => _application.Width;
+        get => _application.Width.ConvertToInt();
         set => _application.Width = value;
     }
 
-    public float Height
+    public int Height
     {
-        get => _application.Height;
+        get => _application.Height.ConvertToInt();
         set => _application.Height = value;
     }
     #endregion

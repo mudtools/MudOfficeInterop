@@ -17,6 +17,9 @@
 			<HintPath>..\DLL\Office.dll</HintPath>
 			<EmbedInteropTypes>false</EmbedInteropTypes>
 		</Reference>
+		<Reference Include="Microsoft.Vbe.Interop">
+			<HintPath>..\DLL\Microsoft.Vbe.Interop.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 
