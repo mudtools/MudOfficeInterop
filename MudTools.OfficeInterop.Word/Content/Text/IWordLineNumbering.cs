@@ -11,13 +11,15 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 文档或节中的行号设置。
 /// 封装了 Microsoft.Office.Interop.Word.LineNumbering 对象。
 /// </summary>
-public interface IWordLineNumbering : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordLineNumbering : IOfficeObject<IWordLineNumbering, MsWord.LineNumbering>, IDisposable
 {
     #region 属性
 
     /// <summary>
     /// 获取代表 Microsoft Word 应用程序的 <see cref="IWordApplication"/> 对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -33,12 +35,12 @@ public interface IWordLineNumbering : IDisposable
     /// <summary>
     /// 获取或设置行号的起始值。
     /// </summary>
-    int? StartingNumber { get; set; }
+    int StartingNumber { get; set; }
 
     /// <summary>
     /// 获取或设置行号之间的距离（以行为单位）。
     /// </summary>
-    int? CountBy { get; set; }
+    int CountBy { get; set; }
 
 
     /// <summary>
@@ -49,7 +51,7 @@ public interface IWordLineNumbering : IDisposable
     /// <summary>
     /// 获取或设置行号相对于页面或文本边界的水平位置（以磅为单位）。
     /// </summary>
-    float? DistanceFromText { get; set; }
+    float DistanceFromText { get; set; }
 
     /// <summary>
     /// 获取或设置一个布尔值，该值指示是否为每个页面或节重新开始编号。
@@ -58,6 +60,6 @@ public interface IWordLineNumbering : IDisposable
     /// 注意：此属性可能与 RestartMode 属性相关联或重叠。
     /// 具体行为取决于 Word 版本和上下文。建议优先使用 RestartMode。
     /// </remarks>
-    int? Active { get; set; }
+    int Active { get; set; }
     #endregion 
 }
