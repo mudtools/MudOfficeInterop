@@ -321,28 +321,6 @@ internal class WordParagraphs : IWordParagraphs
         return foundParagraphs;
     }
 
-    /// <inheritdoc/>
-    public int ReplaceAllText(string findText, string replaceText, bool matchCase = false, bool matchWholeWord = false)
-    {
-        if (_paragraphs == null || string.IsNullOrEmpty(findText)) return 0;
-
-        int totalReplacements = 0;
-        try
-        {
-            for (int i = 1; i <= Count; i++)
-            {
-                var paragraph = new WordParagraph(_paragraphs[i]);
-                totalReplacements += paragraph.ReplaceText(findText, replaceText, matchCase, matchWholeWord);
-                paragraph.Dispose();
-            }
-        }
-        catch
-        {
-            // 替换失败返回已执行的替换次数
-        }
-
-        return totalReplacements;
-    }
 
     /// <inheritdoc/>
     public List<IWordParagraph> GetRange(int startIndex, int endIndex)

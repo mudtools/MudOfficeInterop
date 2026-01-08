@@ -117,16 +117,6 @@ public interface IWordParagraphs : IEnumerable<IWordParagraph?>, IDisposable
     List<IWordParagraph> FindByText(string text, bool matchCase = false, bool matchWholeWord = false);
 
     /// <summary>
-    /// 替换所有段落中的指定文本。
-    /// </summary>
-    /// <param name="findText">要查找的文本。</param>
-    /// <param name="replaceText">替换文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <param name="matchWholeWord">是否匹配整个单词。</param>
-    /// <returns>总替换次数。</returns>
-    int ReplaceAllText(string findText, string replaceText, bool matchCase = false, bool matchWholeWord = false);
-
-    /// <summary>
     /// 获取指定范围的段落。
     /// </summary>
     /// <param name="startIndex">开始索引。</param>
