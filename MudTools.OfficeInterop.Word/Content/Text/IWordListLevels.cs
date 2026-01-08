@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档列表级别接口
 /// </summary>
-public interface IWordListLevels : IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordListLevels : IEnumerable<IWordListLevel?>, IOfficeObject<IWordListLevels, MsWord.ListLevels>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -26,5 +27,5 @@ public interface IWordListLevels : IDisposable
     /// <summary>
     /// 获取指定索引的列表级别
     /// </summary>
-    IWordListLevel this[int index] { get; }
+    IWordListLevel? this[int index] { get; }
 }
