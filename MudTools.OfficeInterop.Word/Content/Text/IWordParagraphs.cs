@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 段落集合的封装接口。
 /// </summary>
-public interface IWordParagraphs : IEnumerable<IWordParagraph?>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordParagraphs : IEnumerable<IWordParagraph?>, IOfficeObject<IWordParagraphs, MsWord.Paragraphs>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -24,130 +25,327 @@ public interface IWordParagraphs : IEnumerable<IWordParagraph?>, IDisposable
     object? Parent { get; }
 
     /// <summary>
-    /// 获取段落数量。
+    /// 获取指定集合中的项数。
     /// </summary>
     int Count { get; }
 
-    /// <summary>
-    /// 通过索引获取段落。
-    /// </summary>
-    IWordParagraph this[int index] { get; }
 
     /// <summary>
-    /// 获取第一个段落。
+    /// 通过索引获取集合中的单个段落对象。
     /// </summary>
-    IWordParagraph First { get; }
+    /// <param name="index">指示单个对象在集合中位置的整数索引。</param>
+    /// <returns>指定索引处的段落对象。</returns>
+    IWordParagraph? this[int index] { get; }
 
     /// <summary>
-    /// 获取最后一个段落。
+    /// 获取表示Paragraphs集合中第一项的Paragraph对象。
     /// </summary>
-    IWordParagraph Last { get; }
+    IWordParagraph? First { get; }
 
     /// <summary>
-    /// 添加新的段落。
+    /// 获取表示Paragraphs集合中最后一项的Paragraph对象。
     /// </summary>
-    /// <param name="text">段落文本。</param>
-    /// <param name="beforeParagraph">在指定段落前添加。</param>
-    /// <returns>新创建的段落。</returns>
-    IWordParagraph Add(string text = null, int beforeParagraph = -1);
+    IWordParagraph? Last { get; }
+
+
 
     /// <summary>
-    /// 在指定位置插入段落。
+    /// 获取或设置表示指定段落格式设置的ParagraphFormat对象。
     /// </summary>
-    /// <param name="index">插入位置。</param>
-    /// <param name="text">段落文本。</param>
-    /// <returns>新插入的段落。</returns>
-    IWordParagraph Insert(int index, string text = null);
+    IWordParagraphFormat? Format { get; set; }
 
     /// <summary>
-    /// 删除指定索引的段落。
+    /// 获取或设置表示指定段落所有自定义制表位的TabStops集合。
     /// </summary>
-    /// <param name="index">段落索引。</param>
-    void Delete(int index);
+    IWordTabStops? TabStops { get; set; }
 
     /// <summary>
-    /// 删除指定范围的段落。
+    /// 获取或设置表示指定对象所有边框的Borders集合。
     /// </summary>
-    /// <param name="startIndex">开始索引。</param>
-    /// <param name="count">删除数量。</param>
-    void DeleteRange(int startIndex, int count);
+    IWordBorders? Borders { get; set; }
 
     /// <summary>
-    /// 删除所有段落。
+    /// 获取或设置指定对象的样式。
     /// </summary>
-    void Clear();
+    [ComPropertyWrap(IsMethod = true, NeedConvert = true)]
+    IWordStyle? Style { get; set; }
 
     /// <summary>
-    /// 获取所有段落索引列表。
+    /// 获取或设置指定对象的样式。
     /// </summary>
-    /// <returns>段落索引列表。</returns>
-    List<int> GetIndexes();
+    [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
+    WdBuiltinStyle StyleType { get; set; }
 
     /// <summary>
-    /// 获取文档总字符数。
+    /// 获取或设置指定对象的样式。
     /// </summary>
-    /// <returns>字符总数。</returns>
-    int GetTotalCharacters();
+    [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
+    string? StyleName { get; set; }
 
     /// <summary>
-    /// 获取文档总单词数。
+    /// 获取或设置表示指定段落对齐方式的WdParagraphAlignment常量。
     /// </summary>
-    /// <returns>单词总数。</returns>
-    int GetTotalWords();
+    WdParagraphAlignment Alignment { get; set; }
 
     /// <summary>
-    /// 获取文档总句子数。
+    /// 获取或设置一个值，指示当Microsoft Word重新分页时，指定段落的所有行是否保持在同一页上。
     /// </summary>
-    /// <returns>句子总数。</returns>
-    int GetTotalSentences();
+    int KeepTogether { get; set; }
 
     /// <summary>
-    /// 按照指定条件排序段落。
+    /// 获取或设置一个值，指示当Microsoft Word重新分页时，指定段落是否与后续段落保持在同一页上。
     /// </summary>
-    /// <param name="ascending">是否升序。</param>
-    void Sort(bool ascending = true);
+    int KeepWithNext { get; set; }
 
     /// <summary>
-    /// 查找包含指定文本的段落。
+    /// 获取或设置一个值，指示是否在指定段落前强制分页。
     /// </summary>
-    /// <param name="text">要查找的文本。</param>
-    /// <param name="matchCase">是否匹配大小写。</param>
-    /// <param name="matchWholeWord">是否匹配整个单词。</param>
-    /// <returns>段落列表。</returns>
-    List<IWordParagraph> FindByText(string text, bool matchCase = false, bool matchWholeWord = false);
+    int PageBreakBefore { get; set; }
 
     /// <summary>
-    /// 获取指定范围的段落。
+    /// 获取或设置一个值，指示是否取消指定段落的行号显示。
     /// </summary>
-    /// <param name="startIndex">开始索引。</param>
-    /// <param name="endIndex">结束索引。</param>
-    /// <returns>段落列表。</returns>
-    List<IWordParagraph> GetRange(int startIndex, int endIndex);
+    int NoLineNumber { get; set; }
 
     /// <summary>
-    /// 获取标题段落列表。
+    /// 获取或设置指定段落的右缩进（以磅为单位）。
     /// </summary>
-    /// <returns>标题段落列表。</returns>
-    List<IWordParagraph> GetHeadings();
+    float RightIndent { get; set; }
 
     /// <summary>
-    /// 获取空段落列表。
+    /// 获取或设置指定段落的左缩进值（以磅为单位）。
     /// </summary>
-    /// <returns>空段落列表。</returns>
-    List<IWordParagraph> GetEmptyParagraphs();
+    float LeftIndent { get; set; }
 
     /// <summary>
-    /// 批量设置段落格式。
+    /// 获取或设置首行缩进或悬挂缩进的值（以磅为单位）。
     /// </summary>
-    /// <param name="alignment">对齐方式。</param>
-    /// <param name="leftIndent">左缩进。</param>
-    /// <param name="lineSpacing">行距。</param>
-    void SetFormatForAll(WdParagraphAlignment alignment = WdParagraphAlignment.wdAlignParagraphLeft,
-                        float leftIndent = 0, float lineSpacing = 1.0f);
+    float FirstLineIndent { get; set; }
 
     /// <summary>
-    /// 获取段落长度统计信息。
+    /// 获取或设置指定段落的行距（以磅为单位）。
     /// </summary>
-    /// <returns>长度统计信息。</returns>
-    (int MinLength, int MaxLength, double AverageLength) GetLengthStatistics();
+    float LineSpacing { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落的行距规则。
+    /// </summary>
+    WdLineSpacing LineSpacingRule { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落前的间距（以磅为单位）。
+    /// </summary>
+    float SpaceBefore { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落或文本列后的间距（以磅为单位）。
+    /// </summary>
+    float SpaceAfter { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示指定段落是否包含在自动连字符中。
+    /// </summary>
+    int Hyphenation { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示当Microsoft Word重新分页时，指定段落的首行和末行是否与段落其余部分保持在同一页上。
+    /// </summary>
+    int WidowControl { get; set; }
+
+    /// <summary>
+    /// 获取表示指定对象底纹格式设置的Shading对象。
+    /// </summary>
+    IWordShading? Shading { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示Microsoft Word是否对指定段落应用东亚换行规则。
+    /// </summary>
+    int FarEastLineBreakControl { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示在指定段落或文本框中，Microsoft Word是否在拉丁文本的单词中间换行。
+    /// </summary>
+    int WordWrap { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否为指定段落启用悬挂标点。
+    /// </summary>
+    int HangingPunctuation { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示对于指定段落，Microsoft Word是否将行首的标点符号更改为半角字符。
+    /// </summary>
+    int HalfWidthPunctuationOnTopOfLine { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示Microsoft Word是否自动为指定段落添加日语和拉丁文本之间的空格。
+    /// </summary>
+    int AddSpaceBetweenFarEastAndAlpha { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示Microsoft Word是否自动为指定段落添加日语文本和数字之间的空格。
+    /// </summary>
+    int AddSpaceBetweenFarEastAndDigit { get; set; }
+
+    /// <summary>
+    /// 获取或设置表示行上字体垂直位置的WdBaselineAlignment常量。
+    /// </summary>
+    WdBaselineAlignment BaseLineAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示如果指定了每行的字符数，Microsoft Word是否自动调整指定段落的右缩进。
+    /// </summary>
+    int AutoAdjustRightIndent { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示当指定每页的行数时，Microsoft Word是否将指定段落中的字符与行网格对齐。
+    /// </summary>
+    int DisableLineHeightGrid { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落的大纲级别。
+    /// </summary>
+    WdOutlineLevel OutlineLevel { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落的右缩进值（以字符为单位）。
+    /// </summary>
+    float CharacterUnitRightIndent { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落的左缩进值（以字符为单位）。
+    /// </summary>
+    float CharacterUnitLeftIndent { get; set; }
+
+    /// <summary>
+    /// 获取或设置首行缩进或悬挂缩进的值（以字符为单位）。
+    /// </summary>
+    float CharacterUnitFirstLineIndent { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落前的间距量（以网格线为单位）。
+    /// </summary>
+    float LineUnitBefore { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落后的间距量（以网格线为单位）。
+    /// </summary>
+    float LineUnitAfter { get; set; }
+
+    /// <summary>
+    /// 获取或设置指定段落的阅读顺序，而不更改其对齐方式。
+    /// </summary>
+    WdReadingOrder ReadingOrder { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示Microsoft Word是否自动设置指定段落前的间距量。
+    /// </summary>
+    int SpaceBeforeAuto { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示Microsoft Word是否自动设置指定段落后的间距量。
+    /// </summary>
+    int SpaceAfterAuto { get; set; }
+
+
+    /// <summary>
+    /// 向文档添加一个新的空白段落，并返回表示该段落的Paragraph对象。
+    /// </summary>
+    /// <param name="range">要在其之前添加新段落的范围。新段落不会替换该范围。</param>
+    /// <returns>新添加的段落对象。</returns>
+    IWordParagraph? Add(IWordRange? range = null);
+
+    /// <summary>
+    /// 移除指定段落前的所有间距。
+    /// </summary>
+    void CloseUp();
+
+    /// <summary>
+    /// 将指定段落前的间距设置为12磅。
+    /// </summary>
+    void OpenUp();
+
+    /// <summary>
+    /// 如果指定段落前的间距为0，则将其设置为12磅；如果大于0，则设置为0。
+    /// </summary>
+    void OpenOrCloseUp();
+
+    /// <summary>
+    /// 将悬挂缩进设置为指定数量的制表位。
+    /// </summary>
+    /// <param name="count">要缩进的制表位数（如果为正数）或要从缩进中移除的制表位数（如果为负数）。</param>
+    void TabHangingIndent(short count);
+
+    /// <summary>
+    /// 将指定段落的左缩进设置为指定数量的制表位。
+    /// </summary>
+    /// <param name="count">要缩进的制表位数（如果为正数）或要从缩进中移除的制表位数（如果为负数）。</param>
+    void TabIndent(short count);
+
+    /// <summary>
+    /// 移除手动段落格式设置（未使用样式应用的格式设置）。
+    /// </summary>
+    void Reset();
+
+    /// <summary>
+    /// 将指定段落设置为单倍行距。
+    /// </summary>
+    void Space1();
+
+    /// <summary>
+    /// 将指定段落格式化为1.5倍行距。
+    /// </summary>
+    void Space15();
+
+    /// <summary>
+    /// 将指定段落设置为双倍行距。
+    /// </summary>
+    void Space2();
+
+    /// <summary>
+    /// 按指定字符数缩进一个或多个段落。
+    /// </summary>
+    /// <param name="count">要缩进的字符数。</param>
+    void IndentCharWidth(short count);
+
+    /// <summary>
+    /// 按指定字符数缩进一个或多个段落的首行。
+    /// </summary>
+    /// <param name="count">要缩进的字符数。</param>
+    void IndentFirstLineCharWidth(short count);
+
+    /// <summary>
+    /// 将前一个标题级别样式（标题1到标题8）应用于指定段落。
+    /// </summary>
+    void OutlinePromote();
+
+    /// <summary>
+    /// 将下一个标题级别样式（标题1到标题8）应用于指定段落。
+    /// </summary>
+    void OutlineDemote();
+
+    /// <summary>
+    /// 通过应用普通样式将指定段落降级为正文文本。
+    /// </summary>
+    void OutlineDemoteToBody();
+
+    /// <summary>
+    /// 将一个或多个段落缩进一个级别。
+    /// </summary>
+    void Indent();
+
+    /// <summary>
+    /// 移除一个或多个段落的缩进级别。
+    /// </summary>
+    void Outdent();
+
+    /// <summary>
+    /// 以6磅为增量增加段落前后的间距。
+    /// </summary>
+    void IncreaseSpacing();
+
+    /// <summary>
+    /// 以6磅为增量减少段落前后的间距。
+    /// </summary>
+    void DecreaseSpacing();
 }
