@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示单个列表格式的库。
 /// <para>注：ListGallery 对象是 ListGalleries 集合的成员。每个 ListGallery 对象表示“项目符号和编号”对话框中的三个选项卡之一。</para>
 /// </summary>
-public interface IWordListGallery : IDisposable
+[ComObjectWrap(ComNamespace = "MsWord")]
+public interface IWordListGallery : IOfficeObject<IWordListGallery, MsWord.ListGallery>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -31,15 +32,7 @@ public interface IWordListGallery : IDisposable
     /// <summary>
     /// 获取表示指定列表库的所有列表格式的 ListTemplates 集合。
     /// </summary>
-    IWordListTemplates ListTemplates { get; }
-
-    /// <summary>
-    /// 获取一个值，该值指示指定的列表模板是否包含 Microsoft Word 中内置的格式。
-    /// <para>注：索引号代表“项目符号和编号”对话框中指定选项卡上的列表格式。</para>
-    /// </summary>
-    /// <param name="index">列表格式的索引号（从 1 开始）。</param>
-    /// <returns>如果列表模板已被修改则返回 true，否则返回 false。</returns>
-    bool Modified(int index);
+    IWordListTemplates? ListTemplates { get; }
 
     /// <summary>
     /// 将列表库的指定列表模板重置为内置列表模板格式。
