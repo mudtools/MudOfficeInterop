@@ -9,7 +9,8 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// 表示 Word 文档中列表段落的集合。
 /// </summary>
-public interface IWordListParagraphs : IEnumerable<IWordParagraph>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordListParagraphs : IEnumerable<IWordParagraph?>, IOfficeObject<IWordListParagraphs, MsWord.ListParagraphs>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的应用程序。
@@ -30,5 +31,5 @@ public interface IWordListParagraphs : IEnumerable<IWordParagraph>, IDisposable
     /// 通过索引获取列表段落。
     /// </summary>
     /// <param name="index">从 1 开始的索引。</param>
-    IWordParagraph this[int index] { get; }
+    IWordParagraph? this[int index] { get; }
 }
