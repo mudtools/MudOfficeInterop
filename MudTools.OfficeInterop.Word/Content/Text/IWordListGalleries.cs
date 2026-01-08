@@ -10,7 +10,8 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 ListGallery 对象的集合，这些对象表示“项目符号和编号”对话框中的三个选项卡。
 /// <para>注：使用 ListGalleries 属性可返回 ListGalleries 集合。</para>
 /// </summary>
-public interface IWordListGalleries : IEnumerable<IWordListGallery>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordListGalleries : IEnumerable<IWordListGallery?>, IOfficeObject<IWordListGalleries, MsWord.ListGalleries>, IDisposable
 {
     /// <summary>
     /// 获取与该对象关联的 Word 应用程序。
@@ -33,5 +34,5 @@ public interface IWordListGalleries : IEnumerable<IWordListGallery>, IDisposable
     /// </summary>
     /// <param name="index">列表库类型 (<see cref="MsWord.WdListGalleryType"/>)。</param>
     /// <returns>指定的 ListGallery 对象。</returns>
-    IWordListGallery this[WdListGalleryType index] { get; }
+    IWordListGallery? this[WdListGalleryType index] { get; }
 }
