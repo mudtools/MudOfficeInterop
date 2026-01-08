@@ -10,11 +10,13 @@ namespace MudTools.OfficeInterop.Word;
 /// <summary>
 /// Word 文档列表模板集合接口
 /// </summary>
-public interface IWordListTemplates : IDisposable, IEnumerable<IWordListTemplate>
+[ComCollectionWrap(ComNamespace = "MsWord")]
+public interface IWordListTemplates : IDisposable, IOfficeObject<IWordListTemplates, MsWord.ListTemplates>, IEnumerable<IWordListTemplate?>
 {
     /// <summary>
     /// 获取应用程序对象。
     /// </summary>
+    [ComPropertyWrap(NeedDispose = false)]
     IWordApplication? Application { get; }
 
     /// <summary>
@@ -30,31 +32,18 @@ public interface IWordListTemplates : IDisposable, IEnumerable<IWordListTemplate
     /// <summary>
     /// 通过索引获取列表模板。
     /// </summary>
-    IWordListTemplate this[int index] { get; }
+    IWordListTemplate? this[int index] { get; }
 
     /// <summary>
     /// 通过名称获取列表模板。
     /// </summary>
-    IWordListTemplate this[string name] { get; }
+    IWordListTemplate? this[string name] { get; }
 
     /// <summary>
     /// 添加新的列表模板。
     /// </summary>
     /// <param name="outlineNumbered">是否为大纲编号。</param>
-    /// <param name="builtIn">是否为内置模板。</param>
-    /// <returns>新创建的列表模板。</returns>
-    IWordListTemplate Add(bool outlineNumbered, bool builtIn);
-
-    /// <summary>
-    /// 判断是否存在指定名称的列表模板。
-    /// </summary>
     /// <param name="name">列表模板名称。</param>
-    /// <returns>是否存在。</returns>
-    bool Contains(string name);
-
-    /// <summary>
-    /// 获取所有列表模板名称列表。
-    /// </summary>
-    /// <returns>列表模板名称列表。</returns>
-    List<string> GetNames();
+    /// <returns>新创建的列表模板。</returns>
+    IWordListTemplate? Add(bool? outlineNumbered, string? name);
 }
