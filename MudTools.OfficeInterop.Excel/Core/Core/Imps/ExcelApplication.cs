@@ -1413,7 +1413,7 @@ internal partial class ExcelApplication : IExcelApplication
     /// </summary>
     public int Top
     {
-        get => Convert.ToSingle(_application?.Top);
+        get => Convert.ToInt32(_application?.Top);
         set
         {
             if (_application != null)

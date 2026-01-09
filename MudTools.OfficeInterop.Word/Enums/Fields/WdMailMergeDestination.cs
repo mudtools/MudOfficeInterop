@@ -7,13 +7,28 @@
 
 namespace MudTools.OfficeInterop.Word;
 
+/// <summary>
+/// 邮件合并目的地
+/// </summary>
 public enum WdMailMergeDestination
 {
+    /// <summary>
+    /// 创建新的文档
+    /// </summary>
     wdSendToNewDocument,
 
+    /// <summary>
+    /// 发送到打印机
+    /// </summary>
     wdSendToPrinter,
 
+    /// <summary>
+    /// 邮件发送
+    /// </summary>
     wdSendToEmail,
 
+    /// <summary>
+    /// 传真发送
+    /// </summary>
     wdSendToFax
 }
