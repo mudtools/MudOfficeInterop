@@ -1,6 +1,9 @@
 
 namespace MudTools.OfficeInterop.Vbe;
 
+/// <summary>
+/// 组件类型枚举
+/// </summary>
 public enum vbext_ComponentType
 {
     /// <summary>
