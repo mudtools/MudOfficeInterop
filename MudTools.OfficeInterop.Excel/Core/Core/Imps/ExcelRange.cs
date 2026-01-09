@@ -5,186 +5,248 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using System.Data;
 
 namespace MudTools.OfficeInterop.Excel.Imps;
 
-/// <summary>
-/// 初始化Excel范围对象
-/// </summary>
-/// <param name="range">Excel原生Range对象</param>
-/// <exception cref="ArgumentNullException">range参数为空时抛出</exception>
-internal class ExcelRange(MsExcel.Range? range) : CoreRange<ExcelRange, IExcelRange>(range),
-    IExcelRange, IExcelRows, IExcelColumns, IDisposable
+partial class ExcelRange
 {
 
-    #region 构造函数
-
-    public ExcelRange() : this(null)
-    {
-
-    }
-
-    public IExcelRange? LoadFromObject(object comObject)
-    {
-        if (comObject == null) return null;
-        if (comObject is MsExcel.Range comInstance)
-            return new ExcelRange(comInstance);
-        return null;
-    }
-    #endregion
-
-    /// <summary>
-    /// 获取工作表中指定行列的单元格对象
-    /// </summary>
-    /// <param name="row">行号</param>
-    /// <param name="column">列号</param>
-    /// <returns>单元格对象</returns>
-    public IExcelRange? this[int? row, int? column]
+    ///  <inheritdoc/>
+    [global::System.CodeDom.Compiler.GeneratedCode("Mud.ServiceCodeGenerator", "1.4.7")]
+    public MudTools.OfficeInterop.Excel.IExcelRange? this[int? index1, int? index2]
     {
         get
         {
-            var range = _range?.Item[row.ComArgsVal(i => i > 0), column.ComArgsVal(i => i > 0)] is MsExcel.Range rang && rang != null ? new ExcelRange(rang) : null;
-            if (range != null) _disposableList.Add(range);
-            return range;
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index1 == null)
+                throw new ArgumentNullException(nameof(index1));
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index2 == null)
+                throw new ArgumentNullException(nameof(index2));
+
+            try
+            {
+                var comElement = _range.Item[index1, index2];
+                if (comElement is MsExcel.Range rComObj)
+                    return new MudTools.OfficeInterop.Excel.Imps.ExcelRange(rComObj);
+                else
+                    return null;
+            }
+            catch (COMException ce)
+            {
+                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+            }
+            catch (Exception ex)
+            {
+                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+            }
+        }
+        set
+        {
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index1 == null)
+                throw new ArgumentNullException(nameof(index1));
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index2 == null)
+                throw new ArgumentNullException(nameof(index2));
+
+            try
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+
+                _range.Item[index1, index2] = ((Imps.ExcelRange)value).InternalComObject;
+            }
+            catch (COMException ce)
+            {
+                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+            }
+            catch (Exception ex)
+            {
+                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+            }
         }
     }
 
-    /// <summary>
-    /// 获取工作表中指定行列的单元格对象
-    /// </summary>
-    /// <param name="rowAddress">行地址</param>
-    /// <param name="columnAddress">列地址</param>
-    /// <returns>单元格对象</returns>
-    public IExcelRange? this[string? rowAddress, string? columnAddress]
+    ///  <inheritdoc/>
+    [global::System.CodeDom.Compiler.GeneratedCode("Mud.ServiceCodeGenerator", "1.4.7")]
+    public MudTools.OfficeInterop.Excel.IExcelRange? this[string? index1, string? index2]
     {
         get
         {
-            var range = _range?.Item[rowAddress.ComArgsVal(), columnAddress.ComArgsVal()] is MsExcel.Range rang && rang != null ? new ExcelRange(rang) : null;
-            if (range != null) _disposableList.Add(range);
-            return range;
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index1 == null)
+                throw new ArgumentNullException(nameof(index1));
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index2 == null)
+                throw new ArgumentNullException(nameof(index2));
+
+            try
+            {
+                var comElement = _range.Item[index1, index2];
+                if (comElement is MsExcel.Range rComObj)
+                    return new MudTools.OfficeInterop.Excel.Imps.ExcelRange(rComObj);
+                else
+                    return null;
+            }
+            catch (COMException ce)
+            {
+                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+            }
+            catch (Exception ex)
+            {
+                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+            }
+        }
+        set
+        {
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index1 == null)
+                throw new ArgumentNullException(nameof(index1));
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index2 == null)
+                throw new ArgumentNullException(nameof(index2));
+
+            try
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                _range.Item[index1, index2] = ((Imps.ExcelRange)value).InternalComObject;
+            }
+            catch (COMException ce)
+            {
+                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+            }
+            catch (Exception ex)
+            {
+                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+            }
         }
     }
 
-    /// <summary>
-    /// 获取工作表中指定行列的单元格对象
-    /// </summary>
-    /// <param name="address">地址</param>
-    public IExcelRange? this[string address]
+    ///  <inheritdoc/>
+    [global::System.CodeDom.Compiler.GeneratedCode("Mud.ServiceCodeGenerator", "1.4.7")]
+    public MudTools.OfficeInterop.Excel.IExcelRange? this[string index]
     {
         get
         {
-            if (string.IsNullOrWhiteSpace(address))
-                throw new ArgumentException("地址不能为空");
-            var range = _range?[address] is MsExcel.Range rang && rang != null ? new ExcelRange(rang) : null;
-            if (range != null) _disposableList.Add(range);
-            return range;
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (string.IsNullOrEmpty(index))
+                throw new ArgumentNullException(nameof(index));
+
+            try
+            {
+                var comElement = _range.Item[index];
+                MudTools.OfficeInterop.Excel.IExcelRange? result = null;
+                if (comElement is MsExcel.Range rComObj)
+                    result = new MudTools.OfficeInterop.Excel.Imps.ExcelRange(rComObj);
+                if (result != null)
+                    _disposableList.Add(result);
+                return result;
+            }
+            catch (COMException ce)
+            {
+                throw new ExcelOperationException("根据索引检索 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+            }
         }
     }
 
-
-    /// <summary>
-    /// 获取工作表中指定行列的单元格对象
-    /// </summary>
-    /// <param name="row">行号</param>
-    /// <returns>单元格对象</returns>
-    public IExcelRange? this[int row] => this[row, null];
-
-    /// <summary>
-    /// 从DataTable复制数据到Excel工作表
-    /// </summary>
-    /// <param name="dataTable">数据表</param>
-    /// <param name="startCell">起始单元格</param>
-    /// <param name="fieldNames">是否包含字段名</param>
-    /// <returns>是否操作成功</returns>
-    public bool CopyFromDataTable(
-        DataTable dataTable,
-        string startCell = "A1",
-        bool fieldNames = true)
+    ///  <inheritdoc/>
+    public MudTools.OfficeInterop.Excel.IExcelRange? this[int index]
     {
+        get
+        {
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            if (index < 1)
+                throw new IndexOutOfRangeException("第一个索引参数不能少于1");
+
+            try
+            {
+                var comElement = _range.Item[index];
+                MudTools.OfficeInterop.Excel.IExcelRange? result = null;
+                if (comElement is MsExcel.Range rComObj)
+                    result = new MudTools.OfficeInterop.Excel.Imps.ExcelRange(rComObj);
+                if (result != null)
+                    _disposableList.Add(result);
+                return result;
+            }
+            catch (COMException ce)
+            {
+                throw new ExcelOperationException("根据索引检索 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+            }
+        }
+    }
+
+    public object[,]? ArrayValue
+    {
+        get
+        {
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            var obj = _range.Value2;
+            if (obj is object[,] objs && objs != null)
+                return objs;
+            return null;
+        }
+        set
+        {
+            if (_range == null)
+                throw new ObjectDisposedException(nameof(_range));
+            _range.Value2 = value;
+        }
+    }
+
+    ///  <inheritdoc/>
+    public object? GetValue(XlRangeValueDataType rangeValueDataType)
+    {
+        if (_range == null)
+            throw new ObjectDisposedException(nameof(_range));
+        var rangeValueDataTypeObj = rangeValueDataType.EnumConvert(MsExcel.XlRangeValueDataType.xlRangeValueDefault);
+
         try
         {
-            MsExcel.Range startRange = _range.Worksheet.Range[startCell];
-            int startRow = startRange.Row;
-            int startCol = startRange.Column;
-
-            // 写入列标题
-            if (fieldNames)
-            {
-                for (int i = 0; i < dataTable.Columns.Count; i++)
-                {
-                    var cell = _range.Worksheet.Cells[startRow, startCol + i] as MsExcel.Range; ;
-                    cell.Value = dataTable.Columns[i].ColumnName;
-                }
-                startRow++; // 数据从下一行开始
-            }
-
-            // 写入数据
-            for (int row = 0; row < dataTable.Rows.Count; row++)
-            {
-                for (int col = 0; col < dataTable.Columns.Count; col++)
-                {
-                    var cell = _range.Worksheet.Cells[startRow + row, startCol + col] as MsExcel.Range;
-                    cell.Value = dataTable.Rows[row][col];
-                }
-            }
-
-            return true;
+            var returnValue = _range?.Value[rangeValueDataTypeObj];
+            return returnValue;
+        }
+        catch (COMException cx)
+        {
+            throw new ExcelOperationException("执行GetValue操作失败: " + cx.Message, cx);
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"从DataTable复制数据失败: {ex.Message}", ex);
+            throw new ExcelOperationException("执行GetValue操作失败", ex);
         }
     }
 
-
-    /// <summary>
-    /// 替换内容
-    /// </summary>
-    /// <param name="what">要替换的内容</param>
-    /// <param name="replacement">替换后的内容</param>
-    /// <param name="lookAt">匹配方式</param>
-    /// <param name="searchOrder">搜索顺序</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <param name="matchByte">双字节匹配</param>
-    /// <param name="searchFormat">搜索格式</param>
-    /// <param name="replaceFormat">替换格式</param>
-    /// <returns>是否发生替换</returns>
-    public bool Replace(object what, object replacement, object lookAt, object searchOrder, object matchCase, object matchByte, object searchFormat, object replaceFormat)
+    ///  <inheritdoc/>
+    public void SetValue(XlRangeValueDataType rangeValueDataType, object? value)
     {
         if (_range == null)
-            return false;
-        return _range.Replace(
-                    What: what,
-                    Replacement: replacement,
-                    LookAt: lookAt,
-                    SearchOrder: searchOrder,
-                    MatchCase: matchCase,
-                    MatchByte: matchByte,
-                    SearchFormat: searchFormat,
-                    ReplaceFormat: replaceFormat);
-    }
+            throw new ObjectDisposedException(nameof(_range));
+        var rangeValueDataTypeObj = rangeValueDataType.EnumConvert(MsExcel.XlRangeValueDataType.xlRangeValueDefault);
+        var valueObj = value != null ? (object)value : global::System.Type.Missing;
 
-
-    /// <summary>
-    /// 创建分类汇总
-    /// </summary>
-    /// <param name="groupBy">分组依据的列索引</param>
-    /// <param name="function">汇总函数</param>
-    /// <param name="totalList">汇总列索引数组</param>
-    /// <param name="replace">是否替换现有分类汇总</param>
-    /// <param name="pageBreaks">是否分页</param>
-    /// <param name="summaryBelowData">汇总位置</param>
-    public void Subtotal(int groupBy, XlConsolidationFunction function, object totalList, bool replace, bool pageBreaks, XlSummaryRow summaryBelowData)
-    {
-        if (_range == null)
-            return;
-        _range.Subtotal(
-            GroupBy: groupBy,
-            Function: function.EnumConvert(MsExcel.XlConsolidationFunction.xlCount),
-            TotalList: totalList,
-            Replace: replace,
-            PageBreaks: pageBreaks,
-            SummaryBelowData: summaryBelowData.EnumConvert(MsExcel.XlSummaryRow.xlSummaryAbove));
+        try
+        {
+            _range?.Value[rangeValueDataTypeObj] = valueObj;
+        }
+        catch (COMException cx)
+        {
+            throw new ExcelOperationException("执行SetValue操作失败: " + cx.Message, cx);
+        }
+        catch (Exception ex)
+        {
+            throw new ExcelOperationException("执行SetValue操作失败", ex);
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// ChartFormat 对象包含图表元素（如 ChartArea, PlotArea, Series 等）的通用格式属性
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartFormat : IOfficeObject<IExcelChartFormat>, IDisposable
+public interface IExcelChartFormat : IOfficeObject<IExcelChartFormat, MsExcel.ChartFormat>, IDisposable
 {
     #region 基础属性
     /// <summary>

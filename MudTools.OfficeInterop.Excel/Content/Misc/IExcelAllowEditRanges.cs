@@ -4,7 +4,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示所有 AllowEditRange 对象的集合，这些对象表示受保护工作表中可以编辑的单元格。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelAllowEditRanges : IEnumerable<IExcelAllowEditRange?>, IOfficeObject<IExcelAllowEditRanges>, IDisposable
+public interface IExcelAllowEditRanges : IEnumerable<IExcelAllowEditRange?>, IOfficeObject<IExcelAllowEditRanges, MsExcel.AllowEditRanges>, IDisposable
 {
     /// <summary>
     /// 获取集合中的对象数量。

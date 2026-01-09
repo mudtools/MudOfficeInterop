@@ -11,8 +11,9 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示受保护工作表中可以编辑的单元格区域。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelAllowEditRange : IOfficeObject<IExcelAllowEditRange>, IDisposable
+public interface IExcelAllowEditRange : IOfficeObject<IExcelAllowEditRange, MsExcel.AllowEditRange>, IDisposable
 {
+
     /// <summary>
     /// 获取或设置将文档保存为网页时的网页标题。
     /// </summary>

@@ -8,20 +8,17 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 插入格式来源枚举
-/// 用于指定插入单元格时格式的来源方向
+/// 指定插入行时格式复制的来源位置。
 /// </summary>
 public enum XlInsertFormatOrigin
 {
     /// <summary>
-    /// 从左侧或上方获取格式
-    /// 插入单元格时，从左侧或上方的单元格复制格式
+    /// 来自上方和/或左侧的单元格。
     /// </summary>
-    FromLeftOrAbove = 0,
+    xlFormatFromLeftOrAbove,
 
     /// <summary>
-    /// 从右侧或下方获取格式
-    /// 插入单元格时，从右侧或下方的单元格复制格式
+    /// 来自下方和/或右侧的单元格。
     /// </summary>
-    FromRightOrBelow = 1,
+    xlFormatFromRightOrBelow
 }

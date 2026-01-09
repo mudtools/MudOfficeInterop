@@ -312,12 +312,12 @@ public interface IExcelApplication : IOfficeApplication
     /// <summary>
     /// 获取当前活动行集合
     /// </summary>
-    IExcelRows ActiveRows { get; }
+    IExcelRange ActiveRows { get; }
 
     /// <summary>
     /// 获取当前活动列集合
     /// </summary>
-    IExcelColumns ActiveColumns { get; }
+    IExcelRange ActiveColumns { get; }
 
     /// <summary>
     /// 获取当前活动工作表的所有列集合

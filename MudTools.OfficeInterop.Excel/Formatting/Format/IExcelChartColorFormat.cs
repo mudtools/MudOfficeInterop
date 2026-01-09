@@ -15,7 +15,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置形状或图表元素的颜色
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartColorFormat : IOfficeObject<IExcelChartColorFormat>, IDisposable
+public interface IExcelChartColorFormat : IOfficeObject<IExcelChartColorFormat, MsExcel.ChartColorFormat>, IDisposable
 {
     /// <summary>
     /// 获取父对象

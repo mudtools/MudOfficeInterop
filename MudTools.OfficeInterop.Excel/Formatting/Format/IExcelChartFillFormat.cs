@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置形状或图表元素的背景填充
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartFillFormat : IOfficeObject<IExcelChartFillFormat>, IDisposable
+public interface IExcelChartFillFormat : IOfficeObject<IExcelChartFillFormat, MsExcel.ChartFillFormat>, IDisposable
 {
     #region 基础属性
     /// <summary>

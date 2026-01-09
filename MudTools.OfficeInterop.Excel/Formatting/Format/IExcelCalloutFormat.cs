@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于控制标注的引线类型、角度、边距、起点等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCalloutFormat : IOfficeObject<IExcelCalloutFormat>, IDisposable
+public interface IExcelCalloutFormat : IOfficeObject<IExcelCalloutFormat, MsExcel.CalloutFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape）。

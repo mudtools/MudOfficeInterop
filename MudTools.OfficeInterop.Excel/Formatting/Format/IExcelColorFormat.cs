@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 定义Excel颜色格式的接口，提供对Excel中颜色相关属性和操作的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelColorFormat : IOfficeObject<IExcelColorFormat>, IDisposable
+public interface IExcelColorFormat : IOfficeObject<IExcelColorFormat, MsExcel.ColorFormat>, IDisposable
 {
     /// <summary>
     /// 获取颜色格式的父级对象

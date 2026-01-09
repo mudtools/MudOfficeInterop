@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于管理和操作多个Excel范围对象的集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelRanges : IDisposable, IOfficeObject<IExcelRanges>, IEnumerable<IExcelRange?>
+public interface IExcelRanges : IDisposable, IOfficeObject<IExcelRanges, MsExcel.Ranges>, IEnumerable<IExcelRange?>
 {
     /// <summary>
     /// 获取工作簿集合所在的父对象（通常是Application）

@@ -588,7 +588,7 @@ internal partial class ExcelChart : IExcelChart
     {
         if (sourceData is ExcelRange excelRange)
         {
-            _chart?.SetSourceData(excelRange.InternalRange, (MsExcel.XlRowCol)(int)plotBy);
+            _chart?.SetSourceData(excelRange.InternalComObject, (MsExcel.XlRowCol)(int)plotBy);
         }
         else
         {

@@ -23,9 +23,9 @@ partial class ExcelWorksheet
         try
         {
             if (cell1 is ExcelRange range1)
-                cell1 = range1.InternalRange;
+                cell1 = range1.InternalComObject;
             if (cell2 is ExcelRange range2)
-                cell2 = range2.InternalRange;
+                cell2 = range2.InternalComObject;
 
             cell1 ??= System.Type.Missing;
             cell2 ??= System.Type.Missing;

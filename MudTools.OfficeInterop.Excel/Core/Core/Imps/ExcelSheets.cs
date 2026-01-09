@@ -438,7 +438,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
 
         try
         {
-            MsExcel.Range interopRange = ((ExcelRange)sourceRange).InternalRange;
+            MsExcel.Range interopRange = ((ExcelRange)sourceRange).InternalComObject;
             _worksheets.FillAcrossSheets(interopRange,
                 fillType.EnumConvert(MsExcel.XlFillWith.xlFillWithAll));
         }

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于控制连接符的类型、起始/终止连接对象及连接点。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelConnectorFormat : IOfficeObject<IExcelConnectorFormat>, IDisposable
+public interface IExcelConnectorFormat : IOfficeObject<IExcelConnectorFormat, MsExcel.ConnectorFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape）。

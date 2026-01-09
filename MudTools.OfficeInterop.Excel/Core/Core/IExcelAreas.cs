@@ -11,7 +11,9 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Areas 集合对象的二次封装接口
 /// 提供对 Microsoft.Office.Interop.Excel.Areas 的安全访问和操作
 /// </summary>
-public interface IExcelAreas : IEnumerable<IExcelRange>, IDisposable
+
+[ComCollectionWrap(ComNamespace = "MsExcel")]
+public interface IExcelAreas : IEnumerable<IExcelRange?>, IOfficeObject<IExcelAreas, MsExcel.Areas>, IDisposable
 {
     #region 基础属性
     /// <summary>
@@ -26,7 +28,7 @@ public interface IExcelAreas : IEnumerable<IExcelRange>, IDisposable
     /// </summary>
     /// <param name="index">区域索引（从1开始）</param>
     /// <returns>区域对象</returns>
-    IExcelRange this[int index] { get; }
+    IExcelRange? this[int index] { get; }
 
     /// <summary>
     /// 获取区域集合所在的父对象（通常是 Range）
@@ -41,67 +43,4 @@ public interface IExcelAreas : IEnumerable<IExcelRange>, IDisposable
     IExcelApplication? Application { get; }
     #endregion
 
-    #region 查找和筛选
-    /// <summary>
-    /// 根据地址查找区域 (占位符，因为 Areas 通常是连续的，查找意义不大)
-    /// </summary>
-    /// <param name="address">区域地址</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的区域数组</returns>
-    IExcelRange[] FindByAddress(string address, bool matchCase = false);
-
-    /// <summary>
-    /// 根据大小查找区域 (占位符)
-    /// </summary>
-    /// <param name="rowCount">行数</param>
-    /// <param name="columnCount">列数</param>
-    /// <param name="tolerance">容差</param>
-    /// <returns>匹配的区域数组</returns>
-    IExcelRange[] FindBySize(int rowCount, int columnCount, int tolerance = 0);
-
-    /// <summary>
-    /// 获取最大的区域
-    /// </summary>
-    /// <returns>最大的区域对象</returns>
-    IExcelRange GetLargestArea();
-
-    /// <summary>
-    /// 获取最小的区域
-    /// </summary>
-    /// <returns>最小的区域对象</returns>
-    IExcelRange GetSmallestArea();
-
-    /// <summary>
-    /// 获取可见的区域 (占位符，通常由父 Range 决定)
-    /// </summary>
-    /// <returns>可见区域数组</returns>
-    IExcelRange[] GetVisibleAreas();
-
-    /// <summary>
-    /// 获取隐藏的区域 (占位符，通常由父 Range 决定)
-    /// </summary>
-    /// <returns>隐藏区域数组</returns>
-    IExcelRange[] GetHiddenAreas();
-    #endregion
-
-    #region 操作方法  
-    /// <summary>
-    /// 删除指定索引的区域 (通常通过父 Range 操作，或删除整个父 Range)
-    /// </summary>
-    /// <param name="index">要删除的区域索引</param>
-    void Delete(int index);
-
-    /// <summary>
-    /// 删除指定的区域对象 (通常通过父 Range 操作)
-    /// </summary>
-    /// <param name="area">要删除的区域对象</param>
-    void Delete(IExcelRange area);
-
-    /// <summary>
-    /// 批量删除区域 (通常通过父 Range 操作)
-    /// </summary>
-    /// <param name="indices">要删除的区域索引数组</param>
-    void DeleteRange(int[] indices);
-
-    #endregion
 }

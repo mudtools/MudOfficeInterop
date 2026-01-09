@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -18,49 +18,49 @@ public enum XlConditionValueTypes
     /// 不指定条件值
     /// </summary>
     xlConditionValueNone = -1,
-    
+
     /// <summary>
     /// 数字值
     /// 条件值为具体的数字
     /// </summary>
     xlConditionValueNumber,
-    
+
     /// <summary>
     /// 最低值
     /// 条件值为数据范围中的最低值
     /// </summary>
     xlConditionValueLowestValue,
-    
+
     /// <summary>
     /// 最高值
     /// 条件值为数据范围中的最高值
     /// </summary>
     xlConditionValueHighestValue,
-    
+
     /// <summary>
     /// 百分比
     /// 条件值为数据范围中的百分比
     /// </summary>
     xlConditionValuePercent,
-    
+
     /// <summary>
     /// 公式
     /// 条件值由公式计算得出
     /// </summary>
     xlConditionValueFormula,
-    
+
     /// <summary>
     /// 百分点
     /// 条件值为数据范围中的百分点值
     /// </summary>
     xlConditionValuePercentile,
-    
+
     /// <summary>
     /// 自动最小值
     /// 条件值为Excel自动确定的最小值
     /// </summary>
     xlConditionValueAutomaticMin,
-    
+
     /// <summary>
     /// 自动最大值
     /// 条件值为Excel自动确定的最大值

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于管理控件的列表项、当前值、范围、多选等属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelControlFormat : IOfficeObject<IExcelControlFormat>, IDisposable
+public interface IExcelControlFormat : IOfficeObject<IExcelControlFormat, MsExcel.ControlFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象。

@@ -1,5 +1,5 @@
-﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+//
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -8,9 +8,17 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示 Excel 工作表中行集合的包装器接口，提供对多行的批量操作功能。
+/// 指定当单元格引用被行向和列向范围名称替换时，哪个范围名称首先列出
 /// </summary>
-public interface IExcelRows : IExcelRange, IDisposable
+public enum XlApplyNamesOrder
 {
+    /// <summary>
+    /// 先列后行
+    /// </summary>
+    xlColumnThenRow = 2,
 
+    /// <summary>
+    /// 先行后列
+    /// </summary>
+    xlRowThenColumn = 1
 }

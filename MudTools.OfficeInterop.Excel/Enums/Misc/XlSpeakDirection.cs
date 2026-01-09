@@ -1,5 +1,5 @@
 //
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -8,8 +8,17 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// 表示Excel工作表中列集合的接口，继承自IExcelRange和IDisposable接口
+/// 指定单元格的朗读顺序
 /// </summary>
-public interface IExcelColumns : IExcelRange, IDisposable
+public enum XlSpeakDirection
 {
+    /// <summary>
+    /// 按行朗读，然后移动到下一行
+    /// </summary>
+    xlSpeakByRows,
+
+    /// <summary>
+    /// 按列朗读，然后移动到下一列
+    /// </summary>
+    xlSpeakByColumns
 }

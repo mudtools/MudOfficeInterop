@@ -806,11 +806,11 @@ internal partial class ExcelApplication : IExcelApplication
         }
     }
 
-    private IExcelRows _activeRows;
+    private IExcelRange _activeRows;
     /// <summary>
     /// 获取当前活动行集合
     /// </summary>
-    public IExcelRows ActiveRows
+    public IExcelRange ActiveRows
     {
         get
         {
@@ -845,7 +845,7 @@ internal partial class ExcelApplication : IExcelApplication
     /// <summary>
     /// 获取当前活动列集合
     /// </summary>
-    public IExcelColumns ActiveColumns
+    public IExcelRange ActiveColumns
     {
         get
         {
@@ -990,7 +990,7 @@ internal partial class ExcelApplication : IExcelApplication
             // 将自定义范围对象转换为原生 Range 对象数组
             var nativeRanges = ranges
                 .Where(r => r != null)
-                .Select(r => (r as ExcelRange)?.InternalRange)
+                .Select(r => (r as ExcelRange)?.InternalComObject)
                 .Where(r => r != null)
                 .ToArray();
 
@@ -1049,7 +1049,7 @@ internal partial class ExcelApplication : IExcelApplication
             // 将自定义范围对象转换为原生 Range 对象数组
             MsExcel.Range?[] nativeRanges = ranges
                   .Where(r => r != null)
-                  .Select(r => (r as ExcelRange)?.InternalRange)
+                  .Select(r => (r as ExcelRange)?.InternalComObject)
                   .Where(r => r != null)
                   .ToArray();
 
@@ -2347,9 +2347,9 @@ internal partial class ExcelApplication : IExcelApplication
         if (_application == null)
             return null;
         if (cell1 is ExcelRange range1)
-            cell1 = range1.Range;
+            cell1 = range1.InternalComObject;
         if (cell2 is ExcelRange range2)
-            cell2 = range2.Range;
+            cell2 = range2.InternalComObject;
         cell1 ??= Type.Missing;
         cell2 ??= Type.Missing;
         return new ExcelRange(_application.Range[cell1, cell2]);
@@ -2401,7 +2401,7 @@ internal partial class ExcelApplication : IExcelApplication
             // 如果 relativeTo 是 ExcelRange, 需要提取内部 MsExcel.Range
             if (relativeTo is ExcelRange excelRange)
             {
-                comRelativeTo = excelRange.InternalRange;
+                comRelativeTo = excelRange.InternalComObject;
             }
             // 如果 relativeTo 是 ExcelWorksheet, 需要提取内部 MsExcel.Worksheet 的 Range? 通常 relativeTo 是一个 Range
             else if (relativeTo is ExcelWorksheet excelWorksheet)
