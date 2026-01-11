@@ -357,7 +357,7 @@ namespace AdvancedFormattingSample
                 horizontalMergeRange.Value = "水平合并的单元格";
                 horizontalMergeRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 horizontalMergeRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
-                horizontalMergeRange.Merge();
+                horizontalMergeRange.Merge(null);
                 horizontalMergeRange.Interior.Color = Color.LightBlue;
 
                 // 垂直合并单元格
@@ -365,7 +365,7 @@ namespace AdvancedFormattingSample
                 verticalMergeRange.Value = "垂直合并的单元格";
                 verticalMergeRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 verticalMergeRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
-                verticalMergeRange.Merge();
+                verticalMergeRange.Merge(null);
                 verticalMergeRange.Interior.Color = Color.LightGreen;
                 verticalMergeRange.Orientation = XlOrientation.xlVertical; // 垂直文本
 
@@ -374,13 +374,13 @@ namespace AdvancedFormattingSample
                 centerMergeRange.Value = "合并后居中";
                 centerMergeRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 centerMergeRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
-                centerMergeRange.Merge();
+                centerMergeRange.Merge(null);
                 centerMergeRange.Interior.Color = Color.LightYellow;
 
                 // 取消合并示例
                 var unmergeRange = worksheet.Range("A12:E12");
                 unmergeRange.Value = "这是将要被取消合并的区域";
-                unmergeRange.Merge();
+                unmergeRange.Merge(null);
                 // 取消合并将在下面操作中完成
 
                 // 保存工作簿
@@ -422,7 +422,7 @@ namespace AdvancedFormattingSample
                 worksheet.Range("A1").Font.Color = Color.White;
                 worksheet.Range("A1").Interior.Color = Color.DarkBlue;
                 var titleRange = worksheet.Range("A1:E1");
-                titleRange.Merge();
+                titleRange.Merge(null);
                 titleRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 创建表头

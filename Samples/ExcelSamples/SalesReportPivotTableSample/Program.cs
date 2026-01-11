@@ -122,7 +122,7 @@ namespace SalesReportPivotTableSample
 
                 using var pivotCache = workbook.PivotCaches().Create(
                     XlPivotTableSourceType.xlDatabase,
-                    sourceWorksheet.Range("A1:H33").GetAddress(external: true)
+                    sourceWorksheet.Range("A1:H33").Address(external: true)
                 );
 
                 using var productPivot = productPivotSheet.PivotTables().Add(
@@ -276,7 +276,7 @@ namespace SalesReportPivotTableSample
                 // 重新创建数据透视表缓存（包含新列）
                 using var monthlyPivotCache = workbook.PivotCaches().Create(
                     XlPivotTableSourceType.xlDatabase,
-                    sourceWorksheet.Range("A1:I33").GetAddress(external: true)
+                    sourceWorksheet.Range("A1:I33").Address(external: true)
                 );
 
                 using var monthlyPivot = monthlyPivotSheet.PivotTables().Add(

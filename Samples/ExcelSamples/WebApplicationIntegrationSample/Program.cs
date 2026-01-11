@@ -222,7 +222,7 @@ namespace WebApplicationIntegrationSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.Navy;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:E1").Merge();
+                worksheet.Range("A1:E1").Merge(null);
 
                 worksheet.Range("A2").Value = "功能";
                 worksheet.Range("B2").Value = "说明";
@@ -301,7 +301,7 @@ namespace WebApplicationIntegrationSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.DarkRed;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:G1").Merge();
+                worksheet.Range("A1:G1").Merge(null);
 
                 worksheet.Range("A2").Value = "权限级别";
                 worksheet.Range("B2").Value = "可读";
@@ -408,7 +408,7 @@ namespace WebApplicationIntegrationSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.DarkGreen;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:F1").Merge();
+                worksheet.Range("A1:F1").Merge(null);
 
                 // 报表参数区域
                 worksheet.Range("A2").Value = "参数名称";
@@ -539,7 +539,7 @@ namespace WebApplicationIntegrationSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.Purple;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:G1").Merge();
+                worksheet.Range("A1:G1").Merge(null);
 
                 worksheet.Range("A2").Value = "API端点";
                 worksheet.Range("B2").Value = "/api/export/excel";

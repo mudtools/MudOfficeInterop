@@ -460,7 +460,7 @@ namespace CellFormattingSample
                 titleRange.Interior.Color = Color.DarkBlue;
                 titleRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 titleRange.VerticalAlignment = XlVAlign.xlVAlignCenter;
-                titleRange.Merge(); // 合并单元格
+                titleRange.Merge(null); // 合并单元格
 
                 // 创建表头
                 var headerRange = worksheet.Range("A2:E2");
