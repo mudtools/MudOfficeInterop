@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.Excel.Imps;
+
 partial class ExcelApplication
 {
     private MsExcel.AppEvents_Event _appEvents_Event;
@@ -79,6 +80,172 @@ partial class ExcelApplication
 
     #endregion
 
+    /// <summary>
+    /// 初始化 ExcelApplication 实例（创建新的Excel应用程序）
+    /// </summary>
+    public ExcelApplication()
+    {
+        var app = new MsExcel.Application();
+        _application = app;
+        _appEvents_Event = app;
+        _disposedValue = false;
+        InitializeEvents();
+    }
+    /// <summary>
+    /// 初始化 ExcelApplication 实例
+    /// </summary>
+    /// <param name="application">底层的 COM Application 对象</param>
+    internal ExcelApplication(MsExcel.Application application)
+    {
+        _application = application ?? throw new ArgumentNullException(nameof(application));
+        _appEvents_Event = application;
+        InitializeEvents();
+    }
+
+    internal ExcelApplication(MsExcel._Application application)
+    {
+        _application = application ?? throw new ArgumentNullException(nameof(application));
+    }
+
+    public IExcelWorkbook BlankWorkbook()
+    {
+        if (_application == null)
+            throw new ObjectDisposedException(nameof(_application));
+
+        try
+        {
+            var book = new ExcelWorkbook(
+                _application.Workbooks.Add());
+            return book;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to create blank workbook.", ex);
+        }
+    }
+
+    public IExcelWorkbook CreateFrom(string templatePath)
+    {
+        if (_application == null)
+            throw new ObjectDisposedException(nameof(_application));
+
+        if (!File.Exists(templatePath))
+            throw new FileNotFoundException("Template file not found.", templatePath);
+
+        try
+        {
+            var workBook = _application.Workbooks.Add(System.IO.Path.GetFullPath(templatePath));
+            var book = new ExcelWorkbook(workBook);
+            return book;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to create workbook from template.", ex);
+        }
+    }
+
+    public IExcelWorkbook Open(string filePath)
+    {
+        if (_application == null)
+            throw new ObjectDisposedException(nameof(_application));
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException("Excel file not found.", filePath);
+
+        try
+        {
+            var workBook = _application.Workbooks.Open(System.IO.Path.GetFullPath(filePath));
+            var book = new ExcelWorkbook(workBook);
+
+            return book;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to open workbook.", ex);
+        }
+    }
+
+    /// <summary>
+    /// 打开工作簿
+    /// </summary>
+    /// <param name="filename">文件路径</param>
+    /// <param name="updateLinks">是否更新链接</param>
+    /// <param name="readOnly">是否只读</param>
+    /// <param name="format">文件格式</param>
+    /// <param name="password">打开密码</param>
+    /// <param name="writeResPassword">写入密码</param>
+    /// <param name="ignoreReadOnlyRecommended">是否忽略只读建议</param>
+    /// <param name="origin">文本来源</param>
+    /// <param name="delimiter">文本分隔符</param>
+    /// <param name="editable">是否可编辑</param>
+    /// <param name="notify">是否通知</param>
+    /// <param name="converter">格式转换器</param>
+    /// <param name="addToMru">是否添加到最近使用文件</param>
+    /// <returns>打开的工作簿对象</returns>
+    public IExcelWorkbook? OpenWorkbook(string filename, int updateLinks = 0, bool readOnly = false,
+                                     int format = 1, string password = "", string writeResPassword = "",
+                                     bool ignoreReadOnlyRecommended = false, int origin = 0,
+                                     string delimiter = ",", bool editable = true, bool notify = false,
+                                     int converter = 0, bool addToMru = true)
+    {
+        if (_application == null)
+            throw new ObjectDisposedException(nameof(_application));
+        if (_application?.Workbooks == null || string.IsNullOrEmpty(filename))
+            return null;
+
+        try
+        {
+            var workbook = _application.Workbooks.Open(
+                filename, updateLinks, readOnly, format, password, writeResPassword,
+                ignoreReadOnlyRecommended, origin, delimiter, editable, notify,
+                converter, addToMru, Type.Missing, Type.Missing);
+
+            return workbook != null ? new ExcelWorkbook(workbook) : null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 创建文件对话框
+    /// </summary>
+    /// <param name="fileDialogType">文件对话框类型</param>
+    /// <returns>文件对话框对象</returns>
+    public IOfficeFileDialog? CreateFileDialog(MsoFileDialogType fileDialogType)
+    {
+        var dialog = _application?.FileDialog[(MsCore.MsoFileDialogType)(int)fileDialogType];
+        return dialog != null ? new MudTools.OfficeInterop.Imps.OfficeFileDialog(dialog) : null;
+    }
+
+    public void Activate()
+    {
+        try
+        {
+            _application?.Visible = true;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to activate Word application.", ex);
+        }
+    }
+
+
+    public int WindowStateValue
+    {
+        get
+        {
+            if (_application == null)
+                throw new ObjectDisposedException(nameof(_application));
+            return _application.WindowState.ConvertToInt();
+        }
+        set
+        {
+            if (_application == null)
+                throw new ObjectDisposedException(nameof(_application));
+            _application.WindowState = value.EnumConvert<MsExcel.XlWindowState>();
+        }
+    }
 
     /// <summary>
     /// 初始化Excel事件处理
@@ -124,6 +291,7 @@ partial class ExcelApplication
         _appEvents_Event.SheetBeforeRightClick -= OnSheetBeforeRightClick;
         _appEvents_Event.SheetCalculate -= OnSheetCalculate;
     }
+
 
     #region 事件实现
 
@@ -487,4 +655,121 @@ partial class ExcelApplication
     }
 
     #endregion
+
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposedValue) return;
+
+        if (disposing)
+        {
+            if (_application != null)
+            {
+                DisConnectEvent();
+                // 释放 COM 对象
+                try { while (0 < Marshal.ReleaseComObject(_application)) { } } catch { }
+                _application = null;
+            }
+            _disposableList.Dispose();
+            _excelRange_ActiveCell?.Dispose();
+            _excelRange_ActiveCell = null;
+            _excelChart_ActiveChart?.Dispose();
+            _excelChart_ActiveChart = null;
+            _excelWindow_ActiveWindow?.Dispose();
+            _excelWindow_ActiveWindow = null;
+            _excelWorkbook_ActiveWorkbook?.Dispose();
+            _excelWorkbook_ActiveWorkbook = null;
+            _excelAddIns_AddIns?.Dispose();
+            _excelAddIns_AddIns = null;
+            _excelRange_Cells?.Dispose();
+            _excelRange_Cells = null;
+            _excelSheets_Charts?.Dispose();
+            _excelSheets_Charts = null;
+            _excelRange_Columns?.Dispose();
+            _excelRange_Columns = null;
+            _excelNames_Names?.Dispose();
+            _excelNames_Names = null;
+            _excelRange_Rows?.Dispose();
+            _excelRange_Rows = null;
+            _excelSheets_Sheets?.Dispose();
+            _excelSheets_Sheets = null;
+            _excelWorkbook_ThisWorkbook?.Dispose();
+            _excelWorkbook_ThisWorkbook = null;
+            _excelWindows_Windows?.Dispose();
+            _excelWindows_Windows = null;
+            _excelWorkbooks_Workbooks?.Dispose();
+            _excelWorkbooks_Workbooks = null;
+            _excelWorksheetFunction_WorksheetFunction?.Dispose();
+            _excelWorksheetFunction_WorksheetFunction = null;
+            _excelSheets_Worksheets?.Dispose();
+            _excelSheets_Worksheets = null;
+            _excelSheets_Excel4IntlMacroSheets?.Dispose();
+            _excelSheets_Excel4IntlMacroSheets = null;
+            _excelSheets_Excel4MacroSheets?.Dispose();
+            _excelSheets_Excel4MacroSheets = null;
+            _excelAutoCorrect_AutoCorrect?.Dispose();
+            _excelAutoCorrect_AutoCorrect = null;
+            _excelDialogs_Dialogs?.Dispose();
+            _excelDialogs_Dialogs = null;
+            _officeFileSearch_FileSearch?.Dispose();
+            _officeFileSearch_FileSearch = null;
+            _excelRecentFiles_RecentFiles?.Dispose();
+            _excelRecentFiles_RecentFiles = null;
+            _excelODBCErrors_ODBCErrors?.Dispose();
+            _excelODBCErrors_ODBCErrors = null;
+            _vbeApplication_VBE?.Dispose();
+            _vbeApplication_VBE = null;
+            _excelOLEDBErrors_OLEDBErrors?.Dispose();
+            _excelOLEDBErrors_OLEDBErrors = null;
+            _officeCOMAddIns_COMAddIns?.Dispose();
+            _officeCOMAddIns_COMAddIns = null;
+            _excelCellFormat_FindFormat?.Dispose();
+            _excelCellFormat_FindFormat = null;
+            _excelCellFormat_ReplaceFormat?.Dispose();
+            _excelCellFormat_ReplaceFormat = null;
+            _excelWatches_Watches?.Dispose();
+            _excelWatches_Watches = null;
+            _excelAutoRecover_AutoRecover?.Dispose();
+            _excelAutoRecover_AutoRecover = null;
+            _excelErrorCheckingOptions_ErrorCheckingOptions?.Dispose();
+            _excelErrorCheckingOptions_ErrorCheckingOptions = null;
+            _excelSmartTagRecognizers_SmartTagRecognizers?.Dispose();
+            _excelSmartTagRecognizers_SmartTagRecognizers = null;
+            _officeNewFile_NewWorkbook?.Dispose();
+            _officeNewFile_NewWorkbook = null;
+            _excelSpellingOptions_SpellingOptions?.Dispose();
+            _excelSpellingOptions_SpellingOptions = null;
+            _excelSpeech_Speech?.Dispose();
+            _excelSpeech_Speech = null;
+            _excelRange_ThisCell?.Dispose();
+            _excelRange_ThisCell = null;
+            _officeAssistance_Assistance?.Dispose();
+            _officeAssistance_Assistance = null;
+            _excelMultiThreadedCalculation_MultiThreadedCalculation?.Dispose();
+            _excelMultiThreadedCalculation_MultiThreadedCalculation = null;
+            _excelFileExportConverters_FileExportConverters?.Dispose();
+            _excelFileExportConverters_FileExportConverters = null;
+            _officeSmartArtLayouts_SmartArtLayouts?.Dispose();
+            _officeSmartArtLayouts_SmartArtLayouts = null;
+            _officeSmartArtQuickStyles_SmartArtQuickStyles?.Dispose();
+            _officeSmartArtQuickStyles_SmartArtQuickStyles = null;
+            _officeSmartArtColors_SmartArtColors?.Dispose();
+            _officeSmartArtColors_SmartArtColors = null;
+            _excelAddIns2_AddIns2?.Dispose();
+            _excelAddIns2_AddIns2 = null;
+            _excelProtectedViewWindows_ProtectedViewWindows?.Dispose();
+            _excelProtectedViewWindows_ProtectedViewWindows = null;
+            _excelProtectedViewWindow_ActiveProtectedViewWindow?.Dispose();
+            _excelProtectedViewWindow_ActiveProtectedViewWindow = null;
+            _excelQuickAnalysis_QuickAnalysis?.Dispose();
+            _excelQuickAnalysis_QuickAnalysis = null;
+            _officeLanguageSettings_LanguageSettings?.Dispose();
+            _officeLanguageSettings_LanguageSettings = null;
+            _officeCommandBars_CommandBars?.Dispose();
+            _officeCommandBars_CommandBars = null;
+            GC.Collect();
+        }
+
+        _disposedValue = true;
+    }
 }

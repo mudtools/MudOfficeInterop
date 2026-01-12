@@ -8,31 +8,44 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// Excel筛选器接口，表示Excel工作表中的一组筛选条件，支持资源释放和遍历操作
+/// 表示最近 OLE DB 查询返回的 OLE DB 错误。
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelFilters : IOfficeObject<IExcelFilters, MsExcel.Filters>, IDisposable, IEnumerable<IExcelFilter?>
+[ComObjectWrap(ComNamespace = "MsExcel")]
+public interface IExcelOLEDBError : IOfficeObject<IExcelOLEDBError, MsExcel.OLEDBError>, IDisposable
 {
     /// <summary>
-    /// 获取当前COM对象的父对象。
+    /// 获取对象的父对象 
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取当前COM对象的Application对象
+    /// 获取对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取自动筛选器集合中的筛选器数量
+    /// 获取 SQL 状态错误代码。
     /// </summary>
-    int? Count { get; }
+    string SqlState { get; }
 
     /// <summary>
-    /// 根据索引获取自动筛选器（索引从1开始）
+    /// 获取 OLE DB 错误字符串。
     /// </summary>
-    /// <param name="index">筛选器索引</param>
-    /// <returns>自动筛选器对象</returns>
-    IExcelFilter? this[int index] { get; }
+    string ErrorString { get; }
+
+    /// <summary>
+    /// 获取提供程序特定的数字值，该值指定错误。错误号对应于最近 OLE DB 查询后产生的错误情况。
+    /// </summary>
+    int Native { get; }
+
+    /// <summary>
+    /// 获取指定错误的数字值。错误号对应于最近 OLE DB 查询后产生的错误情况的唯一陷阱号。
+    /// </summary>
+    int Number { get; }
+
+    /// <summary>
+    /// 获取指定最近 OLE DB 查询后产生的错误阶段的数字值。
+    /// </summary>
+    int Stage { get; }
 }

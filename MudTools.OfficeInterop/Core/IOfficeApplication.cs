@@ -37,6 +37,7 @@ public interface IOfficeApplication : IDisposable
     /// <summary>
     /// 获取应用程序的构建版本信息
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     string? Build { get; }
     #endregion
 
@@ -51,21 +52,25 @@ public interface IOfficeApplication : IDisposable
     /// <summary>
     /// 获取或设置应用程序窗口的左边距
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     int Left { get; set; }
 
     /// <summary>
     /// 获取或设置应用程序窗口的顶边距
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     int Top { get; set; }
 
     /// <summary>
     /// 获取或设置应用程序窗口的宽度
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     int Width { get; set; }
 
     /// <summary>
     /// 获取或设置应用程序窗口的高度
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     int Height { get; set; }
 
     #endregion
@@ -89,6 +94,7 @@ public interface IOfficeApplication : IDisposable
     /// <summary>
     /// 使应用程序窗口获得焦点
     /// </summary>
+    [IgnoreGenerator]
     void Activate();
 
     /// <summary>
@@ -106,7 +112,7 @@ public interface IOfficeApplication : IDisposable
     /// <param name="macroName">宏名称</param>
     /// <param name="args">宏参数</param>
     /// <returns>宏的返回值</returns>
-    object Run(string macroName, params object[] args);
+    object? Run(string macroName, params object[] args);
 
     #endregion
 
@@ -118,7 +124,7 @@ public interface IOfficeApplication : IDisposable
     /// <param name="fileDialogType">对话框类型</param>
     /// <returns>文件对话框对象</returns>
     [IgnoreGenerator]
-    IOfficeFileDialog CreateFileDialog(MsoFileDialogType fileDialogType);
+    IOfficeFileDialog? CreateFileDialog(MsoFileDialogType fileDialogType);
 
     #endregion
 }

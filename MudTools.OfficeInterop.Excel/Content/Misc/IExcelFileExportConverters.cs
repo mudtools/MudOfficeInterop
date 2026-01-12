@@ -8,10 +8,10 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// Excel筛选器接口，表示Excel工作表中的一组筛选条件，支持资源释放和遍历操作
+/// 文件导出转换器集合
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelFilters : IOfficeObject<IExcelFilters, MsExcel.Filters>, IDisposable, IEnumerable<IExcelFilter?>
+public interface IExcelFileExportConverters : IEnumerable<IExcelFileExportConverter?>, IOfficeObject<IExcelFileExportConverters, MsExcel.FileExportConverters>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。
@@ -25,14 +25,21 @@ public interface IExcelFilters : IOfficeObject<IExcelFilters, MsExcel.Filters>, 
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取自动筛选器集合中的筛选器数量
+    /// 获取文件导出转换器集合中的筛选器数量
     /// </summary>
     int? Count { get; }
 
     /// <summary>
-    /// 根据索引获取自动筛选器（索引从1开始）
+    /// 根据索引获取文件导出转换器（索引从1开始）
     /// </summary>
-    /// <param name="index">筛选器索引</param>
-    /// <returns>自动筛选器对象</returns>
-    IExcelFilter? this[int index] { get; }
+    /// <param name="index">索引从1开始</param>
+    /// <returns>文件导出转换器对象</returns>
+    IExcelFileExportConverter? this[int index] { get; }
+
+    /// <summary>
+    /// 根据索引获取文件导出转换器（索引从1开始）
+    /// </summary>
+    /// <param name="name">索引从1开始</param>
+    /// <returns>文件导出转换器对象</returns>
+    IExcelFileExportConverter? this[string name] { get; }
 }

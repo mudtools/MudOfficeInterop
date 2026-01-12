@@ -8,31 +8,37 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// Excel筛选器接口，表示Excel工作表中的一组筛选条件，支持资源释放和遍历操作
+/// 指定快速分析工具的显示模式。
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelFilters : IOfficeObject<IExcelFilters, MsExcel.Filters>, IDisposable, IEnumerable<IExcelFilter?>
+public enum XlQuickAnalysisMode
 {
     /// <summary>
-    /// 获取当前COM对象的父对象。
+    /// 仅显示分析镜头（鼠标悬停提示）。
     /// </summary>
-    object? Parent { get; }
+    xlLensOnly,
 
     /// <summary>
-    /// 获取当前COM对象的Application对象
+    /// 显示条件格式选项。
     /// </summary>
-    [ComPropertyWrap(NeedDispose = false)]
-    IExcelApplication? Application { get; }
+    xlFormatConditions,
 
     /// <summary>
-    /// 获取自动筛选器集合中的筛选器数量
+    /// 显示推荐的图表选项。
     /// </summary>
-    int? Count { get; }
+    xlRecommendedCharts,
 
     /// <summary>
-    /// 根据索引获取自动筛选器（索引从1开始）
+    /// 显示汇总选项。
     /// </summary>
-    /// <param name="index">筛选器索引</param>
-    /// <returns>自动筛选器对象</returns>
-    IExcelFilter? this[int index] { get; }
+    xlTotals,
+
+    /// <summary>
+    /// 显示表格选项。
+    /// </summary>
+    xlTables,
+
+    /// <summary>
+    /// 显示迷你图选项。
+    /// </summary>
+    xlSparklines
 }

@@ -8,31 +8,34 @@
 namespace MudTools.OfficeInterop.Excel;
 
 /// <summary>
-/// Excel筛选器接口，表示Excel工作表中的一组筛选条件，支持资源释放和遍历操作
+/// 表示工作簿的自动恢复功能。
 /// </summary>
-[ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelFilters : IOfficeObject<IExcelFilters, MsExcel.Filters>, IDisposable, IEnumerable<IExcelFilter?>
+[ComObjectWrap(ComNamespace = "MsExcel")]
+public interface IExcelAutoRecover : IOfficeObject<IExcelAutoRecover, MsExcel.AutoRecover>, IDisposable
 {
     /// <summary>
-    /// 获取当前COM对象的父对象。
+    /// 获取对象的父对象 
     /// </summary>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取当前COM对象的Application对象
+    /// 获取对象所在的Application对象
     /// </summary>
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
     /// <summary>
-    /// 获取自动筛选器集合中的筛选器数量
+    /// 获取或设置一个值，指示是否启用该对象。
     /// </summary>
-    int? Count { get; }
+    bool Enabled { get; set; }
 
     /// <summary>
-    /// 根据索引获取自动筛选器（索引从1开始）
+    /// 获取或设置 AutoRecover 对象的时间间隔（以分钟为单位）。
     /// </summary>
-    /// <param name="index">筛选器索引</param>
-    /// <returns>自动筛选器对象</returns>
-    IExcelFilter? this[int index] { get; }
+    int Time { get; set; }
+
+    /// <summary>
+    /// 获取或设置 Microsoft Excel 存储 AutoRecover 临时文件的完整路径。
+    /// </summary>
+    string Path { get; set; }
 }

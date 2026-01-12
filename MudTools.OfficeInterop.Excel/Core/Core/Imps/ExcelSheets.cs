@@ -112,14 +112,14 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         object? beforeObj = before switch
         {
             ExcelWorksheet ws => ws.InternalComObject,
-            ExcelChart chart => chart._chart,
+            ExcelChart chart => chart.InternalComObject,
             _ => Type.Missing
         };
 
         object? afterObj = after switch
         {
             ExcelWorksheet ws => ws.InternalComObject,
-            ExcelChart chart => chart._chart,
+            ExcelChart chart => chart.InternalComObject,
             _ => Type.Missing
         };
         try
@@ -155,14 +155,14 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         object? beforeObj = before switch
         {
             ExcelWorksheet ws => ws.InternalComObject,
-            ExcelChart chart => chart._chart,
+            ExcelChart chart => chart.InternalComObject,
             _ => Type.Missing
         };
 
         object? afterObj = after switch
         {
             ExcelWorksheet ws => ws.InternalComObject,
-            ExcelChart chart => chart._chart,
+            ExcelChart chart => chart.InternalComObject,
             _ => Type.Missing
         };
         try
@@ -199,14 +199,14 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         object? beforeObj = before switch
         {
             ExcelWorksheet ws => ws.InternalComObject,
-            ExcelChart chart => chart._chart,
+            ExcelChart chart => chart.InternalComObject,
             _ => Type.Missing
         };
 
         object? afterObj = after switch
         {
             ExcelWorksheet ws => ws.InternalComObject,
-            ExcelChart chart => chart._chart,
+            ExcelChart chart => chart.InternalComObject,
             _ => Type.Missing
         };
         try
@@ -313,14 +313,14 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             object? beforeObj = beforeSheet switch
             {
                 ExcelWorksheet ws => ws.InternalComObject,
-                ExcelChart chart => chart._chart,
+                ExcelChart chart => chart.InternalComObject,
                 _ => Type.Missing
             };
 
             object? afterObj = afterSheet switch
             {
                 ExcelWorksheet ws => ws.InternalComObject,
-                ExcelChart chart => chart._chart,
+                ExcelChart chart => chart.InternalComObject,
                 _ => Type.Missing
             };
             _worksheets.Copy(beforeObj, afterObj);
@@ -375,14 +375,14 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             object? beforeObj = beforeSheet switch
             {
                 ExcelWorksheet ws => ws.InternalComObject,
-                ExcelChart chart => chart._chart,
+                ExcelChart chart => chart.InternalComObject,
                 _ => Type.Missing
             };
 
             object? afterObj = afterSheet switch
             {
                 ExcelWorksheet ws => ws.InternalComObject,
-                ExcelChart chart => chart._chart,
+                ExcelChart chart => chart.InternalComObject,
                 _ => Type.Missing
             };
 
@@ -524,7 +524,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             if (sheet is ExcelWorksheet ws)
                 ws.InternalComObject.Delete();
             else if (sheet is ExcelChart chart)
-                chart._chart.Delete();
+                chart.InternalComObject.Delete();
         }
         catch (COMException comEx)
         {

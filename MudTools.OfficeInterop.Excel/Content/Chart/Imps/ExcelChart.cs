@@ -19,7 +19,9 @@ internal partial class ExcelChart : IExcelChart
     /// <summary>
     /// 内部持有的 Microsoft.Office.Interop.Excel.Chart 对象引用
     /// </summary>
-    internal MsExcel.Chart? _chart;
+    private MsExcel.Chart? _chart;
+
+    internal MsExcel.Chart? InternalComObject => _chart;
 
     /// <summary>
     /// 标记对象是否已被释放，用于防止重复释放

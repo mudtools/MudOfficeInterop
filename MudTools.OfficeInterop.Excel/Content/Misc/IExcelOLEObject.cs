@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// OLEObject 对象是 OLEObjects 集合的成员。OLEObjects 集合包含单个工作表上的所有 OLE 对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelOLEObject : IOfficeObject<IExcelOLEObject>, IDisposable
+public interface IExcelOLEObject : IOfficeObject<IExcelOLEObject, MsExcel.OLEObject>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

@@ -63,6 +63,24 @@ internal partial class WordApplication
         }
     }
 
+    public void Activate()
+    {
+        if (_application == null)
+            throw new ObjectDisposedException(nameof(_application));
+        try
+        {
+            _application?.Activate();
+        }
+        catch (COMException cx)
+        {
+            throw new ExcelOperationException("执行Activate操作失败: " + cx.Message, cx);
+        }
+        catch (Exception ex)
+        {
+            throw new ExcelOperationException("执行Activate操作失败", ex);
+        }
+    }
+
     public IWordDocument CreateFrom(string templatePath)
     {
         if (!File.Exists(templatePath))
