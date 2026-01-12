@@ -323,7 +323,7 @@ namespace CellRangeOperationsSample
                 usedRange.Borders.LineStyle = XlLineStyle.xlContinuous;
 
                 // 查找操作
-                var foundCell = dataRange.Find("6月");
+                var foundCell = dataRange.Find("6月", null);
                 if (foundCell != null)
                 {
                     foundCell.Interior.Color = Color.Yellow;

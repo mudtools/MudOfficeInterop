@@ -99,8 +99,8 @@ public interface IExcelRange : IEnumerable<IExcelRange?>, IOfficeObject<IExcelRa
     /// <param name="copyToRange">可选。如果操作是 xlFilterCopy，则为复制行的目标区域；否则忽略此参数。</param>
     /// <param name="unique">可选。True 表示仅筛选唯一记录；False 表示筛选所有符合条件的记录。默认为 False。</param>
     /// <returns>表示操作结果的对象。</returns>
-    object? AdvancedFilter(XlFilterAction action, IExcelRange? criteriaRange,
-                           IExcelRange? copyToRange, bool? unique);
+    object? AdvancedFilter(XlFilterAction action, IExcelRange? criteriaRange = null,
+                           IExcelRange? copyToRange = null, bool? unique = null);
 
     /// <summary>
     /// 将名称应用到指定区域中的单元格。
@@ -448,7 +448,7 @@ public interface IExcelRange : IEnumerable<IExcelRange?>, IOfficeObject<IExcelRa
     /// <param name="matchByte">可选。仅当选择或安装了双字节语言支持时使用。True 表示双字节字符仅匹配双字节字符；False 表示双字节字符匹配其单字节等效项。</param>
     /// <param name="searchFormat">可选。搜索格式。</param>
     /// <returns>表示找到的第一个匹配单元格的 Range 对象。</returns>
-    IExcelRange? Find(object what, IExcelRange? after, XlFindLookIn? lookIn = null,
+    IExcelRange? Find(object what, IExcelRange? after = null, XlFindLookIn? lookIn = null,
         XlLookAt? lookAt = null, XlSearchOrder? searchOrder = null,
         XlSearchDirection searchDirection = XlSearchDirection.xlNext,
         bool? matchCase = null, bool? matchByte = null,
@@ -626,7 +626,7 @@ public interface IExcelRange : IEnumerable<IExcelRange?>, IOfficeObject<IExcelRa
     /// 从指定的 Range 对象创建合并单元格。
     /// </summary>
     /// <param name="across">可选。True 表示将指定区域中每一行的单元格合并为单独的合并单元格。默认值为 False。</param>
-    void Merge(bool? across);
+    void Merge(bool? across = null);
 
     /// <summary>
     /// 将合并区域拆分为单独的单元格。

@@ -318,7 +318,7 @@ namespace DocumentAutomationProcessingSample
                     shape.Fill.ForeColor.RGB = Color.Gray;
                     shape.Line.Visible = false;
                     shape.Rotation = 315; // 斜角
-                    shape.WrapFormat.AllowOverlap = true;
+                    shape.WrapFormat.AllowOverlap = 1;
                     shape.WrapFormat.Type = WdWrapType.wdWrapNone;
                     shape.RelativeHorizontalPosition = WdRelativeHorizontalPosition.wdRelativeHorizontalPositionMargin;
                     shape.RelativeVerticalPosition = WdRelativeVerticalPosition.wdRelativeVerticalPositionMargin;

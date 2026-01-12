@@ -74,7 +74,7 @@ namespace EnterpriseReportingSystemSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.Navy;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:F1").Merge();
+                worksheet.Range("A1:F1").Merge(null);
 
                 // 报表信息行
                 worksheet.Range("A2").Value = "报表期间:";
@@ -175,7 +175,7 @@ namespace EnterpriseReportingSystemSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.DarkGreen;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:G1").Merge();
+                worksheet.Range("A1:G1").Merge(null);
 
                 // 报表信息
                 worksheet.Range("A2").Value = "报表期间:";
@@ -287,7 +287,7 @@ namespace EnterpriseReportingSystemSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Font.Color = Color.White;
                 worksheet.Range("A1").Interior.Color = Color.DarkBlue;
-                worksheet.Range("A1:J1").Merge();
+                worksheet.Range("A1:J1").Merge(null);
                 worksheet.Range("A1:J1").HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 报表信息
@@ -303,20 +303,20 @@ namespace EnterpriseReportingSystemSample
                 worksheet.Range("A4").Font.Bold = true;
                 worksheet.Range("A4").Interior.Color = Color.LightGray;
                 worksheet.Range("A4").HorizontalAlignment = XlHAlign.xlHAlignCenter;
-                worksheet.Range("A4:A5").Merge();
+                worksheet.Range("A4:A5").Merge(null);
 
                 worksheet.Range("B4").Value = "第一季度";
-                worksheet.Range("B4:D4").Merge();
+                worksheet.Range("B4:D4").Merge(null);
                 worksheet.Range("B4").Interior.Color = Color.LightBlue;
                 worksheet.Range("B4").HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 worksheet.Range("E4").Value = "第二季度";
-                worksheet.Range("E4:G4").Merge();
+                worksheet.Range("E4:G4").Merge(null);
                 worksheet.Range("E4").Interior.Color = Color.LightGreen;
                 worksheet.Range("E4").HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 worksheet.Range("H4").Value = "第三季度";
-                worksheet.Range("H4:J4").Merge();
+                worksheet.Range("H4:J4").Merge(null);
                 worksheet.Range("H4").Interior.Color = Color.LightYellow;
                 worksheet.Range("H4").HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
@@ -435,7 +435,7 @@ namespace EnterpriseReportingSystemSample
                     worksheet.Range("A1").Font.Bold = true;
                     worksheet.Range("A1").Interior.Color = Color.DarkRed;
                     worksheet.Range("A1").Font.Color = Color.White;
-                    worksheet.Range("A1:G1").Merge();
+                    worksheet.Range("A1:G1").Merge(null);
                     worksheet.Range("A1:G1").HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                     // 报表信息
@@ -547,7 +547,7 @@ namespace EnterpriseReportingSystemSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.Purple;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:H1").Merge();
+                worksheet.Range("A1:H1").Merge(null);
                 worksheet.Range("A1:H1").HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 报表信息
@@ -675,7 +675,7 @@ namespace EnterpriseReportingSystemSample
                 worksheet.Range("A1").Font.Bold = true;
                 worksheet.Range("A1").Interior.Color = Color.Orange;
                 worksheet.Range("A1").Font.Color = Color.White;
-                worksheet.Range("A1:G1").Merge();
+                worksheet.Range("A1:G1").Merge(null);
                 worksheet.Range("A1:G1").HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 // 报表信息

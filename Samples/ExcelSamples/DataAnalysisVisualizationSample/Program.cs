@@ -777,7 +777,7 @@ namespace DataAnalysisVisualizationSample
                 summaryWorksheet.Range("A1").Interior.Color = Color.DarkBlue;
                 summaryWorksheet.Range("A1").Font.Color = Color.White;
                 var titleRange = summaryWorksheet.Range("A1:E1");
-                titleRange.Merge();
+                titleRange.Merge(null);
                 titleRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
 
                 summaryWorksheet.Range("A3").Value = "总体统计";
