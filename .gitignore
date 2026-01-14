@@ -3,6 +3,8 @@
 ################################################################################
 
 /.vs
+/docs
+/bindebug_net10.0
 /MudTools.OfficeInterop/bin/Debug
 /MudTools.OfficeInterop/obj
 /MudTools.OfficeInterop.Excel/bin/Debug
@@ -32,7 +34,8 @@
 /Samples/WordSamples/TaskPanesAndDialogsSample/obj
 /Samples/WordSamples/TextFormattingSample/obj
 /Samples/WordSamples/WordFactorySample/obj
-/Samples/bin/Debug
+/Samples/bin
+/Samples/bindebug
 /Samples/ExcelSamples/AdvancedChartFeaturesSample/obj
 /Samples/ExcelSamples/AdvancedDataOperationsSample/obj
 /Samples/ExcelSamples/AdvancedFormattingSample/obj
@@ -51,7 +54,7 @@
 /Samples/ExcelSamples/PivotTableApplicationSample/obj
 /Samples/ExcelSamples/WebApplicationIntegrationSample/obj
 /Samples/ExcelSamples/WorkbookWorksheetOperationsSample/obj
-/bin/Debug
+/bin
 /Samples/ExcelSamples/BestPracticesSummarySample/obj/Debug/net6.0-windows
 /Samples/ExcelSamples/BestPracticesSummarySample/obj
 /Samples/ExcelSamples/ExcelAutomationIntroductionSample/obj
