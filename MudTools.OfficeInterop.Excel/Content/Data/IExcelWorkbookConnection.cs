@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel工作簿连接的接口，提供对工作簿中各种数据连接的访问和操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelWorkbookConnection : IOfficeObject<IExcelWorkbookConnection>, IDisposable
+public interface IExcelWorkbookConnection : IOfficeObject<IExcelWorkbookConnection, MsExcel.WorkbookConnection>, IDisposable
 {
 
     /// <summary>

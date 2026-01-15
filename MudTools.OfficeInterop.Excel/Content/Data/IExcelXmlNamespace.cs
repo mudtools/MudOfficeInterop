@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口继承自 IDisposable，确保正确释放 COM 对象资源。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelXmlNamespace : IOfficeObject<IExcelXmlNamespace>, IDisposable
+public interface IExcelXmlNamespace : IOfficeObject<IExcelXmlNamespace, MsExcel.XmlNamespace>, IDisposable
 {
     /// <summary>
     /// 获取所属的父对象。

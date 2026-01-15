@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 表格（ListObject）中所有数据行的集合，支持遍历和索引访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelListRows : IOfficeObject<IExcelListRows>, IEnumerable<IExcelListRow>, IDisposable
+public interface IExcelListRows : IOfficeObject<IExcelListRows, MsExcel.ListRows>, IEnumerable<IExcelListRow>, IDisposable
 {
 
 

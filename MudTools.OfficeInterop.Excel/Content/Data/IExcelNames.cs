@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Names 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelNames : IOfficeObject<IExcelNames>, IEnumerable<IExcelName>, IDisposable
+public interface IExcelNames : IOfficeObject<IExcelNames, MsExcel.Names>, IEnumerable<IExcelName>, IDisposable
 {
     #region 基础属性
 

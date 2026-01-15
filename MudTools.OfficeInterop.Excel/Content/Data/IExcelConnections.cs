@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 继承自IDisposable和IEnumerable[IExcelWorkbookConnection]接口，提供对Excel工作簿连接的管理功能
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelConnections : IOfficeObject<IExcelConnections>, IDisposable, IEnumerable<IExcelWorkbookConnection>
+public interface IExcelConnections : IOfficeObject<IExcelConnections, MsExcel.Connections>, IDisposable, IEnumerable<IExcelWorkbookConnection>
 {
 
     /// <summary>

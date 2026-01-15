@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 继承自IDisposable接口，支持资源释放
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTextConnection : IOfficeObject<IExcelTextConnection>, IDisposable
+public interface IExcelTextConnection : IOfficeObject<IExcelTextConnection, MsExcel.TextConnection>, IDisposable
 {
     /// <summary>
     /// 获取条件值对象所在的Application对象

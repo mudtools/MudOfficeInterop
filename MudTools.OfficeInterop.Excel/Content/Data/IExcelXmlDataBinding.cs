@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中的XML数据绑定接口，提供对XML数据源的操作功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelXmlDataBinding : IOfficeObject<IExcelXmlDataBinding>, IDisposable
+public interface IExcelXmlDataBinding : IOfficeObject<IExcelXmlDataBinding, MsExcel.XmlDataBinding>, IDisposable
 {
     /// <summary>
     /// 获取所属的父对象。

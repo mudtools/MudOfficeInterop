@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口封装了对Excel OLEDB连接对象的操作，提供了连接管理、数据刷新等功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelOLEDBConnection : IOfficeObject<IExcelOLEDBConnection>, IDisposable
+public interface IExcelOLEDBConnection : IOfficeObject<IExcelOLEDBConnection, MsExcel.OLEDBConnection>, IDisposable
 {
 
     /// <summary>

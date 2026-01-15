@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示在参数查询中使用的单个参数。Parameter对象是Parameters集合的成员。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelParameter : IOfficeObject<IExcelParameter>, IDisposable
+public interface IExcelParameter : IOfficeObject<IExcelParameter, MsExcel.Parameter>, IDisposable
 {
     /// <summary>
     /// 获取指定对象的父对象。

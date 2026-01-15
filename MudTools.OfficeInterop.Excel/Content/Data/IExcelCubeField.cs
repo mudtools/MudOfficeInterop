@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口提供了对 Cube 字段的各种属性和操作方法的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCubeField : IOfficeObject<IExcelCubeField>, IDisposable
+public interface IExcelCubeField : IOfficeObject<IExcelCubeField, MsExcel.CubeField>, IDisposable
 {
     /// <summary>
     /// 获取所在的父对象

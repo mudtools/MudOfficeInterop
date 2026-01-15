@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 数据透视表中的多维数据集字段集合的接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCubeFields : IOfficeObject<IExcelCubeFields>, IEnumerable<IExcelCubeField>, IDisposable
+public interface IExcelCubeFields : IOfficeObject<IExcelCubeFields, MsExcel.CubeFields>, IEnumerable<IExcelCubeField>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。

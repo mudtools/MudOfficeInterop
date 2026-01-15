@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 表格（ListObject）中所有列的集合，支持遍历和索引访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelListColumns : IOfficeObject<IExcelListColumns>, IEnumerable<IExcelListColumn>, IDisposable
+public interface IExcelListColumns : IOfficeObject<IExcelListColumns, MsExcel.ListColumns>, IEnumerable<IExcelListColumn>, IDisposable
 {
     /// <summary>
     /// 获取此集合所属的父对象（通常是 ListObject）。

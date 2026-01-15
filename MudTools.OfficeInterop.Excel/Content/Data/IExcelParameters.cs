@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示指定查询表的Parameter对象集合。每个Parameter对象表示一个查询参数。每个查询表都包含一个Parameters集合，但除非查询表使用参数查询，否则该集合为空。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelParameters : IEnumerable<IExcelParameter?>, IOfficeObject<IExcelParameters>, IDisposable
+public interface IExcelParameters : IEnumerable<IExcelParameter?>, IOfficeObject<IExcelParameters, MsExcel.Parameters>, IDisposable
 {
     /// <summary>
     /// 获取指定对象的父对象。

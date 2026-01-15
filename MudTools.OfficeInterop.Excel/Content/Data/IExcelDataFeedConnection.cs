@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel数据源连接接口，用于定义数据连接的基本操作和属性
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelDataFeedConnection : IOfficeObject<IExcelDataFeedConnection>, IDisposable
+public interface IExcelDataFeedConnection : IOfficeObject<IExcelDataFeedConnection, MsExcel.DataFeedConnection>, IDisposable
 {
     /// <summary>
     /// 获取父级对象
