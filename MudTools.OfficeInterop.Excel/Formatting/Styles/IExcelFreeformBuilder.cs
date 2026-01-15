@@ -5,7 +5,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示一个Excel自由多边形形状构建器接口，用于创建自定义的自由形状
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelFreeformBuilder : IOfficeObject<IExcelFreeformBuilder>, IDisposable
+public interface IExcelFreeformBuilder : IOfficeObject<IExcelFreeformBuilder, MsExcel.FreeformBuilder>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象

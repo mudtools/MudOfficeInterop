@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ErrorCheckingOptions 对象的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelErrorCheckingOptions : IOfficeObject<IExcelErrorCheckingOptions>, IDisposable
+public interface IExcelErrorCheckingOptions : IOfficeObject<IExcelErrorCheckingOptions, MsExcel.ErrorCheckingOptions>, IDisposable
 {
     /// <summary>
     /// 返回指定对象的父对象。

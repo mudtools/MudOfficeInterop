@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel排序字段集合的接口，用于定义和操作Excel中的排序规则
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSortFields : IOfficeObject<IExcelSortFields>, IDisposable, IEnumerable<IExcelSortField?>
+public interface IExcelSortFields : IOfficeObject<IExcelSortFields, MsExcel.SortFields>, IDisposable, IEnumerable<IExcelSortField?>
 {
     /// <summary>
     /// 获取父级排序对象

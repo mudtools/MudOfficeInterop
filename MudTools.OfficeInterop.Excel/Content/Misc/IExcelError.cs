@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel Error COM组件二次封装
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelError : IOfficeObject<IExcelError>, IDisposable
+public interface IExcelError : IOfficeObject<IExcelError, MsExcel.Error>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。

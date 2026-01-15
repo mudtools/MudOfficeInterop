@@ -5,7 +5,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口封装了COM对象，提供对Excel自定义属性的访问和操作能力
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCustomProperty : IOfficeObject<IExcelCustomProperty>, IDisposable
+public interface IExcelCustomProperty : IOfficeObject<IExcelCustomProperty, MsExcel.CustomProperty>, IDisposable
 {
     /// <summary>
     /// 获取自定义属性的父对象

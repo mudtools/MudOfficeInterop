@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Legend 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelLegend : IOfficeObject<IExcelLegend>, IDisposable
+public interface IExcelLegend : IOfficeObject<IExcelLegend, MsExcel.Legend>, IDisposable
 {
     #region 基础属性
     /// <summary>

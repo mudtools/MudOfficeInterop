@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.SmartTagAction 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSmartTagAction : IOfficeObject<IExcelSmartTagAction>, IDisposable
+public interface IExcelSmartTagAction : IOfficeObject<IExcelSmartTagAction, MsExcel.SmartTagAction>, IDisposable
 {
 
     /// <summary>

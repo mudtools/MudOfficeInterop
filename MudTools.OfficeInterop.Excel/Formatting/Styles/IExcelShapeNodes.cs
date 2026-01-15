@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示自由形状中所有路径节点的集合，支持遍历、索引访问和节点操作。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelShapeNodes : IOfficeObject<IExcelShapeNodes>, IEnumerable<IExcelShapeNode?>, IDisposable
+public interface IExcelShapeNodes : IOfficeObject<IExcelShapeNodes, MsExcel.ShapeNodes>, IEnumerable<IExcelShapeNode?>, IDisposable
 {
     /// <summary>
     /// 获取集合中节点的总数。

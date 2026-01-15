@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel工作表中的自动筛选功能接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelAutoFilter : IOfficeObject<IExcelAutoFilter>, IDisposable
+public interface IExcelAutoFilter : IOfficeObject<IExcelAutoFilter, MsExcel.AutoFilter>, IDisposable
 {
 
     /// <summary>

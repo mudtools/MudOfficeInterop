@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// <summary>
 /// 表示用户访问权限/// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelUserAccess : IOfficeObject<IExcelUserAccess>, IDisposable
+public interface IExcelUserAccess : IOfficeObject<IExcelUserAccess, MsExcel.UserAccess>, IDisposable
 {
     /// <summary>
     /// 获取用户的名称

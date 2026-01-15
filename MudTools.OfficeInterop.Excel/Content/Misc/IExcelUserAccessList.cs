@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 UserAccess 对象的集合，这些对象表示受保护区域的用户访问权限。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelUserAccessList : IEnumerable<IExcelUserAccess?>, IOfficeObject<IExcelUserAccessList>, IDisposable
+public interface IExcelUserAccessList : IEnumerable<IExcelUserAccess?>, IOfficeObject<IExcelUserAccessList, MsExcel.UserAccessList>, IDisposable
 {
 
     /// <summary>

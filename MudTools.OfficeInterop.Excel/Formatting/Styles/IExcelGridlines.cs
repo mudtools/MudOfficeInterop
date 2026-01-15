@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Gridlines 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelGridlines : IOfficeObject<IExcelGridlines>, IDisposable
+public interface IExcelGridlines : IOfficeObject<IExcelGridlines, MsExcel.Gridlines>, IDisposable
 {
     #region 基础属性
     /// <summary>

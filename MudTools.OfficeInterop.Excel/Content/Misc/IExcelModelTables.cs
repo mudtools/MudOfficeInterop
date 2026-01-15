@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示模型表集合对象
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelModelTables : IEnumerable<IExcelModelTable?>, IOfficeObject<IExcelModelTables>, IDisposable
+public interface IExcelModelTables : IEnumerable<IExcelModelTable?>, IOfficeObject<IExcelModelTables, MsExcel.ModelTables>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

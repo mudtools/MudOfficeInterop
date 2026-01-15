@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Outline (Worksheet.Outline) 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelOutline : IOfficeObject<IExcelOutline>, IDisposable
+public interface IExcelOutline : IOfficeObject<IExcelOutline, MsExcel.Outline>, IDisposable
 {
     #region 基础属性
     /// <summary>

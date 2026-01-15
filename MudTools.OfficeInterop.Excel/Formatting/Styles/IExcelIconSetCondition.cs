@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示一个图标集条件格式规则
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelIconSetCondition : IOfficeObject<IExcelIconSetCondition>, IDisposable
+public interface IExcelIconSetCondition : IOfficeObject<IExcelIconSetCondition, MsExcel.IconSetCondition>, IDisposable
 {
     /// <summary>
     /// 获取条件格式规则的父对象

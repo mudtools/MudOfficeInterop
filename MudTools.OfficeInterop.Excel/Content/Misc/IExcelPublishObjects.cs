@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作簿中所有PublishObject对象的集合。每个PublishObject对象表示已保存到网页的工作簿项，可以根据对象的属性和方法指定的值进行刷新。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPublishObjects : IEnumerable<IExcelPublishObject?>, IOfficeObject<IExcelPublishObjects>, IDisposable
+public interface IExcelPublishObjects : IEnumerable<IExcelPublishObject?>, IOfficeObject<IExcelPublishObjects, MsExcel.PublishObjects>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

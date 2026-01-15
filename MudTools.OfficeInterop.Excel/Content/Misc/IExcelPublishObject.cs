@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示已保存到网页的工作簿项，可以根据PublishObject对象的属性和方法指定的值进行刷新。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPublishObject : IOfficeObject<IExcelPublishObject>, IDisposable
+public interface IExcelPublishObject : IOfficeObject<IExcelPublishObject, MsExcel.PublishObject>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

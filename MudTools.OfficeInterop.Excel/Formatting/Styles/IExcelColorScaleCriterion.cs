@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// ColorScaleCriterion 对象代表颜色刻度条件格式中的一个特定条件（例如，最小值、中间值、最大值）。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelColorScaleCriterion : IOfficeObject<IExcelColorScaleCriterion>, IDisposable
+public interface IExcelColorScaleCriterion : IOfficeObject<IExcelColorScaleCriterion, MsExcel.ColorScaleCriterion>, IDisposable
 {
     #region 基础属性
 

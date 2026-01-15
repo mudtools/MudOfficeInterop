@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Microsoft.Office.Interop.Excel.Pane 实现的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPane : IOfficeObject<IExcelPane>, IDisposable
+public interface IExcelPane : IOfficeObject<IExcelPane, MsExcel.Pane>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。

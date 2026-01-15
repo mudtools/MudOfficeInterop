@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.RecentFile 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelRecentFile : IOfficeObject<IExcelRecentFile>, IDisposable
+public interface IExcelRecentFile : IOfficeObject<IExcelRecentFile, MsExcel.RecentFile>, IDisposable
 {
     #region 基础属性
     /// <summary>

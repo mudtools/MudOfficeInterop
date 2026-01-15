@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Styles 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelStyles : IOfficeObject<IExcelStyles>, IEnumerable<IExcelStyle?>, IDisposable
+public interface IExcelStyles : IOfficeObject<IExcelStyles, MsExcel.Styles>, IEnumerable<IExcelStyle?>, IDisposable
 {
     #region 基础属性
 

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示指定工作表上所有 Scenario 对象的集合。方案是一组已命名并保存的输入值（称为可变单元格）。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelScenarios : IEnumerable<IExcelScenario?>, IOfficeObject<IExcelScenarios>, IDisposable
+public interface IExcelScenarios : IEnumerable<IExcelScenario?>, IOfficeObject<IExcelScenarios, MsExcel.Scenarios>, IDisposable
 {
     /// <summary>
     /// 获取对象所在的父对象

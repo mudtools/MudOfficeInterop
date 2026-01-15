@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于管理链接源、更新方式、断开链接等操作。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelLinkFormat : IOfficeObject<IExcelLinkFormat>, IDisposable
+public interface IExcelLinkFormat : IOfficeObject<IExcelLinkFormat, MsExcel.LinkFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape 或 OLEObject）。

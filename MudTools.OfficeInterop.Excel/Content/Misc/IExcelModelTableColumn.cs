@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel数据模型表中的列。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelModelTableColumn : IOfficeObject<IExcelModelTableColumn>, IDisposable
+public interface IExcelModelTableColumn : IOfficeObject<IExcelModelTableColumn, MsExcel.ModelTableColumn>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

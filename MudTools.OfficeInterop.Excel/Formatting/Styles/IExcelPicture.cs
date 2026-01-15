@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Picture 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPicture : IOfficeObject<IExcelPicture>, IDisposable
+public interface IExcelPicture : IOfficeObject<IExcelPicture, MsExcel.Picture>, IDisposable
 {
 
     /// <summary>

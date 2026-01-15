@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示自定义工作簿视图。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelCustomView : IOfficeObject<IExcelCustomView>, IDisposable
+public interface IExcelCustomView : IOfficeObject<IExcelCustomView, MsExcel.CustomView>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

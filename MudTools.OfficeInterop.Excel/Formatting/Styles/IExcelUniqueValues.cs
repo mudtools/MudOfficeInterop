@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口用于定义和操作唯一值或重复值的条件格式规则
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelUniqueValues : IOfficeObject<IExcelUniqueValues>, IDisposable
+public interface IExcelUniqueValues : IOfficeObject<IExcelUniqueValues, MsExcel.UniqueValues>, IDisposable
 {
     /// <summary>
     /// 获取父对象

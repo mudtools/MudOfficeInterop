@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中的文本框架对象，提供对文本框属性和行为的访问接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTextFrame2 : IOfficeObject<IExcelTextFrame2>, IDisposable
+public interface IExcelTextFrame2 : IOfficeObject<IExcelTextFrame2, MsExcel.TextFrame2>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象

@@ -13,7 +13,7 @@ using System;
 /// Excel Errors COM组件二次封装
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelErrors : IOfficeObject<IExcelErrors>, IDisposable
+public interface IExcelErrors : IOfficeObject<IExcelErrors, MsExcel.Errors>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。

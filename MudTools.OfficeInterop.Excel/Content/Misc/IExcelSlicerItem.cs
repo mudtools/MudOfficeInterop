@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于获取或设置切片器项的名称、值、选中状态等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerItem : IOfficeObject<IExcelSlicerItem>, IDisposable
+public interface IExcelSlicerItem : IOfficeObject<IExcelSlicerItem, MsExcel.SlicerItem>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 SlicerCache 或 SlicerItems 集合）。

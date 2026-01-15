@@ -14,7 +14,7 @@ using System;
 /// 表示Excel排序字段的接口，用于定义和操作Excel中的排序规则
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSortField : IOfficeObject<IExcelSortField>, IDisposable
+public interface IExcelSortField : IOfficeObject<IExcelSortField, MsExcel.SortField>, IDisposable
 {
     /// <summary>
     /// 获取父级排序字段集合

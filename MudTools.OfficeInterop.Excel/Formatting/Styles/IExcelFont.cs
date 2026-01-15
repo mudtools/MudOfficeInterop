@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口提供了操作Excel单元格字体的各种属性和方法
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelFont : IOfficeObject<IExcelFont>, IDisposable
+public interface IExcelFont : IOfficeObject<IExcelFont, MsExcel.Font>, IDisposable
 {
 
     /// <summary>

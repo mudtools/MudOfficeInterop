@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作表中所有切片器的集合，支持遍历和索引访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicers : IOfficeObject<IExcelSlicers>, IEnumerable<IExcelSlicer?>, IDisposable
+public interface IExcelSlicers : IOfficeObject<IExcelSlicers, MsExcel.Slicers>, IEnumerable<IExcelSlicer?>, IDisposable
 {
     /// <summary>
     /// 获取集合中切片器的总数。

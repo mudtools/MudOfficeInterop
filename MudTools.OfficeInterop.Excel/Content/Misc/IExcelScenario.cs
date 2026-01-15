@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示工作表中的方案。方案是一组已命名并保存的输入值（称为可变单元格）。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelScenario : IOfficeObject<IExcelScenario>, IDisposable
+public interface IExcelScenario : IOfficeObject<IExcelScenario, MsExcel.Scenario>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。

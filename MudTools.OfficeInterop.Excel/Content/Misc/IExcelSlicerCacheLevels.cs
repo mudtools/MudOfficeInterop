@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 支持遍历和索引访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerCacheLevels : IOfficeObject<IExcelSlicerCacheLevels>, IEnumerable<IExcelSlicerCacheLevel?>, IDisposable
+public interface IExcelSlicerCacheLevels : IOfficeObject<IExcelSlicerCacheLevels, MsExcel.SlicerCacheLevels>, IEnumerable<IExcelSlicerCacheLevel?>, IDisposable
 {
     /// <summary>
     /// 获取集合中层级的总数。

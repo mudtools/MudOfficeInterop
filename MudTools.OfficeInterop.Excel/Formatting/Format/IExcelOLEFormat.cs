@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中 OLE 对象格式的封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelOLEFormat : IOfficeObject<IExcelOLEFormat>, IDisposable
+public interface IExcelOLEFormat : IOfficeObject<IExcelOLEFormat, MsExcel.OLEFormat>, IDisposable
 {
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供Excel排序功能的接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSort : IOfficeObject<IExcelSort>, IDisposable
+public interface IExcelSort : IOfficeObject<IExcelSort, MsExcel.Sort>, IDisposable
 {
     /// <summary>
     /// 获取父级工作表

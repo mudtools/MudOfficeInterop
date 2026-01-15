@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中图片的格式设置接口，提供对图片的各种格式属性和操作方法的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPictureFormat : IOfficeObject<IExcelPictureFormat>, IDisposable
+public interface IExcelPictureFormat : IOfficeObject<IExcelPictureFormat, MsExcel.PictureFormat>, IDisposable
 {
     /// <summary>
     /// 获取图片格式对象的父对象

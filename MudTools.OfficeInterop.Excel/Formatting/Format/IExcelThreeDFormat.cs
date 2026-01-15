@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ThreeDFormat 对象的二次封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelThreeDFormat : IOfficeObject<IExcelThreeDFormat?>, IDisposable
+public interface IExcelThreeDFormat : IOfficeObject<IExcelThreeDFormat, MsExcel.ThreeDFormat>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Shape）。

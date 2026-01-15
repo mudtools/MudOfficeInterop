@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中单个注音符号的封装接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPhonetic : IOfficeObject<IExcelPhonetic>, IDisposable
+public interface IExcelPhonetic : IOfficeObject<IExcelPhonetic, MsExcel.Phonetic>, IDisposable
 {
     /// <summary>
     /// 获取当前COM对象的父对象。

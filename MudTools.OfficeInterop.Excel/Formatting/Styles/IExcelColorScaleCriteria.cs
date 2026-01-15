@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.ColorScaleCriteria 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelColorScaleCriteria : IOfficeObject<IExcelColorScaleCriteria>, IEnumerable<IExcelColorScaleCriterion?>, IDisposable
+public interface IExcelColorScaleCriteria : IOfficeObject<IExcelColorScaleCriteria, MsExcel.ColorScaleCriteria>, IEnumerable<IExcelColorScaleCriterion?>, IDisposable
 {
 
     #region 基础属性

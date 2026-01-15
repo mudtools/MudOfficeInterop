@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 包含将文档另存为网页或打开网页时，Microsoft Excel使用的工作簿级属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelWebOptions : IOfficeObject<IExcelWebOptions>, IDisposable
+public interface IExcelWebOptions : IOfficeObject<IExcelWebOptions, MsExcel.WebOptions>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 

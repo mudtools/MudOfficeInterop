@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Pictures 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelPictures : IOfficeObject<IExcelPictures>, IEnumerable<IExcelPicture?>, IDisposable
+public interface IExcelPictures : IOfficeObject<IExcelPictures, MsExcel.Pictures>, IEnumerable<IExcelPicture?>, IDisposable
 {
     /// <summary>
     /// 获取当前图片集合中包含的图片总数。

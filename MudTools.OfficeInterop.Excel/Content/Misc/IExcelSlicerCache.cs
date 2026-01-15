@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 一个切片器缓存可以被多个切片器控件共享，实现联动筛选。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSlicerCache : IOfficeObject<IExcelSlicerCache>, IDisposable
+public interface IExcelSlicerCache : IOfficeObject<IExcelSlicerCache, MsExcel.SlicerCache>, IDisposable
 {
     /// <summary>
     /// 获取此缓存所属的父对象（通常是 SlicerCaches 集合）。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置和管理基于数据平均值的条件格式规则
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelAboveAverage : IOfficeObject<IExcelAboveAverage>, IDisposable
+public interface IExcelAboveAverage : IOfficeObject<IExcelAboveAverage, MsExcel.AboveAverage>, IDisposable
 {
     /// <summary>
     /// 获取条件格式规则的父对象
