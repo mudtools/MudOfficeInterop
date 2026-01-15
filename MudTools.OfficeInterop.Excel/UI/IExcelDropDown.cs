@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示Excel中的下拉框控件接口，继承自IExcelControl和IDisposable接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelDropDown : IOfficeObject<IExcelDropDown>, IExcelControl, IDisposable
+public interface IExcelDropDown : IOfficeObject<IExcelDropDown, MsExcel.DropDown>, IExcelControl, IDisposable
 {
     /// <summary>
     /// 获取或设置下拉框的链接单元格

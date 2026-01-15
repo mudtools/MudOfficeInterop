@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示图表或工作表中的选项卡。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTab : IOfficeObject<IExcelTab>, IDisposable
+public interface IExcelTab : IOfficeObject<IExcelTab, MsExcel.Tab>, IDisposable
 {
     /// <summary>
     /// 获取父级工作表

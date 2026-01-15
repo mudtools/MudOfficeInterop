@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 代表多维数据集字段的层次成员选择控件。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelTreeviewControl : IOfficeObject<IExcelTreeviewControl>, IDisposable
+public interface IExcelTreeviewControl : IOfficeObject<IExcelTreeviewControl, MsExcel.TreeviewControl>, IDisposable
 {
     /// <summary>
     /// 获取所在的父对象

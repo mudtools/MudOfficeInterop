@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 继承自IExcelControl接口和IDisposable接口，提供编辑框特有的功能
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelEditBox : IOfficeObject<IExcelEditBox>, IExcelControl, IDisposable
+public interface IExcelEditBox : IOfficeObject<IExcelEditBox, MsExcel.EditBox>, IExcelControl, IDisposable
 {
     /// <summary>
     /// 获取或设置编辑框的标题
