@@ -9,7 +9,7 @@ namespace MudTools.OfficeInterop.Excel;
 
 
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCustomViews : IEnumerable<IExcelCustomView?>, IOfficeObject<IExcelCustomViews>, IDisposable
+public interface IExcelCustomViews : IEnumerable<IExcelCustomView?>, IOfficeObject<IExcelCustomViews, MsExcel.CustomViews>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象 
