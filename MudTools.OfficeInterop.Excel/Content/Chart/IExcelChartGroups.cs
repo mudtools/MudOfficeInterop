@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel ChartGroups 集合对象的二次封装实现类
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelChartGroups : IOfficeObject<IExcelChartGroups>, IEnumerable<IExcelChartGroup>, IDisposable
+public interface IExcelChartGroups : IOfficeObject<IExcelChartGroups, MsExcel.ChartGroups>, IEnumerable<IExcelChartGroup>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Trendlines 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelTrendlines : IOfficeObject<IExcelTrendlines>, IEnumerable<IExcelTrendline>, IDisposable
+public interface IExcelTrendlines : IOfficeObject<IExcelTrendlines, MsExcel.Trendlines>, IEnumerable<IExcelTrendline>, IDisposable
 {
     #region 基础属性
     /// <summary>

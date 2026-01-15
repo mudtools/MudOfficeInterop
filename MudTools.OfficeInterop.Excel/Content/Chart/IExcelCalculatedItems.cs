@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 该接口封装了对Excel数据透视表计算项集合的操作方法和属性
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCalculatedItems : IOfficeObject<IExcelCalculatedItems>, IEnumerable<IExcelPivotItem?>, IDisposable
+public interface IExcelCalculatedItems : IOfficeObject<IExcelCalculatedItems, MsExcel.CalculatedItems>, IEnumerable<IExcelPivotItem?>, IDisposable
 {
 
     /// <summary>

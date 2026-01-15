@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Charts 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelCharts : IOfficeObject<IExcelCharts>, IEnumerable<IExcelChart?>, IDisposable
+public interface IExcelCharts : IOfficeObject<IExcelCharts, MsExcel.Charts>, IEnumerable<IExcelChart?>, IDisposable
 {
     #region 基础属性
 

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 图表中数据点集合的接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelPoints : IOfficeObject<IExcelPoints>, IEnumerable<IExcelPoint>, IDisposable
+public interface IExcelPoints : IOfficeObject<IExcelPoints, MsExcel.Points>, IEnumerable<IExcelPoint>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象

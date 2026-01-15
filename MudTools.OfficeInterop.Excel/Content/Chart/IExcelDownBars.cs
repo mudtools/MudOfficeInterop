@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置下跌柱（开盘价高于收盘价）的填充、边框、可见性等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelDownBars : IOfficeObject<IExcelDownBars>, IDisposable
+public interface IExcelDownBars : IOfficeObject<IExcelDownBars, MsExcel.DownBars>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Chart）。

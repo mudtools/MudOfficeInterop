@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 包括获取单元格的父对象、应用程序对象、单元格类型、关联的数据透视表、数据字段、透视表字段、透视表项等相关信息，以及处理单元格更改的方法。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotCell : IOfficeObject<IExcelPivotCell>, IDisposable
+public interface IExcelPivotCell : IOfficeObject<IExcelPivotCell, MsExcel.PivotCell>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。

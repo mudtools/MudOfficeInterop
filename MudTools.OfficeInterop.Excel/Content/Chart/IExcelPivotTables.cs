@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.PivotTables 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelPivotTables : IOfficeObject<IExcelPivotTables>, IEnumerable<IExcelPivotTable>, IDisposable
+public interface IExcelPivotTables : IOfficeObject<IExcelPivotTables, MsExcel.PivotTables>, IEnumerable<IExcelPivotTable>, IDisposable
 {
     #region 基础属性
     /// <summary>

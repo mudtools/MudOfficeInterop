@@ -9,7 +9,7 @@ namespace MudTools.OfficeInterop.Excel;
 
 
 [ComObjectWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelPivotAxis : IOfficeObject<IExcelPivotAxis>, IDisposable
+public interface IExcelPivotAxis : IOfficeObject<IExcelPivotAxis, MsExcel.PivotAxis>, IDisposable
 {
 
     /// <summary>

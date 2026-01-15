@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 中的数据透视表线条对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotLine : IOfficeObject<IExcelPivotLine>, IDisposable
+public interface IExcelPivotLine : IOfficeObject<IExcelPivotLine, MsExcel.PivotLine>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。

@@ -5,7 +5,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// Excel SlicerPivotTables 集合对象的二次封装实现类
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface ISlicerPivotTables : IOfficeObject<ISlicerPivotTables>, IEnumerable<IExcelPivotTable>, IDisposable
+public interface ISlicerPivotTables : IOfficeObject<ISlicerPivotTables, MsExcel.SlicerPivotTables>, IEnumerable<IExcelPivotTable>, IDisposable
 {
     /// <summary>
     /// 获取数据透视表集合所在的父对象（通常是 Worksheet）

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口封装了与 Microsoft Excel 数据透视表公式相关的功能，允许访问和操作数据透视表中的计算字段公式。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
-public interface IExcelPivotFormulas : IOfficeObject<IExcelPivotFormulas>, IEnumerable<IExcelPivotFormula?>, IDisposable
+public interface IExcelPivotFormulas : IOfficeObject<IExcelPivotFormulas, MsExcel.PivotFormulas>, IEnumerable<IExcelPivotFormula?>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。

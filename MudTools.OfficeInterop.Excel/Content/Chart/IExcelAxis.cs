@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 代表图表中的单个坐标轴（如类别轴、数值轴）
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelAxis : IOfficeObject<IExcelAxis>, IDisposable
+public interface IExcelAxis : IOfficeObject<IExcelAxis, MsExcel.Axis>, IDisposable
 {
     #region 基础属性  
 

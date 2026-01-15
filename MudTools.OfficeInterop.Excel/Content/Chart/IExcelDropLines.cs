@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 常用于折线图、面积图等，增强数据可读性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelDropLines : IOfficeObject<IExcelDropLines>, IDisposable
+public interface IExcelDropLines : IOfficeObject<IExcelDropLines, MsExcel.DropLines>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Chart）。

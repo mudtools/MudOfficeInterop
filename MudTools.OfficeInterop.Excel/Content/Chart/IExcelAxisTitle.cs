@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于设置标题文本、字体、对齐方式、方向、可见性等。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelAxisTitle : IOfficeObject<IExcelAxisTitle>, IDisposable
+public interface IExcelAxisTitle : IOfficeObject<IExcelAxisTitle, MsExcel.AxisTitle>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Axis）。

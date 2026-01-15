@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于股票图（High-Low-Close 等）中显示价格波动范围。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelHiLoLines : IOfficeObject<IExcelHiLoLines>, IDisposable
+public interface IExcelHiLoLines : IOfficeObject<IExcelHiLoLines, MsExcel.HiLoLines>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Chart）。

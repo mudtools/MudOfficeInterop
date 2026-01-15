@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口是对 Microsoft.Office.Interop.Excel.DataLabel COM 对象的封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelDataLabel : IOfficeObject<IExcelDataLabel>, IDisposable
+public interface IExcelDataLabel : IOfficeObject<IExcelDataLabel, MsExcel.DataLabel>, IDisposable
 {
     /// <summary>
     /// 获取该对象的父对象。

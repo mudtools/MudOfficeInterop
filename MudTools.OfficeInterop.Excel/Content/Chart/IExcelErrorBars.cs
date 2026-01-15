@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.ErrorBars 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelErrorBars : IOfficeObject<IExcelErrorBars>, IDisposable
+public interface IExcelErrorBars : IOfficeObject<IExcelErrorBars, MsExcel.ErrorBars>, IDisposable
 {
     #region 基础属性
     /// <summary>

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于控制系列的间隙宽度、重叠、坐标轴、数据标签、趋势线等共享属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup>, IDisposable
+public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup, MsExcel.ChartGroup>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Chart）。

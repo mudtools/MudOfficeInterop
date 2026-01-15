@@ -6,7 +6,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 此接口封装了对 Excel 图表引导线对象的操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelLeaderLines : IOfficeObject<IExcelLeaderLines>, IDisposable
+public interface IExcelLeaderLines : IOfficeObject<IExcelLeaderLines, MsExcel.LeaderLines>, IDisposable
 {
     /// <summary>
     /// 获取引导线对象的父对象

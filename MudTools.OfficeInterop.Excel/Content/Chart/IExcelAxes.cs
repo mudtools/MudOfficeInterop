@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 提供对 Microsoft.Office.Interop.Excel.Axes 的安全访问和操作
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel"), ItemIndex]
-public interface IExcelAxes : IEnumerable<IExcelAxis?>, IOfficeObject<IExcelAxes>, IDisposable
+public interface IExcelAxes : IEnumerable<IExcelAxis?>, IOfficeObject<IExcelAxes, MsExcel.Axes>, IDisposable
 {
 
     /// <summary>

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 表示 Excel 图表中的数据点接口
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelPoint : IOfficeObject<IExcelPoint>, IDisposable
+public interface IExcelPoint : IOfficeObject<IExcelPoint, MsExcel.Point>, IDisposable
 {
     /// <summary>
     /// 获取对象的父对象

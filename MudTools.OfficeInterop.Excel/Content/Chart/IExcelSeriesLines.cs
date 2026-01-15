@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Excel;
 /// 用于控制连接主次坐标轴数据系列的连线样式（如柱形图与折线图之间的连线）。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsExcel")]
-public interface IExcelSeriesLines : IOfficeObject<IExcelSeriesLines>, IDisposable
+public interface IExcelSeriesLines : IOfficeObject<IExcelSeriesLines, MsExcel.SeriesLines>, IDisposable
 {
     /// <summary>
     /// 获取此对象的父对象（通常是 Chart 或 SeriesCollection）。
