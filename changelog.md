@@ -1,0 +1,398 @@
+# OfficeInterop 项目变更日志
+
+## 2.0.5
+
+- 更新Excel操作对象库版本并优化方法参数
+- 更新接口继承类型定义并移除冗余核心视图接口
+- 修正Top属性的数据类型转换
+- 更新代码生成器版本并完成枚举类型文件
+- 重新组织IWordRange接口代码
+- 重构Word替换接口实现
+- 重构Word列表模板接口并移除实现类
+- 更新IWordListParagraphs接口添加COM封装支持
+- 重构IWordListGalleries接口实现
+- 更新IWordListGallery接口并移除实现类
+- 移除Word段落接口定义
+- 实现IWordParagraphs接口并移除具体实现类
+- 更新IWordParagraph接口实现并移除具体实现类
+- 重构IWordLineNumbering接口继承和属性类型定义
+- 重构Word框架集合接口并移除实现类
+- 更新IWordFootnotes接口以增强脚注功能
+- 调整接口属性类型和命名规范
+- 移除公共图形对象和工作表相关接口
+- 更新IWordDocuments接口实现COM封装和添加文档操作功能
+- 重构表格样式接口实现
+- 优化Word XML接口和形状组合接口的类型定义
+- 扩展IWordShapeRange接口功能并移除冗余实现
+- 更新IWordShape接口并移除冗余的WordShape实现类
+- 重构IWordShading接口以使用通用Office对象封装
+- 更新IWordInterior接口实现COM对象封装
+- 添加Value2属性支持并更新数据透视表接口
+- 更新.gitignore文件添加Excel示例项目obj目录
+- 更新IWordInlineShapes接口增强Word内嵌形状功能
+- 重构标题样式和内联形状接口以支持Office对象封装
+- 更新IWordHeadingStyle接口以支持COM对象封装
+- 更新IWordGroupShapes接口实现
+- 重构IWordBorders接口并移除实现类
+- 重构IWordBorder接口并移除实现类
+- 更新Word格式接口继承IOfficeObject
+- 重构图片格式接口实现
+- 实现IWordOLEFormat接口并移除旧的封装类
+- 更新Word列表相关接口实现
+- 为Word格式接口添加COM属性包装器
+- 重构IWordLinkFormat接口实现
+- 更新IWordLineFormat接口定义并移除具体实现类
+- 更新IWordGlowFormat接口实现COM对象封装
+- 为接口添加OfficeObject继承支持
+- 更新TwoInitialCapsException接口实现
+- 优化自动更正异常接口设计并移除实现类
+- 重构IWordOtherCorrectionsException接口实现
+- 重构连字和字母自动更正异常接口
+- 重构HangulAndAlphabetException接口实现
+- 更新IWordFirstLetterExceptions接口并移除实现类
+- 重构IWordFirstLetterException接口实现
+- 添加Word自动更正条目接口属性和方法
+- 重构IWordAutoCorrectEntries接口定义并移除实现类
+- 重构IWordAutoCorrect接口实现
+
+## 2.0.4
+
+- 升级版本号至2.0.4并更新依赖包
+- 更新接口继承以支持泛型类型参数
+- 更新Word接口继承类型以包含具体COM对象类型
+- 将ComCollectionWrap属性更改为ComObjectWrap并添加泛型COM类型支持
+- 更新IWordVariables接口定义并移除实现类
+- 重构Word变量接口实现
+- 重构Word文档接口实现
+- 更新IWordSubdocuments接口添加COM封装和可空类型支持
+- 重构子文档接口实现并添加COM封装特性
+- 更新IWordSources接口实现并移除具体实现类
+- 重构智能标记类型接口和源接口实现
+- 重构智能标记识别程序接口
+- 更新IWordSmartTagActions接口添加COM封装和额外功能
+- 更新接口继承关系并移除实现类
+- 更新Word评论相关接口实现
+- 添加WordProofreadingErrors接口的COM封装支持
+- 重构Word可读性统计和最近文档接口
+- 为Word接口添加COM封装特性和Application属性说明
+- 添加数据透视表缓存属性和VBE组件功能
+- 优化代码格式和类型定义
+
+## 2.0.3
+
+- 更新版本号至2.0.3
+- 重构Word对话框和对话框集合的具体实现类
+- 重构Word页面接口实现
+- 更新Word接口定义并移除实现类
+- 更新IWordPageNumbers接口并移除实现类
+- 更新ServiceCodeGenerator版本并优化枚举类型接口
+- 移除内容控件和表单域相关接口及实现类
+- 重构文件转换器接口实现
+- 完成VBE对象接口实现并添加类型注释
+- 更新IWordEmailOptions接口定义并移除实现类
+- 为AutoCorrect接口添加COM属性包装器
+- 移除辅助接口定义
+- 重构IWordEditor和IWordEditors接口实现
+- 移除Word下拉列表功能相关接口和实现
+- 更新字典接口实现并添加加载器重载
+- 为Word接口添加Office对象支持并调整属性类型
+- 更新IWordCustomProperties接口添加COM封装支持和加载器
+- 添加Word自定义属性接口功能
+- 添加项目英文版本README文件
+- 更新IWordContentControls接口定义并移除实现类
+- 为IWordContentControlListEntries接口添加COM封装支持并移除实现类
+- 更新Word操作对象接口以支持更好的COM对象管理
+- 更新IWordContentControl接口继承和属性可空性
+- 更新IWordConflicts接口定义并移除实现类
+- 重构IWordConflict接口以支持COM对象封装
+- 更新Word权限接口实现并移除旧的实现类
+- 移除IWordBrowser接口
+- 移除WordCheckBox相关实现
+- 更新接口继承结构并移除实现类
+- 更新IWordBookmarks接口添加COM封装支持
+- 更新目录和书签接口实现
+- 重构AutoCaption接口实现
+- 调整IWordAdjustments接口实现并移除具体实现类
+- 更新IWordAddIn和IWordAddIns接口实现
+- 为IWordAddIn接口添加ComObjectWrap特性
+- 更新IWordPage接口添加页面功能和属性
+- 修复Directory.Build.props文件中的Mud.ServiceCodeGenerator包版本
+- 更新IExcelRanges接口定义并移除实现类
+- 更新Excel AddIns接口实现并改进类型安全
+- 为IExcelAddIn接口添加Application和Parent属性
+- 添加用户访问权限接口和改进工作表接口
+- 为Excel接口添加Office对象继承
+- 更新IExcelWindow接口定义并移除实现类
+- 重构受保护视图窗口接口并移除实现类
+- IExcelRange接口实现IOfficeObject接口并添加LoadFromObject方法
+- 添加ExcelQueryTable接口实现和属性重构
+- 替换ReturnValueConvert为ValueConvert属性并优化接口
+- 更新IExcelWorkbook接口类型定义为包装接口
+- 为IExcelCellFormat接口添加IOfficeObject继承
+- 更新IExcelWorkbooks接口并移除实现类
+- 移除PrintPreview相关代码并调整PageSetup属性
+- 重构Excel页面设置接口并添加COM封装属性
+- 重构Excel评论相关接口和实现
+- 更新IExcelCellFormat接口定义并移除实现类
+- 移除高级图表功能说明文档
+- 为Excel控件接口添加Office对象继承
+- 为Excel格式化样式接口添加OfficeObject继承
+- 重构IExcelTickLabels接口并移除实现类
+- 为Excel格式接口添加COM属性包装
+- 修复CoreRange格式设置问题并优化excelStyles接口设计
+- 更新IExcelStyle接口定义并移除实现类
+- 移除SmartTagActions和SmartTags实现类并更新接口定义
+- 添加Excel智能标记操作接口实现
+- 更新图片和形状接口定义添加COM封装属性
+- 更新Excel接口的可空类型定义并优化分页符接口
+- 更新IExcelGroupShapes接口定义
+- 移除IExcelFreeformBuilder接口并调整ExcelGridlines实现
+- 更新IExcelErrorCheckingOptions接口增强错误检查功能
+- 为ExcelDataBarBorder接口添加COM对象封装支持
+- 更新颜色刻度条件接口以支持空值和字符串加载
+- 将IWordApplication属性改为可空类型
+- 为Excel格式接口添加IOfficeObject继承并更新可空类型
+- 更新接口定义以支持可空类型
+- 为Excel接口添加IOfficeObject继承
+- 优化对象扩展和查找替换功能
+- 添加Office COM对象封装器创建功能
+- 添加IOfficeObject接口
+- 为Excel添加IOfficeObject接口并支持空值返回
+- 为XML接口添加IOfficeObject继承并实现工厂创建方法
+- 为SmartArt相关接口添加IOfficeObject类型继承
+- 为Office操作对象接口添加通用对象类型
+- 为Office格式接口添加IOfficeObject继承
+- 更新Word接口定义和实现
+- 添加Word数学公式排序示例项目的构建输出目录
+- 移除IWordDataLabels接口中的数据标签相关属性
+- 更新Excel示例项目的.gitignore文件
+- 更新IWordFields接口并移除实现类
+- 更新Word查找接口和表格样式属性
+- 为Word文本接口添加COM封装特性和辅助生成器特性
+
+## 2.0.1
+
+- 重构Excel COM接口封装类
+- 重构Excel条件格式接口定义
+- 更新接口定义以增强空值处理与类型安全性
+- 更新Excel表格格式接口并增强功能
+- 完成Excel趋势线集合接口定义以增强空值处理能力
+- 完成趋势线接口定义并强化COM对象封装
+- 为IExcelUpBars接口添加COM属性与新属性
+- 为ISlicerPivotTables接口添加COM封装特性并优化空值处理
+- 更新项目版本号并调整打包配置属性
+- 更新数据透视表相关接口返回值可空性
+- 统一使用InternalComObject访问底层COM对象
+- 重构图表相关接口和实现类
+- 扩展图表组合接口功能
+- 完成Excel坐标轴刻度接口定义
+- 完成Excel三维格式接口定义
+- 为ExcelTextEffectFormat接口添加COM属性包装器
+- 完成Excel阴影格式接口定义并移除冗余实现
+- 为Excel图片格式接口添加COM封装特性
+- 重构Excel图表相关接口和实现
+- 完成Excel图表图例接口定义
+- 移除部分接口中废弃的实现
+- 完善错误处理机制设计
+- 增加全局的DisposableList资源释放对象
+- 重构Excel工作簿数据连接接口实现
+- 优化Excel数据透视表接口和文档连接接口
+- 完成Excel ODBC和OLEDB连接接口功能
+- 更新Excel验证接口并优化参数转换方法
+- 重构Excel表格对象和文档连接接口
+- 重构Excel模型连接接口实现
+- 重构Excel工作表行接口并增强功能
+- 重构Excel排序接口并更新项目名称
+- 重构Excel切片器接口并增强功能
+- 更新Mud.ServiceCodeGenerator包版本
+- 移除IExcelSlicer接口中的Columns属性和IExcelSlicerCache接口中的IsPivot属性
+- 为IExcelSlicer添加Copy和Cut方法并完善接口定义
+- 为多个Excel COM接口添加Application和Parent属性
+- 更新Excel最近文档接口定义并调整实现
+- 优化Excel页眉页脚接口实现
+- 为IExcelGraphic接口添加ColorType属性支持
+- 更新Excel接口定义与实现，增强COM封装一致性与可维护性
+
+## 1.2.2
+
+- 添加自动生成代码所需的特性
+- 删除不需要的文件
+- 完成Excel 样式集合的接口的资源释放功能
+- 完成Excel页面集合的接口的资源释放
+- 完成Excel筛选器接口的资源释放功能
+- 完成ExcelErrors资源释放
+- 删除无效的文件
+- 重命名AssemblyInfo文件
+- 完成测试代码
+- 删除演示代码中文本对话框设置功能
+- 升级示例文件的引用程序集
+- 添加IOfficePermission封装接口
+- 完成IWordFillFormat接口封装
+- 更新包的引用和依赖
+- 解决Excel示例程序中的编译错误
+- IWordDocument封装接口添加SaveAs方法
+- IWordShapes二次封装对象添加AddTextEffect方法
+- IExcelShapes二次封装对象添加AddChart2方法
+- 完成Excel图表组件的相关二次封装功能
+- 修改Excel示例代码
+- 添加Excel示例代码
+- 添加Excel相关的功能文件
+- 修正文件夹合并示例错误
+- 完成文件夹合并示例
+- 移除多余的开发信息
+- 添加IExcelChartGroup二次封装对象
+- 将IExcelChart接口的Axes 属性调用改为Axes方法
+- 添加word相关文档
+- 发布1.1.9版本
+- 添加IExcelRangeCharacters二次封装接口
+- 完善IWordFont缺失的属性及方法
+- 优化IExcelHyperlinks接口的资源管理
+- 完成IExcelHPageBreak接口
+- 优化IExcelHPageBreaks接口
+- 优化ExcelHPageBreak空对象处理机制
+- 完善IExcelFormatCondition接口缺失的属性及方法
+- 完成IExcelColorScaleCriteria二次封装接口
+- 优化IExcelBorders二次封装接口
+- 完成IExcelValidation接口
+- 优化IWordBorders二次封装接口的参数转换方式
+- 优化Excel集合类COM组件的资源释放功能
+- 添加IExcelAxisTitle二次封装接口
+- 发布1.1.8
+- 完成IExcelDataBar二次封装接口
+- 完成Excel文档内容
+- 添加API文档生成组件
+- 完成系统异常处理架构
+- 添加全局的DisposableList资源释放对象
+- 修改gitignore
+- 完成IExcelDrawing二次封装接口
+- 完成IExcelDataTable封装代码
+- 完成IExcelChartTitle缺失的属性
+- 完成IExcelChart二次封装接口
+- 完成IExcelSmartTag二次封装接口
+- 完成IExcelStyle二次封装接口
+- 完成IExcelBorder二次封装接口代码
+- 添加IOfficeSmartArt二次封装接口
+- 完成IExcelShapeRange缺失的属性及方法
+- 添加IExcelGroupObject二次封装接口
+
+## 1.1.6
+
+- IExcelRange添加CopyPicture方法
+- 将IExcelComSheets接口的EnumerateSheets方法重命名为Items
+- IExcelComSheets添加this索引器
+
+## 1.1.5
+
+- 完成IExcelShape二次封装接口缺失的属性
+- 完成IExcelPicture接口
+- 完成IExcelTextFrame缺失的属性
+- 完成IExcelSortFields二次封装接口的实现
+- 修改系统枚举转换方法
+- 修改打印预览组件
+- 加入Excel 中剪切板对象封装相关类
+- 添加查询对象IExcelQueryTable及相关的封装接口
+- 添加IExcelBorders缺失的属性
+- IExcelBorder接口添加ColorIndex属性
+- 重构IExcelComSheets接口
+
+## 1.1.4
+
+- 整理ICommonWorksheet的公共属性及方法
+- IExcelChart二次封装对象绑定事件处理
+- 为ICommonWorksheet接口添加公共的Protect方法
+- 整理IExcelRange的SpecialCells方法签名
+- 整理IExcelWorksheet的AutoFilter属性
+- IExcelWindow二次封装对象添加ActiveCell、ActiveChart、ActivePane、ActiveSheet和ActiveWorksheet属性
+- 修复编译错误
+- 完成IExcelPane二次封装对象
+- IExcelShapeRange接口添加ScaleWidth、ScaleHeight方法
+- ICoreRange添加AutoFormat方法和AutoOutline方法
+- 整理IExcelWorkbook的PivotCaches方法返回对象
+- ICoreRange接口添加Replace方法
+- 修改ICoreRange的BorderAround方法签名
+- 修改ICoreRange的Find方法签名
+- 完成接口注释
+- 完善缺失的属性注释内容
+- 优化ExcelCellFormat属性
+- 处理IWordPageSetup接口代码
+- 完成IWordPageSetup组件二次封装
+- 继续完成IWordPageSetup封装属性
+- 完成IWordPageSetup二次封装接口
+- IExcelRange添加Parse方法
+- 整理IExcelRange的GetAddressLocal、GetAddress方法签名
+- 完成ExcelCommonSheets的异常处理
+- 整理IExcelComments的Add方法
+- 完成IExcelWindow二次封装对象
+
+## 1.1.1
+
+- 完成IWordDocument二次封装对象
+- 完成IWordWindow二次封装接口
+- 添加OLEFormat类封装
+
+## 1.1.0
+
+- 处理WordRange二次封装属性及资源释放
+- 添加IWordHeadersFooters封装类
+- 完成IWordApplication接口的封装
+- 完善部分类的注释内容
+- 处理WordApplication接口及实现的代码
+- 完成枚举注释
+- 完成IOfficePickerDialog二次封装对象
+- 继续完成WordApplication相关的附属属性封装
+- 完成Office Search组件封装
+- 添加文件搜索公共接口封装
+- 整理Excel项目文件结构
+- 处理Excel项目中的枚举文件
+- 整理MudTools.OfficeInterop.Word项目中文件从属
+- 整理Word项目中的枚举
+- 完善WordApplication封装类
+- 添加自定义组合键KeyBindings二次封装
+- 完成Application二次封装组件
+- 解决现有封装类中存在的编译错误
+- 添加IWordEditor、IWordConflict封装接口
+- 完成IWordRange二次封装的属性及方法
+- 完善完成WordTable、WordBorders缺失的属性及方法
+- 整理Shape的从属文件夹
+- 添加 Word 对象错误集合的封装实现类
+- 添加Word 文档中的一个子文档（Subdocument）的封装接口
+- 添加Word 文档中修订（Revision）的封装接口
+- 添加Word FormField封装代码
+- 添加Word单元格外相关二次封装代码
+- 完成word文本处理相关的封装接口
+- 整理图形相关的封装接口
+- 整理文本相关类的文件结构
+- 完成Word Chart Com组件的二次封装
+- 添加代码版权信息
+- 修正添加Application属性引起的错误
+- 添加WordShape的二次封装代码
+- 添加用于操作Word表格样式TableStyle组件
+- 添加文档段落格式相关的缩进字符单元内内容解析文件
+- 添加用于操作 Word 文档中段落的格式设置ParagraphFormat COM组件相关类
+- 添加AutoCorrectEntries自动更正条目COM组件封装代码
+- 添加IExcelRange 高级应用文档
+- 添加Word模板相关二次封装代码
+- 完成接口文档
+- 添加类的描述信息
+- 完成打印设置功能说明文档
+- 更新操作指南文档
+
+## 1.0.7
+
+- 修复IExcelPicture封装的错误
+- 为ICommonWorksheet添加ParentName属性
+- 解决MudTools.OfficeInterop.Word项目包与PPT项目包冲突的问题
+- 修改系统发布目标平台
+- 加入IExcelErrors接口
+- 修改项目的API文档内容
+- 修改编译配置
+- 加入AssemblyName描述信息
+- 加入项目打包信息
+- 分别为MudTools.OfficeInterop、MudTools.OfficeInterop.Excel、MudTools.OfficeInterop.PowerPoint、MudTools.OfficeInterop.Word项目编写README.md文件
+- 删除项目中大量不需要的类
+- 添加README.md文件
+
+## 1.0.0
+
+- 首次提交代码
+- 删除源码管理不需要的文件
