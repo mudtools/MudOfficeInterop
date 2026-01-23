@@ -289,7 +289,7 @@ public interface IExcelWorkbook : IOfficeObject<IExcelWorkbook, MsExcel.Workbook
     /// 获取表示工作簿中所有数据透视表缓存的PivotCaches集合。
     /// </summary>
     /// <returns>数据透视表缓存集合。</returns>
-    IExcelPivotCaches PivotCaches();
+    IExcelPivotCaches? PivotCaches();
 
     /// <summary>
     /// 将指定的工作簿发布到公共文件夹。此方法仅适用于连接到Microsoft Exchange服务器的Microsoft Exchange客户端。
@@ -775,8 +775,7 @@ public interface IExcelWorkbook : IOfficeObject<IExcelWorkbook, MsExcel.Workbook
     /// <param name="destination">可选。数据将导入到指定范围的新XML列表中。</param>
     /// <returns>XML导入结果。</returns>
     [ValueConvert]
-    XlXmlImportResult? XmlImport(string url, out IExcelXmlMap importMap,
-                                bool? overwrite = null, object? destination = null);
+    XlXmlImportResult? XmlImport(string url, out IExcelXmlMap importMap, bool? overwrite = null, object? destination = null);
 
     /// <summary>
     /// 导出已映射到指定XML架构映射的数据到XML数据文件。

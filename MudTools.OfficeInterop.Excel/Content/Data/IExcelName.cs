@@ -102,7 +102,8 @@ public interface IExcelName : IOfficeObject<IExcelName, MsExcel.Name>, IDisposab
     /// 获取或设置宏类型
     /// 对应 Name.MacroType 属性
     /// </summary>
-    XlXLMMacroType? MacroType { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    XlXLMMacroType MacroType { get; set; }
 
     /// <summary>
     /// 获取或设置快捷键
@@ -115,7 +116,7 @@ public interface IExcelName : IOfficeObject<IExcelName, MsExcel.Name>, IDisposab
     /// 获取引用的区域对象
     /// 对应 Name.RefersToRange 属性
     /// </summary>
-    IExcelRange RefersToRange { get; }
+    IExcelRange? RefersToRange { get; }
 
     /// <summary>
     /// 获取或设置注释

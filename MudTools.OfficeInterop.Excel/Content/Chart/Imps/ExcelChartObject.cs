@@ -174,12 +174,12 @@ internal class ExcelChartObject : IExcelChartObject
     /// <summary>
     /// 形状对象缓存
     /// </summary>
-    private IExcelShapeRange _excelShape;
+    private IExcelShapeRange? _excelShape;
 
     /// <summary>
     /// 获取图表对象的底层形状对象
     /// </summary>
-    public IExcelShapeRange ShapeRange => _excelShape ??= new ExcelShapeRange(_shapeRange);
+    public IExcelShapeRange? ShapeRange => _excelShape ??= new ExcelShapeRange(_shapeRange);
 
     #endregion
 

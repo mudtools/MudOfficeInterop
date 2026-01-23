@@ -24,10 +24,15 @@ public interface IExcelListColumn : IOfficeObject<IExcelListColumn, MsExcel.List
     [ComPropertyWrap(NeedDispose = false)]
     IExcelApplication? Application { get; }
 
-
+    /// <summary>
+    /// 获取此列的列表数据格式，用于处理列表数据源中的数据。
+    /// </summary>
     IExcelListDataFormat? ListDataFormat { get; }
 
-    IExcelXPath XPath { get; }
+    /// <summary>
+    /// 获取此列的 XPath 属性，用于访问 XML 数据源中的数据。
+    /// </summary>
+    IExcelXPath? XPath { get; }
 
     /// <summary>
     /// 获取此列在 ListColumns 集合中的索引（从 1 开始）。
@@ -53,7 +58,8 @@ public interface IExcelListColumn : IOfficeObject<IExcelListColumn, MsExcel.List
     /// <summary>
     /// 获取或设置此列的总计行公式（仅当 ListObject.ShowTotals = true 时有效）。
     /// </summary>
-    XlTotalsCalculation? TotalsCalculation { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    XlTotalsCalculation TotalsCalculation { get; set; }
 
     /// <summary>
     /// 删除此列（将从表格中移除该列）。

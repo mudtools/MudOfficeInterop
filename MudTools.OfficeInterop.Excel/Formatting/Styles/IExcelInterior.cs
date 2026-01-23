@@ -43,12 +43,14 @@ public interface IExcelInterior : IOfficeObject<IExcelInterior, MsExcel.Interior
     /// 获取或设置内部图案类型
     /// 对应 Interior.Pattern 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlPattern Pattern { get; set; }
 
     /// <summary>
     /// 获取或设置内部颜色索引
     /// 对应 Interior.ColorIndex 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex ColorIndex { get; set; }
 
     /// <summary>

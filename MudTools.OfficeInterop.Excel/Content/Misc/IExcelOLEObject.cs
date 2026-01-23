@@ -191,6 +191,7 @@ public interface IExcelOLEObject : IOfficeObject<IExcelOLEObject, MsExcel.OLEObj
     /// 获取 OLE 对象类型。可以是以下 XlOLEType 常量之一：xlOLELink 或 xlOLEEmbed。
     /// 如果对象是链接的（存在于文件外部），则返回 xlOLELink；如果对象是嵌入的（完全包含在文件中），则返回 xlOLEEmbed。只读对象。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlOLEType OLEType { get; }
 
     /// <summary>

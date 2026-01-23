@@ -32,12 +32,14 @@ public interface IExcelValidation : IOfficeObject<IExcelValidation, MsExcel.Vali
     /// 获取或设置验证类型
     /// 对应 Validation.Type 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlDVType Type { get; }
 
     /// <summary>
     /// 获取或设置错误警告样式
     /// 对应 Validation.AlertStyle 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlDVAlertStyle AlertStyle { get; }
 
     /// <summary>

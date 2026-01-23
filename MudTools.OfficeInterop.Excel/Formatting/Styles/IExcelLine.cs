@@ -77,11 +77,13 @@ public interface IExcelLine : IOfficeObject<IExcelLine, MsExcel.Line>, IDisposab
     /// <summary>
     /// 获取或设置箭头头部样式
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlArrowHeadStyle ArrowHeadStyle { get; set; }
 
     /// <summary>
     /// 获取或设置箭头头部宽度
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlArrowHeadWidth ArrowHeadWidth { get; set; }
 
     /// <summary>

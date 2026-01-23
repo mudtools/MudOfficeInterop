@@ -32,5 +32,6 @@ public interface IExcelModelTableColumn : IOfficeObject<IExcelModelTableColumn, 
     /// <summary>
     /// 获取模型表列的数据类型。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlParameterDataType DataType { get; }
 }

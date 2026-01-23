@@ -29,7 +29,7 @@ public interface IExcelChartObject : IExcelComGraphObject, IDisposable
     /// 获取图表对象的图表
     /// 对应 ChartObject.Chart 属性
     /// </summary>
-    IExcelChart Chart { get; }
+    IExcelChart? Chart { get; }
 
     /// <summary>
     /// 获取图表对象是否为嵌入式图表
@@ -66,6 +66,6 @@ public interface IExcelChartObject : IExcelComGraphObject, IDisposable
     /// </summary>
     /// <param name="worksheetName">新图表对象名称</param>
     /// <returns>新创建的图表对象对象</returns>
-    IExcelWorksheet CopyToNewWorksheet(string worksheetName = "");
+    IExcelWorksheet? CopyToNewWorksheet(string worksheetName = "");
     #endregion
 }

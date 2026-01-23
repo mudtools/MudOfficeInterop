@@ -27,6 +27,7 @@ public interface IExcelShapeNode : IOfficeObject<IExcelShapeNode, MsExcel.ShapeN
     /// <summary>
     /// 获取节点类型（角点或曲线点）。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore", NeedConvert = true)]
     MsoEditingType EditingType { get; }
 
     /// <summary>
