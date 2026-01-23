@@ -40,11 +40,13 @@ public interface IWordKeyBinding : IDisposable
     /// <summary>
     /// 获取或设置指定的组合键。 返回值是一个 WdKey 常量。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     WdKey KeyCode { get; }
 
     /// <summary>
     /// 获取或设置组合键的第二个键代码。 返回值是一个 WdKey 常量。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     WdKey KeyCode2 { get; }
 
     /// <summary>

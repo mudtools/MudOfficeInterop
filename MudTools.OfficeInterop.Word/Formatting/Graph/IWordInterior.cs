@@ -41,11 +41,13 @@ public interface IWordInterior : IOfficeObject<IWordInterior, MsWord.Interior>, 
     /// <summary>
     /// 获取或设置内部区域颜色索引。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex ColorIndex { get; set; }
 
     /// <summary>
     /// 获取或设置内部区域图案。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlPattern Pattern { get; set; }
 
     /// <summary>
@@ -57,5 +59,6 @@ public interface IWordInterior : IOfficeObject<IWordInterior, MsWord.Interior>, 
     /// <summary>
     /// 获取或设置内部区域图案颜色索引。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex PatternColorIndex { get; set; }
 }

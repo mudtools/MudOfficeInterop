@@ -54,6 +54,7 @@ public interface IWordHyperlink : IDisposable
     /// <summary>
     /// 获取超链接的类型。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoHyperlinkType Type { get; }
 
     /// <summary>

@@ -63,6 +63,7 @@ public interface IWordWalls : IOfficeObject<IWordWalls>, IDisposable
     /// <summary>
     /// 获取或设置是否显示图片背面。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlChartPictureType PictureType { get; set; }
 
     /// <summary>

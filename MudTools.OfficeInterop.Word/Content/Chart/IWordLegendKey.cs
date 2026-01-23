@@ -52,6 +52,7 @@ public interface IWordLegendKey : IOfficeObject<IWordLegendKey>, IDisposable
     /// <summary>
     /// 获取或设置标记背景颜色索引
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex MarkerBackgroundColorIndex { get; set; }
 
     /// <summary>
@@ -79,6 +80,7 @@ public interface IWordLegendKey : IOfficeObject<IWordLegendKey>, IDisposable
     /// 获取或设置图片类型
     /// </summary>
     [ConvertInt]
+    [ComPropertyWrap(NeedConvert = true)]
     XlChartPictureType PictureType { get; set; }
 
     /// <summary>

@@ -39,7 +39,7 @@ public interface IWordStyle : IDisposable
     /// 获取或设置表格的样式。
     /// </summary>
     [ComPropertyWrap(IsMethod = true, PropertyName = "BaseStyle", NeedConvert = true)]
-    WdBuiltinStyle? BaseStyleType { get; set; }
+    WdBuiltinStyle BaseStyleType { get; set; }
 
     /// <summary>
     /// 获取一个值，该值指示此样式当前是否正在使用中。

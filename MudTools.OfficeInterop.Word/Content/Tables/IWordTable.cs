@@ -109,7 +109,7 @@ public interface IWordTable : IOfficeObject<IWordTable>, IDisposable
     /// 获取或设置指定对象的样式。
     /// </summary>
     [ComPropertyWrap(IsMethod = true, PropertyName = "Style", NeedConvert = true)]
-    WdBuiltinStyle? StyleType { get; set; }
+    WdBuiltinStyle StyleType { get; set; }
 
     /// <summary>
     /// 获取或设置指定对象的样式。
@@ -165,22 +165,22 @@ public interface IWordTable : IOfficeObject<IWordTable>, IDisposable
     /// <summary>
     /// 返回表示表格中所有表格行的 Rows 集合。
     /// </summary>
-    IWordRows Rows { get; }
+    IWordRows? Rows { get; }
 
     /// <summary>
     /// 获取或设置表示指定对象的所有边框的 Borders 集合。
     /// </summary>
-    IWordBorders Borders { get; set; }
+    IWordBorders? Borders { get; set; }
 
     /// <summary>
     /// 返回引用指定对象的阴影格式的 Shading 对象。
     /// </summary>
-    IWordShading Shading { get; }
+    IWordShading? Shading { get; }
 
     /// <summary>
     /// 返回表示指定表格中所有表格的 Tables 集合。
     /// </summary>
-    IWordTables Tables { get; }
+    IWordTables? Tables { get; }
 
     /// <summary>
     /// 选择指定的对象。
@@ -215,7 +215,7 @@ public interface IWordTable : IOfficeObject<IWordTable>, IDisposable
     /// <param name="applyFirstColumn">可选 Object。如果为 True，则应用指定格式的第一列属性。默认值为 True。</param>
     /// <param name="applyLastColumn">可选 Object。如果为 True，则应用指定格式的最后一列属性。默认值为 False。</param>
     /// <param name="autoFit">可选 Object。如果为 True，则在尽可能不更改单元格中文本换行方式的情况下减小表格列的宽度。默认值为 True。</param>
-    void AutoFormat(object format = null, bool? applyBorders = null, bool? applyShading = null,
+    void AutoFormat(object? format = null, bool? applyBorders = null, bool? applyShading = null,
                     bool? applyFont = null, bool? applyColor = null, bool? applyHeadingRows = null,
                     bool? applyLastRow = null, bool? applyFirstColumn = null, bool? applyLastColumn = null,
                     bool? autoFit = null);
