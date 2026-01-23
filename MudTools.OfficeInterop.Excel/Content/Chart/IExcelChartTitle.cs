@@ -118,12 +118,14 @@ public interface IExcelChartTitle : IOfficeObject<IExcelChartTitle, MsExcel.Char
     /// 获取或设置图表标题的水平对齐方式
     /// 对应 ChartTitle.HorizontalAlignment 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlHAlign HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置图表标题的垂直对齐方式
     /// 对应 ChartTitle.VerticalAlignment 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlVAlign VerticalAlignment { get; set; }
 
     /// <summary>
@@ -172,6 +174,7 @@ public interface IExcelChartTitle : IOfficeObject<IExcelChartTitle, MsExcel.Char
     /// 获取或设置图表标题的方向
     /// 对应 ChartTitle.Orientation 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlOrientation Orientation { get; set; }
 
     /// <summary>

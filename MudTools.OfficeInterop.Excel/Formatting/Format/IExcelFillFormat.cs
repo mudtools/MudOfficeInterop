@@ -36,16 +36,17 @@ public interface IExcelFillFormat : IOfficeObject<IExcelFillFormat, MsExcel.Fill
     /// <summary>
     /// 获取或设置前景色
     /// </summary>
-    IExcelColorFormat ForeColor { get; set; }
+    IExcelColorFormat? ForeColor { get; set; }
 
     /// <summary>
     /// 获取或设置背景色
     /// </summary>
-    IExcelColorFormat BackColor { get; set; }
+    IExcelColorFormat? BackColor { get; set; }
 
     /// <summary>
     /// 获取或设置图案类型
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore", NeedConvert = true)]
     MsoPatternType Pattern { get; }
 
     /// <summary>

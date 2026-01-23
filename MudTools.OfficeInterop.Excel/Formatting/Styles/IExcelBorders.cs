@@ -55,11 +55,13 @@ public interface IExcelBorders : IOfficeObject<IExcelBorders, MsExcel.Borders>, 
     /// <summary>
     /// 获取或设置边框线条样式
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlLineStyle LineStyle { get; set; }
 
     /// <summary>
     /// 获取或设置边框粗细
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlBorderWeight Weight { get; set; }
 
     /// <summary>
@@ -72,11 +74,18 @@ public interface IExcelBorders : IOfficeObject<IExcelBorders, MsExcel.Borders>, 
     /// 获取或设置边框的颜色。
     /// 对应 Border.ColorIndex 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex ColorIndex { get; set; }
 
+    /// <summary>
+    /// 获取或设置边框主题颜色
+    /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
     Color ThemeColor { get; set; }
 
+    /// <summary>
+    /// 获取或设置边框主题颜色
+    /// </summary>
     [ComPropertyWrap(NeedConvert = true)]
     float TintAndShade { get; set; }
     #endregion

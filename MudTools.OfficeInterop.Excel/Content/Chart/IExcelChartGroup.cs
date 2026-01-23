@@ -56,7 +56,7 @@ public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup, MsExcel.Char
     /// <summary>
     /// 获取图表组的类型（柱形图、折线图、饼图等）。
     /// </summary>
-    [ComPropertyWrap(ComNamespace = "MsCore")]
+    [ComPropertyWrap(ComNamespace = "MsCore", NeedConvert = true)]
     MsoChartType Type { get; }
 
     /// <summary>
@@ -175,7 +175,7 @@ public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup, MsExcel.Char
     /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
     /// </summary>
     [ValueConvert]
-    IExcelCategoryCollection CategoryCollection();
+    IExcelCategoryCollection? CategoryCollection();
 
     /// <summary>
     /// 获取图表组中指定索引的图表分类。
@@ -183,14 +183,14 @@ public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup, MsExcel.Char
     /// </summary>
     /// <param name="index">要获取的图表分类的索引</param>
     [ValueConvert]
-    IExcelChartCategory CategoryCollection(int index);
+    IExcelChartCategory? CategoryCollection(int index);
 
     /// <summary>
     /// 获取图表组中的完整分类集合。
     /// 返回封装后的 <see cref="IExcelCategoryCollection"/> 接口。
     /// </summary>
     [ValueConvert]
-    IExcelCategoryCollection FullCategoryCollection();
+    IExcelCategoryCollection? FullCategoryCollection();
 
     /// <summary>
     /// 获取图表组中指定索引的完整分类集合。
@@ -198,5 +198,5 @@ public interface IExcelChartGroup : IOfficeObject<IExcelChartGroup, MsExcel.Char
     /// </summary>
     /// <param name="index">要获取的分类集合的索引</param>
     [ValueConvert]
-    IExcelCategoryCollection FullCategoryCollection(int index);
+    IExcelCategoryCollection? FullCategoryCollection(int index);
 }

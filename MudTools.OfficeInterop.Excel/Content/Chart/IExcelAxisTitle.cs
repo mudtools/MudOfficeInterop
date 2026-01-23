@@ -110,18 +110,21 @@ public interface IExcelAxisTitle : IOfficeObject<IExcelAxisTitle, MsExcel.AxisTi
     /// 获取坐标轴标题的文本方向（角度或预设方向）。
     /// 使用 <see cref="XlOrientation"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlOrientation Orientation { get; set; }
 
     /// <summary>
     /// 获取或设置坐标轴标题的水平对齐方式。
     /// 使用 <see cref="XlHAlign"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlHAlign HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置坐标轴标题的垂直对齐方式。
     /// 使用 <see cref="XlVAlign"/> 枚举。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlVAlign VerticalAlignment { get; set; }
 
     /// <summary>

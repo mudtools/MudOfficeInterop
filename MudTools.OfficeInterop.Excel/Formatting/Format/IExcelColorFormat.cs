@@ -32,13 +32,13 @@ public interface IExcelColorFormat : IOfficeObject<IExcelColorFormat, MsExcel.Co
     /// 获取或设置颜色类型
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoColorType? Type { get; }
+    MsoColorType Type { get; }
 
     /// <summary>
     /// 获取或设置对象的主题颜色索引
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoThemeColorIndex? ObjectThemeColor { get; set; }
+    MsoThemeColorIndex ObjectThemeColor { get; set; }
 
     /// <summary>
     /// 获取或设置颜色的亮度值

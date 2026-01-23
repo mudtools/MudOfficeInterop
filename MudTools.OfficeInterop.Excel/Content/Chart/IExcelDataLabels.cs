@@ -109,12 +109,14 @@ public interface IExcelDataLabels : IOfficeObject<IExcelDataLabels, MsExcel.Data
     /// <summary>
     /// 获取或设置所有数据标签的水平对齐方式。
     /// </summary>
-    XlHAlign? HorizontalAlignment { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    XlHAlign HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置所有数据标签的垂直对齐方式。
     /// </summary>
-    XlVAlign? VerticalAlignment { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    XlVAlign VerticalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置所有数据标签文本的阅读顺序。
@@ -124,9 +126,14 @@ public interface IExcelDataLabels : IOfficeObject<IExcelDataLabels, MsExcel.Data
     /// <summary>
     /// 获取或设置所有数据标签文本的方向（角度）。
     /// </summary>
-    XlOrientation? Orientation { get; set; }
+    [ComPropertyWrap(NeedConvert = true)]
+    XlOrientation Orientation { get; set; }
 
-    object Select();
+    /// <summary>
+    /// 选择所有数据标签。
+    /// </summary>
+    /// <returns></returns>
+    object? Select();
 
     /// <summary>
     /// 删除集合中的所有数据标签。

@@ -29,46 +29,49 @@ public interface IExcelDisplayUnitLabel : IOfficeObject<IExcelDisplayUnitLabel, 
     /// <summary>
     /// 获取显示单位标签的边框格式。
     /// </summary>
-    IExcelBorder Border { get; }
+    IExcelBorder? Border { get; }
 
     /// <summary>
     /// 获取显示单位标签的内部填充格式。
     /// </summary>
-    IExcelInterior Interior { get; }
+    IExcelInterior? Interior { get; }
 
     /// <summary>
     /// 获取显示单位标签的填充格式。
     /// </summary>
-    IExcelChartFillFormat Fill { get; }
+    IExcelChartFillFormat? Fill { get; }
 
     /// <summary>
     /// 获取显示单位标签的字符格式。
     /// </summary>
-    IExcelCharacters Characters { get; }
+    IExcelCharacters? Characters { get; }
 
     /// <summary>
     /// 获取显示单位标签的字体格式。
     /// </summary>
-    IExcelFont Font { get; }
+    IExcelFont? Font { get; }
 
     /// <summary>
     /// 获取显示单位标签的整体格式设置对象。
     /// </summary>
-    IExcelChartFormat Format { get; }
+    IExcelChartFormat? Format { get; }
 
     /// <summary>
     /// 获取或设置显示单位标签的水平对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlHAlign HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置显示单位标签的文字方向。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlOrientation Orientation { get; set; }
 
     /// <summary>
     /// 获取或设置显示单位标签的垂直对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlVAlign VerticalAlignment { get; set; }
 
     /// <summary>
@@ -151,11 +154,11 @@ public interface IExcelDisplayUnitLabel : IOfficeObject<IExcelDisplayUnitLabel, 
     /// 选中显示单位标签。
     /// </summary>
     /// <returns>操作结果对象。</returns>
-    object Select();
+    object? Select();
 
     /// <summary>
     /// 删除显示单位标签。
     /// </summary>
     /// <returns>操作结果对象。</returns>
-    object Delete();
+    object? Delete();
 }

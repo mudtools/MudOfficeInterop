@@ -34,12 +34,14 @@ public interface IExcelBorder : IOfficeObject<IExcelBorder, MsExcel.Border>, IDi
     /// 获取或设置边框的线条样式
     /// 对应 Border.LineStyle 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlLineStyle LineStyle { get; set; }
 
     /// <summary>
     /// 获取或设置边框的粗细
     /// 对应 Border.Weight 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlBorderWeight Weight { get; set; }
 
     /// <summary>
@@ -53,6 +55,7 @@ public interface IExcelBorder : IOfficeObject<IExcelBorder, MsExcel.Border>, IDi
     /// 获取或设置边框的颜色。
     /// 对应 Border.ColorIndex 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex ColorIndex { get; set; }
 
     /// <summary>

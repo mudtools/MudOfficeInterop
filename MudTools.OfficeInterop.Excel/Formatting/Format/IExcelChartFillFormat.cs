@@ -46,20 +46,20 @@ public interface IExcelChartFillFormat : IOfficeObject<IExcelChartFillFormat, Ms
     /// 对应 FillFormat.Type (使用 MsoFillType 枚举对应的 int 值)
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoFillType? Type { get; }
+    MsoFillType Type { get; }
 
     /// <summary>
     /// 获取或设置图案类型 (如果 FillType 为 msoFillPatterned)
     /// 对应 FillFormat.Pattern (使用 MsoPatternType 枚举对应的 int 值)
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoPatternType? Pattern { get; }
+    MsoPatternType Pattern { get; }
 
     /// <summary>
     /// 获取或设置渐变填充的样式
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoGradientStyle? GradientStyle { get; }
+    MsoGradientStyle GradientStyle { get; }
     /// <summary>
     /// 获取或设置渐变填充的变体
     /// </summary>
@@ -68,7 +68,7 @@ public interface IExcelChartFillFormat : IOfficeObject<IExcelChartFillFormat, Ms
     /// 获取或设置渐变填充的颜色类型
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoGradientColorType? GradientColorType { get; }
+    MsoGradientColorType GradientColorType { get; }
 
     /// <summary>
     /// 获取纹理填充的名称
@@ -84,19 +84,19 @@ public interface IExcelChartFillFormat : IOfficeObject<IExcelChartFillFormat, Ms
     /// 获取或设置预设渐变类型
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoPresetGradientType? PresetGradientType { get; }
+    MsoPresetGradientType PresetGradientType { get; }
 
     /// <summary>
     /// 获取或设置预设纹理类型
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoPresetTexture? PresetTexture { get; }
+    MsoPresetTexture PresetTexture { get; }
 
     /// <summary>
     /// 获取或设置纹理类型
     /// </summary>
     [ComPropertyWrap(ComNamespace = "MsCore")]
-    MsoTextureType? TextureType { get; }
+    MsoTextureType TextureType { get; }
 
     /// <summary>
     /// 获取或设置填充格式是否可见

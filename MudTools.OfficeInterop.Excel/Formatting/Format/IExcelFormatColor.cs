@@ -43,7 +43,7 @@ public interface IExcelFormatColor : IOfficeObject<IExcelFormatColor, MsExcel.Fo
     /// 使用 <see cref="MsoThemeColorIndex"/> 枚举。
     /// 设置此属性会清除 RGB 设置。
     /// </summary>
-    [ComPropertyWrap(ComNamespace = "MsCore")]
+    [ComPropertyWrap(ComNamespace = "MsCore", NeedConvert = true)]
     MsoThemeColorIndex ThemeColor { get; set; }
 
     /// <summary>

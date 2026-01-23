@@ -32,12 +32,14 @@ public interface IExcelFormatCondition : IOfficeObject<IExcelFormatCondition, Ms
     /// 获取条件格式规则的类型
     /// 对应 FormatCondition.Type 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlFormatConditionType Type { get; }
 
     /// <summary>
     /// 获取或设置比较操作符 (对于 xlCellValue 类型)
     /// 对应 FormatCondition.Operator 属性
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlFormatConditionOperator Operator { get; }
 
     /// <summary>

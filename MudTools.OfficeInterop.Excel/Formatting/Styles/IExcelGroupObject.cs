@@ -113,24 +113,28 @@ public interface IExcelGroupObject : IOfficeObject<IExcelGroupObject, MsExcel.Gr
     /// 获取或设置箭头头部长度。
     /// 指定形状线条末端箭头的长度。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlArrowHeadLength ArrowHeadLength { get; set; }
 
     /// <summary>
     /// 获取或设置箭头头部样式。
     /// 指定形状线条末端箭头的样式类型。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlArrowHeadStyle ArrowHeadStyle { get; set; }
 
     /// <summary>
     /// 获取或设置箭头头部宽度。
     /// 指定形状线条末端箭头的宽度。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlArrowHeadWidth ArrowHeadWidth { get; set; }
 
     /// <summary>
     /// 获取或设置对象的方向。
     /// 指定对象（如文本）的排列方向。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlOrientation Orientation { get; set; }
 
     /// <summary>

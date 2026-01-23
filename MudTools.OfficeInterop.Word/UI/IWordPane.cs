@@ -57,8 +57,14 @@ public interface IWordPane : IOfficeObject<IWordPane>, IDisposable
     /// </summary>
     IWordSelection? Selection { get; }
 
+    /// <summary>
+    /// 获取窗格的页。
+    /// </summary>
     IWordPages? Pages { get; }
 
+    /// <summary>
+    /// 获取窗格的缩放设置。
+    /// </summary>
     IWordZooms? Zooms { get; }
 
     #endregion // 属性
@@ -70,10 +76,20 @@ public interface IWordPane : IOfficeObject<IWordPane>, IDisposable
     /// </summary>
     void Activate();
 
+    /// <summary>
+    /// 滚动窗格。
+    /// </summary>
+    /// <param name="velocity"></param>
     void AutoScroll(int velocity);
 
+    /// <summary>
+    /// 关闭窗格。
+    /// </summary>
     void Close();
 
+    /// <summary>
+    /// 创建新的框架集。
+    /// </summary>
     void NewFrameset();
 
     /// <summary>
