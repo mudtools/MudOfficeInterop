@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.Word;
 /// 表示 Word 图表轴标题的封装接口。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsWord")]
-public interface IWordAxisTitle :  IOfficeObject<IWordAxisTitle>,IDisposable
+public interface IWordAxisTitle : IOfficeObject<IWordAxisTitle>, IDisposable
 {
     /// <summary>
     /// 获取应用程序对象。
@@ -100,11 +100,13 @@ public interface IWordAxisTitle :  IOfficeObject<IWordAxisTitle>,IDisposable
     /// <summary>
     /// 获取或设置水平对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlConstants HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置垂直对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlConstants VerticalAlignment { get; set; }
 
     /// <summary>

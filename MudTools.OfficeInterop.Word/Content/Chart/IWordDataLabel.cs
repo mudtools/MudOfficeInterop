@@ -79,11 +79,13 @@ public interface IWordDataLabel : IOfficeObject<IWordDataLabel>, IDisposable
     /// <summary>
     /// 获取或设置水平对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlConstants HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置垂直对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlConstants VerticalAlignment { get; set; }
 
     /// <summary>

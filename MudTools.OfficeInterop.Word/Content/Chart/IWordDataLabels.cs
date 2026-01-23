@@ -77,11 +77,13 @@ public interface IWordDataLabels : IEnumerable<IWordDataLabel?>, IOfficeObject<I
     /// <summary>
     /// 获取或设置水平对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlConstants HorizontalAlignment { get; set; }
 
     /// <summary>
     /// 获取或设置垂直对齐方式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlConstants VerticalAlignment { get; set; }
 
     /// <summary>
@@ -104,6 +106,7 @@ public interface IWordDataLabels : IEnumerable<IWordDataLabel?>, IOfficeObject<I
     /// <summary>
     /// 获取或设置数据标签类型。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlDataLabelsType Type { get; set; }
 
     /// <summary>
@@ -130,6 +133,7 @@ public interface IWordDataLabels : IEnumerable<IWordDataLabel?>, IOfficeObject<I
     /// <summary>
     /// 获取或设置数据标签方向。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlOrientation Orientation { get; set; }
 
     /// <summary>

@@ -44,5 +44,5 @@ public interface IOfficeHTMLProject : IOfficeObject<IOfficeHTMLProject>, IDispos
     /// 在 Microsoft 脚本编辑器中打开指定的 HTML 项目或 HTML 项目项，使用可选的 Microsoft.Office.Core.MsoHTMLProjectOpen 常量指定的视图之一。
     /// </summary>
     /// <param name="openKind">可选 Microsoft.Office.Core.MsoHTMLProjectOpen。打开指定项目或项目项的视图。</param>
-    void Open(MsoHTMLProjectOpen openKind = (MsoHTMLProjectOpen)0);
+    void Open(MsoHTMLProjectOpen openKind = MsoHTMLProjectOpen.msoHTMLProjectOpenSourceView);
 }

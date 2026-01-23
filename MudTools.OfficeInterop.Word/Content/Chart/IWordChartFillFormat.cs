@@ -43,6 +43,7 @@ public interface IWordChartFillFormat : IOfficeObject<IWordChartFillFormat>, IDi
     /// <summary>
     /// 获取渐变颜色类型。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     MsoGradientColorType GradientColorType { get; }
 
     /// <summary>
@@ -53,6 +54,7 @@ public interface IWordChartFillFormat : IOfficeObject<IWordChartFillFormat>, IDi
     /// <summary>
     /// 获取渐变样式。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoGradientStyle GradientStyle { get; }
 
     /// <summary>
@@ -63,11 +65,13 @@ public interface IWordChartFillFormat : IOfficeObject<IWordChartFillFormat>, IDi
     /// <summary>
     /// 获取预设渐变类型。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetGradientType PresetGradientType { get; }
 
     /// <summary>
     /// 获取预设纹理。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoPresetTexture PresetTexture { get; }
 
     /// <summary>
@@ -78,6 +82,7 @@ public interface IWordChartFillFormat : IOfficeObject<IWordChartFillFormat>, IDi
     /// <summary>
     /// 获取纹理类型。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoTextureType TextureType { get; }
 
     /// <summary>
@@ -89,6 +94,7 @@ public interface IWordChartFillFormat : IOfficeObject<IWordChartFillFormat>, IDi
     /// <summary>
     /// 获取或设置填充类型。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoFillType Type { get; }
 
     /// <summary>

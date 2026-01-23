@@ -59,11 +59,13 @@ public interface IWordChartFont : IOfficeObject<IWordChartFont>, IDisposable
     /// <summary>
     /// 获取或设置字体颜色索引。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex ColorIndex { get; set; }
 
     /// <summary>
     /// 获取或设置图表字体的背景色样式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlBackground Background { get; set; }
 
     /// <summary>

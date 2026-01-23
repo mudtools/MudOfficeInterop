@@ -44,6 +44,7 @@ public interface IWordColorFormat : IOfficeObject<IWordColorFormat, MsWord.Color
     /// <summary>
     /// 获取颜色格式的类型。
     /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
     MsoColorType Type { get; }
 
     /// <summary>

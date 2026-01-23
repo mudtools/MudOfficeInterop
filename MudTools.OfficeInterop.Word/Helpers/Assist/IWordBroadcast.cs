@@ -35,6 +35,7 @@ public interface IWordBroadcast : IOfficeObject<IWordBroadcast>, IDisposable
     /// <summary>
     /// 获取广播的当前状态。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     MsoBroadcastState State { get; }
 
     /// <summary>

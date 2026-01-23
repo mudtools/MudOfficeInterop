@@ -28,11 +28,13 @@ public interface IWordChartBorder : IOfficeObject<IWordChartBorder>, IDisposable
     /// <summary>
     /// 获取或设置边框颜色索引。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlColorIndex ColorIndex { get; set; }
 
     /// <summary>
     /// 获取或设置边框线条样式。
     /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
     XlLineStyle LineStyle { get; set; }
 
     /// <summary>
