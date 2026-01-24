@@ -322,8 +322,7 @@ namespace DocumentAutomationProcessingSample
                     shape.WrapFormat.Type = WdWrapType.wdWrapNone;
                     shape.RelativeHorizontalPosition = WdRelativeHorizontalPosition.wdRelativeHorizontalPositionMargin;
                     shape.RelativeVerticalPosition = WdRelativeVerticalPosition.wdRelativeVerticalPositionMargin;
-                    shape.LeftPosition = WdShapePosition.wdShapeCenter;
-                    shape.TopPosition = WdShapePosition.wdShapeCenter;
+
                 }
 
                 Console.WriteLine("  - 水印已添加");
