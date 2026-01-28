@@ -6,91 +6,76 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
+using System;
+using System.Runtime.InteropServices;
+
 /// <summary>
-/// PowerPoint 动作设置接口
+/// 表示 PowerPoint 中形状的动作设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointActionSetting : IDisposable
 {
     /// <summary>
-    /// 获取或设置动作类型
+    /// 获取创建此动作设置的 PowerPoint 应用程序实例。
     /// </summary>
-    PpActionType ActionType { get; set; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="Application"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置超链接
+    /// 获取此动作设置的父对象。
     /// </summary>
-    string Hyperlink { get; }
-
-    /// <summary>
-    /// 获取或设置运行程序
-    /// </summary>
-    string Run { get; set; }
-
-    /// <summary>
-    /// 获取或设置幻灯片放映名称
-    /// </summary>
-    string SlideShowName { get; set; }
-
-    /// <summary>
-    /// 获取或设置动画动作
-    /// </summary>
-    PpAnimateAction AnimateAction { get; set; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此动作设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
+    /// <summary>
+    /// 获取或设置动作类型。
+    /// </summary>
+    /// <value>表示动作类型的 <see cref="PpActionType"/> 枚举值。</value>
+    PpActionType Action { get; set; }
 
     /// <summary>
-    /// 获取或设置触发器类型
+    /// 获取或设置动作动词。
     /// </summary>
-    PpMouseActivation TriggerType { get; set; }
+    /// <value>表示动作动词的字符串。</value>
+    string? ActionVerb { get; set; }
 
     /// <summary>
-    /// 设置动作参数
+    /// 获取或设置一个值，指示是否在触发动作时应用动画效果。
     /// </summary>
-    /// <param name="actionType">动作类型</param>
-    /// <param name="hyperlink">超链接</param>
-    /// <param name="run">运行程序</param>
-    /// <param name="slideShowName">幻灯片放映名称</param>
-    void SetAction(PpActionType actionType = PpActionType.ppActionNone, string hyperlink = null, string run = null, string slideShowName = null);
-
+    /// <value>指示是否应用动画效果的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool AnimateAction { get; set; }
 
     /// <summary>
-    /// 设置动画效果
+    /// 获取或设置要运行的程序或宏的名称。
     /// </summary>
-    /// <param name="animateAction">动画动作</param>
-    /// <param name="playAnimation">是否播放动画</param>
-    /// <param name="stopAnimation">是否停止动画</param>
-    void SetAnimation(PpAnimateAction animateAction = PpAnimateAction.ppAnimateNone, bool playAnimation = false, bool stopAnimation = false);
+    /// <value>表示要运行的程序或宏名称的字符串。</value>
+    string? Run { get; set; }
 
     /// <summary>
-    /// 应用动作设置到对象
+    /// 获取或设置幻灯片放映的名称。
     /// </summary>
-    /// <param name="targetObject">目标对象</param>
-    void ApplyTo(object targetObject);
-
-
-    /// <summary>
-    /// 预览动作
-    /// </summary>
-    void Preview();
+    /// <value>表示幻灯片放映名称的字符串。</value>
+    string? SlideShowName { get; set; }
 
     /// <summary>
-    /// 复制动作设置
+    /// 获取与此动作设置关联的超链接。
     /// </summary>
-    /// <returns>复制的动作设置</returns>
-    IPowerPointActionSetting Duplicate();
+    /// <value>表示超链接的 <see cref="IPowerPointHyperlink"/> 对象。</value>
+    IPowerPointHyperlink? Hyperlink { get; }
 
     /// <summary>
-    /// 重置动作设置
+    /// 获取与此动作设置关联的声音效果。
     /// </summary>
-    void Reset();
+    /// <value>表示声音效果的 <see cref="IPowerPointSoundEffect"/> 对象。</value>
+    IPowerPointSoundEffect? SoundEffect { get; }
 
     /// <summary>
-    /// 获取动作设置信息
+    /// 获取或设置一个值，指示在展示其他幻灯片后是否返回到原始幻灯片。
     /// </summary>
-    /// <returns>动作设置信息字符串</returns>
-    string GetActionSettingInfo();
+    /// <value>指示是否返回的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool ShowAndReturn { get; set; }
 }

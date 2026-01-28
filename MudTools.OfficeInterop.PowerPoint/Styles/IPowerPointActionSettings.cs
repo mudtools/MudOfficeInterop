@@ -5,71 +5,39 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using Microsoft.Office.Interop.PowerPoint;
-
 namespace MudTools.OfficeInterop.PowerPoint;
+
+
 /// <summary>
-/// PowerPoint 动作设置集合接口
+/// 表示 PowerPoint 形状的动作设置集合。
 /// </summary>
-public interface IPowerPointActionSettings : IDisposable
+[ComCollectionWrap(ComNamespace = "MsPowerPoint")]
+public interface IPowerPointActionSettings : IEnumerable<IPowerPointActionSetting?>, IDisposable
 {
+
     /// <summary>
-    /// 获取动作设置数量
+    /// 获取集合中的动作设置数量。
     /// </summary>
+    /// <value>集合中的动作设置数量。</value>
     int Count { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此动作设置集合的 PowerPoint 应用程序实例。
     /// </summary>
+    /// <value>表示 PowerPoint 应用程序的 <see cref="Application"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
+
+    /// <summary>
+    /// 获取此动作设置集合的父对象。
+    /// </summary>
+    /// <value>表示此动作设置集合父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 根据索引获取动作设置
+    /// 通过鼠标激活类型获取集合中的指定动作设置。
     /// </summary>
-    IPowerPointActionSetting this[int index] { get; }
-
-    /// <summary>
-    /// 根据动作类型获取动作设置
-    /// </summary>
-    IPowerPointActionSetting this[PpMouseActivation actionType] { get; }
-
-    /// <summary>
-    /// 查找符合条件的动作设置
-    /// </summary>
-    /// <param name="predicate">查找条件</param>
-    /// <returns>符合条件的动作设置列表</returns>
-    IEnumerable<IPowerPointActionSetting> Find(Func<IPowerPointActionSetting, bool> predicate);
-
-    /// <summary>
-    /// 获取所有鼠标点击动作设置
-    /// </summary>
-    /// <returns>鼠标点击动作设置列表</returns>
-    IEnumerable<IPowerPointActionSetting> GetMouseClickActions();
-
-    /// <summary>
-    /// 获取所有鼠标悬停动作设置
-    /// </summary>
-    /// <returns>鼠标悬停动作设置列表</returns>
-    IEnumerable<IPowerPointActionSetting> GetMouseOverActions();
-
-    /// <summary>
-    /// 清除所有动作设置
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 重置动作设置
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 刷新动作设置显示
-    /// </summary>
-    void Refresh();
-
-    /// <summary>
-    /// 获取动作设置集合信息
-    /// </summary>
-    /// <returns>动作设置集合信息字符串</returns>
-    string GetActionSettingsInfo();
+    /// <param name="index">要获取的动作设置的鼠标激活类型。</param>
+    /// <value>指定鼠标激活类型对应的 <see cref="IPowerPointActionSetting"/> 对象。</value>
+    IPowerPointActionSetting? this[PpMouseActivation index] { get; }
 }
