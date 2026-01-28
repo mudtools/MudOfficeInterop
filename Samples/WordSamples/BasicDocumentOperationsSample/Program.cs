@@ -71,7 +71,7 @@ namespace BasicDocumentOperationsSample
                 Console.WriteLine($"可用区域尺寸: {width} x {height} 磅");
 
                 // 控制应用程序可见性
-                app.Visibility = WordAppVisibility.Visible;
+                app.Visible = true;
                 Console.WriteLine("应用程序已设为可见");
 
                 // 获取应用程序版本信息
@@ -202,7 +202,7 @@ namespace BasicDocumentOperationsSample
                 Console.WriteLine("已关闭屏幕更新以提高性能");
 
                 // 设置窗口状态
-                app.WordWindowState = WdWindowState.wdWindowStateMaximize;
+                app.WindowState = WdWindowState.wdWindowStateMaximize;
                 Console.WriteLine("窗口已最大化");
 
                 Console.WriteLine("应用程序设置和选项操作完成");

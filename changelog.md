@@ -1,5 +1,21 @@
 # OfficeInterop 项目变更日志
 
+## 2.0.6
+
+- 为COM属性添加包装注解并调整可为空类型
+- 统一接口属性并添加ComPropertyWrap特性
+- 优化COM属性包装和类型定义
+- 为COM接口属性添加ComPropertyWrap特性
+- 更新Excel控件接口继承以匹配MsExcel类型
+- 更新接口继承以支持具体COM类型
+- 统一接口继承IOfficeObject泛型参数
+- 为接口添加泛型MsExcel类型参数以增强类型安全
+- 为接口添加MsExcel COM类型参数泛型支持
+- 删除过时的技术文档并更新.gitignore配置
+- 移除打印相关枚举和word对话框枚举文件
+- 移除过时的Excel枚举定义代码文件
+- 优化Excel接口结构并增强功能支持
+
 ## 2.0.5
 
 - 更新Excel操作对象库版本并优化方法参数
