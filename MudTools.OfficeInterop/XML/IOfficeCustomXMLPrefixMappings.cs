@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft.Office.Core.CustomXMLPrefixMapping 对象的集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeCustomXMLPrefixMappings : IOfficeObject<IOfficeCustomXMLPrefixMappings>, IEnumerable<IOfficeCustomXMLPrefixMapping?>, IDisposable
+public interface IOfficeCustomXMLPrefixMappings : IOfficeObject<IOfficeCustomXMLPrefixMappings, MsCore.CustomXMLPrefixMappings>, IEnumerable<IOfficeCustomXMLPrefixMapping?>, IDisposable
 {
     /// <summary>
     /// 获取 Microsoft.Office.Core.CustomXMLPrefixMappings 对象的父对象。只读。

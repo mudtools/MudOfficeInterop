@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示附加到数据流的 Microsoft.Office.Core.CustomXMLSchema 对象集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeCustomXMLSchemaCollection : IOfficeObject<IOfficeCustomXMLSchemaCollection>, IEnumerable<IOfficeCustomXMLSchema?>, IDisposable
+public interface IOfficeCustomXMLSchemaCollection : IOfficeObject<IOfficeCustomXMLSchemaCollection, MsCore.CustomXMLSchemaCollection>, IEnumerable<IOfficeCustomXMLSchema?>, IDisposable
 {
     /// <summary>
     /// 获取 Microsoft.Office.Core._CustomXMLSchemaCollection 对象的父对象。只读。
