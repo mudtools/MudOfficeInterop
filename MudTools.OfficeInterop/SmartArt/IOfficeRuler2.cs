@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 应用程序中的标尺对象接口，提供对标尺属性的访问
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeRuler2 : IOfficeObject<IOfficeRuler2>, IDisposable
+public interface IOfficeRuler2 : IOfficeObject<IOfficeRuler2, MsCore.Ruler2>, IDisposable
 {
     /// <summary>
     /// 获取标尺的父对象

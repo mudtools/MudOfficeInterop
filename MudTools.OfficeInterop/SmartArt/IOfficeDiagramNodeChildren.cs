@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office图表节点子节点集合的接口，继承自IEnumerable&lt;IOfficeDiagramNode&gt;和IDisposable接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeDiagramNodeChildren : IOfficeObject<IOfficeDiagramNodeChildren>, IEnumerable<IOfficeDiagramNode?>, IDisposable
+public interface IOfficeDiagramNodeChildren : IOfficeObject<IOfficeDiagramNodeChildren, MsCore.DiagramNodeChildren>, IEnumerable<IOfficeDiagramNode?>, IDisposable
 {
     /// <summary>
     /// 获取集合中子节点的数量

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 封装 Microsoft.Office.Core.Font2 对象的接口，用于操作 Office 应用程序中的字体格式设置
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeFont2 : IOfficeObject<IOfficeFont2>, IDisposable
+public interface IOfficeFont2 : IOfficeObject<IOfficeFont2, MsCore.Font2>, IDisposable
 {
     /// <summary>
     /// 获取字体对象的父对象
