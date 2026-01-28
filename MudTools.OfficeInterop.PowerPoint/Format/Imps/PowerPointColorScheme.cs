@@ -59,7 +59,7 @@ internal class PowerPointColorScheme : IPowerPointColorScheme
         {
             if (_colorScheme != null && index >= 1 && index <= Count)
             {
-                return _colorScheme[(PpColorSchemeIndex)index].RGB;
+                return _colorScheme[(MsPowerPoint.PpColorSchemeIndex)index].RGB;
             }
             return 0;
         }
@@ -178,7 +178,7 @@ internal class PowerPointColorScheme : IPowerPointColorScheme
         {
             if (_colorScheme != null && index >= 1 && index <= Count)
             {
-                _colorScheme[(PpColorSchemeIndex)index].RGB = color;
+                _colorScheme[(MsPowerPoint.PpColorSchemeIndex)index].RGB = color;
             }
         }
         catch (Exception ex)

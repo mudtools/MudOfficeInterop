@@ -6,149 +6,215 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
 /// <summary>
-/// PowerPoint 填充格式接口
+/// 表示对象的填充格式。
+/// 提供设置和获取填充属性（如颜色、渐变、纹理等）的功能。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointFillFormat : IDisposable
 {
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此填充格式的应用程序对象。
     /// </summary>
-    object? Parent { get; }
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置前景色
+    /// 获取创建此填充格式的应用程序的创建者代码。
     /// </summary>
-    int ForeColor { get; set; }
+    int Creator { get; }
 
     /// <summary>
-    /// 获取或设置背景色
+    /// 获取此填充格式的父对象。
     /// </summary>
-    int BackColor { get; set; }
+    object Parent { get; }
 
     /// <summary>
-    /// 获取或设置可见性
+    /// 将填充设置为背景填充。
     /// </summary>
-    bool Visible { get; set; }
+    void Background();
 
     /// <summary>
-    /// 获取填充类型
+    /// 设置单色渐变填充。
     /// </summary>
-    int Type { get; }
+    /// <param name="style">渐变样式。</param>
+    /// <param name="variant">渐变变体，取值范围为1到4。</param>
+    /// <param name="degree">渐变角度，取值范围为0.0到1.0。</param>
+    void OneColorGradient([ComNamespace("MsCore")] MsoGradientStyle style, int variant, float degree);
 
     /// <summary>
-    /// 获取或设置渐变颜色类型
+    /// 设置图案填充。
     /// </summary>
-    int GradientColorType { get; }
+    /// <param name="pattern">图案类型。</param>
+    void Patterned([ComNamespace("MsCore")] MsoPatternType pattern);
 
     /// <summary>
-    /// 获取或设置渐变样式
+    /// 设置预设渐变填充。
     /// </summary>
-    int GradientStyle { get; }
+    /// <param name="style">渐变样式。</param>
+    /// <param name="variant">渐变变体，取值范围为1到4。</param>
+    /// <param name="presetGradientType">预设渐变类型。</param>
+    void PresetGradient([ComNamespace("MsCore")] MsoGradientStyle style, int variant, [ComNamespace("MsCore")] MsoPresetGradientType presetGradientType);
 
     /// <summary>
-    /// 获取或设置渐变变体
+    /// 设置预设纹理填充。
     /// </summary>
-    int GradientVariant { get; }
+    /// <param name="presetTexture">预设纹理类型。</param>
+    void PresetTextured([ComNamespace("MsCore")] MsoPresetTexture presetTexture);
 
     /// <summary>
-    /// 获取或设置图案类型
-    /// </summary>
-    int Pattern { get; }
-
-    /// <summary>
-    /// 获取或设置纹理类型
-    /// </summary>
-    int TextureType { get; set; }
-
-    /// <summary>
-    /// 获取或设置纹理名称
-    /// </summary>
-    string TextureName { get; set; }
-
-    /// <summary>
-    /// 设置纯色填充
+    /// 设置纯色填充。
     /// </summary>
     void Solid();
 
     /// <summary>
-    /// 设置图案填充
+    /// 设置双色渐变填充。
     /// </summary>
-    /// <param name="pattern">图案类型</param>
-    void Patterned(int pattern);
+    /// <param name="style">渐变样式。</param>
+    /// <param name="variant">渐变变体，取值范围为1到4。</param>
+    void TwoColorGradient([ComNamespace("MsCore")] MsoGradientStyle style, int variant);
 
     /// <summary>
-    /// 设置渐变填充
+    /// 使用指定图片文件设置填充。
     /// </summary>
-    /// <param name="style">渐变样式</param>
-    /// <param name="variant">渐变变体</param>
-    /// <param name="presetGradientType">预设渐变类型</param>
-    void Gradient(int style, int variant, int presetGradientType);
+    /// <param name="pictureFile">图片文件路径。</param>
+    void UserPicture(string pictureFile);
 
     /// <summary>
-    /// 设置纹理填充
+    /// 使用指定纹理文件设置填充。
     /// </summary>
-    /// <param name="textureFile">纹理文件路径</param>
-    /// <param name="textureType">纹理类型</param>
-    void Textured(string textureFile, MsoPresetTexture textureType = MsoPresetTexture.msoPresetTextureMixed);
+    /// <param name="textureFile">纹理文件路径。</param>
+    void UserTextured(string textureFile);
 
     /// <summary>
-    /// 设置图片填充
+    /// 获取或设置填充的背景颜色。
     /// </summary>
-    /// <param name="pictureFile">图片文件路径</param>
-    /// <param name="linkToFile">是否链接到文件</param>
-    /// <param name="saveWithDocument">是否与文档一起保存</param>
-    void UserPicture(string pictureFile, bool linkToFile = false, bool saveWithDocument = true);
+    IPowerPointColorFormat? BackColor { get; set; }
 
     /// <summary>
-    /// 设置预设纹理填充
+    /// 获取或设置填充的前景颜色。
     /// </summary>
-    /// <param name="presetTexture">预设纹理类型</param>
-    void PresetTextured(MsoPresetTexture presetTexture);
+    IPowerPointColorFormat? ForeColor { get; set; }
 
     /// <summary>
-    /// 设置预设渐变填充
+    /// 获取渐变填充的颜色类型。
     /// </summary>
-    /// <param name="presetGradientType">预设渐变类型</param>
-    void PresetGradient(MsoPresetGradientType presetGradientType);
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoGradientColorType GradientColorType { get; }
 
     /// <summary>
-    /// 设置自定义颜色渐变
+    /// 获取单色渐变的渐变程度（0.0到1.0）。
     /// </summary>
-    /// <param name="color1">起始颜色</param>
-    /// <param name="color2">结束颜色</param>
-    /// <param name="style">渐变样式</param>
-    /// <param name="variant">渐变变体</param>
-    void TwoColorGradient(int color1, int color2, int style, int variant);
+    float GradientDegree { get; }
 
     /// <summary>
-    /// 重置填充格式
+    /// 获取渐变填充的样式。
     /// </summary>
-    void Reset();
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoGradientStyle GradientStyle { get; }
 
     /// <summary>
-    /// 复制填充格式
+    /// 获取渐变填充的变体（1到4）。
     /// </summary>
-    /// <returns>复制的填充格式对象</returns>
-    IPowerPointFillFormat Duplicate();
+    int GradientVariant { get; }
 
     /// <summary>
-    /// 应用填充格式到指定形状
+    /// 获取图案填充的图案类型。
     /// </summary>
-    /// <param name="shape">目标形状</param>
-    void ApplyTo(IPowerPointShape shape);
-
-
-    /// <summary>
-    /// 设置填充颜色
-    /// </summary>
-    /// <param name="foregroundColor">前景色</param>
-    /// <param name="backgroundColor">背景色</param>
-    void SetColors(int foregroundColor, int backgroundColor = 0);
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoPatternType Pattern { get; }
 
     /// <summary>
-    /// 获取填充信息
+    /// 获取预设渐变填充的类型。
     /// </summary>
-    /// <returns>填充信息字符串</returns>
-    string GetFillInfo();
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoPresetGradientType PresetGradientType { get; }
+
+    /// <summary>
+    /// 获取预设纹理填充的纹理类型。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoPresetTexture PresetTexture { get; }
+
+    /// <summary>
+    /// 获取纹理填充的纹理名称。
+    /// </summary>
+    string TextureName { get; }
+
+    /// <summary>
+    /// 获取纹理填充的类型。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoTextureType TextureType { get; }
+
+    /// <summary>
+    /// 获取或设置填充的透明度（0.0到1.0）。
+    /// </summary>
+    float Transparency { get; set; }
+
+    /// <summary>
+    /// 获取填充类型。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoFillType Type { get; }
+
+    /// <summary>
+    /// 获取或设置填充是否可见。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Visible { get; set; }
+
+    /// <summary>
+    /// 获取渐变填充的渐变停止点集合。
+    /// </summary>
+    IOfficeGradientStops? GradientStops { get; }
+
+    /// <summary>
+    /// 获取或设置纹理填充的水平偏移量。
+    /// </summary>
+    float TextureOffsetX { get; set; }
+
+    /// <summary>
+    /// 获取或设置纹理填充的垂直偏移量。
+    /// </summary>
+    float TextureOffsetY { get; set; }
+
+    /// <summary>
+    /// 获取或设置纹理填充的对齐方式。
+    /// </summary>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoTextureAlignment TextureAlignment { get; set; }
+
+    /// <summary>
+    /// 获取或设置纹理填充的水平缩放比例。
+    /// </summary>
+    float TextureHorizontalScale { get; set; }
+
+    /// <summary>
+    /// 获取或设置纹理填充的垂直缩放比例。
+    /// </summary>
+    float TextureVerticalScale { get; set; }
+
+    /// <summary>
+    /// 获取或设置纹理是否平铺。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool TextureTile { get; set; }
+
+    /// <summary>
+    /// 获取或设置填充是否随对象旋转。
+    /// </summary>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool RotateWithObject { get; set; }
+
+    /// <summary>
+    /// 获取图片效果集合。
+    /// </summary>
+    IOfficePictureEffects? PictureEffects { get; }
+
+    /// <summary>
+    /// 获取或设置渐变填充的角度。
+    /// </summary>
+    float GradientAngle { get; set; }
 }
