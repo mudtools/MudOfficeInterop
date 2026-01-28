@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 渐变停止点定义了渐变颜色过渡的关键点，包括颜色、位置和透明度等属性
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeGradientStops : IOfficeObject<IOfficeGradientStops>, IEnumerable<IOfficeGradientStop?>, IDisposable
+public interface IOfficeGradientStops : IOfficeObject<IOfficeGradientStops, MsCore.GradientStops>, IEnumerable<IOfficeGradientStop?>, IDisposable
 {
     /// <summary>
     /// 获取集合中渐变停止点的数量

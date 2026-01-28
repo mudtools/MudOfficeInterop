@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中文本框架的接口封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeTextFrame : IOfficeObject<IOfficeTextFrame>, IDisposable
+public interface IOfficeTextFrame : IOfficeObject<IOfficeTextFrame, MsCore.TextFrame>, IDisposable
 {
     /// <summary>
     /// 获取文本框架的父形状。

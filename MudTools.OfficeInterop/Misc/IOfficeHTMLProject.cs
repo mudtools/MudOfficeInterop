@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office应用程序中的HTML项目，用于处理HTML文档和脚本编辑
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeHTMLProject : IOfficeObject<IOfficeHTMLProject>, IDisposable
+public interface IOfficeHTMLProject : IOfficeObject<IOfficeHTMLProject, MsCore.HTMLProject>, IDisposable
 {
     /// <summary>
     /// 获取指定对象的父对象。

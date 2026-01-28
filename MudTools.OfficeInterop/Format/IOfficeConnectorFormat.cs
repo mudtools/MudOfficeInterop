@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中连接符格式的接口封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeConnectorFormat : IOfficeObject<IOfficeConnectorFormat>, IDisposable
+public interface IOfficeConnectorFormat : IOfficeObject<IOfficeConnectorFormat, MsCore.ConnectorFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置连接符的类型。

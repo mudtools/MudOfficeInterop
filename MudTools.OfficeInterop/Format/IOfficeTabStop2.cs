@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office应用程序中的制表位接口，提供对制表位属性和操作的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeTabStop2 : IOfficeObject<IOfficeTabStop2>, IDisposable
+public interface IOfficeTabStop2 : IOfficeObject<IOfficeTabStop2, MsCore.TabStop2>, IDisposable
 {
     /// <summary>
     /// 获取制表位的父对象。

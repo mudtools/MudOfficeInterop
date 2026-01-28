@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop;
 /// 用于处理线条和形状边框的格式设置
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeLineFormat : IOfficeObject<IOfficeLineFormat>, IDisposable
+public interface IOfficeLineFormat : IOfficeObject<IOfficeLineFormat, MsCore.LineFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置线条的可见性

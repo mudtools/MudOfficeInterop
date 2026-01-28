@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 使用此对象可以限制对活动文档的访问权限，并返回或设置特定的权限设置 [[1]], [[14]].
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficePermission : IOfficeObject<IOfficePermission>, IEnumerable<IOfficeUserPermission?>, IDisposable
+public interface IOfficePermission : IOfficeObject<IOfficePermission, MsCore.Permission>, IEnumerable<IOfficeUserPermission?>, IDisposable
 {
     /// <summary>
     /// 获取一个值，该值指示是否已为活动文档启用了权限限制。

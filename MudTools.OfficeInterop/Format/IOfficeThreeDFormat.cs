@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 中三维格式的接口封装。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeThreeDFormat : IOfficeObject<IOfficeThreeDFormat>, IDisposable
+public interface IOfficeThreeDFormat : IOfficeObject<IOfficeThreeDFormat, MsCore.ThreeDFormat>, IDisposable
 {
     /// <summary>
     /// 获取或设置三维效果的深度。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 封装了Microsoft.Office.Core.FillFormat COM对象
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeFillFormat : IOfficeObject<IOfficeFillFormat>, IDisposable
+public interface IOfficeFillFormat : IOfficeObject<IOfficeFillFormat, MsCore.FillFormat>, IDisposable
 {
     /// <summary>
     /// 获取前景颜色格式
