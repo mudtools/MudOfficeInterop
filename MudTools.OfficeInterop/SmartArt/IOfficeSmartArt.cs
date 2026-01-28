@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// SmartArt 图表的抽象接口，提供对布局、样式、颜色、节点等核心功能的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArt : IOfficeObject<IOfficeSmartArt>, IDisposable
+public interface IOfficeSmartArt : IOfficeObject<IOfficeSmartArt, MsCore.SmartArt>, IDisposable
 {
     /// <summary>
     /// 获取所有节点的集合（包括嵌套子节点）

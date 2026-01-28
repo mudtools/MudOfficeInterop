@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
 [ItemIndex]
-public interface IOfficeShapes : IOfficeObject<IOfficeShapes>, IEnumerable<IOfficeShape?>, IDisposable
+public interface IOfficeShapes : IOfficeObject<IOfficeShapes, MsCore.Shapes>, IEnumerable<IOfficeShape?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的形状数量

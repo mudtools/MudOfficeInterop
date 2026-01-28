@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对 SmartArt 布局集合的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtLayouts : IOfficeObject<IOfficeSmartArtLayouts>, IEnumerable<IOfficeSmartArtLayout?>, IDisposable
+public interface IOfficeSmartArtLayouts : IOfficeObject<IOfficeSmartArtLayouts, MsCore.SmartArtLayouts>, IEnumerable<IOfficeSmartArtLayout?>, IDisposable
 {
     /// <summary>
     /// 获取 SmartArt 布局集合中项的数量。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对单个 SmartArt 快速样式属性的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartArtQuickStyle : IOfficeObject<IOfficeSmartArtQuickStyle>, IDisposable
+public interface IOfficeSmartArtQuickStyle : IOfficeObject<IOfficeSmartArtQuickStyle, MsCore.SmartArtQuickStyle>, IDisposable
 {
     /// <summary>
     /// 获取 SmartArt 快速样式的名称。

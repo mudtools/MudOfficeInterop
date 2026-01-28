@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// Microsoft Office Word 2003 Document 对象和 Microsoft Office Excel 2003 Workbook 对象的 SmartDocument 属性返回一个 SmartDocument 对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeSmartDocument : IOfficeObject<IOfficeSmartDocument>, IDisposable
+public interface IOfficeSmartDocument : IOfficeObject<IOfficeSmartDocument, MsCore.SmartDocument>, IDisposable
 {
     /// <summary>
     /// 获取或设置标识附加到活动 Microsoft Office Word 2003 文档或 Microsoft Office Excel 2003 工作簿的 XML 扩展包的 ID（通常是全局唯一标识符 GUID）。

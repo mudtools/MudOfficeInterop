@@ -15,7 +15,7 @@ namespace MudTools.OfficeInterop;
 /// 支持集合遍历和资源释放功能
 /// </remarks>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeTextRange2 : IOfficeObject<IOfficeTextRange2>, IEnumerable<IOfficeTextRange2?>, IDisposable
+public interface IOfficeTextRange2 : IOfficeObject<IOfficeTextRange2, MsCore.TextRange2>, IEnumerable<IOfficeTextRange2?>, IDisposable
 {
     /// <summary>
     /// 获取父对象

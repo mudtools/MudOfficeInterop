@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Office 文本文档中的一列，提供对列数、间距和文本方向的控制
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeTextColumn2 : IOfficeObject<IOfficeTextColumn2>, IDisposable
+public interface IOfficeTextColumn2 : IOfficeObject<IOfficeTextColumn2, MsCore.TextColumn2>, IDisposable
 {
     /// <summary>
     /// 获取或设置列的数量

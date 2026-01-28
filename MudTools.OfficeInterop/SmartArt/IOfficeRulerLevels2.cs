@@ -15,7 +15,7 @@ namespace MudTools.OfficeInterop;
 /// 支持遍历集合中的所有 Ruler Level 项并提供资源释放机制
 /// </remarks>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeRulerLevels2 : IOfficeObject<IOfficeRulerLevels2>, IEnumerable<IOfficeRulerLevel2>, IDisposable
+public interface IOfficeRulerLevels2 : IOfficeObject<IOfficeRulerLevels2, MsCore.RulerLevels2>, IEnumerable<IOfficeRulerLevel2>, IDisposable
 {
     /// <summary>
     /// 获取父对象
