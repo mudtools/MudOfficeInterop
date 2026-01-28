@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示Office主题字体集合的接口，提供对Office文档中主题字体的访问
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore"), ItemIndex]
-public interface IOfficeThemeFonts : IOfficeObject<IOfficeThemeFonts>, IEnumerable<IOfficeThemeFont?>, IDisposable
+public interface IOfficeThemeFonts : IOfficeObject<IOfficeThemeFonts, MsCore.ThemeFonts>, IEnumerable<IOfficeThemeFont?>, IDisposable
 {
     /// <summary>
     /// 获取 Microsoft.Office.Core.ThemeFonts 对象的父对象。只读。

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 封装 Microsoft.Office.Interop.Word.PictureEffect 的接口，用于操作图片效果。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficePictureEffect : IOfficeObject<IOfficePictureEffect>, IDisposable
+public interface IOfficePictureEffect : IOfficeObject<IOfficePictureEffect, MsCore.PictureEffect>, IDisposable
 {
     /// <summary>
     /// 获取或设置效果的类型。

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop;
 /// IRibbonUI 对象通常在自定义功能区加载时通过回调函数传递
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore", ComClassName = "IRibbonUI")]
-public interface IOfficeRibbonUI : IOfficeObject<IOfficeRibbonUI>, IDisposable
+public interface IOfficeRibbonUI : IOfficeObject<IOfficeRibbonUI, MsCore.IRibbonUI>, IDisposable
 {
     #region 操作方法
     /// <summary>

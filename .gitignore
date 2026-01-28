@@ -4,6 +4,8 @@
 
 /.vs
 /docs
+/publish
+/nuget
 /bindebug_net10.0
 /MudTools.OfficeInterop/bin/Debug
 /MudTools.OfficeInterop/obj

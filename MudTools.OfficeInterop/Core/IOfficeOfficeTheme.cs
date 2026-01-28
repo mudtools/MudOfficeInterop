@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 表示 Microsoft Office 主题。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeOfficeTheme : IOfficeObject<IOfficeOfficeTheme>, IDisposable
+public interface IOfficeOfficeTheme : IOfficeObject<IOfficeOfficeTheme, MsCore.OfficeTheme>, IDisposable
 {
     /// <summary>
     /// 获取 Microsoft.Office.Core.OfficeTheme 对象的父对象。只读。

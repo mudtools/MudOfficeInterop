@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 该接口提供对选取器对话框功能的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficePickerDialog : IOfficeObject<IOfficePickerDialog>, IDisposable
+public interface IOfficePickerDialog : IOfficeObject<IOfficePickerDialog, MsCore.PickerDialog>, IDisposable
 {
     /// <summary>
     /// 获取或设置选取器对话框的数据处理器 ID。

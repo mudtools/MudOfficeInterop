@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop;
 /// 提供对 Microsoft.Office.Core.FileDialogFilter 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeFileDialogFilter : IOfficeObject<IOfficeFileDialogFilter>, IDisposable
+public interface IOfficeFileDialogFilter : IOfficeObject<IOfficeFileDialogFilter, MsCore.FileDialogFilter>, IDisposable
 {
     #region 基础属性
     /// <summary>

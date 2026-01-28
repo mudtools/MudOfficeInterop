@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop;
 /// ICTPFactory 对象用于创建 CustomTaskPane 对象
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore", ComClassName = "ICTPFactory")]
-public interface IOfficeCTPFactory : IOfficeObject<IOfficeCTPFactory>, IDisposable
+public interface IOfficeCTPFactory : IOfficeObject<IOfficeCTPFactory, MsCore.ICTPFactory>, IDisposable
 {
     /// <summary>
     /// 创建一个新的自定义任务窗格 (CustomTaskPane)

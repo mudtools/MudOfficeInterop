@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop;
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsCore", ComClassName = "FileDialogSelectedItems")]
 [ItemIndex]
-public interface IOfficeSelectedItems : IOfficeObject<IOfficeSelectedItems>, IEnumerable<string>, IDisposable
+public interface IOfficeSelectedItems : IOfficeObject<IOfficeSelectedItems, MsCore.FileDialogSelectedItems>, IEnumerable<string>, IDisposable
 {
     #region 基础属性
     /// <summary>

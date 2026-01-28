@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop;
 /// 提供对 Microsoft.Office.Core.FileDialog 的安全访问和操作
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsCore")]
-public interface IOfficeFileDialog : IOfficeObject<IOfficeFileDialog>, IDisposable
+public interface IOfficeFileDialog : IOfficeObject<IOfficeFileDialog, MsCore.FileDialog>, IDisposable
 {
     #region 基础属性
     /// <summary>
