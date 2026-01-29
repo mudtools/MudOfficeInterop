@@ -8,127 +8,132 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 
+using System;
+using System.Runtime.InteropServices;
+
 /// <summary>
-/// PowerPoint 线条格式接口
+/// 表示 PowerPoint 形状的线条格式设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointLineFormat : IDisposable
 {
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此线条格式设置的应用程序实例。
     /// </summary>
+    /// <value>表示应用程序的 <see cref="IPowerPointApplication"/>。</value>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IPowerPointApplication? Application { get; }
+
+    /// <summary>
+    /// 获取创建此线条格式设置的应用程序的创建者代码。
+    /// </summary>
+    /// <value>表示创建者代码的整数值。</value>
+    int Creator { get; }
+
+    /// <summary>
+    /// 获取此线条格式设置的父对象。
+    /// </summary>
+    /// <value>表示此线条格式设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置线条样式
+    /// 获取或设置线条的背景颜色。
     /// </summary>
-    int Style { get; set; }
+    /// <value>表示背景颜色的 <see cref="IPowerPointColorFormat"/> 对象。</value>
+    IPowerPointColorFormat? BackColor { get; set; }
 
     /// <summary>
-    /// 获取或设置线条粗细
+    /// 获取或设置线条起始箭头头的长度。
     /// </summary>
-    float Weight { get; set; }
+    /// <value>表示起始箭头头长度的 <see cref="MsoArrowheadLength"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoArrowheadLength BeginArrowheadLength { get; set; }
 
     /// <summary>
-    /// 获取或设置前景色
+    /// 获取或设置线条起始箭头头的样式。
     /// </summary>
-    int ForeColor { get; set; }
+    /// <value>表示起始箭头头样式的 <see cref="MsoArrowheadStyle"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoArrowheadStyle BeginArrowheadStyle { get; set; }
 
     /// <summary>
-    /// 获取或设置可见性
+    /// 获取或设置线条起始箭头头的宽度。
     /// </summary>
+    /// <value>表示起始箭头头宽度的 <see cref="MsoArrowheadWidth"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoArrowheadWidth BeginArrowheadWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条的虚线样式。
+    /// </summary>
+    /// <value>表示虚线样式的 <see cref="MsoLineDashStyle"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoLineDashStyle DashStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条结束箭头头的长度。
+    /// </summary>
+    /// <value>表示结束箭头头长度的 <see cref="MsoArrowheadLength"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoArrowheadLength EndArrowheadLength { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条结束箭头头的样式。
+    /// </summary>
+    /// <value>表示结束箭头头样式的 <see cref="MsoArrowheadStyle"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoArrowheadStyle EndArrowheadStyle { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条结束箭头头的宽度。
+    /// </summary>
+    /// <value>表示结束箭头头宽度的 <see cref="MsoArrowheadWidth"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoArrowheadWidth EndArrowheadWidth { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条的前景颜色。
+    /// </summary>
+    /// <value>表示前景颜色的 <see cref="IPowerPointColorFormat"/> 对象。</value>
+    IPowerPointColorFormat? ForeColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条的图案样式。
+    /// </summary>
+    /// <value>表示图案样式的 <see cref="MsoPatternType"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoPatternType Pattern { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条的样式。
+    /// </summary>
+    /// <value>表示线条样式的 <see cref="MsoLineStyle"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoLineStyle Style { get; set; }
+
+    /// <summary>
+    /// 获取或设置线条的透明度。
+    /// </summary>
+    /// <value>表示透明度值的浮点数（0.0 到 1.0）。</value>
+    float Transparency { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示线条是否可见。
+    /// </summary>
+    /// <value>指示是否可见的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
     bool Visible { get; set; }
 
     /// <summary>
-    /// 获取或设置虚线样式
+    /// 获取或设置线条的粗细（以磅为单位）。
     /// </summary>
-    int DashStyle { get; set; }
+    /// <value>表示线条粗细的浮点数。</value>
+    float Weight { get; set; }
 
     /// <summary>
-    /// 获取或设置起始箭头样式
+    /// 获取或设置一个值，指示是否使用内嵌笔。
     /// </summary>
-    int BeginArrowheadStyle { get; set; }
-
-    /// <summary>
-    /// 获取或设置结束箭头样式
-    /// </summary>
-    int EndArrowheadStyle { get; set; }
-
-    /// <summary>
-    /// 获取或设置起始箭头宽度
-    /// </summary>
-    int BeginArrowheadWidth { get; set; }
-
-    /// <summary>
-    /// 获取或设置结束箭头宽度
-    /// </summary>
-    int EndArrowheadWidth { get; set; }
-
-    /// <summary>
-    /// 获取或设置起始箭头长度
-    /// </summary>
-    int BeginArrowheadLength { get; set; }
-
-    /// <summary>
-    /// 获取或设置结束箭头长度
-    /// </summary>
-    int EndArrowheadLength { get; set; }
-
-    /// <summary>
-    /// 获取线条类型
-    /// </summary>
-    int Type { get; }
-
-
-    /// <summary>
-    /// 设置箭头样式
-    /// </summary>
-    /// <param name="beginStyle">起始箭头样式</param>
-    /// <param name="endStyle">结束箭头样式</param>
-    /// <param name="beginWidth">起始箭头宽度</param>
-    /// <param name="endWidth">结束箭头宽度</param>
-    /// <param name="beginLength">起始箭头长度</param>
-    /// <param name="endLength">结束箭头长度</param>
-    void SetArrowheads(int beginStyle = 0, int endStyle = 0, int beginWidth = 1, int endWidth = 1, int beginLength = 1, int endLength = 1);
-
-
-    /// <summary>
-    /// 重置线条格式
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 复制线条格式
-    /// </summary>
-    /// <returns>复制的线条格式对象</returns>
-    IPowerPointLineFormat Duplicate();
-
-    /// <summary>
-    /// 应用线条格式到指定形状
-    /// </summary>
-    /// <param name="shape">目标形状</param>
-    void ApplyTo(IPowerPointShape shape);
-
-    /// <summary>
-    /// 设置线条粗细
-    /// </summary>
-    /// <param name="weight">线条粗细</param>
-    void SetWeight(float weight);
-
-    /// <summary>
-    /// 设置线条颜色
-    /// </summary>
-    /// <param name="color">线条颜色</param>
-    void SetColor(int color);
-
-    /// <summary>
-    /// 设置线条样式
-    /// </summary>
-    /// <param name="style">线条样式</param>
-    void SetStyle(int style);
-
-    /// <summary>
-    /// 获取线条信息
-    /// </summary>
-    /// <returns>线条信息字符串</returns>
-    string GetLineInfo();
+    /// <value>指示是否使用内嵌笔的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool InsetPen { get; set; }
 }
