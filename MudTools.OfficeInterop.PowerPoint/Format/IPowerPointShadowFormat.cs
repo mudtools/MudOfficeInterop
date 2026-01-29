@@ -6,93 +6,112 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
 /// <summary>
-/// PowerPoint 阴影格式接口
+/// 表示 PowerPoint 形状的阴影格式设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointShadowFormat : IDisposable
 {
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此阴影格式设置的应用程序实例。
     /// </summary>
+    /// <value>表示应用程序的 <see cref="IPowerPointApplication"/>。</value>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IPowerPointApplication? Application { get; }
+
+    /// <summary>
+    /// 获取创建此阴影格式设置的应用程序的创建者代码。
+    /// </summary>
+    /// <value>表示创建者代码的整数值。</value>
+    int Creator { get; }
+
+    /// <summary>
+    /// 获取此阴影格式设置的父对象。
+    /// </summary>
+    /// <value>表示此阴影格式设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置可见性
+    /// 按指定增量增加阴影的水平偏移量。
     /// </summary>
-    bool Visible { get; set; }
+    /// <param name="increment">水平偏移量增量（以磅为单位）。</param>
+    void IncrementOffsetX(float increment);
 
     /// <summary>
-    /// 获取或设置阴影类型
+    /// 按指定增量增加阴影的垂直偏移量。
     /// </summary>
-    int Type { get; set; }
+    /// <param name="increment">垂直偏移量增量（以磅为单位）。</param>
+    void IncrementOffsetY(float increment);
 
     /// <summary>
-    /// 获取或设置水平偏移
+    /// 获取或设置阴影的前景颜色。
     /// </summary>
+    /// <value>表示阴影颜色的 <see cref="IPowerPointColorFormat"/> 对象。</value>
+    IPowerPointColorFormat? ForeColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示阴影是否被形状遮挡。
+    /// </summary>
+    /// <value>指示阴影是否被遮挡的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Obscured { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影的水平偏移量（以磅为单位）。
+    /// </summary>
+    /// <value>表示水平偏移量的浮点数。</value>
     float OffsetX { get; set; }
 
     /// <summary>
-    /// 获取或设置垂直偏移
+    /// 获取或设置阴影的垂直偏移量（以磅为单位）。
     /// </summary>
+    /// <value>表示垂直偏移量的浮点数。</value>
     float OffsetY { get; set; }
 
     /// <summary>
-    /// 获取或设置前景色
+    /// 获取或设置阴影的透明度。
     /// </summary>
-    int ForeColor { get; set; }
-
+    /// <value>表示透明度值的浮点数（0.0 到 1.0）。</value>
+    float Transparency { get; set; }
 
     /// <summary>
-    /// 获取或设置模糊度
+    /// 获取或设置阴影的类型。
     /// </summary>
+    /// <value>表示阴影类型的 <see cref="MsoShadowType"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoShadowType Type { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示阴影是否可见。
+    /// </summary>
+    /// <value>指示阴影是否可见的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Visible { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影的样式。
+    /// </summary>
+    /// <value>表示阴影样式的 <see cref="MsoShadowStyle"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoShadowStyle Style { get; set; }
+
+    /// <summary>
+    /// 获取或设置阴影的模糊程度。
+    /// </summary>
+    /// <value>表示模糊程度的浮点数（以磅为单位）。</value>
     float Blur { get; set; }
 
     /// <summary>
-    /// 获取或设置阴影大小
+    /// 获取或设置阴影的大小。
     /// </summary>
+    /// <value>表示阴影大小的浮点数（以磅为单位）。</value>
     float Size { get; set; }
 
     /// <summary>
-    /// 重置阴影格式
+    /// 获取或设置一个值，指示阴影是否随形状旋转。
     /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 复制阴影格式
-    /// </summary>
-    /// <returns>复制的阴影格式对象</returns>
-    IPowerPointShadowFormat Duplicate();
-
-    /// <summary>
-    /// 应用阴影格式到指定形状
-    /// </summary>
-    /// <param name="shape">目标形状</param>
-    void ApplyTo(IPowerPointShape shape);
-
-    /// <summary>
-    /// 设置阴影偏移
-    /// </summary>
-    /// <param name="offsetX">水平偏移</param>
-    /// <param name="offsetY">垂直偏移</param>
-    void SetOffset(float offsetX, float offsetY);
-
-    /// <summary>
-    /// 设置阴影颜色
-    /// </summary>
-    /// <param name="color">阴影颜色</param>
-    /// <param name="transparency">透明度</param>
-    void SetColor(int color, float transparency = 0);
-
-    /// <summary>
-    /// 设置阴影大小和模糊度
-    /// </summary>
-    /// <param name="size">阴影大小</param>
-    /// <param name="blur">模糊度</param>
-    void SetSizeAndBlur(float size, float blur);
-
-    /// <summary>
-    /// 获取阴影信息
-    /// </summary>
-    /// <returns>阴影信息字符串</returns>
-    string GetShadowInfo();
+    /// <value>指示阴影是否随形状旋转的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool RotateWithShape { get; set; }
 }

@@ -16,7 +16,7 @@ internal class PowerPointSlide : IPowerPointSlide
     private bool _disposedValue;
     private IPowerPointShapes? _shapes;
     private IPowerPointHeadersFooters? _headersFooters;
-    private IPowerPointBackground? _background;
+    private IPowerPointShapeRange? _background;
     private IPowerPointSlideShowTransition? _slideShowTransition;
     private IPowerPointTimeLine? _timeLine;
     private IPowerPointTags? _tags;
@@ -96,11 +96,11 @@ internal class PowerPointSlide : IPowerPointSlide
     /// <summary>
     /// 获取幻灯片的背景
     /// </summary>
-    public IPowerPointBackground? Background
+    public IPowerPointShapeRange? Background
     {
         get
         {
-            _background ??= new PowerPointBackground(_slide.Background);
+            _background ??= new PowerPointShapeRange(_slide.Background);
             return _background;
         }
     }

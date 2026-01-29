@@ -49,7 +49,7 @@ public interface IPowerPointSlide : IDisposable
     /// <summary>
     /// 获取幻灯片的背景
     /// </summary>
-    IPowerPointBackground? Background { get; }
+    IPowerPointShapeRange? Background { get; }
 
     /// <summary>
     /// 获取幻灯片的母版

@@ -15,7 +15,7 @@ internal class PowerPointMaster : IPowerPointMaster
     private bool _disposedValue;
     private IPowerPointShapes _shapes;
     private IPowerPointHeadersFooters _headersFooters;
-    private IPowerPointBackground _background;
+    private IPowerPointShapeRange _background;
 
     /// <summary>
     /// 获取母版名称
@@ -63,7 +63,7 @@ internal class PowerPointMaster : IPowerPointMaster
     /// <summary>
     /// 获取背景
     /// </summary>
-    public IPowerPointBackground Background
+    public IPowerPointShapeRange Background
     {
         get
         {
@@ -71,7 +71,7 @@ internal class PowerPointMaster : IPowerPointMaster
             {
                 // 获取背景形状范围
                 var backgroundRange = _master.Shapes.Range(new object[] { 1 }); // 假设背景是第一个形状
-                _background = new PowerPointBackground(backgroundRange);
+                _background = new PowerPointShapeRange(backgroundRange);
             }
             return _background;
         }

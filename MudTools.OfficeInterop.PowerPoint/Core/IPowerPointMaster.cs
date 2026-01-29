@@ -30,7 +30,7 @@ public interface IPowerPointMaster : IDisposable
     /// <summary>
     /// 获取背景
     /// </summary>
-    IPowerPointBackground Background { get; }
+    IPowerPointShapeRange Background { get; }
 
     /// <summary>
     /// 获取父对象
