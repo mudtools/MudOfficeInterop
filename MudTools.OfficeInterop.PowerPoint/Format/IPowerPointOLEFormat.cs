@@ -51,7 +51,6 @@ public interface IPowerPointOLEFormat : IDisposable
     /// 获取或设置 OLE 对象跟随颜色的方式。
     /// </summary>
     /// <value>表示颜色跟随方式的 <see cref="PpFollowColors"/> 枚举值。</value>
-    [ComPropertyWrap(ComNamespace = "MsCore")]
     PpFollowColors FollowColors { get; set; }
 
     /// <summary>

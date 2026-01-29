@@ -33,7 +33,6 @@ public interface IPowerPointParagraphFormat : IDisposable
     /// 获取或设置段落的对齐方式。
     /// </summary>
     /// <value>表示段落对齐方式的 <see cref="PpParagraphAlignment"/> 枚举值。</value>
-    [ComPropertyWrap(ComNamespace = "MsCore")]
     PpParagraphAlignment Alignment { get; set; }
 
     /// <summary>
@@ -85,7 +84,6 @@ public interface IPowerPointParagraphFormat : IDisposable
     /// 获取或设置文本的基线对齐方式。
     /// </summary>
     /// <value>表示基线对齐方式的 <see cref="PpBaselineAlignment"/> 枚举值。</value>
-    [ComPropertyWrap(ComNamespace = "MsCore")]
     PpBaselineAlignment BaseLineAlignment { get; set; }
 
     /// <summary>
@@ -113,6 +111,5 @@ public interface IPowerPointParagraphFormat : IDisposable
     /// 获取或设置文本的方向。
     /// </summary>
     /// <value>表示文本方向的 <see cref="PpDirection"/> 枚举值。</value>
-    [ComPropertyWrap(ComNamespace = "MsCore")]
     PpDirection TextDirection { get; set; }
 }

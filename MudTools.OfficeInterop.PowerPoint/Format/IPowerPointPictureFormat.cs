@@ -6,81 +6,104 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
+
 /// <summary>
-/// PowerPoint 图片格式接口
+/// 表示 PowerPoint 中图片的格式设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointPictureFormat : IDisposable
 {
+    /// <summary>
+    /// 获取创建此图片格式设置的应用程序实例。
+    /// </summary>
+    /// <value>表示应用程序的 <see cref="IPowerPointApplication"/>。</value>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置亮度
+    /// 获取创建此图片格式设置的应用程序的创建者代码。
     /// </summary>
-    float Brightness { get; set; }
+    /// <value>表示创建者代码的整数值。</value>
+    int Creator { get; }
 
     /// <summary>
-    /// 获取或设置对比度
+    /// 获取此图片格式设置的父对象。
     /// </summary>
-    float Contrast { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否透明背景
-    /// </summary>
-    bool TransparentBackground { get; set; }
-
-    /// <summary>
-    /// 获取或设置裁剪左边缘
-    /// </summary>
-    float CropLeft { get; set; }
-
-    /// <summary>
-    /// 获取或设置裁剪右边缘
-    /// </summary>
-    float CropRight { get; set; }
-
-    /// <summary>
-    /// 获取或设置裁剪上边缘
-    /// </summary>
-    float CropTop { get; set; }
-
-    /// <summary>
-    /// 获取或设置裁剪下边缘
-    /// </summary>
-    float CropBottom { get; set; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此图片格式设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 裁剪图片
+    /// 按指定增量增加图片的亮度。
     /// </summary>
-    void Crop();
+    /// <param name="increment">亮度增量值（-1.0 到 1.0）。</param>
+    void IncrementBrightness(float increment);
 
     /// <summary>
-    /// 重置图片格式
+    /// 按指定增量增加图片的对比度。
     /// </summary>
-    void Reset();
+    /// <param name="increment">对比度增量值（-1.0 到 1.0）。</param>
+    void IncrementContrast(float increment);
 
     /// <summary>
-    /// 设置裁剪区域
+    /// 获取或设置图片的亮度。
     /// </summary>
-    /// <param name="left">左裁剪</param>
-    /// <param name="right">右裁剪</param>
-    /// <param name="top">上裁剪</param>
-    /// <param name="bottom">下裁剪</param>
-    void SetCrop(float left, float right, float top, float bottom);
+    /// <value>表示亮度值的浮点数（0.0 到 1.0）。</value>
+    float Brightness { get; set; }
 
     /// <summary>
-    /// 应用图片样式
+    /// 获取或设置图片的颜色类型。
     /// </summary>
-    /// <param name="styleIndex">样式索引</param>
-    void ApplyStyle(int styleIndex);
+    /// <value>表示图片颜色类型的 <see cref="MsoPictureColorType"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoPictureColorType ColorType { get; set; }
 
     /// <summary>
-    /// 获取图片信息
+    /// 获取或设置图片的对比度。
     /// </summary>
-    /// <returns>图片信息字符串</returns>
-    string GetPictureInfo();
+    /// <value>表示对比度值的浮点数（0.0 到 1.0）。</value>
+    float Contrast { get; set; }
+
+    /// <summary>
+    /// 获取或设置从图片底部裁剪的量（以磅为单位）。
+    /// </summary>
+    /// <value>表示底部裁剪量的浮点数。</value>
+    float CropBottom { get; set; }
+
+    /// <summary>
+    /// 获取或设置从图片左侧裁剪的量（以磅为单位）。
+    /// </summary>
+    /// <value>表示左侧裁剪量的浮点数。</value>
+    float CropLeft { get; set; }
+
+    /// <summary>
+    /// 获取或设置从图片右侧裁剪的量（以磅为单位）。
+    /// </summary>
+    /// <value>表示右侧裁剪量的浮点数。</value>
+    float CropRight { get; set; }
+
+    /// <summary>
+    /// 获取或设置从图片顶部裁剪的量（以磅为单位）。
+    /// </summary>
+    /// <value>表示顶部裁剪量的浮点数。</value>
+    float CropTop { get; set; }
+
+    /// <summary>
+    /// 获取或设置透明颜色的 RGB 值。
+    /// </summary>
+    /// <value>表示透明颜色 RGB 值的整数值。</value>
+    int TransparencyColor { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否将背景设置为透明。
+    /// </summary>
+    /// <value>指示背景是否透明的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool TransparentBackground { get; set; }
+
+    /// <summary>
+    /// 获取图片的裁剪设置对象。
+    /// </summary>
+    /// <value>表示裁剪设置的 <see cref="IOfficeCrop"/> 对象。</value>
+    IOfficeCrop? Crop { get; }
 }
-
