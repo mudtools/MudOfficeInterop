@@ -6,93 +6,113 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
+using System;
+using System.Runtime.InteropServices;
+
 /// <summary>
-/// PowerPoint 段落格式接口
+/// 表示 PowerPoint 文本框中段落的格式设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointParagraphFormat : IDisposable
 {
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此段落格式设置的 PowerPoint 应用程序实例。
     /// </summary>
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
+
+    /// <summary>
+    /// 获取此段落格式设置的父对象。
+    /// </summary>
+    /// <value>表示此段落格式设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置对齐方式
+    /// 获取或设置段落的对齐方式。
     /// </summary>
-    int Alignment { get; set; }
+    /// <value>表示段落对齐方式的 <see cref="PpParagraphAlignment"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    PpParagraphAlignment Alignment { get; set; }
 
     /// <summary>
-    /// 获取或设置段前间距
+    /// 获取段落的项目符号格式设置。
     /// </summary>
+    /// <value>表示项目符号格式的 <see cref="IPowerPointBulletFormat"/> 对象。</value>
+    IPowerPointBulletFormat? Bullet { get; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示段前间距是否使用行距规则。
+    /// </summary>
+    /// <value>指示是否使用行距规则的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool LineRuleBefore { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示段后间距是否使用行距规则。
+    /// </summary>
+    /// <value>指示是否使用行距规则的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool LineRuleAfter { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示段内行间距是否使用行距规则。
+    /// </summary>
+    /// <value>指示是否使用行距规则的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool LineRuleWithin { get; set; }
+
+    /// <summary>
+    /// 获取或设置段前间距（以磅为单位）。
+    /// </summary>
+    /// <value>表示段前间距的浮点数。</value>
     float SpaceBefore { get; set; }
 
     /// <summary>
-    /// 获取或设置段后间距
+    /// 获取或设置段后间距（以磅为单位）。
     /// </summary>
+    /// <value>表示段后间距的浮点数。</value>
     float SpaceAfter { get; set; }
 
     /// <summary>
-    /// 获取或设置基线对齐方式
+    /// 获取或设置段内行间距（以磅为单位）。
     /// </summary>
-    int BaseLineAlignment { get; set; }
+    /// <value>表示段内行间距的浮点数。</value>
+    float SpaceWithin { get; set; }
 
     /// <summary>
-    /// 获取或设置段落间距控制
+    /// 获取或设置文本的基线对齐方式。
     /// </summary>
-    int SpaceWithin { get; set; }
+    /// <value>表示基线对齐方式的 <see cref="PpBaselineAlignment"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    PpBaselineAlignment BaseLineAlignment { get; set; }
 
     /// <summary>
-    /// 获取或设置段落间距类型
+    /// 获取或设置一个值，指示是否启用远东换行控制。
     /// </summary>
-    int SpaceWithinType { get; set; }
+    /// <value>指示是否启用远东换行控制的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool FarEastLineBreakControl { get; set; }
 
     /// <summary>
-    /// 获取或设置是否保持在一起
+    /// 获取或设置一个值，指示是否启用自动换行。
     /// </summary>
-    bool KeepTogether { get; set; }
+    /// <value>指示是否启用自动换行的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool WordWrap { get; set; }
 
     /// <summary>
-    /// 获取或设置是否保持与下一段在一起
+    /// 获取或设置一个值，指示是否启用悬挂标点。
     /// </summary>
-    bool KeepWithNext { get; set; }
+    /// <value>指示是否启用悬挂标点的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HangingPunctuation { get; set; }
 
     /// <summary>
-    /// 获取或设置页面分段
+    /// 获取或设置文本的方向。
     /// </summary>
-    bool PageBreakBefore { get; set; }
-
-    /// <summary>
-    /// 获取或设置大纲级别
-    /// </summary>
-    int OutlineLevel { get; set; }
-
-    /// <summary>
-    /// 复制段落格式
-    /// </summary>
-    /// <returns>复制的段落格式对象</returns>
-    IPowerPointParagraphFormat Duplicate();
-
-    /// <summary>
-    /// 应用段落格式到指定文本范围
-    /// </summary>
-    /// <param name="textRange">目标文本范围</param>
-    void ApplyTo(IPowerPointTextRange textRange);
-
-    /// <summary>
-    /// 重置段落格式为默认值
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 设置段落间距
-    /// </summary>
-    /// <param name="spaceBefore">段前间距</param>
-    /// <param name="spaceAfter">段后间距</param>
-    void SetSpacing(float spaceBefore, float spaceAfter);
-
-    /// <summary>
-    /// 设置对齐方式
-    /// </summary>
-    /// <param name="alignment">对齐方式</param>
-    void SetAlignment(int alignment);
+    /// <value>表示文本方向的 <see cref="PpDirection"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    PpDirection TextDirection { get; set; }
 }
