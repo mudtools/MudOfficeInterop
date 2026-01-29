@@ -8,9 +8,6 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 
-using System;
-using System.Runtime.InteropServices;
-
 /// <summary>
 /// 表示 PowerPoint 中的自定义版式。
 /// </summary>

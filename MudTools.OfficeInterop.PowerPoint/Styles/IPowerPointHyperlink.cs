@@ -6,85 +6,90 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
 /// <summary>
-/// PowerPoint 超链接接口
+/// 表示 PowerPoint 中的超链接对象。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointHyperlink : IDisposable
 {
     /// <summary>
-    /// 获取或设置超链接地址
+    /// 获取创建此超链接的 PowerPoint 应用程序实例。
     /// </summary>
-    string Address { get; set; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置子地址
+    /// 获取此超链接的父对象。
     /// </summary>
-    string SubAddress { get; set; }
-
-    /// <summary>
-    /// 获取或设置显示文本
-    /// </summary>
-    string TextToDisplay { get; set; }
-
-    /// <summary>
-    /// 获取或设置屏幕提示
-    /// </summary>
-    string ScreenTip { get; set; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此超链接父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取超链接类型
+    /// 获取此超链接的类型。
     /// </summary>
-    int Type { get; }
+    /// <value>表示超链接类型的 <see cref="MsoHyperlinkType"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoHyperlinkType Type { get; }
 
     /// <summary>
-    /// 获取超链接是否有效
+    /// 获取或设置超链接的地址。
     /// </summary>
-    bool IsValid { get; }
+    /// <value>表示超链接地址的字符串。</value>
+    string? Address { get; set; }
 
     /// <summary>
-    /// 跟随超链接
+    /// 获取或设置超链接的子地址。
+    /// </summary>
+    /// <value>表示超链接子地址的字符串。</value>
+    string? SubAddress { get; set; }
+
+    /// <summary>
+    /// 将此超链接添加到收藏夹。
+    /// </summary>
+    void AddToFavorites();
+
+    /// <summary>
+    /// 获取或设置电子邮件超链接的主题。
+    /// </summary>
+    /// <value>表示电子邮件主题的字符串。</value>
+    string? EmailSubject { get; set; }
+
+    /// <summary>
+    /// 获取或设置超链接的屏幕提示文本。
+    /// </summary>
+    /// <value>表示屏幕提示文本的字符串。</value>
+    string? ScreenTip { get; set; }
+
+    /// <summary>
+    /// 获取或设置超链接的显示文本。
+    /// </summary>
+    /// <value>表示显示文本的字符串。</value>
+    string? TextToDisplay { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示在打开超链接后是否返回到原始文档。
+    /// </summary>
+    /// <value>指示是否返回的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool ShowAndReturn { get; set; }
+
+    /// <summary>
+    /// 跟踪此超链接。
     /// </summary>
     void Follow();
 
     /// <summary>
-    /// 删除超链接
+    /// 创建新文档作为此超链接的目标。
+    /// </summary>
+    /// <param name="fileName">要创建的新文档的文件名。</param>
+    /// <param name="editNow">指示是否立即编辑新文档的布尔值。</param>
+    /// <param name="overwrite">指示是否覆盖现有文件的布尔值。</param>
+    void CreateNewDocument(string fileName, [ConvertTriState] bool editNow, [ConvertTriState] bool overwrite);
+
+    /// <summary>
+    /// 删除此超链接。
     /// </summary>
     void Delete();
-
-    /// <summary>
-    /// 编辑超链接
-    /// </summary>
-    /// <param name="newAddress">新地址</param>
-    /// <param name="newSubAddress">新子地址</param>
-    /// <param name="newTextToDisplay">新显示文本</param>
-    void Edit(string newAddress = null, string newSubAddress = null, string newTextToDisplay = null);
-
-    /// <summary>
-    /// 复制超链接
-    /// </summary>
-    /// <returns>复制的超链接对象</returns>
-    IPowerPointHyperlink Duplicate();
-
-    /// <summary>
-    /// 应用超链接到指定范围
-    /// </summary>
-    /// <param name="range">目标范围</param>
-    void ApplyTo(object range);
-
-    /// <summary>
-    /// 验证超链接
-    /// </summary>
-    /// <returns>是否有效</returns>
-    bool Validate();
-
-    /// <summary>
-    /// 获取超链接信息
-    /// </summary>
-    /// <returns>超链接信息字符串</returns>
-    string GetHyperlinkInfo();
 }
