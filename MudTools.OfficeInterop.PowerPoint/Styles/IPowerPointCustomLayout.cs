@@ -8,90 +8,168 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 
+using System;
+using System.Runtime.InteropServices;
+
 /// <summary>
-/// PowerPoint 自定义布局接口
+/// 表示 PowerPoint 中的自定义版式。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointCustomLayout : IDisposable
 {
     /// <summary>
-    /// 获取或设置布局名称
+    /// 获取创建此自定义版式的 PowerPoint 应用程序实例。
     /// </summary>
-    string Name { get; set; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取形状集合
+    /// 获取此自定义版式的父对象。
     /// </summary>
-    IPowerPointShapes Shapes { get; }
-
-    /// <summary>
-    /// 获取页眉页脚
-    /// </summary>
-    IPowerPointHeadersFooters HeadersFooters { get; }
-
-    /// <summary>
-    /// 获取背景
-    /// </summary>
-    IPowerPointShapeRange Background { get; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此自定义版式父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置是否包含主题
+    /// 获取此自定义版式中的形状集合。
     /// </summary>
-    bool FollowMasterBackground { get; set; }
+    /// <value>表示形状集合的 <see cref="IPowerPointShapes"/> 对象。</value>
+    IPowerPointShapes? Shapes { get; }
 
     /// <summary>
-    /// 获取布局索引
+    /// 获取此自定义版式的页眉页脚集合。
     /// </summary>
-    int Index { get; }
-
+    /// <value>表示页眉页脚集合的 <see cref="IPowerPointHeadersFooters"/> 对象。</value>
+    IPowerPointHeadersFooters? HeadersFooters { get; }
 
     /// <summary>
-    /// 应用到幻灯片
+    /// 获取此自定义版式的背景形状范围。
     /// </summary>
-    /// <param name="slide">目标幻灯片</param>
-    void ApplyTo(IPowerPointSlide slide);
+    /// <value>表示背景形状范围的 <see cref="IPowerPointShapeRange"/> 对象。</value>
+    IPowerPointShapeRange? Background { get; }
 
     /// <summary>
-    /// 复制布局
+    /// 获取或设置此自定义版式的名称。
     /// </summary>
-    /// <returns>复制的布局</returns>
-    IPowerPointCustomLayout Duplicate();
+    /// <value>表示自定义版式名称的字符串。</value>
+    string? Name { get; set; }
 
     /// <summary>
-    /// 删除布局
+    /// 删除此自定义版式。
     /// </summary>
     void Delete();
 
     /// <summary>
-    /// 重置布局
+    /// 获取此自定义版式的高度（以磅为单位）。
     /// </summary>
-    void Reset();
+    /// <value>表示高度的浮点数。</value>
+    float Height { get; }
 
     /// <summary>
-    /// 刷新布局显示
+    /// 获取此自定义版式的宽度（以磅为单位）。
     /// </summary>
-    void Refresh();
+    /// <value>表示宽度的浮点数。</value>
+    float Width { get; }
 
     /// <summary>
-    /// 获取布局的缩略图
+    /// 获取此自定义版式中的超链接集合。
     /// </summary>
-    /// <returns>缩略图数据</returns>
-    byte[] GetThumbnail();
+    /// <value>表示超链接集合的 <see cref="IPowerPointHyperlinks"/> 对象。</value>
+    IPowerPointHyperlinks? Hyperlinks { get; }
 
     /// <summary>
-    /// 导出布局为图片
+    /// 获取与此自定义版式关联的设计对象。
     /// </summary>
-    /// <param name="fileName">文件路径</param>
-    /// <param name="filterName">图片格式</param>
-    void Export(string fileName, string filterName = "PNG");
+    /// <value>表示设计对象的 <see cref="IPowerPointDesign"/> 对象。</value>
+    IPowerPointDesign? Design { get; }
 
     /// <summary>
-    /// 获取布局信息
+    /// 获取此自定义版式的时间线对象。
     /// </summary>
-    /// <returns>布局信息字符串</returns>
-    string GetLayoutInfo();
+    /// <value>表示时间线对象的 <see cref="IPowerPointTimeLine"/> 对象。</value>
+    IPowerPointTimeLine? TimeLine { get; }
+
+    /// <summary>
+    /// 获取此自定义版式的幻灯片放映切换效果。
+    /// </summary>
+    /// <value>表示幻灯片放映切换效果的 <see cref="IPowerPointSlideShowTransition"/> 对象。</value>
+    IPowerPointSlideShowTransition? SlideShowTransition { get; }
+
+    /// <summary>
+    /// 获取或设置此自定义版式的匹配名称。
+    /// </summary>
+    /// <value>表示匹配名称的字符串。</value>
+    string? MatchingName { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示此自定义版式是否被保留。
+    /// </summary>
+    /// <value>指示版式是否被保留的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Preserved { get; set; }
+
+    /// <summary>
+    /// 获取此自定义版式在集合中的索引。
+    /// </summary>
+    /// <value>表示索引的整数值。</value>
+    int Index { get; }
+
+    /// <summary>
+    /// 选择此自定义版式。
+    /// </summary>
+    void Select();
+
+    /// <summary>
+    /// 剪切此自定义版式。
+    /// </summary>
+    void Cut();
+
+    /// <summary>
+    /// 复制此自定义版式。
+    /// </summary>
+    void Copy();
+
+    /// <summary>
+    /// 复制此自定义版式。
+    /// </summary>
+    /// <returns>新创建的自定义版式副本。</returns>
+    IPowerPointCustomLayout? Duplicate();
+
+    /// <summary>
+    /// 将此自定义版式移动到指定位置。
+    /// </summary>
+    /// <param name="toPos">要移动到的目标位置索引。</param>
+    void MoveTo(int toPos);
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否显示母版形状。
+    /// </summary>
+    /// <value>指示是否显示母版形状的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool DisplayMasterShapes { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否跟随母版背景。
+    /// </summary>
+    /// <value>指示是否跟随母版背景的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool FollowMasterBackground { get; set; }
+
+    /// <summary>
+    /// 获取此自定义版式的主题颜色方案。
+    /// </summary>
+    /// <value>表示主题颜色方案的 <see cref="IOfficeThemeColorScheme"/> 对象。</value>
+    IOfficeThemeColorScheme? ThemeColorScheme { get; }
+
+    /// <summary>
+    /// 获取此自定义版式的客户数据。
+    /// </summary>
+    /// <value>表示客户数据的 <see cref="IPowerPointCustomerData"/> 对象。</value>
+    IPowerPointCustomerData? CustomerData { get; }
+
+    /// <summary>
+    /// 获取此自定义版式的参考线集合。
+    /// </summary>
+    /// <value>表示参考线集合的 <see cref="IPowerPointGuides"/> 对象。</value>
+    IPowerPointGuides? Guides { get; }
 }
