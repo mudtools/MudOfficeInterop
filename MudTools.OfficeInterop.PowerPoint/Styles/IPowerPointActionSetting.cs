@@ -7,8 +7,6 @@
 
 namespace MudTools.OfficeInterop.PowerPoint;
 
-using System;
-using System.Runtime.InteropServices;
 
 /// <summary>
 /// 表示 PowerPoint 中形状的动作设置。

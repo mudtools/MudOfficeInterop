@@ -7,40 +7,61 @@
 
 namespace MudTools.OfficeInterop.PowerPoint;
 
+using System;
+using System.Runtime.InteropServices;
+
 /// <summary>
-/// 表示 Excel 中 OLE 对象格式的封装接口
+/// 表示 PowerPoint 中 OLE 对象的格式设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointOLEFormat : IDisposable
 {
+    /// <summary>
+    /// 获取创建此 OLE 格式设置的 PowerPoint 应用程序实例。
+    /// </summary>
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取 OLE 对象的程序标识符
+    /// 获取此 OLE 格式设置的父对象。
     /// </summary>
-    string ProgID { get; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此 OLE 格式设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取应用程序对象
+    /// 获取 OLE 对象支持的动作动词集合。
     /// </summary>
-    IPowerPointApplication Application { get; }
+    /// <value>表示 OLE 动作动词的 <see cref="IPowerPointObjectVerbs"/> 集合。</value>
+    IPowerPointObjectVerbs? ObjectVerbs { get; }
 
     /// <summary>
-    /// 获取 OLE 对象的原始格式
+    /// 获取 OLE 对象的底层对象。
     /// </summary>
-    object Object { get; }
+    /// <value>表示 OLE 对象的 <see cref="object"/>。</value>
+    object? Object { get; }
 
     /// <summary>
-    /// 激活 OLE 对象以进行编辑
+    /// 获取 OLE 对象的程序标识符。
+    /// </summary>
+    /// <value>表示 OLE 对象 ProgID 的字符串。</value>
+    string? ProgID { get; }
+
+    /// <summary>
+    /// 获取或设置 OLE 对象跟随颜色的方式。
+    /// </summary>
+    /// <value>表示颜色跟随方式的 <see cref="PpFollowColors"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    PpFollowColors FollowColors { get; set; }
+
+    /// <summary>
+    /// 对 OLE 对象执行指定的动作动词。
+    /// </summary>
+    /// <param name="index">要执行的动作动词的索引。默认为 0，表示默认动作。</param>
+    void DoVerb(int index = 0);
+
+    /// <summary>
+    /// 激活 OLE 对象以进行编辑。
     /// </summary>
     void Activate();
-
-    /// <summary>
-    /// 转换 OLE 对象的类型
-    /// </summary>
-    /// <param name="classType">新的类类型</param>
-    void DoVerb(int classType);
 }
