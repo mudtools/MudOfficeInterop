@@ -7,98 +7,112 @@
 
 namespace MudTools.OfficeInterop.PowerPoint;
 
+using System;
+using System.Runtime.InteropServices;
+
 /// <summary>
-/// PowerPoint 动画设置接口
+/// 表示 PowerPoint 形状的动画设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointAnimationSettings : IDisposable
 {
     /// <summary>
-    /// 获取或设置进入效果
+    /// 获取创建此动画设置的 PowerPoint 应用程序实例。
     /// </summary>
-    int EntryEffect { get; set; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置动画顺序
+    /// 获取此动画设置的父对象。
     /// </summary>
-    int AnimationOrder { get; set; }
-
-    /// <summary>
-    /// 获取或设置前进模式
-    /// </summary>
-    int AdvanceMode { get; set; }
-
-    /// <summary>
-    /// 获取或设置前进时间
-    /// </summary>
-    float AdvanceTime { get; set; }
-
-    /// <summary>
-    /// 获取声音效果
-    /// </summary>
-    IPowerPointSoundEffect SoundEffect { get; }
-
-    /// <summary>
-    /// 获取播放设置
-    /// </summary>
-    IPowerPointPlaySettings PlaySettings { get; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此动画设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置是否动画背景
+    /// 获取动画后变暗的颜色设置。
     /// </summary>
+    /// <value>表示变暗颜色的 <see cref="IPowerPointColorFormat"/> 对象。</value>
+    IPowerPointColorFormat? DimColor { get; }
+
+    /// <summary>
+    /// 获取动画的声音效果设置。
+    /// </summary>
+    /// <value>表示声音效果的 <see cref="IPowerPointSoundEffect"/> 对象。</value>
+    IPowerPointSoundEffect? SoundEffect { get; }
+
+    /// <summary>
+    /// 获取或设置进入动画效果。
+    /// </summary>
+    /// <value>表示进入效果的 <see cref="PpEntryEffect"/> 枚举值。</value>
+    PpEntryEffect EntryEffect { get; set; }
+
+    /// <summary>
+    /// 获取或设置动画后的效果。
+    /// </summary>
+    /// <value>表示动画后效果的 <see cref="PpAfterEffect"/> 枚举值。</value>
+    PpAfterEffect AfterEffect { get; set; }
+
+    /// <summary>
+    /// 获取或设置动画的顺序。
+    /// </summary>
+    /// <value>表示动画顺序的整数值。</value>
+    int AnimationOrder { get; set; }
+
+    /// <summary>
+    /// 获取或设置动画的推进模式。
+    /// </summary>
+    /// <value>表示推进模式的 <see cref="PpAdvanceMode"/> 枚举值。</value>
+    PpAdvanceMode AdvanceMode { get; set; }
+
+    /// <summary>
+    /// 获取或设置自动推进动画的时间（以秒为单位）。
+    /// </summary>
+    /// <value>表示自动推进时间的浮点数。</value>
+    float AdvanceTime { get; set; }
+
+    /// <summary>
+    /// 获取动画的播放设置。
+    /// </summary>
+    /// <value>表示播放设置的 <see cref="IPowerPointPlaySettings"/> 对象。</value>
+    IPowerPointPlaySettings? PlaySettings { get; }
+
+    /// <summary>
+    /// 获取或设置文本动画的层级效果。
+    /// </summary>
+    /// <value>表示文本层级效果的 <see cref="PpTextLevelEffect"/> 枚举值。</value>
+    PpTextLevelEffect TextLevelEffect { get; set; }
+
+    /// <summary>
+    /// 获取或设置文本动画的单位效果。
+    /// </summary>
+    /// <value>表示文本单位效果的 <see cref="PpTextUnitEffect"/> 枚举值。</value>
+    PpTextUnitEffect TextUnitEffect { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否启用动画。
+    /// </summary>
+    /// <value>指示是否启用动画的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Animate { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否启用背景动画。
+    /// </summary>
+    /// <value>指示是否启用背景动画的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
     bool AnimateBackground { get; set; }
 
-
+    /// <summary>
+    /// 获取或设置一个值，指示是否以相反顺序动画文本。
+    /// </summary>
+    /// <value>指示是否以相反顺序动画文本的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool AnimateTextInReverse { get; set; }
 
     /// <summary>
-    /// 播放动画
+    /// 获取或设置图表动画的单位效果。
     /// </summary>
-    /// <param name="from">起始时间</param>
-    /// <param name="to">结束时间</param>
-    /// <param name="repeats">重复次数</param>
-    void Play(double from = 0, double to = 0, int repeats = 1);
-
-    /// <summary>
-    /// 停止动画
-    /// </summary>
-    void Stop();
-
-    /// <summary>
-    /// 暂停动画
-    /// </summary>
-    void Pause();
-
-    /// <summary>
-    /// 恢复动画
-    /// </summary>
-    void Resume();
-
-    /// <summary>
-    /// 重置动画设置
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 应用动画方案
-    /// </summary>
-    /// <param name="schemeIndex">方案索引</param>
-    void ApplyAnimationScheme(int schemeIndex = -1);
-
-    /// <summary>
-    /// 设置动画参数
-    /// </summary>
-    /// <param name="entryEffect">进入效果</param>
-    /// <param name="advanceMode">前进模式</param>
-    /// <param name="advanceTime">前进时间</param>
-    void SetAnimation(int entryEffect = 0, int advanceMode = 1, float advanceTime = 0);
-
-    /// <summary>
-    /// 获取动画设置信息
-    /// </summary>
-    /// <returns>动画设置信息字符串</returns>
-    string GetAnimationSettingsInfo();
+    /// <value>表示图表单位效果的 <see cref="PpChartUnitEffect"/> 枚举值。</value>
+    PpChartUnitEffect ChartUnitEffect { get; set; }
 }
