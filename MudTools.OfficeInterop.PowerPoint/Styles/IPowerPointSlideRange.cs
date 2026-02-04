@@ -8,133 +8,294 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 /// <summary>
-/// PowerPoint SlideRange 对象的二次封装接口
-/// 提供对 Microsoft.Office.Interop.PowerPoint.SlideRange 的安全访问和操作
+/// 表示 PowerPoint 演示文稿中的幻灯片范围。
 /// </summary>
-public interface IPowerPointSlideRange : IEnumerable<IPowerPointSlide>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsPowerPoint")]
+public interface IPowerPointSlideRange : IEnumerable<IPowerPointSlide?>, IDisposable
 {
-    #region 基础属性
     /// <summary>
-    /// 获取幻灯片范围中的幻灯片数量
-    /// 对应 SlideRange.Count 属性
+    /// 获取创建此幻灯片范围的 PowerPoint 应用程序实例。
     /// </summary>
-    int Count { get; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取指定索引的幻灯片对象
-    /// 索引从1开始
+    /// 获取此幻灯片范围的父对象。
     /// </summary>
-    /// <param name="index">幻灯片索引（从1开始）</param>
-    /// <returns>幻灯片对象</returns>
-    IPowerPointSlide this[int index] { get; }
-
-    /// <summary>
-    /// 获取幻灯片范围所在的父对象（通常是 Slides 集合）
-    /// 对应 SlideRange.Parent 属性
-    /// </summary>
+    /// <value>表示此幻灯片范围父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取幻灯片范围所在的Application对象
-    /// 对应 SlideRange.Application 属性
+    /// 获取此幻灯片范围中的形状集合。
     /// </summary>
-    IPowerPointApplication Application { get; }
+    /// <value>表示形状集合的 <see cref="IPowerPointShapes"/> 对象。</value>
+    IPowerPointShapes? Shapes { get; }
 
     /// <summary>
-    /// 获取幻灯片范围的名称
-    /// 对应 SlideRange.Name 属性
+    /// 获取此幻灯片范围的页眉页脚集合。
     /// </summary>
-    string Name { get; set; }
-    #endregion
-
-
-    #region 操作方法
-    /// <summary>
-    /// 选择幻灯片范围中的所有幻灯片
-    /// 对应 SlideRange.Select 方法
-    /// </summary>
-    /// <param name="replace">是否替换当前选择</param>
-    void Select(bool replace = true);
+    /// <value>表示页眉页脚集合的 <see cref="IPowerPointHeadersFooters"/> 对象。</value>
+    IPowerPointHeadersFooters? HeadersFooters { get; }
 
     /// <summary>
-    /// 复制幻灯片范围
-    /// 对应 SlideRange.Copy 方法
+    /// 获取此幻灯片范围的幻灯片放映切换效果。
     /// </summary>
-    void Copy();
+    /// <value>表示幻灯片放映切换效果的 <see cref="IPowerPointSlideShowTransition"/> 对象。</value>
+    IPowerPointSlideShowTransition? SlideShowTransition { get; }
 
     /// <summary>
-    /// 剪切幻灯片范围
-    /// 对应 SlideRange.Cut 方法
+    /// 获取或设置此幻灯片范围的颜色方案。
+    /// </summary>
+    /// <value>表示颜色方案的 <see cref="IPowerPointColorScheme"/> 对象。</value>
+    IPowerPointColorScheme? ColorScheme { get; set; }
+
+    /// <summary>
+    /// 获取此幻灯片范围的背景形状范围。
+    /// </summary>
+    /// <value>表示背景形状范围的 <see cref="IPowerPointShapeRange"/> 对象。</value>
+    IPowerPointShapeRange? Background { get; }
+
+    /// <summary>
+    /// 获取或设置此幻灯片范围的名称。
+    /// </summary>
+    /// <value>表示幻灯片范围名称的字符串。</value>
+    string? Name { get; set; }
+
+    /// <summary>
+    /// 获取此幻灯片范围的唯一标识符。
+    /// </summary>
+    /// <value>表示幻灯片范围标识符的整数值。</value>
+    int SlideID { get; }
+
+    /// <summary>
+    /// 获取此幻灯片范围的打印步骤数。
+    /// </summary>
+    /// <value>表示打印步骤数的整数值。</value>
+    int PrintSteps { get; }
+
+    /// <summary>
+    /// 选择此幻灯片范围。
+    /// </summary>
+    void Select();
+
+    /// <summary>
+    /// 剪切此幻灯片范围。
     /// </summary>
     void Cut();
 
     /// <summary>
-    /// 删除幻灯片范围中的所有幻灯片
-    /// 对应 SlideRange.Delete 方法
+    /// 复制此幻灯片范围。
+    /// </summary>
+    void Copy();
+
+    /// <summary>
+    /// 获取或设置此幻灯片范围的版式。
+    /// </summary>
+    /// <value>表示幻灯片版式的 <see cref="PpSlideLayout"/> 枚举值。</value>
+    PpSlideLayout Layout { get; set; }
+
+    /// <summary>
+    /// 复制此幻灯片范围。
+    /// </summary>
+    /// <returns>新创建的幻灯片范围。</returns>
+    IPowerPointSlideRange? Duplicate();
+
+    /// <summary>
+    /// 删除此幻灯片范围。
     /// </summary>
     void Delete();
 
     /// <summary>
-    /// 删除指定索引的幻灯片
+    /// 获取此幻灯片范围的标签集合。
     /// </summary>
-    /// <param name="index">要删除的幻灯片索引</param>
-    void Delete(int index);
+    /// <value>表示标签集合的 <see cref="IPowerPointTags"/> 对象。</value>
+    IPowerPointTags? Tags { get; }
 
     /// <summary>
-    /// 删除指定的幻灯片对象
+    /// 获取此幻灯片范围在演示文稿中的索引。
     /// </summary>
-    /// <param name="slide">要删除的幻灯片对象</param>
-    void Delete(IPowerPointSlide slide);
+    /// <value>表示幻灯片范围索引的整数值。</value>
+    int SlideIndex { get; }
 
     /// <summary>
-    /// 批量删除幻灯片
+    /// 获取此幻灯片范围的编号。
     /// </summary>
-    /// <param name="indices">要删除的幻灯片索引数组 (建议降序排列)</param>
-    void DeleteRange(int[] indices);
+    /// <value>表示幻灯片范围编号的整数值。</value>
+    int SlideNumber { get; }
 
     /// <summary>
-    /// 移动幻灯片范围到演示文稿中的新位置
-    /// 对应 SlideRange.MoveTo 方法
+    /// 获取或设置一个值，指示是否显示母版形状。
     /// </summary>
-    /// <param name="toPos">新位置索引</param>
+    /// <value>指示是否显示母版形状的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool DisplayMasterShapes { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示是否跟随母版背景。
+    /// </summary>
+    /// <value>指示是否跟随母版背景的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool FollowMasterBackground { get; set; }
+
+    /// <summary>
+    /// 获取此幻灯片范围的备注页。
+    /// </summary>
+    /// <value>表示备注页的 <see cref="IPowerPointSlideRange"/> 对象。</value>
+    IPowerPointSlideRange? NotesPage { get; }
+
+    /// <summary>
+    /// 获取此幻灯片范围使用的母版。
+    /// </summary>
+    /// <value>表示母版的 <see cref="IPowerPointMaster"/> 对象。</value>
+    IPowerPointMaster? Master { get; }
+
+    /// <summary>
+    /// 获取此幻灯片范围中的超链接集合。
+    /// </summary>
+    /// <value>表示超链接集合的 <see cref="IPowerPointHyperlinks"/> 对象。</value>
+    IPowerPointHyperlinks? Hyperlinks { get; }
+
+    /// <summary>
+    /// 导出此幻灯片范围为指定格式的图像文件。
+    /// </summary>
+    /// <param name="fileName">导出文件的名称。</param>
+    /// <param name="filterName">导出过滤器的名称。</param>
+    /// <param name="scaleWidth">导出图像的宽度缩放比例。</param>
+    /// <param name="scaleHeight">导出图像的高度缩放比例。</param>
+    void Export(string fileName, string filterName, int scaleWidth = 0, int scaleHeight = 0);
+
+    /// <summary>
+    /// 通过索引或名称获取幻灯片范围中的指定幻灯片。
+    /// </summary>
+    /// <param name="index">要获取的幻灯片的索引（从1开始）或名称。</param>
+    /// <value>指定索引或名称对应的 <see cref="IPowerPointSlide"/> 对象。</value>
+    IPowerPointSlide? this[int index] { get; }
+
+    /// <summary>
+    /// 通过索引或名称获取幻灯片范围中的指定幻灯片。
+    /// </summary>
+    /// <param name="name">要获取的幻灯片的索引（从1开始）或名称。</param>
+    /// <value>指定索引或名称对应的 <see cref="IPowerPointSlide"/> 对象。</value>
+    IPowerPointSlide? this[string name] { get; }
+
+    /// <summary>
+    /// 获取幻灯片范围中的幻灯片数量。
+    /// </summary>
+    /// <value>幻灯片范围中的幻灯片数量。</value>
+    int Count { get; }
+
+    /// <summary>
+    /// 获取此幻灯片范围中的脚本集合。
+    /// </summary>
+    /// <value>表示脚本集合的 <see cref="IOfficeScripts"/> 对象。</value>
+    IOfficeScripts? Scripts { get; }
+
+    /// <summary>
+    /// 获取此幻灯片范围中的注释集合。
+    /// </summary>
+    /// <value>表示注释集合的 <see cref="IPowerPointComments"/> 对象。</value>
+    IPowerPointComments? Comments { get; }
+
+    /// <summary>
+    /// 获取或设置此幻灯片范围的设计模板。
+    /// </summary>
+    /// <value>表示设计模板的 <see cref="IPowerPointDesign"/> 对象。</value>
+    IPowerPointDesign? Design { get; set; }
+
+    /// <summary>
+    /// 将此幻灯片范围移动到指定位置。
+    /// </summary>
+    /// <param name="toPos">要移动到的目标位置索引。</param>
     void MoveTo(int toPos);
 
     /// <summary>
-    /// 复制幻灯片范围到演示文稿中的新位置
-    /// 对应 SlideRange.Duplicate 方法
+    /// 获取此幻灯片范围的时间线对象。
     /// </summary>
-    /// <returns>复制后的新幻灯片范围对象</returns>
-    IPowerPointSlideRange Duplicate();
-    #endregion  
-
-    #region 内容操作 
+    /// <value>表示时间线对象的 <see cref="IPowerPointTimeLine"/> 对象。</value>
+    IPowerPointTimeLine? TimeLine { get; }
 
     /// <summary>
-    /// 插入新幻灯片到范围末尾
+    /// 应用指定的模板到此幻灯片范围。
     /// </summary>
-    /// <param name="layout">新幻灯片版式</param>
-    /// <param name="insertIndex"></param>
-    /// <returns>新插入的幻灯片对象</returns>
-    IPowerPointSlide InsertNewSlide(int insertIndex, PpSlideLayout layout = PpSlideLayout.ppLayoutBlank);
-    #endregion
-
-    #region 导出和导入 (概念性)
-    /// <summary>
-    /// 导出幻灯片范围到 PDF 文件
-    /// </summary>
-    /// <param name="filename">导出文件路径</param>
-    /// <param name="overwrite">是否覆盖已存在文件</param>
-    /// <returns>是否导出成功</returns>
-    bool ExportToPDF(string filename, bool overwrite = true);
+    /// <param name="fileName">模板文件的名称。</param>
+    void ApplyTemplate(string fileName);
 
     /// <summary>
-    /// 导出幻灯片范围到图片文件 (每张幻灯片一张图)
+    /// 获取此幻灯片范围所在的节编号。
     /// </summary>
-    /// <param name="folderPath">导出文件夹路径</param>
-    /// <param name="format">图片格式 (例如 "png", "jpg")</param>
-    /// <param name="prefix">文件名前缀</param>
-    /// <returns>成功导出的幻灯片数量</returns>
-    int ExportToImages(string folderPath, string format = "png", string prefix = "slide_");
+    /// <value>表示节编号的整数值。</value>
+    int SectionNumber { get; }
 
-    #endregion    
+    /// <summary>
+    /// 获取或设置此幻灯片范围的自定义版式。
+    /// </summary>
+    /// <value>表示自定义版式的 <see cref="IPowerPointCustomLayout"/> 对象。</value>
+    IPowerPointCustomLayout? CustomLayout { get; set; }
+
+    /// <summary>
+    /// 应用指定的主题到此幻灯片范围。
+    /// </summary>
+    /// <param name="themeName">主题名称。</param>
+    void ApplyTheme(string themeName);
+
+    /// <summary>
+    /// 获取此幻灯片范围的主题颜色方案。
+    /// </summary>
+    /// <value>表示主题颜色方案的 <see cref="IOfficeThemeColorScheme"/> 对象。</value>
+    IOfficeThemeColorScheme? ThemeColorScheme { get; }
+
+    /// <summary>
+    /// 应用指定的主题颜色方案到此幻灯片范围。
+    /// </summary>
+    /// <param name="themeColorSchemeName">主题颜色方案的名称。</param>
+    void ApplyThemeColorScheme(string themeColorSchemeName);
+
+    /// <summary>
+    /// 获取或设置此幻灯片范围的背景样式。
+    /// </summary>
+    /// <value>表示背景样式的 <see cref="MsoBackgroundStyleIndex"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoBackgroundStyleIndex BackgroundStyle { get; set; }
+
+    /// <summary>
+    /// 获取此幻灯片范围的客户数据。
+    /// </summary>
+    /// <value>表示客户数据的 <see cref="IPowerPointCustomerData"/> 对象。</value>
+    IPowerPointCustomerData? CustomerData { get; }
+
+    /// <summary>
+    /// 将此幻灯片范围发布到幻灯片库。
+    /// </summary>
+    /// <param name="slideLibraryUrl">幻灯片库的 URL。</param>
+    /// <param name="overwrite">指示是否覆盖现有幻灯片的布尔值。</param>
+    /// <param name="useSlideOrder">指示是否使用幻灯片顺序的布尔值。</param>
+    void PublishSlides(string slideLibraryUrl, bool overwrite = false, bool useSlideOrder = false);
+
+    /// <summary>
+    /// 将此幻灯片范围移动到指定节的开始位置。
+    /// </summary>
+    /// <param name="toSection">目标节的索引。</param>
+    void MoveToSectionStart(int toSection);
+
+    /// <summary>
+    /// 获取此幻灯片范围在节中的索引。
+    /// </summary>
+    /// <value>表示节索引的整数值。</value>
+    [ComPropertyWrap(PropertyName = "sectionIndex")]
+    int SectionIndex { get; }
+
+    /// <summary>
+    /// 获取一个值，指示此幻灯片范围是否有备注页。
+    /// </summary>
+    /// <value>指示是否有备注页的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasNotesPage { get; }
+
+    /// <summary>
+    /// 应用指定的模板到此幻灯片范围（增强版本）。
+    /// </summary>
+    /// <param name="fileName">模板文件的名称。</param>
+    /// <param name="variantGUID">变体 GUID。</param>
+    void ApplyTemplate2(string fileName, string variantGUID);
 }

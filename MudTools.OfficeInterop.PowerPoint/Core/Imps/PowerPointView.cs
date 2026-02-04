@@ -47,10 +47,6 @@ internal class PowerPointView : IPowerPointView
         }
     }
 
-    /// <summary>
-    /// 获取当前幻灯片索引
-    /// </summary>
-    public int SlideIndex => Slide?.Index ?? 0;
 
     /// <summary>
     /// 获取或设置缩放比例

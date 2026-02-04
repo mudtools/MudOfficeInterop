@@ -23,7 +23,7 @@ public interface IPowerPointSequence : IEnumerable<IPowerPointEffect?>, IDisposa
     /// <summary>
     /// 获取创建此动画序列的 PowerPoint 应用程序实例。
     /// </summary>
-    /// <value>表示 PowerPoint 应用程序的 <see cref="Application"/> 对象。</value>
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
     [ComPropertyWrap(NeedDispose = false)]
     IPowerPointApplication? Application { get; }
 

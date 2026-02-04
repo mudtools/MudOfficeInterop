@@ -28,10 +28,7 @@ public interface IPowerPointView : IDisposable
     /// </summary>
     IPowerPointSlide Slide { get; }
 
-    /// <summary>
-    /// 获取当前幻灯片索引
-    /// </summary>
-    int SlideIndex { get; }
+
 
     /// <summary>
     /// 获取或设置缩放比例
