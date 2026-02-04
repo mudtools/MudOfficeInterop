@@ -11,53 +11,46 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// <summary>
 /// PowerPoint 序列接口
 /// </summary>
-public interface IPowerPointSequences : IEnumerable<IPowerPointSequence>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsPowerPoint")]
+public interface IPowerPointSequences : IEnumerable<IPowerPointSequence?>, IDisposable
 {
+
     /// <summary>
-    /// 获取序列数量
+    /// 获取集合中的动画序列数量。
     /// </summary>
+    /// <value>集合中的动画序列数量。</value>
     int Count { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此动画序列集合的 PowerPoint 应用程序实例。
     /// </summary>
+    /// <value>表示 PowerPoint 应用程序的 <see cref="Application"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
+
+    /// <summary>
+    /// 获取此动画序列集合的父对象。
+    /// </summary>
+    /// <value>表示此动画序列集合父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 根据索引获取序列
+    /// 通过索引获取集合中的指定动画序列。
     /// </summary>
-    IPowerPointSequence this[int index] { get; }
+    /// <param name="index">要获取的动画序列的索引（从1开始）。</param>
+    /// <value>位于指定索引处的 <see cref="IPowerPointSequence"/> 对象。</value>
+    IPowerPointSequence? this[int index] { get; }
 
     /// <summary>
-    /// 添加序列
+    /// 在动画序列集合中添加新动画序列。
     /// </summary>
-    /// <param name="index">插入位置</param>
-    /// <returns>新添加的序列</returns>
-    IPowerPointSequence Add(int index = -1);
-
-
-    /// <summary>
-    /// 根据条件查找序列
-    /// </summary>
-    /// <param name="predicate">查找条件</param>
-    /// <returns>符合条件的序列列表</returns>
-    IEnumerable<IPowerPointSequence> Find(Func<IPowerPointSequence, bool> predicate);
+    /// <param name="index">新动画序列要插入的位置索引。值为-1表示在末尾添加。</param>
+    /// <returns>新添加的 <see cref="IPowerPointSequence"/> 对象。</returns>
+    IPowerPointSequence? Add(int index = -1);
 
     /// <summary>
-    /// 获取主序列
+    /// 在动画序列集合中添加新动画序列。
     /// </summary>
-    /// <returns>主序列</returns>
-    IPowerPointSequence GetMainSequence();
-
-    /// <summary>
-    /// 获取交互序列
-    /// </summary>
-    /// <returns>交互序列</returns>
-    IEnumerable<IPowerPointSequence> GetInteractiveSequences();
-
-    /// <summary>
-    /// 重新排序序列
-    /// </summary>
-    /// <param name="newOrder">新顺序数组</param>
-    void Reorder(int[] newOrder);
+    /// <returns>新添加的 <see cref="IPowerPointSequence"/> 对象。</returns>
+    IPowerPointSequence? Add();
 }

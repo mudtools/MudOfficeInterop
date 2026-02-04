@@ -8,88 +8,37 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 
+using System;
+using System.Runtime.InteropServices;
+
 /// <summary>
-/// PowerPoint 时间线接口
+/// 表示 PowerPoint 幻灯片中的时间线对象，用于管理动画序列。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointTimeLine : IDisposable
 {
     /// <summary>
-    /// 获取动画序列集合
+    /// 获取创建此时间线的 PowerPoint 应用程序实例。
     /// </summary>
-    IPowerPointSequences Sequences { get; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="Application"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取此时间线的父对象。
     /// </summary>
+    /// <value>表示此时间线父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置是否启用动画
+    /// 获取主要动画序列。
     /// </summary>
-    bool Enabled { get; set; }
+    /// <value>表示主要动画序列的 <see cref="IPowerPointSequence"/> 对象。</value>
+    IPowerPointSequence? MainSequence { get; }
 
     /// <summary>
-    /// 获取动画效果数量
+    /// 获取交互式动画序列集合。
     /// </summary>
-    int EffectCount { get; }
-
-    /// <summary>
-    /// 获取主序列
-    /// </summary>
-    IPowerPointSequence MainSequence { get; }
-
-    /// <summary>
-    /// 获取交互序列
-    /// </summary>
-    IPowerPointSequence InteractiveSequences { get; }
-
-    /// <summary>
-    /// 添加动画序列
-    /// </summary>
-    /// <param name="index">插入位置</param>
-    /// <returns>新添加的序列</returns>
-    IPowerPointSequence AddSequence(int index = -1);
-
-    /// <summary>
-    /// 刷新动画显示
-    /// </summary>
-    void Refresh();
-
-    /// <summary>
-    /// 应用动画方案
-    /// </summary>
-    /// <param name="schemeIndex">方案索引</param>
-    void ApplyAnimationScheme(int schemeIndex = -1);
-
-    /// <summary>
-    /// 复制动画到其他幻灯片
-    /// </summary>
-    /// <param name="targetSlide">目标幻灯片</param>
-    void CopyTo(IPowerPointSlide targetSlide);
-
-    /// <summary>
-    /// 获取动画效果
-    /// </summary>
-    /// <param name="index">效果索引</param>
-    /// <returns>动画效果</returns>
-    IPowerPointEffect GetEffect(int index);
-
-    /// <summary>
-    /// 查找指定形状的动画效果
-    /// </summary>
-    /// <param name="shape">目标形状</param>
-    /// <returns>动画效果列表</returns>
-    IEnumerable<IPowerPointEffect> FindEffectsByShape(IPowerPointShape shape);
-
-    /// <summary>
-    /// 设置动画播放顺序
-    /// </summary>
-    /// <param name="effectOrder">效果顺序数组</param>
-    void SetEffectOrder(int[] effectOrder);
-
-    /// <summary>
-    /// 获取时间线信息
-    /// </summary>
-    /// <returns>时间线信息字符串</returns>
-    string GetTimeLineInfo();
+    /// <value>表示交互式动画序列集合的 <see cref="IPowerPointSequences"/> 对象。</value>
+    IPowerPointSequences? InteractiveSequences { get; }
 }
