@@ -5,25 +5,25 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-
 namespace MudTools.OfficeInterop.PowerPoint;
 
-
 /// <summary>
-/// 表示 PowerPoint 表格的样式定义。
+/// 指定形状的自动调整大小选项。
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTableStyle : IDisposable
+public enum PpAutoSize
 {
     /// <summary>
-    /// 获取表格样式的名称。
+    /// 混合自动调整大小设置。
     /// </summary>
-    /// <value>表格样式的名称。</value>
-    string? Name { get; }
+    ppAutoSizeMixed = -2,
 
     /// <summary>
-    /// 获取表格样式的唯一标识符。
+    /// 不自动调整大小。
     /// </summary>
-    /// <value>表格样式的标识符字符串。</value>
-    string? Id { get; }
+    ppAutoSizeNone = 0,
+
+    /// <summary>
+    /// 自动调整形状大小以适应文本内容。
+    /// </summary>
+    ppAutoSizeShapeToFitText = 1
 }

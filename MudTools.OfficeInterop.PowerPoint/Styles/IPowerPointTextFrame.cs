@@ -7,156 +7,109 @@
 
 namespace MudTools.OfficeInterop.PowerPoint;
 /// <summary>
-/// PowerPoint 文本框接口
+/// 表示 PowerPoint 形状中的文本框。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointTextFrame : IDisposable
 {
     /// <summary>
-    /// 获取或设置文本内容
+    /// 获取创建此文本框的应用程序实例。
     /// </summary>
-    string Text { get; set; }
+    /// <value>表示应用程序的 <see cref="IPowerPointApplication"/>。</value>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取是否有文本
+    /// 获取创建此文本框的应用程序的创建者代码。
     /// </summary>
-    bool HasText { get; }
+    /// <value>表示创建者代码的整数值。</value>
+    int Creator { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取此文本框的父对象。
     /// </summary>
+    /// <value>表示此文本框父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取文本范围
+    /// 获取或设置文本框的底部边距（以磅为单位）。
     /// </summary>
-    IPowerPointTextRange TextRange { get; }
-
-    /// <summary>
-    /// 获取段落格式
-    /// </summary>
-    IPowerPointParagraphFormat ParagraphFormat { get; }
-
-    /// <summary>
-    /// 获取字体设置
-    /// </summary>
-    IPowerPointFont Font { get; }
-
-    /// <summary>
-    /// 获取或设置是否自动调整大小
-    /// </summary>
-    bool AutoSize { get; set; }
-
-    /// <summary>
-    /// 获取或设置垂直锚定位置
-    /// </summary>
-    int VerticalAnchor { get; set; }
-
-    /// <summary>
-    /// 获取或设置水平锚定位置
-    /// </summary>
-    int HorizontalAnchor { get; set; }
-
-    /// <summary>
-    /// 获取或设置文本方向
-    /// </summary>
-    int Orientation { get; set; }
-
-    /// <summary>
-    /// 获取或设置边距
-    /// </summary>
-    float MarginLeft { get; set; }
-
-    /// <summary>
-    /// 获取或设置右边距
-    /// </summary>
-    float MarginRight { get; set; }
-
-    /// <summary>
-    /// 获取或设置上边距
-    /// </summary>
-    float MarginTop { get; set; }
-
-    /// <summary>
-    /// 获取或设置下边距
-    /// </summary>
+    /// <value>表示底部边距的浮点数。</value>
     float MarginBottom { get; set; }
 
     /// <summary>
-    /// 选择文本框
+    /// 获取或设置文本框的左侧边距（以磅为单位）。
     /// </summary>
-    void Select();
+    /// <value>表示左侧边距的浮点数。</value>
+    float MarginLeft { get; set; }
 
     /// <summary>
-    /// 清除文本框内容
+    /// 获取或设置文本框的右侧边距（以磅为单位）。
     /// </summary>
-    void Clear();
+    /// <value>表示右侧边距的浮点数。</value>
+    float MarginRight { get; set; }
 
     /// <summary>
-    /// 添加文本到文本框
+    /// 获取或设置文本框的顶部边距（以磅为单位）。
     /// </summary>
-    /// <param name="text">要添加的文本</param>
-    void AddText(string text);
+    /// <value>表示顶部边距的浮点数。</value>
+    float MarginTop { get; set; }
 
     /// <summary>
-    /// 插入文本到指定位置
+    /// 获取或设置文本的方向。
     /// </summary>
-    /// <param name="position">插入位置</param>
-    /// <param name="text">要插入的文本</param>
-    void InsertText(int position, string text);
+    /// <value>表示文本方向的 <see cref="MsoTextOrientation"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoTextOrientation Orientation { get; set; }
 
     /// <summary>
-    /// 删除指定范围的文本
+    /// 获取一个值，指示文本框是否包含文本。
     /// </summary>
-    /// <param name="start">起始位置</param>
-    /// <param name="length">删除长度</param>
-    void DeleteText(int start, int length);
+    /// <value>指示是否包含文本的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasText { get; }
 
     /// <summary>
-    /// 查找并替换文本
+    /// 获取文本框的文本范围对象。
     /// </summary>
-    /// <param name="findText">查找文本</param>
-    /// <param name="replaceText">替换文本</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <param name="wholeWords">是否匹配整个单词</param>
-    /// <returns>替换次数</returns>
-    int ReplaceText(string findText, string replaceText, bool matchCase = false, bool wholeWords = false);
+    /// <value>表示文本范围的 <see cref="IPowerPointTextRange"/> 对象。</value>
+    IPowerPointTextRange? TextRange { get; }
 
     /// <summary>
-    /// 获取指定范围的文本
+    /// 获取文本框的标尺设置。
     /// </summary>
-    /// <param name="start">起始位置</param>
-    /// <param name="length">文本长度</param>
-    /// <returns>文本内容</returns>
-    string GetTextRange(int start, int length);
+    /// <value>表示标尺的 <see cref="IPowerPointRuler"/> 对象。</value>
+    IPowerPointRuler? Ruler { get; }
 
     /// <summary>
-    /// 设置文本的字体格式
+    /// 获取或设置文本的水平对齐方式。
     /// </summary>
-    /// <param name="fontName">字体名称</param>
-    /// <param name="fontSize">字体大小</param>
-    /// <param name="bold">是否加粗</param>
-    /// <param name="italic">是否斜体</param>
-    /// <param name="underline">下划线类型</param>
-    /// <param name="color">字体颜色</param>
-    void SetFontFormat(string fontName = null, float fontSize = 0, bool bold = false, bool italic = false, int underline = 0, int color = 0);
+    /// <value>表示水平对齐方式的 <see cref="MsoHorizontalAnchor"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoHorizontalAnchor HorizontalAnchor { get; set; }
 
     /// <summary>
-    /// 设置段落格式
+    /// 获取或设置文本的垂直对齐方式。
     /// </summary>
-    /// <param name="alignment">对齐方式</param>
-    /// <param name="spaceBefore">段前间距</param>
-    /// <param name="spaceAfter">段后间距</param>
-    /// <param name="lineSpacing">行距</param>
-    /// <param name="firstLineIndent">首行缩进</param>
-    void SetParagraphFormat(int alignment = 0, float spaceBefore = 0, float spaceAfter = 0, float lineSpacing = 0, float firstLineIndent = 0);
+    /// <value>表示垂直对齐方式的 <see cref="MsoVerticalAnchor"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoVerticalAnchor VerticalAnchor { get; set; }
 
     /// <summary>
-    /// 自动调整文本框大小
+    /// 获取或设置文本框的自动调整大小方式。
     /// </summary>
-    void AutoSizeText();
+    /// <value>表示自动调整大小方式的 <see cref="PpAutoSize"/> 枚举值。</value>
+    PpAutoSize AutoSize { get; set; }
 
     /// <summary>
-    /// 刷新文本框显示
+    /// 获取或设置一个值，指示文本是否自动换行。
     /// </summary>
-    void Refresh();
+    /// <value>指示是否自动换行的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool WordWrap { get; set; }
+
+    /// <summary>
+    /// 删除文本框中的所有文本。
+    /// </summary>
+    void DeleteText();
 }

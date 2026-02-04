@@ -5,25 +5,35 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-
 namespace MudTools.OfficeInterop.PowerPoint;
 
-
 /// <summary>
-/// 表示 PowerPoint 表格的样式定义。
+/// 指定制表位的对齐类型。
 /// </summary>
-[ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTableStyle : IDisposable
+public enum PpTabStopType
 {
     /// <summary>
-    /// 获取表格样式的名称。
+    /// 混合制表位类型。
     /// </summary>
-    /// <value>表格样式的名称。</value>
-    string? Name { get; }
+    ppTabStopMixed = -2,
 
     /// <summary>
-    /// 获取表格样式的唯一标识符。
+    /// 左对齐制表位。
     /// </summary>
-    /// <value>表格样式的标识符字符串。</value>
-    string? Id { get; }
+    ppTabStopLeft = 1,
+
+    /// <summary>
+    /// 居中对齐制表位。
+    /// </summary>
+    ppTabStopCenter = 2,
+
+    /// <summary>
+    /// 右对齐制表位。
+    /// </summary>
+    ppTabStopRight = 3,
+
+    /// <summary>
+    /// 小数点对齐制表位。
+    /// </summary>
+    ppTabStopDecimal = 4
 }
