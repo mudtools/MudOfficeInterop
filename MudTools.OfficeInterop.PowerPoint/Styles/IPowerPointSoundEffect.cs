@@ -8,54 +8,44 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 /// <summary>
-/// PowerPoint 声音效果接口
+/// 表示 PowerPoint 幻灯片中的声音效果。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointSoundEffect : IDisposable
 {
     /// <summary>
-    /// 获取或设置声音名称
+    /// 获取创建此声音效果的 PowerPoint 应用程序实例。
     /// </summary>
-    string Name { get; set; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取此声音效果的父对象。
     /// </summary>
+    /// <value>表示此声音效果父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 从文件导入声音
+    /// 获取或设置声音效果的名称。
     /// </summary>
-    /// <param name="fileName">文件路径</param>
+    /// <value>表示声音效果名称的字符串。</value>
+    string? Name { get; set; }
+
+    /// <summary>
+    /// 获取或设置声音效果的类型。
+    /// </summary>
+    /// <value>表示声音效果类型的 <see cref="PpSoundEffectType"/> 枚举值。</value>
+    PpSoundEffectType Type { get; set; }
+
+    /// <summary>
+    /// 从文件导入声音效果。
+    /// </summary>
+    /// <param name="fileName">声音文件的名称。</param>
     void ImportFromFile(string fileName);
 
     /// <summary>
-    /// 播放声音
+    /// 播放声音效果。
     /// </summary>
     void Play();
-
-    /// <summary>
-    /// 停止播放
-    /// </summary>
-    void Stop();
-
-    /// <summary>
-    /// 暂停播放
-    /// </summary>
-    void Pause();
-
-    /// <summary>
-    /// 恢复播放
-    /// </summary>
-    void Resume();
-
-    /// <summary>
-    /// 删除声音效果
-    /// </summary>
-    void Delete();
-
-    /// <summary>
-    /// 获取声音效果信息
-    /// </summary>
-    /// <returns>声音效果信息字符串</returns>
-    string GetSoundEffectInfo();
 }
