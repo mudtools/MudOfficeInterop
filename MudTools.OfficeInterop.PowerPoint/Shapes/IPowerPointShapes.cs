@@ -6,214 +6,329 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
 /// <summary>
-/// PowerPoint 形状集合接口
+/// 表示 PowerPoint 幻灯片中的形状集合。
 /// </summary>
-public interface IPowerPointShapes : IEnumerable<IPowerPointShape>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsPowerPoint")]
+public interface IPowerPointShapes : IEnumerable<IPowerPointShape?>, IDisposable
 {
     /// <summary>
-    /// 获取形状数量
+    /// 获取创建此形状集合的应用程序实例。
     /// </summary>
-    int Count { get; }
+    /// <value>表示应用程序的 <see cref="IPowerPointApplication"/>。</value>
+    [ComPropertyWrap(NeedDispose = false, NeedConvert = true)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此形状集合的应用程序的创建者代码。
     /// </summary>
+    /// <value>表示创建者代码的整数值。</value>
+    int Creator { get; }
+
+    /// <summary>
+    /// 获取此形状集合的父对象。
+    /// </summary>
+    /// <value>表示此形状集合父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 根据索引获取形状
+    /// 获取形状集合中的形状数量。
     /// </summary>
-    IPowerPointShape this[int index] { get; }
+    /// <value>集合中的形状数量。</value>
+    int Count { get; }
 
     /// <summary>
-    /// 根据名称获取形状
+    /// 通过索引或名称获取集合中的指定形状。
     /// </summary>
-    IPowerPointShape this[string name] { get; }
-
+    /// <param name="index">要获取的形状的索引（从1开始）或名称。</param>
+    /// <value>指定索引或名称对应的 <see cref="IPowerPointShape"/> 对象。</value>
+    IPowerPointShape? this[int index] { get; }
 
     /// <summary>
-    /// 添加形状
+    /// 通过索引或名称获取集合中的指定形状。
     /// </summary>
-    /// <param name="type">形状类型</param>
-    /// <param name="left">左边缘位置</param>
-    /// <param name="top">上边缘位置</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新添加的形状</returns>
-    IPowerPointShape AddShape(MsoAutoShapeType type, double left, double top, double width, double height);
+    /// <param name="name">要获取的形状的索引（从1开始）或名称。</param>
+    /// <value>指定索引或名称对应的 <see cref="IPowerPointShape"/> 对象。</value>
+    IPowerPointShape? this[string name] { get; }
 
     /// <summary>
-    /// 添加文本框
+    /// 添加标注形状到集合中。
     /// </summary>
-    /// <param name="orientation">文本方向</param>
-    /// <param name="left">左边缘位置</param>
-    /// <param name="top">上边缘位置</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新添加的文本框</returns>
-    IPowerPointShape AddTextbox(MsoTextOrientation orientation, double left, double top, double width, double height);
+    /// <param name="type">标注类型。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。</param>
+    /// <param name="height">形状的高度（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddCallout([ComNamespace("MsCore")] MsoCalloutType type, float left, float top, float width, float height);
 
     /// <summary>
-    /// 添加图片
+    /// 添加连接线形状到集合中。
     /// </summary>
-    /// <param name="fileName">图片文件路径</param>
-    /// <param name="linkToFile">是否链接到文件</param>
-    /// <param name="saveWithDocument">是否与文档一起保存</param>
-    /// <param name="left">左边缘位置</param>
-    /// <param name="top">上边缘位置</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新添加的图片形状</returns>
-    IPowerPointShape AddPicture(string fileName, bool linkToFile, bool saveWithDocument, double left, double top, double width, double height);
+    /// <param name="type">连接线类型。</param>
+    /// <param name="beginX">起始点的 X 坐标（以磅为单位）。</param>
+    /// <param name="beginY">起始点的 Y 坐标（以磅为单位）。</param>
+    /// <param name="endX">结束点的 X 坐标（以磅为单位）。</param>
+    /// <param name="endY">结束点的 Y 坐标（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddConnector([ComNamespace("MsCore")] MsoConnectorType type, float beginX, float beginY, float endX, float endY);
 
     /// <summary>
-    /// 添加图表
+    /// 添加曲线形状到集合中。
     /// </summary>
-    /// <param name="type">图表类型</param>
-    /// <param name="left">左边缘位置</param>
-    /// <param name="top">上边缘位置</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新添加的图表形状</returns>
-    IPowerPointShape AddChart(MsoChartType type, double left, double top, double width, double height);
+    /// <param name="safeArrayOfPoints">包含曲线点的数组。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddCurve(object safeArrayOfPoints);
 
     /// <summary>
-    /// 添加表格
+    /// 添加标签形状到集合中。
     /// </summary>
-    /// <param name="numRows">行数</param>
-    /// <param name="numColumns">列数</param>
-    /// <param name="left">左边缘位置</param>
-    /// <param name="top">上边缘位置</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新添加的表格形状</returns>
-    IPowerPointShape AddTable(int numRows, int numColumns, double left, double top, double width, double height);
+    /// <param name="orientation">文本方向。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。</param>
+    /// <param name="height">形状的高度（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddLabel([ComNamespace("MsCore")] MsoTextOrientation orientation, float left, float top, float width, float height);
 
     /// <summary>
-    /// 添加智能图形
+    /// 添加直线形状到集合中。
     /// </summary>
-    /// <param name="smartArtType">智能图形类型</param>
-    /// <param name="left">左边缘位置</param>
-    /// <param name="top">上边缘位置</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    /// <returns>新添加的智能图形形状</returns>
-    IPowerPointShape AddSmartArt(object smartArtType, double left, double top, double width, double height);
-
-    IPowerPointShape AddOLEObject(
-        float Left = 0f, float Top = 0f,
-        float Width = -1f, float Height = -1f,
-        string ClassName = "", string FileName = "", bool DisplayAsIcon = false,
-        string IconFileName = "", int IconIndex = 0,
-        string IconLabel = "", bool Link = false);
+    /// <param name="beginX">起始点的 X 坐标（以磅为单位）。</param>
+    /// <param name="beginY">起始点的 Y 坐标（以磅为单位）。</param>
+    /// <param name="endX">结束点的 X 坐标（以磅为单位）。</param>
+    /// <param name="endY">结束点的 Y 坐标（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddLine(float beginX, float beginY, float endX, float endY);
 
     /// <summary>
-    /// 获取形状范围
+    /// 添加图片形状到集合中。
     /// </summary>
-    /// <param name="index">索引或名称数组</param>
-    /// <returns>形状范围对象</returns>
-    IPowerPointShapeRange Range(object index);
+    /// <param name="fileName">图片文件名称。</param>
+    /// <param name="linkToFile">指示是否链接到文件的布尔值。</param>
+    /// <param name="saveWithDocument">指示是否随文档保存的布尔值。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用原始宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用原始高度。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddPicture(string fileName, [ConvertTriState] bool linkToFile, [ConvertTriState] bool saveWithDocument, float left, float top, float width = -1f, float height = -1f);
 
     /// <summary>
-    /// 根据条件查找形状
+    /// 添加折线形状到集合中。
     /// </summary>
-    /// <param name="predicate">查找条件</param>
-    /// <returns>符合条件的形状列表</returns>
-    IEnumerable<IPowerPointShape> Find(Func<IPowerPointShape, bool> predicate);
+    /// <param name="safeArrayOfPoints">包含折线点的数组。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddPolyline(object safeArrayOfPoints);
 
     /// <summary>
-    /// 按类型查找形状
+    /// 添加自选图形到集合中。
     /// </summary>
-    /// <param name="shapeType">形状类型</param>
-    /// <returns>指定类型的形状列表</returns>
-    IEnumerable<IPowerPointShape> FindByType(MsoShapeType shapeType);
+    /// <param name="type">自选图形类型。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。</param>
+    /// <param name="height">形状的高度（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddShape([ComNamespace("MsCore")] MsoAutoShapeType type, float left, float top, float width, float height);
 
     /// <summary>
-    /// 按名称查找形状
+    /// 添加艺术字形状到集合中。
     /// </summary>
-    /// <param name="name">形状名称</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的形状列表</returns>
-    IEnumerable<IPowerPointShape> FindByName(string name, bool matchCase = false);
+    /// <param name="presetTextEffect">预设的艺术字效果。</param>
+    /// <param name="text">艺术字文本。</param>
+    /// <param name="fontName">字体名称。</param>
+    /// <param name="fontSize">字体大小。</param>
+    /// <param name="fontBold">指示字体是否为粗体的布尔值。</param>
+    /// <param name="fontItalic">指示字体是否为斜体的布尔值。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddTextEffect([ComNamespace("MsCore")] MsoPresetTextEffect presetTextEffect, string text, string fontName, float fontSize, [ConvertTriState] bool fontBold, [ConvertTriState] bool fontItalic, float left, float top);
 
     /// <summary>
-    /// 删除所有形状
+    /// 添加文本框形状到集合中。
     /// </summary>
-    void Delete();
+    /// <param name="orientation">文本方向。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。</param>
+    /// <param name="height">形状的高度（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddTextbox([ComNamespace("MsCore")] MsoTextOrientation orientation, float left, float top, float width, float height);
 
     /// <summary>
-    /// 删除指定索引的形状
+    /// 创建自由形状构建器。
     /// </summary>
-    /// <param name="index">形状索引</param>
-    void Delete(int index);
+    /// <param name="editingType">编辑类型。</param>
+    /// <param name="x1">第一个点的 X 坐标（以磅为单位）。</param>
+    /// <param name="y1">第一个点的 Y 坐标（以磅为单位）。</param>
+    /// <returns>新创建的 <see cref="IPowerPointFreeformBuilder"/> 对象。</returns>
+    IPowerPointFreeformBuilder? BuildFreeform([ComNamespace("MsCore")] MsoEditingType editingType, float x1, float y1);
 
     /// <summary>
-    /// 删除指定名称的形状
+    /// 选择集合中的所有形状。
     /// </summary>
-    /// <param name="name">形状名称</param>
-    void Delete(string name);
+    void SelectAll();
 
     /// <summary>
-    /// 选择所有形状
+    /// 获取指定形状的范围。
     /// </summary>
-    /// <param name="replace">是否替换当前选择</param>
-    void SelectAll(bool replace = true);
+    /// <param name="index">要获取范围的形状的索引（从1开始）、索引数组或名称。</param>
+    /// <returns>指定形状范围对应的 <see cref="IPowerPointShapeRange"/> 对象。</returns>
+    IPowerPointShapeRange? Range([Optional] object index);
 
     /// <summary>
-    /// 取消选择所有形状
+    /// 获取一个值，指示幻灯片是否有标题。
     /// </summary>
-    void DeselectAll();
+    /// <value>指示幻灯片是否有标题的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool HasTitle { get; }
 
     /// <summary>
-    /// 对齐所有形状
+    /// 添加标题形状到集合中。
     /// </summary>
-    /// <param name="alignCmd">对齐命令</param>
-    /// <param name="relativeToSlide">是否相对于幻灯片对齐</param>
-    void AlignAll(int alignCmd, bool relativeToSlide = false);
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddTitle();
 
     /// <summary>
-    /// 分布所有形状
+    /// 获取幻灯片的标题形状。
     /// </summary>
-    /// <param name="distributeCmd">分布命令</param>
-    /// <param name="relativeToSlide">是否相对于幻灯片分布</param>
-    void DistributeAll(int distributeCmd, bool relativeToSlide = false);
+    /// <value>表示标题形状的 <see cref="IPowerPointShape"/> 对象。</value>
+    IPowerPointShape? Title { get; }
 
     /// <summary>
-    /// 组合所有形状
+    /// 获取幻灯片中的占位符集合。
     /// </summary>
-    /// <returns>组合后的形状</returns>
-    IPowerPointShape GroupAll();
+    /// <value>表示占位符集合的 <see cref="IPowerPointPlaceholders"/> 对象。</value>
+    IPowerPointPlaceholders? Placeholders { get; }
 
     /// <summary>
-    /// 获取占位符
+    /// 添加 OLE 对象形状到集合中。
     /// </summary>
-    /// <param name="index">占位符索引</param>
-    /// <returns>占位符形状</returns>
-    IPowerPointShape Placeholders(int index);
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用默认宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用默认高度。</param>
+    /// <param name="className">对象的类名。</param>
+    /// <param name="fileName">对象的文件名称。</param>
+    /// <param name="displayAsIcon">指示是否显示为图标的布尔值。</param>
+    /// <param name="iconFileName">图标文件的名称。</param>
+    /// <param name="iconIndex">图标的索引。</param>
+    /// <param name="iconLabel">图标的标签。</param>
+    /// <param name="link">指示是否链接到文件的布尔值。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddOLEObject(float left = 0f, float top = 0f, float width = -1f, float height = -1f, string className = "", string fileName = "", [ConvertTriState] bool displayAsIcon = false, string iconFileName = "", int iconIndex = 0, string iconLabel = "", [ConvertTriState] bool link = false);
 
     /// <summary>
-    /// 获取主标题占位符
+    /// 添加注释形状到集合中。
     /// </summary>
-    /// <returns>主标题占位符</returns>
-    IPowerPointShape Title { get; }
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。</param>
+    /// <param name="height">形状的高度（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddComment(float left = 1f, float top = 1f, float width = 145f, float height = 145f);
 
     /// <summary>
-    /// 获取所有占位符
+    /// 添加占位符形状到集合中。
     /// </summary>
-    IEnumerable<IPowerPointShape> GetAllPlaceholders();
+    /// <param name="type">占位符类型。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。值为-1表示使用默认位置。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。值为-1表示使用默认位置。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用默认宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用默认高度。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddPlaceholder(PpPlaceholderType type, float left = -1f, float top = -1f, float width = -1f, float height = -1f);
 
     /// <summary>
-    /// 按Z轴顺序排序
+    /// 添加媒体对象形状到集合中。
     /// </summary>
-    /// <param name="ascending">是否升序排列</param>
-    /// <returns>排序后的形状列表</returns>
-    IEnumerable<IPowerPointShape> OrderByZOrder(bool ascending = true);
+    /// <param name="fileName">媒体文件的名称。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用默认宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用默认高度。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddMediaObject(string fileName, float left = 0f, float top = 0f, float width = -1f, float height = -1f);
 
     /// <summary>
-    /// 按名称排序
+    /// 粘贴剪贴板内容为形状。
     /// </summary>
-    /// <param name="ascending">是否升序排列</param>
-    /// <returns>排序后的形状列表</returns>
-    IEnumerable<IPowerPointShape> OrderByName(bool ascending = true);
+    /// <returns>粘贴的形状范围。</returns>
+    IPowerPointShapeRange? Paste();
+
+    /// <summary>
+    /// 添加表格形状到集合中。
+    /// </summary>
+    /// <param name="numRows">表格的行数。</param>
+    /// <param name="numColumns">表格的列数。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。值为-1表示使用默认位置。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。值为-1表示使用默认位置。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用默认宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用默认高度。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddTable(int numRows, int numColumns, float left = -1f, float top = -1f, float width = -1f, float height = -1f);
+
+    /// <summary>
+    /// 以特殊格式粘贴剪贴板内容为形状。
+    /// </summary>
+    /// <param name="dataType">粘贴的数据类型。</param>
+    /// <param name="displayAsIcon">指示是否显示为图标的布尔值。</param>
+    /// <param name="iconFileName">图标文件的名称。</param>
+    /// <param name="iconIndex">图标的索引。</param>
+    /// <param name="iconLabel">图标的标签。</param>
+    /// <param name="link">指示是否链接到文件的布尔值。</param>
+    /// <returns>粘贴的形状范围。</returns>
+    IPowerPointShapeRange? PasteSpecial(PpPasteDataType dataType = PpPasteDataType.ppPasteDefault, [ConvertTriState] bool displayAsIcon = false, string iconFileName = "", int iconIndex = 0, string iconLabel = "", [ConvertTriState] bool link = false);
+
+    /// <summary>
+    /// 添加图表形状到集合中。
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。</param>
+    /// <param name="height">形状的高度（以磅为单位）。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddChart([ComNamespace("MsCore")] XlChartType type = XlChartType.xlArea, float left = -1, float top = -1f, float width = -1f, float height = -1f);
+
+    /// <summary>
+    /// 添加媒体对象形状到集合中（增强版本）。
+    /// </summary>
+    /// <param name="fileName">媒体文件的名称。</param>
+    /// <param name="linkToFile">指示是否链接到文件的布尔值。</param>
+    /// <param name="saveWithDocument">指示是否随文档保存的布尔值。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用默认宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用默认高度。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddMediaObject2(string fileName, [ConvertTriState] bool linkToFile = false, [ConvertTriState] bool saveWithDocument = true, float left = 0f, float top = 0f, float width = -1f, float height = -1f);
+
+    /// <summary>
+    /// 添加智能艺术形状到集合中。
+    /// </summary>
+    /// <param name="layout">智能艺术布局。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。值为-1表示使用默认位置。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。值为-1表示使用默认位置。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用默认宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用默认高度。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddSmartArt(IOfficeSmartArtLayout layout, float left = -1f, float top = -1f, float width = -1f, float height = -1f);
+
+    /// <summary>
+    /// 添加图片形状到集合中（增强版本）。
+    /// </summary>
+    /// <param name="fileName">图片文件名称。</param>
+    /// <param name="linkToFile">指示是否链接到文件的布尔值。</param>
+    /// <param name="saveWithDocument">指示是否随文档保存的布尔值。</param>
+    /// <param name="left">形状的左边缘位置（以磅为单位）。</param>
+    /// <param name="top">形状的上边缘位置（以磅为单位）。</param>
+    /// <param name="width">形状的宽度（以磅为单位）。值为-1表示使用默认宽度。</param>
+    /// <param name="height">形状的高度（以磅为单位）。值为-1表示使用默认高度。</param>
+    /// <param name="compress">图片压缩选项。</param>
+    /// <returns>新添加的 <see cref="IPowerPointShape"/> 对象。</returns>
+    IPowerPointShape? AddPicture2(string fileName, [ConvertTriState] bool linkToFile, [ConvertTriState] bool saveWithDocument, float left, float top, float width = -1f, float height = -1f, [ComNamespace("MsCore")] MsoPictureCompress compress = MsoPictureCompress.msoPictureCompressDocDefault);
 }
