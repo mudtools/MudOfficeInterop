@@ -1,17 +1,51 @@
 # OfficeInterop 项目变更日志
 
+## 2.0.7
+
+- 更新项目版本号至2.0.7
+- 统一接口继承IOfficeObject以增强类型安全
+- 添加大小写转换枚举并重构文本范围接口
+- 添加PowerPoint标尺和制表位相关接口及枚举
+- 重构标签接口并移除实现类
+- 重构声音效果接口并移除实现类
+- 移除幻灯片统计相关接口和实现类
+- 添加幻灯片导航接口并重构放映窗口接口
+- 添加PowerPoint枚举类型和接口定义
+- 添加切换速度枚举并重构切换效果接口
+- 添加PpPasteDataType枚举和IPowerPointPlaceholders接口
+- 添加幻灯片放映相关枚举和接口
+- 移动接口文件到Core目录并扩展功能
+- 添加PowerPoint注释接口并重构幻灯片相关接口
+- 重构动画序列和时间线接口及实现
+- 重构动画序列接口并删除旧实现
+- 添加PowerPoint动画相关枚举和接口
+- 重构IPowerPointHyperlink接口并添加MsoHyperlinkType枚举
+- 新增IPowerPointGuide相关接口和枚举
+- 添加动画相关枚举并重构动画设置接口
+- 重构阴影格式接口并移除实现类
+- 移除冗余属性注解并重构播放设置接口
+- 添加PowerPoint段落格式和项目符号相关枚举及接口
+- 完善PowerPoint OLE格式接口及相关功能
+- 重构IPowerPointLineFormat接口并删除实现类
+- 重构页眉页脚接口并移动文件位置
+- 更新页眉页脚接口并添加日期时间格式枚举
+- 重构动作设置接口并删除实现类
+- 添加PowerPoint相关枚举和接口定义
+- 使用完整命名空间引用PpColorSchemeIndex
+- 添加新的枚举类型PpColorSchemeIndex和接口IPowerPointColorFormat
+- 更新接口泛型参数以包含具体COM类型
+
 ## 2.0.6
 
-- 为COM属性添加包装注解并调整可为空类型
-- 统一接口属性并添加ComPropertyWrap特性
-- 优化COM属性包装和类型定义
+- 为 PowerPoint COM属性添加包装注解并调整可为空类型
+- 统一 PowerPoint 接口属性并添加ComPropertyWrap特性
+- 优化 PowerPoint COM属性包装和类型定义
 - 为COM接口属性添加ComPropertyWrap特性
 - 更新Excel控件接口继承以匹配MsExcel类型
-- 更新接口继承以支持具体COM类型
-- 统一接口继承IOfficeObject泛型参数
+- 更新 PowerPoint 接口继承以支持具体COM类型
+- 统一 PowerPoint 接口继承IOfficeObject泛型参数
 - 为接口添加泛型MsExcel类型参数以增强类型安全
 - 为接口添加MsExcel COM类型参数泛型支持
-- 删除过时的技术文档并更新.gitignore配置
 - 移除打印相关枚举和word对话框枚举文件
 - 移除过时的Excel枚举定义代码文件
 - 优化Excel接口结构并增强功能支持
