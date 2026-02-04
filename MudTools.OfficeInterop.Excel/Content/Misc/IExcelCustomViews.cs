@@ -7,7 +7,9 @@
 
 namespace MudTools.OfficeInterop.Excel;
 
-
+/// <summary>
+/// 表示自定义工作簿视图集合。
+/// </summary>
 [ComCollectionWrap(ComNamespace = "MsExcel")]
 public interface IExcelCustomViews : IEnumerable<IExcelCustomView?>, IOfficeObject<IExcelCustomViews, MsExcel.CustomViews>, IDisposable
 {
