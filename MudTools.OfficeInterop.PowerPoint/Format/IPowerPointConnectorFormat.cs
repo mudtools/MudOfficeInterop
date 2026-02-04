@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示连接线格式，用于管理两个形状之间的连接线。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointConnectorFormat : IDisposable
+public interface IPowerPointConnectorFormat : IOfficeObject<IPowerPointConnectorFormat, MsPowerPoint.ConnectorFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此对象的应用程序对象。

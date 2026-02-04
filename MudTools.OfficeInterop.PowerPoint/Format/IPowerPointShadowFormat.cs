@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 形状的阴影格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointShadowFormat : IDisposable
+public interface IPowerPointShadowFormat : IOfficeObject<IPowerPointShadowFormat, MsPowerPoint.ShadowFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此阴影格式设置的应用程序实例。

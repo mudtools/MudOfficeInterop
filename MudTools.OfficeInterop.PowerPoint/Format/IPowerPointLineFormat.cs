@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 形状的线条格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointLineFormat : IDisposable
+public interface IPowerPointLineFormat : IOfficeObject<IPowerPointLineFormat, MsPowerPoint.LineFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此线条格式设置的应用程序实例。

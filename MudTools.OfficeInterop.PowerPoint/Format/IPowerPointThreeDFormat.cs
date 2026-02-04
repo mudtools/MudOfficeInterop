@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 形状的三维格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointThreeDFormat : IDisposable
+public interface IPowerPointThreeDFormat : IOfficeObject<IPowerPointThreeDFormat, MsPowerPoint.ThreeDFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此三维格式设置的应用程序实例。

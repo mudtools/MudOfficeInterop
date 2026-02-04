@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画中的命令效果设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointCommandEffect : IDisposable
+public interface IPowerPointCommandEffect : IOfficeObject<IPowerPointCommandEffect, MsPowerPoint.CommandEffect>, IDisposable
 {
     /// <summary>
     /// 获取创建此命令效果的 PowerPoint 应用程序实例。

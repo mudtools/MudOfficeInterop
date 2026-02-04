@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画中的滤镜效果设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointFilterEffect : IDisposable
+public interface IPowerPointFilterEffect : IOfficeObject<IPowerPointFilterEffect, MsPowerPoint.FilterEffect>, IDisposable
 {
     /// <summary>
     /// 获取创建此滤镜效果的 PowerPoint 应用程序实例。

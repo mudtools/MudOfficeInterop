@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中的行对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointRow : IDisposable
+public interface IPowerPointRow : IOfficeObject<IPowerPointRow, MsPowerPoint.Row>, IDisposable
 {
     /// <summary>
     /// 获取行所属的 PowerPoint 应用程序实例。

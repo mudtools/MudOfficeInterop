@@ -15,7 +15,7 @@ using System;
 /// 表示链接格式，用于管理 PowerPoint 中链接对象（如链接的 OLE 对象）的属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointLinkFormat : IDisposable
+public interface IPowerPointLinkFormat : IOfficeObject<IPowerPointLinkFormat, MsPowerPoint.LinkFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此对象的 PowerPoint 应用程序。

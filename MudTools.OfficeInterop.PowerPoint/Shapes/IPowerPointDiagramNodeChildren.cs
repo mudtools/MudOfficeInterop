@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示图示节点的子节点集合，提供对节点子级的访问和管理。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointDiagramNodeChildren : IEnumerable<IPowerPointDiagramNode?>, IDisposable
+public interface IPowerPointDiagramNodeChildren : IOfficeObject<IPowerPointDiagramNodeChildren, MsPowerPoint.DiagramNodeChildren>, IEnumerable<IPowerPointDiagramNode?>, IDisposable
 {
     /// <summary>
     /// 获取创建此子节点集合的应用程序。

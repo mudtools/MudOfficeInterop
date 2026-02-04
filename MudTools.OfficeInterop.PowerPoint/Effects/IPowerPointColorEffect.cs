@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画中的颜色效果设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointColorEffect : IDisposable
+public interface IPowerPointColorEffect : IOfficeObject<IPowerPointColorEffect, MsPowerPoint.ColorEffect>, IDisposable
 {
     /// <summary>
     /// 获取创建此颜色效果的 PowerPoint 应用程序实例。

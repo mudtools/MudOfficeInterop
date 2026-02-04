@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 表格中单元格的集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointCellRange : IEnumerable<IPowerPointCell>, IDisposable
+public interface IPowerPointCellRange : IOfficeObject<IPowerPointCellRange, MsPowerPoint.CellRange>, IEnumerable<IPowerPointCell>, IDisposable
 {
     /// <summary>
     /// 获取集合中的单元格数量。

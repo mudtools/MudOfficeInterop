@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示一个图示对象，提供对图示属性和操作的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointDiagram : IDisposable
+public interface IPowerPointDiagram : IOfficeObject<IPowerPointDiagram, MsPowerPoint.Diagram>, IDisposable
 {
     /// <summary>
     /// 获取创建此图示的应用程序。

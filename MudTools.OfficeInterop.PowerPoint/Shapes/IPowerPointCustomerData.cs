@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示与演示文稿或幻灯片关联的自定义数据集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointCustomerData : IEnumerable<IOfficeCustomXMLPart?>, IDisposable
+public interface IPowerPointCustomerData : IOfficeObject<IPowerPointCustomerData, MsPowerPoint.CustomerData>, IEnumerable<IOfficeCustomXMLPart?>, IDisposable
 {
 
     /// <summary>

@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 提供播放、导入和导出声音文件的功能。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSoundFormat : IDisposable
+public interface IPowerPointSoundFormat : IOfficeObject<IPowerPointSoundFormat, MsPowerPoint.SoundFormat>, IDisposable
 {
     /// <summary>
     /// 播放当前声音。

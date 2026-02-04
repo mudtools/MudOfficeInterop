@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画效果的信息。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointEffectInformation : IDisposable
+public interface IPowerPointEffectInformation : IOfficeObject<IPowerPointEffectInformation, MsPowerPoint.EffectInformation>, IDisposable
 {
     /// <summary>
     /// 获取创建此效果信息的 PowerPoint 应用程序实例。

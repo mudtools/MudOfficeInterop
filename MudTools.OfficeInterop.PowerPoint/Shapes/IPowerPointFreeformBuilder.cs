@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示自由形状构建器，用于通过添加节点来创建自定义的自由形状。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointFreeformBuilder : IDisposable
+public interface IPowerPointFreeformBuilder : IOfficeObject<IPowerPointFreeformBuilder, MsPowerPoint.FreeformBuilder>, IDisposable
 {
     /// <summary>
     /// 获取创建此自由形状构建器的应用程序。

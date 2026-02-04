@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 段落中项目符号的格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointBulletFormat : IDisposable
+public interface IPowerPointBulletFormat : IOfficeObject<IPowerPointBulletFormat, MsPowerPoint.BulletFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此项目符号格式设置的 PowerPoint 应用程序实例。

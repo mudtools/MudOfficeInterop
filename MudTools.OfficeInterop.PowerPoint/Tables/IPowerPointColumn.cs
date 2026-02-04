@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 表格中的单列。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointColumn : IDisposable
+public interface IPowerPointColumn : IOfficeObject<IPowerPointColumn, MsPowerPoint.Column>, IDisposable
 {
     /// <summary>
     /// 获取创建此列的 PowerPoint 应用程序实例。

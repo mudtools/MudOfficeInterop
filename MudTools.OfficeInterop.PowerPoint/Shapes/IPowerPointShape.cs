@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示幻灯片上的一个形状，提供对形状属性、格式和操作的全面访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointShape : IDisposable
+public interface IPowerPointShape : IOfficeObject<IPowerPointShape, MsPowerPoint.Shape>, IDisposable
 {
     /// <summary>
     /// 获取创建此形状的应用程序。

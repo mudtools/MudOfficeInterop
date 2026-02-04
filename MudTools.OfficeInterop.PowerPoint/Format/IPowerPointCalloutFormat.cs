@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 该接口提供对标注线的各种属性（如角度、长度、类型等）进行配置和查询的功能。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointCalloutFormat : IDisposable
+public interface IPowerPointCalloutFormat : IOfficeObject<IPowerPointCalloutFormat, MsPowerPoint.CalloutFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此对象的应用程序对象。

@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 表格中的列集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointColumns : IEnumerable<IPowerPointColumn?>, IDisposable
+public interface IPowerPointColumns : IOfficeObject<IPowerPointColumns, MsPowerPoint.Columns>, IEnumerable<IPowerPointColumn?>, IDisposable
 {
 
     /// <summary>

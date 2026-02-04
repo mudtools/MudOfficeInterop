@@ -15,7 +15,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示颜色格式的接口，用于定义和管理颜色属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointColorFormat : IDisposable
+public interface IPowerPointColorFormat : IOfficeObject<IPowerPointColorFormat, MsPowerPoint.ColorFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此颜色格式对象的应用程序对象。

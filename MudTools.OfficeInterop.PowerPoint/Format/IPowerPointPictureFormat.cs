@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中图片的格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointPictureFormat : IDisposable
+public interface IPowerPointPictureFormat : IOfficeObject<IPowerPointPictureFormat, MsPowerPoint.PictureFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此图片格式设置的应用程序实例。

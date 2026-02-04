@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 动画路径中的关键点集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointAnimationPoints : IEnumerable<IPowerPointAnimationPoint?>, IDisposable
+public interface IPowerPointAnimationPoints : IOfficeObject<IPowerPointAnimationPoints, MsPowerPoint.AnimationPoints>, IEnumerable<IPowerPointAnimationPoint?>, IDisposable
 {
 
     /// <summary>

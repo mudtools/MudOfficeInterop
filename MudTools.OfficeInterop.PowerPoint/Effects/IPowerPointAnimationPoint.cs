@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画路径中的关键点。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointAnimationPoint : IDisposable
+public interface IPowerPointAnimationPoint : IOfficeObject<IPowerPointAnimationPoint, MsPowerPoint.AnimationPoint>, IDisposable
 {
     /// <summary>
     /// 获取创建此动画点的 PowerPoint 应用程序实例。

@@ -14,7 +14,7 @@ using System;
 /// 表示 PowerPoint 中的一个表格。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTable : IDisposable
+public interface IPowerPointTable : IOfficeObject<IPowerPointTable, MsPowerPoint.Table>, IDisposable
 {
     /// <summary>
     /// 获取创建此表格的 PowerPoint 应用程序对象。

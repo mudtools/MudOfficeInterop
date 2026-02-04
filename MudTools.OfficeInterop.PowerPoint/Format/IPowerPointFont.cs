@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示字体对象，用于设置和获取字体的各种属性。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointFont : IDisposable
+public interface IPowerPointFont : IOfficeObject<IPowerPointFont, MsPowerPoint.Font>, IDisposable
 {
     /// <summary>
     /// 获取字体所属的应用程序对象。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画效果的时间设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTiming : IDisposable
+public interface IPowerPointTiming : IOfficeObject<IPowerPointTiming, MsPowerPoint.Timing>, IDisposable
 {
     /// <summary>
     /// 获取创建此时间设置的 PowerPoint 应用程序实例。

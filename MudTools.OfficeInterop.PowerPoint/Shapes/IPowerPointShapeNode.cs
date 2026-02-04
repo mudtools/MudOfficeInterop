@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示形状中的一个节点，该节点定义了自由形状的几何结构。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointShapeNode : IDisposable
+public interface IPowerPointShapeNode : IOfficeObject<IPowerPointShapeNode, MsPowerPoint.ShapeNode>, IDisposable
 {
     /// <summary>
     /// 获取创建此形状节点的应用程序。

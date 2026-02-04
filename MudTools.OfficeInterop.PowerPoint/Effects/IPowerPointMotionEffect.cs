@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画中的运动效果设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointMotionEffect : IDisposable
+public interface IPowerPointMotionEffect : IOfficeObject<IPowerPointMotionEffect, MsPowerPoint.MotionEffect>, IDisposable
 {
     /// <summary>
     /// 获取创建此运动效果的 PowerPoint 应用程序实例。

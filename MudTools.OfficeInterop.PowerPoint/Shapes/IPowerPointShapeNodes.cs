@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示形状节点的集合，这些节点定义了自由形状的几何结构。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointShapeNodes : IEnumerable<IPowerPointShapeNode?>, IDisposable
+public interface IPowerPointShapeNodes : IOfficeObject<IPowerPointShapeNodes, MsPowerPoint.ShapeNodes>, IEnumerable<IPowerPointShapeNode?>, IDisposable
 {
     /// <summary>
     /// 获取创建此形状节点集合的应用程序。

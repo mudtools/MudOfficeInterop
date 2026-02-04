@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示画布上形状的集合，提供在画布上创建和操作形状的方法。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointCanvasShapes : IEnumerable<IPowerPointShape?>, IDisposable
+public interface IPowerPointCanvasShapes : IOfficeObject<IPowerPointCanvasShapes, MsPowerPoint.CanvasShapes>, IEnumerable<IPowerPointShape?>, IDisposable
 {
     /// <summary>
     /// 获取创建此形状集合的应用程序。

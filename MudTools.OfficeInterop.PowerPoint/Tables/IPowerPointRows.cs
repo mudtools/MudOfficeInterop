@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 表格中的行集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointRows : IEnumerable<IPowerPointRow?>, IDisposable
+public interface IPowerPointRows : IOfficeObject<IPowerPointRows, MsPowerPoint.Rows>, IEnumerable<IPowerPointRow?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的行数量。

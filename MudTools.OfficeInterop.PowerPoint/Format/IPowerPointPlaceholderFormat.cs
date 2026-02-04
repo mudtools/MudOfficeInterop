@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中占位符的格式信息。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointPlaceholderFormat : IDisposable
+public interface IPowerPointPlaceholderFormat : IOfficeObject<IPowerPointPlaceholderFormat, MsPowerPoint.PlaceholderFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此占位符格式对象的 PowerPoint 应用程序实例。

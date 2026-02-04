@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画效果的行为设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointAnimationBehavior : IDisposable
+public interface IPowerPointAnimationBehavior : IOfficeObject<IPowerPointAnimationBehavior, MsPowerPoint.AnimationBehavior>, IDisposable
 {
     /// <summary>
     /// 获取创建此动画行为的 PowerPoint 应用程序实例。

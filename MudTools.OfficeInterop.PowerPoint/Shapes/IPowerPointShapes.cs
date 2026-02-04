@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片中的形状集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointShapes : IEnumerable<IPowerPointShape?>, IDisposable
+public interface IPowerPointShapes : IOfficeObject<IPowerPointShapes, MsPowerPoint.Shapes>, IEnumerable<IPowerPointShape?>, IDisposable
 {
     /// <summary>
     /// 获取创建此形状集合的应用程序实例。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示组合形状中的子形状集合，提供对组合内各个形状的访问。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointGroupShapes : IEnumerable<IPowerPointShape?>, IDisposable
+public interface IPowerPointGroupShapes : IOfficeObject<IPowerPointGroupShapes, MsPowerPoint.GroupShapes>, IEnumerable<IPowerPointShape?>, IDisposable
 {
     /// <summary>
     /// 获取创建此组合形状集合的应用程序。

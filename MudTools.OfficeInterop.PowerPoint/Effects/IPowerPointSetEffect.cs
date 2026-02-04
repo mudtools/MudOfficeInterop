@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画中的设置效果。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSetEffect : IDisposable
+public interface IPowerPointSetEffect : IOfficeObject<IPowerPointSetEffect, MsPowerPoint.SetEffect>, IDisposable
 {
     /// <summary>
     /// 获取创建此设置效果的 PowerPoint 应用程序实例。

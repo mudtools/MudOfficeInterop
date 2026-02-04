@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 形状的调整值集合。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointAdjustments : IDisposable
+public interface IPowerPointAdjustments : IOfficeObject<IPowerPointAdjustments, MsPowerPoint.Adjustments>, IDisposable
 {
     /// <summary>
     /// 获取创建此调整值集合的应用程序实例。

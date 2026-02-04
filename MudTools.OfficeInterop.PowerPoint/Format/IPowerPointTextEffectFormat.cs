@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示艺术字文本效果格式，用于控制艺术字对象的文本外观和布局。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTextEffectFormat : IDisposable
+public interface IPowerPointTextEffectFormat : IOfficeObject<IPowerPointTextEffectFormat, MsPowerPoint.TextEffectFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此对象的应用程序对象。

@@ -14,7 +14,7 @@ using System;
 /// 表示 PowerPoint 表格中的一个单元格。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointCell : IDisposable
+public interface IPowerPointCell : IOfficeObject<IPowerPointCell, MsPowerPoint.Cell>, IDisposable
 {
     /// <summary>
     /// 获取创建此单元格的 PowerPoint 应用程序对象。

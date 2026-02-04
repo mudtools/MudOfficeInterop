@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 文本框中段落的格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointParagraphFormat : IDisposable
+public interface IPowerPointParagraphFormat : IOfficeObject<IPowerPointParagraphFormat, MsPowerPoint.ParagraphFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此段落格式设置的 PowerPoint 应用程序实例。

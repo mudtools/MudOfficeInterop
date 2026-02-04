@@ -14,7 +14,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示媒体的格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointMediaFormat : IDisposable
+public interface IPowerPointMediaFormat : IOfficeObject<IPowerPointMediaFormat, MsPowerPoint.MediaFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此媒体格式对象的应用程序。

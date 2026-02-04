@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 中 OLE 对象的格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointOLEFormat : IDisposable
+public interface IPowerPointOLEFormat : IOfficeObject<IPowerPointOLEFormat, MsPowerPoint.OLEFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此 OLE 格式设置的 PowerPoint 应用程序实例。

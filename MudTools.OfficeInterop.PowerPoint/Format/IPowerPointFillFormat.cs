@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 提供设置和获取填充属性（如颜色、渐变、纹理等）的功能。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointFillFormat : IDisposable
+public interface IPowerPointFillFormat : IOfficeObject<IPowerPointFillFormat, MsPowerPoint.FillFormat>, IDisposable
 {
     /// <summary>
     /// 获取创建此填充格式的应用程序对象。

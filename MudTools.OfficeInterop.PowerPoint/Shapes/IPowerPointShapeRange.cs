@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中形状的集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointShapeRange : IDisposable, IEnumerable<IPowerPointShape?>
+public interface IPowerPointShapeRange : IOfficeObject<IPowerPointShapeRange, MsPowerPoint.ShapeRange>, IDisposable, IEnumerable<IPowerPointShape?>
 {
     /// <summary>
     /// 获取创建此形状集合的应用程序对象。

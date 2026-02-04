@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 动画中的旋转效果设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointRotationEffect : IDisposable
+public interface IPowerPointRotationEffect : IOfficeObject<IPowerPointRotationEffect, MsPowerPoint.RotationEffect>, IDisposable
 {
     /// <summary>
     /// 获取创建此旋转效果的 PowerPoint 应用程序实例。

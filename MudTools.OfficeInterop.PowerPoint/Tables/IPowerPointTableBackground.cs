@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 表格的背景格式设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTableBackground : IDisposable
+public interface IPowerPointTableBackground : IOfficeObject<IPowerPointTableBackground, MsPowerPoint.TableBackground>, IDisposable
 {
     /// <summary>
     /// 获取表格背景的填充格式设置。
