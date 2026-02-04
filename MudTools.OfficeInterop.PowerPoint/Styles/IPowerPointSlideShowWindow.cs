@@ -7,72 +7,88 @@
 
 namespace MudTools.OfficeInterop.PowerPoint;
 /// <summary>
-/// PowerPoint 幻灯片放映窗口接口
+/// 表示 PowerPoint 的幻灯片放映窗口。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointSlideShowWindow : IDisposable
 {
     /// <summary>
-    /// 获取或设置窗口高度
+    /// 获取创建此幻灯片放映窗口的 PowerPoint 应用程序实例。
     /// </summary>
-    float Height { get; set; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置窗口宽度
+    /// 获取此幻灯片放映窗口的父对象。
     /// </summary>
-    float Width { get; set; }
-
-    /// <summary>
-    /// 获取或设置窗口左边缘位置
-    /// </summary>
-    float Left { get; set; }
-
-    /// <summary>
-    /// 获取或设置窗口上边缘位置
-    /// </summary>
-    float Top { get; set; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此幻灯片放映窗口父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取幻灯片放映视图
+    /// 获取幻灯片放映视图。
     /// </summary>
-    IPowerPointSlideShowView View { get; }
+    /// <value>表示幻灯片放映视图的 <see cref="IPowerPointSlideShowView"/> 对象。</value>
+    IPowerPointSlideShowView? View { get; }
 
     /// <summary>
-    /// 获取幻灯片放映设置
+    /// 获取幻灯片放映窗口关联的演示文稿。
     /// </summary>
-    IPowerPointSlideShowSettings Settings { get; }
+    /// <value>表示演示文稿的 <see cref="IPowerPointPresentation"/> 对象。</value>
+    IPowerPointPresentation? Presentation { get; }
 
     /// <summary>
-    /// 获取幻灯片放映状态
+    /// 获取一个值，指示幻灯片放映是否以全屏模式显示。
     /// </summary>
-    PpSlideShowState State { get; }
+    /// <value>指示是否为全屏模式的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool IsFullScreen { get; }
 
     /// <summary>
-    /// 激活窗口
+    /// 获取或设置幻灯片放映窗口的左边缘位置（以磅为单位）。
+    /// </summary>
+    /// <value>表示左边缘位置的浮点数。</value>
+    float Left { get; set; }
+
+    /// <summary>
+    /// 获取或设置幻灯片放映窗口的上边缘位置（以磅为单位）。
+    /// </summary>
+    /// <value>表示上边缘位置的浮点数。</value>
+    float Top { get; set; }
+
+    /// <summary>
+    /// 获取或设置幻灯片放映窗口的宽度（以磅为单位）。
+    /// </summary>
+    /// <value>表示宽度的浮点数。</value>
+    float Width { get; set; }
+
+    /// <summary>
+    /// 获取或设置幻灯片放映窗口的高度（以磅为单位）。
+    /// </summary>
+    /// <value>表示高度的浮点数。</value>
+    float Height { get; set; }
+
+    /// <summary>
+    /// 获取幻灯片放映窗口的窗口句柄。
+    /// </summary>
+    /// <value>表示窗口句柄的整数值。</value>
+    int HWND { get; }
+
+    /// <summary>
+    /// 获取一个值，指示幻灯片放映窗口是否为活动窗口。
+    /// </summary>
+    /// <value>指示是否为活动窗口的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Active { get; }
+
+    /// <summary>
+    /// 激活幻灯片放映窗口。
     /// </summary>
     void Activate();
 
     /// <summary>
-    /// 暂停幻灯片放映
+    /// 获取幻灯片导航对象。
     /// </summary>
-    void Pause();
-
-    /// <summary>
-    /// 恢复幻灯片放映
-    /// </summary>
-    void Resume();
-
-    /// <summary>
-    /// 切换到黑屏
-    /// </summary>
-    void BlackScreen();
-
-    /// <summary>
-    /// 切换到白屏
-    /// </summary>
-    void WhiteScreen();
+    /// <value>表示幻灯片导航的 <see cref="IPowerPointSlideNavigation"/> 对象。</value>
+    IPowerPointSlideNavigation? SlideNavigation { get; }
 }
