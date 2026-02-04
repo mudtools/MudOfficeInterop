@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片中的参考线集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointGuides : IEnumerable<IPowerPointGuide?>, IDisposable
+public interface IPowerPointGuides : IOfficeObject<IPowerPointGuides, MsPowerPoint.Guides>, IEnumerable<IPowerPointGuide?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的参考线数量。

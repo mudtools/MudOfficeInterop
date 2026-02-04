@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 幻灯片中的时间线对象，用于管理动画序列。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTimeLine : IDisposable
+public interface IPowerPointTimeLine : IOfficeObject<IPowerPointTimeLine, MsPowerPoint.TimeLine>, IDisposable
 {
     /// <summary>
     /// 获取创建此时间线的 PowerPoint 应用程序实例。

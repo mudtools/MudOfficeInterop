@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示形状的文本框架，提供对文本格式、布局和效果的访问。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTextFrame2 : IDisposable
+public interface IPowerPointTextFrame2 : IOfficeObject<IPowerPointTextFrame2, MsPowerPoint.TextFrame2>, IDisposable
 {
     /// <summary>
     /// 获取创建此文本框架的应用程序。

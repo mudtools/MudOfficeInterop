@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中的超链接对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointHyperlink : IDisposable
+public interface IPowerPointHyperlink : IOfficeObject<IPowerPointHyperlink, MsPowerPoint.Hyperlink>, IDisposable
 {
     /// <summary>
     /// 获取创建此超链接的 PowerPoint 应用程序实例。

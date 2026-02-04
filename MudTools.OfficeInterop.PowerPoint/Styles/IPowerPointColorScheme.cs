@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 演示文稿中的颜色方案。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointColorScheme : IEnumerable<IPowerPointRGBColor?>, IDisposable
+public interface IPowerPointColorScheme : IOfficeObject<IPowerPointColorScheme, MsPowerPoint.ColorScheme>, IEnumerable<IPowerPointRGBColor?>, IDisposable
 {
 
     /// <summary>

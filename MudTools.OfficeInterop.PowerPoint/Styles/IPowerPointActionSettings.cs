@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 形状的动作设置集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointActionSettings : IEnumerable<IPowerPointActionSetting?>, IDisposable
+public interface IPowerPointActionSettings : IOfficeObject<IPowerPointActionSettings, MsPowerPoint.ActionSettings>, IEnumerable<IPowerPointActionSetting?>, IDisposable
 {
 
     /// <summary>

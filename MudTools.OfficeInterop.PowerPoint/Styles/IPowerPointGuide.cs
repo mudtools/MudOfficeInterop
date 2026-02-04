@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片中的参考线。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointGuide : IDisposable
+public interface IPowerPointGuide : IOfficeObject<IPowerPointGuide, MsPowerPoint.Guide>, IDisposable
 {
     /// <summary>
     /// 获取创建此参考线的 PowerPoint 应用程序实例。

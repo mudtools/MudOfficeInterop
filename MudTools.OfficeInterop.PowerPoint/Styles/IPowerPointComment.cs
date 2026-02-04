@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片中的注释。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointComment : IDisposable
+public interface IPowerPointComment : IOfficeObject<IPowerPointComment, MsPowerPoint.Comment>, IDisposable
 {
     /// <summary>
     /// 获取创建此注释的 PowerPoint 应用程序实例。

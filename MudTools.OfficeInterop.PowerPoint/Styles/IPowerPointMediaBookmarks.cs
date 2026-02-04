@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示媒体书签的集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointMediaBookmarks : IEnumerable<IPowerPointMediaBookmark?>, IDisposable
+public interface IPowerPointMediaBookmarks : IOfficeObject<IPowerPointMediaBookmarks, MsPowerPoint.MediaBookmarks>, IEnumerable<IPowerPointMediaBookmark?>, IDisposable
 {
 
     /// <summary>

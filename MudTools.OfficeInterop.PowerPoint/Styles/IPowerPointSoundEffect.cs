@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片中的声音效果。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSoundEffect : IDisposable
+public interface IPowerPointSoundEffect : IOfficeObject<IPowerPointSoundEffect, MsPowerPoint.SoundEffect>, IDisposable
 {
     /// <summary>
     /// 获取创建此声音效果的 PowerPoint 应用程序实例。

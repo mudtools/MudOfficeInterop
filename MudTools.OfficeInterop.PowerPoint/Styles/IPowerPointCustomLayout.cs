@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中的自定义版式。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointCustomLayout : IDisposable
+public interface IPowerPointCustomLayout : IOfficeObject<IPowerPointCustomLayout, MsPowerPoint.CustomLayout>, IDisposable
 {
     /// <summary>
     /// 获取创建此自定义版式的 PowerPoint 应用程序实例。

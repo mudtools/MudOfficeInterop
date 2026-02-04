@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 演示文稿中的设计模板。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointDesign : IDisposable
+public interface IPowerPointDesign : IOfficeObject<IPowerPointDesign, MsPowerPoint.Design>, IDisposable
 {
     /// <summary>
     /// 获取创建此设计模板的 PowerPoint 应用程序实例。

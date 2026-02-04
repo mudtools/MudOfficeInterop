@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 标尺中的层级设置集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointRulerLevels : IEnumerable<IPowerPointRulerLevel?>, IDisposable
+public interface IPowerPointRulerLevels : IOfficeObject<IPowerPointRulerLevels, MsPowerPoint.RulerLevels>, IEnumerable<IPowerPointRulerLevel?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的标尺层级数量。

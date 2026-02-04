@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 /// 表示 PowerPoint 幻灯片或备注页中的页眉和页脚集合。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointHeadersFooters : IDisposable
+public interface IPowerPointHeadersFooters : IOfficeObject<IPowerPointHeadersFooters, MsPowerPoint.HeadersFooters>, IDisposable
 {
     /// <summary>
     /// 获取创建此页眉页脚集合的 PowerPoint 应用程序实例。

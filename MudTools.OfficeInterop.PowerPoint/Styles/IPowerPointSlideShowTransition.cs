@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片的切换效果设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSlideShowTransition : IDisposable
+public interface IPowerPointSlideShowTransition : IOfficeObject<IPowerPointSlideShowTransition, MsPowerPoint.SlideShowTransition>, IDisposable
 {
     /// <summary>
     /// 获取创建此切换效果设置的 PowerPoint 应用程序实例。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// PowerPoint 序列接口
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSequences : IEnumerable<IPowerPointSequence?>, IDisposable
+public interface IPowerPointSequences : IOfficeObject<IPowerPointSequences, MsPowerPoint.Sequences>, IEnumerable<IPowerPointSequence?>, IDisposable
 {
 
     /// <summary>

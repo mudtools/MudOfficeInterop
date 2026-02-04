@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片中的动画序列。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSequence : IEnumerable<IPowerPointEffect?>, IDisposable
+public interface IPowerPointSequence : IOfficeObject<IPowerPointSequence, MsPowerPoint.Sequence>, IEnumerable<IPowerPointEffect?>, IDisposable
 {
 
     /// <summary>

@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 文本框中的制表位集合。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTabStops : IDisposable
+public interface IPowerPointTabStops : IOfficeObject<IPowerPointTabStops, MsPowerPoint.TabStops>, IDisposable
 {
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 文本框中的文本范围。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTextRange : IDisposable
+public interface IPowerPointTextRange : IOfficeObject<IPowerPointTextRange, MsPowerPoint.TextRange>, IDisposable
 {
 
     /// <summary>

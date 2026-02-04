@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 演示文稿中的命名幻灯片放映。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointNamedSlideShow : IDisposable
+public interface IPowerPointNamedSlideShow : IOfficeObject<IPowerPointNamedSlideShow, MsPowerPoint.NamedSlideShow>, IDisposable
 {
     /// <summary>
     /// 获取创建此命名幻灯片放映的 PowerPoint 应用程序实例。

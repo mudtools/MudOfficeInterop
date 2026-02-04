@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 演示文稿中的命名幻灯片放映集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointNamedSlideShows : IEnumerable<IPowerPointNamedSlideShow?>, IDisposable
+public interface IPowerPointNamedSlideShows : IOfficeObject<IPowerPointNamedSlideShows, MsPowerPoint.NamedSlideShows>, IEnumerable<IPowerPointNamedSlideShow?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的命名幻灯片放映数量。

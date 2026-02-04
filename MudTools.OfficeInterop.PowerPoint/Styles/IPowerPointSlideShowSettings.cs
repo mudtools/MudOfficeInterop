@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 演示文稿的幻灯片放映设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSlideShowSettings : IDisposable
+public interface IPowerPointSlideShowSettings : IOfficeObject<IPowerPointSlideShowSettings, MsPowerPoint.SlideShowSettings>, IDisposable
 {
     /// <summary>
     /// 获取创建此幻灯片放映设置的 PowerPoint 应用程序实例。

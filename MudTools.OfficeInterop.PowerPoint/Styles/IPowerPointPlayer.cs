@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中的媒体播放器对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointPlayer : IDisposable
+public interface IPowerPointPlayer : IOfficeObject<IPowerPointPlayer, MsPowerPoint.Player>, IDisposable
 {
     /// <summary>
     /// 获取创建此播放器的 PowerPoint 应用程序实例。

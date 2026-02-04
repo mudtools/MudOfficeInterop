@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示媒体中的一个书签。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointMediaBookmark : IDisposable
+public interface IPowerPointMediaBookmark : IOfficeObject<IPowerPointMediaBookmark, MsPowerPoint.MediaBookmark>, IDisposable
 {
     /// <summary>
     /// 获取书签的索引号。

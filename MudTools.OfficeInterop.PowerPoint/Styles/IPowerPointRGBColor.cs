@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 中的 RGB 颜色对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointRGBColor : IDisposable
+public interface IPowerPointRGBColor : IOfficeObject<IPowerPointRGBColor, MsPowerPoint.RGBColor>, IDisposable
 {
     /// <summary>
     /// 获取创建此 RGB 颜色对象的 PowerPoint 应用程序实例。

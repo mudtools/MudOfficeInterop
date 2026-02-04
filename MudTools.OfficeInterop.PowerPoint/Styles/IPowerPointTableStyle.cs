@@ -13,7 +13,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 表格的样式定义。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTableStyle : IDisposable
+public interface IPowerPointTableStyle : IOfficeObject<IPowerPointTableStyle, MsPowerPoint.TableStyle>, IDisposable
 {
     /// <summary>
     /// 获取表格样式的名称。

@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 对象中的标签集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint", NoneDisposed = false)]
-public interface IPowerPointTags : IEnumerable<string?>, IDisposable
+public interface IPowerPointTags : IOfficeObject<IPowerPointTags, MsPowerPoint.Tags>, IEnumerable<string?>, IDisposable
 {
     /// <summary>
     /// 获取集合中的标签数量。

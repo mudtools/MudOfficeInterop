@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 标尺中的层级设置。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointRulerLevel : IDisposable
+public interface IPowerPointRulerLevel : IOfficeObject<IPowerPointRulerLevel, MsPowerPoint.RulerLevel>, IDisposable
 {
     /// <summary>
     /// 获取创建此标尺层级的 PowerPoint 应用程序实例。

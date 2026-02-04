@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 文本框中的标尺对象。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointRuler : IDisposable
+public interface IPowerPointRuler : IOfficeObject<IPowerPointRuler, MsPowerPoint.Ruler>, IDisposable
 {
     /// <summary>
     /// 获取创建此标尺对象的 PowerPoint 应用程序实例。

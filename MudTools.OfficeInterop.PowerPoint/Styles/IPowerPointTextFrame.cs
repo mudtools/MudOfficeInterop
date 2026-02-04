@@ -10,7 +10,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 形状中的文本框。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointTextFrame : IDisposable
+public interface IPowerPointTextFrame : IOfficeObject<IPowerPointTextFrame, MsPowerPoint.TextFrame>, IDisposable
 {
     /// <summary>
     /// 获取创建此文本框的应用程序实例。

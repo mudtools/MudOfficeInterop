@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片或备注页中的页眉或页脚。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointHeaderFooter : IDisposable
+public interface IPowerPointHeaderFooter : IOfficeObject<IPowerPointHeaderFooter, MsPowerPoint.HeaderFooter>, IDisposable
 {
     /// <summary>
     /// 获取创建此页眉页脚的 PowerPoint 应用程序实例。

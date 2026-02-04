@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示一组边框的集合，通常用于表格单元格或形状。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointBorders : IEnumerable<IPowerPointLineFormat?>, IDisposable
+public interface IPowerPointBorders : IOfficeObject<IPowerPointBorders, MsPowerPoint.Borders>, IEnumerable<IPowerPointLineFormat?>, IDisposable
 {
     /// <summary>
     /// 获取集合中边框的数量。

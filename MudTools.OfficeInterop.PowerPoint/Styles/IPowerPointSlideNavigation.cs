@@ -11,7 +11,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片放映中的导航控件。
 /// </summary>
 [ComObjectWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointSlideNavigation : IDisposable
+public interface IPowerPointSlideNavigation : IOfficeObject<IPowerPointSlideNavigation, MsPowerPoint.SlideNavigation>, IDisposable
 {
     /// <summary>
     /// 获取创建此导航控件的 PowerPoint 应用程序实例。

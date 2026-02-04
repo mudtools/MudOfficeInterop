@@ -12,7 +12,7 @@ namespace MudTools.OfficeInterop.PowerPoint;
 /// 表示 PowerPoint 幻灯片中的占位符集合。
 /// </summary>
 [ComCollectionWrap(ComNamespace = "MsPowerPoint")]
-public interface IPowerPointPlaceholders : IEnumerable<IPowerPointShape?>, IDisposable
+public interface IPowerPointPlaceholders : IOfficeObject<IPowerPointPlaceholders, MsPowerPoint.Placeholders>, IEnumerable<IPowerPointShape?>, IDisposable
 {
 
     /// <summary>
