@@ -8,70 +8,122 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 /// <summary>
-/// PowerPoint 序列项接口
+/// 表示 PowerPoint 幻灯片中的动画序列。
 /// </summary>
-public interface IPowerPointSequence : IDisposable
+[ComCollectionWrap(ComNamespace = "MsPowerPoint")]
+public interface IPowerPointSequence : IEnumerable<IPowerPointEffect?>, IDisposable
 {
+
     /// <summary>
-    /// 获取效果数量
+    /// 获取集合中的动画效果数量。
     /// </summary>
+    /// <value>集合中的动画效果数量。</value>
     int Count { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取创建此动画序列的 PowerPoint 应用程序实例。
     /// </summary>
+    /// <value>表示 PowerPoint 应用程序的 <see cref="Application"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
+
+    /// <summary>
+    /// 获取此动画序列的父对象。
+    /// </summary>
+    /// <value>表示此动画序列父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 根据索引获取效果
+    /// 通过索引获取集合中的指定动画效果。
     /// </summary>
-    IPowerPointEffect this[int index] { get; }
+    /// <param name="index">要获取的动画效果的索引（从1开始）。</param>
+    /// <value>位于指定索引处的 <see cref="IPowerPointEffect"/> 对象。</value>
+    IPowerPointEffect? this[int index] { get; }
 
     /// <summary>
-    /// 添加效果
+    /// 为指定形状添加动画效果。
     /// </summary>
-    /// <param name="shape">目标形状</param>
-    /// <param name="effectId">效果ID</param>
-    /// <param name="trigger">触发器</param>
-    /// <param name="index">插入位置</param>
-    /// <returns>新添加的效果</returns>
-    IPowerPointEffect AddEffect(IPowerPointShape shape, int effectId = 1, int trigger = 1, int index = -1);
+    /// <param name="shape">要添加动画效果的形状。</param>
+    /// <param name="effectId">动画效果类型。</param>
+    /// <param name="level">动画效果的层级。</param>
+    /// <param name="trigger">动画效果的触发类型。</param>
+    /// <param name="index">新动画效果要插入的位置索引。值为-1表示在末尾添加。</param>
+    /// <returns>新添加的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? AddEffect(IPowerPointShape shape, MsoAnimEffect effectId, MsoAnimateByLevel level = MsoAnimateByLevel.msoAnimateLevelNone, MsoAnimTriggerType trigger = MsoAnimTriggerType.msoAnimTriggerOnPageClick, int index = -1);
 
     /// <summary>
-    /// 删除效果
+    /// 克隆指定的动画效果。
     /// </summary>
-    /// <param name="index">效果索引</param>
-    void DeleteEffect(int index);
+    /// <param name="effect">要克隆的动画效果。</param>
+    /// <param name="index">克隆效果要插入的位置索引。值为-1表示在末尾添加。</param>
+    /// <returns>克隆的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? Clone(IPowerPointEffect effect, int index = -1);
 
     /// <summary>
-    /// 移动效果
+    /// 查找指定形状的第一个动画效果。
     /// </summary>
-    /// <param name="fromIndex">源索引</param>
-    /// <param name="toIndex">目标索引</param>
-    void MoveEffect(int fromIndex, int toIndex);
+    /// <param name="shape">要查找动画效果的形状。</param>
+    /// <returns>找到的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? FindFirstAnimationFor(IPowerPointShape shape);
 
     /// <summary>
-    /// 查找指定形状的效果
+    /// 查找指定点击次数的第一个动画效果。
     /// </summary>
-    /// <param name="shape">目标形状</param>
-    /// <returns>效果列表</returns>
-    IEnumerable<IPowerPointEffect> FindEffectsByShape(IPowerPointShape shape);
+    /// <param name="click">点击次数。</param>
+    /// <returns>找到的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? FindFirstAnimationForClick(int click);
 
     /// <summary>
-    /// 清除所有效果
+    /// 将动画效果转换为指定层级的构建动画。
     /// </summary>
-    void ClearEffects();
+    /// <param name="effect">要转换的动画效果。</param>
+    /// <param name="level">目标层级。</param>
+    /// <returns>转换后的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? ConvertToBuildLevel(IPowerPointEffect effect, MsoAnimateByLevel level);
 
     /// <summary>
-    /// 设置序列播放时间
+    /// 将动画效果转换为后续效果。
     /// </summary>
-    /// <param name="startTime">开始时间</param>
-    /// <param name="duration">持续时间</param>
-    void SetTiming(float startTime, float duration);
+    /// <param name="effect">要转换的动画效果。</param>
+    /// <param name="after">后续效果类型。</param>
+    /// <param name="dimColor">变暗颜色的 RGB 值。</param>
+    /// <param name="dimSchemeColor">变暗颜色在颜色方案中的索引。</param>
+    /// <returns>转换后的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? ConvertToAfterEffect(IPowerPointEffect effect, MsoAnimAfterEffect after, int dimColor = 0, PpColorSchemeIndex dimSchemeColor = PpColorSchemeIndex.ppNotSchemeColor);
 
     /// <summary>
-    /// 获取序列信息
+    /// 将动画效果转换为背景动画。
     /// </summary>
-    /// <returns>序列信息字符串</returns>
-    string GetSequenceInfo();
+    /// <param name="effect">要转换的动画效果。</param>
+    /// <param name="animateBackground">指示是否为背景动画的布尔值。</param>
+    /// <returns>转换后的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? ConvertToAnimateBackground(IPowerPointEffect effect, [ConvertTriState] bool animateBackground);
+
+    /// <summary>
+    /// 将动画效果转换为反向动画。
+    /// </summary>
+    /// <param name="effect">要转换的动画效果。</param>
+    /// <param name="animateInReverse">指示是否为反向动画的布尔值。</param>
+    /// <returns>转换后的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? ConvertToAnimateInReverse(IPowerPointEffect effect, [ConvertTriState] bool animateInReverse);
+
+    /// <summary>
+    /// 将动画效果转换为文本单位效果。
+    /// </summary>
+    /// <param name="effect">要转换的动画效果。</param>
+    /// <param name="unitEffect">文本单位效果类型。</param>
+    /// <returns>转换后的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? ConvertToTextUnitEffect(IPowerPointEffect effect, MsoAnimTextUnitEffect unitEffect);
+
+    /// <summary>
+    /// 添加触发式动画效果。
+    /// </summary>
+    /// <param name="pShape">要添加动画效果的形状。</param>
+    /// <param name="effectId">动画效果类型。</param>
+    /// <param name="trigger">动画效果的触发类型。</param>
+    /// <param name="pTriggerShape">触发动画效果的形状。</param>
+    /// <param name="bookmark">书签名称。</param>
+    /// <param name="level">动画效果的层级。</param>
+    /// <returns>新添加的 <see cref="IPowerPointEffect"/> 对象。</returns>
+    IPowerPointEffect? AddTriggerEffect(IPowerPointShape pShape, MsoAnimEffect effectId, MsoAnimTriggerType trigger, IPowerPointShape pTriggerShape, string bookmark = "", MsoAnimateByLevel level = MsoAnimateByLevel.msoAnimateLevelNone);
 }

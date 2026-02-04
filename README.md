@@ -57,6 +57,38 @@ MudTools.OfficeInterop 适用于以下场景：
 
 ## 功能模块
 
+```mermaid
+graph TB
+    subgraph "MudTools.OfficeInterop 层级架构"
+        Core[MudTools.OfficeInterop<br/>核心模块<br/>基础接口 + 通用功能<br/>Office UI 组件封装]
+        
+        subgraph "Office 应用程序模块"
+            Excel[MudTools.OfficeInterop.Excel<br/>Excel 模块]
+            Word[MudTools.OfficeInterop.Word<br/>Word 模块]
+            PPT[MudTools.OfficeInterop.PowerPoint<br/>PowerPoint 模块]
+            VBE[MudTools.OfficeInterop.Vbe<br/>VBE 模块]
+        end
+    end
+    
+    COM[Microsoft Office COM 组件]
+    
+    Core --> Excel
+    Core --> Word
+    Core --> PPT
+    Core --> VBE
+    Excel --> COM
+    Word --> COM
+    PPT --> COM
+    VBE --> COM
+    
+    style Core fill:#e1f5ff
+    style Excel fill:#fff4e1
+    style Word fill:#ffe1e1
+    style PPT fill:#e1ffe1
+    style VBE fill:#f0e1ff
+    style COM fill:#f5f5f5
+```
+
 ### 核心模块 (MudTools.OfficeInterop)
 - 提供 Office 应用程序的基础接口和通用功能
 - 封装 Office 核心组件的常用操作
@@ -89,21 +121,17 @@ MudTools.OfficeInterop 适用于以下场景：
 - .NET Framework 4.7
 - .NET Framework 4.8
 - .NET Standard 2.1
-- .NET 6.0-windows
-- .NET 7.0-windows
-- .NET 8.0-windows
-- .NET 9.0-windows
 
 ## 安装
 
 该项目依赖于 Microsoft Office COM 组件，使用前需要确保系统中已安装相应版本的 Microsoft Office。
 
 ```xml
-<PackageReference Include="MudTools.OfficeInterop" Version="2.0.1" />
-<PackageReference Include="MudTools.OfficeInterop.Excel" Version="2.0.1" />
-<PackageReference Include="MudTools.OfficeInterop.Word" Version="2.0.1" />
-<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="2.0.1" />
-<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="2.0.1" />
+<PackageReference Include="MudTools.OfficeInterop" Version="2.0.6" />
+<PackageReference Include="MudTools.OfficeInterop.Excel" Version="2.0.6" />
+<PackageReference Include="MudTools.OfficeInterop.Word" Version="2.0.6" />
+<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="2.0.6" />
+<PackageReference Include="MudTools.OfficeInterop.Vbe" Version="2.0.6" />
 ```
 
 ## 工厂类使用说明
