@@ -6,193 +6,272 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 namespace MudTools.OfficeInterop.PowerPoint;
+
 /// <summary>
-/// PowerPoint 文本范围接口
+/// 表示 PowerPoint 文本框中的文本范围。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointTextRange : IDisposable
 {
-    /// <summary>
-    /// 获取或设置文本内容
-    /// </summary>
-    string Text { get; set; }
 
     /// <summary>
-    /// 获取文本长度
+    /// 获取集合中的文本范围数量。
     /// </summary>
-    int Length { get; }
+    /// <value>集合中的文本范围数量。</value>
+    int Count { get; }
 
     /// <summary>
-    /// 获取起始位置
+    /// 获取创建此文本范围的 PowerPoint 应用程序实例。
     /// </summary>
-    int Start { get; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取父对象
+    /// 获取此文本范围的父对象。
     /// </summary>
+    /// <value>表示此文本范围父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取字体设置
+    /// 获取文本范围的动作设置。
     /// </summary>
-    IPowerPointFont Font { get; }
+    /// <value>表示动作设置的 <see cref="IPowerPointActionSettings"/> 对象。</value>
+    IPowerPointActionSettings? ActionSettings { get; }
 
     /// <summary>
-    /// 获取段落格式
+    /// 获取文本范围的起始位置。
     /// </summary>
-    IPowerPointParagraphFormat ParagraphFormat { get; }
+    /// <value>表示起始位置的整数值。</value>
+    int Start { get; }
 
     /// <summary>
-    /// 获取字符数
+    /// 获取文本范围的长度。
     /// </summary>
-    int Characters { get; }
+    /// <value>表示文本长度的整数值。</value>
+    int Length { get; }
 
     /// <summary>
-    /// 获取单词数
+    /// 获取文本范围的左边界位置（以磅为单位）。
     /// </summary>
-    int Words { get; }
+    /// <value>表示左边界位置的浮点数。</value>
+    float BoundLeft { get; }
 
     /// <summary>
-    /// 获取行数
+    /// 获取文本范围的上边界位置（以磅为单位）。
     /// </summary>
-    int Lines { get; }
+    /// <value>表示上边界位置的浮点数。</value>
+    float BoundTop { get; }
 
     /// <summary>
-    /// 获取段落数
+    /// 获取文本范围的宽度（以磅为单位）。
     /// </summary>
-    int Paragraphs { get; }
+    /// <value>表示宽度的浮点数。</value>
+    float BoundWidth { get; }
 
     /// <summary>
-    /// 获取句子数
+    /// 获取文本范围的高度（以磅为单位）。
     /// </summary>
-    int Sentences { get; }
+    /// <value>表示高度的浮点数。</value>
+    float BoundHeight { get; }
 
     /// <summary>
-    /// 选择文本范围
+    /// 获取指定范围的段落集合。
+    /// </summary>
+    /// <param name="start">起始位置索引。值为-1表示使用默认起始位置。</param>
+    /// <param name="length">范围长度。值为-1表示使用默认长度。</param>
+    /// <returns>指定范围的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Paragraphs(int start = -1, int length = -1);
+
+    /// <summary>
+    /// 获取指定范围的句子集合。
+    /// </summary>
+    /// <param name="start">起始位置索引。值为-1表示使用默认起始位置。</param>
+    /// <param name="length">范围长度。值为-1表示使用默认长度。</param>
+    /// <returns>指定范围的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Sentences(int start = -1, int length = -1);
+
+    /// <summary>
+    /// 获取指定范围的单词集合。
+    /// </summary>
+    /// <param name="start">起始位置索引。值为-1表示使用默认起始位置。</param>
+    /// <param name="length">范围长度。值为-1表示使用默认长度。</param>
+    /// <returns>指定范围的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Words(int start = -1, int length = -1);
+
+    /// <summary>
+    /// 获取指定范围的字符集合。
+    /// </summary>
+    /// <param name="start">起始位置索引。值为-1表示使用默认起始位置。</param>
+    /// <param name="length">范围长度。值为-1表示使用默认长度。</param>
+    /// <returns>指定范围的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Characters(int start = -1, int length = -1);
+
+    /// <summary>
+    /// 获取指定范围的行集合。
+    /// </summary>
+    /// <param name="start">起始位置索引。值为-1表示使用默认起始位置。</param>
+    /// <param name="length">范围长度。值为-1表示使用默认长度。</param>
+    /// <returns>指定范围的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Lines(int start = -1, int length = -1);
+
+    /// <summary>
+    /// 修剪文本范围的开头和结尾的空格。
+    /// </summary>
+    /// <returns>修剪后的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? TrimText();
+
+    /// <summary>
+    /// 获取或设置文本范围的文本内容。
+    /// </summary>
+    /// <value>表示文本内容的字符串。</value>
+    string? Text { get; set; }
+
+    /// <summary>
+    /// 在文本范围后插入新文本。
+    /// </summary>
+    /// <param name="newText">要插入的新文本。</param>
+    /// <returns>插入的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? InsertAfter(string newText = "");
+
+    /// <summary>
+    /// 在文本范围前插入新文本。
+    /// </summary>
+    /// <param name="newText">要插入的新文本。</param>
+    /// <returns>插入的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? InsertBefore(string newText = "");
+
+    /// <summary>
+    /// 插入日期和时间。
+    /// </summary>
+    /// <param name="dateTimeFormat">日期时间格式。</param>
+    /// <param name="insertAsField">指示是否作为字段插入的布尔值。</param>
+    /// <returns>插入的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? InsertDateTime(PpDateTimeFormat dateTimeFormat, [ConvertTriState] bool insertAsField = false);
+
+    /// <summary>
+    /// 插入幻灯片编号。
+    /// </summary>
+    /// <returns>插入的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? InsertSlideNumber();
+
+    /// <summary>
+    /// 插入符号。
+    /// </summary>
+    /// <param name="fontName">字体名称。</param>
+    /// <param name="charNumber">字符编码。</param>
+    /// <param name="unicode">指示是否为 Unicode 字符的布尔值。</param>
+    /// <returns>插入的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? InsertSymbol(string fontName, int charNumber, [ConvertTriState] bool unicode = false);
+
+    /// <summary>
+    /// 获取文本范围的字体设置。
+    /// </summary>
+    /// <value>表示字体设置的 <see cref="IPowerPointFont"/> 对象。</value>
+    IPowerPointFont? Font { get; }
+
+    /// <summary>
+    /// 获取文本范围的段落格式设置。
+    /// </summary>
+    /// <value>表示段落格式的 <see cref="IPowerPointParagraphFormat"/> 对象。</value>
+    IPowerPointParagraphFormat? ParagraphFormat { get; }
+
+    /// <summary>
+    /// 获取或设置文本范围的缩进级别。
+    /// </summary>
+    /// <value>表示缩进级别的整数值。</value>
+    int IndentLevel { get; set; }
+
+    /// <summary>
+    /// 选择此文本范围。
     /// </summary>
     void Select();
 
     /// <summary>
-    /// 复制文本范围
+    /// 剪切此文本范围。
+    /// </summary>
+    void Cut();
+
+    /// <summary>
+    /// 复制此文本范围。
     /// </summary>
     void Copy();
 
     /// <summary>
-    /// 删除文本范围
+    /// 删除此文本范围。
     /// </summary>
     void Delete();
 
     /// <summary>
-    /// 查找并替换文本
+    /// 粘贴剪贴板内容到此文本范围。
     /// </summary>
-    /// <param name="findWhat">查找内容</param>
-    /// <param name="replaceWhat">替换内容</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <param name="wholeWords">是否匹配整个单词</param>
-    /// <returns>替换次数</returns>
-    int Replace(string findWhat, string replaceWhat, bool matchCase = false, bool wholeWords = false);
+    /// <returns>粘贴的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Paste();
 
     /// <summary>
-    /// 插入文本到文本范围
+    /// 更改文本范围的大小写。
     /// </summary>
-    /// <param name="newText">要插入的文本</param>
-    /// <param name="start">插入起始位置</param>
-    /// <param name="length">插入长度</param>
-    /// <returns>新插入的文本范围</returns>
-    IPowerPointTextRange InsertAfter(string newText, int start = -1, int length = 0);
+    /// <param name="type">大小写更改类型。</param>
+    void ChangeCase(PpChangeCase type);
 
     /// <summary>
-    /// 在文本范围前插入文本
+    /// 为文本范围的每个句子添加句号。
     /// </summary>
-    /// <param name="newText">要插入的文本</param>
-    /// <returns>新插入的文本范围</returns>
-    IPowerPointTextRange InsertBefore(string newText);
+    void AddPeriods();
 
     /// <summary>
-    /// 获取指定字符的文本范围
+    /// 从文本范围的每个句子中移除句号。
     /// </summary>
-    /// <param name="start">起始字符索引</param>
-    /// <param name="length">字符长度</param>
-    /// <returns>文本范围</returns>
-    IPowerPointTextRange CharactersRange(int start = -1, int length = -1);
+    void RemovePeriods();
 
     /// <summary>
-    /// 获取指定单词的文本范围
+    /// 查找文本。
     /// </summary>
-    /// <param name="start">起始单词索引</param>
-    /// <param name="length">单词长度</param>
-    /// <returns>文本范围</returns>
-    IPowerPointTextRange WordsRange(int start = -1, int length = -1);
+    /// <param name="findWhat">要查找的文本。</param>
+    /// <param name="after">在指定位置后开始查找。</param>
+    /// <param name="matchCase">指示是否区分大小写的布尔值。</param>
+    /// <param name="wholeWords">指示是否全字匹配的布尔值。</param>
+    /// <returns>找到的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Find(string findWhat, int after = 0, [ConvertTriState] bool matchCase = false, [ConvertTriState] bool wholeWords = false);
 
     /// <summary>
-    /// 获取指定行的文本范围
+    /// 替换文本。
     /// </summary>
-    /// <param name="start">起始行索引</param>
-    /// <param name="length">行长度</param>
-    /// <returns>文本范围</returns>
-    IPowerPointTextRange LinesRange(int start = -1, int length = -1);
+    /// <param name="findWhat">要查找的文本。</param>
+    /// <param name="replaceWhat">要替换的文本。</param>
+    /// <param name="after">在指定位置后开始查找。</param>
+    /// <param name="matchCase">指示是否区分大小写的布尔值。</param>
+    /// <param name="wholeWords">指示是否全字匹配的布尔值。</param>
+    /// <returns>替换后的 <see cref="IPowerPointTextRange"/> 对象。</returns>
+    IPowerPointTextRange? Replace(string findWhat, string replaceWhat, int after = 0, [ConvertTriState] bool matchCase = false, [ConvertTriState] bool wholeWords = false);
 
     /// <summary>
-    /// 获取指定段落的文本范围
+    /// 获取旋转后的文本范围边界。
     /// </summary>
-    /// <param name="start">起始段落索引</param>
-    /// <param name="length">段落长度</param>
-    /// <returns>文本范围</returns>
-    IPowerPointTextRange ParagraphsRange(int start = -1, int length = -1);
+    /// <param name="x1">第一个点的 X 坐标。</param>
+    /// <param name="y1">第一个点的 Y 坐标。</param>
+    /// <param name="x2">第二个点的 X 坐标。</param>
+    /// <param name="y2">第二个点的 Y 坐标。</param>
+    /// <param name="x3">第三个点的 X 坐标。</param>
+    /// <param name="y3">第三个点的 Y 坐标。</param>
+    /// <param name="x4">第四个点的 X 坐标。</param>
+    /// <param name="y4">第四个点的 Y 坐标。</param>
+    void RotatedBounds(out float x1, out float y1, out float x2, out float y2, out float x3, out float y3, out float x4, out float y4);
 
     /// <summary>
-    /// 获取指定句子的文本范围
+    /// 获取或设置文本范围的语言标识符。
     /// </summary>
-    /// <param name="start">起始句子索引</param>
-    /// <param name="length">句子长度</param>
-    /// <returns>文本范围</returns>
-    IPowerPointTextRange SentencesRange(int start = -1, int length = -1);
+    /// <value>表示语言标识符的 <see cref="MsoLanguageID"/> 枚举值。</value>
+    [ComPropertyWrap(ComNamespace = "MsCore")]
+    MsoLanguageID LanguageID { get; set; }
 
     /// <summary>
-    /// 设置文本范围的字体格式
+    /// 将文本范围设置为从右到左方向。
     /// </summary>
-    /// <param name="fontName">字体名称</param>
-    /// <param name="fontSize">字体大小</param>
-    /// <param name="bold">是否加粗</param>
-    /// <param name="italic">是否斜体</param>
-    /// <param name="underline">下划线类型</param>
-    /// <param name="color">字体颜色</param>
-    void SetFontFormat(string fontName = null, float fontSize = 0, bool bold = false, bool italic = false, int underline = 0, int color = 0);
+    void RtlRun();
 
     /// <summary>
-    /// 设置文本范围的段落格式
+    /// 将文本范围设置为从左到右方向。
     /// </summary>
-    /// <param name="alignment">对齐方式</param>
-    /// <param name="spaceBefore">段前间距</param>
-    /// <param name="spaceAfter">段后间距</param>
-    /// <param name="lineSpacing">行距</param>
-    /// <param name="firstLineIndent">首行缩进</param>
-    void SetParagraphFormat(int alignment = 0, float spaceBefore = 0, float spaceAfter = 0, float lineSpacing = 0, float firstLineIndent = 0);
-
-    /// <summary>
-    /// 添加超链接到文本范围
-    /// </summary>
-    /// <param name="address">超链接地址</param>
-    /// <returns>超链接对象</returns>
-    IPowerPointHyperlink AddHyperlink(string address);
-
-    /// <summary>
-    /// 添加动作设置到文本范围
-    /// </summary>
-    /// <param name="actionType">动作类型</param>
-    /// <param name="action">动作设置</param>
-    void AddActionSetting(int actionType, object action);
-
-    /// <summary>
-    /// 获取文本范围的边界框
-    /// </summary>
-    /// <param name="left">左边缘</param>
-    /// <param name="top">上边缘</param>
-    /// <param name="width">宽度</param>
-    /// <param name="height">高度</param>
-    void GetBoundingBox(out float left, out float top, out float width, out float height);
-
-    /// <summary>
-    /// 刷新文本范围显示
-    /// </summary>
-    void Refresh();
+    void LtrRun();
 }
