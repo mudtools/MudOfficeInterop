@@ -8,95 +8,81 @@
 namespace MudTools.OfficeInterop.PowerPoint;
 
 
+
 /// <summary>
-/// PowerPoint 幻灯片放映切换效果接口
+/// 表示 PowerPoint 幻灯片的切换效果设置。
 /// </summary>
+[ComObjectWrap(ComNamespace = "MsPowerPoint")]
 public interface IPowerPointSlideShowTransition : IDisposable
 {
     /// <summary>
-    /// 获取或设置进入效果
+    /// 获取创建此切换效果设置的 PowerPoint 应用程序实例。
     /// </summary>
-    int EntryEffect { get; set; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取或设置是否定时前进
+    /// 获取此切换效果设置的父对象。
     /// </summary>
-    int AdvanceOnTime { get; set; }
-
-    /// <summary>
-    /// 获取或设置前进时间
-    /// </summary>
-    float AdvanceTime { get; set; }
-
-    /// <summary>
-    /// 获取或设置是否隐藏幻灯片
-    /// </summary>
-    bool Hidden { get; set; }
-
-    /// <summary>
-    /// 获取父对象
-    /// </summary>
+    /// <value>表示此切换效果设置父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取或设置声音效果
+    /// 获取或设置一个值，指示是否在单击时推进到下一张幻灯片。
     /// </summary>
-    string SoundEffect { get; set; }
+    /// <value>指示是否在单击时推进的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool AdvanceOnClick { get; set; }
 
     /// <summary>
-    /// 获取或设置持续时间
+    /// 获取或设置一个值，指示是否在指定时间后自动推进到下一张幻灯片。
     /// </summary>
+    /// <value>指示是否自动推进的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool AdvanceOnTime { get; set; }
+
+    /// <summary>
+    /// 获取或设置自动推进的时间（以秒为单位）。
+    /// </summary>
+    /// <value>表示自动推进时间的浮点数。</value>
+    float AdvanceTime { get; set; }
+
+    /// <summary>
+    /// 获取或设置切换效果的进入效果类型。
+    /// </summary>
+    /// <value>表示进入效果类型的 <see cref="PpEntryEffect"/> 枚举值。</value>
+    PpEntryEffect EntryEffect { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示幻灯片是否隐藏。
+    /// </summary>
+    /// <value>指示幻灯片是否隐藏的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool Hidden { get; set; }
+
+    /// <summary>
+    /// 获取或设置一个值，指示声音是否循环播放直到下一个幻灯片开始。
+    /// </summary>
+    /// <value>指示声音是否循环播放的布尔值。</value>
+    [ComPropertyWrap(NeedConvert = true)]
+    bool LoopSoundUntilNext { get; set; }
+
+    /// <summary>
+    /// 获取切换效果的声音效果设置。
+    /// </summary>
+    /// <value>表示声音效果的 <see cref="IPowerPointSoundEffect"/> 对象。</value>
+    IPowerPointSoundEffect? SoundEffect { get; }
+
+    /// <summary>
+    /// 获取或设置切换效果的速度。
+    /// </summary>
+    /// <value>表示切换速度的 <see cref="PpTransitionSpeed"/> 枚举值。</value>
+    PpTransitionSpeed Speed { get; set; }
+
+    /// <summary>
+    /// 获取或设置切换效果的持续时间（以秒为单位）。
+    /// </summary>
+    /// <value>表示持续时间的浮点数。</value>
     float Duration { get; set; }
-
-    /// <summary>
-    /// 获取或设置速度
-    /// </summary>
-    int Speed { get; set; }
-
-
-    /// <summary>
-    /// 获取或设置是否循环
-    /// </summary>
-    bool Loop { get; set; }
-
-
-    /// <summary>
-    /// 重置切换效果
-    /// </summary>
-    void Reset();
-
-    /// <summary>
-    /// 设置切换效果
-    /// </summary>
-    /// <param name="effectType">效果类型</param>
-    /// <param name="duration">持续时间</param>
-    /// <param name="speed">速度</param>
-    void SetTransition(int effectType, float duration = 1.0f, int speed = 2);
-
-    /// <summary>
-    /// 设置切换声音
-    /// </summary>
-    /// <param name="soundFile">声音文件路径</param>
-    /// <param name="loop">是否循环</param>
-    void SetSound(string soundFile, bool loop = false);
-
-    /// <summary>
-    /// 设置定时
-    /// </summary>
-    /// <param name="advanceTime">前进时间</param>
-    /// <param name="advanceOnTime">是否定时前进</param>
-    void SetTiming(int advanceTime, bool advanceOnTime = true);
-
-    /// <summary>
-    /// 应用到指定幻灯片范围
-    /// </summary>
-    /// <param name="fromSlide">起始幻灯片</param>
-    /// <param name="toSlide">结束幻灯片</param>
-    void ApplyToRange(int fromSlide, int toSlide);
-
-    /// <summary>
-    /// 获取切换效果信息
-    /// </summary>
-    /// <returns>切换效果信息字符串</returns>
-    string GetTransitionInfo();
 }
