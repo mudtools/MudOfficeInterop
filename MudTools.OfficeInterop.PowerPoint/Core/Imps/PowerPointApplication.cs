@@ -140,7 +140,7 @@ internal class PowerPointApplication : IPowerPointApplication
     }
 
     public IPowerPointSelection Selection => _application.ActiveWindow?.Selection != null ? new PowerPointSelection(_application.ActiveWindow.Selection) : null;
-    public IPowerPointView ActiveView => _application.ActiveWindow?.View != null ? new PowerPointView(_application.ActiveWindow.View, this.ActivePresentation) : null;
+    public IPowerPointView ActiveView => _application.ActiveWindow?.View != null ? new PowerPointView(_application.ActiveWindow.View) : null;
     #endregion
 
     #region 环境和设置
