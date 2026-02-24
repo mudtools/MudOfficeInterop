@@ -1,13 +1,13 @@
 <Project>
 	<PropertyGroup>
 		<TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
-		<Version>2.0.7</Version>
+		<Version>2.0.8</Version>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<Copyright>© 2019-2025 Mud Studio Co.,Ltd.</Copyright>
+		<Copyright>© 2019-2026 Mud Studio Co.,Ltd.</Copyright>
 		<Authors>Mud Studio</Authors>
 		<Company>Mud Studio</Company>
 		<LangVersion>latest</LangVersion>
