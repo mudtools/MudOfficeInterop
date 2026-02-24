@@ -5,8 +5,6 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using System.Reflection;
-
 namespace MudTools.OfficeInterop.Excel.Imps;
 
 /// <summary>
@@ -16,12 +14,6 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
 {
     #region IDisposable Support
     protected bool _disposedValue = false;
-
-
-    /// <summary>
-    /// 用于记录日志的静态日志记录器。
-    /// </summary>
-    private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
     protected virtual void Dispose(bool disposing)
     {
@@ -443,11 +435,11 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
         catch (COMException ce)
         {
-            _log.Error($"工作表保护过程中发生异常：{ce.Message}", ce);
+            throw new ExcelOperationException($"工作表保护过程中发生异常：{ce.Message}", ce);
         }
         catch (Exception ex)
         {
-            _log.Error($"工作表保护过程中发生异常：{ex.Message}", ex);
+            throw new ExcelOperationException($"工作表保护过程中发生异常：{ex.Message}", ex);
         }
     }
 
@@ -468,11 +460,11 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
         catch (COMException ce)
         {
-            _log.Error($"取消工作表保护过程中发生异常：{ce.Message}", ce);
+            throw new ExcelOperationException($"取消工作表保护过程中发生异常：{ce.Message}", ce);
         }
         catch (Exception ex)
         {
-            _log.Error($"取消工作表保护过程中发生异常：{ex.Message}", ex);
+            throw new ExcelOperationException($"取消工作表保护过程中发生异常：{ex.Message}", ex);
         }
     }
     #endregion

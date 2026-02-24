@@ -1,22 +1,16 @@
-﻿//
+//
 // MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
-using log4net;
 using MudTools.OfficeInterop.Excel.Imps;
 
 namespace MudTools.OfficeInterop.Excel;
 
 internal class Utils
 {
-    /// <summary>
-    /// 用于记录此类型运行时日志的 logger 实例。
-    /// </summary>
-    private static readonly ILog log = LogManager.GetLogger(typeof(Utils));
-
     public static IExcelComSheet? CreateSheetObj(object workSheet)
     {
         try
@@ -40,13 +34,13 @@ internal class Utils
         }
         catch (COMException cx)
         {
-            log.Error("识别 WorkSheet 对象类型失败：" + cx.Message, cx);
-            return null;
+            throw new ExcelOperationException("识别 WorkSheet 对象类型失败：" + cx.Message, cx);
+
         }
         catch (Exception ex)
         {
-            log.Error("识别 WorkSheet 对象类型失败：" + ex.Message, ex);
-            return null;
+            throw new ExcelOperationException("识别 WorkSheet 对象类型失败：" + ex.Message, ex);
+
         }
     }
 
@@ -79,13 +73,13 @@ internal class Utils
         }
         catch (COMException cx)
         {
-            log.Error("识别Selection对象类型失败：" + cx.Message, cx);
-            return null;
+            throw new ExcelOperationException("识别Selection对象类型失败：" + cx.Message, cx);
+
         }
         catch (Exception ex)
         {
-            log.Error("识别Selection对象类型失败：" + ex.Message, ex);
-            return null;
+            throw new ExcelOperationException("识别Selection对象类型失败：" + ex.Message, ex);
+
         }
     }
     public static IExcelControl? CreateControl(object? comObj, XlFormControl xlFormControl)
@@ -144,13 +138,13 @@ internal class Utils
         }
         catch (COMException cx)
         {
-            log.Error("创建Excel控件对象类型失败：" + cx.Message, cx);
-            return null;
+            throw new ExcelOperationException("创建Excel控件对象类型失败：" + cx.Message, cx);
+
         }
         catch (Exception ex)
         {
-            log.Error("创建Excel控件对象类型失败：" + ex.Message, ex);
-            return null;
+            throw new ExcelOperationException("创建Excel控件对象类型失败：" + ex.Message, ex);
+
         }
 
     }

@@ -4,7 +4,7 @@ rem Set project root directory
 set "PROJECT_ROOT=%~dp0"
 set "OUTPUT_DIR=%PROJECT_ROOT%bin"
 set "NUGET_DIR=%PROJECT_ROOT%nuget"
-set "VERSION=2.0.6"
+set "VERSION=2.0.8"
 
 echo Preparing to generate OfficeInterop NuGet packages version %VERSION%
 echo ================================
@@ -18,6 +18,7 @@ mkdir "%NUGET_DIR%"
 
 rem Build projects
 echo Building projects...
+dotnet build "%PROJECT_ROOT%MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" -c Release
 dotnet build "%PROJECT_ROOT%MudTools.OfficeInterop.Excel\MudTools.OfficeInterop.Excel.csproj" -c Release
 dotnet build "%PROJECT_ROOT%MudTools.OfficeInterop.Word\MudTools.OfficeInterop.Word.csproj" -c Release
 dotnet build "%PROJECT_ROOT%MudTools.OfficeInterop.PowerPoint\MudTools.OfficeInterop.PowerPoint.csproj" -c Release
@@ -32,6 +33,7 @@ if %errorlevel% neq 0 (
 
 rem Generate NuGet packages
 echo Generating NuGet packages...
+dotnet pack "%PROJECT_ROOT%MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" -c Release -o "%NUGET_DIR%"
 dotnet pack "%PROJECT_ROOT%MudTools.OfficeInterop.Excel\MudTools.OfficeInterop.Excel.csproj" -c Release -o "%NUGET_DIR%"
 dotnet pack "%PROJECT_ROOT%MudTools.OfficeInterop.Word\MudTools.OfficeInterop.Word.csproj" -c Release -o "%NUGET_DIR%"
 dotnet pack "%PROJECT_ROOT%MudTools.OfficeInterop.PowerPoint\MudTools.OfficeInterop.PowerPoint.csproj" -c Release -o "%NUGET_DIR%"
@@ -54,6 +56,7 @@ echo Packages location: %NUGET_DIR%
 echo ================================
 echo 
 echo Example commands to publish to NuGet:
+echo dotnet nuget push "%NUGET_DIR%\MudTools.OfficeInterop.%VERSION%.nupkg" -k YOUR_API_KEY -s https://api.nuget.org/v3/index.json
 echo dotnet nuget push "%NUGET_DIR%\MudTools.OfficeInterop.Excel.%VERSION%.nupkg" -k YOUR_API_KEY -s https://api.nuget.org/v3/index.json
 echo dotnet nuget push "%NUGET_DIR%\MudTools.OfficeInterop.Word.%VERSION%.nupkg" -k YOUR_API_KEY -s https://api.nuget.org/v3/index.json
 echo dotnet nuget push "%NUGET_DIR%\MudTools.OfficeInterop.PowerPoint.%VERSION%.nupkg" -k YOUR_API_KEY -s https://api.nuget.org/v3/index.json

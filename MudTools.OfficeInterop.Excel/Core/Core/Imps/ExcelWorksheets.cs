@@ -14,7 +14,6 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
     /// </summary>
     private MsExcel.Sheets? _worksheets;
     private DisposableList _disposables = [];
-    private static readonly ILog log = LogManager.GetLogger(typeof(ExcelWorksheets));
 
     #region 构造函数和释放
 
@@ -85,8 +84,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             }
             catch (Exception ex)
             {
-                log.Warn($"Failed to retrieve sheet at index {index}: {ex.Message}");
-                return null;
+                throw new ExcelOperationException($"Failed to retrieve sheet at index {index}: {ex.Message}");
+
             }
         }
     }
@@ -116,8 +115,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             }
             catch (Exception ex)
             {
-                log.Warn($"Failed to retrieve sheet with name '{name}': {ex.Message}");
-                return null;
+                throw new ExcelOperationException($"Failed to retrieve sheet with name '{name}': {ex.Message}");
+
             }
         }
     }
@@ -233,8 +232,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log?.Warn($"Failed to add worksheet: {ex.Message}");
-            return null;
+            throw new ExcelOperationException($"Failed to add worksheet: {ex.Message}");
+
         }
     }
 
@@ -307,8 +306,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn($"Failed to create worksheet from template '{templatePath}': {ex.Message}");
-            return null;
+            throw new ExcelOperationException($"Failed to create worksheet from template '{templatePath}': {ex.Message}");
+
         }
     }
 
@@ -362,7 +361,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn("Failed to clear worksheets", ex);
+            throw new ExcelOperationException("Failed to clear worksheets", ex);
         }
     }
 
@@ -393,7 +392,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn($"Failed to delete worksheet by {key}: {ex.Message}");
+            throw new ExcelOperationException($"Failed to delete worksheet by {key}: {ex.Message}");
         }
     }
 
@@ -414,7 +413,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn("Failed to move worksheet", ex);
+            throw new ExcelOperationException("Failed to move worksheet", ex);
         }
     }
 
@@ -447,9 +446,8 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn("Failed to copy worksheet", ex);
+            throw new ExcelOperationException("Failed to copy worksheet", ex);
         }
-        return null;
     }
 
     /// <summary>
@@ -472,7 +470,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn("Failed to select worksheets", ex);
+            throw new ExcelOperationException("Failed to select worksheets", ex);
         }
     }
 
@@ -503,7 +501,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn("Failed to arrange worksheets in order", ex);
+            throw new ExcelOperationException("Failed to arrange worksheets in order", ex);
         }
     }
 
@@ -590,7 +588,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
                 }
                 catch (Exception ex)
                 {
-                    log.Warn($"Failed to calculate sheet '{ws.Name}': {ex.Message}");
+                    throw new ExcelOperationException($"Failed to calculate sheet '{ws.Name}': {ex.Message}");
                 }
             }
         }
@@ -613,7 +611,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn($"Failed to hide all sheets: {ex.Message}");
+            throw new ExcelOperationException($"Failed to hide all sheets: {ex.Message}");
         }
     }
 
@@ -633,7 +631,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            log.Warn($"Failed to show all sheets: {ex.Message}");
+            throw new ExcelOperationException($"Failed to show all sheets: {ex.Message}");
         }
     }
 
