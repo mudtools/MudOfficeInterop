@@ -5,95 +5,45 @@
 //
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+
 namespace MudTools.OfficeInterop.PowerPoint;
+
 /// <summary>
-/// PowerPoint DocumentWindows 集合对象的二次封装接口
-/// 提供对 Microsoft.Office.Interop.PowerPoint.DocumentWindows 的安全访问和操作
+/// 表示 PowerPoint 应用程序中所有打开的文档窗口集合。
 /// </summary>
-public interface IPowerPointDocumentWindows : IEnumerable<IPowerPointDocumentWindow>, IDisposable
+[ComCollectionWrap(ComNamespace = "MsPowerPoint")]
+public interface IPowerPointDocumentWindows : IOfficeObject<IPowerPointDocumentWindows, MsPowerPoint.DocumentWindows>, IEnumerable<IPowerPointDocumentWindow?>, IDisposable
 {
-    #region 基础属性
+
     /// <summary>
-    /// 获取窗口集合中的窗口数量
-    /// 对应 DocumentWindows.Count 属性
+    /// 获取集合中的文档窗口数量。
     /// </summary>
+    /// <value>集合中的文档窗口数量。</value>
     int Count { get; }
 
     /// <summary>
-    /// 获取指定索引的窗口对象
-    /// 索引从1开始
+    /// 获取创建此文档窗口集合的 PowerPoint 应用程序实例。
     /// </summary>
-    /// <param name="index">窗口索引（从1开始）</param>
-    /// <returns>窗口对象</returns>
-    IPowerPointDocumentWindow this[int index] { get; }
+    /// <value>表示 PowerPoint 应用程序的 <see cref="IPowerPointApplication"/> 对象。</value>
+    [ComPropertyWrap(NeedDispose = false)]
+    IPowerPointApplication? Application { get; }
 
     /// <summary>
-    /// 获取窗口集合所在的父对象（通常是 Application）
-    /// 对应 DocumentWindows.Parent 属性
+    /// 获取此文档窗口集合的父对象。
     /// </summary>
+    /// <value>表示此文档窗口集合父对象的 <see cref="object"/>。</value>
     object? Parent { get; }
 
     /// <summary>
-    /// 获取窗口集合所在的Application对象
-    /// 对应 DocumentWindows.Application 属性
+    /// 通过索引获取集合中的指定文档窗口。
     /// </summary>
-    IPowerPointApplication Application { get; }
-    #endregion
-
-    #region 查找和筛选
-    /// <summary>
-    /// 根据标题查找窗口
-    /// </summary>
-    /// <param name="caption">窗口标题</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的窗口数组</returns>
-    IPowerPointDocumentWindow[] FindByCaption(string caption, bool matchCase = false);
+    /// <param name="index">要获取的文档窗口的索引（从1开始）。</param>
+    /// <value>位于指定索引处的 <see cref="IPowerPointDocumentWindow"/> 对象。</value>
+    IPowerPointDocumentWindow? this[int index] { get; }
 
     /// <summary>
-    /// 根据关联的演示文稿名称查找窗口
+    /// 排列所有打开的文档窗口。
     /// </summary>
-    /// <param name="presentationName">演示文稿名称</param>
-    /// <param name="matchCase">是否区分大小写</param>
-    /// <returns>匹配的窗口数组</returns>
-    IPowerPointDocumentWindow[] FindByPresentationName(string presentationName, bool matchCase = false);
-
-    /// <summary>
-    /// 获取活动的窗口
-    /// </summary>
-    /// <returns>活动窗口对象</returns>
-    IPowerPointDocumentWindow GetActiveWindow();
-
-    /// <summary>
-    /// 获取可见的窗口
-    /// </summary>
-    /// <returns>可见窗口数组</returns>
-    IPowerPointDocumentWindow[] GetVisibleWindows();
-
-    #endregion
-
-    #region 操作方法
-    /// <summary>
-    /// 关闭所有窗口
-    /// </summary>
-    void Clear();
-
-    /// <summary>
-    /// 删除/关闭指定索引的窗口
-    /// </summary>
-    /// <param name="index">要关闭的窗口索引</param>
-    void Delete(int index);
-
-    /// <summary>
-    /// 删除/关闭指定的窗口对象
-    /// </summary>
-    /// <param name="window">要关闭的窗口对象</param>
-    void Delete(IPowerPointDocumentWindow window);
-
-    /// <summary>
-    /// 批量删除/关闭窗口
-    /// </summary>
-    /// <param name="indices">要关闭的窗口索引数组 (建议降序排列)</param>
-    void DeleteRange(int[] indices);
-
-    #endregion
+    /// <param name="arrangeStyle">窗口排列样式。</param>
+    void Arrange(PpArrangeStyle arrangeStyle = PpArrangeStyle.ppArrangeTiled);
 }
