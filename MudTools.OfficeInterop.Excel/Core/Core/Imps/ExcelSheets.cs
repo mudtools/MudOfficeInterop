@@ -45,12 +45,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             }
             catch (COMException ex)
             {
-                throw new ExcelOperationException($"Failed to retrieve sheet at index {index}: {ex.Message}");
+                throw new OfficeOperationException($"Failed to retrieve sheet at index {index}: {ex.Message}");
 
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException($"Failed to retrieve sheet at index {index}: {ex.Message}");
+                throw new OfficeOperationException($"Failed to retrieve sheet at index {index}: {ex.Message}");
 
             }
         }
@@ -81,12 +81,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             }
             catch (COMException ex)
             {
-                throw new ExcelOperationException($"Failed to retrieve sheet with name '{name}': {ex.Message}");
+                throw new OfficeOperationException($"Failed to retrieve sheet with name '{name}': {ex.Message}");
 
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException($"Failed to retrieve sheet with name '{name}': {ex.Message}");
+                throw new OfficeOperationException($"Failed to retrieve sheet with name '{name}': {ex.Message}");
 
             }
         }
@@ -134,12 +134,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException($"Failed to add sheet: {ex.Message}");
+            throw new OfficeOperationException($"Failed to add sheet: {ex.Message}");
 
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to add sheet: {ex.Message}");
+            throw new OfficeOperationException($"Failed to add sheet: {ex.Message}");
 
         }
     }
@@ -177,12 +177,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException($"Failed to add chart: {ex.Message}");
+            throw new OfficeOperationException($"Failed to add chart: {ex.Message}");
 
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to add chart: {ex.Message}");
+            throw new OfficeOperationException($"Failed to add chart: {ex.Message}");
 
         }
     }
@@ -225,12 +225,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException($"Failed to add sheet: {ex.Message}");
+            throw new OfficeOperationException($"Failed to add sheet: {ex.Message}");
 
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to add sheet: {ex.Message}");
+            throw new OfficeOperationException($"Failed to add sheet: {ex.Message}");
 
         }
     }
@@ -260,12 +260,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException($"Failed to create sheet from template '{templatePath}': {ex.Message}");
+            throw new OfficeOperationException($"Failed to create sheet from template '{templatePath}': {ex.Message}");
             return null;
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to create sheet from template '{templatePath}': {ex.Message}");
+            throw new OfficeOperationException($"Failed to create sheet from template '{templatePath}': {ex.Message}");
 
         }
     }
@@ -324,12 +324,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         catch (COMException comEx)
         {
             // 记录或重新抛出特定的 COM 异常
-            throw new ExcelOperationException($"COM Exception in CopyTo method: {comEx.Message}", comEx);
+            throw new OfficeOperationException($"COM Exception in CopyTo method: {comEx.Message}", comEx);
 
         }
         catch (Exception ex) // 捕获其他可能的异常
         {
-            throw new ExcelOperationException($"General Exception in CopyTo method: {ex.Message}", ex);
+            throw new OfficeOperationException($"General Exception in CopyTo method: {ex.Message}", ex);
 
         }
     }
@@ -361,7 +361,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         // 检查内部对象是否为 null
         if (_worksheets == null)
         {
-            throw new ExcelOperationException("Underlying Sheets object is null in CopyTo method.");
+            throw new OfficeOperationException("Underlying Sheets object is null in CopyTo method.");
             throw new InvalidOperationException("Cannot move Sheets: underlying Interop Sheets object is null.");
         }
 
@@ -386,12 +386,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"COM Exception in MoveTo method: {comEx.Message}", comEx);
+            throw new OfficeOperationException($"COM Exception in MoveTo method: {comEx.Message}", comEx);
 
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"General Exception in MoveTo method: {ex.Message}", ex);
+            throw new OfficeOperationException($"General Exception in MoveTo method: {ex.Message}", ex);
 
         }
     }
@@ -421,7 +421,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         // 检查内部对象是否为 null
         if (_worksheets == null)
         {
-            throw new ExcelOperationException("Underlying Sheets object is null in CopyTo method.");
+            throw new OfficeOperationException("Underlying Sheets object is null in CopyTo method.");
         }
 
         // 检查源区域参数
@@ -439,12 +439,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         catch (COMException comEx)
         {
             // 记录或重新抛出特定的 COM 异常
-            throw new ExcelOperationException($"COM Exception in FillAcrossSheets method: {comEx.Message}", comEx);
+            throw new OfficeOperationException($"COM Exception in FillAcrossSheets method: {comEx.Message}", comEx);
 
         }
         catch (Exception ex) // 捕获其他可能的异常
         {
-            throw new ExcelOperationException($"General Exception in FillAcrossSheets method: {ex.Message}", ex);
+            throw new OfficeOperationException($"General Exception in FillAcrossSheets method: {ex.Message}", ex);
 
         }
     }
@@ -463,7 +463,7 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to clear sheets: {ex.Message}");
+            throw new OfficeOperationException($"Failed to clear sheets: {ex.Message}");
         }
     }
 
@@ -480,11 +480,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"Failed to delete sheet at index {index}: {comEx.Message}");
+            throw new OfficeOperationException($"Failed to delete sheet at index {index}: {comEx.Message}");
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to delete sheet at index {index}: {ex.Message}");
+            throw new OfficeOperationException($"Failed to delete sheet at index {index}: {ex.Message}");
         }
     }
 
@@ -501,11 +501,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"Failed to delete sheet named '{name}': {comEx.Message}");
+            throw new OfficeOperationException($"Failed to delete sheet named '{name}': {comEx.Message}");
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to delete sheet named '{name}': {ex.Message}");
+            throw new OfficeOperationException($"Failed to delete sheet named '{name}': {ex.Message}");
         }
     }
 
@@ -522,11 +522,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"Failed to delete sheet: {comEx.Message}");
+            throw new OfficeOperationException($"Failed to delete sheet: {comEx.Message}");
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to delete provided sheet: {ex.Message}");
+            throw new OfficeOperationException($"Failed to delete provided sheet: {ex.Message}");
         }
     }
 
@@ -545,11 +545,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"Failed to select worksheets: {comEx.Message}");
+            throw new OfficeOperationException($"Failed to select worksheets: {comEx.Message}");
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to select worksheets: {ex.Message}");
+            throw new OfficeOperationException($"Failed to select worksheets: {ex.Message}");
         }
     }
     #endregion  
@@ -571,11 +571,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             }
             catch (COMException comEx)
             {
-                throw new ExcelOperationException($"Failed to export sheet '{sheet.Name}' to {fileName}: {comEx.Message}");
+                throw new OfficeOperationException($"Failed to export sheet '{sheet.Name}' to {fileName}: {comEx.Message}");
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException($"Failed to export sheet '{sheet.Name}' to {fileName}: {ex.Message}");
+                throw new OfficeOperationException($"Failed to export sheet '{sheet.Name}' to {fileName}: {ex.Message}");
             }
         }
         return count;
@@ -630,11 +630,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
                 }
                 catch (COMException comEx)
                 {
-                    throw new ExcelOperationException($"Failed to calculate sheet '{ws.Name}': {comEx.Message}");
+                    throw new OfficeOperationException($"Failed to calculate sheet '{ws.Name}': {comEx.Message}");
                 }
                 catch (Exception ex)
                 {
-                    throw new ExcelOperationException($"Failed to calculate sheet '{ws.Name}': {ex.Message}");
+                    throw new OfficeOperationException($"Failed to calculate sheet '{ws.Name}': {ex.Message}");
                 }
             }
         }
@@ -658,11 +658,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"Failed to print all sheets: {comEx.Message}");
+            throw new OfficeOperationException($"Failed to print all sheets: {comEx.Message}");
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to print all sheets: {ex.Message}");
+            throw new OfficeOperationException($"Failed to print all sheets: {ex.Message}");
         }
     }
 
@@ -688,12 +688,12 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
             }
             catch (COMException comEx)
             {
-                throw new ExcelOperationException($"Failed to get active sheet: {comEx.Message}");
+                throw new OfficeOperationException($"Failed to get active sheet: {comEx.Message}");
 
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException($"Failed to get active sheet: {ex.Message}");
+                throw new OfficeOperationException($"Failed to get active sheet: {ex.Message}");
 
             }
         }
@@ -716,11 +716,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"Failed to hide all sheets: {comEx.Message}");
+            throw new OfficeOperationException($"Failed to hide all sheets: {comEx.Message}");
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to hide all sheets: {ex.Message}");
+            throw new OfficeOperationException($"Failed to hide all sheets: {ex.Message}");
         }
     }
 
@@ -741,11 +741,11 @@ internal class ExcelSheets : ExcelCommonSheets, IExcelSheets
         }
         catch (COMException comEx)
         {
-            throw new ExcelOperationException($"Failed to show all sheets: {comEx.Message}");
+            throw new OfficeOperationException($"Failed to show all sheets: {comEx.Message}");
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to show all sheets: {ex.Message}");
+            throw new OfficeOperationException($"Failed to show all sheets: {ex.Message}");
         }
     }
 

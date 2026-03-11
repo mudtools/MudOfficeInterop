@@ -34,12 +34,12 @@ internal class Utils
         }
         catch (COMException cx)
         {
-            throw new ExcelOperationException("识别 WorkSheet 对象类型失败：" + cx.Message, cx);
+            throw new OfficeOperationException("识别 WorkSheet 对象类型失败：" + cx.Message, cx);
 
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("识别 WorkSheet 对象类型失败：" + ex.Message, ex);
+            throw new OfficeOperationException("识别 WorkSheet 对象类型失败：" + ex.Message, ex);
 
         }
     }
@@ -73,12 +73,12 @@ internal class Utils
         }
         catch (COMException cx)
         {
-            throw new ExcelOperationException("识别Selection对象类型失败：" + cx.Message, cx);
+            throw new OfficeOperationException("识别Selection对象类型失败：" + cx.Message, cx);
 
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("识别Selection对象类型失败：" + ex.Message, ex);
+            throw new OfficeOperationException("识别Selection对象类型失败：" + ex.Message, ex);
 
         }
     }
@@ -138,12 +138,12 @@ internal class Utils
         }
         catch (COMException cx)
         {
-            throw new ExcelOperationException("创建Excel控件对象类型失败：" + cx.Message, cx);
+            throw new OfficeOperationException("创建Excel控件对象类型失败：" + cx.Message, cx);
 
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("创建Excel控件对象类型失败：" + ex.Message, ex);
+            throw new OfficeOperationException("创建Excel控件对象类型失败：" + ex.Message, ex);
 
         }
 

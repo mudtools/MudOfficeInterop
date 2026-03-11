@@ -222,7 +222,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException($"添加工作表失败:{ex.Message}", ex);
+            throw new OfficeOperationException($"添加工作表失败:{ex.Message}", ex);
         }
     }
 
@@ -312,7 +312,7 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
         catch (COMException ex)
         {
-            throw new ExcelOperationException($"工作表复制失败:{ex.Message}", ex);
+            throw new OfficeOperationException($"工作表复制失败:{ex.Message}", ex);
         }
     }
 
@@ -435,11 +435,11 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
         catch (COMException ce)
         {
-            throw new ExcelOperationException($"工作表保护过程中发生异常：{ce.Message}", ce);
+            throw new OfficeOperationException($"工作表保护过程中发生异常：{ce.Message}", ce);
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"工作表保护过程中发生异常：{ex.Message}", ex);
+            throw new OfficeOperationException($"工作表保护过程中发生异常：{ex.Message}", ex);
         }
     }
 
@@ -460,11 +460,11 @@ internal abstract class ExcelCommonSheets : IExcelComSheets
         }
         catch (COMException ce)
         {
-            throw new ExcelOperationException($"取消工作表保护过程中发生异常：{ce.Message}", ce);
+            throw new OfficeOperationException($"取消工作表保护过程中发生异常：{ce.Message}", ce);
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"取消工作表保护过程中发生异常：{ex.Message}", ex);
+            throw new OfficeOperationException($"取消工作表保护过程中发生异常：{ex.Message}", ex);
         }
     }
     #endregion

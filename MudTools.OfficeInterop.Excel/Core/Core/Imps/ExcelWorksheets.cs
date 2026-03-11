@@ -84,7 +84,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException($"Failed to retrieve sheet at index {index}: {ex.Message}");
+                throw new OfficeOperationException($"Failed to retrieve sheet at index {index}: {ex.Message}");
 
             }
         }
@@ -115,7 +115,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException($"Failed to retrieve sheet with name '{name}': {ex.Message}");
+                throw new OfficeOperationException($"Failed to retrieve sheet with name '{name}': {ex.Message}");
 
             }
         }
@@ -232,7 +232,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to add worksheet: {ex.Message}");
+            throw new OfficeOperationException($"Failed to add worksheet: {ex.Message}");
 
         }
     }
@@ -306,7 +306,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to create worksheet from template '{templatePath}': {ex.Message}");
+            throw new OfficeOperationException($"Failed to create worksheet from template '{templatePath}': {ex.Message}");
 
         }
     }
@@ -361,7 +361,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("Failed to clear worksheets", ex);
+            throw new OfficeOperationException("Failed to clear worksheets", ex);
         }
     }
 
@@ -392,7 +392,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to delete worksheet by {key}: {ex.Message}");
+            throw new OfficeOperationException($"Failed to delete worksheet by {key}: {ex.Message}");
         }
     }
 
@@ -413,7 +413,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("Failed to move worksheet", ex);
+            throw new OfficeOperationException("Failed to move worksheet", ex);
         }
     }
 
@@ -446,7 +446,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("Failed to copy worksheet", ex);
+            throw new OfficeOperationException("Failed to copy worksheet", ex);
         }
     }
 
@@ -470,7 +470,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("Failed to select worksheets", ex);
+            throw new OfficeOperationException("Failed to select worksheets", ex);
         }
     }
 
@@ -501,7 +501,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("Failed to arrange worksheets in order", ex);
+            throw new OfficeOperationException("Failed to arrange worksheets in order", ex);
         }
     }
 
@@ -588,7 +588,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
                 }
                 catch (Exception ex)
                 {
-                    throw new ExcelOperationException($"Failed to calculate sheet '{ws.Name}': {ex.Message}");
+                    throw new OfficeOperationException($"Failed to calculate sheet '{ws.Name}': {ex.Message}");
                 }
             }
         }
@@ -611,7 +611,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to hide all sheets: {ex.Message}");
+            throw new OfficeOperationException($"Failed to hide all sheets: {ex.Message}");
         }
     }
 
@@ -631,7 +631,7 @@ internal class ExcelWorksheets : ExcelCommonSheets, IExcelWorksheets
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException($"Failed to show all sheets: {ex.Message}");
+            throw new OfficeOperationException($"Failed to show all sheets: {ex.Message}");
         }
     }
 

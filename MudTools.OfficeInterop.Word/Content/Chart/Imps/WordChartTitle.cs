@@ -29,7 +29,7 @@ internal partial class WordChartTitle
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("执行Characters操作失败", ex);
+            throw new OfficeOperationException("执行Characters操作失败", ex);
         }
     }
 }

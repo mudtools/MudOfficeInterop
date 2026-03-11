@@ -36,11 +36,11 @@ partial class ExcelRange
             }
             catch (COMException ce)
             {
-                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+                throw new OfficeOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+                throw new OfficeOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
             }
         }
         set
@@ -63,11 +63,11 @@ partial class ExcelRange
             }
             catch (COMException ce)
             {
-                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+                throw new OfficeOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+                throw new OfficeOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
             }
         }
     }
@@ -97,11 +97,11 @@ partial class ExcelRange
             }
             catch (COMException ce)
             {
-                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+                throw new OfficeOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+                throw new OfficeOperationException("根据双索引获取 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
             }
         }
         set
@@ -123,11 +123,11 @@ partial class ExcelRange
             }
             catch (COMException ce)
             {
-                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+                throw new OfficeOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
             }
             catch (Exception ex)
             {
-                throw new ExcelOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
+                throw new OfficeOperationException("根据双索引设置 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败", ex);
             }
         }
     }
@@ -155,7 +155,7 @@ partial class ExcelRange
             }
             catch (COMException ce)
             {
-                throw new ExcelOperationException("根据索引检索 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+                throw new OfficeOperationException("根据索引检索 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
             }
         }
     }
@@ -182,7 +182,7 @@ partial class ExcelRange
             }
             catch (COMException ce)
             {
-                throw new ExcelOperationException("根据索引检索 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
+                throw new OfficeOperationException("根据索引检索 MudTools.OfficeInterop.Excel.Imps.ExcelRange 对象失败: " + ce.Message, ce);
             }
         }
     }
@@ -220,11 +220,11 @@ partial class ExcelRange
         }
         catch (COMException cx)
         {
-            throw new ExcelOperationException("执行GetValue操作失败: " + cx.Message, cx);
+            throw new OfficeOperationException("执行GetValue操作失败: " + cx.Message, cx);
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("执行GetValue操作失败", ex);
+            throw new OfficeOperationException("执行GetValue操作失败", ex);
         }
     }
 
@@ -242,11 +242,11 @@ partial class ExcelRange
         }
         catch (COMException cx)
         {
-            throw new ExcelOperationException("执行SetValue操作失败: " + cx.Message, cx);
+            throw new OfficeOperationException("执行SetValue操作失败: " + cx.Message, cx);
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("执行SetValue操作失败", ex);
+            throw new OfficeOperationException("执行SetValue操作失败", ex);
         }
     }
 }

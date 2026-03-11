@@ -33,7 +33,7 @@ partial class ExcelSeriesCollection
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("执行Extend操作失败", ex);
+            throw new OfficeOperationException("执行Extend操作失败", ex);
         }
     }
 
@@ -65,7 +65,7 @@ partial class ExcelSeriesCollection
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("添加对象操作失败", ex);
+            throw new OfficeOperationException("添加对象操作失败", ex);
         }
     }
 }

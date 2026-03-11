@@ -73,11 +73,11 @@ internal partial class WordApplication
         }
         catch (COMException cx)
         {
-            throw new ExcelOperationException("执行Activate操作失败: " + cx.Message, cx);
+            throw new OfficeOperationException("执行Activate操作失败: " + cx.Message, cx);
         }
         catch (Exception ex)
         {
-            throw new ExcelOperationException("执行Activate操作失败", ex);
+            throw new OfficeOperationException("执行Activate操作失败", ex);
         }
     }
 
