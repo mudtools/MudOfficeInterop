@@ -29,7 +29,11 @@ internal partial class WordApplication
 
     internal WordApplication()
     {
-        _disposedValue = true;
+        _application = new MsWord.Application();
+        _applicationEvent = _application;
+        ConnectEvents();
+        _application.DisplayAlerts = MsWord.WdAlertLevel.wdAlertsMessageBox;
+        _disposedValue = false;
     }
 
     /// <summary>

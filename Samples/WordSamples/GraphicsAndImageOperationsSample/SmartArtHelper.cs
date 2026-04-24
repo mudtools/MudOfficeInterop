@@ -107,7 +107,7 @@ namespace GraphicsAndImageOperationsSample
                 {
                     try
                     {
-                        smartArt.AllNodes[i + 1].TextFrame.TextRange.Text = nodeTexts[i];
+                        smartArt.AllNodes[i + 1].TextFrame2.TextRange.Text = nodeTexts[i];
                     }
                     catch (Exception ex)
                     {

@@ -7,6 +7,7 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
+using System.Drawing;
 
 namespace GraphicsAndImageOperationsSample
 {
@@ -107,7 +108,7 @@ namespace GraphicsAndImageOperationsSample
         public void ApplyShadowEffect(
             IWordShape shape,
             ShadowEffectType effectType,
-            WdColor color,
+            Color color,
             float offsetX = 3,
             float offsetY = 3,
             float blur = 5,
@@ -163,7 +164,7 @@ namespace GraphicsAndImageOperationsSample
         public void ApplyGlowEffect(
             IWordShape shape,
             GlowEffectType effectType,
-            WdColor color,
+            Color color,
             float radius = 5,
             float transparency = 0)
         {
@@ -187,7 +188,7 @@ namespace GraphicsAndImageOperationsSample
 
                 // 设置发光属性
                 shape.Glow.Radius = radius;
-                shape.Glow.Color.RGB = (int)color;
+                shape.Glow.Color.RGB = color;
                 shape.Glow.Transparency = transparency;
             }
             catch (Exception ex)
@@ -316,8 +317,8 @@ namespace GraphicsAndImageOperationsSample
             IWordShape shape,
             ThreeDEffectType effectType,
             float depth = 2,
-            WdColor extrusionColor = WdColor.wdColorAutomatic,
-            WdColor contourColor = WdColor.wdColorAutomatic,
+            Color extrusionColor = default,
+            Color contourColor = default,
             float contourWidth = 1)
         {
             if (shape?.ThreeD == null) return;
@@ -328,15 +329,15 @@ namespace GraphicsAndImageOperationsSample
                 shape.ThreeD.Depth = depth;
 
                 // 设置挤出颜色
-                if (extrusionColor != WdColor.wdColorAutomatic)
+                if (extrusionColor != default)
                 {
-                    shape.ThreeD.ExtrusionColor.RGB = (int)extrusionColor;
+                    shape.ThreeD.ExtrusionColor.RGB = extrusionColor;
                 }
 
                 // 设置轮廓
-                if (contourColor != WdColor.wdColorAutomatic)
+                if (contourColor != default)
                 {
-                    shape.ThreeD.ContourColor.RGB = (int)contourColor;
+                    shape.ThreeD.ContourColor.RGB = contourColor;
                 }
                 shape.ThreeD.ContourWidth = contourWidth;
 
@@ -383,10 +384,10 @@ namespace GraphicsAndImageOperationsSample
                 switch (presetName.ToLower())
                 {
                     case "glow":
-                        ApplyGlowEffect(shape, GlowEffectType.Medium, WdColor.wdColorBlue);
+                        ApplyGlowEffect(shape, GlowEffectType.Medium, Color.Blue);
                         break;
                     case "shadow":
-                        ApplyShadowEffect(shape, ShadowEffectType.OuterShadow, WdColor.wdColorGray50);
+                        ApplyShadowEffect(shape, ShadowEffectType.OuterShadow, Color.Gray);
                         break;
                     case "3d":
                         Apply3DFormatEffect(shape, ThreeDEffectType.Simple);
@@ -398,14 +399,14 @@ namespace GraphicsAndImageOperationsSample
                         ApplyReflectionEffect(shape);
                         break;
                     case "professional":
-                        ApplyShadowEffect(shape, ShadowEffectType.OuterShadow, WdColor.wdColorGray50, 2, 2, 3);
-                        ApplyGlowEffect(shape, GlowEffectType.Small, WdColor.wdColorBlue, 2);
+                        ApplyShadowEffect(shape, ShadowEffectType.OuterShadow, Color.Gray, 2, 2, 3);
+                        ApplyGlowEffect(shape, GlowEffectType.Small, Color.Blue, 2);
                         ApplySoftEdgeEffect(shape, 2);
                         break;
                     case "dramatic":
-                        ApplyShadowEffect(shape, ShadowEffectType.PerspectiveOuterShadow, WdColor.wdColorBlack, 5, 5, 10);
+                        ApplyShadowEffect(shape, ShadowEffectType.PerspectiveOuterShadow, Color.Black, 5, 5, 10);
                         Apply3DFormatEffect(shape, ThreeDEffectType.Complex, 5);
-                        ApplyGlowEffect(shape, GlowEffectType.Large, WdColor.wdColorGold, 10);
+                        ApplyGlowEffect(shape, GlowEffectType.Large, Color.Gold, 10);
                         break;
                     default:
                         Console.WriteLine($"未知的预设效果: {presetName}");

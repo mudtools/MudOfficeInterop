@@ -6,7 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using MudTools.OfficeInterop;
-using MudTools.OfficeInterop.Word;
+using System.Drawing;
 
 namespace GraphicsAndImageOperationsSample
 {
@@ -136,34 +136,34 @@ namespace GraphicsAndImageOperationsSample
 
                 // 添加矩形形状
                 var shape1 = document.Shapes.AddShape(
-                    MsoAutoShapeType.msoShapeRectangle,
+                    (int)MsoAutoShapeType.msoShapeRectangle,
                     100, 100, 200, 100);
 
                 // 设置形状文本
                 shape1.TextFrame.TextRange.Text = "矩形形状";
 
                 // 设置形状填充
-                shape1.Fill.ForeColor.RGB = (int)WdColor.wdColorBlue;
+                shape1.Fill.ForeColor.RGB = Color.Blue;
 
                 // 设置形状边框
-                shape1.Line.ForeColor.RGB = (int)WdColor.wdColorBlack;
+                shape1.Line.ForeColor.RGB = Color.Black;
                 shape1.Line.Weight = 2;
 
                 // 添加圆形形状
                 var shape2 = document.Shapes.AddShape(
-                    MsoAutoShapeType.msoShapeOval,
+                    (int)MsoAutoShapeType.msoShapeOval,
                     150, 250, 150, 150);
 
                 shape2.TextFrame.TextRange.Text = "圆形";
-                shape2.Fill.ForeColor.RGB = (int)WdColor.wdColorRed;
+                shape2.Fill.ForeColor.RGB = Color.Red;
 
                 // 添加箭头形状
                 var shape3 = document.Shapes.AddShape(
-                    MsoAutoShapeType.msoShapeCurvedRightArrow,
+                    (int)MsoAutoShapeType.msoShapeCurvedRightArrow,
                     100, 450, 200, 50);
 
                 shape3.TextFrame.TextRange.Text = "箭头";
-                shape3.Fill.ForeColor.RGB = (int)WdColor.wdColorGreen;
+                shape3.Fill.ForeColor.RGB = Color.Green;
 
                 Console.WriteLine("形状操作完成");
             }
@@ -237,7 +237,7 @@ namespace GraphicsAndImageOperationsSample
 
                 // 添加形状
                 var shape = document.Shapes.AddShape(
-                    MsoAutoShapeType.msoShapeRoundedRectangle,
+                    (int)MsoAutoShapeType.msoShapeRoundedRectangle,
                     100, 100, 200, 100);
 
                 shape.TextFrame.TextRange.Text = "带效果的形状";
@@ -248,12 +248,11 @@ namespace GraphicsAndImageOperationsSample
                 shape.Shadow.Blur = 5;
                 shape.Shadow.OffsetX = 3;
                 shape.Shadow.OffsetY = 3;
-                shape.Shadow.ForeColor.RGB = (int)WdColor.wdColorGray50;
+                shape.Shadow.ForeColor.RGB = Color.Gray;
 
                 // 设置发光效果
                 shape.Glow.Radius = 5;
-                shape.Glow.Color.RGB = (int)WdColor.wdColorBlue;
-
+                shape.Glow.Color.RGB = Color.Blue;
                 // 设置柔化边缘效果
                 shape.SoftEdge.Type = MsoSoftEdgeType.msoSoftEdgeType6;
                 shape.SoftEdge.Radius = 5;

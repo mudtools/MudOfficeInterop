@@ -7,6 +7,7 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
+using System.Drawing;
 
 namespace GraphicsAndImageOperationsSample
 {
@@ -39,7 +40,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateRectangle(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeRectangle, left, top, width, height);
+            var shape = _document.Shapes.AddShape((int)MsoAutoShapeType.msoShapeRectangle, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -59,7 +60,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateCircle(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeOval, left, top, width, height);
+            var shape = _document.Shapes.AddShape((int)MsoAutoShapeType.msoShapeOval, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -79,7 +80,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateTriangle(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeIsoscelesTriangle, left, top, width, height);
+            var shape = _document.Shapes.AddShape((int)MsoAutoShapeType.msoShapeIsoscelesTriangle, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -99,7 +100,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateArrow(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeCurvedRightArrow, left, top, width, height);
+            var shape = _document.Shapes.AddShape((int)MsoAutoShapeType.msoShapeCurvedRightArrow, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -119,7 +120,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateStar(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeStar32Point, left, top, width, height);
+            var shape = _document.Shapes.AddShape((int)MsoAutoShapeType.msoShapeStar32Point, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -139,7 +140,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateCloud(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeCloudCallout, left, top, width, height);
+            var shape = _document.Shapes.AddShape((int)MsoAutoShapeType.msoShapeCloudCallout, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -159,7 +160,7 @@ namespace GraphicsAndImageOperationsSample
         /// <returns>创建的形状</returns>
         public IWordShape CreateHeart(float left, float top, float width, float height, string text = "")
         {
-            var shape = _document.Shapes.AddShape(MsoAutoShapeType.msoShapeHeart, left, top, width, height);
+            var shape = _document.Shapes.AddShape((int)MsoAutoShapeType.msoShapeHeart, left, top, width, height);
             if (!string.IsNullOrEmpty(text))
             {
                 shape.TextFrame.TextRange.Text = text;
@@ -172,13 +173,13 @@ namespace GraphicsAndImageOperationsSample
         /// 批量设置形状填充颜色
         /// </summary>
         /// <param name="color">颜色</param>
-        public void SetFillColorForAll(WdColor color)
+        public void SetFillColorForAll(Color color)
         {
             foreach (var shape in _shapes)
             {
                 if (shape != null && shape.Fill != null)
                 {
-                    shape.Fill.ForeColor.RGB = (int)color;
+                    shape.Fill.ForeColor.RGB = color;
                 }
             }
         }
@@ -188,13 +189,13 @@ namespace GraphicsAndImageOperationsSample
         /// </summary>
         /// <param name="color">边框颜色</param>
         /// <param name="weight">边框粗细</param>
-        public void SetBorderForAll(WdColor color, float weight)
+        public void SetBorderForAll(Color color, float weight)
         {
             foreach (var shape in _shapes)
             {
                 if (shape != null && shape.Line != null)
                 {
-                    shape.Line.ForeColor.RGB = (int)color;
+                    shape.Line.ForeColor.RGB = color;
                     shape.Line.Weight = weight;
                 }
             }

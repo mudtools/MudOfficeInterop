@@ -6,6 +6,7 @@
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
 using MudTools.OfficeInterop.Word;
+using System.Drawing;
 
 namespace GraphicsAndImageOperationsSample
 {
@@ -138,29 +139,27 @@ namespace GraphicsAndImageOperationsSample
 
                 // 创建各种形状
                 using var rectangle = _shapeManager.CreateRectangle(100, 100, 150, 75, "矩形");
-                _graphicsHelper.SetShapeFillColor(rectangle, WdColor.wdColorLightBlue);
-                _graphicsHelper.SetShapeBorder(rectangle, WdColor.wdColorBlue, 1);
+                _graphicsHelper.SetShapeFillColor(rectangle, Color.LightBlue);
+                _graphicsHelper.SetShapeBorder(rectangle, Color.Blue, 1);
 
                 using var circle = _shapeManager.CreateCircle(300, 100, 100, 100, "圆形");
-                _graphicsHelper.SetShapeFillColor(circle, WdColor.wdColorLightGreen);
-                _graphicsHelper.SetShapeBorder(circle, WdColor.wdColorGreen, 1);
+                _graphicsHelper.SetShapeFillColor(circle, Color.LightGreen);
+                _graphicsHelper.SetShapeBorder(circle, Color.Green, 1);
 
                 using var triangle = _shapeManager.CreateTriangle(450, 100, 100, 100, "三角形");
-                _graphicsHelper.SetShapeFillColor(triangle, WdColor.wdColorLightYellow);
-                _graphicsHelper.SetShapeBorder(triangle, WdColor.wdColorOrange, 1);
-
+                _graphicsHelper.SetShapeFillColor(triangle, Color.LightYellow);
+                _graphicsHelper.SetShapeBorder(triangle, Color.Orange, 1);
                 using var arrow = _shapeManager.CreateArrow(100, 250, 200, 50, "箭头");
-                _graphicsHelper.SetShapeFillColor(arrow, WdColor.wdColorDarkRed);
-                _graphicsHelper.SetShapeBorder(arrow, WdColor.wdColorRed, 1);
+                _graphicsHelper.SetShapeFillColor(arrow, Color.DarkRed);
+                _graphicsHelper.SetShapeBorder(arrow, Color.Red, 1);
 
                 using var star = _shapeManager.CreateStar(350, 250, 100, 100, "星形");
-                _graphicsHelper.SetShapeFillColor(star, WdColor.wdColorPink);
-                _graphicsHelper.SetShapeBorder(star, WdColor.wdColorViolet, 1);
+                _graphicsHelper.SetShapeFillColor(star, Color.Pink);
+                _graphicsHelper.SetShapeBorder(star, Color.Violet, 1);
 
                 using var cloud = _shapeManager.CreateCloud(200, 350, 150, 100, "云朵");
-                _graphicsHelper.SetShapeFillColor(cloud, WdColor.wdColorLightTurquoise);
-                _graphicsHelper.SetShapeBorder(cloud, WdColor.wdColorTeal, 1);
-
+                _graphicsHelper.SetShapeFillColor(cloud, Color.LightGoldenrodYellow);
+                _graphicsHelper.SetShapeBorder(cloud, Color.Teal, 1);
                 AddParagraph("\n以上形状展示了基本的形状创建和样式设置功能。", "宋体", 10, WdParagraphAlignment.wdAlignParagraphCenter);
             }
             catch (Exception ex)
@@ -213,21 +212,21 @@ namespace GraphicsAndImageOperationsSample
 
                 // 创建基础形状
                 using var baseShape = _shapeManager.CreateRectangle(100, 100, 150, 75, "基础形状");
-                _graphicsHelper.SetShapeFillColor(baseShape, WdColor.wdColorLightBlue);
+                _graphicsHelper.SetShapeFillColor(baseShape, Color.LightBlue);
 
                 // 添加阴影效果
                 using var shadowShape = _shapeManager.CreateRectangle(300, 100, 150, 75, "阴影效果");
-                _graphicsHelper.SetShapeFillColor(shadowShape, WdColor.wdColorLightGreen);
-                _effectsHelper.ApplyShadowEffect(shadowShape, GraphicEffectsHelper.ShadowEffectType.OuterShadow, WdColor.wdColorGray50);
+                _graphicsHelper.SetShapeFillColor(shadowShape, Color.LightGreen);
+                _effectsHelper.ApplyShadowEffect(shadowShape, GraphicEffectsHelper.ShadowEffectType.OuterShadow, Color.Gray);
 
                 // 添加发光效果
                 using var glowShape = _shapeManager.CreateRectangle(100, 250, 150, 75, "发光效果");
-                _graphicsHelper.SetShapeFillColor(glowShape, WdColor.wdColorLightYellow);
-                _effectsHelper.ApplyGlowEffect(glowShape, GraphicEffectsHelper.GlowEffectType.Medium, WdColor.wdColorBlue);
+                _graphicsHelper.SetShapeFillColor(glowShape, Color.LightYellow);
+                _effectsHelper.ApplyGlowEffect(glowShape, GraphicEffectsHelper.GlowEffectType.Medium, Color.Blue);
 
                 // 添加三维效果
                 using var threeDShape = _shapeManager.CreateRectangle(300, 250, 150, 75, "三维效果");
-                _graphicsHelper.SetShapeFillColor(threeDShape, WdColor.wdColorDarkRed);
+                _graphicsHelper.SetShapeFillColor(threeDShape, Color.DarkRed);
                 _effectsHelper.Apply3DFormatEffect(threeDShape, GraphicEffectsHelper.ThreeDEffectType.Simple);
 
                 AddParagraph("\n以上形状展示了不同的图形效果应用。", "宋体", 10, WdParagraphAlignment.wdAlignParagraphCenter);

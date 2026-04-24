@@ -7,6 +7,7 @@
 
 using MudTools.OfficeInterop;
 using MudTools.OfficeInterop.Word;
+using System.Drawing;
 
 namespace GraphicsAndImageOperationsSample
 {
@@ -65,7 +66,7 @@ namespace GraphicsAndImageOperationsSample
         {
             try
             {
-                var shape = _document.Shapes.AddShape(shapeType, left, top, width, height);
+                var shape = _document.Shapes.AddShape((int)shapeType, left, top, width, height);
                 shape.TextFrame.TextRange.Text = text;
                 return shape;
             }
@@ -81,11 +82,11 @@ namespace GraphicsAndImageOperationsSample
         /// </summary>
         /// <param name="shape">形状对象</param>
         /// <param name="color">颜色</param>
-        public void SetShapeFillColor(IWordShape shape, WdColor color)
+        public void SetShapeFillColor(IWordShape shape, Color color)
         {
             if (shape != null)
             {
-                shape.Fill.ForeColor.RGB = (int)color;
+                shape.Fill.ForeColor.RGB = color;
             }
         }
 
@@ -95,11 +96,11 @@ namespace GraphicsAndImageOperationsSample
         /// <param name="shape">形状对象</param>
         /// <param name="color">边框颜色</param>
         /// <param name="weight">边框粗细</param>
-        public void SetShapeBorder(IWordShape shape, WdColor color, float weight)
+        public void SetShapeBorder(IWordShape shape, Color color, float weight)
         {
             if (shape != null)
             {
-                shape.Line.ForeColor.RGB = (int)color;
+                shape.Line.ForeColor.RGB = color;
                 shape.Line.Weight = weight;
             }
         }
@@ -113,7 +114,7 @@ namespace GraphicsAndImageOperationsSample
         /// <param name="offsetY">阴影Y偏移</param>
         /// <param name="blur">阴影模糊度</param>
         /// <param name="color">阴影颜色</param>
-        public void AddShadowEffect(IWordShape shape, float offsetX, float offsetY, float blur, WdColor color)
+        public void AddShadowEffect(IWordShape shape, float offsetX, float offsetY, float blur, Color color)
         {
             if (shape != null)
             {
@@ -122,7 +123,7 @@ namespace GraphicsAndImageOperationsSample
                 shape.Shadow.Blur = blur;
                 shape.Shadow.OffsetX = offsetX;
                 shape.Shadow.OffsetY = offsetY;
-                shape.Shadow.ForeColor.RGB = (int)color;
+                shape.Shadow.ForeColor.RGB = color;
             }
         }
 
@@ -132,12 +133,12 @@ namespace GraphicsAndImageOperationsSample
         /// <param name="shape">图形对象</param>
         /// <param name="radius">发光半径</param>
         /// <param name="color">发光颜色</param>
-        public void AddGlowEffect(IWordShape shape, float radius, WdColor color)
+        public void AddGlowEffect(IWordShape shape, float radius, Color color)
         {
             if (shape != null)
             {
                 shape.Glow.Radius = radius;
-                shape.Glow.Color.RGB = (int)color;
+                shape.Glow.Color.RGB = color;
             }
         }
 
