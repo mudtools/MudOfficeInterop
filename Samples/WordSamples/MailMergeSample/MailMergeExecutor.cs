@@ -23,7 +23,7 @@ namespace MailMergeSample
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
         /// <param name="document">Word文档对象</param>
-        public MailMergeExecutor(IWordApplication? Application, IWordDocument document)
+        public MailMergeExecutor(IWordApplication? application, IWordDocument document)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _document = document ?? throw new ArgumentNullException(nameof(document));
@@ -59,7 +59,7 @@ namespace MailMergeSample
                 if (!string.IsNullOrEmpty(outputPath))
                 {
                     var resultDoc = _application.ActiveDocument;
-                    resultDoc.Save(outputPath);
+                    resultDoc.SaveAs(outputPath);
                     result.OutputPath = outputPath;
                     Console.WriteLine($"邮件合并结果已保存: {outputPath}");
                 }
@@ -274,7 +274,7 @@ namespace MailMergeSample
                 if (!string.IsNullOrEmpty(outputPath))
                 {
                     var resultDoc = _application.ActiveDocument;
-                    resultDoc.Save(outputPath);
+                    resultDoc.SaveAs(outputPath);
                     result.OutputPath = outputPath;
                     Console.WriteLine($"邮件合并结果已保存: {outputPath}");
                 }

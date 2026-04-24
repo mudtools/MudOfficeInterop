@@ -62,7 +62,7 @@ namespace PageLayoutAndPrintingSample
                 pageSetup.PageHeight = 15840; // A4纸高度
 
                 // 或者使用预定义的纸张大小
-                pageSetup.PageSize = WdPaperSize.wdPaperA4;
+                pageSetup.PaperSize = WdPaperSize.wdPaperA4;
 
                 // 设置页面方向
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait; // 纵向
@@ -243,7 +243,7 @@ namespace PageLayoutAndPrintingSample
                 using var pageSetup = section1.PageSetup;
 
                 // 设置A4纸张
-                pageSetup.PageSize = WdPaperSize.wdPaperA4;
+                pageSetup.PaperSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
 
                 // 设置页边距
@@ -370,7 +370,7 @@ namespace PageLayoutAndPrintingSample
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "PageLayoutDemo.docx");
-                document.Save(filePath);
+                document.SaveAs(filePath);
 
                 Console.WriteLine($"专业文档已创建: {filePath}");
             }
@@ -446,7 +446,7 @@ namespace PageLayoutAndPrintingSample
 
                 // 保存文档
                 string filePath = Path.Combine(Path.GetTempPath(), "CompleteDocumentWithHelpers.docx");
-                document.Save(filePath);
+                document.SaveAs(filePath);
 
                 Console.WriteLine($"使用辅助类创建的完整文档已保存: {filePath}");
             }

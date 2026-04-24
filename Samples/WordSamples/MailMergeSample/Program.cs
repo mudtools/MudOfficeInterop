@@ -314,7 +314,7 @@ namespace MailMergeSample
 
                 // 2. 保存模板
                 string templatePath = Path.Combine(Path.GetTempPath(), "CustomerLetterTemplate.dotx");
-                document.Save(templatePath);
+                document.SaveAs(templatePath);
                 Console.WriteLine($"邮件合并模板已创建: {templatePath}");
 
                 // 3. 演示执行邮件合并

@@ -38,7 +38,7 @@ namespace PageLayoutAndPrintingSample
                 if (sectionIndex > 0 && sectionIndex <= _document.Sections.Count)
                 {
                     using var section = _document.Sections[sectionIndex];
-                    section.PageSetup.PageSize = paperSize;
+                    section.PageSetup.PaperSize = paperSize;
                 }
             }
             catch (Exception ex)
@@ -243,7 +243,7 @@ namespace PageLayoutAndPrintingSample
 
                     StringBuilder info = new StringBuilder();
                     info.AppendLine($"第 {sectionIndex} 节页面设置信息:");
-                    info.AppendLine($"  纸张尺寸: {pageSetup.PageSize}");
+                    info.AppendLine($"  纸张尺寸: {pageSetup.PaperSize}");
                     info.AppendLine($"  页面宽度: {pageSetup.PageWidth} 磅");
                     info.AppendLine($"  页面高度: {pageSetup.PageHeight} 磅");
                     info.AppendLine($"  页面方向: {pageSetup.Orientation}");
@@ -289,7 +289,7 @@ namespace PageLayoutAndPrintingSample
                             using var targetPageSetup = _document.Sections[targetIndex].PageSetup;
 
                             // 复制所有页面设置属性
-                            targetPageSetup.PageSize = sourcePageSetup.PageSize;
+                            targetPageSetup.PaperSize = sourcePageSetup.PaperSize;
                             targetPageSetup.PageWidth = sourcePageSetup.PageWidth;
                             targetPageSetup.PageHeight = sourcePageSetup.PageHeight;
                             targetPageSetup.Orientation = sourcePageSetup.Orientation;

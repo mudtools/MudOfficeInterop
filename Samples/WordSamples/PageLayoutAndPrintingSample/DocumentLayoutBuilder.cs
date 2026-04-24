@@ -49,7 +49,7 @@ namespace PageLayoutAndPrintingSample
                 using var pageSetup = section1.PageSetup;
 
                 // 设置A4纸张
-                pageSetup.PageSize = WdPaperSize.wdPaperA4;
+                pageSetup.PaperSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
 
                 // 设置页边距
