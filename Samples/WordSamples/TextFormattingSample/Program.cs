@@ -161,15 +161,15 @@ namespace TextFormattingSample
                 // 应用内置样式
                 using var heading1 = document.Range();
                 heading1.Text = "标题 1\n";
-                heading1.Style = "标题 1";
+                heading1.StyleName = "标题 1";
 
                 using var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 heading2.Text = "标题 2\n";
-                heading2.Style = "标题 2";
+                heading2.StyleName = "标题 2";
 
                 using var normalText = document.Range(document.Content.End - 1, document.Content.End - 1);
                 normalText.Text = "正文文本\n";
-                normalText.Style = "正文";
+                normalText.StyleName = "正文";
 
                 // 创建自定义样式
                 using var customStyle = document.Styles.Add("我的自定义样式");
@@ -180,7 +180,7 @@ namespace TextFormattingSample
 
                 using var customRange = document.Range(document.Content.End - 1, document.Content.End - 1);
                 customRange.Text = "使用自定义样式的文本\n";
-                customRange.Style = "我的自定义样式";
+                customRange.StyleName = "我的自定义样式";
 
                 Console.WriteLine("样式应用完成");
             }
@@ -238,7 +238,7 @@ namespace TextFormattingSample
                 range.Text = "带边框和底纹的文本\n";
 
                 // 设置边框
-                range.Borders.Enable = true;
+                range.Borders.Enable = 1;
                 range.Borders[WdBorderType.wdBorderTop].LineStyle = WdLineStyle.wdLineStyleSingle;
                 range.Borders[WdBorderType.wdBorderLeft].LineStyle = WdLineStyle.wdLineStyleSingle;
                 range.Borders[WdBorderType.wdBorderBottom].LineStyle = WdLineStyle.wdLineStyleSingle;
@@ -413,15 +413,15 @@ namespace TextFormattingSample
                 // 添加多级标题
                 using var heading1 = document.Range();
                 heading1.Text = "第一章 标题\n";
-                heading1.Style = "标题 1";
+                heading1.StyleName = "标题 1";
 
                 using var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 heading2.Text = "1.1 节标题\n";
-                heading2.Style = "标题 2";
+                heading2.StyleName = "标题 2";
 
                 using var heading3 = document.Range(document.Content.End - 1, document.Content.End - 1);
                 heading3.Text = "1.1.1 小节标题\n";
-                heading3.Style = "标题 3";
+                heading3.StyleName = "标题 3";
 
                 // 添加正文内容
                 using var content = document.Range(document.Content.End - 1, document.Content.End - 1);
@@ -532,7 +532,7 @@ namespace TextFormattingSample
                 table.Cell(4, 3).Range.Text = "20%";
 
                 // 格式化表格
-                table.Borders.Enable = true;
+                table.Borders.Enable = 1;
                 // 注意：由于库的限制，这里可能需要使用不同的方法来设置行对齐
 
                 // 保存文档
@@ -842,11 +842,11 @@ namespace TextFormattingSample
             // 添加多级标题
             using var heading1 = document.Range();
             heading1.Text = "第一章 简介\n";
-            heading1.Style = "标题 1";
+            heading1.StyleName = "标题 1";
 
             using var heading2 = document.Range(document.Content.End - 1, document.Content.End - 1);
             heading2.Text = "1.1 背景\n";
-            heading2.Style = "标题 2";
+            heading2.StyleName = "标题 2";
 
             // 添加正文内容
             using var content1 = document.Range(document.Content.End - 1, document.Content.End - 1);
@@ -854,7 +854,7 @@ namespace TextFormattingSample
 
             using var heading3 = document.Range(document.Content.End - 1, document.Content.End - 1);
             heading3.Text = "1.2 目标\n";
-            heading3.Style = "标题 2";
+            heading3.StyleName = "标题 2";
 
             using var content2 = document.Range(document.Content.End - 1, document.Content.End - 1);
             content2.Text = "这是第一章的另一个小节内容。\n";

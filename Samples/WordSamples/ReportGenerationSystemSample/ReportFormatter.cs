@@ -25,7 +25,7 @@ namespace ReportGenerationSystemSample
             {
                 // 设置页面布局
                 using var pageSetup = document.Sections[1].PageSetup;
-                pageSetup.PageSize = WdPaperSize.wdPaperA4;
+                pageSetup.PaperSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
                 pageSetup.TopMargin = 1440 / 72;    // 2厘米
                 pageSetup.BottomMargin = 1440 / 72;
@@ -66,7 +66,7 @@ namespace ReportGenerationSystemSample
                 find.Forward = true;
                 find.Wrap = WdFindWrap.wdFindContinue;
 
-                if (find.Execute())
+                if (find.Execute() == true)
                 {
                     find.ParentRange.Font.Name = "微软雅黑";
                     find.ParentRange.Font.Size = 20;
@@ -213,7 +213,7 @@ namespace ReportGenerationSystemSample
             var pageSetup = document.Sections[1].PageSetup;
             try
             {
-                pageSetup.PageSize = WdPaperSize.wdPaperA4;
+                pageSetup.PaperSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
                 pageSetup.TopMargin = 1134 / 72;    // 1.5厘米
                 pageSetup.BottomMargin = 1134 / 72;
@@ -359,7 +359,7 @@ namespace ReportGenerationSystemSample
             try
             {
                 // 设置页面布局
-                pageSetup.PageSize = WdPaperSize.wdPaperA4;
+                pageSetup.PaperSize = WdPaperSize.wdPaperA4;
                 pageSetup.Orientation = WdOrientation.wdOrientPortrait;
                 pageSetup.TopMargin = 1417;    // 2厘米
                 pageSetup.BottomMargin = 1417;

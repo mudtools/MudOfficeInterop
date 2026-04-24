@@ -358,7 +358,7 @@ namespace ReportGenerationSystemSample
                     }
 
                     // 设置表格样式
-                    table.Borders.Enable = true;
+                    table.Borders.Enable = 1;
                     table.AllowAutoFit = true;
                     table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
                 }
@@ -490,7 +490,7 @@ namespace ReportGenerationSystemSample
                     totalRow.Cells[2].Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
 
                     // 设置表格样式
-                    table.Borders.Enable = true;
+                    table.Borders.Enable = 1;
                     table.AllowAutoFit = true;
                     table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
                 }
@@ -556,7 +556,7 @@ namespace ReportGenerationSystemSample
                     totalRow.Cells[2].Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
 
                     // 设置表格样式
-                    table.Borders.Enable = true;
+                    table.Borders.Enable = 1;
                     table.AllowAutoFit = true;
                     table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
                 }
@@ -711,7 +711,7 @@ namespace ReportGenerationSystemSample
                     }
 
                     // 设置表格样式
-                    table.Borders.Enable = true;
+                    table.Borders.Enable = 1;
                     table.AllowAutoFit = true;
                     table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
                 }
