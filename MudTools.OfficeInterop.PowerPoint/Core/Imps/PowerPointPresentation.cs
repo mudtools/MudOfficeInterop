@@ -1,5 +1,5 @@
 ﻿//
-// 懒人Excel工具箱 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
+// MudTools.OfficeInterop 项目的版权、商标、专利和其他相关权利均受相应法律法规的保护。使用本项目应遵守相关法律法规和许可证的要求。
 //
 // 本项目主要遵循 MIT 许可证和 Apache 许可证（版本 2.0）进行分发和使用。许可证位于源代码树根目录中的 LICENSE-MIT 和 LICENSE-APACHE 文件。
 //
@@ -14,7 +14,7 @@ internal class PowerPointPresentation : IPowerPointPresentation
 {
     internal MsPowerPoint.Presentation _presentation;
     private bool _disposedValue;
-    private IPowerPointSlides _slides;
+    private IPowerPointSlides? _slides;
 
     /// <summary>
     /// 获取或设置演示文稿名称
@@ -47,7 +47,7 @@ internal class PowerPointPresentation : IPowerPointPresentation
     /// <summary>
     /// 获取幻灯片集合
     /// </summary>
-    public IPowerPointSlides Slides
+    public IPowerPointSlides? Slides
     {
         get
         {
@@ -59,7 +59,18 @@ internal class PowerPointPresentation : IPowerPointPresentation
         }
     }
 
-
+    /// <inheritdoc/>
+    public IPowerPointSlideShowSettings? SlideShowSettings
+    {
+        get
+        {
+            if (_presentation?.SlideShowSettings != null)
+            {
+                return new PowerPointSlideShowSettings(_presentation.SlideShowSettings);
+            }
+            return null;
+        }
+    }
 
     /// <summary>
     /// 获取或设置演示文稿是否已修改
@@ -94,7 +105,7 @@ internal class PowerPointPresentation : IPowerPointPresentation
     /// </summary>
     /// <param name="fileName">文件名（可选）</param>
     /// <param name="fileFormat">文件格式（可选）</param>
-    public void Save(string fileName = null, PpSaveAsFileType fileFormat = PpSaveAsFileType.ppSaveAsDefault)
+    public void Save(string? fileName = null, PpSaveAsFileType fileFormat = PpSaveAsFileType.ppSaveAsDefault)
     {
         try
         {

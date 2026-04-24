@@ -39,7 +39,12 @@ public interface IPowerPointPresentation : IDisposable
     /// <summary>
     /// 获取幻灯片集合
     /// </summary>
-    IPowerPointSlides Slides { get; }
+    IPowerPointSlides? Slides { get; }
+
+    /// <summary>
+    /// 获取幻灯片放映设置参数。
+    /// </summary>
+    IPowerPointSlideShowSettings? SlideShowSettings { get; }
 
     /// <summary>
     /// 获取或设置演示文稿是否已修改
@@ -56,7 +61,7 @@ public interface IPowerPointPresentation : IDisposable
     /// </summary>
     /// <param name="fileName">文件名（可选）</param>
     /// <param name="fileFormat">文件格式（可选）</param>
-    void Save(string fileName = null, PpSaveAsFileType fileFormat = PpSaveAsFileType.ppSaveAsDefault);
+    void Save(string? fileName = null, PpSaveAsFileType fileFormat = PpSaveAsFileType.ppSaveAsDefault);
 
     /// <summary>
     /// 另存为演示文稿

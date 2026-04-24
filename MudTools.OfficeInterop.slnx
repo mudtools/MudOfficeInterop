@@ -22,6 +22,15 @@
     <Project Path="Samples/ExcelSamples/WebApplicationIntegrationSample/WebApplicationIntegrationSample.csproj" />
     <Project Path="Samples/ExcelSamples/WorkbookWorksheetOperationsSample/WorkbookWorksheetOperationsSample.csproj" />
   </Folder>
+  <Folder Name="/samples/PowerPointSamples/">
+    <File Path="Samples/PowerPointSamples/Directory.Build.props" />
+    <Project Path="Samples/PowerPointSamples/AdvancedEditingAndLayoutSample/AdvancedEditingAndLayoutSample.csproj" />
+    <Project Path="Samples/PowerPointSamples/ApplicationOperationsSample/ApplicationOperationsSample.csproj" />
+    <Project Path="Samples/PowerPointSamples/ExportAndConversionSample/ExportAndConversionSample.csproj" />
+    <Project Path="Samples/PowerPointSamples/PresentationAndSlideSample/PresentationAndSlideSample.csproj" />
+    <Project Path="Samples/PowerPointSamples/ShapeOperationsSample/ShapeOperationsSample.csproj" />
+    <Project Path="Samples/PowerPointSamples/SlideShowControlSample/SlideShowControlSample.csproj" />
+  </Folder>
   <Folder Name="/samples/WordSample/">
     <File Path="Samples/WordSamples/Directory.Build.props" />
     <Project Path="Samples/WordSamples/BasicDocumentOperationsSample/BasicDocumentOperationsSample.csproj" />
