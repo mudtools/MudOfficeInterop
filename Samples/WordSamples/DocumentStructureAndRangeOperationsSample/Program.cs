@@ -555,7 +555,7 @@ namespace DocumentStructureAndRangeOperationsSample
             find.MatchWildcards = false;
             find.MatchSoundsLike = false;
             find.MatchAllWordForms = false;
-            replacementCount = find.Execute(replace: WdReplace.wdReplaceAll) ? 1 : 0; // 简化处理
+            replacementCount = find.Execute(replace: WdReplace.wdReplaceAll) == true ? 1 : 0; // 简化处理
 
             return new FindReplaceResult
             {

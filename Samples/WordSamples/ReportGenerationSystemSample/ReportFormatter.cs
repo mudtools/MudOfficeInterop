@@ -78,7 +78,7 @@ namespace ReportGenerationSystemSample
 
                 // 查找并格式化其他可能的标题
                 find.Text = "XYZ公司月度财务报表";
-                if (find.Execute())
+                if (find.Execute() == true)
                 {
                     find.ParentRange.Font.Name = "微软雅黑";
                     find.ParentRange.Font.Size = 20;
@@ -89,7 +89,7 @@ namespace ReportGenerationSystemSample
                 }
 
                 find.Text = "XYZ公司项目进度报表";
-                if (find.Execute())
+                if (find.Execute() == true)
                 {
                     find.ParentRange.Font.Name = "微软雅黑";
                     find.ParentRange.Font.Size = 20;
@@ -119,7 +119,7 @@ namespace ReportGenerationSystemSample
                     using var table = document.Tables[i];
 
                     // 设置表格边框
-                    table.Borders.Enable = true;
+                    table.Borders.Enable = 1;
                     table.Borders[WdBorderType.wdBorderTop].LineStyle = WdLineStyle.wdLineStyleSingle;
                     table.Borders[WdBorderType.wdBorderLeft].LineStyle = WdLineStyle.wdLineStyleSingle;
                     table.Borders[WdBorderType.wdBorderBottom].LineStyle = WdLineStyle.wdLineStyleSingle;
@@ -262,7 +262,7 @@ namespace ReportGenerationSystemSample
                 find.Wrap = WdFindWrap.wdFindContinue;
                 find.MatchWildcards = true;
 
-                while (find.Execute())
+                while (find.Execute() == true)
                 {
                     find.ParentRange.Font.Name = "Segoe UI";
                     find.ParentRange.Font.Size = 24;
@@ -291,7 +291,7 @@ namespace ReportGenerationSystemSample
                     using var table = document.Tables[i];
 
                     // 设置无边框样式
-                    table.Borders.Enable = false;
+                    table.Borders.Enable = 0;
 
                     // 设置表头样式
                     if (table.Rows.Count > 0)
@@ -408,7 +408,7 @@ namespace ReportGenerationSystemSample
                 find.Wrap = WdFindWrap.wdFindContinue;
                 find.MatchWildcards = true;
 
-                while (find.Execute())
+                while (find.Execute() == true)
                 {
                     find.ParentRange.Font.Name = "Calibri";
                     find.ParentRange.Font.Size = 18;
@@ -436,9 +436,9 @@ namespace ReportGenerationSystemSample
                     using var table = document.Tables[i];
 
                     // 设置简单边框
-                    table.Borders.Enable = true;
-                    table.Borders.LineStyle = WdLineStyle.wdLineStyleSingle;
-                    table.Borders.LineWidth = WdLineWidth.wdLineWidth050pt;
+                    table.Borders.Enable = 1;
+                    table.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                    table.Borders.OutsideLineWidth = WdLineWidth.wdLineWidth050pt;
 
                     // 设置表头样式
                     if (table.Rows.Count > 0)

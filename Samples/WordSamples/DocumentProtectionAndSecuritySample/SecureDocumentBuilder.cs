@@ -18,7 +18,6 @@ namespace DocumentProtectionAndSecuritySample
         private readonly IWordDocument _document;
         private readonly DocumentProtectionHelper _protectionHelper;
         private readonly ContentProtectionManager _contentProtectionManager;
-        private readonly DigitalSignatureManager _signatureManager;
         private readonly PermissionManager _permissionManager;
 
         /// <summary>
@@ -26,14 +25,13 @@ namespace DocumentProtectionAndSecuritySample
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
         /// <param name="document">Word文档对象</param>
-        public SecureDocumentBuilder(IWordApplication? Application, IWordDocument document)
+        public SecureDocumentBuilder(IWordApplication? application, IWordDocument document)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _document = document ?? throw new ArgumentNullException(nameof(document));
 
             _protectionHelper = new DocumentProtectionHelper(document);
             _contentProtectionManager = new ContentProtectionManager(document);
-            _signatureManager = new DigitalSignatureManager(application, document);
             _permissionManager = new PermissionManager(document);
         }
 
@@ -183,15 +181,6 @@ namespace DocumentProtectionAndSecuritySample
             contentRange.Text = "\n\n";
             contentRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
-            var signatureLines = parties.Select(p => new SignatureLineDefinition
-            {
-                Title = p.PartyType,
-                SuggestedSigner = p.AuthorizedRepresentative,
-                SuggestedSignerLine2 = p.Position,
-                SuggestedSignerEmail = p.Email
-            }).ToList();
-
-            _signatureManager.AddMultipleSignatureLines(signatureLines);
         }
 
         /// <summary>
@@ -353,8 +342,6 @@ namespace DocumentProtectionAndSecuritySample
                 // 检查权限管理状态
                 result.PermissionStatus = _permissionManager.GetPermissionManagementStatus();
 
-                // 验证签名
-                result.SignatureValidation = _signatureManager.ValidateSignatures();
 
                 // 获取受保护内容信息
                 result.ProtectedContent = _contentProtectionManager.GetAllProtectedContentInfo();
@@ -392,8 +379,6 @@ namespace DocumentProtectionAndSecuritySample
                 // 获取权限状态
                 report.PermissionStatus = _permissionManager.GetPermissionManagementStatus();
 
-                // 获取签名信息
-                report.Signatures = _signatureManager.GetDocumentSignatures();
 
                 // 获取受保护内容
                 report.ProtectedContent = _contentProtectionManager.GetAllProtectedContentInfo();
@@ -625,10 +610,6 @@ namespace DocumentProtectionAndSecuritySample
         /// </summary>
         public PermissionManagementStatus PermissionStatus { get; set; }
 
-        /// <summary>
-        /// 签名验证结果
-        /// </summary>
-        public SignatureValidationResult SignatureValidation { get; set; }
 
         /// <summary>
         /// 受保护内容
@@ -655,7 +636,6 @@ namespace DocumentProtectionAndSecuritySample
                    $"  验证状态: 通过\n" +
                    $"  {ProtectionStatus.GenerateReport()}\n" +
                    $"  {PermissionStatus.GenerateReport()}\n" +
-                   $"  {SignatureValidation.GenerateReport()}\n" +
                    $"  受保护内容项数: {ProtectedContent.Count}";
         }
     }
@@ -686,11 +666,6 @@ namespace DocumentProtectionAndSecuritySample
         public PermissionManagementStatus PermissionStatus { get; set; }
 
         /// <summary>
-        /// 签名列表
-        /// </summary>
-        public List<SignatureInfo> Signatures { get; set; } = new List<SignatureInfo>();
-
-        /// <summary>
         /// 受保护内容
         /// </summary>
         public List<ProtectedContentInfo> ProtectedContent { get; set; } = new List<ProtectedContentInfo>();
@@ -704,32 +679,5 @@ namespace DocumentProtectionAndSecuritySample
         /// 错误信息
         /// </summary>
         public string ErrorMessage { get; set; }
-
-        /// <summary>
-        /// 生成安全报告
-        /// </summary>
-        /// <returns>安全报告</returns>
-        public string GenerateReport()
-        {
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                return $"生成安全报告失败: {ErrorMessage}";
-            }
-
-            var signatureReports = Signatures.Select(s => s.GenerateReport()).ToList();
-            var signaturesReport = signatureReports.Any() ? string.Join("\n\n", signatureReports) : "无签名信息";
-
-            var contentReports = ProtectedContent.Select(c => c.GenerateReport()).ToList();
-            var contentReport = contentReports.Any() ? string.Join("\n\n", contentReports) : "无受保护内容";
-
-            return $"文档安全报告\n" +
-                   $"文档标题: {DocumentTitle}\n" +
-                   $"生成日期: {GeneratedDate:yyyy-MM-dd HH:mm:ss}\n\n" +
-                   $"{ProtectionStatus.GenerateReport()}\n\n" +
-                   $"{PermissionStatus.GenerateReport()}\n\n" +
-                   $"签名信息:\n{signaturesReport}\n\n" +
-                   $"受保护内容:\n{contentReport}\n\n" +
-                   $"{PermissionReport.GenerateReport()}";
-        }
     }
 }

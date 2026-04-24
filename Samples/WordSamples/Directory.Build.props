@@ -6,23 +6,23 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-		<Copyright>© 2019-2025 Mud Studio Co.,Ltd.</Copyright>
+		<Copyright>© 2019-2026 Mud Studio Co.,Ltd.</Copyright>
 		<Authors>Mud Studio</Authors>
 		<Company>Mud Studio</Company>
 		<LangVersion>latest</LangVersion>		
 		<BaseOutputPath>..\..\bin</BaseOutputPath>
 	</PropertyGroup>
     
-	<!--<ItemGroup>
-		<PackageReference Include="log4net" Version="3.2.0" />
-		<PackageReference Include="MudTools.OfficeInterop.Word" Version="2.0.8" />
-		<PackageReference Include="MudTools.OfficeInterop" Version="2.0.8" />
-	</ItemGroup>-->
-
 	<ItemGroup>
+		<PackageReference Include="log4net" Version="3.2.0" />
+		<PackageReference Include="MudTools.OfficeInterop.Word" Version="2.0.9" />
+		<PackageReference Include="MudTools.OfficeInterop" Version="2.0.9" />
+	</ItemGroup>
+
+	<!--<ItemGroup>
 		<ProjectReference Include="..\..\..\MudTools.OfficeInterop.Word\MudTools.OfficeInterop.Word.csproj" />
 		<ProjectReference Include="..\..\..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
-	</ItemGroup>
+	</ItemGroup>-->
 	<ItemGroup>
 		<PackageReference Include="System.ValueTuple" Version="4.6.1" />
 	</ItemGroup>

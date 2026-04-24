@@ -44,6 +44,12 @@ public interface IWordParagraph : IOfficeObject<IWordParagraph, MsWord.Paragraph
     /// </summary>
     IWordDropCap? DropCap { get; }
 
+
+    /// <summary>
+    /// 获取表示指定对象范围的Range对象。
+    /// </summary>
+    IWordRange? Range { get; }
+
     /// <summary>
     /// 获取或设置指定对象的样式。
     /// </summary>

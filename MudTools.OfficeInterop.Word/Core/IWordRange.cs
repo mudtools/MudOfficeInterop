@@ -32,6 +32,11 @@ public interface IWordRange : IOfficeObject<IWordRange, MsWord.Range>, IDisposab
     string Text { get; set; }
 
     /// <summary>
+    /// 获取表示指定范围内所有编辑器的Editors集合。
+    /// </summary>
+    IWordEditors? Editors { get; }
+
+    /// <summary>
     /// 获取或设置一个Range对象，表示指定范围内格式化文本。
     /// </summary>
     IWordRange? FormattedText { get; set; }

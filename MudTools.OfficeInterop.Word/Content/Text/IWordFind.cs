@@ -25,6 +25,13 @@ public interface IWordFind : IOfficeObject<IWordFind>, IDisposable
     /// </summary>
     object? Parent { get; }
 
+
+    /// <summary>
+    /// 获取一个值，指示指定对象是否在文档中具有父范围。对于 Find 对象，如果 Parent 是 Range 对象，则 ParentRange 返回该 Range；否则返回 null。
+    /// </summary>
+    [IgnoreGenerator]
+    IWordRange? ParentRange { get; }
+
     /// <summary>
     /// 获取或设置一个值，指示查找操作是否向前搜索文档。
     /// </summary>

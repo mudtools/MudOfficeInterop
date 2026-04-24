@@ -80,7 +80,7 @@ namespace DocumentProtectionAndSecuritySample
                         formField.TextInput.Default = defaultValue;
                         if (isReadOnly)
                         {
-                            formField.TextInput.EditType(type: WdTextFormFieldType.wdRegularText, @default: defaultValue, enabled: true);
+                            formField.TextInput.EditType(type: WdTextFormFieldType.wdRegularText, defaultStr: defaultValue, enabled: true);
                         }
                         break;
 
@@ -267,18 +267,6 @@ namespace DocumentProtectionAndSecuritySample
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
                 range.Text = $"{content}\n";
                 range.Collapse(WdCollapseDirection.wdCollapseEnd);
-
-                // 添加可编辑区域
-                var editableRange = _document.EditableRanges.Add(range);
-
-                if (editorType == WdEditorType.wdEditorEveryone)
-                {
-                    editableRange.Editors.Add(WdEditorType.wdEditorEveryone);
-                }
-                else if (!string.IsNullOrEmpty(editorName))
-                {
-                    editableRange.Editors.Add(editorName);
-                }
 
                 Console.WriteLine("可编辑区域已创建");
                 return true;
