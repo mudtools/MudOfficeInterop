@@ -22,7 +22,7 @@ namespace RibbonCustomizationSample
         /// 构造函数
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
-        public RibbonCustomizationHelper(IWordApplication? Application)
+        public RibbonCustomizationHelper(IWordApplication? application)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _ribbonManager = new RibbonManager(application);

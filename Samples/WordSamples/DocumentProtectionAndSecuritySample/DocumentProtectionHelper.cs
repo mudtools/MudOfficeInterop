@@ -146,9 +146,8 @@ namespace DocumentProtectionAndSecuritySample
                 status.ProtectionType = _document.ProtectionType;
                 status.HasOpenPassword = _document.HasPassword;
                 status.HasModifyPassword = _document.HasPassword;
-                status.EditableRangesCount = _document.EditableRanges.Count;
+                status.EditableRangesCount = _document.Range()?.Editors?.Count ?? 0;
                 status.BookmarksCount = _document.Bookmarks.Count;
-                status.SignaturesCount = _document.Signatures.Count;
             }
             catch (Exception ex)
             {
@@ -164,22 +163,12 @@ namespace DocumentProtectionAndSecuritySample
         /// </summary>
         /// <param name="range">文档范围</param>
         /// <param name="editorType">编辑者类型</param>
-        /// <param name="editorName">编辑者名称（可选）</param>
         /// <returns>是否添加成功</returns>
-        public bool AddEditableRange(IWordRange range, WdEditorType editorType, string editorName = null)
+        public bool AddEditableRange(IWordRange range, WdEditorType editorType)
         {
             try
             {
-                var editableRange = _document.EditableRanges.Add(range);
-
-                if (editorType == WdEditorType.wdEditorEveryone)
-                {
-                    editableRange.Editors.Add(WdEditorType.wdEditorEveryone);
-                }
-                else if (!string.IsNullOrEmpty(editorName))
-                {
-                    editableRange.Editors.Add(editorName);
-                }
+                range.Editors?.Add(editorType);
 
                 Console.WriteLine("可编辑区域已添加");
                 return true;
@@ -351,11 +340,6 @@ namespace DocumentProtectionAndSecuritySample
         public int BookmarksCount { get; set; }
 
         /// <summary>
-        /// 数字签名数量
-        /// </summary>
-        public int SignaturesCount { get; set; }
-
-        /// <summary>
         /// 错误信息
         /// </summary>
         public string ErrorMessage { get; set; }
@@ -377,8 +361,7 @@ namespace DocumentProtectionAndSecuritySample
                    $"  是否有打开密码: {HasOpenPassword}\n" +
                    $"  是否有修改密码: {HasModifyPassword}\n" +
                    $"  可编辑区域数量: {EditableRangesCount}\n" +
-                   $"  书签数量: {BookmarksCount}\n" +
-                   $"  数字签名数量: {SignaturesCount}";
+                   $"  书签数量: {BookmarksCount}";
         }
     }
 

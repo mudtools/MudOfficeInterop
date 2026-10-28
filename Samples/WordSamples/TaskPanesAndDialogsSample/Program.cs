@@ -239,7 +239,7 @@ namespace TaskPanesAndDialogsSample
 
                 // 保存文档
                 string filePath = Path.Combine(tempDirectory, "DialogSupportingDocument.docx");
-                document.Save(filePath);
+                document.SaveAs(filePath);
 
                 Console.WriteLine($"支持对话框的文档已创建: {filePath}");
                 Console.WriteLine();

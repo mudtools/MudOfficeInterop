@@ -15,14 +15,12 @@
     
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="3.2.0" />
-		<PackageReference Include="MudTools.OfficeInterop.PowerPoint" Version="2.0.9" />
-		<PackageReference Include="MudTools.OfficeInterop" Version="2.0.9" />
 	</ItemGroup>
 
-	<!--<ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\..\..\MudTools.OfficeInterop.PowerPoint\MudTools.OfficeInterop.PowerPoint.csproj" />
 		<ProjectReference Include="..\..\..\MudTools.OfficeInterop\MudTools.OfficeInterop.csproj" />
-	</ItemGroup>-->
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.ValueTuple" Version="4.6.1" />
 	</ItemGroup>

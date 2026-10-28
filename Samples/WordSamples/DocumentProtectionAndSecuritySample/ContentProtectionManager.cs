@@ -319,18 +319,24 @@ namespace DocumentProtectionAndSecuritySample
                 }
 
                 // 获取可编辑区域信息
-                for (int i = 1; i <= _document.EditableRanges.Count; i++)
+                var editors = _document.Range()?.Editors;
+                if (editors != null)
                 {
-                    var editableRange = _document.EditableRanges.Item(i);
-                    var info = new ProtectedContentInfo
+                    foreach (var editor in editors)
                     {
-                        ContentType = "可编辑区域",
-                        Name = $"EditableRange{i}",
-                        StartPosition = editableRange.Range.Start,
-                        EndPosition = editableRange.Range.End,
-                        Length = editableRange.Range.End - editableRange.Range.Start
-                    };
-                    protectedContents.Add(info);
+                        if (editor?.Range == null)
+                            continue;
+
+                        var info = new ProtectedContentInfo
+                        {
+                            ContentType = "可编辑区域",
+                            Name = editor.Name,
+                            StartPosition = editor.Range.Start,
+                            EndPosition = editor.Range.End,
+                            Length = editor.Range.End - editor.Range.Start
+                        };
+                        protectedContents.Add(info);
+                    }
                 }
             }
             catch (Exception ex)

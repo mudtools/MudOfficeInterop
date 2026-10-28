@@ -96,11 +96,8 @@ namespace DocumentProtectionAndSecuritySample
                 var editableRange2 = document.Range(65, 78); // "这是另一个可编辑区域。"
 
                 // 添加可编辑区域
-                var ed1 = document.EditableRanges.Add(editableRange1);
-                ed1.Editors.Add(WdEditorType.wdEditorEveryone); // 所有人可编辑
-
-                var ed2 = document.EditableRanges.Add(editableRange2);
-                ed2.Editors.Add("特定用户组"); // 特定用户组可编辑
+                editableRange1.Editors?.Add(WdEditorType.wdEditorEveryone); // 所有人可编辑
+                editableRange2.Editors?.Add(WdEditorType.wdEditorOwners); // 仅所有者可编辑
 
                 // 应用编辑限制
                 document.Protect(
@@ -379,7 +376,7 @@ namespace DocumentProtectionAndSecuritySample
                 var contentProtectionManager = new ContentProtectionManager(document);
 
                 // 创建机密内容区域
-                var allowedEditors = new List<string> { "manager@company.com", "admin@company.com" };
+                var allowedEditors = new List<WdEditorType> { WdEditorType.wdEditorEveryone };
                 contentProtectionManager.CreateConfidentialSection(
                     "这部分包含机密的财务信息，只有授权人员可以查看和编辑。",
                     allowedEditors);
@@ -388,13 +385,6 @@ namespace DocumentProtectionAndSecuritySample
                 contentProtectionManager.CreateEditableSection(
                     "请在此处填写您的评论：\n______________________________________________\n______________________________________________",
                     WdEditorType.wdEditorEveryone);
-
-                // 创建数字签名管理器
-                var signatureManager = new DigitalSignatureManager(app, document);
-
-                // 检查可用的签名提供商
-                var providers = signatureManager.GetAvailableSignatureProviders();
-                Console.WriteLine($"找到 {providers.Count} 个签名提供商");
 
                 // 创建权限管理器
                 var permissionManager = new PermissionManager(document);

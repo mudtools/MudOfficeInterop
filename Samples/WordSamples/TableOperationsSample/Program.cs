@@ -144,7 +144,7 @@ namespace TableOperationsSample
                 using var table = document.Tables.Add(range, 4, 3);
 
                 // 设置表格边框
-                table.Borders.Enable = true;
+                table.Borders.Enable = 1;
                 table.Borders[WdBorderType.wdBorderTop].LineStyle = WdLineStyle.wdLineStyleSingle;
                 table.Borders[WdBorderType.wdBorderLeft].LineStyle = WdLineStyle.wdLineStyleSingle;
                 table.Borders[WdBorderType.wdBorderBottom].LineStyle = WdLineStyle.wdLineStyleSingle;
@@ -388,7 +388,7 @@ namespace TableOperationsSample
 
                 // 格式化表格
                 // 表格边框
-                table.Borders.Enable = true;
+                table.Borders.Enable = 1;
                 table.Borders[WdBorderType.wdBorderTop].LineStyle = WdLineStyle.wdLineStyleSingle;
                 table.Borders[WdBorderType.wdBorderLeft].LineStyle = WdLineStyle.wdLineStyleSingle;
                 table.Borders[WdBorderType.wdBorderBottom].LineStyle = WdLineStyle.wdLineStyleSingle;
@@ -471,7 +471,7 @@ namespace TableOperationsSample
                 table.Cell(3, 3).Range.Text = "250";
 
                 // 应用内置表格样式
-                table.Style = "网格型";
+                table.StyleName = "网格型";
 
                 Console.WriteLine("表格样式和主题操作完成");
             }
@@ -664,7 +664,7 @@ namespace TableOperationsSample
             table.Cell(3, 3).Range.Text = "30";
 
             // 应用样式
-            table.Style = "彩色列表";
+            table.StyleName = "彩色列表";
 
             // 保存文档
             string filePath = Path.Combine(Path.GetTempPath(), $"FormattedTable_{Guid.NewGuid()}.docx");

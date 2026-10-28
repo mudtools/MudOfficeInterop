@@ -23,7 +23,7 @@ namespace TaskPanesAndDialogsSample
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
         /// <param name="document">Word文档对象</param>
-        public UserInteractionHandler(IWordApplication? Application, IWordDocument document)
+        public UserInteractionHandler(IWordApplication? application, IWordDocument document)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _document = document ?? throw new ArgumentNullException(nameof(document));
@@ -202,7 +202,7 @@ namespace TaskPanesAndDialogsSample
                         // 模拟保存文件操作
                         Console.WriteLine("模拟保存文件对话框...");
                         result.FilePath = @"C:\temp\保存的文档.docx";
-                        _document.Save(result.FilePath);
+                        _document.SaveAs(result.FilePath);
                         result.IsSuccess = true;
                         result.Message = "文件保存操作已完成";
                         break;
@@ -211,7 +211,7 @@ namespace TaskPanesAndDialogsSample
                         // 模拟另存为操作
                         Console.WriteLine("模拟另存为对话框...");
                         result.FilePath = @"C:\temp\另存为文档.docx";
-                        _document.Save(result.FilePath);
+                        _document.SaveAs(result.FilePath);
                         result.IsSuccess = true;
                         result.Message = "文件另存为操作已完成";
                         break;

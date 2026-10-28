@@ -23,7 +23,7 @@ namespace TaskPanesAndDialogsSample
         /// </summary>
         /// <param name="application">Word应用程序对象</param>
         /// <param name="document">Word文档对象</param>
-        public DialogManager(IWordApplication? Application, IWordDocument document)
+        public DialogManager(IWordApplication? application, IWordDocument document)
         {
             _application = application ?? throw new ArgumentNullException(nameof(application));
             _document = document ?? throw new ArgumentNullException(nameof(document));
@@ -40,7 +40,7 @@ namespace TaskPanesAndDialogsSample
                 using var fontDialog = _application.Dialogs[WdWordDialog.wdDialogFormatFont];
                 var result = fontDialog.Show();
 
-                if (result) // 用户点击了确定
+                if (result == true) // 用户点击了确定
                 {
                     Console.WriteLine("字体设置已应用");
                     return true;
@@ -69,7 +69,7 @@ namespace TaskPanesAndDialogsSample
                 using var paragraphDialog = _application.Dialogs[WdWordDialog.wdDialogFormatParagraph];
                 var result = paragraphDialog.Show();
 
-                if (result) // 用户点击了确定
+                if (result == true) // 用户点击了确定
                 {
                     Console.WriteLine("段落格式已应用");
                     return true;
@@ -98,7 +98,7 @@ namespace TaskPanesAndDialogsSample
                 using var pageSetupDialog = _application.Dialogs[WdWordDialog.wdDialogFilePageSetup];
                 var result = pageSetupDialog.Show();
 
-                if (result) // 用户点击了确定
+                if (result == true) // 用户点击了确定
                 {
                     Console.WriteLine("页面设置已应用");
                     return true;
@@ -127,7 +127,7 @@ namespace TaskPanesAndDialogsSample
                 using var findDialog = _application.Dialogs[WdWordDialog.wdDialogEditFind];
                 var result = findDialog.Show();
 
-                if (result) // 用户点击了确定
+                if (result == true) // 用户点击了确定
                 {
                     Console.WriteLine("查找操作已完成");
                     return true;
@@ -161,7 +161,7 @@ namespace TaskPanesAndDialogsSample
                 // 显示对话框
                 var result = pageSetupDialog.Show();
 
-                if (result) // 用户点击了确定
+                if (result == true) // 用户点击了确定
                 {
                     // 应用页面设置到当前节
                     var section = _document.Sections[1];
