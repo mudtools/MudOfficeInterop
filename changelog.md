@@ -1,5 +1,17 @@
 # OfficeInterop 项目变更日志
 
+## 2.1.0
+
+- 新增 PowerPoint 系列示例项目：应用程序操作、演示文稿与幻灯片、形状操作、高级编辑与布局、放映控制、导出与转换
+- 为 IPowerPointPresentation 添加 SlideShowSettings 属性，暴露幻灯片放映设置
+- 完善 PowerPoint 演示文稿接口的可空性定义，Slides 属性及 Save 方法参数调整为可空类型
+- 修正 PowerPointPresentation 实现类中的项目版权信息
+- 添加 GitHub Actions CI 工作流，自动构建并打包 5 个类库，上传生成的 NuGet 包产物
+- 示例项目改用本地工程引用，确保示例代码与源码接口保持同步
+- 修复 Word 示例项目中的编译错误，统一使用 SaveAs 保存文档、正确判断对话框返回值
+- 调整示例中可编辑区域权限设置方式，改用 IWordRange.Editors 添加编辑者
+- 修正示例辅助类构造函数参数命名，以及表格边框启用和表格样式赋值方式
+
 ## 2.0.9
 
 - 添加 IPowerPointPane 和 IPowerPointPanes 窗格接口定义
