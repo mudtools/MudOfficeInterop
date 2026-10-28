@@ -17,19 +17,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Build
-        shell: pwsh
-        run: |
-          $libs = @(
-            'MudTools.OfficeInterop',
-            'MudTools.OfficeInterop.Vbe',
-            'MudTools.OfficeInterop.Excel',
-            'MudTools.OfficeInterop.Word',
-            'MudTools.OfficeInterop.PowerPoint'
-          )
-          foreach ($p in $libs) {
-            dotnet build "$p/$p.csproj" -c Release
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          }
+        run: dotnet build MudTools.OfficeInterop.slnx -c Release
 
       - name: Pack
         shell: pwsh
