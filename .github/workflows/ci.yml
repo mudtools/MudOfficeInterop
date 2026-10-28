@@ -16,10 +16,7 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Build
-        run: dotnet build MudTools.OfficeInterop.slnx -c Release
-
-      - name: Pack
+      - name: Pack libraries
         shell: pwsh
         run: |
           $libs = @(
@@ -30,9 +27,28 @@ jobs:
             'MudTools.OfficeInterop.PowerPoint'
           )
           foreach ($p in $libs) {
-            dotnet pack "$p/$p.csproj" -c Release --no-build -o out
+            dotnet pack "$p/$p.csproj" -c Release -o out
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+
+      - name: Restore with local packages
+        shell: pwsh
+        run: |
+          $config = Join-Path $env:RUNNER_TEMP 'nuget.config'
+          @"
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <clear />
+              <add key="local" value="$PWD/out" />
+              <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+            </packageSources>
+          </configuration>
+          "@ | Set-Content -Path $config -Encoding utf8
+          dotnet restore MudTools.OfficeInterop.slnx --configfile $config
+
+      - name: Build solution
+        run: dotnet build MudTools.OfficeInterop.slnx -c Release --no-restore
 
       - uses: actions/upload-artifact@v4
         with:

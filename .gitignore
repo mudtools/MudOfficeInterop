@@ -6,6 +6,7 @@
 /docs
 /publish
 /nuget
+/out
 /bindebug_net10.0
 /MudTools.OfficeInterop/bin/Debug
 /MudTools.OfficeInterop/obj
